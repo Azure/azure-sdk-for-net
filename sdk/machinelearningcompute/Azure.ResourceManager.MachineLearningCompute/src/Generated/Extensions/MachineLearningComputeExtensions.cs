@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningCompute.Mocking;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Resources;
@@ -54,10 +52,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> Returns a <see cref="OperationalizationClusterResource"/> object. </returns>
         public static OperationalizationClusterResource GetOperationalizationClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMachineLearningComputeArmClient(client).GetOperationalizationClusterResource(id);
         }
@@ -74,10 +69,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An object representing collection of OperationalizationClusterResources and their operations over a OperationalizationClusterResource. </returns>
         public static OperationalizationClusterCollection GetOperationalizationClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMachineLearningComputeResourceGroupResource(resourceGroupResource).GetOperationalizationClusters();
         }
@@ -115,10 +107,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         [ForwardsClientCalls]
         public static async Task<Response<OperationalizationClusterResource>> GetOperationalizationClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMachineLearningComputeResourceGroupResource(resourceGroupResource).GetOperationalizationClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -156,10 +145,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         [ForwardsClientCalls]
         public static Response<OperationalizationClusterResource> GetOperationalizationCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMachineLearningComputeResourceGroupResource(resourceGroupResource).GetOperationalizationCluster(clusterName, cancellationToken);
         }
@@ -196,10 +182,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="OperationalizationClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalizationClusterResource> GetOperationalizationClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMachineLearningComputeSubscriptionResource(subscriptionResource).GetOperationalizationClustersAsync(skiptoken, cancellationToken);
         }
@@ -236,10 +219,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="OperationalizationClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalizationClusterResource> GetOperationalizationClusters(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMachineLearningComputeSubscriptionResource(subscriptionResource).GetOperationalizationClusters(skiptoken, cancellationToken);
         }
@@ -271,10 +251,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="ResourceOperation"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMachineLearningComputeTenantResource(tenantResource).GetAvailableOperationsMachineLearningComputesAsync(cancellationToken);
         }
@@ -306,10 +283,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="ResourceOperation"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMachineLearningComputeTenantResource(tenantResource).GetAvailableOperationsMachineLearningComputes(cancellationToken);
         }

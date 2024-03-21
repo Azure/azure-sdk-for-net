@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (StorageAccountSasSecretName != null)
+            if (Optional.IsDefined(StorageAccountSasSecretName))
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (ServiceBusConnectionStringSecretName != null)
+            if (Optional.IsDefined(ServiceBusConnectionStringSecretName))
             {
                 writer.WritePropertyName("serviceBusConnectionStringSecretName"u8);
                 writer.WriteStringValue(ServiceBusConnectionStringSecretName);

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Mocking
 {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -55,47 +55,47 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (DscNodeReportType != null)
+            if (Optional.IsDefined(DscNodeReportType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DscNodeReportType);
             }
-            if (ReportId != null)
+            if (Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (RefreshMode != null)
+            if (Optional.IsDefined(RefreshMode))
             {
                 writer.WritePropertyName("refreshMode"u8);
                 writer.WriteStringValue(RefreshMode);
             }
-            if (RebootRequested != null)
+            if (Optional.IsDefined(RebootRequested))
             {
                 writer.WritePropertyName("rebootRequested"u8);
                 writer.WriteStringValue(RebootRequested);
             }
-            if (ReportFormatVersion != null)
+            if (Optional.IsDefined(ReportFormatVersion))
             {
                 writer.WritePropertyName("reportFormatVersion"u8);
                 writer.WriteStringValue(ReportFormatVersion);
             }
-            if (ConfigurationVersion != null)
+            if (Optional.IsDefined(ConfigurationVersion))
             {
                 writer.WritePropertyName("configurationVersion"u8);
                 writer.WriteStringValue(ConfigurationVersion);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Errors is ChangeTrackingList<DscReportError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Resources is ChangeTrackingList<DscReportResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MetaConfiguration != null)
+            if (Optional.IsDefined(MetaConfiguration))
             {
                 writer.WritePropertyName("metaConfiguration"u8);
                 writer.WriteObjectValue(MetaConfiguration);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (!(IPV4Addresses is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPV4Addresses))
             {
                 writer.WritePropertyName("iPV4Addresses"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPV6Addresses is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(IPV6Addresses))
             {
                 writer.WritePropertyName("iPV6Addresses"u8);
                 writer.WriteStartArray();
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NumberOfResources.HasValue)
+            if (Optional.IsDefined(NumberOfResources))
             {
                 writer.WritePropertyName("numberOfResources"u8);
                 writer.WriteNumberValue(NumberOfResources.Value);
             }
-            if (RawErrors != null)
+            if (Optional.IsDefined(RawErrors))
             {
                 writer.WritePropertyName("rawErrors"u8);
                 writer.WriteStringValue(RawErrors);

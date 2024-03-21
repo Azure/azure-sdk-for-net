@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HybridConnectivity.Models;
 
 namespace Azure.ResourceManager.HybridConnectivity
@@ -279,10 +277,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<EndpointResource>> UpdateAsync(EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
             scope.Start();
@@ -324,10 +319,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<EndpointResource> Update(EndpointResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.Update");
             scope.Start();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (!(InitialAdminObjectIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InitialAdminObjectIds))
             {
                 writer.WritePropertyName("initialAdminObjectIds"u8);
                 writer.WriteStartArray();
@@ -41,47 +41,47 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HsmUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HsmUri))
             {
                 writer.WritePropertyName("hsmUri"u8);
                 writer.WriteStringValue(HsmUri.AbsoluteUri);
             }
-            if (EnableSoftDelete.HasValue)
+            if (Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (SoftDeleteRetentionInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (EnablePurgeProtection.HasValue)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkRuleSet);
             }
-            if (!(Regions is ChangeTrackingList<ManagedHsmGeoReplicatedRegion> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && SecurityDomainProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(SecurityDomainProperties))
             {
                 writer.WritePropertyName("securityDomainProperties"u8);
                 writer.WriteObjectValue(SecurityDomainProperties);

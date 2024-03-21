@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Subregion != null)
+            if (options.Format != "W" && Optional.IsDefined(Subregion))
             {
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);
             }
-            if (ServerKeyName != null)
+            if (Optional.IsDefined(ServerKeyName))
             {
                 writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
-            if (ServerKeyType.HasValue)
+            if (Optional.IsDefined(ServerKeyType))
             {
                 writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER

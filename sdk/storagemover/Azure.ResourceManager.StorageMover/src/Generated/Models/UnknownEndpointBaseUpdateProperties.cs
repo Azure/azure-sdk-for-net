@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The UnknownEndpointBaseUpdateProperties. </summary>
+    /// <summary> Unknown version of EndpointBaseUpdateProperties. </summary>
     internal partial class UnknownEndpointBaseUpdateProperties : EndpointBaseUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEndpointBaseUpdateProperties"/>. </summary>

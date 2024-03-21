@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(PeriodStartOn, "O");
             writer.WritePropertyName("periodEndTime"u8);
             writer.WriteStringValue(PeriodEndOn, "O");
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteObjectValue(Value);

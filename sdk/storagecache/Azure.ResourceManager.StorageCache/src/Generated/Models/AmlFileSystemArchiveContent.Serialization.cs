@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (FilesystemPath != null)
+            if (Optional.IsDefined(FilesystemPath))
             {
                 writer.WritePropertyName("filesystemPath"u8);
                 writer.WriteStringValue(FilesystemPath);

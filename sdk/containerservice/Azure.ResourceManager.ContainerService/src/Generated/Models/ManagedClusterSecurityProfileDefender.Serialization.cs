@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (LogAnalyticsWorkspaceResourceId != null)
+            if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceResourceId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceResourceId);
             }
-            if (SecurityMonitoring != null)
+            if (Optional.IsDefined(SecurityMonitoring))
             {
                 writer.WritePropertyName("securityMonitoring"u8);
                 writer.WriteObjectValue(SecurityMonitoring);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (SecretRef != null)
+            if (Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
-            if (TriggerParameter != null)
+            if (Optional.IsDefined(TriggerParameter))
             {
                 writer.WritePropertyName("triggerParameter"u8);
                 writer.WriteStringValue(TriggerParameter);

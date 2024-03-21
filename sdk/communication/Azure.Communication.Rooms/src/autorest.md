@@ -19,3 +19,12 @@ payload-flattening-threshold: 10
 clear-output-folder: true
 generation1-convenience-client: true
 ```
+
+``` yaml
+# Add nullable annotations
+directive:
+  - from: swagger-document
+    where: $.definitions.ParticipantProperties
+    transform: >
+      $.properties.role["x-nullable"] = true;
+```

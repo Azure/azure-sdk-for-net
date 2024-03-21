@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoAttachedDatabaseConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachedDatabaseConfigurationName, KustoAttachedDatabaseConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoAttachedDatabaseConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string attachedDatabaseConfigurationName, KustoAttachedDatabaseConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual async Task<Response<KustoAttachedDatabaseConfigurationResource>> GetAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual Response<KustoAttachedDatabaseConfigurationResource> Get(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<KustoAttachedDatabaseConfigurationResource>> GetIfExistsAsync(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
         public virtual NullableResponse<KustoAttachedDatabaseConfigurationResource> GetIfExists(string attachedDatabaseConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (attachedDatabaseConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(attachedDatabaseConfigurationName));
-            }
-            if (attachedDatabaseConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(attachedDatabaseConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
 
             using var scope = _kustoAttachedDatabaseConfigurationAttachedDatabaseConfigurationsClientDiagnostics.CreateScope("KustoAttachedDatabaseConfigurationCollection.GetIfExists");
             scope.Start();

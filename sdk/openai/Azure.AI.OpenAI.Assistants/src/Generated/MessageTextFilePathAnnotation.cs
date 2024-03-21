@@ -21,14 +21,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
         internal MessageTextFilePathAnnotation(string text, int startIndex, int endIndex, InternalMessageTextFilePathDetails internalDetails) : base(text, startIndex, endIndex)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (internalDetails == null)
-            {
-                throw new ArgumentNullException(nameof(internalDetails));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
             Type = "file_path";
             InternalDetails = internalDetails;

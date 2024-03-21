@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Args != null)
+            if (Optional.IsDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStringValue(Args);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

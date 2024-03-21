@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceType"/> is null. </exception>
         public Service(string serviceType)
         {
-            if (serviceType == null)
-            {
-                throw new ArgumentNullException(nameof(serviceType));
-            }
+            Argument.AssertNotNull(serviceType, nameof(serviceType));
 
             ServiceType = serviceType;
         }

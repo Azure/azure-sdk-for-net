@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (TotalThroughputLimit.HasValue)
+            if (Optional.IsDefined(TotalThroughputLimit))
             {
                 writer.WritePropertyName("totalThroughputLimit"u8);
                 writer.WriteNumberValue(TotalThroughputLimit.Value);

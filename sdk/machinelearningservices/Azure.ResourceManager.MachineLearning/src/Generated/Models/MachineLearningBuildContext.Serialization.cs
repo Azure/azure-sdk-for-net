@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("contextUri"u8);
             writer.WriteStringValue(ContextUri.AbsoluteUri);
-            if (DockerfilePath != null)
+            if (Optional.IsDefined(DockerfilePath))
             {
                 writer.WritePropertyName("dockerfilePath"u8);
                 writer.WriteStringValue(DockerfilePath);

@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EndpointUri != null)
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (EndpointBaseUri != null)
+            if (Optional.IsDefined(EndpointBaseUri))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (ClientAuthentication != null)
+            if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);

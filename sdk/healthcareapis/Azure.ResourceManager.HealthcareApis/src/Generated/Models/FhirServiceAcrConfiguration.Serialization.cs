@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (!(LoginServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoginServers))
             {
                 writer.WritePropertyName("loginServers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(OciArtifacts is ChangeTrackingList<HealthcareApisServiceOciArtifactEntry> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OciArtifacts))
             {
                 writer.WritePropertyName("ociArtifacts"u8);
                 writer.WriteStartArray();

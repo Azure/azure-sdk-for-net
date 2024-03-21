@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EnableAgentAutoUpgrade != null)
+            if (options.Format != "W" && Optional.IsDefined(EnableAgentAutoUpgrade))
             {
                 writer.WritePropertyName("enableAgentAutoUpgrade"u8);
                 writer.WriteStringValue(EnableAgentAutoUpgrade);

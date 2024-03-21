@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

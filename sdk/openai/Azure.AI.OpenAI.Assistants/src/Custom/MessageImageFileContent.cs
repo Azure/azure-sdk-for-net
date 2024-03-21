@@ -14,8 +14,8 @@ namespace Azure.AI.OpenAI.Assistants;
 
 public partial class MessageImageFileContent
 {
-    /// <inheritdoc cref="InternalMessageImageFileIdDetails.FileId"/>
-    public string FileId => InternalDetails.InternalDetails.FileId;
+    /// <inheritdoc cref="InternalMessageImageFileDetails.InternalDetails"/>
+    public string FileId => InternalDetails.InternalDetails;
 
     internal InternalMessageImageFileDetails InternalDetails { get; }
 }

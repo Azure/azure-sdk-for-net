@@ -57,18 +57,9 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="scripts"/> is null. </exception>
         internal TransliterationLanguage(string name, string nativeName, IEnumerable<TransliterableScript> scripts)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (nativeName == null)
-            {
-                throw new ArgumentNullException(nameof(nativeName));
-            }
-            if (scripts == null)
-            {
-                throw new ArgumentNullException(nameof(scripts));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(nativeName, nameof(nativeName));
+            Argument.AssertNotNull(scripts, nameof(scripts));
 
             Name = name;
             NativeName = nativeName;

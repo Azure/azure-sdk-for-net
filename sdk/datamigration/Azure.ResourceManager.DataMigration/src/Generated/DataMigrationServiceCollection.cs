@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataMigration
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataMigrationServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataMigrationServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, DataMigrationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<DataMigrationServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<DataMigrationServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataMigrationServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual NullableResponse<DataMigrationServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _dataMigrationServiceServicesClientDiagnostics.CreateScope("DataMigrationServiceCollection.GetIfExists");
             scope.Start();

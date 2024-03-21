@@ -9,11 +9,8 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Orbital;
 using Azure.ResourceManager.Orbital.Models;
 using Azure.ResourceManager.Resources;
 

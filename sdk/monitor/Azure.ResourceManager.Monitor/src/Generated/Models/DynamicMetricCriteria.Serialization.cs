@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(AlertSensitivity.ToString());
             writer.WritePropertyName("failingPeriods"u8);
             writer.WriteObjectValue(FailingPeriods);
-            if (IgnoreDataBefore.HasValue)
+            if (Optional.IsDefined(IgnoreDataBefore))
             {
                 writer.WritePropertyName("ignoreDataBefore"u8);
                 writer.WriteStringValue(IgnoreDataBefore.Value, "O");
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToString());
-            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SkipMetricValidation.HasValue)
+            if (Optional.IsDefined(SkipMetricValidation))
             {
                 writer.WritePropertyName("skipMetricValidation"u8);
                 writer.WriteBooleanValue(SkipMetricValidation.Value);

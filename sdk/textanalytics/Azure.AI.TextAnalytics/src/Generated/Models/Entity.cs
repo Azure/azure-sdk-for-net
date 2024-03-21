@@ -21,14 +21,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
         public Entity(string text, string category, int offset, int length, double confidenceScore)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(category, nameof(category));
 
             Text = text;
             Category = category;

@@ -28,14 +28,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lowKey"/> or <paramref name="highKey"/> is null. </exception>
         public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey)
         {
-            if (lowKey == null)
-            {
-                throw new ArgumentNullException(nameof(lowKey));
-            }
-            if (highKey == null)
-            {
-                throw new ArgumentNullException(nameof(highKey));
-            }
+            Argument.AssertNotNull(lowKey, nameof(lowKey));
+            Argument.AssertNotNull(highKey, nameof(highKey));
 
             Count = count;
             LowKey = lowKey;

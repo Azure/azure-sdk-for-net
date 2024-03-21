@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(Headers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteObjectValue(Body);
             }
-            if (DataMasking != null)
+            if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
                 writer.WriteObjectValue(DataMasking);

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="osFamily"/> is null. </exception>
         public BatchCloudServiceConfiguration(string osFamily)
         {
-            if (osFamily == null)
-            {
-                throw new ArgumentNullException(nameof(osFamily));
-            }
+            Argument.AssertNotNull(osFamily, nameof(osFamily));
 
             OSFamily = osFamily;
         }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (CodeVersion != null)
+            if (Optional.IsDefined(CodeVersion))
             {
                 writer.WritePropertyName("codeVersion"u8);
                 writer.WriteStringValue(CodeVersion);
             }
-            if (SupportExpireOn.HasValue)
+            if (Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (Environment.HasValue)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteStringValue(Environment.Value.ToString());

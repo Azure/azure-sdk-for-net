@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FirewallPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallPolicyName, FirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FirewallPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string firewallPolicyName, FirewallPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         public virtual async Task<Response<FirewallPolicyResource>> GetAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         public virtual Response<FirewallPolicyResource> Get(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<FirewallPolicyResource>> GetIfExistsAsync(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="firewallPolicyName"/> is null. </exception>
         public virtual NullableResponse<FirewallPolicyResource> GetIfExists(string firewallPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
 
             using var scope = _firewallPolicyClientDiagnostics.CreateScope("FirewallPolicyCollection.GetIfExists");
             scope.Start();

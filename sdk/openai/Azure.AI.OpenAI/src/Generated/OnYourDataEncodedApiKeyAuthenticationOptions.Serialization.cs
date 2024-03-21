@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -27,7 +26,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("encodedApiKey"u8);
+            writer.WritePropertyName("encoded_api_key"u8);
             writer.WriteStringValue(EncodedApiKey);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -75,7 +74,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encodedApiKey"u8))
+                if (property.NameEquals("encoded_api_key"u8))
                 {
                     encodedApiKey = property.Value.GetString();
                     continue;

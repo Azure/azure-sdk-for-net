@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Encoding;
@@ -187,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 Assert.IsFalse(rawSend.MessageAnnotations.ContainsKey(AmqpMessageConstants.PartitionIdName));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterReasonHeader));
                 Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(AmqpMessageConstants.DeadLetterErrorDescriptionHeader));
+                Assert.IsFalse(toSend.ApplicationProperties.ContainsKey(MessagingClientDiagnostics.DiagnosticIdAttribute));
 
                 // delivery annotations only apply to a single hop so they are cleared
                 Assert.AreEqual(0, rawSend.DeliveryAnnotations.Count);

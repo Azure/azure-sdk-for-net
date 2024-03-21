@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="secretAccessKey"> The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleCloudStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accessKeyId, DataFactorySecretBaseDefinition secretAccessKey, DataFactoryElement<string> serviceUri, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleCloudStorageLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accessKeyId, DataFactorySecret secretAccessKey, DataFactoryElement<string> serviceUri, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The access key identifier of the Google Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AccessKeyId { get; set; }
         /// <summary> The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user. </summary>
-        public DataFactorySecretBaseDefinition SecretAccessKey { get; set; }
+        public DataFactorySecret SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServiceUri { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>

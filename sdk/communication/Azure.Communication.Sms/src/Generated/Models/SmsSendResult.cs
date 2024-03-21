@@ -19,10 +19,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         internal SmsSendResult(string to, int httpStatusCode, bool successful)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(to, nameof(to));
 
             To = to;
             HttpStatusCode = httpStatusCode;

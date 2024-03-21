@@ -56,14 +56,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maxStorageSize"> The maximum supported storage size. </param>
         /// <param name="minBackupRetentionDays"> Minimal backup retention days. </param>
         /// <param name="maxBackupRetentionDays"> Maximum backup retention days. </param>
+        /// <param name="minBackupIntervalHours"> Minimal backup interval hours. </param>
+        /// <param name="maxBackupIntervalHours"> Maximum backup interval hours. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerStorageEditionCapability(string name, long? minStorageSize, long? maxStorageSize, long? minBackupRetentionDays, long? maxBackupRetentionDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerStorageEditionCapability(string name, long? minStorageSize, long? maxStorageSize, long? minBackupRetentionDays, long? maxBackupRetentionDays, long? minBackupIntervalHours, long? maxBackupIntervalHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MinStorageSize = minStorageSize;
             MaxStorageSize = maxStorageSize;
             MinBackupRetentionDays = minBackupRetentionDays;
             MaxBackupRetentionDays = maxBackupRetentionDays;
+            MinBackupIntervalHours = minBackupIntervalHours;
+            MaxBackupIntervalHours = maxBackupIntervalHours;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +81,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public long? MinBackupRetentionDays { get; }
         /// <summary> Maximum backup retention days. </summary>
         public long? MaxBackupRetentionDays { get; }
+        /// <summary> Minimal backup interval hours. </summary>
+        public long? MinBackupIntervalHours { get; }
+        /// <summary> Maximum backup interval hours. </summary>
+        public long? MaxBackupIntervalHours { get; }
     }
 }

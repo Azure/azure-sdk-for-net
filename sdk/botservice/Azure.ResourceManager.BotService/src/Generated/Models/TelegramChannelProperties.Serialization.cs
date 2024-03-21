@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (IsValidated.HasValue)
+            if (Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);

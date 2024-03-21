@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (LastUpdatedOn != null)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn);
             }
-            if (!(ThreatTypeMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatTypeMetrics))
             {
                 writer.WritePropertyName("threatTypeMetrics"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatternTypeMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternTypeMetrics))
             {
                 writer.WritePropertyName("patternTypeMetrics"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceMetrics))
             {
                 writer.WritePropertyName("sourceMetrics"u8);
                 writer.WriteStartArray();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (options.Format != "W" && AutoDetectedKeyVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AutoDetectedKeyVersion))
             {
                 writer.WritePropertyName("autoDetectedKeyVersion"u8);
                 writer.WriteStringValue(AutoDetectedKeyVersion);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && KeyState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyState))
             {
                 writer.WritePropertyName("keyState"u8);
                 writer.WriteStringValue(KeyState.Value.ToString());
             }
-            if (options.Format != "W" && VersionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VersionType))
             {
                 writer.WritePropertyName("versionType"u8);
                 writer.WriteStringValue(VersionType.Value.ToString());

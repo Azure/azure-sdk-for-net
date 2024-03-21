@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 if (PublicIPAddress != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("publicIpAddress");
                 }
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 if (PrivateIPAddress != null)
                 {

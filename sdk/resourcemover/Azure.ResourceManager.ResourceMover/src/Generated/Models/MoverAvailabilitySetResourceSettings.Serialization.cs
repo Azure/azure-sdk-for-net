@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FaultDomain.HasValue)
+            if (Optional.IsDefined(FaultDomain))
             {
                 if (FaultDomain != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("faultDomain");
                 }
             }
-            if (UpdateDomain.HasValue)
+            if (Optional.IsDefined(UpdateDomain))
             {
                 if (UpdateDomain != null)
                 {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);

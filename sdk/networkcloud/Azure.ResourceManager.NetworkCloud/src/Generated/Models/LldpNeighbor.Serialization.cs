@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PortDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(PortDescription))
             {
                 writer.WritePropertyName("portDescription"u8);
                 writer.WriteStringValue(PortDescription);
             }
-            if (options.Format != "W" && PortName != null)
+            if (options.Format != "W" && Optional.IsDefined(PortName))
             {
                 writer.WritePropertyName("portName"u8);
                 writer.WriteStringValue(PortName);
             }
-            if (options.Format != "W" && SystemDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemDescription))
             {
                 writer.WritePropertyName("systemDescription"u8);
                 writer.WriteStringValue(SystemDescription);
             }
-            if (options.Format != "W" && SystemName != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemName))
             {
                 writer.WritePropertyName("systemName"u8);
                 writer.WriteStringValue(SystemName);

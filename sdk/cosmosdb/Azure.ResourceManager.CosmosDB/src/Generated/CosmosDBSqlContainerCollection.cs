@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBSqlContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CosmosDBSqlContainerResource> CreateOrUpdate(WaitUntil waitUntil, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBSqlContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<CosmosDBSqlContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBSqlContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBSqlContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _cosmosDBSqlContainerSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerCollection.GetIfExists");
             scope.Start();

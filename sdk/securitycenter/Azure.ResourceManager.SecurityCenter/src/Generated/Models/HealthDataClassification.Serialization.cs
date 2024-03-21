@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Component != null)
+            if (Optional.IsDefined(Component))
             {
                 writer.WritePropertyName("component"u8);
                 writer.WriteStringValue(Component);
             }
-            if (Scenario != null)
+            if (Optional.IsDefined(Scenario))
             {
                 writer.WritePropertyName("scenario"u8);
                 writer.WriteStringValue(Scenario);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);

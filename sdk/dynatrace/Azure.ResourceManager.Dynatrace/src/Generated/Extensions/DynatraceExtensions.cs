@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Dynatrace.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> Returns a <see cref="DynatraceMonitorResource"/> object. </returns>
         public static DynatraceMonitorResource GetDynatraceMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDynatraceArmClient(client).GetDynatraceMonitorResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> Returns a <see cref="DynatraceTagRuleResource"/> object. </returns>
         public static DynatraceTagRuleResource GetDynatraceTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDynatraceArmClient(client).GetDynatraceTagRuleResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> Returns a <see cref="DynatraceSingleSignOnResource"/> object. </returns>
         public static DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDynatraceArmClient(client).GetDynatraceSingleSignOnResource(id);
         }
@@ -112,10 +101,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An object representing collection of DynatraceMonitorResources and their operations over a DynatraceMonitorResource. </returns>
         public static DynatraceMonitorCollection GetDynatraceMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetDynatraceMonitors();
         }
@@ -153,10 +139,7 @@ namespace Azure.ResourceManager.Dynatrace
         [ForwardsClientCalls]
         public static async Task<Response<DynatraceMonitorResource>> GetDynatraceMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetDynatraceMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
@@ -194,10 +177,7 @@ namespace Azure.ResourceManager.Dynatrace
         [ForwardsClientCalls]
         public static Response<DynatraceMonitorResource> GetDynatraceMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDynatraceResourceGroupResource(resourceGroupResource).GetDynatraceMonitor(monitorName, cancellationToken);
         }
@@ -233,10 +213,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An async collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DynatraceMonitorResource> GetDynatraceMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDynatraceSubscriptionResource(subscriptionResource).GetDynatraceMonitorsAsync(cancellationToken);
         }
@@ -272,10 +249,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> A collection of <see cref="DynatraceMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DynatraceMonitorResource> GetDynatraceMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDynatraceSubscriptionResource(subscriptionResource).GetDynatraceMonitors(cancellationToken);
         }

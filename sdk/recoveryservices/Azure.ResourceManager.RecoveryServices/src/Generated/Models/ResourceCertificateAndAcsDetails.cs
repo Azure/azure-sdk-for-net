@@ -20,18 +20,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="globalAcsNamespace"/>, <paramref name="globalAcsHostName"/> or <paramref name="globalAcsRPRealm"/> is null. </exception>
         internal ResourceCertificateAndAcsDetails(string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm)
         {
-            if (globalAcsNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(globalAcsNamespace));
-            }
-            if (globalAcsHostName == null)
-            {
-                throw new ArgumentNullException(nameof(globalAcsHostName));
-            }
-            if (globalAcsRPRealm == null)
-            {
-                throw new ArgumentNullException(nameof(globalAcsRPRealm));
-            }
+            Argument.AssertNotNull(globalAcsNamespace, nameof(globalAcsNamespace));
+            Argument.AssertNotNull(globalAcsHostName, nameof(globalAcsHostName));
+            Argument.AssertNotNull(globalAcsRPRealm, nameof(globalAcsRPRealm));
 
             GlobalAcsNamespace = globalAcsNamespace;
             GlobalAcsHostName = globalAcsHostName;

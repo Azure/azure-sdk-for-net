@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -66,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            AmqpMessageBody body = null;
+            AmqpMessageBody body;
             if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
                 body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
@@ -136,7 +137,9 @@ namespace Azure.Messaging.ServiceBus
             // copy application properties except for broker set ones
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.ApplicationProperties)
             {
-                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader)
+                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader
+                    || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader
+                    || kvp.Key == MessagingClientDiagnostics.DiagnosticIdAttribute)
                 {
                     continue;
                 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceDetails"u8);
             writer.WriteObjectValue(ResourceDetails);
-            if (!(PendingFields is ChangeTrackingList<PendingField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PendingFields))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();

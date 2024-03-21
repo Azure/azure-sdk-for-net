@@ -104,17 +104,19 @@ public class PipelineMessage : IDisposable
 
     /// <summary>
     /// Apply the options from the provided <see cref="RequestOptions"/> to
-    /// this <see cref="PipelineMessage"/> instance. This method is intended to
-    /// be called after the creation of the <see cref="PipelineMessage"/> and
-    /// its <see cref="Request"/> is complete, and prior to the call to
-    /// <see cref="ClientPipeline.Send(PipelineMessage)"/>.
+    /// this <see cref="PipelineMessage"/> instance.
     /// </summary>
     /// <param name="options">The <see cref="RequestOptions"/> to apply to this
     /// <see cref="PipelineMessage"/> instance.</param>
+    /// <remarks> This method is intended to be called after the creation of
+    /// the <see cref="PipelineMessage"/> and its <see cref="Request"/> is
+    /// complete, and prior to the call to
+    /// <see cref="ClientPipeline.Send(PipelineMessage)"/>.
+    /// </remarks>
     public void Apply(RequestOptions options)
     {
         // This design moves the client-author API (options.Apply) off the
-        // client-user type RequestOptions.  Its only purpose is to call through to
+        // client-user type RequestOptions. Its only purpose is to call through to
         // the internal options.Apply method.
         options.Apply(this);
     }
@@ -144,7 +146,7 @@ public class PipelineMessage : IDisposable
     /// <param name="key">The key for the property in the message's property
     /// bag.</param>
     /// <param name="value">The value of the property.</param>
-    public void SetProperty(Type key, object value) =>
+    public void SetProperty(Type key, object? value) =>
         _propertyBag.Set((ulong)key.TypeHandle.Value, value);
 
     #endregion

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (ResourceOwnerUsername != null)
+            if (Optional.IsDefined(ResourceOwnerUsername))
             {
                 writer.WritePropertyName("resourceOwnerUsername"u8);
                 writer.WriteStringValue(ResourceOwnerUsername);
             }
-            if (ResourceOwnerPassword != null)
+            if (Optional.IsDefined(ResourceOwnerPassword))
             {
                 writer.WritePropertyName("resourceOwnerPassword"u8);
                 writer.WriteStringValue(ResourceOwnerPassword);

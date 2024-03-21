@@ -26,97 +26,97 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ExportId != null)
+            if (options.Format != "W" && Optional.IsDefined(ExportId))
             {
                 writer.WritePropertyName("ExportId"u8);
                 writer.WriteStringValue(ExportId);
             }
-            if (options.Format != "W" && InstrumentationKey != null)
+            if (options.Format != "W" && Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("InstrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (RecordTypes != null)
+            if (Optional.IsDefined(RecordTypes))
             {
                 writer.WritePropertyName("RecordTypes"u8);
                 writer.WriteStringValue(RecordTypes);
             }
-            if (options.Format != "W" && ApplicationName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("ApplicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("SubscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("ResourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && DestinationStorageSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(DestinationStorageSubscriptionId))
             {
                 writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
                 writer.WriteStringValue(DestinationStorageSubscriptionId);
             }
-            if (options.Format != "W" && DestinationStorageLocationId != null)
+            if (options.Format != "W" && Optional.IsDefined(DestinationStorageLocationId))
             {
                 writer.WritePropertyName("DestinationStorageLocationId"u8);
                 writer.WriteStringValue(DestinationStorageLocationId);
             }
-            if (options.Format != "W" && DestinationAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(DestinationAccountId))
             {
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);
             }
-            if (options.Format != "W" && DestinationType != null)
+            if (options.Format != "W" && Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("DestinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (options.Format != "W" && IsUserEnabled != null)
+            if (options.Format != "W" && Optional.IsDefined(IsUserEnabled))
             {
                 writer.WritePropertyName("IsUserEnabled"u8);
                 writer.WriteStringValue(IsUserEnabled);
             }
-            if (options.Format != "W" && LastUserUpdate != null)
+            if (options.Format != "W" && Optional.IsDefined(LastUserUpdate))
             {
                 writer.WritePropertyName("LastUserUpdate"u8);
                 writer.WriteStringValue(LastUserUpdate);
             }
-            if (NotificationQueueEnabled != null)
+            if (Optional.IsDefined(NotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
                 writer.WriteStringValue(NotificationQueueEnabled);
             }
-            if (options.Format != "W" && ExportStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ExportStatus))
             {
                 writer.WritePropertyName("ExportStatus"u8);
                 writer.WriteStringValue(ExportStatus);
             }
-            if (options.Format != "W" && LastSuccessTime != null)
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessTime))
             {
                 writer.WritePropertyName("LastSuccessTime"u8);
                 writer.WriteStringValue(LastSuccessTime);
             }
-            if (options.Format != "W" && LastGapTime != null)
+            if (options.Format != "W" && Optional.IsDefined(LastGapTime))
             {
                 writer.WritePropertyName("LastGapTime"u8);
                 writer.WriteStringValue(LastGapTime);
             }
-            if (options.Format != "W" && PermanentErrorReason != null)
+            if (options.Format != "W" && Optional.IsDefined(PermanentErrorReason))
             {
                 writer.WritePropertyName("PermanentErrorReason"u8);
                 writer.WriteStringValue(PermanentErrorReason);
             }
-            if (options.Format != "W" && StorageName != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageName))
             {
                 writer.WritePropertyName("StorageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (options.Format != "W" && ContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("ContainerName"u8);
                 writer.WriteStringValue(ContainerName);

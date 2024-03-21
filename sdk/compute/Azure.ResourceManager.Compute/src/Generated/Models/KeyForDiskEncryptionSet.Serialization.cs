@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (SourceVault != null)
+            if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);

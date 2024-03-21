@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (FailureThreshold.HasValue)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (InitialDelay.HasValue)
+            if (Optional.IsDefined(InitialDelay))
             {
                 if (InitialDelay != null)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("initialDelay");
                 }
             }
-            if (Period.HasValue)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteStringValue(Period.Value, "P");
             }
-            if (SuccessThreshold.HasValue)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (TlsSettings != null)
+            if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (DnsZone != null)
+            if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (PreValidatedCustomDomainResource != null)
+            if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {

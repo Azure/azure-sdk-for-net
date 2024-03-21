@@ -430,7 +430,7 @@
       "IsNullable": false
      },
      "IsRequired": false,
-     "IsReadOnly": false
+     "IsReadOnly": true
     }
    ]
   },
@@ -677,7 +677,7 @@
             "$id": "83",
             "Name": "name",
             "SerializedName": "name",
-            "Description": "Name of the Template value",
+            "Description": "Template binding reference name",
             "Type": {
              "$id": "84",
              "Kind": "Primitive",

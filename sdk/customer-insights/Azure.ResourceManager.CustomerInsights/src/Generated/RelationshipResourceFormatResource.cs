@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RelationshipResourceFormatResource>> UpdateAsync(WaitUntil waitUntil, RelationshipResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatResource.Update");
             scope.Start();
@@ -330,10 +325,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RelationshipResourceFormatResource> Update(WaitUntil waitUntil, RelationshipResourceFormatData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _relationshipResourceFormatRelationshipsClientDiagnostics.CreateScope("RelationshipResourceFormatResource.Update");
             scope.Start();

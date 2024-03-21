@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownWebhook. </summary>
+    /// <summary> Unknown version of Webhook. </summary>
     internal partial class UnknownWebhook : MachineLearningWebhook
     {
         /// <summary> Initializes a new instance of <see cref="UnknownWebhook"/>. </summary>

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fqdn"/> is null. </exception>
         internal WebConnectivityEndpoint(string fqdn)
         {
-            if (fqdn == null)
-            {
-                throw new ArgumentNullException(nameof(fqdn));
-            }
+            Argument.AssertNotNull(fqdn, nameof(fqdn));
 
             Fqdn = fqdn;
         }

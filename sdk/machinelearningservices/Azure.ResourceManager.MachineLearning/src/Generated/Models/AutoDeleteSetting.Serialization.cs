@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Condition.HasValue)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {

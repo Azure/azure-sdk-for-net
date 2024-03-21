@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streetAddress1"u8);
             writer.WriteStringValue(StreetAddress1);
-            if (StreetAddress2 != null)
+            if (Optional.IsDefined(StreetAddress2))
             {
                 writer.WritePropertyName("streetAddress2"u8);
                 writer.WriteStringValue(StreetAddress2);
             }
-            if (StreetAddress3 != null)
+            if (Optional.IsDefined(StreetAddress3))
             {
                 writer.WritePropertyName("streetAddress3"u8);
                 writer.WriteStringValue(StreetAddress3);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (StateOrProvince != null)
+            if (Optional.IsDefined(StateOrProvince))
             {
                 writer.WritePropertyName("stateOrProvince"u8);
                 writer.WriteStringValue(StateOrProvince);
@@ -52,27 +52,27 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("postalCode"u8);
             writer.WriteStringValue(PostalCode);
-            if (ZipExtendedCode != null)
+            if (Optional.IsDefined(ZipExtendedCode))
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
                 writer.WriteStringValue(ZipExtendedCode);
             }
-            if (CompanyName != null)
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (AddressType.HasValue)
+            if (Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
-            if (SkipAddressValidation.HasValue)
+            if (Optional.IsDefined(SkipAddressValidation))
             {
                 writer.WritePropertyName("skipAddressValidation"u8);
                 writer.WriteBooleanValue(SkipAddressValidation.Value);
             }
-            if (TaxIdentificationNumber != null)
+            if (Optional.IsDefined(TaxIdentificationNumber))
             {
                 writer.WritePropertyName("taxIdentificationNumber"u8);
                 writer.WriteStringValue(TaxIdentificationNumber);

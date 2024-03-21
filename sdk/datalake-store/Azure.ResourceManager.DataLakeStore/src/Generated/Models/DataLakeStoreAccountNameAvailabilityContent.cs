@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataLakeStoreAccountNameAvailabilityContent(string name, DataLakeStoreResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;

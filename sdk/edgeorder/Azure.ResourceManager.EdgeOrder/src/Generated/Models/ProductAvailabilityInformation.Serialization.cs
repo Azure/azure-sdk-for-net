@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AvailabilityStage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityStage))
             {
                 writer.WritePropertyName("availabilityStage"u8);
                 writer.WriteStringValue(AvailabilityStage.Value.ToString());
             }
-            if (options.Format != "W" && DisabledReason.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisabledReason))
             {
                 writer.WritePropertyName("disabledReason"u8);
                 writer.WriteStringValue(DisabledReason.Value.ToString());
             }
-            if (options.Format != "W" && DisabledReasonMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DisabledReasonMessage))
             {
                 writer.WritePropertyName("disabledReasonMessage"u8);
                 writer.WriteStringValue(DisabledReasonMessage);

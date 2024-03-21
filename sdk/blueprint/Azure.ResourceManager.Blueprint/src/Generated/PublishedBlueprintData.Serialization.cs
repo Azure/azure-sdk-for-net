@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (TargetScope.HasValue)
+            if (Optional.IsDefined(TargetScope))
             {
                 writer.WritePropertyName("targetScope"u8);
                 writer.WriteStringValue(TargetScope.Value.ToString());
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (!(ResourceGroups is ChangeTrackingDictionary<string, ResourceGroupDefinition> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroups))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartObject();
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Blueprint
                 }
                 writer.WriteEndObject();
             }
-            if (BlueprintName != null)
+            if (Optional.IsDefined(BlueprintName))
             {
                 writer.WritePropertyName("blueprintName"u8);
                 writer.WriteStringValue(BlueprintName);
             }
-            if (ChangeNotes != null)
+            if (Optional.IsDefined(ChangeNotes))
             {
                 writer.WritePropertyName("changeNotes"u8);
                 writer.WriteStringValue(ChangeNotes);

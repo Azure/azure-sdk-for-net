@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);

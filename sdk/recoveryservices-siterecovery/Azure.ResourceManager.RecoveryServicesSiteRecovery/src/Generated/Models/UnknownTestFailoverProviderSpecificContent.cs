@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownTestFailoverProviderSpecificContent. </summary>
+    /// <summary> Unknown version of TestFailoverProviderSpecificInput. </summary>
     internal partial class UnknownTestFailoverProviderSpecificContent : TestFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTestFailoverProviderSpecificContent"/>. </summary>

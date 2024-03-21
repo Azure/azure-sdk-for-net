@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(ContactRoles is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactRoles))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContactGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactGroups))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ThresholdType.HasValue)
+            if (Optional.IsDefined(ThresholdType))
             {
                 writer.WritePropertyName("thresholdType"u8);
                 writer.WriteStringValue(ThresholdType.Value.ToString());
             }
-            if (Locale.HasValue)
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale.Value.ToString());

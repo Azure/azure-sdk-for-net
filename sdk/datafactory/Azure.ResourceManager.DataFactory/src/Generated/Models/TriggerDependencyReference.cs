@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TriggerDependencyReference(DataFactoryTriggerReference referenceTrigger)
         {
-            if (referenceTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(referenceTrigger));
-            }
+            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
             ReferenceTrigger = referenceTrigger;
             DependencyReferenceType = "TriggerDependencyReference";

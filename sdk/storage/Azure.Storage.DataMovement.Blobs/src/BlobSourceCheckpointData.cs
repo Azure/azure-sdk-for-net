@@ -4,6 +4,7 @@
 using System.IO;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Blobs
 {

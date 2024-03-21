@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ColocationStatus != null)
+            if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
                 writer.WriteObjectValue(ColocationStatus);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

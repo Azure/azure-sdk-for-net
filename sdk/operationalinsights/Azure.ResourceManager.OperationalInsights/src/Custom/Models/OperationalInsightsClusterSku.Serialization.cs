@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            Optional<OperationalInsightsClusterCapacity> capacity = default;
-            Optional<OperationalInsightsClusterSkuName> name = default;
+            OperationalInsightsClusterCapacity? capacity = default;
+            OperationalInsightsClusterSkuName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterSku(Optional.ToNullable(capacity), Optional.ToNullable(name), serializedAdditionalRawData);
+            return new OperationalInsightsClusterSku(capacity, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterSku>.Write(ModelReaderWriterOptions options)

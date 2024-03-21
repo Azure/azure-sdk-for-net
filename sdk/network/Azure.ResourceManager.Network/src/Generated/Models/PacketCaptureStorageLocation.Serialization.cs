@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (StorageId != null)
+            if (Optional.IsDefined(StorageId))
             {
                 writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
             }
-            if (StoragePath != null)
+            if (Optional.IsDefined(StoragePath))
             {
                 writer.WritePropertyName("storagePath"u8);
                 writer.WriteStringValue(StoragePath);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);

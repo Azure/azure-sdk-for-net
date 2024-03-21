@@ -9,11 +9,10 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The UnknownArmDeploymentScript. </summary>
+    /// <summary> Unknown version of ArmDeploymentScript. </summary>
     internal partial class UnknownArmDeploymentScript : ArmDeploymentScriptData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownArmDeploymentScript"/>. </summary>

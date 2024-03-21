@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AgFoodPlatform.Mocking;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Resources;
@@ -54,10 +52,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> Returns a <see cref="ExtensionResource"/> object. </returns>
         public static ExtensionResource GetExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAgFoodPlatformArmClient(client).GetExtensionResource(id);
         }
@@ -76,10 +71,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> Returns a <see cref="FarmBeatsExtensionResource"/> object. </returns>
         public static FarmBeatsExtensionResource GetFarmBeatsExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAgFoodPlatformArmClient(client).GetFarmBeatsExtensionResource(id);
         }
@@ -98,10 +90,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> Returns a <see cref="FarmBeatResource"/> object. </returns>
         public static FarmBeatResource GetFarmBeatResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAgFoodPlatformArmClient(client).GetFarmBeatResource(id);
         }
@@ -120,10 +109,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> Returns a <see cref="AgFoodPlatformPrivateEndpointConnectionResource"/> object. </returns>
         public static AgFoodPlatformPrivateEndpointConnectionResource GetAgFoodPlatformPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAgFoodPlatformArmClient(client).GetAgFoodPlatformPrivateEndpointConnectionResource(id);
         }
@@ -142,10 +128,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> Returns a <see cref="AgFoodPlatformPrivateLinkResource"/> object. </returns>
         public static AgFoodPlatformPrivateLinkResource GetAgFoodPlatformPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAgFoodPlatformArmClient(client).GetAgFoodPlatformPrivateLinkResource(id);
         }
@@ -162,10 +145,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of FarmBeatResources and their operations over a FarmBeatResource. </returns>
         public static FarmBeatCollection GetFarmBeats(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAgFoodPlatformResourceGroupResource(resourceGroupResource).GetFarmBeats();
         }
@@ -203,10 +183,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         [ForwardsClientCalls]
         public static async Task<Response<FarmBeatResource>> GetFarmBeatAsync(this ResourceGroupResource resourceGroupResource, string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableAgFoodPlatformResourceGroupResource(resourceGroupResource).GetFarmBeatAsync(farmBeatsResourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -244,10 +221,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         [ForwardsClientCalls]
         public static Response<FarmBeatResource> GetFarmBeat(this ResourceGroupResource resourceGroupResource, string farmBeatsResourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAgFoodPlatformResourceGroupResource(resourceGroupResource).GetFarmBeat(farmBeatsResourceName, cancellationToken);
         }
@@ -288,10 +262,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(this SubscriptionResource subscriptionResource, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).GetFarmBeatsAsync(maxPageSize, skipToken, cancellationToken);
         }
@@ -332,10 +303,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FarmBeatResource> GetFarmBeats(this SubscriptionResource subscriptionResource, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).GetFarmBeats(maxPageSize, skipToken, cancellationToken);
         }
@@ -367,10 +335,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -402,10 +367,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAgFoodPlatformSubscriptionResource(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
         }
@@ -422,10 +384,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An object representing collection of FarmBeatsExtensionResources and their operations over a FarmBeatsExtensionResource. </returns>
         public static FarmBeatsExtensionCollection GetFarmBeatsExtensions(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAgFoodPlatformTenantResource(tenantResource).GetFarmBeatsExtensions();
         }
@@ -463,10 +422,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         [ForwardsClientCalls]
         public static async Task<Response<FarmBeatsExtensionResource>> GetFarmBeatsExtensionAsync(this TenantResource tenantResource, string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableAgFoodPlatformTenantResource(tenantResource).GetFarmBeatsExtensionAsync(farmBeatsExtensionId, cancellationToken).ConfigureAwait(false);
         }
@@ -504,10 +460,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         [ForwardsClientCalls]
         public static Response<FarmBeatsExtensionResource> GetFarmBeatsExtension(this TenantResource tenantResource, string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableAgFoodPlatformTenantResource(tenantResource).GetFarmBeatsExtension(farmBeatsExtensionId, cancellationToken);
         }

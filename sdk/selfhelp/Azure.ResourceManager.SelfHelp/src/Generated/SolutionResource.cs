@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp
@@ -196,10 +194,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SolutionResource>> UpdateAsync(WaitUntil waitUntil, SolutionResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResource.Update");
             scope.Start();
@@ -245,10 +240,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SolutionResource> Update(WaitUntil waitUntil, SolutionResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResource.Update");
             scope.Start();

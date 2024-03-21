@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
-            if (MinimumNodeCount.HasValue)
+            if (Optional.IsDefined(MinimumNodeCount))
             {
                 writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumNodeCount.Value);
             }
-            if (MaximumNodeCount.HasValue)
+            if (Optional.IsDefined(MaximumNodeCount))
             {
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumNodeCount.Value);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (LocalizedValue != null)
+            if (Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
             }
-            if (!(SkuInstances is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SkuInstances))
             {
                 writer.WritePropertyName("skuInstances"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

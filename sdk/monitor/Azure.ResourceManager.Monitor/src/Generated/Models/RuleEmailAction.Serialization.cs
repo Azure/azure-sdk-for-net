@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (SendToServiceOwners.HasValue)
+            if (Optional.IsDefined(SendToServiceOwners))
             {
                 writer.WritePropertyName("sendToServiceOwners"u8);
                 writer.WriteBooleanValue(SendToServiceOwners.Value);
             }
-            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();

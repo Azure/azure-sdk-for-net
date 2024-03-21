@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AllowNewSession.HasValue)
+            if (Optional.IsDefined(AllowNewSession))
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (AssignedUser != null)
+            if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);

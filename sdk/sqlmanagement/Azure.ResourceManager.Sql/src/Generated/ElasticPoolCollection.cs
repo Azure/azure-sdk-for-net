@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ElasticPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string elasticPoolName, ElasticPoolData data, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ElasticPoolResource> CreateOrUpdate(WaitUntil waitUntil, string elasticPoolName, ElasticPoolData data, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual async Task<Response<ElasticPoolResource>> GetAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual Response<ElasticPoolResource> Get(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<ElasticPoolResource>> GetIfExistsAsync(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="elasticPoolName"/> is null. </exception>
         public virtual NullableResponse<ElasticPoolResource> GetIfExists(string elasticPoolName, CancellationToken cancellationToken = default)
         {
-            if (elasticPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(elasticPoolName));
-            }
-            if (elasticPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(elasticPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(elasticPoolName, nameof(elasticPoolName));
 
             using var scope = _elasticPoolClientDiagnostics.CreateScope("ElasticPoolCollection.GetIfExists");
             scope.Start();

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,39 +59,39 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (options.Format != "W" && CloudName != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudName))
             {
                 writer.WritePropertyName("cloudName"u8);
                 writer.WriteStringValue(CloudName);
             }
-            if (options.Format != "W" && CloudCapacity != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
                 writer.WriteObjectValue(CloudCapacity);
             }
-            if (options.Format != "W" && !(StorageQoSPolicies is ChangeTrackingList<StorageQoSPolicy> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
             {
                 writer.WritePropertyName("storageQoSPolicies"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

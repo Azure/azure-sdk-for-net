@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobRunResourceIdValue != null)
+            if (options.Format != "W" && Optional.IsDefined(JobRunResourceIdValue))
             {
                 writer.WritePropertyName("jobRunResourceId"u8);
                 writer.WriteStringValue(JobRunResourceIdValue);

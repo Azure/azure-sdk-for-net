@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (BlobUri != null)
+            if (Optional.IsDefined(BlobUri))
             {
                 if (BlobUri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobUri");
                 }
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 if (Credential != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("credential");
                 }
             }
-            if (StorageAccountArmId != null)
+            if (Optional.IsDefined(StorageAccountArmId))
             {
                 if (StorageAccountArmId != null)
                 {

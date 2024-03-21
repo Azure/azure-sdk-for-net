@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (SecuredVmOSDiskEncryptionSetId != null)
+            if (Optional.IsDefined(SecuredVmOSDiskEncryptionSetId))
             {
                 writer.WritePropertyName("securedVMOsDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecuredVmOSDiskEncryptionSetId);

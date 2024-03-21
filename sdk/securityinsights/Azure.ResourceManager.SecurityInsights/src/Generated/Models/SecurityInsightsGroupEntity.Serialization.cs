@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && DistinguishedName != null)
+            if (options.Format != "W" && Optional.IsDefined(DistinguishedName))
             {
                 writer.WritePropertyName("distinguishedName"u8);
                 writer.WriteStringValue(DistinguishedName);
             }
-            if (options.Format != "W" && ObjectGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ObjectGuid))
             {
                 writer.WritePropertyName("objectGuid"u8);
                 writer.WriteStringValue(ObjectGuid.Value);
             }
-            if (options.Format != "W" && Sid != null)
+            if (options.Format != "W" && Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);

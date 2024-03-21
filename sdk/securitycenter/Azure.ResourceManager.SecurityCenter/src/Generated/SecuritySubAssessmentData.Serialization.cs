@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && VulnerabilityId != null)
+            if (options.Format != "W" && Optional.IsDefined(VulnerabilityId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(VulnerabilityId);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Remediation != null)
+            if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (options.Format != "W" && Impact != null)
+            if (options.Format != "W" && Optional.IsDefined(Impact))
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && GeneratedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(GeneratedOn))
             {
                 writer.WritePropertyName("timeGenerated"u8);
                 writer.WriteStringValue(GeneratedOn.Value, "O");
             }
-            if (ResourceDetails != null)
+            if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
             }
-            if (AdditionalData != null)
+            if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteObjectValue(AdditionalData);

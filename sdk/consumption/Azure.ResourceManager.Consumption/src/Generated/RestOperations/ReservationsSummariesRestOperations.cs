@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -68,14 +67,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReservationSummariesListResult>> ListByReservationOrderAsync(string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
             using var message = CreateListByReservationOrderRequest(reservationOrderId, grain, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,14 +94,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReservationSummariesListResult> ListByReservationOrder(string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
             using var message = CreateListByReservationOrderRequest(reservationOrderId, grain, filter);
             _pipeline.Send(message, cancellationToken);
@@ -161,22 +146,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReservationSummariesListResult>> ListByReservationOrderAndReservationAsync(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (reservationId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationId));
-            }
-            if (reservationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListByReservationOrderAndReservationRequest(reservationOrderId, reservationId, grain, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -204,22 +175,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReservationSummariesListResult> ListByReservationOrderAndReservation(string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (reservationId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationId));
-            }
-            if (reservationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
-            }
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListByReservationOrderAndReservationRequest(reservationOrderId, reservationId, grain, filter);
             _pipeline.Send(message, cancellationToken);
@@ -287,10 +244,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<ReservationSummariesListResult>> ListAsync(string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListRequest(resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -320,10 +274,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public Response<ReservationSummariesListResult> List(string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListRequest(resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             _pipeline.Send(message, cancellationToken);
@@ -365,18 +316,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReservationSummariesListResult>> ListByReservationOrderNextPageAsync(string nextLink, string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
             using var message = CreateListByReservationOrderNextPageRequest(nextLink, reservationOrderId, grain, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -404,18 +345,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReservationSummariesListResult> ListByReservationOrderNextPage(string nextLink, string reservationOrderId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
             using var message = CreateListByReservationOrderNextPageRequest(nextLink, reservationOrderId, grain, filter);
             _pipeline.Send(message, cancellationToken);
@@ -458,26 +389,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ReservationSummariesListResult>> ListByReservationOrderAndReservationNextPageAsync(string nextLink, string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (reservationId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationId));
-            }
-            if (reservationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, grain, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -506,26 +420,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ReservationSummariesListResult> ListByReservationOrderAndReservationNextPage(string nextLink, string reservationOrderId, string reservationId, ReservationSummaryDataGrain grain, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (reservationOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationOrderId));
-            }
-            if (reservationOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationOrderId));
-            }
-            if (reservationId == null)
-            {
-                throw new ArgumentNullException(nameof(reservationId));
-            }
-            if (reservationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reservationId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
+            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
             using var message = CreateListByReservationOrderAndReservationNextPageRequest(nextLink, reservationOrderId, reservationId, grain, filter);
             _pipeline.Send(message, cancellationToken);
@@ -570,14 +467,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<ReservationSummariesListResult>> ListNextPageAsync(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -608,14 +499,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public Response<ReservationSummariesListResult> ListNextPage(string nextLink, string resourceScope, ReservationSummaryDataGrain grain, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, grain, startDate, endDate, filter, reservationId, reservationOrderId);
             _pipeline.Send(message, cancellationToken);

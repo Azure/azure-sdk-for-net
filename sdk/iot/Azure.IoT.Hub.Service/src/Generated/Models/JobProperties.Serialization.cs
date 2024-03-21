@@ -16,77 +16,77 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (StartTimeUtc.HasValue)
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (EndTimeUtc.HasValue)
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Progress.HasValue)
+            if (Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (InputBlobContainerUri != null)
+            if (Optional.IsDefined(InputBlobContainerUri))
             {
                 writer.WritePropertyName("inputBlobContainerUri"u8);
                 writer.WriteStringValue(InputBlobContainerUri);
             }
-            if (InputBlobName != null)
+            if (Optional.IsDefined(InputBlobName))
             {
                 writer.WritePropertyName("inputBlobName"u8);
                 writer.WriteStringValue(InputBlobName);
             }
-            if (OutputBlobContainerUri != null)
+            if (Optional.IsDefined(OutputBlobContainerUri))
             {
                 writer.WritePropertyName("outputBlobContainerUri"u8);
                 writer.WriteStringValue(OutputBlobContainerUri);
             }
-            if (OutputBlobName != null)
+            if (Optional.IsDefined(OutputBlobName))
             {
                 writer.WritePropertyName("outputBlobName"u8);
                 writer.WriteStringValue(OutputBlobName);
             }
-            if (ExcludeKeysInExport.HasValue)
+            if (Optional.IsDefined(ExcludeKeysInExport))
             {
                 writer.WritePropertyName("excludeKeysInExport"u8);
                 writer.WriteBooleanValue(ExcludeKeysInExport.Value);
             }
-            if (StorageAuthenticationType.HasValue)
+            if (Optional.IsDefined(StorageAuthenticationType))
             {
                 writer.WritePropertyName("storageAuthenticationType"u8);
                 writer.WriteStringValue(StorageAuthenticationType.Value.ToString());
             }
-            if (FailureReason != null)
+            if (Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (IncludeConfigurations.HasValue)
+            if (Optional.IsDefined(IncludeConfigurations))
             {
                 writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
-            if (ConfigurationsBlobName != null)
+            if (Optional.IsDefined(ConfigurationsBlobName))
             {
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);

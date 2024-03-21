@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PlacementPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string placementPolicyName, PlacementPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PlacementPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string placementPolicyName, PlacementPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual async Task<Response<PlacementPolicyResource>> GetAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual Response<PlacementPolicyResource> Get(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<PlacementPolicyResource>> GetIfExistsAsync(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="placementPolicyName"/> is null. </exception>
         public virtual NullableResponse<PlacementPolicyResource> GetIfExists(string placementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (placementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(placementPolicyName));
-            }
-            if (placementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(placementPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(placementPolicyName, nameof(placementPolicyName));
 
             using var scope = _placementPolicyClientDiagnostics.CreateScope("PlacementPolicyCollection.GetIfExists");
             scope.Start();

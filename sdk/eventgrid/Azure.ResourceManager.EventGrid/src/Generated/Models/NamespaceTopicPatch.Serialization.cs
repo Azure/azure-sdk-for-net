@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EventRetentionInDays.HasValue)
+            if (Optional.IsDefined(EventRetentionInDays))
             {
                 writer.WritePropertyName("eventRetentionInDays"u8);
                 writer.WriteNumberValue(EventRetentionInDays.Value);

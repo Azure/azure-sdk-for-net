@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             LiveEventInputProtocol streamingProtocol = default;
-            Optional<LiveEventInputAccessControl> accessControl = default;
-            Optional<TimeSpan> keyFrameIntervalDuration = default;
-            Optional<string> accessToken = default;
-            Optional<IList<LiveEventEndpoint>> endpoints = default;
+            LiveEventInputAccessControl accessControl = default;
+            TimeSpan? keyFrameIntervalDuration = default;
+            string accessToken = default;
+            IList<LiveEventEndpoint> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventInput(streamingProtocol, accessControl.Value, Optional.ToNullable(keyFrameIntervalDuration), accessToken.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new LiveEventInput(streamingProtocol, accessControl, keyFrameIntervalDuration, accessToken, endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(), serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<LiveEventInput>.Write(ModelReaderWriterOptions options)
         {

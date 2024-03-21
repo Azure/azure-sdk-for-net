@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Media.Models;
@@ -80,38 +79,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MediaJobListResult>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, transformName, filter, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,38 +112,10 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MediaJobListResult> List(string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, transformName, filter, orderby);
             _pipeline.Send(message, cancellationToken);
@@ -225,46 +168,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MediaJobData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -295,46 +203,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MediaJobData> Get(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName);
             _pipeline.Send(message, cancellationToken);
@@ -394,50 +267,12 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MediaJobData>> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,50 +302,12 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MediaJobData> Create(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName, data);
             _pipeline.Send(message, cancellationToken);
@@ -563,46 +360,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,46 +389,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName);
             _pipeline.Send(message, cancellationToken);
@@ -720,50 +447,12 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MediaJobData>> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -793,50 +482,12 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MediaJobData> Update(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, MediaJobData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName, data);
             _pipeline.Send(message, cancellationToken);
@@ -890,46 +541,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelJobAsync(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCancelJobRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -953,46 +569,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="transformName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CancelJob(string subscriptionId, string resourceGroupName, string accountName, string transformName, string jobName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var message = CreateCancelJobRequest(subscriptionId, resourceGroupName, accountName, transformName, jobName);
             _pipeline.Send(message, cancellationToken);
@@ -1032,42 +613,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MediaJobListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, transformName, filter, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1098,42 +648,11 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MediaJobListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string transformName, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (transformName == null)
-            {
-                throw new ArgumentNullException(nameof(transformName));
-            }
-            if (transformName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, transformName, filter, orderby);
             _pipeline.Send(message, cancellationToken);

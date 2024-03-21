@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The UnknownPartition. </summary>
+    /// <summary> Unknown version of Partition. </summary>
     internal partial class UnknownPartition : ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPartition"/>. </summary>

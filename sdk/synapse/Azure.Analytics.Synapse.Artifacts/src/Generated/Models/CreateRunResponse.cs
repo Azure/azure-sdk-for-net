@@ -17,10 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         internal CreateRunResponse(string runId)
         {
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
+            Argument.AssertNotNull(runId, nameof(runId));
 
             RunId = runId;
         }

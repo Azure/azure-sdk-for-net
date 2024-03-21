@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Communication.Models
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
                 writer.WriteObjectValue(Domain);
             }
-            if (Spf != null)
+            if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
                 writer.WriteObjectValue(Spf);
             }
-            if (Dkim != null)
+            if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
                 writer.WriteObjectValue(Dkim);
             }
-            if (Dkim2 != null)
+            if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
                 writer.WriteObjectValue(Dkim2);
             }
-            if (Dmarc != null)
+            if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
                 writer.WriteObjectValue(Dmarc);

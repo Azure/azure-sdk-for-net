@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -285,10 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementGatewayHostnameConfigurationResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementGatewayHostnameConfigurationData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationResource.Update");
             scope.Start();
@@ -335,10 +330,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementGatewayHostnameConfigurationResource> Update(WaitUntil waitUntil, ApiManagementGatewayHostnameConfigurationData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementGatewayHostnameConfigurationGatewayHostnameConfigurationClientDiagnostics.CreateScope("ApiManagementGatewayHostnameConfigurationResource.Update");
             scope.Start();

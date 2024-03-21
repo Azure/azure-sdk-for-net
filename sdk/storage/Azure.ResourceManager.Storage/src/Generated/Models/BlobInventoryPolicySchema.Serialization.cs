@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && Destination != null)
+            if (options.Format != "W" && Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);

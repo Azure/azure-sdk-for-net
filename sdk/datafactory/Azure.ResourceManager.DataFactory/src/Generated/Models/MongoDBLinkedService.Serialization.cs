@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,44 +76,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             JsonSerializer.Serialize(writer, Server);
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
             writer.WritePropertyName("databaseName"u8);
             JsonSerializer.Serialize(writer, DatabaseName);
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (AuthSource != null)
+            if (Optional.IsDefined(AuthSource))
             {
                 writer.WritePropertyName("authSource"u8);
                 JsonSerializer.Serialize(writer, AuthSource);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
             }
-            if (EnableSsl != null)
+            if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 JsonSerializer.Serialize(writer, EnableSsl);
             }
-            if (AllowSelfSignedServerCert != null)
+            if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             MongoDBAuthenticationType? authenticationType = default;
             DataFactoryElement<string> databaseName = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> authSource = default;
             DataFactoryElement<int> port = default;
             DataFactoryElement<bool> enableSsl = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authSource"u8))

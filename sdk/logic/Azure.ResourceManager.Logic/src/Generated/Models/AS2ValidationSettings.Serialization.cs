@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CheckCertificateRevocationListOnReceive);
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
-            if (SigningAlgorithm.HasValue)
+            if (Optional.IsDefined(SigningAlgorithm))
             {
                 writer.WritePropertyName("signingAlgorithm"u8);
                 writer.WriteStringValue(SigningAlgorithm.Value.ToString());

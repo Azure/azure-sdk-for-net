@@ -18,12 +18,12 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CertificateThumbprint != null)
+            if (Optional.IsDefined(CertificateThumbprint))
             {
                 writer.WritePropertyName("x-ms-certificate-thumbprint"u8);
                 writer.WriteStringValue(CertificateThumbprint);
             }
-            if (CertificateResolution.HasValue)
+            if (Optional.IsDefined(CertificateResolution))
             {
                 writer.WritePropertyName("x-ms-policycertificates-result"u8);
                 writer.WriteStringValue(CertificateResolution.Value.ToString());

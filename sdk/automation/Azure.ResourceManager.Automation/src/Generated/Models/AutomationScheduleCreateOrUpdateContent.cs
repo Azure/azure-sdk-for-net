@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AutomationScheduleCreateOrUpdateContent(string name, DateTimeOffset startOn, AutomationScheduleFrequency frequency)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             StartOn = startOn;

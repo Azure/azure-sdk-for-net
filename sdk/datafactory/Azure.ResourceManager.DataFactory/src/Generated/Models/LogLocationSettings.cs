@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LogLocationSettings(DataFactoryLinkedServiceReference linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             LinkedServiceName = linkedServiceName;
         }

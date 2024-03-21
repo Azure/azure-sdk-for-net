@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
@@ -615,10 +613,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> UpdateAsync(WaitUntil waitUntil, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Update");
             scope.Start();
@@ -664,10 +659,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryFabricResource> Update(WaitUntil waitUntil, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.Update");
             scope.Start();
@@ -881,10 +873,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> ReassociateGatewayAsync(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.ReassociateGateway");
             scope.Start();
@@ -930,10 +919,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryFabricResource> ReassociateGateway(WaitUntil waitUntil, FailoverProcessServerContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.ReassociateGateway");
             scope.Start();
@@ -1063,10 +1049,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> RenewCertificateAsync(WaitUntil waitUntil, RenewCertificateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.RenewCertificate");
             scope.Start();
@@ -1112,10 +1095,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryFabricResource> RenewCertificate(WaitUntil waitUntil, RenewCertificateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricResource.RenewCertificate");
             scope.Start();

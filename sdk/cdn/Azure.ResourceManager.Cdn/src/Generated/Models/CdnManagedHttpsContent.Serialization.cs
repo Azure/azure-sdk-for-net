@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -27,7 +26,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WriteStartObject();
-            if (DetectedLanguage != null)
+            if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
                 writer.WriteObjectValue(DetectedLanguage);

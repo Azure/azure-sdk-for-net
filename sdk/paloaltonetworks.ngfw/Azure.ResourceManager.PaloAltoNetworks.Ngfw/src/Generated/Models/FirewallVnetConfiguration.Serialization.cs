@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteObjectValue(TrustSubnet);
             writer.WritePropertyName("unTrustSubnet"u8);
             writer.WriteObjectValue(UnTrustSubnet);
-            if (IPOfTrustSubnetForUdr != null)
+            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
                 writer.WriteObjectValue(IPOfTrustSubnetForUdr);

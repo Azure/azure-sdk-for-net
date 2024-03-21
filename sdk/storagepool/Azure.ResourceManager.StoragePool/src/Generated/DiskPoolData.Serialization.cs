@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.StoragePool
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteEndArray();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (!(Disks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            if (!(AdditionalCapabilities is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteStartArray();

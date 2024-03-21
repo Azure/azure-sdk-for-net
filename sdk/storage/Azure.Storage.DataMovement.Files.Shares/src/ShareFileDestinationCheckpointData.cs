@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Text;
 using Azure.Core;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 

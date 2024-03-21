@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MimeType != null)
+            if (options.Format != "W" && Optional.IsDefined(MimeType))
             {
                 writer.WritePropertyName("mimeType"u8);
                 writer.WriteStringValue(MimeType);
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);

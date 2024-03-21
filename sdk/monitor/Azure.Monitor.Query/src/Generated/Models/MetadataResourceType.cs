@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="type"/> is null. </exception>
         internal MetadataResourceType(string id, string type)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(type, nameof(type));
 
             Id = id;
             Type = type;

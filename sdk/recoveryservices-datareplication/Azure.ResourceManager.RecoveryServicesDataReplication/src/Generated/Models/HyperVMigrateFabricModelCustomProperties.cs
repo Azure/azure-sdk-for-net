@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
         public HyperVMigrateFabricModelCustomProperties(ResourceIdentifier hyperVSiteId, ResourceIdentifier migrationSolutionId)
         {
-            if (hyperVSiteId == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVSiteId));
-            }
-            if (migrationSolutionId == null)
-            {
-                throw new ArgumentNullException(nameof(migrationSolutionId));
-            }
+            Argument.AssertNotNull(hyperVSiteId, nameof(hyperVSiteId));
+            Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
 
             HyperVSiteId = hyperVSiteId;
             MigrationSolutionId = migrationSolutionId;

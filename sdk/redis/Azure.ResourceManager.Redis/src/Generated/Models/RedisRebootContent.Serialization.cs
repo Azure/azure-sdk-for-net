@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (RebootType.HasValue)
+            if (Optional.IsDefined(RebootType))
             {
                 writer.WritePropertyName("rebootType"u8);
                 writer.WriteStringValue(RebootType.Value.ToString());
             }
-            if (ShardId.HasValue)
+            if (Optional.IsDefined(ShardId))
             {
                 writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
-            if (!(Ports is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();

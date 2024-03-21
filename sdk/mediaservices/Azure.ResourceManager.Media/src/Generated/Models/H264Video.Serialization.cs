@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Complexity.HasValue)
+            if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (!(Layers is ChangeTrackingList<H264Layer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
@@ -41,34 +41,34 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RateControlMode.HasValue)
+            if (Optional.IsDefined(RateControlMode))
             {
                 writer.WritePropertyName("rateControlMode"u8);
                 writer.WriteStringValue(RateControlMode.Value.ToString());
             }
-            if (UseSceneChangeDetection.HasValue)
+            if (Optional.IsDefined(UseSceneChangeDetection))
             {
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (SyncMode.HasValue)
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);

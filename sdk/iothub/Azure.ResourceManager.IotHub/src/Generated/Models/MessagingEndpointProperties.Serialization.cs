@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (LockDurationAsIso8601.HasValue)
+            if (Optional.IsDefined(LockDurationAsIso8601))
             {
                 writer.WritePropertyName("lockDurationAsIso8601"u8);
                 writer.WriteStringValue(LockDurationAsIso8601.Value, "P");
             }
-            if (TtlAsIso8601.HasValue)
+            if (Optional.IsDefined(TtlAsIso8601))
             {
                 writer.WritePropertyName("ttlAsIso8601"u8);
                 writer.WriteStringValue(TtlAsIso8601.Value, "P");
             }
-            if (MaxDeliveryCount.HasValue)
+            if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);

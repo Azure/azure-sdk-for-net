@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
@@ -90,18 +88,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NestedResourceTypeSecondSkuResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.CreateOrUpdate");
             scope.Start();
@@ -149,18 +137,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NestedResourceTypeSecondSkuResource> CreateOrUpdate(WaitUntil waitUntil, string sku, ResourceTypeSkuData data, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.CreateOrUpdate");
             scope.Start();
@@ -206,14 +184,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual async Task<Response<NestedResourceTypeSecondSkuResource>> GetAsync(string sku, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.Get");
             scope.Start();
@@ -258,14 +229,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual Response<NestedResourceTypeSecondSkuResource> Get(string sku, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.Get");
             scope.Start();
@@ -370,14 +334,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sku, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.Exists");
             scope.Start();
@@ -420,14 +377,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual Response<bool> Exists(string sku, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.Exists");
             scope.Start();
@@ -470,14 +420,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual async Task<NullableResponse<NestedResourceTypeSecondSkuResource>> GetIfExistsAsync(string sku, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.GetIfExists");
             scope.Start();
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public virtual NullableResponse<NestedResourceTypeSecondSkuResource> GetIfExists(string sku, CancellationToken cancellationToken = default)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (sku.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sku));
-            }
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
 
             using var scope = _nestedResourceTypeSecondSkuSkusClientDiagnostics.CreateScope("NestedResourceTypeSecondSkuCollection.GetIfExists");
             scope.Start();

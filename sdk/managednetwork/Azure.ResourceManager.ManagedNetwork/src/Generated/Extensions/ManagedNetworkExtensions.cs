@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetwork.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -47,10 +45,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
         public static ScopeAssignmentCollection GetScopeAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkArmClient(client).GetScopeAssignments(scope);
         }
@@ -89,10 +84,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static async Task<Response<ScopeAssignmentResource>> GetScopeAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableManagedNetworkArmClient(client).GetScopeAssignmentAsync(scope, scopeAssignmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -131,10 +123,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static Response<ScopeAssignmentResource> GetScopeAssignment(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkArmClient(client).GetScopeAssignment(scope, scopeAssignmentName, cancellationToken);
         }
@@ -153,10 +142,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ManagedNetworkResource"/> object. </returns>
         public static ManagedNetworkResource GetManagedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkArmClient(client).GetManagedNetworkResource(id);
         }
@@ -175,10 +161,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ScopeAssignmentResource"/> object. </returns>
         public static ScopeAssignmentResource GetScopeAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkArmClient(client).GetScopeAssignmentResource(id);
         }
@@ -197,10 +180,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ManagedNetworkGroupResource"/> object. </returns>
         public static ManagedNetworkGroupResource GetManagedNetworkGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkArmClient(client).GetManagedNetworkGroupResource(id);
         }
@@ -219,10 +199,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ManagedNetworkPeeringPolicyResource"/> object. </returns>
         public static ManagedNetworkPeeringPolicyResource GetManagedNetworkPeeringPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkArmClient(client).GetManagedNetworkPeeringPolicyResource(id);
         }
@@ -239,10 +216,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
         public static ManagedNetworkCollection GetManagedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetworks();
         }
@@ -280,10 +254,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static async Task<Response<ManagedNetworkResource>> GetManagedNetworkAsync(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetworkAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -321,10 +292,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static Response<ManagedNetworkResource> GetManagedNetwork(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetwork(managedNetworkName, cancellationToken);
         }
@@ -362,10 +330,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An async collection of <see cref="ManagedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkSubscriptionResource(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
         }
@@ -403,10 +368,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> A collection of <see cref="ManagedNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedNetworkResource> GetManagedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkSubscriptionResource(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
         }

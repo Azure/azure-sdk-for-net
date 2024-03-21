@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (StaticRoutesConfig != null)
+            if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
                 writer.WriteObjectValue(StaticRoutesConfig);
             }
-            if (!(StaticRoutes is ChangeTrackingList<StaticRoute> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StaticRoutes))
             {
                 writer.WritePropertyName("staticRoutes"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(BgpConnections is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
             {
                 writer.WritePropertyName("bgpConnections"u8);
                 writer.WriteStartArray();

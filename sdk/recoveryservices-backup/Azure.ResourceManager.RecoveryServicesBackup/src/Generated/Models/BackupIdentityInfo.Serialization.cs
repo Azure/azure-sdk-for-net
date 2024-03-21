@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (IsSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(IsSystemAssignedIdentity))
             {
                 writer.WritePropertyName("isSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(IsSystemAssignedIdentity.Value);
             }
-            if (ManagedIdentityResourceId != null)
+            if (Optional.IsDefined(ManagedIdentityResourceId))
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);

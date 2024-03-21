@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeterGuid))
             {
                 writer.WritePropertyName("meterGuid"u8);
                 writer.WriteStringValue(MeterGuid.Value);
             }
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Multiplier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && ChargingType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChargingType))
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());

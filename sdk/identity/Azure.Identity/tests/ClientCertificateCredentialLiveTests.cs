@@ -95,6 +95,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [Ignore("To be run manually. Unit test coverage exists.")]
         public async Task IncludeX5CClaimHeader()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;

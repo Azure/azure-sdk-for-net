@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FeatureType.HasValue)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType.Value.ToString());
             }
-            if (FeatureName != null)
+            if (Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);

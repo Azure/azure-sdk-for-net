@@ -59,10 +59,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <exception cref="ArgumentNullException"> <paramref name="stages"/> is null. </exception>
         public ContainerServiceFleetUpdateRunStrategy(IEnumerable<ContainerServiceFleetUpdateStage> stages)
         {
-            if (stages == null)
-            {
-                throw new ArgumentNullException(nameof(stages));
-            }
+            Argument.AssertNotNull(stages, nameof(stages));
 
             Stages = stages.ToList();
         }

@@ -15,9 +15,9 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerRankResult DeserializePersonalizerRankResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PersonalizerRankedAction>> ranking = default;
-            Optional<string> eventId = default;
-            Optional<string> rewardActionId = default;
+            IReadOnlyList<PersonalizerRankedAction> ranking = default;
+            string eventId = default;
+            string rewardActionId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ranking"))
@@ -46,7 +46,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerRankResult(Optional.ToList(ranking), eventId.Value, rewardActionId.Value);
+            return new PersonalizerRankResult(ranking ?? new ChangeTrackingList<PersonalizerRankedAction>(), eventId, rewardActionId);
         }
     }
 }

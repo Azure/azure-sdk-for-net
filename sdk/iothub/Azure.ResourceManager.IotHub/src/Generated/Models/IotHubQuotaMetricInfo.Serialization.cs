@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && CurrentValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && MaxValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteNumberValue(MaxValue.Value);

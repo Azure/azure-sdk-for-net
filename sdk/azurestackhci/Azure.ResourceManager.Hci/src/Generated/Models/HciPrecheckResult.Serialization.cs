@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Remediation != null)
+            if (Optional.IsDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceID"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (AdditionalData != null)
+            if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStringValue(AdditionalData);
             }
-            if (HealthCheckSource != null)
+            if (Optional.IsDefined(HealthCheckSource))
             {
                 writer.WritePropertyName("healthCheckSource"u8);
                 writer.WriteStringValue(HealthCheckSource);

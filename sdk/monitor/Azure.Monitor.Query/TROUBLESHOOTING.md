@@ -75,6 +75,8 @@ Azure Monitor Query supports Microsoft Entra authentication. Both `LogsQueryClie
 
 For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
 
+If you get an HTTP error with status code 401 (Unauthorized) ErrorCode: InvalidAuthenticationTokenTenant, confirm your `Audience` parameter is set correctly. If your resource isn't located in the Azure Public Cloud, the `Audience` parameter must be set in the `ClientOptions` parameter while constructing the client. For an example, see [Configure client for Azure sovereign cloud](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Query#configure-client-for-azure-sovereign-cloud).
+
 ## Troubleshooting logs query
 
 ### Troubleshooting insufficient access error for logs query

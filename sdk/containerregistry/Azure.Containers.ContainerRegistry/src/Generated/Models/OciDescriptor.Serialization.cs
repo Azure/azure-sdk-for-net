@@ -17,22 +17,22 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MediaType != null)
+            if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (SizeInBytes.HasValue)
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (!(Urls is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Urls))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RetentionScheduleFormatType.HasValue)
+            if (Optional.IsDefined(RetentionScheduleFormatType))
             {
                 writer.WritePropertyName("retentionScheduleFormatType"u8);
                 writer.WriteStringValue(RetentionScheduleFormatType.Value.ToString());
             }
-            if (!(MonthsOfYear is ChangeTrackingList<BackupMonthOfYear> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MonthsOfYear))
             {
                 writer.WritePropertyName("monthsOfYear"u8);
                 writer.WriteStartArray();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RetentionScheduleDaily != null)
+            if (Optional.IsDefined(RetentionScheduleDaily))
             {
                 writer.WritePropertyName("retentionScheduleDaily"u8);
                 writer.WriteObjectValue(RetentionScheduleDaily);
             }
-            if (RetentionScheduleWeekly != null)
+            if (Optional.IsDefined(RetentionScheduleWeekly))
             {
                 writer.WritePropertyName("retentionScheduleWeekly"u8);
                 writer.WriteObjectValue(RetentionScheduleWeekly);
             }
-            if (!(RetentionTimes is ChangeTrackingList<DateTimeOffset> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RetentionTimes))
             {
                 writer.WritePropertyName("retentionTimes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RetentionDuration != null)
+            if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);

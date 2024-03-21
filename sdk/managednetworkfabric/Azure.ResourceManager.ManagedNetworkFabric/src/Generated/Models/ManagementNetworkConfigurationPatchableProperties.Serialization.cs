@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (InfrastructureVpnConfiguration != null)
+            if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureVpnConfiguration);
             }
-            if (WorkloadVpnConfiguration != null)
+            if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
                 writer.WriteObjectValue(WorkloadVpnConfiguration);

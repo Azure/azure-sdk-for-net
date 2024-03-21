@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Pem != null)
+            if (Optional.IsDefined(Pem))
             {
                 writer.WritePropertyName("pem"u8);
                 writer.WriteStringValue(Pem);

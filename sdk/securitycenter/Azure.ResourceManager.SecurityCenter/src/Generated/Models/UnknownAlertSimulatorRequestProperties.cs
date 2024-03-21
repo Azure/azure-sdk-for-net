@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownAlertSimulatorRequestProperties. </summary>
+    /// <summary> Unknown version of AlertSimulatorRequestProperties. </summary>
     internal partial class UnknownAlertSimulatorRequestProperties : SecurityAlertSimulatorRequestProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAlertSimulatorRequestProperties"/>. </summary>

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (ClientRequestId != null)
+            if (Optional.IsDefined(ClientRequestId))
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (ClientIPAddress != null)
+            if (Optional.IsDefined(ClientIPAddress))
             {
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIPAddress.ToString());
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (InstalledOn.HasValue)
+            if (Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installedDate"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(Prerequisites is ChangeTrackingList<UpdatePrerequisite> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Prerequisites))
             {
                 writer.WritePropertyName("prerequisites"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (!(ComponentVersions is ChangeTrackingList<HciPackageVersionInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ComponentVersions))
             {
                 writer.WritePropertyName("componentVersions"u8);
                 writer.WriteStartArray();
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (RebootRequired.HasValue)
+            if (Optional.IsDefined(RebootRequired))
             {
                 writer.WritePropertyName("rebootRequired"u8);
                 writer.WriteStringValue(RebootRequired.Value.ToString());
             }
-            if (HealthState.HasValue)
+            if (Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (!(HealthCheckResult is ChangeTrackingList<HciPrecheckResult> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthCheckResult))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
@@ -115,64 +115,64 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (HealthCheckOn.HasValue)
+            if (Optional.IsDefined(HealthCheckOn))
             {
                 writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
-            if (PackagePath != null)
+            if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
                 writer.WriteStringValue(PackagePath);
             }
-            if (PackageSizeInMb.HasValue)
+            if (Optional.IsDefined(PackageSizeInMb))
             {
                 writer.WritePropertyName("packageSizeInMb"u8);
                 writer.WriteNumberValue(PackageSizeInMb.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (ReleaseLink != null)
+            if (Optional.IsDefined(ReleaseLink))
             {
                 writer.WritePropertyName("releaseLink"u8);
                 writer.WriteStringValue(ReleaseLink);
             }
-            if (AvailabilityType.HasValue)
+            if (Optional.IsDefined(AvailabilityType))
             {
                 writer.WritePropertyName("availabilityType"u8);
                 writer.WriteStringValue(AvailabilityType.Value.ToString());
             }
-            if (PackageType != null)
+            if (Optional.IsDefined(PackageType))
             {
                 writer.WritePropertyName("packageType"u8);
                 writer.WriteStringValue(PackageType);
             }
-            if (AdditionalProperties != null)
+            if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStringValue(AdditionalProperties);
             }
             writer.WritePropertyName("updateStateProperties"u8);
             writer.WriteStartObject();
-            if (ProgressPercentage.HasValue)
+            if (Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (NotifyMessage != null)
+            if (Optional.IsDefined(NotifyMessage))
             {
                 writer.WritePropertyName("notifyMessage"u8);
                 writer.WriteStringValue(NotifyMessage);

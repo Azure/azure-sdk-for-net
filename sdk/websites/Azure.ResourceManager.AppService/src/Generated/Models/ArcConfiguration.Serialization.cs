@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactsStorageType.HasValue)
+            if (Optional.IsDefined(ArtifactsStorageType))
             {
                 writer.WritePropertyName("artifactsStorageType"u8);
                 writer.WriteStringValue(ArtifactsStorageType.Value.ToSerialString());
             }
-            if (ArtifactStorageClassName != null)
+            if (Optional.IsDefined(ArtifactStorageClassName))
             {
                 writer.WritePropertyName("artifactStorageClassName"u8);
                 writer.WriteStringValue(ArtifactStorageClassName);
             }
-            if (ArtifactStorageMountPath != null)
+            if (Optional.IsDefined(ArtifactStorageMountPath))
             {
                 writer.WritePropertyName("artifactStorageMountPath"u8);
                 writer.WriteStringValue(ArtifactStorageMountPath);
             }
-            if (ArtifactStorageNodeName != null)
+            if (Optional.IsDefined(ArtifactStorageNodeName))
             {
                 writer.WritePropertyName("artifactStorageNodeName"u8);
                 writer.WriteStringValue(ArtifactStorageNodeName);
             }
-            if (ArtifactStorageAccessMode != null)
+            if (Optional.IsDefined(ArtifactStorageAccessMode))
             {
                 writer.WritePropertyName("artifactStorageAccessMode"u8);
                 writer.WriteStringValue(ArtifactStorageAccessMode);
             }
-            if (FrontEndServiceConfiguration != null)
+            if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
                 writer.WriteObjectValue(FrontEndServiceConfiguration);
             }
-            if (KubeConfig != null)
+            if (Optional.IsDefined(KubeConfig))
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);

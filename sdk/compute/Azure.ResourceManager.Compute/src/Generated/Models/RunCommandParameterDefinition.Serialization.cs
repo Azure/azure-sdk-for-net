@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunCommandParameterDefinitionType);
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Required.HasValue)
+            if (Optional.IsDefined(Required))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(Required.Value);

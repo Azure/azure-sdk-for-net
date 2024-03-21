@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ClusterApplication != null)
+            if (Optional.IsDefined(ClusterApplication))
             {
                 writer.WritePropertyName("clusterApplication"u8);
                 writer.WriteStringValue(ClusterApplication);
             }
-            if (ClientApplication != null)
+            if (Optional.IsDefined(ClientApplication))
             {
                 writer.WritePropertyName("clientApplication"u8);
                 writer.WriteStringValue(ClientApplication);

@@ -21,10 +21,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> is null. </exception>
         public VmPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType)
         {
-            if (vmMembers == null)
-            {
-                throw new ArgumentNullException(nameof(vmMembers));
-            }
+            Argument.AssertNotNull(vmMembers, nameof(vmMembers));
 
             VmMembers = vmMembers.ToList();
             AffinityType = affinityType;

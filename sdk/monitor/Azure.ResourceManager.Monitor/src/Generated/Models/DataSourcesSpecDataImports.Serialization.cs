@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (EventHub != null)
+            if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
                 writer.WriteObjectValue(EventHub);

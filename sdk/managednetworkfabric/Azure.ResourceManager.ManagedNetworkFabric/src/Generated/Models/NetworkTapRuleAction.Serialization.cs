@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (TapRuleActionType.HasValue)
+            if (Optional.IsDefined(TapRuleActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TapRuleActionType.Value.ToString());
             }
-            if (Truncate != null)
+            if (Optional.IsDefined(Truncate))
             {
                 writer.WritePropertyName("truncate"u8);
                 writer.WriteStringValue(Truncate);
             }
-            if (IsTimestampEnabled.HasValue)
+            if (Optional.IsDefined(IsTimestampEnabled))
             {
                 writer.WritePropertyName("isTimestampEnabled"u8);
                 writer.WriteStringValue(IsTimestampEnabled.Value.ToString());
             }
-            if (DestinationId != null)
+            if (Optional.IsDefined(DestinationId))
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (MatchConfigurationName != null)
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);

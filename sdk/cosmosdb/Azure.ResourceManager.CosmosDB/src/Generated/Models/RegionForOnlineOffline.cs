@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         public RegionForOnlineOffline(string region)
         {
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNull(region, nameof(region));
 
             Region = region;
         }

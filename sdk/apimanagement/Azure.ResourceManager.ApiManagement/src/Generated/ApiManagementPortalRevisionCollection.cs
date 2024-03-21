@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementPortalRevisionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string portalRevisionId, ApiManagementPortalRevisionData data, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementPortalRevisionResource> CreateOrUpdate(WaitUntil waitUntil, string portalRevisionId, ApiManagementPortalRevisionData data, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementPortalRevisionResource>> GetAsync(string portalRevisionId, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
         public virtual Response<ApiManagementPortalRevisionResource> Get(string portalRevisionId, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.Get");
             scope.Start();
@@ -384,14 +348,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string portalRevisionId, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.Exists");
             scope.Start();
@@ -434,14 +391,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
         public virtual Response<bool> Exists(string portalRevisionId, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.Exists");
             scope.Start();
@@ -484,14 +434,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementPortalRevisionResource>> GetIfExistsAsync(string portalRevisionId, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.GetIfExists");
             scope.Start();
@@ -536,14 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="portalRevisionId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementPortalRevisionResource> GetIfExists(string portalRevisionId, CancellationToken cancellationToken = default)
         {
-            if (portalRevisionId == null)
-            {
-                throw new ArgumentNullException(nameof(portalRevisionId));
-            }
-            if (portalRevisionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(portalRevisionId));
-            }
+            Argument.AssertNotNullOrEmpty(portalRevisionId, nameof(portalRevisionId));
 
             using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.GetIfExists");
             scope.Start();

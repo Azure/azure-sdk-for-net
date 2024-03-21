@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Server != null)
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (PasswordSecretRef != null)
+            if (Optional.IsDefined(PasswordSecretRef))
             {
                 writer.WritePropertyName("passwordSecretRef"u8);
                 writer.WriteStringValue(PasswordSecretRef);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);

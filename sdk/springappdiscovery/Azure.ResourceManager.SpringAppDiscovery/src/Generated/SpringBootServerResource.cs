@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
 
 namespace Azure.ResourceManager.SpringAppDiscovery
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SpringBootServerResource>> UpdateAsync(WaitUntil waitUntil, SpringBootServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SpringBootServerResource> Update(WaitUntil waitUntil, SpringBootServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.Update");
             scope.Start();
@@ -381,14 +373,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SpringBootServerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.AddTag");
             scope.Start();
@@ -449,14 +435,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SpringBootServerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.AddTag");
             scope.Start();
@@ -516,10 +496,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SpringBootServerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.SetTags");
             scope.Start();
@@ -576,10 +553,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SpringBootServerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.SetTags");
             scope.Start();
@@ -636,10 +610,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SpringBootServerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.RemoveTag");
             scope.Start();
@@ -699,10 +670,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SpringBootServerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _springBootServerspringbootserversClientDiagnostics.CreateScope("SpringBootServerResource.RemoveTag");
             scope.Start();

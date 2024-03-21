@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ShareSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string shareSubscriptionName, ShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ShareSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string shareSubscriptionName, ShareSubscriptionData data, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<ShareSubscriptionResource>> GetAsync(string shareSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> is null. </exception>
         public virtual Response<ShareSubscriptionResource> Get(string shareSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.Get");
             scope.Start();
@@ -368,14 +332,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string shareSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> is null. </exception>
         public virtual Response<bool> Exists(string shareSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ShareSubscriptionResource>> GetIfExistsAsync(string shareSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.GetIfExists");
             scope.Start();
@@ -520,14 +463,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionName"/> is null. </exception>
         public virtual NullableResponse<ShareSubscriptionResource> GetIfExists(string shareSubscriptionName, CancellationToken cancellationToken = default)
         {
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.GetIfExists");
             scope.Start();

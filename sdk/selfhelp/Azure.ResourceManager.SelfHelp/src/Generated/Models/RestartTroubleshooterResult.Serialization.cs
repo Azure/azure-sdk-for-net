@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TroubleshooterResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(TroubleshooterResourceName))
             {
                 writer.WritePropertyName("troubleshooterResourceName"u8);
                 writer.WriteStringValue(TroubleshooterResourceName);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ActionType.HasValue)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (IsAutomaticUpdateEnabled.HasValue)
+            if (Optional.IsDefined(IsAutomaticUpdateEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpdates"u8);
                 writer.WriteBooleanValue(IsAutomaticUpdateEnabled.Value);

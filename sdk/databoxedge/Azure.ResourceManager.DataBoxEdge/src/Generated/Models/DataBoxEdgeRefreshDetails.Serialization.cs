@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (InProgressRefreshJobId != null)
+            if (Optional.IsDefined(InProgressRefreshJobId))
             {
                 writer.WritePropertyName("inProgressRefreshJobId"u8);
                 writer.WriteStringValue(InProgressRefreshJobId);
             }
-            if (LastCompletedRefreshJobTimeInUtc.HasValue)
+            if (Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
             {
                 writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC"u8);
                 writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
             }
-            if (ErrorManifestFile != null)
+            if (Optional.IsDefined(ErrorManifestFile))
             {
                 writer.WritePropertyName("errorManifestFile"u8);
                 writer.WriteStringValue(ErrorManifestFile);
             }
-            if (LastJob != null)
+            if (Optional.IsDefined(LastJob))
             {
                 writer.WritePropertyName("lastJob"u8);
                 writer.WriteStringValue(LastJob);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(FileFormats is ChangeTrackingList<ScheduledActionFileFormat> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FileFormats))
             {
                 writer.WritePropertyName("fileFormats"u8);
                 writer.WriteStartArray();

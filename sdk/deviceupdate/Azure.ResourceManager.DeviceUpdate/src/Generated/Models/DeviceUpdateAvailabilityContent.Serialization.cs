@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CheckNameAvailabilityRequestType.HasValue)
+            if (Optional.IsDefined(CheckNameAvailabilityRequestType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CheckNameAvailabilityRequestType.Value);

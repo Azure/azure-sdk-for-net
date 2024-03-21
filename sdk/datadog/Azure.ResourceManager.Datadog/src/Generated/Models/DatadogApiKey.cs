@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public DatadogApiKey(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
         }

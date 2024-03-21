@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (OldestRecoverOn.HasValue)
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (OldestRecoveryPointInVault.HasValue)
+            if (Optional.IsDefined(OldestRecoveryPointInVault))
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
-            if (OldestRecoveryPointInArchive.HasValue)
+            if (Optional.IsDefined(OldestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
-            if (NewestRecoveryPointInArchive.HasValue)
+            if (Optional.IsDefined(NewestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
-            if (RecoveryPointCount.HasValue)
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (PolicyState != null)
+            if (Optional.IsDefined(PolicyState))
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
             }
-            if (RecoveryModel != null)
+            if (Optional.IsDefined(RecoveryModel))
             {
                 writer.WritePropertyName("recoveryModel"u8);
                 writer.WriteStringValue(RecoveryModel);

@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClusterPrincipalId != null)
+            if (Optional.IsDefined(ClusterPrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(ClusterPrincipalId);
             }
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (options.Format != "W" && TenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantName))
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
             }
-            if (options.Format != "W" && PrincipalName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AadObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AadObjectId))
             {
                 writer.WritePropertyName("aadObjectId"u8);
                 writer.WriteStringValue(AadObjectId.Value);

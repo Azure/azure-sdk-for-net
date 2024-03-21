@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vaultUri"/> or <paramref name="keyVaultCertName"/> is null. </exception>
         public AppPlatformKeyVaultCertificateProperties(Uri vaultUri, string keyVaultCertName)
         {
-            if (vaultUri == null)
-            {
-                throw new ArgumentNullException(nameof(vaultUri));
-            }
-            if (keyVaultCertName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultCertName));
-            }
+            Argument.AssertNotNull(vaultUri, nameof(vaultUri));
+            Argument.AssertNotNull(keyVaultCertName, nameof(keyVaultCertName));
 
             VaultUri = vaultUri;
             KeyVaultCertName = keyVaultCertName;

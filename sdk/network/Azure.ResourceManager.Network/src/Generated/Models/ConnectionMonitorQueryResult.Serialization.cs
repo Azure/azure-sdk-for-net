@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (SourceStatus.HasValue)
+            if (Optional.IsDefined(SourceStatus))
             {
                 writer.WritePropertyName("sourceStatus"u8);
                 writer.WriteStringValue(SourceStatus.Value.ToString());
             }
-            if (!(States is ChangeTrackingList<ConnectionStateSnapshot> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(States))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();

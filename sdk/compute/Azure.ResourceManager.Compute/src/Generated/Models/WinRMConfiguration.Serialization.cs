@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Listeners is ChangeTrackingList<WinRMListener> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Listeners))
             {
                 writer.WritePropertyName("listeners"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 if (Name != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("name");
                 }
             }
-            if (SecretInfo != null)
+            if (Optional.IsDefined(SecretInfo))
             {
                 if (SecretInfo != null)
                 {

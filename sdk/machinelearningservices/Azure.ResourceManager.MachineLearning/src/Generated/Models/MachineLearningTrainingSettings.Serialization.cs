@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IsDnnTrainingEnabled.HasValue)
+            if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
                 writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (IsModelExplainabilityEnabled.HasValue)
+            if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
                 writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (IsOnnxCompatibleModelsEnabled.HasValue)
+            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (IsStackEnsembleEnabled.HasValue)
+            if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
                 writer.WritePropertyName("enableStackEnsemble"u8);
                 writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (IsVoteEnsembleEnabled.HasValue)
+            if (Optional.IsDefined(IsVoteEnsembleEnabled))
             {
                 writer.WritePropertyName("enableVoteEnsemble"u8);
                 writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
-            if (EnsembleModelDownloadTimeout.HasValue)
+            if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (StackEnsembleSettings != null)
+            if (Optional.IsDefined(StackEnsembleSettings))
             {
                 if (StackEnsembleSettings != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
-            if (TrainingMode.HasValue)
+            if (Optional.IsDefined(TrainingMode))
             {
                 writer.WritePropertyName("trainingMode"u8);
                 writer.WriteStringValue(TrainingMode.Value.ToString());

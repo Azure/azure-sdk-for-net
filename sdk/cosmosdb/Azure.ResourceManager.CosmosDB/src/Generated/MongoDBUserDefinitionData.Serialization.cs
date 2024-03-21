@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (!(Roles is ChangeTrackingList<MongoDBRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
-            if (Mechanisms != null)
+            if (Optional.IsDefined(Mechanisms))
             {
                 writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecureInputEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureInputEnabled))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(IsSecureInputEnabled.Value);

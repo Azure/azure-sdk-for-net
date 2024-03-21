@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Registration != null)
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (GraphApiVersion != null)
+            if (Optional.IsDefined(GraphApiVersion))
             {
                 writer.WritePropertyName("graphApiVersion"u8);
                 writer.WriteStringValue(GraphApiVersion);
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);

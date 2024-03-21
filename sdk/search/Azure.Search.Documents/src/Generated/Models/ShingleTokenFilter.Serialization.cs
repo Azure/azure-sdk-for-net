@@ -15,32 +15,32 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxShingleSize.HasValue)
+            if (Optional.IsDefined(MaxShingleSize))
             {
                 writer.WritePropertyName("maxShingleSize"u8);
                 writer.WriteNumberValue(MaxShingleSize.Value);
             }
-            if (MinShingleSize.HasValue)
+            if (Optional.IsDefined(MinShingleSize))
             {
                 writer.WritePropertyName("minShingleSize"u8);
                 writer.WriteNumberValue(MinShingleSize.Value);
             }
-            if (OutputUnigrams.HasValue)
+            if (Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
             }
-            if (OutputUnigramsIfNoShingles.HasValue)
+            if (Optional.IsDefined(OutputUnigramsIfNoShingles))
             {
                 writer.WritePropertyName("outputUnigramsIfNoShingles"u8);
                 writer.WriteBooleanValue(OutputUnigramsIfNoShingles.Value);
             }
-            if (TokenSeparator != null)
+            if (Optional.IsDefined(TokenSeparator))
             {
                 writer.WritePropertyName("tokenSeparator"u8);
                 writer.WriteStringValue(TokenSeparator);
             }
-            if (FilterToken != null)
+            if (Optional.IsDefined(FilterToken))
             {
                 writer.WritePropertyName("filterToken"u8);
                 writer.WriteStringValue(FilterToken);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecurityMonitoringEnabled.HasValue)
+            if (Optional.IsDefined(IsSecurityMonitoringEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsSecurityMonitoringEnabled.Value);

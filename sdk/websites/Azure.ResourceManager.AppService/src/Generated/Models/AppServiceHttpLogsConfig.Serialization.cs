@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (FileSystem != null)
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
-            if (AzureBlobStorage != null)
+            if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);

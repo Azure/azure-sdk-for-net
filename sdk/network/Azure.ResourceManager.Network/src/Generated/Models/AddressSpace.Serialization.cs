@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();

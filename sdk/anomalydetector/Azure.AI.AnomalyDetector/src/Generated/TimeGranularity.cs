@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
+    /// <summary> The TimeGranularity. </summary>
     public readonly partial struct TimeGranularity : IEquatable<TimeGranularity>
     {
         private readonly string _value;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (ContentLink != null)
+            if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
                 writer.WriteStringValue(ContentLink);

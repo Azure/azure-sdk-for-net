@@ -28,47 +28,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Proxy != null)
+            if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteObjectValue(Proxy);
             }
-            if (Tls != null)
+            if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());

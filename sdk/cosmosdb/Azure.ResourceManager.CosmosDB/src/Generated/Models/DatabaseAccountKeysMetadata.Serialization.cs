@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
                 writer.WriteObjectValue(PrimaryMasterKey);
             }
-            if (options.Format != "W" && SecondaryMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
                 writer.WriteObjectValue(SecondaryMasterKey);
             }
-            if (options.Format != "W" && PrimaryReadonlyMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
                 writer.WriteObjectValue(PrimaryReadonlyMasterKey);
             }
-            if (options.Format != "W" && SecondaryReadonlyMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
                 writer.WriteObjectValue(SecondaryReadonlyMasterKey);

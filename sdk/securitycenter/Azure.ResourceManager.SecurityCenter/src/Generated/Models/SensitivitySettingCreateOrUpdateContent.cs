@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sensitiveInfoTypesIds"/> is null. </exception>
         public SensitivitySettingCreateOrUpdateContent(IEnumerable<Guid> sensitiveInfoTypesIds)
         {
-            if (sensitiveInfoTypesIds == null)
-            {
-                throw new ArgumentNullException(nameof(sensitiveInfoTypesIds));
-            }
+            Argument.AssertNotNull(sensitiveInfoTypesIds, nameof(sensitiveInfoTypesIds));
 
             SensitiveInfoTypesIds = sensitiveInfoTypesIds.ToList();
         }

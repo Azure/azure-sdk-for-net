@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endDateTime");
                 }
             }
-            if (options.Format != "W" && ExportedRowCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExportedRowCount))
             {
                 if (ExportedRowCount != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (options.Format != "W" && LabelingJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(LabelingJobId))
             {
                 if (LabelingJobId != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("labelingJobId");
                 }
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {

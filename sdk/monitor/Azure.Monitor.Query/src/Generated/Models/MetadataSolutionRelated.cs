@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,10 +19,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
         internal MetadataSolutionRelated(IEnumerable<string> tables)
         {
-            if (tables == null)
-            {
-                throw new ArgumentNullException(nameof(tables));
-            }
+            Argument.AssertNotNull(tables, nameof(tables));
 
             Tables = tables.ToList();
             Functions = new ChangeTrackingList<string>();

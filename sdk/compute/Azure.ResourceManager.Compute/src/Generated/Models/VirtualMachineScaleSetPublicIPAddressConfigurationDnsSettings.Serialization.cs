@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domainNameLabel"u8);
             writer.WriteStringValue(DomainNameLabel);
-            if (DomainNameLabelScope.HasValue)
+            if (Optional.IsDefined(DomainNameLabelScope))
             {
                 writer.WritePropertyName("domainNameLabelScope"u8);
                 writer.WriteStringValue(DomainNameLabelScope.Value.ToString());

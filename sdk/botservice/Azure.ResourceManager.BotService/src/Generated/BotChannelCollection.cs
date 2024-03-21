@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BotChannelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.BotService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BotChannelResource> CreateOrUpdate(WaitUntil waitUntil, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.CreateOrUpdate");
             scope.Start();

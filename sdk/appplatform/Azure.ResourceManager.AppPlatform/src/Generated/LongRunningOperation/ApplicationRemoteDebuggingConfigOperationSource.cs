@@ -8,7 +8,6 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 

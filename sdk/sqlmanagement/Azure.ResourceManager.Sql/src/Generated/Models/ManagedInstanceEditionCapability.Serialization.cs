@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(SupportedFamilies is ChangeTrackingList<ManagedInstanceFamilyCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
             {
                 writer.WritePropertyName("supportedFamilies"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<StorageCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
                 writer.WritePropertyName("supportedStorageCapabilities"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsZoneRedundant.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

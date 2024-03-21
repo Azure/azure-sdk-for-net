@@ -19,14 +19,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
         public BuildDocumentClassifierRequest(string classifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
         {
-            if (classifierId == null)
-            {
-                throw new ArgumentNullException(nameof(classifierId));
-            }
-            if (docTypes == null)
-            {
-                throw new ArgumentNullException(nameof(docTypes));
-            }
+            Argument.AssertNotNull(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(docTypes, nameof(docTypes));
 
             ClassifierId = classifierId;
             DocTypes = docTypes;

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedServerDnsAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsAliasName, ManagedServerDnsAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ManagedServerDnsAliasResource> CreateOrUpdate(WaitUntil waitUntil, string dnsAliasName, ManagedServerDnsAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual async Task<Response<ManagedServerDnsAliasResource>> GetAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual Response<ManagedServerDnsAliasResource> Get(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual Response<bool> Exists(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedServerDnsAliasResource>> GetIfExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
         public virtual NullableResponse<ManagedServerDnsAliasResource> GetIfExists(string dnsAliasName, CancellationToken cancellationToken = default)
         {
-            if (dnsAliasName == null)
-            {
-                throw new ArgumentNullException(nameof(dnsAliasName));
-            }
-            if (dnsAliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dnsAliasName));
-            }
+            Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasCollection.GetIfExists");
             scope.Start();

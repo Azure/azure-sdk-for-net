@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeploymentExtensionSpec(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

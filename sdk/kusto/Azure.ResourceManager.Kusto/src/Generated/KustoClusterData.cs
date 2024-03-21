@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
@@ -58,10 +57,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public KustoClusterData(AzureLocation location, KustoSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();

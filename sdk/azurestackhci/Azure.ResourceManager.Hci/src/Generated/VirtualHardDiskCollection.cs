@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualHardDiskResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualHardDiskName, VirtualHardDiskData data, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualHardDiskResource> CreateOrUpdate(WaitUntil waitUntil, string virtualHardDiskName, VirtualHardDiskData data, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         public virtual async Task<Response<VirtualHardDiskResource>> GetAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         public virtual Response<VirtualHardDiskResource> Get(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualHardDiskResource>> GetIfExistsAsync(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHardDiskName"/> is null. </exception>
         public virtual NullableResponse<VirtualHardDiskResource> GetIfExists(string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (virtualHardDiskName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualHardDiskName));
-            }
-            if (virtualHardDiskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHardDiskName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualHardDiskName, nameof(virtualHardDiskName));
 
             using var scope = _virtualHardDiskClientDiagnostics.CreateScope("VirtualHardDiskCollection.GetIfExists");
             scope.Start();

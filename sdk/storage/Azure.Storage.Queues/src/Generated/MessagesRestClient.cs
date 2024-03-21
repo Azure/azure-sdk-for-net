@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues.Models;

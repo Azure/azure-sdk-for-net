@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRoutePortResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expressRoutePortName, ExpressRoutePortData data, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRoutePortResource> CreateOrUpdate(WaitUntil waitUntil, string expressRoutePortName, ExpressRoutePortData data, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual async Task<Response<ExpressRoutePortResource>> GetAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<ExpressRoutePortResource> Get(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual Response<bool> Exists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRoutePortResource>> GetIfExistsAsync(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRoutePortName"/> is null. </exception>
         public virtual NullableResponse<ExpressRoutePortResource> GetIfExists(string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var scope = _expressRoutePortClientDiagnostics.CreateScope("ExpressRoutePortCollection.GetIfExists");
             scope.Start();

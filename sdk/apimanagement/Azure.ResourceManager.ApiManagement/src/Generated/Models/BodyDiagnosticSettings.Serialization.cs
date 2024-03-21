@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Bytes.HasValue)
+            if (Optional.IsDefined(Bytes))
             {
                 writer.WritePropertyName("bytes"u8);
                 writer.WriteNumberValue(Bytes.Value);

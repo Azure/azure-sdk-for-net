@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataCollectionEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataCollectionEndpointName, DataCollectionEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataCollectionEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string dataCollectionEndpointName, DataCollectionEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public virtual async Task<Response<DataCollectionEndpointResource>> GetAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public virtual Response<DataCollectionEndpointResource> Get(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataCollectionEndpointResource>> GetIfExistsAsync(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpointName"/> is null. </exception>
         public virtual NullableResponse<DataCollectionEndpointResource> GetIfExists(string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            if (dataCollectionEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(dataCollectionEndpointName));
-            }
-            if (dataCollectionEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataCollectionEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(dataCollectionEndpointName, nameof(dataCollectionEndpointName));
 
             using var scope = _dataCollectionEndpointClientDiagnostics.CreateScope("DataCollectionEndpointCollection.GetIfExists");
             scope.Start();

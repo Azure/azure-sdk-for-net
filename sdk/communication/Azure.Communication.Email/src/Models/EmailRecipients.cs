@@ -28,12 +28,12 @@ namespace Azure.Communication.Email
         {
             if (cc != null)
             {
-                CC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(cc.ToList()));
+                CC = new ChangeTrackingList<EmailAddress>((IList<EmailAddress>)cc.ToList());
             }
 
             if (bcc != null)
             {
-                BCC = new ChangeTrackingList<EmailAddress>(new Optional<IList<EmailAddress>>(bcc.ToList()));
+                BCC = new ChangeTrackingList<EmailAddress>((IList<EmailAddress>)bcc.ToList());
             }
         }
 

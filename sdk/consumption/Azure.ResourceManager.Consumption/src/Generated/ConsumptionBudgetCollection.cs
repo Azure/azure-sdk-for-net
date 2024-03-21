@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Consumption
 {
@@ -72,18 +70,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConsumptionBudgetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.CreateOrUpdate");
             scope.Start();
@@ -131,18 +119,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConsumptionBudgetResource> CreateOrUpdate(WaitUntil waitUntil, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +166,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual async Task<Response<ConsumptionBudgetResource>> GetAsync(string budgetName, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Get");
             scope.Start();
@@ -240,14 +211,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual Response<ConsumptionBudgetResource> Get(string budgetName, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Get");
             scope.Start();
@@ -352,14 +316,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string budgetName, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Exists");
             scope.Start();
@@ -402,14 +359,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual Response<bool> Exists(string budgetName, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.Exists");
             scope.Start();
@@ -452,14 +402,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConsumptionBudgetResource>> GetIfExistsAsync(string budgetName, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
             scope.Start();
@@ -504,14 +447,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="budgetName"/> is null. </exception>
         public virtual NullableResponse<ConsumptionBudgetResource> GetIfExists(string budgetName, CancellationToken cancellationToken = default)
         {
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var scope = _consumptionBudgetBudgetsClientDiagnostics.CreateScope("ConsumptionBudgetCollection.GetIfExists");
             scope.Start();

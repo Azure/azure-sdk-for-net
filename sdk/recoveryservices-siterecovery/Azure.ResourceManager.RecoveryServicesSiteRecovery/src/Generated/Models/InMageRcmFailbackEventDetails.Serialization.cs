@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProtectedItemName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (options.Format != "W" && VmName != null)
+            if (options.Format != "W" && Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (options.Format != "W" && ApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && ServerType != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);
             }
-            if (options.Format != "W" && ComponentDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComponentDisplayName))
             {
                 writer.WritePropertyName("componentDisplayName"u8);
                 writer.WriteStringValue(ComponentDisplayName);

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Resources;
 
@@ -1475,10 +1473,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningWorkspaceResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.Update");
             scope.Start();
@@ -1524,10 +1519,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<MachineLearningWorkspaceResource> Update(WaitUntil waitUntil, MachineLearningWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.Update");
             scope.Start();
@@ -2377,14 +2369,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<MachineLearningWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.AddTag");
             scope.Start();
@@ -2445,14 +2431,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<MachineLearningWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.AddTag");
             scope.Start();
@@ -2512,10 +2492,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<MachineLearningWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.SetTags");
             scope.Start();
@@ -2572,10 +2549,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<MachineLearningWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.SetTags");
             scope.Start();
@@ -2632,10 +2606,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<MachineLearningWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.RemoveTag");
             scope.Start();
@@ -2695,10 +2666,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<MachineLearningWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.RemoveTag");
             scope.Start();

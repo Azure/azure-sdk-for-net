@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(LocalIPAddress);
             writer.WritePropertyName("remoteIPAddress"u8);
             writer.WriteStringValue(RemoteIPAddress);
-            if (TargetNicResourceId != null)
+            if (Optional.IsDefined(TargetNicResourceId))
             {
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);

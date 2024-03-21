@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownScheduleActionBase. </summary>
+    /// <summary> Unknown version of ScheduleActionBase. </summary>
     internal partial class UnknownScheduleActionBase : MachineLearningScheduleAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScheduleActionBase"/>. </summary>

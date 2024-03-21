@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SizeGiB.HasValue)
+            if (Optional.IsDefined(SizeGiB))
             {
                 writer.WritePropertyName("sizeGiB"u8);
                 writer.WriteNumberValue(SizeGiB.Value);
             }
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteObjectValue(ManagedBy);

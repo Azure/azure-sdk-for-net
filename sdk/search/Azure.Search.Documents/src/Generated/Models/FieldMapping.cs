@@ -17,10 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceFieldName"/> is null. </exception>
         public FieldMapping(string sourceFieldName)
         {
-            if (sourceFieldName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceFieldName));
-            }
+            Argument.AssertNotNull(sourceFieldName, nameof(sourceFieldName));
 
             SourceFieldName = sourceFieldName;
         }

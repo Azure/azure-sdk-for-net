@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiskVolumeConfigurations is ChangeTrackingDictionary<string, DiskVolumeConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskVolumeConfigurations))
             {
                 writer.WritePropertyName("diskVolumeConfigurations"u8);
                 writer.WriteStartObject();

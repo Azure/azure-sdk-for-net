@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -82,34 +80,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupProtectionIntentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.CreateOrUpdate");
             scope.Start();
@@ -159,34 +133,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="intentObjectName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupProtectionIntentResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string fabricName, string intentObjectName, BackupProtectionIntentData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.CreateOrUpdate");
             scope.Start();
@@ -235,30 +185,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<Response<BackupProtectionIntentResource>> GetAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Get");
             scope.Start();
@@ -306,30 +235,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual Response<BackupProtectionIntentResource> Get(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Get");
             scope.Start();
@@ -376,30 +284,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Exists");
             scope.Start();
@@ -444,30 +331,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.Exists");
             scope.Start();
@@ -512,30 +378,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupProtectionIntentResource>> GetIfExistsAsync(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.GetIfExists");
             scope.Start();
@@ -582,30 +427,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="fabricName"/> or <paramref name="intentObjectName"/> is null. </exception>
         public virtual NullableResponse<BackupProtectionIntentResource> GetIfExists(string vaultName, string fabricName, string intentObjectName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (intentObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(intentObjectName));
-            }
-            if (intentObjectName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(intentObjectName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNullOrEmpty(intentObjectName, nameof(intentObjectName));
 
             using var scope = _backupProtectionIntentProtectionIntentClientDiagnostics.CreateScope("BackupProtectionIntentCollection.GetIfExists");
             scope.Start();

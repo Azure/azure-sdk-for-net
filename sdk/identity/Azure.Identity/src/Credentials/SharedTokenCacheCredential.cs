@@ -131,6 +131,9 @@ namespace Azure.Identity
                     account,
                     tenantId,
                     requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                    null,
+#endif
                     async,
                     cancellationToken).ConfigureAwait(false);
 

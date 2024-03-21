@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

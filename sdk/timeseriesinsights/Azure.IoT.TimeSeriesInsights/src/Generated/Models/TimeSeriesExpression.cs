@@ -17,10 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public TimeSeriesExpression(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
         }

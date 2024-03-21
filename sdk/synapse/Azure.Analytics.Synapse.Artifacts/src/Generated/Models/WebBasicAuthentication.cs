@@ -23,18 +23,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
         public WebBasicAuthentication(object url, object username, SecretBase password) : base(url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(password, nameof(password));
 
             Username = username;
             Password = password;

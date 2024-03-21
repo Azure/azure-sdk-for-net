@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -52,10 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect)
         {
-            if (quotaId == null)
-            {
-                throw new ArgumentNullException(nameof(quotaId));
-            }
+            Argument.AssertNotNull(quotaId, nameof(quotaId));
 
             QuotaId = quotaId;
             Effect = effect;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(Requests is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Limits is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteStartObject();

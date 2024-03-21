@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (M365 != null)
+            if (Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
                 writer.WriteObjectValue(M365);

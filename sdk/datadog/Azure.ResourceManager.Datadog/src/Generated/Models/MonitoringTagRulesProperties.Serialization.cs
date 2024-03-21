@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (LogRules != null)
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (MetricRules != null)
+            if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);

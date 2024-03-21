@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sphere.Mocking;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereCatalogResource"/> object. </returns>
         public static SphereCatalogResource GetSphereCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereCatalogResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereCertificateResource"/> object. </returns>
         public static SphereCertificateResource GetSphereCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereCertificateResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereImageResource"/> object. </returns>
         public static SphereImageResource GetSphereImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereImageResource(id);
         }
@@ -114,10 +103,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereProductResource"/> object. </returns>
         public static SphereProductResource GetSphereProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereProductResource(id);
         }
@@ -136,10 +122,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeviceGroupResource"/> object. </returns>
         public static SphereDeviceGroupResource GetSphereDeviceGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereDeviceGroupResource(id);
         }
@@ -158,10 +141,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeploymentResource"/> object. </returns>
         public static SphereDeploymentResource GetSphereDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereDeploymentResource(id);
         }
@@ -180,10 +160,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeviceResource"/> object. </returns>
         public static SphereDeviceResource GetSphereDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSphereArmClient(client).GetSphereDeviceResource(id);
         }
@@ -200,10 +177,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
         public static SphereCatalogCollection GetSphereCatalogs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalogs();
         }
@@ -221,7 +195,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,10 +215,7 @@ namespace Azure.ResourceManager.Sphere
         [ForwardsClientCalls]
         public static async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
@@ -262,7 +233,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,10 +253,7 @@ namespace Azure.ResourceManager.Sphere
         [ForwardsClientCalls]
         public static Response<SphereCatalogResource> GetSphereCatalog(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalog(catalogName, cancellationToken);
         }
@@ -303,7 +271,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,10 +289,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An async collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SphereCatalogResource> GetSphereCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSphereSubscriptionResource(subscriptionResource).GetSphereCatalogsAsync(cancellationToken);
         }
@@ -342,7 +307,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,10 +325,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SphereCatalogResource> GetSphereCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSphereSubscriptionResource(subscriptionResource).GetSphereCatalogs(cancellationToken);
         }

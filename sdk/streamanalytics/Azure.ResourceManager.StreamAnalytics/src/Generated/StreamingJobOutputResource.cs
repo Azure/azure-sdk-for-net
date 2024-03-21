@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<StreamingJobOutputResource>> UpdateAsync(StreamingJobOutputData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputResource.Update");
             scope.Start();
@@ -328,10 +323,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<StreamingJobOutputResource> Update(StreamingJobOutputData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputResource.Update");
             scope.Start();

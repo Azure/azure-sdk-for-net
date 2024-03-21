@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -84,14 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetAsync(string taskName, CancellationToken cancellationToken = default)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskName));
-            }
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Get");
             scope.Start();
@@ -136,14 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         public virtual Response<ResourceGroupSecurityTaskResource> Get(string taskName, CancellationToken cancellationToken = default)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskName));
-            }
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Get");
             scope.Start();
@@ -250,14 +234,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string taskName, CancellationToken cancellationToken = default)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskName));
-            }
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Exists");
             scope.Start();
@@ -300,14 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         public virtual Response<bool> Exists(string taskName, CancellationToken cancellationToken = default)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskName));
-            }
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.Exists");
             scope.Start();
@@ -350,14 +320,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceGroupSecurityTaskResource>> GetIfExistsAsync(string taskName, CancellationToken cancellationToken = default)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskName));
-            }
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetIfExists");
             scope.Start();
@@ -402,14 +365,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         public virtual NullableResponse<ResourceGroupSecurityTaskResource> GetIfExists(string taskName, CancellationToken cancellationToken = default)
         {
-            if (taskName == null)
-            {
-                throw new ArgumentNullException(nameof(taskName));
-            }
-            if (taskName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(taskName));
-            }
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
             using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetIfExists");
             scope.Start();

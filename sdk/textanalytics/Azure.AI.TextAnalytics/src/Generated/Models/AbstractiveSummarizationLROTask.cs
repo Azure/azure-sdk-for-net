@@ -17,10 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         public AbstractiveSummarizationLROTask(AbstractiveSummarizationTaskParameters parameters)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             Parameters = parameters;
             Kind = AnalyzeTextLROTaskKind.AbstractiveSummarization;

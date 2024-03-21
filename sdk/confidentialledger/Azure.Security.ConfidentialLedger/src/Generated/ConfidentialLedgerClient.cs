@@ -8,7 +8,6 @@
 using System;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -174,10 +173,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntryAsync(RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Response> CreateLedgerEntryAsync(RequestContent content, string collectionId = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateLedgerEntry");
             scope.Start();
@@ -212,10 +208,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateLedgerEntry(RequestContent,string,RequestContext)']/*" />
         public virtual Response CreateLedgerEntry(RequestContent content, string collectionId = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateLedgerEntry");
             scope.Start();
@@ -251,14 +244,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntryAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetLedgerEntryAsync(string transactionId, string collectionId = null, RequestContext context = null)
         {
-            if (transactionId == null)
-            {
-                throw new ArgumentNullException(nameof(transactionId));
-            }
-            if (transactionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transactionId));
-            }
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
@@ -294,14 +280,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetLedgerEntry(string,string,RequestContext)']/*" />
         public virtual Response GetLedgerEntry(string transactionId, string collectionId = null, RequestContext context = null)
         {
-            if (transactionId == null)
-            {
-                throw new ArgumentNullException(nameof(transactionId));
-            }
-            if (transactionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transactionId));
-            }
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetLedgerEntry");
             scope.Start();
@@ -336,14 +315,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceiptAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetReceiptAsync(string transactionId, RequestContext context = null)
         {
-            if (transactionId == null)
-            {
-                throw new ArgumentNullException(nameof(transactionId));
-            }
-            if (transactionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transactionId));
-            }
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
@@ -378,14 +350,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetReceipt(string,RequestContext)']/*" />
         public virtual Response GetReceipt(string transactionId, RequestContext context = null)
         {
-            if (transactionId == null)
-            {
-                throw new ArgumentNullException(nameof(transactionId));
-            }
-            if (transactionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transactionId));
-            }
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetReceipt");
             scope.Start();
@@ -420,14 +385,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTransactionStatusAsync(string transactionId, RequestContext context = null)
         {
-            if (transactionId == null)
-            {
-                throw new ArgumentNullException(nameof(transactionId));
-            }
-            if (transactionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transactionId));
-            }
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
@@ -462,14 +420,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetTransactionStatus(string,RequestContext)']/*" />
         public virtual Response GetTransactionStatus(string transactionId, RequestContext context = null)
         {
-            if (transactionId == null)
-            {
-                throw new ArgumentNullException(nameof(transactionId));
-            }
-            if (transactionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transactionId));
-            }
+            Argument.AssertNotNullOrEmpty(transactionId, nameof(transactionId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetTransactionStatus");
             scope.Start();
@@ -565,10 +516,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUserAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteUserAsync(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -602,10 +550,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='DeleteUser(string,RequestContext)']/*" />
         public virtual Response DeleteUser(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.DeleteUser");
             scope.Start();
@@ -639,10 +584,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUserAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetUserAsync(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -676,10 +618,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUser(string,RequestContext)']/*" />
         public virtual Response GetUser(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.GetUser");
             scope.Start();
@@ -714,14 +653,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUserAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateUserAsync(string userId, RequestContent content, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();
@@ -756,14 +689,8 @@ namespace Azure.Security.ConfidentialLedger
         /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='CreateOrUpdateUser(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateUser(string userId, RequestContent content, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfidentialLedgerClient.CreateOrUpdateUser");
             scope.Start();

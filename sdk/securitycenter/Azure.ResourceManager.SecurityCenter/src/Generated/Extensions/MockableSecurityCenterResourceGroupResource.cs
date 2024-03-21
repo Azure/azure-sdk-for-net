@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityCenter;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Mocking
@@ -1042,14 +1039,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         public virtual async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
-            if (discoveredSecuritySolutionName == null)
-            {
-                throw new ArgumentNullException(nameof(discoveredSecuritySolutionName));
-            }
-            if (discoveredSecuritySolutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(discoveredSecuritySolutionName));
-            }
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetDiscoveredSecuritySolution");
             scope.Start();
@@ -1089,14 +1079,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredSecuritySolutionName"/> is null. </exception>
         public virtual Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default)
         {
-            if (discoveredSecuritySolutionName == null)
-            {
-                throw new ArgumentNullException(nameof(discoveredSecuritySolutionName));
-            }
-            if (discoveredSecuritySolutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(discoveredSecuritySolutionName));
-            }
+            Argument.AssertNotNullOrEmpty(discoveredSecuritySolutionName, nameof(discoveredSecuritySolutionName));
 
             using var scope = DiscoveredSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetDiscoveredSecuritySolution");
             scope.Start();
@@ -1136,14 +1119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
         public virtual async Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            if (externalSecuritySolutionsName == null)
-            {
-                throw new ArgumentNullException(nameof(externalSecuritySolutionsName));
-            }
-            if (externalSecuritySolutionsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalSecuritySolutionsName));
-            }
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
 
             using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetExternalSecuritySolution");
             scope.Start();
@@ -1183,14 +1159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
         public virtual Response<ExternalSecuritySolution> GetExternalSecuritySolution(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            if (externalSecuritySolutionsName == null)
-            {
-                throw new ArgumentNullException(nameof(externalSecuritySolutionsName));
-            }
-            if (externalSecuritySolutionsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalSecuritySolutionsName));
-            }
+            Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
 
             using var scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetExternalSecuritySolution");
             scope.Start();
@@ -1290,14 +1259,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
         public virtual async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
-            if (securitySolutionName == null)
-            {
-                throw new ArgumentNullException(nameof(securitySolutionName));
-            }
-            if (securitySolutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securitySolutionName));
-            }
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
 
             using var scope = SecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetSecuritySolution");
             scope.Start();
@@ -1337,14 +1299,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="securitySolutionName"/> is null. </exception>
         public virtual Response<SecuritySolution> GetSecuritySolution(AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default)
         {
-            if (securitySolutionName == null)
-            {
-                throw new ArgumentNullException(nameof(securitySolutionName));
-            }
-            if (securitySolutionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(securitySolutionName));
-            }
+            Argument.AssertNotNullOrEmpty(securitySolutionName, nameof(securitySolutionName));
 
             using var scope = SecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetSecuritySolution");
             scope.Start();
@@ -1384,14 +1339,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
         public virtual async Task<Response<SecurityTopologyResource>> GetTopologyAsync(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
-            if (topologyResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(topologyResourceName));
-            }
-            if (topologyResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topologyResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
             using var scope = TopologyClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetTopology");
             scope.Start();
@@ -1431,14 +1379,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="topologyResourceName"/> is null. </exception>
         public virtual Response<SecurityTopologyResource> GetTopology(AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default)
         {
-            if (topologyResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(topologyResourceName));
-            }
-            if (topologyResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(topologyResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(topologyResourceName, nameof(topologyResourceName));
 
             using var scope = TopologyClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.GetTopology");
             scope.Start();

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {

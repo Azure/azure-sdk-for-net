@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (GitHubAccessToken != null)
+            if (Optional.IsDefined(GitHubAccessToken))
             {
                 writer.WritePropertyName("gitHubAccessToken"u8);
                 writer.WriteStringValue(GitHubAccessToken);

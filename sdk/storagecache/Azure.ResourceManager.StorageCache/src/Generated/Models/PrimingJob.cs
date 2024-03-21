@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobName"/> or <paramref name="primingManifestUri"/> is null. </exception>
         public PrimingJob(string primingJobName, Uri primingManifestUri)
         {
-            if (primingJobName == null)
-            {
-                throw new ArgumentNullException(nameof(primingJobName));
-            }
-            if (primingManifestUri == null)
-            {
-                throw new ArgumentNullException(nameof(primingManifestUri));
-            }
+            Argument.AssertNotNull(primingJobName, nameof(primingJobName));
+            Argument.AssertNotNull(primingManifestUri, nameof(primingManifestUri));
 
             PrimingJobName = primingJobName;
             PrimingManifestUri = primingManifestUri;

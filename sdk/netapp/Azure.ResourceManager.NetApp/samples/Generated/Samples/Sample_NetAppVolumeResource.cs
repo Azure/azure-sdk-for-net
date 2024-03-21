@@ -8,11 +8,8 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp.Samples
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VolumesGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_Get.json
             // this example is just showing the usage of "Volumes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VolumesUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_Update.json
             // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,18 +73,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumePatch patch = new NetAppVolumePatch(new AzureLocation("eastus"))
-            {
-                DataProtection = new NetAppVolumePatchDataProtection()
-                {
-                    Backup = new NetAppVolumeBackupConfiguration()
-                    {
-                        IsPolicyEnforced = false,
-                        IsBackupEnabled = true,
-                        BackupVaultId = new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRP/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1"),
-                    },
-                },
-            };
+            NetAppVolumePatch patch = new NetAppVolumePatch(new AzureLocation("placeholder"));
             ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
             NetAppVolumeResource result = lro.Value;
 
@@ -103,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_VolumesDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_Delete.json
             // this example is just showing the usage of "Volumes_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PopulateAvailabilityZone_VolumesPopulateAvailabilityZones()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_PopulateAvailabilityZones.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_PopulateAvailabilityZones.json
             // this example is just showing the usage of "Volumes_PopulateAvailabilityZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Revert_VolumesRevert()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_Revert.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_Revert.json
             // this example is just showing the usage of "Volumes_Revert" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,7 +185,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ResetCifsPassword_VolumesResetCifsPassword()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_ResetCifsPassword.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_ResetCifsPassword.json
             // this example is just showing the usage of "Volumes_ResetCifsPassword" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -223,41 +209,12 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Volumes_SplitClone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task SplitCloneFromParent_VolumesSplitClone()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_SplitClone.json
-            // this example is just showing the usage of "Volumes_SplitCloneFromParent" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "account1";
-            string poolName = "pool1";
-            string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
-
-            // invoke the operation
-            await netAppVolume.SplitCloneFromParentAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
         // Volumes_BreakFileLocks
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task BreakFileLocks_VolumesBreakFileLocks()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_BreakFileLocks.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_BreakFileLocks.json
             // this example is just showing the usage of "Volumes_BreakFileLocks" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -291,7 +248,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetGetGroupIdListForLdapUser_GetGroupIdListForUser()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/GroupIdListForLDAPUser.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/GroupIdListForLDAPUser.json
             // this example is just showing the usage of "Volumes_ListGetGroupIdListForLdapUser" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -322,7 +279,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task BreakReplication_VolumesBreakReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_BreakReplication.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_BreakReplication.json
             // this example is just showing the usage of "Volumes_BreakReplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -355,7 +312,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ReestablishReplication_VolumesReestablishReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_ReestablishReplication.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_ReestablishReplication.json
             // this example is just showing the usage of "Volumes_ReestablishReplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -388,7 +345,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetReplicationStatus_VolumesReplicationStatus()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_ReplicationStatus.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_ReplicationStatus.json
             // this example is just showing the usage of "Volumes_ReplicationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -417,7 +374,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetReplications_VolumesListReplications()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_ListReplications.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_ListReplications.json
             // this example is just showing the usage of "Volumes_ListReplications" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -449,7 +406,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ResyncReplication_VolumesResyncReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_ResyncReplication.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_ResyncReplication.json
             // this example is just showing the usage of "Volumes_ResyncReplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -478,7 +435,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteReplication_VolumesDeleteReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_DeleteReplication.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_DeleteReplication.json
             // this example is just showing the usage of "Volumes_DeleteReplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -507,7 +464,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AuthorizeReplication_VolumesAuthorizeReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_AuthorizeReplication.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_AuthorizeReplication.json
             // this example is just showing the usage of "Volumes_AuthorizeReplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -540,7 +497,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ReInitializeReplication_VolumesReInitializeReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_ReInitializeReplication.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_ReInitializeReplication.json
             // this example is just showing the usage of "Volumes_ReInitializeReplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -569,7 +526,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PoolChange_VolumesAuthorizeReplication()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_PoolChange.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_PoolChange.json
             // this example is just showing the usage of "Volumes_PoolChange" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -599,7 +556,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Relocate_VolumesRelocate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_Relocate.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_Relocate.json
             // this example is just showing the usage of "Volumes_Relocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -629,7 +586,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task FinalizeRelocation_VolumesFinalizeRelocation()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_FinalizeRelocation.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_FinalizeRelocation.json
             // this example is just showing the usage of "Volumes_FinalizeRelocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -658,7 +615,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RevertRelocation_VolumesRevertRelocation()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_RevertRelocation.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_RevertRelocation.json
             // this example is just showing the usage of "Volumes_RevertRelocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -682,41 +639,12 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Volumes_BackupStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetLatestStatusBackup_VolumesBackupStatus()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_LatestBackupStatus.json
-            // this example is just showing the usage of "Backups_GetLatestStatus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "account1";
-            string poolName = "pool1";
-            string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
-
-            // invoke the operation
-            NetAppVolumeBackupStatus result = await netAppVolume.GetLatestStatusBackupAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         // Volumes_RestoreStatus
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRestoreStatus_VolumesRestoreStatus()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/Volumes_RestoreStatus.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-07-01/examples/Volumes_RestoreStatus.json
             // this example is just showing the usage of "Backups_GetVolumeRestoreStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -738,36 +666,6 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppRestoreStatus result = await netAppVolume.GetRestoreStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // BackupsUnderVolume_Migrate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task MigrateBackupsBackupsUnderVolume_BackupsUnderVolumeMigrate()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2023-05-01-preview/examples/BackupsUnderVolume_Migrate.json
-            // this example is just showing the usage of "BackupsUnderVolume_MigrateBackups" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "account1";
-            string poolName = "pool1";
-            string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
-
-            // invoke the operation
-            BackupsMigrationContent content = new BackupsMigrationContent("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1");
-            await netAppVolume.MigrateBackupsBackupsUnderVolumeAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

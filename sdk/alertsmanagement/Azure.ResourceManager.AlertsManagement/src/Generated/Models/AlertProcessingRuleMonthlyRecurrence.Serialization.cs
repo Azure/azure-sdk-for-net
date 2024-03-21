@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");

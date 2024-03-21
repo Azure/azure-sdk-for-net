@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && PrimaryEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoint))
             {
                 writer.WritePropertyName("primaryEndpoint"u8);
                 writer.WriteStringValue(PrimaryEndpoint);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

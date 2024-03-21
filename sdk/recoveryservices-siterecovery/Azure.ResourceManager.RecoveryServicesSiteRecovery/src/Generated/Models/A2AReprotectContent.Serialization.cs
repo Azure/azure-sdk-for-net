@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryContainerId != null)
+            if (Optional.IsDefined(RecoveryContainerId))
             {
                 writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
-            if (!(VmDisks is ChangeTrackingList<A2AVmDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (RecoveryCloudServiceId != null)
+            if (Optional.IsDefined(RecoveryCloudServiceId))
             {
                 writer.WritePropertyName("recoveryCloudServiceId"u8);
                 writer.WriteStringValue(RecoveryCloudServiceId);
             }
-            if (RecoveryAvailabilitySetId != null)
+            if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
                 writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (PurviewResourceId != null)
+            if (Optional.IsDefined(PurviewResourceId))
             {
                 writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);

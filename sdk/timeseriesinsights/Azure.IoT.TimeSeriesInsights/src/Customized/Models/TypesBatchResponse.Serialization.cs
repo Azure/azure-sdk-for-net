@@ -21,9 +21,9 @@ namespace Azure.IoT.TimeSeriesInsights
 
         internal static TypesBatchResponse DeserializeTypesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> @get = default;
-            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> put = default;
-            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            IReadOnlyList<TimeSeriesTypeOperationResult> @get = default;
+            IReadOnlyList<TimeSeriesTypeOperationResult> put = default;
+            IReadOnlyList<TimeSeriesOperationError> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -72,7 +72,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TypesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(delete));
+            return new TypesBatchResponse(@get ?? new ChangeTrackingList<TimeSeriesTypeOperationResult>(), put ?? new ChangeTrackingList<TimeSeriesTypeOperationResult>(), delete ?? new ChangeTrackingList<TimeSeriesOperationError>());
         }
     }
 }

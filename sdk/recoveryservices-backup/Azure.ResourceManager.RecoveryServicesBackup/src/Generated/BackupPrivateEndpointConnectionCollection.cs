@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -81,26 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, BackupPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -149,26 +130,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, string privateEndpointConnectionName, BackupPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -215,22 +179,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<BackupPrivateEndpointConnectionResource>> GetAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -276,22 +226,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<BackupPrivateEndpointConnectionResource> Get(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -337,22 +273,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -396,22 +318,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -455,22 +363,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupPrivateEndpointConnectionResource>> GetIfExistsAsync(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -516,22 +410,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<BackupPrivateEndpointConnectionResource> GetIfExists(string vaultName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _backupPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("BackupPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

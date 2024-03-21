@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (!(Schedule is ChangeTrackingList<HDInsightAutoScaleSchedule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteStartArray();

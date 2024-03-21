@@ -14,6 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// model types used for mocking.
     /// </summary>
     [CodeGenType("AIMetricsAdvisorModelFactory")]
+    [CodeGenSuppress("DataFeedDimension", typeof(string), typeof(string))]
     public static partial class MetricsAdvisorModelFactory
     {
         /// <summary>

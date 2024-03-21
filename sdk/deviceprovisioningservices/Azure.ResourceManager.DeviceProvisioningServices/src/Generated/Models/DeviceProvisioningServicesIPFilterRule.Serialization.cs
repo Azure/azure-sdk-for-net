@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             writer.WriteStringValue(Action.ToSerialString());
             writer.WritePropertyName("ipMask"u8);
             writer.WriteStringValue(IPMask);
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target.Value.ToSerialString());

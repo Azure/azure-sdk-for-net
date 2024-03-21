@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DatabricksAccessToken != null)
+            if (Optional.IsDefined(DatabricksAccessToken))
             {
                 writer.WritePropertyName("databricksAccessToken"u8);
                 writer.WriteStringValue(DatabricksAccessToken);
             }
-            if (WorkspaceUri != null)
+            if (Optional.IsDefined(WorkspaceUri))
             {
                 writer.WritePropertyName("workspaceUrl"u8);
                 writer.WriteStringValue(WorkspaceUri.AbsoluteUri);

@@ -8,6 +8,7 @@
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -19,13 +20,13 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Days.HasValue)
+            if (Common.Optional.IsDefined(Days))
             {
                 writer.WriteStartElement("Days");
                 writer.WriteValue(Days.Value);
                 writer.WriteEndElement();
             }
-            if (AllowPermanentDelete.HasValue)
+            if (Common.Optional.IsDefined(AllowPermanentDelete))
             {
                 writer.WriteStartElement("AllowPermanentDelete");
                 writer.WriteValue(AllowPermanentDelete.Value);

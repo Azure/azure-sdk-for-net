@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Redis.Models;
@@ -74,42 +73,11 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateUpdateAsync(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName, RedisCacheAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateUpdateRequest(subscriptionId, resourceGroupName, cacheName, accessPolicyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -134,42 +102,11 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateUpdate(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName, RedisCacheAccessPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateUpdateRequest(subscriptionId, resourceGroupName, cacheName, accessPolicyName, data);
             _pipeline.Send(message, cancellationToken);
@@ -215,38 +152,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, accessPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,38 +180,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, cacheName, accessPolicyName);
             _pipeline.Send(message, cancellationToken);
@@ -349,38 +230,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisCacheAccessPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, accessPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -410,38 +263,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cacheName"/> or <paramref name="accessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisCacheAccessPolicyData> Get(string subscriptionId, string resourceGroupName, string cacheName, string accessPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
-            if (accessPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicyName));
-            }
-            if (accessPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accessPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
+            Argument.AssertNotNullOrEmpty(accessPolicyName, nameof(accessPolicyName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, cacheName, accessPolicyName);
             _pipeline.Send(message, cancellationToken);
@@ -491,30 +316,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisCacheAccessPolicyList>> ListAsync(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +345,9 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisCacheAccessPolicyList> List(string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);
@@ -606,34 +389,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RedisCacheAccessPolicyList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -661,34 +420,10 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RedisCacheAccessPolicyList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cacheName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (cacheName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheName));
-            }
-            if (cacheName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cacheName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, cacheName);
             _pipeline.Send(message, cancellationToken);

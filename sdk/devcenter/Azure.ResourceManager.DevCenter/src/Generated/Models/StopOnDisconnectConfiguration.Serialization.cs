@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (GracePeriodMinutes.HasValue)
+            if (Optional.IsDefined(GracePeriodMinutes))
             {
                 writer.WritePropertyName("gracePeriodMinutes"u8);
                 writer.WriteNumberValue(GracePeriodMinutes.Value);

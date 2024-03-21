@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SparkReady.HasValue)
+            if (Optional.IsDefined(SparkReady))
             {
                 writer.WritePropertyName("sparkReady"u8);
                 writer.WriteBooleanValue(SparkReady.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

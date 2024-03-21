@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -72,26 +71,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorPartnerId, string integrationId, RequestContent content, RequestContext context = null)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.CreateOrUpdate");
             scope.Start();
@@ -128,26 +110,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorPartnerId, string integrationId, RequestContent content, RequestContext context = null)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.CreateOrUpdate");
             scope.Start();
@@ -183,22 +148,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorPartnerIntegrationAsync(string sensorPartnerId, string integrationId, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.GetSensorPartnerIntegration");
             scope.Start();
@@ -234,22 +185,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegration(string,string,RequestContext)']/*" />
         public virtual Response GetSensorPartnerIntegration(string sensorPartnerId, string integrationId, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.GetSensorPartnerIntegration");
             scope.Start();
@@ -285,22 +222,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.Delete");
             scope.Start();
@@ -336,22 +259,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string sensorPartnerId, string integrationId, RequestContext context = null)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.Delete");
             scope.Start();
@@ -388,26 +297,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsentAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> CheckConsentAsync(string sensorPartnerId, string integrationId, string key, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.CheckConsent");
             scope.Start();
@@ -444,26 +336,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsent(string,string,string,RequestContext)']/*" />
         public virtual Response CheckConsent(string sensorPartnerId, string integrationId, string key, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.CheckConsent");
             scope.Start();
@@ -499,22 +374,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLinkAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GenerateConsentLinkAsync(string sensorPartnerId, string integrationId, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.GenerateConsentLink");
             scope.Start();
@@ -550,22 +411,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLink(string,string,RequestContext)']/*" />
         public virtual Response GenerateConsentLink(string sensorPartnerId, string integrationId, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
-            if (integrationId == null)
-            {
-                throw new ArgumentNullException(nameof(integrationId));
-            }
-            if (integrationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
+            Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
 
             using var scope = ClientDiagnostics.CreateScope("SensorPartnerIntegrations.GenerateConsentLink");
             scope.Start();
@@ -618,14 +465,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -669,14 +509,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrations(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (sensorPartnerId == null)
-            {
-                throw new ArgumentNullException(nameof(sensorPartnerId));
-            }
-            if (sensorPartnerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorPartnerId));
-            }
+            Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);

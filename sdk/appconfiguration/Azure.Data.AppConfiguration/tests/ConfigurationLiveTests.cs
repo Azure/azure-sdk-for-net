@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -86,16 +87,15 @@ namespace Azure.Data.AppConfiguration.Tests
             return CreateSetting($"{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
         }
 
-        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
+        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents, [CallerMemberName] string batchKey = null)
         {
             string key = GenerateKeyId("key-");
 
             /*
              * The configuration store contains a KV with the Key
              * that represents {expectedEvents} data points.
-             * If not set, create the {expectedEvents} data points and the "BatchKey"
+             * If not set, create the {expectedEvents} data points and the "batchKey"
             */
-            const string batchKey = "BatchKey";
 
             try
             {
@@ -106,7 +106,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 for (int i = 0; i < expectedEvents; i++)
                 {
-                    await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "test_value", $"{i.ToString()}"));
+                    await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "test_value", $"{i}"));
                 }
 
                 await service.SetConfigurationSettingAsync(new ConfigurationSetting(batchKey, key));
@@ -922,6 +922,105 @@ namespace Azure.Data.AppConfiguration.Tests
             }
 
             Assert.AreEqual(expectedEvents, resultsReturned);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPage()
+        {
+            ConfigurationClient service = GetClient();
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+            }
+
+            foreach (MatchConditions matchConditions in matchConditionsList)
+            {
+                selector.MatchConditions.Add(matchConditions);
+            }
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithModifiedPage()
+        {
+            ConfigurationClient service = GetClient();
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+            ConfigurationSetting lastSetting = null;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+                lastSetting = page.Values.Last();
+            }
+
+            foreach (MatchConditions matchConditions in matchConditionsList)
+            {
+                selector.MatchConditions.Add(matchConditions);
+            }
+
+            lastSetting.Value += "1";
+            await service.SetConfigurationSettingAsync(lastSetting);
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+
+                if (pagesCount == 0)
+                {
+                    Assert.AreEqual(304, response.Status);
+                    Assert.IsEmpty(page.Values);
+                }
+                else
+                {
+                    Assert.AreEqual(200, response.Status);
+                    Assert.IsNotEmpty(page.Values);
+                }
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
         }
 
         [RecordedTest]

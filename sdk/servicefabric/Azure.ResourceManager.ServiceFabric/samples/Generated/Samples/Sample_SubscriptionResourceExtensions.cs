@@ -9,9 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ServiceFabric;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples

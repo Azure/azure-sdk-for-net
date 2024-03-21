@@ -17,10 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> is null. </exception>
         internal ServiceResourceDetails(CustomDocumentModelsDetails customDocumentModels)
         {
-            if (customDocumentModels == null)
-            {
-                throw new ArgumentNullException(nameof(customDocumentModels));
-            }
+            Argument.AssertNotNull(customDocumentModels, nameof(customDocumentModels));
 
             CustomDocumentModels = customDocumentModels;
         }

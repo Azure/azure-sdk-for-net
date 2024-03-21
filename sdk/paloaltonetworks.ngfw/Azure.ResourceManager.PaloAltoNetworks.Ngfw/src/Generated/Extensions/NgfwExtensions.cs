@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -53,10 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="GlobalRulestackResource"/> object. </returns>
         public static GlobalRulestackResource GetGlobalRulestackResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetGlobalRulestackResource(id);
         }
@@ -75,10 +70,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="GlobalRulestackCertificateObjectResource"/> object. </returns>
         public static GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetGlobalRulestackCertificateObjectResource(id);
         }
@@ -97,10 +89,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="GlobalRulestackFqdnResource"/> object. </returns>
         public static GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetGlobalRulestackFqdnResource(id);
         }
@@ -119,10 +108,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="PostRulestackRuleResource"/> object. </returns>
         public static PostRulestackRuleResource GetPostRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetPostRulestackRuleResource(id);
         }
@@ -141,10 +127,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="GlobalRulestackPrefixResource"/> object. </returns>
         public static GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetGlobalRulestackPrefixResource(id);
         }
@@ -163,10 +146,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="PreRulestackRuleResource"/> object. </returns>
         public static PreRulestackRuleResource GetPreRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetPreRulestackRuleResource(id);
         }
@@ -185,10 +165,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallResource"/> object. </returns>
         public static PaloAltoNetworksFirewallResource GetPaloAltoNetworksFirewallResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetPaloAltoNetworksFirewallResource(id);
         }
@@ -207,10 +184,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="LocalRulestackResource"/> object. </returns>
         public static LocalRulestackResource GetLocalRulestackResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetLocalRulestackResource(id);
         }
@@ -229,10 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public static PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetPaloAltoNetworksFirewallStatusResource(id);
         }
@@ -251,10 +222,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="LocalRulestackCertificateObjectResource"/> object. </returns>
         public static LocalRulestackCertificateObjectResource GetLocalRulestackCertificateObjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetLocalRulestackCertificateObjectResource(id);
         }
@@ -273,10 +241,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="LocalRulestackFqdnResource"/> object. </returns>
         public static LocalRulestackFqdnResource GetLocalRulestackFqdnResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetLocalRulestackFqdnResource(id);
         }
@@ -295,10 +260,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="LocalRulestackRuleResource"/> object. </returns>
         public static LocalRulestackRuleResource GetLocalRulestackRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetLocalRulestackRuleResource(id);
         }
@@ -317,10 +279,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> Returns a <see cref="LocalRulestackPrefixResource"/> object. </returns>
         public static LocalRulestackPrefixResource GetLocalRulestackPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePaloAltoNetworksNgfwArmClient(client).GetLocalRulestackPrefixResource(id);
         }
@@ -337,10 +296,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of PaloAltoNetworksFirewallResources and their operations over a PaloAltoNetworksFirewallResource. </returns>
         public static PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetPaloAltoNetworksFirewalls();
         }
@@ -378,10 +334,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         [ForwardsClientCalls]
         public static async Task<Response<PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetPaloAltoNetworksFirewallAsync(firewallName, cancellationToken).ConfigureAwait(false);
         }
@@ -419,10 +372,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         [ForwardsClientCalls]
         public static Response<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewall(this ResourceGroupResource resourceGroupResource, string firewallName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetPaloAltoNetworksFirewall(firewallName, cancellationToken);
         }
@@ -439,10 +389,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of LocalRulestackResources and their operations over a LocalRulestackResource. </returns>
         public static LocalRulestackCollection GetLocalRulestacks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetLocalRulestacks();
         }
@@ -480,10 +427,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         [ForwardsClientCalls]
         public static async Task<Response<LocalRulestackResource>> GetLocalRulestackAsync(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetLocalRulestackAsync(localRulestackName, cancellationToken).ConfigureAwait(false);
         }
@@ -521,10 +465,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         [ForwardsClientCalls]
         public static Response<LocalRulestackResource> GetLocalRulestack(this ResourceGroupResource resourceGroupResource, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePaloAltoNetworksNgfwResourceGroupResource(resourceGroupResource).GetLocalRulestack(localRulestackName, cancellationToken);
         }
@@ -560,10 +501,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetPaloAltoNetworksFirewallsAsync(cancellationToken);
         }
@@ -599,10 +537,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetPaloAltoNetworksFirewalls(cancellationToken);
         }
@@ -638,10 +573,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetLocalRulestacksAsync(cancellationToken);
         }
@@ -677,10 +609,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LocalRulestackResource> GetLocalRulestacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePaloAltoNetworksNgfwSubscriptionResource(subscriptionResource).GetLocalRulestacks(cancellationToken);
         }
@@ -697,10 +626,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of GlobalRulestackResources and their operations over a GlobalRulestackResource. </returns>
         public static GlobalRulestackCollection GetGlobalRulestacks(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetGlobalRulestacks();
         }
@@ -738,10 +664,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         [ForwardsClientCalls]
         public static async Task<Response<GlobalRulestackResource>> GetGlobalRulestackAsync(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetGlobalRulestackAsync(globalRulestackName, cancellationToken).ConfigureAwait(false);
         }
@@ -779,10 +702,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         [ForwardsClientCalls]
         public static Response<GlobalRulestackResource> GetGlobalRulestack(this TenantResource tenantResource, string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockablePaloAltoNetworksNgfwTenantResource(tenantResource).GetGlobalRulestack(globalRulestackName, cancellationToken);
         }

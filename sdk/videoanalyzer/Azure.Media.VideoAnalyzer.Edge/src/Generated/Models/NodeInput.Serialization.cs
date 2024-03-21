@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nodeName"u8);
             writer.WriteStringValue(NodeName);
-            if (!(OutputSelectors is ChangeTrackingList<OutputSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputSelectors))
             {
                 writer.WritePropertyName("outputSelectors"u8);
                 writer.WriteStartArray();

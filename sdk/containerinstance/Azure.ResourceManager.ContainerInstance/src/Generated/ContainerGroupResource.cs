@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ContainerGroupResource>> UpdateAsync(ContainerGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ContainerGroupResource> Update(ContainerGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.Update");
             scope.Start();
@@ -678,14 +670,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<ContainerLogs>> GetContainerLogsAsync(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
@@ -726,14 +711,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<ContainerLogs> GetContainerLogs(string containerName, int? tail = null, bool? timestamps = null, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.GetContainerLogs");
             scope.Start();
@@ -773,18 +751,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ContainerExecResult>> ExecuteContainerCommandAsync(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
@@ -824,18 +792,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<ContainerExecResult> ExecuteContainerCommand(string containerName, ContainerExecContent content, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.ExecuteContainerCommand");
             scope.Start();
@@ -874,14 +832,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<ContainerAttachResult>> AttachContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
             scope.Start();
@@ -920,14 +871,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<ContainerAttachResult> AttachContainer(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _containersClientDiagnostics.CreateScope("ContainerGroupResource.AttachContainer");
             scope.Start();
@@ -970,14 +914,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ContainerGroupResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.AddTag");
             scope.Start();
@@ -1038,14 +976,8 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ContainerGroupResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.AddTag");
             scope.Start();
@@ -1105,10 +1037,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerGroupResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.SetTags");
             scope.Start();
@@ -1165,10 +1094,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerGroupResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.SetTags");
             scope.Start();
@@ -1225,10 +1151,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ContainerGroupResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.RemoveTag");
             scope.Start();
@@ -1288,10 +1211,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ContainerGroupResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _containerGroupClientDiagnostics.CreateScope("ContainerGroupResource.RemoveTag");
             scope.Start();

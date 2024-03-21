@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileDataNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataNetworkName, MobileDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileDataNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string dataNetworkName, MobileDataNetworkData data, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
         public virtual async Task<Response<MobileDataNetworkResource>> GetAsync(string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
         public virtual Response<MobileDataNetworkResource> Get(string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileDataNetworkResource>> GetIfExistsAsync(string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetworkName"/> is null. </exception>
         public virtual NullableResponse<MobileDataNetworkResource> GetIfExists(string dataNetworkName, CancellationToken cancellationToken = default)
         {
-            if (dataNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkName));
-            }
-            if (dataNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(dataNetworkName, nameof(dataNetworkName));
 
             using var scope = _mobileDataNetworkDataNetworksClientDiagnostics.CreateScope("MobileDataNetworkCollection.GetIfExists");
             scope.Start();

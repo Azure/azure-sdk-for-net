@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);

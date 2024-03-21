@@ -17,10 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         public IotHubDeviceConnection(string deviceId)
         {
-            if (deviceId == null)
-            {
-                throw new ArgumentNullException(nameof(deviceId));
-            }
+            Argument.AssertNotNull(deviceId, nameof(deviceId));
 
             DeviceId = deviceId;
         }

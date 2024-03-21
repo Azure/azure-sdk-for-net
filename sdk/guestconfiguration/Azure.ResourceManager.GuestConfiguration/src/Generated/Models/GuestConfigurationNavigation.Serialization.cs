@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ContentUri != null)
+            if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUri"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (ContentHash != null)
+            if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
             }
-            if (AssignmentType.HasValue)
+            if (Optional.IsDefined(AssignmentType))
             {
                 if (AssignmentType != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentType");
                 }
             }
-            if (options.Format != "W" && AssignmentSource != null)
+            if (options.Format != "W" && Optional.IsDefined(AssignmentSource))
             {
                 if (AssignmentSource != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentSource");
                 }
             }
-            if (options.Format != "W" && ContentType != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 if (ContentType != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("contentType");
                 }
             }
-            if (!(ConfigurationParameters is ChangeTrackingList<GuestConfigurationParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConfigurationProtectedParameters is ChangeTrackingList<GuestConfigurationParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConfigurationSetting != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationSetting))
             {
                 if (ConfigurationSetting != null)
                 {

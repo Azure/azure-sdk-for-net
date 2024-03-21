@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TargetDiskNetworkAccessOption.HasValue)
+            if (Optional.IsDefined(TargetDiskNetworkAccessOption))
             {
                 writer.WritePropertyName("targetDiskNetworkAccessOption"u8);
                 writer.WriteStringValue(TargetDiskNetworkAccessOption.Value.ToSerialString());
             }
-            if (TargetDiskAccessId != null)
+            if (Optional.IsDefined(TargetDiskAccessId))
             {
                 writer.WritePropertyName("targetDiskAccessId"u8);
                 writer.WriteStringValue(TargetDiskAccessId);

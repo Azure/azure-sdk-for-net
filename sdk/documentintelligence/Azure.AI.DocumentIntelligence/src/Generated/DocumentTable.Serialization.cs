@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -38,7 +37,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -55,12 +54,12 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteObjectValue(Caption);
             }
-            if (!(Footnotes is ChangeTrackingList<DocumentFootnote> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Footnotes))
             {
                 writer.WritePropertyName("footnotes"u8);
                 writer.WriteStartArray();

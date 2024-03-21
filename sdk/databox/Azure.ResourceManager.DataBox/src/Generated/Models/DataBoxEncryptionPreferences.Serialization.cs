@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (DoubleEncryption.HasValue)
+            if (Optional.IsDefined(DoubleEncryption))
             {
                 writer.WritePropertyName("doubleEncryption"u8);
                 writer.WriteStringValue(DoubleEncryption.Value.ToSerialString());
             }
-            if (HardwareEncryption.HasValue)
+            if (Optional.IsDefined(HardwareEncryption))
             {
                 writer.WritePropertyName("hardwareEncryption"u8);
                 writer.WriteStringValue(HardwareEncryption.Value.ToSerialString());

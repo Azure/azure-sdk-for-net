@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (ElasticMaximum.HasValue)
+            if (Optional.IsDefined(ElasticMaximum))
             {
                 writer.WritePropertyName("elasticMaximum"u8);
                 writer.WriteNumberValue(ElasticMaximum.Value);
             }
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (ScaleType != null)
+            if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType);

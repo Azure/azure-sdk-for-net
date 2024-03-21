@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -74,42 +73,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, FlowLogData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -134,42 +102,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, FlowLogData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName, data);
             _pipeline.Send(message, cancellationToken);
@@ -220,42 +157,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FlowLogData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName, networkTagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -284,42 +190,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FlowLogData> UpdateTags(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName, networkTagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -369,38 +244,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FlowLogData>> GetAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -430,38 +277,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FlowLogData> Get(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName);
             _pipeline.Send(message, cancellationToken);
@@ -513,38 +332,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -568,38 +359,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkWatcherName"/> or <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string networkWatcherName, string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkWatcherName, flowLogName);
             _pipeline.Send(message, cancellationToken);
@@ -643,30 +406,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FlowLogListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkWatcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -693,30 +435,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FlowLogListResult> List(string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, networkWatcherName);
             _pipeline.Send(message, cancellationToken);
@@ -758,34 +479,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FlowLogListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkWatcherName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -813,34 +510,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkWatcherName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FlowLogListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkWatcherName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (networkWatcherName == null)
-            {
-                throw new ArgumentNullException(nameof(networkWatcherName));
-            }
-            if (networkWatcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkWatcherName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(networkWatcherName, nameof(networkWatcherName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, networkWatcherName);
             _pipeline.Send(message, cancellationToken);

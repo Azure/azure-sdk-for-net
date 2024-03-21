@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(HeaderAction.ToString());
             writer.WritePropertyName("headerName"u8);
             writer.WriteStringValue(HeaderName);
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

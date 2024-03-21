@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storage"/>, <paramref name="jobManager"/> or <paramref name="taskManager"/> is null. </exception>
         public FlinkProfile(FlinkStorageProfile storage, ComputeResourceRequirement jobManager, ComputeResourceRequirement taskManager)
         {
-            if (storage == null)
-            {
-                throw new ArgumentNullException(nameof(storage));
-            }
-            if (jobManager == null)
-            {
-                throw new ArgumentNullException(nameof(jobManager));
-            }
-            if (taskManager == null)
-            {
-                throw new ArgumentNullException(nameof(taskManager));
-            }
+            Argument.AssertNotNull(storage, nameof(storage));
+            Argument.AssertNotNull(jobManager, nameof(jobManager));
+            Argument.AssertNotNull(taskManager, nameof(taskManager));
 
             Storage = storage;
             JobManager = jobManager;

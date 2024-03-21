@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataShareInvitationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string invitationName, DataShareInvitationData data, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataShareInvitationResource> CreateOrUpdate(WaitUntil waitUntil, string invitationName, DataShareInvitationData data, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
         public virtual async Task<Response<DataShareInvitationResource>> GetAsync(string invitationName, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
         public virtual Response<DataShareInvitationResource> Get(string invitationName, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.Get");
             scope.Start();
@@ -368,14 +332,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string invitationName, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
         public virtual Response<bool> Exists(string invitationName, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataShareInvitationResource>> GetIfExistsAsync(string invitationName, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetIfExists");
             scope.Start();
@@ -520,14 +463,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="invitationName"/> is null. </exception>
         public virtual NullableResponse<DataShareInvitationResource> GetIfExists(string invitationName, CancellationToken cancellationToken = default)
         {
-            if (invitationName == null)
-            {
-                throw new ArgumentNullException(nameof(invitationName));
-            }
-            if (invitationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(invitationName));
-            }
+            Argument.AssertNotNullOrEmpty(invitationName, nameof(invitationName));
 
             using var scope = _dataShareInvitationInvitationsClientDiagnostics.CreateScope("DataShareInvitationCollection.GetIfExists");
             scope.Start();

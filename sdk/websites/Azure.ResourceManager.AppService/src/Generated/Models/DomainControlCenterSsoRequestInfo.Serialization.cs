@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && PostParameterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PostParameterKey))
             {
                 writer.WritePropertyName("postParameterKey"u8);
                 writer.WriteStringValue(PostParameterKey);
             }
-            if (options.Format != "W" && PostParameterValue != null)
+            if (options.Format != "W" && Optional.IsDefined(PostParameterValue))
             {
                 writer.WritePropertyName("postParameterValue"u8);
                 writer.WriteStringValue(PostParameterValue);

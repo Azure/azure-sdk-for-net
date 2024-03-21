@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (ShareablePrivateLinkResourcePropertiesType != null)
+            if (Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);

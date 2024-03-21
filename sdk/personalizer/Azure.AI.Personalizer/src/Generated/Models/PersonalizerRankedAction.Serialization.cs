@@ -14,8 +14,8 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerRankedAction DeserializePersonalizerRankedAction(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<float> probability = default;
+            string id = default;
+            float? probability = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -34,7 +34,7 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerRankedAction(id.Value, Optional.ToNullable(probability));
+            return new PersonalizerRankedAction(id, probability);
         }
     }
 }

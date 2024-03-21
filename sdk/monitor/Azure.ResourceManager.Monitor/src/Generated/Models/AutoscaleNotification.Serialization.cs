@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteObjectValue(Email);
             }
-            if (!(Webhooks is ChangeTrackingList<WebhookNotification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Webhooks))
             {
                 writer.WritePropertyName("webhooks"u8);
                 writer.WriteStartArray();

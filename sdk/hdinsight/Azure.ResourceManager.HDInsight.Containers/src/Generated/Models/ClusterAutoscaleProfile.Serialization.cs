@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (GracefulDecommissionTimeout.HasValue)
+            if (Optional.IsDefined(GracefulDecommissionTimeout))
             {
                 writer.WritePropertyName("gracefulDecommissionTimeout"u8);
                 writer.WriteNumberValue(GracefulDecommissionTimeout.Value);
             }
-            if (AutoscaleType.HasValue)
+            if (Optional.IsDefined(AutoscaleType))
             {
                 writer.WritePropertyName("autoscaleType"u8);
                 writer.WriteStringValue(AutoscaleType.Value.ToString());
             }
-            if (ScheduleBasedConfig != null)
+            if (Optional.IsDefined(ScheduleBasedConfig))
             {
                 writer.WritePropertyName("scheduleBasedConfig"u8);
                 writer.WriteObjectValue(ScheduleBasedConfig);
             }
-            if (LoadBasedConfig != null)
+            if (Optional.IsDefined(LoadBasedConfig))
             {
                 writer.WritePropertyName("loadBasedConfig"u8);
                 writer.WriteObjectValue(LoadBasedConfig);

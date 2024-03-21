@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (LogicalName != null)
+            if (Optional.IsDefined(LogicalName))
             {
                 writer.WritePropertyName("logicalName"u8);
                 writer.WriteStringValue(LogicalName);
             }
-            if (PhysicalFullName != null)
+            if (Optional.IsDefined(PhysicalFullName))
             {
                 writer.WritePropertyName("physicalFullName"u8);
                 writer.WriteStringValue(PhysicalFullName);
             }
-            if (RestoreFullName != null)
+            if (Optional.IsDefined(RestoreFullName))
             {
                 writer.WritePropertyName("restoreFullName"u8);
                 writer.WriteStringValue(RestoreFullName);
             }
-            if (FileType.HasValue)
+            if (Optional.IsDefined(FileType))
             {
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (SizeMB.HasValue)
+            if (Optional.IsDefined(SizeMB))
             {
                 writer.WritePropertyName("sizeMB"u8);
                 writer.WriteNumberValue(SizeMB.Value);

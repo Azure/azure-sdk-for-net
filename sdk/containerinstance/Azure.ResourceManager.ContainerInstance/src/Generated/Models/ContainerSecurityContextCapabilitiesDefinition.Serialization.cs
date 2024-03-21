@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (!(Add is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Drop is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Drop))
             {
                 writer.WritePropertyName("drop"u8);
                 writer.WriteStartArray();

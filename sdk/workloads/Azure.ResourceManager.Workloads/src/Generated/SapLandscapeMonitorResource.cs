@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
@@ -279,10 +277,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SapLandscapeMonitorResource>> UpdateAsync(SapLandscapeMonitorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapLandscapeMonitorClientDiagnostics.CreateScope("SapLandscapeMonitorResource.Update");
             scope.Start();
@@ -324,10 +319,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SapLandscapeMonitorResource> Update(SapLandscapeMonitorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapLandscapeMonitorClientDiagnostics.CreateScope("SapLandscapeMonitorResource.Update");
             scope.Start();
@@ -370,10 +362,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SapLandscapeMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SapLandscapeMonitorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapLandscapeMonitorClientDiagnostics.CreateScope("SapLandscapeMonitorResource.CreateOrUpdate");
             scope.Start();
@@ -419,10 +408,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SapLandscapeMonitorResource> CreateOrUpdate(WaitUntil waitUntil, SapLandscapeMonitorData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapLandscapeMonitorClientDiagnostics.CreateScope("SapLandscapeMonitorResource.CreateOrUpdate");
             scope.Start();

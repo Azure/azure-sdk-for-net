@@ -40,5 +40,7 @@ extends:
       safeName: AzureAnalyticsPurviewAdministration
     - name: Azure.Analytics.Purview.Catalog
       safeName: AzureAnalyticsPurviewCatalog
+    - name: Azure.Analytics.Purview.DataMap
+      safeName: AzureAnalyticsPurviewDataMap
     - name: Azure.Analytics.Purview.Scanning
       safeName: AzureAnalyticsPurviewScanning

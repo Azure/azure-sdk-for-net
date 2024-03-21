@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (QueryResultsUri != null)
+            if (Optional.IsDefined(QueryResultsUri))
             {
                 writer.WritePropertyName("queryResultsUri"u8);
                 writer.WriteStringValue(QueryResultsUri.AbsoluteUri);
             }
-            if (NonCompliantResources.HasValue)
+            if (Optional.IsDefined(NonCompliantResources))
             {
                 writer.WritePropertyName("nonCompliantResources"u8);
                 writer.WriteNumberValue(NonCompliantResources.Value);
             }
-            if (NonCompliantPolicies.HasValue)
+            if (Optional.IsDefined(NonCompliantPolicies))
             {
                 writer.WritePropertyName("nonCompliantPolicies"u8);
                 writer.WriteNumberValue(NonCompliantPolicies.Value);
             }
-            if (!(ResourceDetails is ChangeTrackingList<ComplianceDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyDetails is ChangeTrackingList<ComplianceDetail> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyGroupDetails is ChangeTrackingList<ComplianceDetail> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyGroupDetails))
             {
                 writer.WritePropertyName("policyGroupDetails"u8);
                 writer.WriteStartArray();

@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ExpressRouteAuthorizationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpressRouteAuthorizationId))
             {
                 writer.WritePropertyName("expressRouteAuthorizationId"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationId);
             }
-            if (options.Format != "W" && ExpressRouteAuthorizationKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpressRouteAuthorizationKey))
             {
                 writer.WritePropertyName("expressRouteAuthorizationKey"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationKey);
             }
-            if (ExpressRouteId != null)
+            if (Optional.IsDefined(ExpressRouteId))
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);

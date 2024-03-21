@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ExtendedLocations;
 
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
@@ -27,12 +26,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<CustomLocationData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

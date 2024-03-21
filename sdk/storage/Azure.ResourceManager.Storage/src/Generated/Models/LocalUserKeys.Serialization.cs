@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SharedKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);

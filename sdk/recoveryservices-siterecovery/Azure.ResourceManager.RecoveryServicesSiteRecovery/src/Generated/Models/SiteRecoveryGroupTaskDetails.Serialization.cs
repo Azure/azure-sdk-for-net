@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildTasks))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();

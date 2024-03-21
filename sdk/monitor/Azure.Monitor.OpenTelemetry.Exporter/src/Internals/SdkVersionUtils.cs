@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 #if AZURE_MONITOR_EXPORTER
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
 #elif LIVE_METRICS_EXPORTER
-                string? extensionVersion = GetVersion(typeof(LiveMetricsExtractionProcessor));
+                string? extensionVersion = GetVersion(typeof(LiveMetricsActivityProcessor));
 #endif
 
                 if (IsDistro)

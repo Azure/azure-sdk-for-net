@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="lifecycles"/> is null. </exception>
         public DataProtectionRetentionRule(string name, IEnumerable<SourceLifeCycle> lifecycles) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (lifecycles == null)
-            {
-                throw new ArgumentNullException(nameof(lifecycles));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(lifecycles, nameof(lifecycles));
 
             Lifecycles = lifecycles.ToList();
             ObjectType = "AzureRetentionRule";

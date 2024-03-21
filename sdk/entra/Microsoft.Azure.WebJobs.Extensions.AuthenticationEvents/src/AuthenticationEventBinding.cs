@@ -12,12 +12,16 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
+using Microsoft.Extensions.Logging;
+
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
+
 using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
@@ -195,7 +199,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else if (requestEvent.GetType() != _parameterInfo.ParameterType && ex == null && _parameterInfo.ParameterType != typeof(string))
             {
-                throw new Exception(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Parm_Mismatch, requestEvent.GetType(), _parameterInfo.ParameterType));
+                throw new Exception(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Parm_Mismatch,
+                        arg0: requestEvent.GetType(),
+                        arg1: _parameterInfo.ParameterType));
             }
 
             requestEvent.StatusMessage = ex == null ? AuthenticationEventResource.Status_Good : ex.Message;
@@ -224,18 +233,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 return null;
             }
 
-            TokenValidator validator = ConfigurationManager.EZAuthEnabled && requestMessage.Headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY) ?
-                (TokenValidator)new TokenValidatorEZAuth() :
-                new TokenValidatorInternal();
+            TokenValidator validator = TokenValidatorHelper.IsEzAuthValid(requestMessage.Headers) ? new TokenValidatorEZAuth() : new TokenValidatorInternal();
 
-            (bool valid, Dictionary<string, string> claims) = await validator.GetClaimsAndValidate(requestMessage, configurationManager).ConfigureAwait(false);
-            if (valid)
+            try
             {
-                return claims;
+                return await validator.ValidateAndGetClaims(requestMessage, configurationManager).ConfigureAwait(false);
             }
-            else
+            catch (Exception exceptionIfFailed)
             {
-                throw new UnauthorizedAccessException();
+                _configuration.Log(exceptionIfFailed.Message, logLevel: LogLevel.Error);
+                throw;
             }
         }
 

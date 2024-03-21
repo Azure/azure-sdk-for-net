@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contentKeyLocation"/> is null. </exception>
         public ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
         {
-            if (contentKeyLocation == null)
-            {
-                throw new ArgumentNullException(nameof(contentKeyLocation));
-            }
+            Argument.AssertNotNull(contentKeyLocation, nameof(contentKeyLocation));
 
             AllowTestDevices = allowTestDevices;
             LicenseType = licenseType;

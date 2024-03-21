@@ -11,24 +11,5 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MonitorConditionOperatorExtensions
     {
-        public static string ToSerialString(this MonitorConditionOperator value) => value switch
-        {
-            MonitorConditionOperator.GreaterThan => "GreaterThan",
-            MonitorConditionOperator.GreaterThanOrEqual => "GreaterThanOrEqual",
-            MonitorConditionOperator.LessThan => "LessThan",
-            MonitorConditionOperator.LessThanOrEqual => "LessThanOrEqual",
-            MonitorConditionOperator.EqualsValue => "Equals",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorConditionOperator value.")
-        };
-
-        public static MonitorConditionOperator ToMonitorConditionOperator(this string value)
-        {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan")) return MonitorConditionOperator.GreaterThan;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThanOrEqual")) return MonitorConditionOperator.GreaterThanOrEqual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan")) return MonitorConditionOperator.LessThan;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThanOrEqual")) return MonitorConditionOperator.LessThanOrEqual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equals")) return MonitorConditionOperator.EqualsValue;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorConditionOperator value.");
-        }
     }
 }

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (!(MetaData is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IssueType.HasValue)
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IssueType.Value.ToSerialString());
             }
-            if (!(Solutions is ChangeTrackingList<DiagnosticSolution> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();

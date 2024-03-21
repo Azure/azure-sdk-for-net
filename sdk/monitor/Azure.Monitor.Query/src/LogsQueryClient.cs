@@ -26,12 +26,10 @@ namespace Azure.Monitor.Query
         private readonly HttpPipeline _pipeline;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint.
-        /// <example snippet="Snippet:CreateLogsClient">
-        /// <code language="csharp">
+        /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint.
+        /// <code snippet="Snippet:CreateLogsClient" language="csharp">
         /// var client = new LogsQueryClient(new DefaultAzureCredential());
         /// </code>
-        /// </example>
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         public LogsQueryClient(TokenCredential credential) : this(credential, null)
@@ -39,7 +37,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>. Uses the default 'https://api.loganalytics.io' endpoint if Audience is not set in LogsQueryClientOptions.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://api.loganalytics.io' endpoint, unless <see cref="LogsQueryClientOptions.Audience"/> is set to an Azure sovereign cloud.
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="LogsQueryClientOptions"/> instance to use as client configuration.</param>
@@ -48,7 +46,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
@@ -57,7 +55,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LogsQueryClient"/>.
+        /// Creates an instance of <see cref="LogsQueryClient"/> for the Azure cloud represented by <paramref name="endpoint"/>.
         /// </summary>
         /// <param name="endpoint">The service endpoint to use.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownJobLimits. </summary>
+    /// <summary> Unknown version of JobLimits. </summary>
     internal partial class UnknownJobLimits : MachineLearningJobLimits
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobLimits"/>. </summary>

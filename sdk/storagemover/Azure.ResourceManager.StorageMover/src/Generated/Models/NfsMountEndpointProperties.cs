@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="export"/> is null. </exception>
         public NfsMountEndpointProperties(string host, string export)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (export == null)
-            {
-                throw new ArgumentNullException(nameof(export));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(export, nameof(export));
 
             Host = host;
             Export = export;

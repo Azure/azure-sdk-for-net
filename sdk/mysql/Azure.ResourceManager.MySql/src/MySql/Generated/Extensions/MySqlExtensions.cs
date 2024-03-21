@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.Mocking;
 using Azure.ResourceManager.MySql.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerResource"/> object. </returns>
         public static MySqlServerResource GetMySqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlServerResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlFirewallRuleResource"/> object. </returns>
         public static MySqlFirewallRuleResource GetMySqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlFirewallRuleResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlVirtualNetworkRuleResource"/> object. </returns>
         public static MySqlVirtualNetworkRuleResource GetMySqlVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlVirtualNetworkRuleResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlDatabaseResource"/> object. </returns>
         public static MySqlDatabaseResource GetMySqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlDatabaseResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlConfigurationResource"/> object. </returns>
         public static MySqlConfigurationResource GetMySqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlConfigurationResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerAdministratorResource"/> object. </returns>
         public static MySqlServerAdministratorResource GetMySqlServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlServerAdministratorResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerSecurityAlertPolicyResource"/> object. </returns>
         public static MySqlServerSecurityAlertPolicyResource GetMySqlServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlServerSecurityAlertPolicyResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlQueryTextResource"/> object. </returns>
         public static MySqlQueryTextResource GetMySqlQueryTextResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlQueryTextResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlQueryStatisticResource"/> object. </returns>
         public static MySqlQueryStatisticResource GetMySqlQueryStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlQueryStatisticResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlWaitStatisticResource"/> object. </returns>
         public static MySqlWaitStatisticResource GetMySqlWaitStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlWaitStatisticResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlAdvisorResource"/> object. </returns>
         public static MySqlAdvisorResource GetMySqlAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlAdvisorResource(id);
         }
@@ -291,10 +256,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlRecommendationActionResource"/> object. </returns>
         public static MySqlRecommendationActionResource GetMySqlRecommendationActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlRecommendationActionResource(id);
         }
@@ -313,10 +275,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlPrivateEndpointConnectionResource"/> object. </returns>
         public static MySqlPrivateEndpointConnectionResource GetMySqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlPrivateEndpointConnectionResource(id);
         }
@@ -335,10 +294,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlPrivateLinkResource"/> object. </returns>
         public static MySqlPrivateLinkResource GetMySqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlPrivateLinkResource(id);
         }
@@ -357,10 +313,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerKeyResource"/> object. </returns>
         public static MySqlServerKeyResource GetMySqlServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlArmClient(client).GetMySqlServerKeyResource(id);
         }
@@ -377,10 +330,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlServerResources and their operations over a MySqlServerResource. </returns>
         public static MySqlServerCollection GetMySqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMySqlResourceGroupResource(resourceGroupResource).GetMySqlServers();
         }
@@ -418,10 +368,7 @@ namespace Azure.ResourceManager.MySql
         [ForwardsClientCalls]
         public static async Task<Response<MySqlServerResource>> GetMySqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMySqlResourceGroupResource(resourceGroupResource).GetMySqlServerAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
@@ -459,10 +406,7 @@ namespace Azure.ResourceManager.MySql
         [ForwardsClientCalls]
         public static Response<MySqlServerResource> GetMySqlServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMySqlResourceGroupResource(resourceGroupResource).GetMySqlServer(serverName, cancellationToken);
         }
@@ -498,10 +442,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlServerResource> GetMySqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMySqlSubscriptionResource(subscriptionResource).GetMySqlServersAsync(cancellationToken);
         }
@@ -537,10 +478,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlServerResource> GetMySqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMySqlSubscriptionResource(subscriptionResource).GetMySqlServers(cancellationToken);
         }
@@ -573,10 +511,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlPerformanceTier"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMySqlSubscriptionResource(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
@@ -609,10 +544,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlPerformanceTier"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMySqlSubscriptionResource(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
@@ -644,10 +576,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(this SubscriptionResource subscriptionResource, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableMySqlSubscriptionResource(subscriptionResource).CheckMySqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -679,10 +608,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(this SubscriptionResource subscriptionResource, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMySqlSubscriptionResource(subscriptionResource).CheckMySqlNameAvailability(content, cancellationToken);
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (!(TriggerCriteria is ChangeTrackingList<TriggerCriterion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TriggerCriteria))
             {
                 writer.WritePropertyName("triggerCriteria"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,32 +47,32 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (ReplacementMaps != null)
+            if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
                 writer.WriteObjectValue(ReplacementMaps);
             }
-            if (!(Sections is ChangeTrackingList<SelfHelpSection> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sections))
             {
                 writer.WritePropertyName("sections"u8);
                 writer.WriteStartArray();

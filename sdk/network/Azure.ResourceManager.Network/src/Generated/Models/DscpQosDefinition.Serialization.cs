@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Markings is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Markings))
             {
                 writer.WritePropertyName("markings"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceIPRanges is ChangeTrackingList<QosIPRange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationIPRanges is ChangeTrackingList<QosIPRange> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourcePortRanges is ChangeTrackingList<QosPortRange> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPortRanges is ChangeTrackingList<QosPortRange> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());

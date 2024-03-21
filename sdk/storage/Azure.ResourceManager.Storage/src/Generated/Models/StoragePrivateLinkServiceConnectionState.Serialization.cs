@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ActionRequired != null)
+            if (Optional.IsDefined(ActionRequired))
             {
                 writer.WritePropertyName("actionRequired"u8);
                 writer.WriteStringValue(ActionRequired);

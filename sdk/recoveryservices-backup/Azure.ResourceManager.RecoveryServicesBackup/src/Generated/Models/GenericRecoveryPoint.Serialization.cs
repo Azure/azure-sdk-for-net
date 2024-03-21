@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (RecoveryPointType != null)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (RecoveryPointOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (RecoveryPointAdditionalInfo != null)
+            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
             {
                 writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
-            if (RecoveryPointProperties != null)
+            if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
                 writer.WriteObjectValue(RecoveryPointProperties);

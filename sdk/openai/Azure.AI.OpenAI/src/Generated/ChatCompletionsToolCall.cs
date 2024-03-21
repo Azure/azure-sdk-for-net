@@ -55,10 +55,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         protected ChatCompletionsToolCall(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }

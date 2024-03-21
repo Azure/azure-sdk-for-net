@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterId != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterID"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Quantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && ExtendedUnit != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtendedUnit))
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);

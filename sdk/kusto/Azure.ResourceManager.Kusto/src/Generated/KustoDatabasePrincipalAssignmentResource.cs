@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoDatabasePrincipalAssignmentResource>> UpdateAsync(WaitUntil waitUntil, KustoDatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("KustoDatabasePrincipalAssignmentResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoDatabasePrincipalAssignmentResource> Update(WaitUntil waitUntil, KustoDatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("KustoDatabasePrincipalAssignmentResource.Update");
             scope.Start();

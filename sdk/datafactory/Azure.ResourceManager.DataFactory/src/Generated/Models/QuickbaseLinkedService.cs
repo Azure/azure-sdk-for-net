@@ -18,16 +18,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
         /// <param name="userToken"> The user token for the Quickbase source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="userToken"/> is null. </exception>
-        public QuickbaseLinkedService(DataFactoryElement<string> uri, DataFactorySecretBaseDefinition userToken)
+        public QuickbaseLinkedService(DataFactoryElement<string> uri, DataFactorySecret userToken)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (userToken == null)
-            {
-                throw new ArgumentNullException(nameof(userToken));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(userToken, nameof(userToken));
 
             Uri = uri;
             UserToken = userToken;
@@ -44,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
         /// <param name="userToken"> The user token for the Quickbase source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal QuickbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactorySecretBaseDefinition userToken, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactorySecret userToken, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             UserToken = userToken;
@@ -60,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> The user token for the Quickbase source. </summary>
-        public DataFactorySecretBaseDefinition UserToken { get; set; }
+        public DataFactorySecret UserToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

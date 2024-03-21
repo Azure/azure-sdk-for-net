@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);

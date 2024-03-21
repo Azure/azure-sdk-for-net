@@ -23,14 +23,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> or <paramref name="storeName"/> is null. </exception>
         public MachineLearningAzureDataLakeGen1Datastore(MachineLearningDatastoreCredentials credentials, string storeName) : base(credentials)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-            if (storeName == null)
-            {
-                throw new ArgumentNullException(nameof(storeName));
-            }
+            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(storeName, nameof(storeName));
 
             StoreName = storeName;
             DatastoreType = DatastoreType.AzureDataLakeGen1;

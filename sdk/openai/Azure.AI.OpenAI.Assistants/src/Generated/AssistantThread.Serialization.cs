@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -33,7 +32,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(Object);
             writer.WritePropertyName("created_at"u8);
             writer.WriteNumberValue(CreatedAt, "U");
-            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

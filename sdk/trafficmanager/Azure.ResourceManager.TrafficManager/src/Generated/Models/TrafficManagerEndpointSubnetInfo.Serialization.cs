@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (First != null)
+            if (Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First.ToString());
             }
-            if (Last != null)
+            if (Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last.ToString());
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);

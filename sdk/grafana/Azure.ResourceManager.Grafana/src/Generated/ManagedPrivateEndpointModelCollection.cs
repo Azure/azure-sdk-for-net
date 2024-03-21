@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Grafana
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedPrivateEndpointModelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedPrivateEndpointName, ManagedPrivateEndpointModelData data, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedPrivateEndpointModelResource> CreateOrUpdate(WaitUntil waitUntil, string managedPrivateEndpointName, ManagedPrivateEndpointModelData data, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<Response<ManagedPrivateEndpointModelResource>> GetAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual Response<ManagedPrivateEndpointModelResource> Get(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedPrivateEndpointModelResource>> GetIfExistsAsync(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Grafana
         /// <exception cref="ArgumentNullException"> <paramref name="managedPrivateEndpointName"/> is null. </exception>
         public virtual NullableResponse<ManagedPrivateEndpointModelResource> GetIfExists(string managedPrivateEndpointName, CancellationToken cancellationToken = default)
         {
-            if (managedPrivateEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(managedPrivateEndpointName));
-            }
-            if (managedPrivateEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedPrivateEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(managedPrivateEndpointName, nameof(managedPrivateEndpointName));
 
             using var scope = _managedPrivateEndpointModelManagedPrivateEndpointsClientDiagnostics.CreateScope("ManagedPrivateEndpointModelCollection.GetIfExists");
             scope.Start();

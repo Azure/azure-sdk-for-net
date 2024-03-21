@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceElementType.ToString());
-            if (DependsOnProfile != null)
+            if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);

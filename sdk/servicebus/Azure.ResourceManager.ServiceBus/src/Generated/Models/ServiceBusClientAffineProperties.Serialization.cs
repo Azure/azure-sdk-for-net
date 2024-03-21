@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (IsDurable.HasValue)
+            if (Optional.IsDefined(IsDurable))
             {
                 writer.WritePropertyName("isDurable"u8);
                 writer.WriteBooleanValue(IsDurable.Value);
             }
-            if (IsShared.HasValue)
+            if (Optional.IsDefined(IsShared))
             {
                 writer.WritePropertyName("isShared"u8);
                 writer.WriteBooleanValue(IsShared.Value);

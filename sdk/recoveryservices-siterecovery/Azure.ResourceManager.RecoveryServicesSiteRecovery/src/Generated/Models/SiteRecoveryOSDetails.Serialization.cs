@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (ProductType != null)
+            if (Optional.IsDefined(ProductType))
             {
                 writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType);
             }
-            if (OSEdition != null)
+            if (Optional.IsDefined(OSEdition))
             {
                 writer.WritePropertyName("osEdition"u8);
                 writer.WriteStringValue(OSEdition);
             }
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("oSVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (OSMajorVersion != null)
+            if (Optional.IsDefined(OSMajorVersion))
             {
                 writer.WritePropertyName("oSMajorVersion"u8);
                 writer.WriteStringValue(OSMajorVersion);
             }
-            if (OSMinorVersion != null)
+            if (Optional.IsDefined(OSMinorVersion))
             {
                 writer.WritePropertyName("oSMinorVersion"u8);
                 writer.WriteStringValue(OSMinorVersion);

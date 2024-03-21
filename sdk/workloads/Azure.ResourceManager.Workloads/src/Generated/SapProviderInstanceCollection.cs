@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SapProviderInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerInstanceName, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SapProviderInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string providerInstanceName, SapProviderInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         public virtual async Task<Response<SapProviderInstanceResource>> GetAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         public virtual Response<SapProviderInstanceResource> Get(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SapProviderInstanceResource>> GetIfExistsAsync(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
         public virtual NullableResponse<SapProviderInstanceResource> GetIfExists(string providerInstanceName, CancellationToken cancellationToken = default)
         {
-            if (providerInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(providerInstanceName));
-            }
-            if (providerInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
 
             using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetIfExists");
             scope.Start();

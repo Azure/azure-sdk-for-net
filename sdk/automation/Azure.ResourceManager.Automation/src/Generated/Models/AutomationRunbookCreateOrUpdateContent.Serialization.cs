@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,34 +49,34 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsLogVerboseEnabled.HasValue)
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (IsLogProgressEnabled.HasValue)
+            if (Optional.IsDefined(IsLogProgressEnabled))
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("runbookType"u8);
             writer.WriteStringValue(RunbookType.ToString());
-            if (Draft != null)
+            if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
                 writer.WriteObjectValue(Draft);
             }
-            if (PublishContentLink != null)
+            if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
                 writer.WriteObjectValue(PublishContentLink);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (LogActivityTrace.HasValue)
+            if (Optional.IsDefined(LogActivityTrace))
             {
                 writer.WritePropertyName("logActivityTrace"u8);
                 writer.WriteNumberValue(LogActivityTrace.Value);

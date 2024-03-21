@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 JsonSerializer.Serialize(writer, Timeout);
             }
-            if (Sleep != null)
+            if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep"u8);
                 JsonSerializer.Serialize(writer, Sleep);
             }
-            if (MinimumSize != null)
+            if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize"u8);
                 JsonSerializer.Serialize(writer, MinimumSize);
             }
-            if (ChildItems != null)
+            if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems"u8);
                 JsonSerializer.Serialize(writer, ChildItems);

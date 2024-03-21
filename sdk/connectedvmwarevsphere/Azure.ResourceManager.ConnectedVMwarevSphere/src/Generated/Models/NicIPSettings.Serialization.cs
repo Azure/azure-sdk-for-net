@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (AllocationMethod.HasValue)
+            if (Optional.IsDefined(AllocationMethod))
             {
                 writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod.Value.ToString());
             }
-            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Gateway is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Gateway))
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStartArray();
@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (SubnetMask != null)
+            if (Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
-            if (options.Format != "W" && PrimaryWinsServer != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryWinsServer))
             {
                 writer.WritePropertyName("primaryWinsServer"u8);
                 writer.WriteStringValue(PrimaryWinsServer);
             }
-            if (options.Format != "W" && SecondaryWinsServer != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryWinsServer))
             {
                 writer.WritePropertyName("secondaryWinsServer"u8);
                 writer.WriteStringValue(SecondaryWinsServer);
             }
-            if (options.Format != "W" && !(IPAddressInfo is ChangeTrackingList<NicIPAddressSettings> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressInfo))
             {
                 writer.WritePropertyName("ipAddressInfo"u8);
                 writer.WriteStartArray();

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TargetVmSecurityType.HasValue)
+            if (Optional.IsDefined(TargetVmSecurityType))
             {
                 writer.WritePropertyName("targetVmSecurityType"u8);
                 writer.WriteStringValue(TargetVmSecurityType.Value.ToString());
             }
-            if (IsTargetVmSecureBootEnabled != null)
+            if (Optional.IsDefined(IsTargetVmSecureBootEnabled))
             {
                 writer.WritePropertyName("isTargetVmSecureBootEnabled"u8);
                 writer.WriteStringValue(IsTargetVmSecureBootEnabled);
             }
-            if (IsTargetVmTpmEnabled != null)
+            if (Optional.IsDefined(IsTargetVmTpmEnabled))
             {
                 writer.WritePropertyName("isTargetVmTpmEnabled"u8);
                 writer.WriteStringValue(IsTargetVmTpmEnabled);
             }
-            if (IsTargetVmIntegrityMonitoringEnabled != null)
+            if (Optional.IsDefined(IsTargetVmIntegrityMonitoringEnabled))
             {
                 writer.WritePropertyName("isTargetVmIntegrityMonitoringEnabled"u8);
                 writer.WriteStringValue(IsTargetVmIntegrityMonitoringEnabled);
             }
-            if (IsTargetVmConfidentialEncryptionEnabled != null)
+            if (Optional.IsDefined(IsTargetVmConfidentialEncryptionEnabled))
             {
                 writer.WritePropertyName("isTargetVmConfidentialEncryptionEnabled"u8);
                 writer.WriteStringValue(IsTargetVmConfidentialEncryptionEnabled);

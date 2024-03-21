@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (IsAutoSyncEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoSyncEnabled))
             {
                 writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
-            if (IsAutoPublishRunbookEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
             {
                 writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");

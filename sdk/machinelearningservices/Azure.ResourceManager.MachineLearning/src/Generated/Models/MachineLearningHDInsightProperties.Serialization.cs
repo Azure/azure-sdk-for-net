@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (SshPort.HasValue)
+            if (Optional.IsDefined(SshPort))
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (AdministratorAccount != null)
+            if (Optional.IsDefined(AdministratorAccount))
             {
                 if (AdministratorAccount != null)
                 {

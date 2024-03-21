@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
     /// <summary>
     /// Details of the message to send.
     /// Please note <see cref="NotificationContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="TextNotificationContent"/>, <see cref="MediaNotificationContent"/> and <see cref="TemplateNotificationContent"/>.
+    /// The available derived classes include <see cref="MediaNotificationContent"/>, <see cref="TemplateNotificationContent"/> and <see cref="TextNotificationContent"/>.
     /// </summary>
     public abstract partial class NotificationContent
     {
@@ -56,10 +56,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         protected NotificationContent(Guid channelRegistrationId, IEnumerable<string> to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(to, nameof(to));
 
             ChannelRegistrationId = channelRegistrationId;
             To = to.ToList();

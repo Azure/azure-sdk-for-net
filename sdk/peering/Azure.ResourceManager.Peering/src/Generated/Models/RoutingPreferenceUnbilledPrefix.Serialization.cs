@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Prefix != null)
+            if (options.Format != "W" && Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && AzureRegion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
             }
-            if (options.Format != "W" && PeerAsn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);

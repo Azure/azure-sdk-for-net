@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && SlaInMinutes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SlaInMinutes))
             {
                 writer.WritePropertyName("slaMinutes"u8);
                 writer.WriteNumberValue(SlaInMinutes.Value);

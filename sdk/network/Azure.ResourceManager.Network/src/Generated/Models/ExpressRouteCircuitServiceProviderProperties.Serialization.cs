@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceProviderName != null)
+            if (Optional.IsDefined(ServiceProviderName))
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (BandwidthInMbps.HasValue)
+            if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);

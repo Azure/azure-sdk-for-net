@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceFabricCluster != null)
+            if (Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
                 writer.WriteObjectValue(ServiceFabricCluster);

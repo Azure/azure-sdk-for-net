@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownCreateProtectionIntentProviderSpecificDetails. </summary>
+    /// <summary> Unknown version of CreateProtectionIntentProviderSpecificDetails. </summary>
     internal partial class UnknownCreateProtectionIntentProviderSpecificDetails : SiteRecoveryCreateProtectionIntentProviderDetail
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCreateProtectionIntentProviderSpecificDetails"/>. </summary>

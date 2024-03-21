@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
         public WaitActivity(string name, DataFactoryElement<int> waitTimeInSeconds) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (waitTimeInSeconds == null)
-            {
-                throw new ArgumentNullException(nameof(waitTimeInSeconds));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(waitTimeInSeconds, nameof(waitTimeInSeconds));
 
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = "Wait";

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (BuildPodName != null)
+            if (Optional.IsDefined(BuildPodName))
             {
                 writer.WritePropertyName("buildPodName"u8);
                 writer.WriteStringValue(BuildPodName);
             }
-            if (options.Format != "W" && !(BuildStages is ChangeTrackingList<AppPlatformBuildStageProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BuildStages))
             {
                 writer.WritePropertyName("buildStages"u8);
                 writer.WriteStartArray();

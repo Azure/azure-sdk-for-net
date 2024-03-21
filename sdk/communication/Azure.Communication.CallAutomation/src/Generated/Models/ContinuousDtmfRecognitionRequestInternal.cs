@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,10 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public ContinuousDtmfRecognitionRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
-            if (targetParticipant == null)
-            {
-                throw new ArgumentNullException(nameof(targetParticipant));
-            }
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
         }

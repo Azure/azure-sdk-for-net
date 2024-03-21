@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmRestApiListResult DeserializeComputeOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ArmRestApi>> value = default;
+            IReadOnlyList<ArmRestApi> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmRestApiListResult(Optional.ToList(value));
+            return new ArmRestApiListResult(value ?? new ChangeTrackingList<ArmRestApi>());
         }
     }
 }

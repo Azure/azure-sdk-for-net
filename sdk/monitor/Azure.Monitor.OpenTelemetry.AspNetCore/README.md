@@ -20,9 +20,18 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
   * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages. (While the OpenTelemetry SqlClient instrumentation remains in its beta phase, we have taken the step to vendor it and include it in our Distro)
 
 * Metrics
-  * Provides automatic collection of Application Insights Standard metrics.
+  * **Application Insights Standard Metrics**: Provides automatic collection of Application Insights Standard metrics.
+  * **ASP.NET Core and HTTP Client Metrics Instrumentation**: Our distro will selectively enable metrics collection based on the .NET runtime version.
+	* **.NET 8.0 and above**: Utilizes built-in Metrics `Microsoft.AspNetCore.Hosting` and `System.Net.Http` from .NET.
+      For a detailed list of metrics produced, refer to the [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
+      and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp) metrics documentation.
+	* **.NET 7.0 and below**: Falls back to ASP.NET Core Instrumentation and HTTP Client Instrumentation.
+      For a detailed list of metrics produced, refer to the [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+      and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced) documentation.
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
+  * Logs created with `Microsoft.Extensions.Logging`. See [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/aspnet/core/fundamentals/logging) for more details on how to create and configure logging.
+  * [Azure SDK logs](https://learn.microsoft.com/dotnet/azure/sdk/logging) are recorded as a subset of `Microsoft.Extensions.Logging`
 
 * Resource Detectors
   * **AppServiceResourceDetector**: Adds resource attributes for the applications running in Azure App Service.
@@ -230,9 +239,9 @@ builder.Services.Configure<HttpClientTraceInstrumentationOptions>(options =>
 
 ##### Customizing SqlClientInstrumentationOptions
 
-While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package. 
-Once it reaches a stable release, it will be included as a standard package reference. 
-Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API. 
+While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package.
+Once it reaches a stable release, it will be included as a standard package reference.
+Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API.
 
 ```
 dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient
@@ -262,6 +271,19 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
     o.EnableLiveMetrics = false;
 });
 ```
+
+#### Drop a Metrics Instrument
+
+The Azure Monitor Distro enables metric collection and collects several metrics by default.
+If you want to exclude specific instruments from being collected in your application's telemetry use the following code snippet:
+
+```C#
+builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
+    metrics.AddView(instrumentName: "http.server.active_requests", MetricStreamConfiguration.Drop)
+    );
+```
+
+Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
 
 ## Key concepts
 

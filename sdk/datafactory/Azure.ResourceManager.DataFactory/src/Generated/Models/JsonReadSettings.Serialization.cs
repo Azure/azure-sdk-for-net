@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (CompressionProperties != null)
+            if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);

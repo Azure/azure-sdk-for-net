@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (ProductSku != null)
+            if (Optional.IsDefined(ProductSku))
             {
                 writer.WritePropertyName("productSku"u8);
                 writer.WriteStringValue(ProductSku);
             }
-            if (ProductSerial != null)
+            if (Optional.IsDefined(ProductSerial))
             {
                 writer.WritePropertyName("productSerial"u8);
                 writer.WriteStringValue(ProductSerial);
             }
-            if (AccountRegistered.HasValue)
+            if (Optional.IsDefined(AccountRegistered))
             {
                 writer.WritePropertyName("accountRegistered"u8);
                 writer.WriteStringValue(AccountRegistered.Value.ToString());
             }
-            if (AccountId != null)
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (UserDomainSupported.HasValue)
+            if (Optional.IsDefined(UserDomainSupported))
             {
                 writer.WritePropertyName("userDomainSupported"u8);
                 writer.WriteStringValue(UserDomainSupported.Value.ToString());
             }
-            if (UserRegistered.HasValue)
+            if (Optional.IsDefined(UserRegistered))
             {
                 writer.WritePropertyName("userRegistered"u8);
                 writer.WriteStringValue(UserRegistered.Value.ToString());
             }
-            if (FreeTrial.HasValue)
+            if (Optional.IsDefined(FreeTrial))
             {
                 writer.WritePropertyName("freeTrial"u8);
                 writer.WriteStringValue(FreeTrial.Value.ToString());
             }
-            if (FreeTrialDaysLeft.HasValue)
+            if (Optional.IsDefined(FreeTrialDaysLeft))
             {
                 writer.WritePropertyName("freeTrialDaysLeft"u8);
                 writer.WriteNumberValue(FreeTrialDaysLeft.Value);
             }
-            if (FreeTrialCreditLeft.HasValue)
+            if (Optional.IsDefined(FreeTrialCreditLeft))
             {
                 writer.WritePropertyName("freeTrialCreditLeft"u8);
                 writer.WriteNumberValue(FreeTrialCreditLeft.Value);
             }
-            if (HelpURL != null)
+            if (Optional.IsDefined(HelpURL))
             {
                 writer.WritePropertyName("helpURL"u8);
                 writer.WriteStringValue(HelpURL);
             }
-            if (SupportURL != null)
+            if (Optional.IsDefined(SupportURL))
             {
                 writer.WritePropertyName("supportURL"u8);
                 writer.WriteStringValue(SupportURL);
             }
-            if (RegisterURL != null)
+            if (Optional.IsDefined(RegisterURL))
             {
                 writer.WritePropertyName("registerURL"u8);
                 writer.WriteStringValue(RegisterURL);

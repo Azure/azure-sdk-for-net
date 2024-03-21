@@ -36,12 +36,12 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\ClientsideEncryption" />
@@ -74,5 +74,7 @@
     <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

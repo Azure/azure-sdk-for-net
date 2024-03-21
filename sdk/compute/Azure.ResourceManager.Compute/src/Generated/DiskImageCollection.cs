@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DiskImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, DiskImageData data, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DiskImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, DiskImageData data, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<Response<DiskImageResource>> GetAsync(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual Response<DiskImageResource> Get(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual Response<bool> Exists(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<NullableResponse<DiskImageResource>> GetIfExistsAsync(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual NullableResponse<DiskImageResource> GetIfExists(string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _diskImageImagesClientDiagnostics.CreateScope("DiskImageCollection.GetIfExists");
             scope.Start();

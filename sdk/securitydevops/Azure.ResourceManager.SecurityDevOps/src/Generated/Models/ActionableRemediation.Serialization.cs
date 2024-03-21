@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(SeverityLevels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SeverityLevels))
             {
                 writer.WritePropertyName("severityLevels"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Categories is ChangeTrackingList<ActionableRemediationRuleCategory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BranchConfiguration != null)
+            if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
                 writer.WriteObjectValue(BranchConfiguration);

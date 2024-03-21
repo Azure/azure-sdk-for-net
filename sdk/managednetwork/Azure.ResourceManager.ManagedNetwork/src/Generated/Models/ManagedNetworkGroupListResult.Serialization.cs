@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ManagedNetworkGroupData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

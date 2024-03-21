@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationEmailConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string emailConfigurationName, DataReplicationEmailConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationEmailConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string emailConfigurationName, DataReplicationEmailConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationEmailConfigurationResource>> GetAsync(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
         public virtual Response<DataReplicationEmailConfigurationResource> Get(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationEmailConfigurationResource>> GetIfExistsAsync(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="emailConfigurationName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationEmailConfigurationResource> GetIfExists(string emailConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (emailConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(emailConfigurationName));
-            }
-            if (emailConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(emailConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(emailConfigurationName, nameof(emailConfigurationName));
 
             using var scope = _dataReplicationEmailConfigurationEmailConfigurationClientDiagnostics.CreateScope("DataReplicationEmailConfigurationCollection.GetIfExists");
             scope.Start();

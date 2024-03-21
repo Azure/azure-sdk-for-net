@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiscoveryScopeErrorSummaries is ChangeTrackingList<SpringBootSiteErrorSummaryModel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiscoveryScopeErrorSummaries))
             {
                 writer.WritePropertyName("discoveryScopeErrorSummaries"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

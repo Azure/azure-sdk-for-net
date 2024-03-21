@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Mocking
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("MockableContainerRegistrySubscriptionResource.CheckContainerRegistryNameAvailability");
             scope.Start();
@@ -116,10 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ContainerRegistryRegistriesClientDiagnostics.CreateScope("MockableContainerRegistrySubscriptionResource.CheckContainerRegistryNameAvailability");
             scope.Start();

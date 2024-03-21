@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Mocking
 {

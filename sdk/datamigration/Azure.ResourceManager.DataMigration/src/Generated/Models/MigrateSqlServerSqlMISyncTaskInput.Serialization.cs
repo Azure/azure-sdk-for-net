@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (NumberOfParallelDatabaseMigrations.HasValue)
+            if (Optional.IsDefined(NumberOfParallelDatabaseMigrations))
             {
                 writer.WritePropertyName("numberOfParallelDatabaseMigrations"u8);
                 writer.WriteNumberValue(NumberOfParallelDatabaseMigrations.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (BackupFileShare != null)
+            if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);

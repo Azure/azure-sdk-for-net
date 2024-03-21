@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,48 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.2 (2024-03-05)
+
+### Features Added
+- Added property `BaseClassifierId` to `BuildDocumentClassifierContent`.
+- Added property `BaseClassifierId` to `DocumentClassifierDetails`.
+- Added property `Warnings` to `DocumentModelDetails`.
+- Added property `Warnings` to `DocumentClassifierDetails`.
+- Added property `SelectionGroup` to `DocumentFieldType`.
+- Added property `ValueSelectionGroup` to `DocumentField`.
+- Added member `Completed` to `OperationDetails`.
+
+### Breaking Changes
+- `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` now target service API version `2024-02-29-preview`. Support for `2023-10-31-preview` has been removed.
+- Renamed class `AIDocumentIntelligenceModelFactory` to `DocumentIntelligenceModelFactory`.
+- Renamed class `AzureAIDocumentIntelligenceClientOptions` to `DocumentIntelligenceClientOptions`.
+- Renamed class `AIDocumentIntelligenceClientBuilderExtensions` to `DocumentIntelligenceClientBuilderExtensions`.
+- In `DocumentField`:
+  - Renamed property `ValueArray` to `ValueList`.
+  - Renamed property `ValueInteger` to `ValueLong`.
+  - Renamed property `ValueNumber` to `ValueDouble`.
+  - Renamed property `ValueObject` to `ValueDictionary`.
+- In `DocumentFieldType`:
+  - Renamed property `Array` to `List`.
+  - Renamed property `Integer` to `Long`.
+  - Renamed property `Number` to `Double`.
+  - Renamed property `Object` to `Dictionary`.
+- Renamed class `FontStyle` to `DocumentFontStyle`.
+- Renamed class `FontWeight` to `DocumentFontWeight`.
+- In `DocumentClassifierDetails`, renamed properties `CreatedDateTime` and `ExpirationDateTime` to `CreatedOn` and `ExpiresOn`, respectively.
+- In `DocumentModelDetails`, renamed properties `CreatedDateTime` and `ExpirationDateTime` to `CreatedOn` and `ExpiresOn`, respectively.
+- In `OperationDetails`, renamed properties `CreatedDateTime` and `LastUpdatedDateTime` to `CreatedOn` and `LastUpdatedOn`, respectively.
+- In `QuotaDetails`, renamed property `QuotaResetDateTime` to `QuotaResetsOn`.
+- In `DocumentBarcodeKind`:
+  - Renamed property `EAN13` to `Ean13`.
+  - Renamed property `EAN8` to `Ean8`.
+  - Renamed property `ITF` to `Itf`.
+  - Renamed property `MicroQRCode` to `MicroQrCode`.
+  - Renamed property `PDF417` to `Pdf417`.
+  - Renamed property `QRCode` to `QrCode`.
+  - Renamed property `UPCA` to `Upca`.
+  - Renamed property `UPCE` to `Upce`.
 
 ## 1.0.0-beta.1 (2023-11-16)
 

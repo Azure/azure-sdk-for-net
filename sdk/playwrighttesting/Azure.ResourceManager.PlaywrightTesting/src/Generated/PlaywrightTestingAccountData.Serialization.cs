@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DashboardUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DashboardUri))
             {
                 writer.WritePropertyName("dashboardUri"u8);
                 writer.WriteStringValue(DashboardUri.AbsoluteUri);
             }
-            if (RegionalAffinity.HasValue)
+            if (Optional.IsDefined(RegionalAffinity))
             {
                 writer.WritePropertyName("regionalAffinity"u8);
                 writer.WriteStringValue(RegionalAffinity.Value.ToString());
             }
-            if (ScalableExecution.HasValue)
+            if (Optional.IsDefined(ScalableExecution))
             {
                 writer.WritePropertyName("scalableExecution"u8);
                 writer.WriteStringValue(ScalableExecution.Value.ToString());
             }
-            if (Reporting.HasValue)
+            if (Optional.IsDefined(Reporting))
             {
                 writer.WritePropertyName("reporting"u8);
                 writer.WriteStringValue(Reporting.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

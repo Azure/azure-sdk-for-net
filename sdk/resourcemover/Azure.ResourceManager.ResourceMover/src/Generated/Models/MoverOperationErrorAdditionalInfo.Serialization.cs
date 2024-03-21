@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OperationErrorAdditionalInfoType != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationErrorAdditionalInfoType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(OperationErrorAdditionalInfoType);
             }
-            if (options.Format != "W" && Info != null)
+            if (options.Format != "W" && Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);

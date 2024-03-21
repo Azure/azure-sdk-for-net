@@ -11,7 +11,7 @@ This package contains a C# SDK for Azure Communication Messages Services.
 Install the Azure Communication Messages client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.Messages --prerelease
+dotnet add package Azure.Communication.Messages
 ``` 
 
 ### Prerequisites

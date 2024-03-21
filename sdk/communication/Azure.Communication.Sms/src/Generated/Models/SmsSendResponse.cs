@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Sms;
 
 namespace Azure.Communication.Sms.Models
 {
@@ -20,10 +19,7 @@ namespace Azure.Communication.Sms.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SmsSendResponse(IEnumerable<SmsSendResult> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

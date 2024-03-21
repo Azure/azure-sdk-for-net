@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
@@ -81,18 +79,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamingJobTransformationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string transformationName, StreamingJobTransformationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamingJobTransformationResource> CreateOrUpdate(WaitUntil waitUntil, string transformationName, StreamingJobTransformationData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         public virtual async Task<Response<StreamingJobTransformationResource>> GetAsync(string transformationName, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         public virtual Response<StreamingJobTransformationResource> Get(string transformationName, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.Get");
             scope.Start();
@@ -303,14 +267,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string transformationName, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.Exists");
             scope.Start();
@@ -353,14 +310,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         public virtual Response<bool> Exists(string transformationName, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.Exists");
             scope.Start();
@@ -403,14 +353,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         public virtual async Task<NullableResponse<StreamingJobTransformationResource>> GetIfExistsAsync(string transformationName, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.GetIfExists");
             scope.Start();
@@ -455,14 +398,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="transformationName"/> is null. </exception>
         public virtual NullableResponse<StreamingJobTransformationResource> GetIfExists(string transformationName, CancellationToken cancellationToken = default)
         {
-            if (transformationName == null)
-            {
-                throw new ArgumentNullException(nameof(transformationName));
-            }
-            if (transformationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(transformationName));
-            }
+            Argument.AssertNotNullOrEmpty(transformationName, nameof(transformationName));
 
             using var scope = _streamingJobTransformationTransformationsClientDiagnostics.CreateScope("StreamingJobTransformationCollection.GetIfExists");
             scope.Start();

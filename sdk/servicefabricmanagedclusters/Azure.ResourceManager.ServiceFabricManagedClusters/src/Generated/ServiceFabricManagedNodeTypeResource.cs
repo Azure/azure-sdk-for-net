@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> UpdateAsync(ServiceFabricManagedNodeTypePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ServiceFabricManagedNodeTypeResource> Update(ServiceFabricManagedNodeTypePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Update");
             scope.Start();
@@ -378,10 +370,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Restart");
             scope.Start();
@@ -427,10 +416,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Restart(WaitUntil waitUntil, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Restart");
             scope.Start();
@@ -476,10 +462,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ReimageAsync(WaitUntil waitUntil, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Reimage");
             scope.Start();
@@ -525,10 +508,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Reimage(WaitUntil waitUntil, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.Reimage");
             scope.Start();
@@ -574,10 +554,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> DeleteNodeAsync(WaitUntil waitUntil, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.DeleteNode");
             scope.Start();
@@ -623,10 +600,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation DeleteNode(WaitUntil waitUntil, NodeTypeActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.DeleteNode");
             scope.Start();
@@ -724,14 +698,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.AddTag");
             scope.Start();
@@ -792,14 +760,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ServiceFabricManagedNodeTypeResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.AddTag");
             scope.Start();
@@ -859,10 +821,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.SetTags");
             scope.Start();
@@ -919,10 +878,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ServiceFabricManagedNodeTypeResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.SetTags");
             scope.Start();
@@ -979,10 +935,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.RemoveTag");
             scope.Start();
@@ -1042,10 +995,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ServiceFabricManagedNodeTypeResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.RemoveTag");
             scope.Start();

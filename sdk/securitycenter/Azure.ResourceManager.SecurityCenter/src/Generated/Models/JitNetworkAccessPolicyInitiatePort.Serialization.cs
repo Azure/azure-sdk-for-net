@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
-            if (AllowedSourceAddressPrefix != null)
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);

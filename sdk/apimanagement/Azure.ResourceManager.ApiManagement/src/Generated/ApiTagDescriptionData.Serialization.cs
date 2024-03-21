@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ExternalDocsUri != null)
+            if (Optional.IsDefined(ExternalDocsUri))
             {
                 writer.WritePropertyName("externalDocsUrl"u8);
                 writer.WriteStringValue(ExternalDocsUri.AbsoluteUri);
             }
-            if (ExternalDocsDescription != null)
+            if (Optional.IsDefined(ExternalDocsDescription))
             {
                 writer.WritePropertyName("externalDocsDescription"u8);
                 writer.WriteStringValue(ExternalDocsDescription);
             }
-            if (TagId != null)
+            if (Optional.IsDefined(TagId))
             {
                 writer.WritePropertyName("tagId"u8);
                 writer.WriteStringValue(TagId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

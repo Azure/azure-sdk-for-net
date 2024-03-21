@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -50,14 +49,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WorkflowRunsClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

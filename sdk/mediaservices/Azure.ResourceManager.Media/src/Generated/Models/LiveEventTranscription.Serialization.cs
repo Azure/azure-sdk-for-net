@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (!(InputTrackSelection is ChangeTrackingList<LiveEventInputTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InputTrackSelection))
             {
                 writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputTranscriptionTrack != null)
+            if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
                 writer.WriteObjectValue(OutputTranscriptionTrack);

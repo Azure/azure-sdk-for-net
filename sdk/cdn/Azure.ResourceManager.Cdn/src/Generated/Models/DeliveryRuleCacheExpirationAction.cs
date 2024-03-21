@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleCacheExpirationAction(CacheExpirationActionProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
             Name = DeliveryRuleActionType.CacheExpiration;

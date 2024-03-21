@@ -71,6 +71,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             // This is used in determining if we should Backoff.
             // If we've been in another state for X amount of time, that may exceed our maximum interval and immediately trigger a Backoff.
             _lastSuccessfulPing = DateTimeOffset.UtcNow;
+
+            // Must reset the metrics cache here.
+            ResetCachedValues();
         }
 
         private void SetPostState()

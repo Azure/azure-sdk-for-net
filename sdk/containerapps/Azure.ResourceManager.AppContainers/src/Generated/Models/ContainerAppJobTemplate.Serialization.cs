@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (!(InitContainers is ChangeTrackingList<ContainerAppInitContainer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Containers is ChangeTrackingList<ContainerAppContainer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Volumes is ChangeTrackingList<ContainerAppVolume> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();

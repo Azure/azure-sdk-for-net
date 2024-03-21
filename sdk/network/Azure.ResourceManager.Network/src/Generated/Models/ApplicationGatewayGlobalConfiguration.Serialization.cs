@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (EnableRequestBuffering.HasValue)
+            if (Optional.IsDefined(EnableRequestBuffering))
             {
                 writer.WritePropertyName("enableRequestBuffering"u8);
                 writer.WriteBooleanValue(EnableRequestBuffering.Value);
             }
-            if (EnableResponseBuffering.HasValue)
+            if (Optional.IsDefined(EnableResponseBuffering))
             {
                 writer.WritePropertyName("enableResponseBuffering"u8);
                 writer.WriteBooleanValue(EnableResponseBuffering.Value);

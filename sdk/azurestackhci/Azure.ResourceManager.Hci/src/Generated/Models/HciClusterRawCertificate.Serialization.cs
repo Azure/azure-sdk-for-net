@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (!(Certificates is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();

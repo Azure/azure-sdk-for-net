@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(CacheBehavior.ToString());
             writer.WritePropertyName("cacheType"u8);
             writer.WriteStringValue(CacheType.ToString());
-            if (CacheDuration.HasValue)
+            if (Optional.IsDefined(CacheDuration))
             {
                 if (CacheDuration != null)
                 {

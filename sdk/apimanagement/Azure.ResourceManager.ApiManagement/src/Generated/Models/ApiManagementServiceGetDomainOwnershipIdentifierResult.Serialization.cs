@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DomainOwnershipIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(DomainOwnershipIdentifier))
             {
                 writer.WritePropertyName("domainOwnershipIdentifier"u8);
                 writer.WriteStringValue(DomainOwnershipIdentifier);

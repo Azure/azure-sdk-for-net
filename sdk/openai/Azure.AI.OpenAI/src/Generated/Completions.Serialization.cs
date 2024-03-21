@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -30,7 +29,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Id);
             writer.WritePropertyName("created"u8);
             writer.WriteNumberValue(Created, "U");
-            if (!(PromptFilterResults is ChangeTrackingList<ContentFilterResultsForPrompt> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
                 writer.WriteStartArray();

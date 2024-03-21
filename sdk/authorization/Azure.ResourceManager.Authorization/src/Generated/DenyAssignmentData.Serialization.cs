@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DenyAssignmentName != null)
+            if (Optional.IsDefined(DenyAssignmentName))
             {
                 writer.WritePropertyName("denyAssignmentName"u8);
                 writer.WriteStringValue(DenyAssignmentName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Permissions is ChangeTrackingList<DenyAssignmentPermission> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (IsAppliedToChildScopes.HasValue)
+            if (Optional.IsDefined(IsAppliedToChildScopes))
             {
                 writer.WritePropertyName("doNotApplyToChildScopes"u8);
                 writer.WriteBooleanValue(IsAppliedToChildScopes.Value);
             }
-            if (!(Principals is ChangeTrackingList<RoleManagementPrincipal> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Principals))
             {
                 writer.WritePropertyName("principals"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludePrincipals is ChangeTrackingList<RoleManagementPrincipal> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludePrincipals))
             {
                 writer.WritePropertyName("excludePrincipals"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (IsSystemProtected.HasValue)
+            if (Optional.IsDefined(IsSystemProtected))
             {
                 writer.WritePropertyName("isSystemProtected"u8);
                 writer.WriteBooleanValue(IsSystemProtected.Value);

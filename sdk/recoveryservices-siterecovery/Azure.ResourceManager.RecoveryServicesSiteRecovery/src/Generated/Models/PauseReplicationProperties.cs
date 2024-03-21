@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="instanceType"/> is null. </exception>
         public PauseReplicationProperties(string instanceType)
         {
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException(nameof(instanceType));
-            }
+            Argument.AssertNotNull(instanceType, nameof(instanceType));
 
             InstanceType = instanceType;
         }

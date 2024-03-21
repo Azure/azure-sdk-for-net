@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzurePortalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AzurePortalUri))
             {
                 writer.WritePropertyName("azurePortalUri"u8);
                 writer.WriteStringValue(AzurePortalUri.AbsoluteUri);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (PortRange != null)
+            if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
-            if (PortReuseHoldTime != null)
+            if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
-            if (PinholeLimits.HasValue)
+            if (Optional.IsDefined(PinholeLimits))
             {
                 writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
-            if (PinholeTimeouts != null)
+            if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);

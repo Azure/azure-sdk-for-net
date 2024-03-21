@@ -43,79 +43,79 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (PrincipalId.HasValue)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (RoleEligibilityScheduleRequestId != null)
+            if (Optional.IsDefined(RoleEligibilityScheduleRequestId))
             {
                 writer.WritePropertyName("roleEligibilityScheduleRequestId"u8);
                 writer.WriteStringValue(RoleEligibilityScheduleRequestId);
             }
-            if (MemberType.HasValue)
+            if (Optional.IsDefined(MemberType))
             {
                 writer.WritePropertyName("memberType"u8);
                 writer.WriteStringValue(MemberType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (ConditionVersion != null)
+            if (Optional.IsDefined(ConditionVersion))
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedOn"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (ExpandedProperties != null)
+            if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
                 writer.WriteObjectValue(ExpandedProperties);

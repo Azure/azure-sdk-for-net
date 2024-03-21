@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StringId != null)
+            if (options.Format != "W" && Optional.IsDefined(StringId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(StringId);

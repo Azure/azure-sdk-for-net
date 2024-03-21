@@ -19,10 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public CorsOptions(IEnumerable<string> allowedOrigins)
         {
-            if (allowedOrigins == null)
-            {
-                throw new ArgumentNullException(nameof(allowedOrigins));
-            }
+            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
 
             AllowedOrigins = allowedOrigins.ToList();
         }

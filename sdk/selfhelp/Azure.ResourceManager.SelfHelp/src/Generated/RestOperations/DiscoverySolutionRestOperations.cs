@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SelfHelp.Models;
@@ -70,10 +69,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<SelfHelpDiscoverySolutionResult>> ListAsync(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, filter, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,10 +95,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<SelfHelpDiscoverySolutionResult> List(string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, filter, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -143,14 +136,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<SelfHelpDiscoverySolutionResult>> ListNextPageAsync(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -177,14 +164,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<SelfHelpDiscoverySolutionResult> ListNextPage(string nextLink, string scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter, skiptoken);
             _pipeline.Send(message, cancellationToken);

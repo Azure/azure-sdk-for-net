@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare.Mocking
@@ -142,10 +139,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = DataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("MockableDataShareTenantResource.RejectConsumerInvitation");
             scope.Start();
@@ -188,10 +182,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<DataShareConsumerInvitationResource> RejectConsumerInvitation(AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = DataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("MockableDataShareTenantResource.RejectConsumerInvitation");
             scope.Start();
@@ -230,10 +221,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public virtual async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            if (emailRegistration == null)
-            {
-                throw new ArgumentNullException(nameof(emailRegistration));
-            }
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
             using var scope = EmailRegistrationsClientDiagnostics.CreateScope("MockableDataShareTenantResource.ActivateEmail");
             scope.Start();
@@ -272,10 +260,7 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public virtual Response<DataShareEmailRegistration> ActivateEmail(AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            if (emailRegistration == null)
-            {
-                throw new ArgumentNullException(nameof(emailRegistration));
-            }
+            Argument.AssertNotNull(emailRegistration, nameof(emailRegistration));
 
             using var scope = EmailRegistrationsClientDiagnostics.CreateScope("MockableDataShareTenantResource.ActivateEmail");
             scope.Start();

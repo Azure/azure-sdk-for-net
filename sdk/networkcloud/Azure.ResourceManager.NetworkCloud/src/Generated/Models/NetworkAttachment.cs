@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkId"/> is null. </exception>
         public NetworkAttachment(string attachedNetworkId, VirtualMachineIPAllocationMethod ipAllocationMethod)
         {
-            if (attachedNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(attachedNetworkId));
-            }
+            Argument.AssertNotNull(attachedNetworkId, nameof(attachedNetworkId));
 
             AttachedNetworkId = attachedNetworkId;
             IPAllocationMethod = ipAllocationMethod;

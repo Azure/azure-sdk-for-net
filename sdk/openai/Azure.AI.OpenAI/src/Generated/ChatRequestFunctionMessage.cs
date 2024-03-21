@@ -19,10 +19,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ChatRequestFunctionMessage(string name, string content)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Role = ChatRole.Function;
             Name = name;

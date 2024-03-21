@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (NasReroute != null)
+            if (Optional.IsDefined(NasReroute))
             {
                 writer.WritePropertyName("nasReroute"u8);
                 writer.WriteObjectValue(NasReroute);

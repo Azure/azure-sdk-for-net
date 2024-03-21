@@ -22,22 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
         public AmazonMwsLinkedService(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactoryElement<string> accessKeyId)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (marketplaceId == null)
-            {
-                throw new ArgumentNullException(nameof(marketplaceId));
-            }
-            if (sellerId == null)
-            {
-                throw new ArgumentNullException(nameof(sellerId));
-            }
-            if (accessKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(accessKeyId));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(marketplaceId, nameof(marketplaceId));
+            Argument.AssertNotNull(sellerId, nameof(sellerId));
+            Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
 
             Endpoint = endpoint;
             MarketplaceId = marketplaceId;
@@ -63,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonMwsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactorySecretBaseDefinition mwsAuthToken, DataFactoryElement<string> accessKeyId, DataFactorySecretBaseDefinition secretKey, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonMwsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactorySecret mwsAuthToken, DataFactoryElement<string> accessKeyId, DataFactorySecret secretKey, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             MarketplaceId = marketplaceId;
@@ -90,11 +78,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Amazon seller ID. </summary>
         public DataFactoryElement<string> SellerId { get; set; }
         /// <summary> The Amazon MWS authentication token. </summary>
-        public DataFactorySecretBaseDefinition MwsAuthToken { get; set; }
+        public DataFactorySecret MwsAuthToken { get; set; }
         /// <summary> The access key id used to access data. </summary>
         public DataFactoryElement<string> AccessKeyId { get; set; }
         /// <summary> The secret key used to access data. </summary>
-        public DataFactorySecretBaseDefinition SecretKey { get; set; }
+        public DataFactorySecret SecretKey { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>

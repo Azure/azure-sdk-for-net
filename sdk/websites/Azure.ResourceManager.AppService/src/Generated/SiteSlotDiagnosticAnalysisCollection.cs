@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
         public virtual async Task<Response<SiteSlotDiagnosticAnalysisResource>> GetAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
-            {
-                throw new ArgumentNullException(nameof(analysisName));
-            }
-            if (analysisName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(analysisName));
-            }
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
         public virtual Response<SiteSlotDiagnosticAnalysisResource> Get(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
-            {
-                throw new ArgumentNullException(nameof(analysisName));
-            }
-            if (analysisName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(analysisName));
-            }
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
-            {
-                throw new ArgumentNullException(nameof(analysisName));
-            }
-            if (analysisName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(analysisName));
-            }
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
         public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
-            {
-                throw new ArgumentNullException(nameof(analysisName));
-            }
-            if (analysisName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(analysisName));
-            }
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotDiagnosticAnalysisResource>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
-            {
-                throw new ArgumentNullException(nameof(analysisName));
-            }
-            if (analysisName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(analysisName));
-            }
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
         public virtual NullableResponse<SiteSlotDiagnosticAnalysisResource> GetIfExists(string analysisName, CancellationToken cancellationToken = default)
         {
-            if (analysisName == null)
-            {
-                throw new ArgumentNullException(nameof(analysisName));
-            }
-            if (analysisName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(analysisName));
-            }
+            Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
             scope.Start();

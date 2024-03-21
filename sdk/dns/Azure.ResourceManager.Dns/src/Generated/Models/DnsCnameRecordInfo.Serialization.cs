@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Cname != null)
+            if (Optional.IsDefined(Cname))
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);

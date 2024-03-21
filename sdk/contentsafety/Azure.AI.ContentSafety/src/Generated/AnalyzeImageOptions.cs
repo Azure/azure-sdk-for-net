@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
@@ -51,10 +50,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
         public AnalyzeImageOptions(ContentSafetyImageData image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
+            Argument.AssertNotNull(image, nameof(image));
 
             Image = image;
             Categories = new ChangeTrackingList<ImageCategory>();

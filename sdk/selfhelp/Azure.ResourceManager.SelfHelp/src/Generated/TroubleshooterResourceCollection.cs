@@ -8,10 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SelfHelp
 {
@@ -69,18 +67,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TroubleshooterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string troubleshooterName, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -128,18 +116,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TroubleshooterResource> CreateOrUpdate(WaitUntil waitUntil, string troubleshooterName, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -185,14 +163,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         public virtual async Task<Response<TroubleshooterResource>> GetAsync(string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.Get");
             scope.Start();
@@ -237,14 +208,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         public virtual Response<TroubleshooterResource> Get(string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.Get");
             scope.Start();
@@ -289,14 +253,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.Exists");
             scope.Start();
@@ -339,14 +296,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         public virtual Response<bool> Exists(string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.Exists");
             scope.Start();
@@ -389,14 +339,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         public virtual async Task<NullableResponse<TroubleshooterResource>> GetIfExistsAsync(string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.GetIfExists");
             scope.Start();
@@ -441,14 +384,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         public virtual NullableResponse<TroubleshooterResource> GetIfExists(string troubleshooterName, CancellationToken cancellationToken = default)
         {
-            if (troubleshooterName == null)
-            {
-                throw new ArgumentNullException(nameof(troubleshooterName));
-            }
-            if (troubleshooterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(troubleshooterName));
-            }
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResourceCollection.GetIfExists");
             scope.Start();

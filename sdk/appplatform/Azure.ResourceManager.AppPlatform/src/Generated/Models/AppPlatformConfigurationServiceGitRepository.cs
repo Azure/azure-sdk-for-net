@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -55,22 +54,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="patterns"/>, <paramref name="uri"/> or <paramref name="label"/> is null. </exception>
         public AppPlatformConfigurationServiceGitRepository(string name, IEnumerable<string> patterns, Uri uri, string label)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (patterns == null)
-            {
-                throw new ArgumentNullException(nameof(patterns));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (label == null)
-            {
-                throw new ArgumentNullException(nameof(label));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(patterns, nameof(patterns));
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(label, nameof(label));
 
             Name = name;
             Patterns = patterns.ToList();

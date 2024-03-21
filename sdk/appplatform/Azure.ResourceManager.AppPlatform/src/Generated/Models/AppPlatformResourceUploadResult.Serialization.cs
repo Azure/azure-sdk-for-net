@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (UploadUri != null)
+            if (Optional.IsDefined(UploadUri))
             {
                 writer.WritePropertyName("uploadUrl"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);

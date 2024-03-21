@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Minute.HasValue)
+            if (Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);

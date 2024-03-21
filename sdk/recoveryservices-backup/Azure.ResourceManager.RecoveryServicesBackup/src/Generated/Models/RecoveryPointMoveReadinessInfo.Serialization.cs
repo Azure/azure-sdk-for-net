@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (IsReadyForMove.HasValue)
+            if (Optional.IsDefined(IsReadyForMove))
             {
                 writer.WritePropertyName("isReadyForMove"u8);
                 writer.WriteBooleanValue(IsReadyForMove.Value);
             }
-            if (AdditionalInfo != null)
+            if (Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStringValue(AdditionalInfo);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerVirtualNetworkRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkRuleName, SqlServerVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerVirtualNetworkRuleResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkRuleName, SqlServerVirtualNetworkRuleData data, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<Response<SqlServerVirtualNetworkRuleResource>> GetAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<SqlServerVirtualNetworkRuleResource> Get(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerVirtualNetworkRuleResource>> GetIfExistsAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         public virtual NullableResponse<SqlServerVirtualNetworkRuleResource> GetIfExists(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkRuleName));
-            }
-            if (virtualNetworkRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkRuleName, nameof(virtualNetworkRuleName));
 
             using var scope = _sqlServerVirtualNetworkRuleVirtualNetworkRulesClientDiagnostics.CreateScope("SqlServerVirtualNetworkRuleCollection.GetIfExists");
             scope.Start();

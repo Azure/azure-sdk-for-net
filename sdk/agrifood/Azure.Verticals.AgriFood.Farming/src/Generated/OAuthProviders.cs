@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -70,14 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='GetOAuthProviderAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetOAuthProviderAsync(string oauthProviderId, RequestContext context)
         {
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
-            if (oauthProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.GetOAuthProvider");
             scope.Start();
@@ -112,14 +104,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='GetOAuthProvider(string,RequestContext)']/*" />
         public virtual Response GetOAuthProvider(string oauthProviderId, RequestContext context)
         {
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
-            if (oauthProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.GetOAuthProvider");
             scope.Start();
@@ -155,18 +140,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string oauthProviderId, RequestContent content, RequestContext context = null)
         {
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
-            if (oauthProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(oauthProviderId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.CreateOrUpdate");
             scope.Start();
@@ -202,18 +177,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string oauthProviderId, RequestContent content, RequestContext context = null)
         {
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
-            if (oauthProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(oauthProviderId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.CreateOrUpdate");
             scope.Start();
@@ -248,14 +213,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string oauthProviderId, RequestContext context = null)
         {
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
-            if (oauthProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.Delete");
             scope.Start();
@@ -290,14 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string oauthProviderId, RequestContext context = null)
         {
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
-            if (oauthProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.Delete");
             scope.Start();
@@ -332,14 +283,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -374,14 +318,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -492,18 +429,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string oauthProviderId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.CreateCascadeDeleteJob");
             scope.Start();
@@ -540,18 +467,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/OAuthProviders.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string oauthProviderId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (oauthProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(oauthProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(oauthProviderId, nameof(oauthProviderId));
 
             using var scope = ClientDiagnostics.CreateScope("OAuthProviders.CreateCascadeDeleteJob");
             scope.Start();

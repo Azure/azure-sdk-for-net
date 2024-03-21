@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (WorkloadProfileName != null)
+            if (Optional.IsDefined(WorkloadProfileName))
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (options.Format != "W" && !(OutboundIPAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EventStreamEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseIntegrationRuntimeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string integrationRuntimeName, SynapseIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseIntegrationRuntimeResource> CreateOrUpdate(WaitUntil waitUntil, string integrationRuntimeName, SynapseIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +179,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<Response<SynapseIntegrationRuntimeResource>> GetAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual Response<SynapseIntegrationRuntimeResource> Get(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual Response<bool> Exists(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.Exists");
             scope.Start();
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseIntegrationRuntimeResource>> GetIfExistsAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.GetIfExists");
             scope.Start();
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual NullableResponse<SynapseIntegrationRuntimeResource> GetIfExists(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (integrationRuntimeName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationRuntimeName));
-            }
-            if (integrationRuntimeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationRuntimeName));
-            }
+            Argument.AssertNotNullOrEmpty(integrationRuntimeName, nameof(integrationRuntimeName));
 
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeCollection.GetIfExists");
             scope.Start();

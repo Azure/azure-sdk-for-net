@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Mocking;
 using Azure.ResourceManager.Workloads.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapVirtualInstanceResource"/> object. </returns>
         public static SapVirtualInstanceResource GetSapVirtualInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapVirtualInstanceResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapCentralServerInstanceResource"/> object. </returns>
         public static SapCentralServerInstanceResource GetSapCentralServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapCentralServerInstanceResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapDatabaseInstanceResource"/> object. </returns>
         public static SapDatabaseInstanceResource GetSapDatabaseInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapDatabaseInstanceResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapApplicationServerInstanceResource"/> object. </returns>
         public static SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapApplicationServerInstanceResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapMonitorResource"/> object. </returns>
         public static SapMonitorResource GetSapMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapMonitorResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapProviderInstanceResource"/> object. </returns>
         public static SapProviderInstanceResource GetSapProviderInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapProviderInstanceResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public static SapLandscapeMonitorResource GetSapLandscapeMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadsArmClient(client).GetSapLandscapeMonitorResource(id);
         }
@@ -201,10 +178,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
         public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapVirtualInstances();
         }
@@ -242,10 +216,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
         }
@@ -283,10 +254,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapVirtualInstance(sapVirtualInstanceName, cancellationToken);
         }
@@ -303,10 +271,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapMonitorResources and their operations over a SapMonitorResource. </returns>
         public static SapMonitorCollection GetSapMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapMonitors();
         }
@@ -344,10 +309,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static async Task<Response<SapMonitorResource>> GetSapMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
@@ -385,10 +347,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static Response<SapMonitorResource> GetSapMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapMonitor(monitorName, cancellationToken);
         }
@@ -421,10 +380,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -457,10 +413,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
         }
@@ -493,10 +446,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -529,10 +479,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
         }
@@ -565,10 +512,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -601,10 +545,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
         }
@@ -637,10 +578,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -673,10 +611,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
         }
@@ -712,10 +647,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
         }
@@ -751,10 +683,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapVirtualInstances(cancellationToken);
         }
@@ -790,10 +719,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
         }
@@ -829,10 +755,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapMonitors(cancellationToken);
         }

@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -295,10 +293,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
         public virtual async Task<Response<VirtualWanResource>> UpdateAsync(NetworkTagsObject wanParameters, CancellationToken cancellationToken = default)
         {
-            if (wanParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wanParameters));
-            }
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.Update");
             scope.Start();
@@ -340,10 +335,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="wanParameters"/> is null. </exception>
         public virtual Response<VirtualWanResource> Update(NetworkTagsObject wanParameters, CancellationToken cancellationToken = default)
         {
-            if (wanParameters == null)
-            {
-                throw new ArgumentNullException(nameof(wanParameters));
-            }
+            Argument.AssertNotNull(wanParameters, nameof(wanParameters));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.Update");
             scope.Start();
@@ -462,10 +454,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<VpnProfileResponse>> GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.GenerateVirtualWanVpnServerConfigurationVpnProfile");
             scope.Start();
@@ -511,10 +500,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<VpnProfileResponse> GenerateVirtualWanVpnServerConfigurationVpnProfile(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.GenerateVirtualWanVpnServerConfigurationVpnProfile");
             scope.Start();
@@ -556,10 +542,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> DownloadVpnSitesConfigurationAsync(WaitUntil waitUntil, GetVpnSitesConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vpnSitesConfigurationClientDiagnostics.CreateScope("VirtualWanResource.DownloadVpnSitesConfiguration");
             scope.Start();
@@ -601,10 +584,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation DownloadVpnSitesConfiguration(WaitUntil waitUntil, GetVpnSitesConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vpnSitesConfigurationClientDiagnostics.CreateScope("VirtualWanResource.DownloadVpnSitesConfiguration");
             scope.Start();
@@ -726,14 +706,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<VirtualWanResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.AddTag");
             scope.Start();
@@ -794,14 +768,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<VirtualWanResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.AddTag");
             scope.Start();
@@ -861,10 +829,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<VirtualWanResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.SetTags");
             scope.Start();
@@ -921,10 +886,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<VirtualWanResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.SetTags");
             scope.Start();
@@ -981,10 +943,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<VirtualWanResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.RemoveTag");
             scope.Start();
@@ -1044,10 +1003,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<VirtualWanResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanResource.RemoveTag");
             scope.Start();

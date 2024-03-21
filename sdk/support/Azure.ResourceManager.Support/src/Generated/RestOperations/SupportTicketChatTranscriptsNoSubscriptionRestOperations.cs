@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,14 +60,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChatTranscriptsListResult>> ListAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListRequest(supportTicketName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +85,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChatTranscriptsListResult> List(string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListRequest(supportTicketName);
             _pipeline.Send(message, cancellationToken);
@@ -140,18 +125,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChatTranscriptsListResult>> ListNextPageAsync(string nextLink, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListNextPageRequest(nextLink, supportTicketName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -177,18 +152,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChatTranscriptsListResult> ListNextPage(string nextLink, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListNextPageRequest(nextLink, supportTicketName);
             _pipeline.Send(message, cancellationToken);

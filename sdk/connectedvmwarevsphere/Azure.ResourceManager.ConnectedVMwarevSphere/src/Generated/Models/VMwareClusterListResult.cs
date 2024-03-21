@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ConnectedVMwarevSphere;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
@@ -52,10 +51,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareClusterListResult(IEnumerable<VMwareClusterData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }

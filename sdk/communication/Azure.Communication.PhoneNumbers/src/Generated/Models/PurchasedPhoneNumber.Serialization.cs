@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -23,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers
             string phoneNumber = default;
             string countryCode = default;
             PhoneNumberType phoneNumberType = default;
-            PhoneNumberCapabilities capabilities = default;
+            PurchasedPhoneNumberCapabilities capabilities = default;
             PhoneNumberAssignmentType assignmentType = default;
             DateTimeOffset purchaseDate = default;
             PhoneNumberCost cost = default;
@@ -54,7 +53,7 @@ namespace Azure.Communication.PhoneNumbers
                 }
                 if (property.NameEquals("capabilities"u8))
                 {
-                    capabilities = PhoneNumberCapabilities.DeserializePhoneNumberCapabilities(property.Value);
+                    capabilities = PurchasedPhoneNumberCapabilities.DeserializePurchasedPhoneNumberCapabilities(property.Value);
                     continue;
                 }
                 if (property.NameEquals("assignmentType"u8))

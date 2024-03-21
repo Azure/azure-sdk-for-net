@@ -13,8 +13,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientLiveTestBase : RecordedTestBase<PhoneNumbersClientTestEnvironment>
     {
-        private const string PhoneNumberRegEx = @"[\\+]?[0-9]{11,15}";
-        private const string UrlEncodedPhoneNumberRegEx = @"[\\%2B]{0,3}[0-9]{11,15}";
+        private const string PhoneNumberRegEx = @"((?:\\u002B)[0-9]{11,})|((?:\%2B)[0-9]{11,})|((?:[+]?)[0-9]{11,})";
         protected const string UnauthorizedNumber = "+14255550123";
         protected const string UnknownPhoneNumberSearchResultId = "01234567-0123-0123-0123-0123456789AB";
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
@@ -23,7 +22,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             SanitizedHeaders.Add("location");
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
-            UriRegexSanitizers.Add(new UriRegexSanitizer(UrlEncodedPhoneNumberRegEx, SanitizeValue));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
             SanitizedHeaders.Add("x-ms-content-sha256");
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ContinuousBackupInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(ContinuousBackupInformation))
             {
                 writer.WritePropertyName("continuousBackupInformation"u8);
                 writer.WriteObjectValue(ContinuousBackupInformation);

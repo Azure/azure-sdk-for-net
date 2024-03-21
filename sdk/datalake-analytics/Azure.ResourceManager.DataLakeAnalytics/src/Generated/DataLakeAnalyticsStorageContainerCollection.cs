@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<DataLakeAnalyticsStorageContainerResource>> GetAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<DataLakeAnalyticsStorageContainerResource> Get(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual Response<bool> Exists(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataLakeAnalyticsStorageContainerResource>> GetIfExistsAsync(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public virtual NullableResponse<DataLakeAnalyticsStorageContainerResource> GetIfExists(string containerName, CancellationToken cancellationToken = default)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (containerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(containerName));
-            }
+            Argument.AssertNotNullOrEmpty(containerName, nameof(containerName));
 
             using var scope = _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageContainerCollection.GetIfExists");
             scope.Start();

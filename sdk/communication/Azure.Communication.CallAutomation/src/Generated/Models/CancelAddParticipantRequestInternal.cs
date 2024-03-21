@@ -17,10 +17,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         public CancelAddParticipantRequestInternal(string invitationId)
         {
-            if (invitationId == null)
-            {
-                throw new ArgumentNullException(nameof(invitationId));
-            }
+            Argument.AssertNotNull(invitationId, nameof(invitationId));
 
             InvitationId = invitationId;
         }

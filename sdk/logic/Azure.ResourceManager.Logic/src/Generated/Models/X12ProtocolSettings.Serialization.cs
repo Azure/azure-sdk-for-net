@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(SecuritySettings);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (!(EnvelopeOverrides is ChangeTrackingList<X12EnvelopeOverride> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationOverrides is ChangeTrackingList<X12ValidationOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MessageFilterList is ChangeTrackingList<X12MessageIdentifier> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(X12DelimiterOverrides is ChangeTrackingList<X12DelimiterOverrides> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(X12DelimiterOverrides))
             {
                 writer.WritePropertyName("x12DelimiterOverrides"u8);
                 writer.WriteStartArray();

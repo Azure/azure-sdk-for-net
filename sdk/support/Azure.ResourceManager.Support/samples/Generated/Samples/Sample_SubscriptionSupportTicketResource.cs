@@ -9,21 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SubscriptionSupportTicketResource
     {
-        // Checks whether name is available for SupportTicket resource
+        // Checks whether name is available for subscription scoped SupportTicket resource
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckSupportTicketNameAvailability_ChecksWhetherNameIsAvailableForSupportTicketResource()
+        public async Task CheckSupportTicketNameAvailability_ChecksWhetherNameIsAvailableForSubscriptionScopedSupportTicketResource()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CheckNameAvailabilityWithSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/CheckNameAvailabilityWithSubscription.json
             // this example is just showing the usage of "SupportTickets_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +47,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDetailsOfASubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetSubscriptionSupportTicketDetails.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetSubscriptionSupportTicketDetails.json
             // this example is just showing the usage of "SupportTickets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +77,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAdvancedDiagnosticConsentOfASupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateAdvancedDiagnosticConsentOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/UpdateAdvancedDiagnosticConsentOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,12 +106,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update contact details of a support ticket
+        // Update contact details of a subscription scoped support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateContactDetailsOfASupportTicket()
+        public async Task Update_UpdateContactDetailsOfASubscriptionScopedSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateContactDetailsOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/UpdateContactDetailsOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,12 +154,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update severity of a support ticket
+        // Update severity of a subscription scoped support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateSeverityOfASupportTicket()
+        public async Task Update_UpdateSeverityOfASubscriptionScopedSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateSeverityOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/UpdateSeverityOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,12 +188,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update status of a support ticket
+        // Update status of a subscription scoped support ticket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateStatusOfASupportTicket()
+        public async Task Update_UpdateStatusOfASubscriptionScopedSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/UpdateStatusOfSupportTicketForSubscription.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/UpdateStatusOfSupportTicketForSubscription.json
             // this example is just showing the usage of "SupportTickets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,12 +222,12 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Checks whether name is available for Communication resource
+        // Checks whether name is available for subscription scoped Communication resource
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckCommunicationNameAvailability_ChecksWhetherNameIsAvailableForCommunicationResource()
+        public async Task CheckCommunicationNameAvailability_ChecksWhetherNameIsAvailableForSubscriptionScopedCommunicationResource()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CheckNameAvailabilityForSupportTicketCommunication.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/CheckNameAvailabilityForSupportTicketCommunication.json
             // this example is just showing the usage of "Communications_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

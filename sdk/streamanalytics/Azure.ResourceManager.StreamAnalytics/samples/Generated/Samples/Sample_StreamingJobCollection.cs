@@ -7,12 +7,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics.Samples

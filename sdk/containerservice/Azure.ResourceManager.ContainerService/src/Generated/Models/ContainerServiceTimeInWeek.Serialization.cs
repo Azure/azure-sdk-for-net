@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Day.HasValue)
+            if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
             }
-            if (!(HourSlots is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HourSlots))
             {
                 writer.WritePropertyName("hourSlots"u8);
                 writer.WriteStartArray();

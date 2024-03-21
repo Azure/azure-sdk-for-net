@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<BatchPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics.CreateScope("BatchPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -118,7 +109,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<BatchPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics.CreateScope("BatchPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -170,7 +154,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -201,7 +185,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -232,7 +216,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics.CreateScope("BatchPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -282,7 +259,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics.CreateScope("BatchPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -332,7 +302,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<BatchPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics.CreateScope("BatchPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -384,7 +347,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<BatchPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _batchPrivateLinkResourcePrivateLinkResourceClientDiagnostics.CreateScope("BatchPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

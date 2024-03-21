@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
@@ -22,14 +21,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="principalIds"/> is null. </exception>
         public RoleAssignmentArtifact(string roleDefinitionId, BinaryData principalIds)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
-            if (principalIds == null)
-            {
-                throw new ArgumentNullException(nameof(principalIds));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            Argument.AssertNotNull(principalIds, nameof(principalIds));
 
             DependsOn = new ChangeTrackingList<string>();
             RoleDefinitionId = roleDefinitionId;

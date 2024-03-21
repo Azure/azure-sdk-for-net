@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (SchemaType.HasValue)
+            if (Optional.IsDefined(SchemaType))
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());

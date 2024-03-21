@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CredentialName != null)
+            if (Optional.IsDefined(CredentialName))
             {
                 writer.WritePropertyName("credentialName"u8);
                 writer.WriteStringValue(CredentialName);
             }
-            if (AzureKeyVaultUri != null)
+            if (Optional.IsDefined(AzureKeyVaultUri))
             {
                 writer.WritePropertyName("azureKeyVaultUrl"u8);
                 writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
             }
-            if (ServicePrincipalName != null)
+            if (Optional.IsDefined(ServicePrincipalName))
             {
                 writer.WritePropertyName("servicePrincipalName"u8);
                 writer.WriteStringValue(ServicePrincipalName);
             }
-            if (ServicePrincipalSecret != null)
+            if (Optional.IsDefined(ServicePrincipalSecret))
             {
                 writer.WritePropertyName("servicePrincipalSecret"u8);
                 writer.WriteStringValue(ServicePrincipalSecret);

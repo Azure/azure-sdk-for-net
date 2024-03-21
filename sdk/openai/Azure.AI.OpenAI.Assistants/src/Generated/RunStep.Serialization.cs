@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -90,7 +89,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 writer.WriteNull("failed_at");
             }
-            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

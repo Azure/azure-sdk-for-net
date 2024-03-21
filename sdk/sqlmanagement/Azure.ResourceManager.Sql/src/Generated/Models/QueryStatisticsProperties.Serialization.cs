@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && QueryId != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (options.Format != "W" && StartTime != null)
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && EndTime != null)
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (!(Intervals is ChangeTrackingList<QueryMetricInterval> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Intervals))
             {
                 writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();

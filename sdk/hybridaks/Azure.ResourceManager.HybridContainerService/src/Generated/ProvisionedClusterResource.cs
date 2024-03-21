@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
@@ -362,10 +360,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ProvisionedClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ProvisionedClusterData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.CreateOrUpdate");
             scope.Start();
@@ -411,10 +406,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ProvisionedClusterResource> CreateOrUpdate(WaitUntil waitUntil, ProvisionedClusterData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.CreateOrUpdate");
             scope.Start();

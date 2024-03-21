@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="roleId"/> is null. </exception>
         public MonitorArmRoleReceiver(string name, string roleId)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (roleId == null)
-            {
-                throw new ArgumentNullException(nameof(roleId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(roleId, nameof(roleId));
 
             Name = name;
             RoleId = roleId;

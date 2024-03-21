@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(MatchCriteria is ChangeTrackingList<RouteCriterion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchCriteria))
             {
                 writer.WritePropertyName("matchCriteria"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<RouteMapAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextStepIfMatched.HasValue)
+            if (Optional.IsDefined(NextStepIfMatched))
             {
                 writer.WritePropertyName("nextStepIfMatched"u8);
                 writer.WriteStringValue(NextStepIfMatched.Value.ToString());

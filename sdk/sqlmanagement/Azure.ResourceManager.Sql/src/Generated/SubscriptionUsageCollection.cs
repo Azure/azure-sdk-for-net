@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -84,14 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual async Task<Response<SubscriptionUsageResource>> GetAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
@@ -136,14 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<SubscriptionUsageResource> Get(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Get");
             scope.Start();
@@ -248,14 +232,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
@@ -298,14 +275,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual Response<bool> Exists(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.Exists");
             scope.Start();
@@ -348,14 +318,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual async Task<NullableResponse<SubscriptionUsageResource>> GetIfExistsAsync(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();
@@ -400,14 +363,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="usageName"/> is null. </exception>
         public virtual NullableResponse<SubscriptionUsageResource> GetIfExists(string usageName, CancellationToken cancellationToken = default)
         {
-            if (usageName == null)
-            {
-                throw new ArgumentNullException(nameof(usageName));
-            }
-            if (usageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(usageName));
-            }
+            Argument.AssertNotNullOrEmpty(usageName, nameof(usageName));
 
             using var scope = _subscriptionUsageClientDiagnostics.CreateScope("SubscriptionUsageCollection.GetIfExists");
             scope.Start();

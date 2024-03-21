@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(ResourceTypes.ToString());
             writer.WritePropertyName("signedPermission"u8);
             writer.WriteStringValue(Permissions.ToString());
-            if (IPAddressOrRange != null)
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Protocols.HasValue)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (SharedAccessStartOn.HasValue)
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry"u8);
             writer.WriteStringValue(SharedAccessExpireOn, "O");
-            if (KeyToSign != null)
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);

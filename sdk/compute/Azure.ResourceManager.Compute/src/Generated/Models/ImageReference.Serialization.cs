@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Offer != null)
+            if (Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && ExactVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ExactVersion))
             {
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
-            if (SharedGalleryImageUniqueId != null)
+            if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
                 writer.WriteStringValue(SharedGalleryImageUniqueId);
             }
-            if (CommunityGalleryImageId != null)
+            if (Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

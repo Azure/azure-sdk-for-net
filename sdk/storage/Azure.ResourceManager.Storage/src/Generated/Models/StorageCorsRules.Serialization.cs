@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (!(CorsRules is ChangeTrackingList<StorageCorsRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorsRules))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();

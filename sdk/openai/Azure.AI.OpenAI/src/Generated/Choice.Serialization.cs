@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -31,7 +30,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
-            if (ContentFilterResults != null)
+            if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);

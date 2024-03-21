@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (IsUnique.HasValue)
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("isUnique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);

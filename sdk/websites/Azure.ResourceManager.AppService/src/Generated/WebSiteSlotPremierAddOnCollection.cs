@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -79,18 +77,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteSlotPremierAddOnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.CreateOrUpdate");
             scope.Start();
@@ -138,18 +126,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteSlotPremierAddOnResource> CreateOrUpdate(WaitUntil waitUntil, string premierAddOnName, PremierAddOnData data, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.CreateOrUpdate");
             scope.Start();
@@ -195,14 +173,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotPremierAddOnResource>> GetAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.Get");
             scope.Start();
@@ -247,14 +218,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<WebSiteSlotPremierAddOnResource> Get(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.Get");
             scope.Start();
@@ -299,14 +263,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.Exists");
             scope.Start();
@@ -349,14 +306,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual Response<bool> Exists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.Exists");
             scope.Start();
@@ -399,14 +349,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotPremierAddOnResource>> GetIfExistsAsync(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.GetIfExists");
             scope.Start();
@@ -451,14 +394,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOnName"/> is null. </exception>
         public virtual NullableResponse<WebSiteSlotPremierAddOnResource> GetIfExists(string premierAddOnName, CancellationToken cancellationToken = default)
         {
-            if (premierAddOnName == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOnName));
-            }
-            if (premierAddOnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(premierAddOnName));
-            }
+            Argument.AssertNotNullOrEmpty(premierAddOnName, nameof(premierAddOnName));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnCollection.GetIfExists");
             scope.Start();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VMwareHostResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostName, VMwareHostData data, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VMwareHostResource> CreateOrUpdate(WaitUntil waitUntil, string hostName, VMwareHostData data, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<Response<VMwareHostResource>> GetAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<VMwareHostResource> Get(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual Response<bool> Exists(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual async Task<NullableResponse<VMwareHostResource>> GetIfExistsAsync(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public virtual NullableResponse<VMwareHostResource> GetIfExists(string hostName, CancellationToken cancellationToken = default)
         {
-            if (hostName == null)
-            {
-                throw new ArgumentNullException(nameof(hostName));
-            }
-            if (hostName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostName));
-            }
+            Argument.AssertNotNullOrEmpty(hostName, nameof(hostName));
 
             using var scope = _vMwareHostHostsClientDiagnostics.CreateScope("VMwareHostCollection.GetIfExists");
             scope.Start();

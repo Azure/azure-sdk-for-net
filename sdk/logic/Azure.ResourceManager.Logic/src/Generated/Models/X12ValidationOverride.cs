@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         public X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
 
             MessageId = messageId;
             ValidateEdiTypes = validateEdiTypes;

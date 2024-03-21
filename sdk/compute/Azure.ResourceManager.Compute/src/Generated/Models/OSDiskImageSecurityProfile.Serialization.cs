@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ConfidentialVmEncryptionType.HasValue)
+            if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
                 writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
-            if (SecureVmDiskEncryptionSetId != null)
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);

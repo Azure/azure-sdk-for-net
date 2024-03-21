@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> or <paramref name="ruleName"/> is null. </exception>
         internal FirewallRuleCounter(string priority, string ruleName)
         {
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
+            Argument.AssertNotNull(priority, nameof(priority));
+            Argument.AssertNotNull(ruleName, nameof(ruleName));
 
             Priority = priority;
             RuleName = ruleName;

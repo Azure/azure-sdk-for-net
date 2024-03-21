@@ -17,10 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> is null. </exception>
         public SemanticField(string fieldName)
         {
-            if (fieldName == null)
-            {
-                throw new ArgumentNullException(nameof(fieldName));
-            }
+            Argument.AssertNotNull(fieldName, nameof(fieldName));
 
             FieldName = fieldName;
         }

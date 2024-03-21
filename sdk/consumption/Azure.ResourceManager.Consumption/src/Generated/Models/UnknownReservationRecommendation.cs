@@ -7,13 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The UnknownReservationRecommendation. </summary>
+    /// <summary> Unknown version of ReservationRecommendation. </summary>
     internal partial class UnknownReservationRecommendation : ConsumptionReservationRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReservationRecommendation"/>. </summary>

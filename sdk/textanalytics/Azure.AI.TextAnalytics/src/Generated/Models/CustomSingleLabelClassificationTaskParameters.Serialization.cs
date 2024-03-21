@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);

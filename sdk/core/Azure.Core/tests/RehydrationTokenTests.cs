@@ -30,5 +30,12 @@ namespace Azure.Core.Tests
             var deserializedToken = ModelReaderWriter.Read(data, typeof(RehydrationToken));
             Assert.AreEqual(token, deserializedToken);
         }
+
+        [Test]
+        public void SerializeDefaultValue()
+        {
+            var data = ModelReaderWriter.Write(default(RehydrationToken));
+            Assert.NotNull(data);
+        }
     }
 }

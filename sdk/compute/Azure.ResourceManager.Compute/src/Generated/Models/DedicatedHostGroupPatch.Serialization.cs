@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlatformFaultDomainCount.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (options.Format != "W" && !(Hosts is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
             }
-            if (SupportAutomaticPlacement.HasValue)
+            if (Optional.IsDefined(SupportAutomaticPlacement))
             {
                 writer.WritePropertyName("supportAutomaticPlacement"u8);
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);

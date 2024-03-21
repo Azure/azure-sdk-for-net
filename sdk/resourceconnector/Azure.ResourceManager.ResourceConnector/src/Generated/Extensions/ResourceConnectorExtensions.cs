@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceConnector.Mocking;
 using Azure.ResourceManager.ResourceConnector.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> Returns a <see cref="ResourceConnectorApplianceResource"/> object. </returns>
         public static ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableResourceConnectorArmClient(client).GetResourceConnectorApplianceResource(id);
         }
@@ -69,10 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> An object representing collection of ResourceConnectorApplianceResources and their operations over a ResourceConnectorApplianceResource. </returns>
         public static ResourceConnectorApplianceCollection GetResourceConnectorAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliances();
         }
@@ -110,10 +102,7 @@ namespace Azure.ResourceManager.ResourceConnector
         [ForwardsClientCalls]
         public static async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorApplianceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -151,10 +140,7 @@ namespace Azure.ResourceManager.ResourceConnector
         [ForwardsClientCalls]
         public static Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliance(resourceName, cancellationToken);
         }
@@ -190,10 +176,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliancesAsync(cancellationToken);
         }
@@ -229,10 +212,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> A collection of <see cref="ResourceConnectorApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliances(cancellationToken);
         }
@@ -267,10 +247,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigApplianceAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -305,10 +282,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigAppliance(cancellationToken);
         }

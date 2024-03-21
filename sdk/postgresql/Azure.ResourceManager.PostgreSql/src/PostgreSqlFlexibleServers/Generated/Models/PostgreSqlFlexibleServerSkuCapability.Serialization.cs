@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && SupportedIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && SupportedMemoryPerVcoreMb.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVcoreMb))
             {
                 writer.WritePropertyName("supportedMemoryPerVcoreMb"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVcoreMb.Value);
             }
-            if (options.Format != "W" && !(SupportedZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
             {
                 writer.WritePropertyName("supportedZones"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedHaMode is ChangeTrackingList<PostgreSqlFlexibleServerHAMode> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHaMode))
             {
                 writer.WritePropertyName("supportedHaMode"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CapabilityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

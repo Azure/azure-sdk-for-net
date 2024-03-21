@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProximityPlacementGroupType.HasValue)
+            if (Optional.IsDefined(ProximityPlacementGroupType))
             {
                 writer.WritePropertyName("proximityPlacementGroupType"u8);
                 writer.WriteStringValue(ProximityPlacementGroupType.Value.ToString());
             }
-            if (options.Format != "W" && !(VirtualMachines is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(VirtualMachineScaleSets is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachineScaleSets))
             {
                 writer.WritePropertyName("virtualMachineScaleSets"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AvailabilitySets is ChangeTrackingList<ComputeSubResourceDataWithColocationStatus> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailabilitySets))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (ColocationStatus != null)
+            if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
                 writer.WriteObjectValue(ColocationStatus);
             }
-            if (Intent != null)
+            if (Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteObjectValue(Intent);

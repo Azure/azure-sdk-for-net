@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (PublicNetwork != null)
+            if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
-            if (!(PrivateEndpoints is ChangeTrackingList<PrivateEndpointAcl> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();

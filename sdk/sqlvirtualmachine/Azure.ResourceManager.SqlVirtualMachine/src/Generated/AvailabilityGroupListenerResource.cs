@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AvailabilityGroupListenerResource>> UpdateAsync(WaitUntil waitUntil, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AvailabilityGroupListenerResource> Update(WaitUntil waitUntil, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerResource.Update");
             scope.Start();

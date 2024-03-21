@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UniqueName != null)
+            if (options.Format != "W" && Optional.IsDefined(UniqueName))
             {
                 writer.WritePropertyName("uniqueName"u8);
                 writer.WriteStringValue(UniqueName);

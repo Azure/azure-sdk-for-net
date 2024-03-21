@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverride> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();

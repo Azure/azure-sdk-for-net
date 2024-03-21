@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="tenant"/> is null. </exception>
         public AzureDataLakeAnalyticsLinkedService(object accountName, object tenant)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (tenant == null)
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(tenant, nameof(tenant));
 
             AccountName = accountName;
             Tenant = tenant;

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LabServices.Mocking;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabVirtualMachineImageResource"/> object. </returns>
         public static LabVirtualMachineImageResource GetLabVirtualMachineImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLabServicesArmClient(client).GetLabVirtualMachineImageResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabPlanResource"/> object. </returns>
         public static LabPlanResource GetLabPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLabServicesArmClient(client).GetLabPlanResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabResource"/> object. </returns>
         public static LabResource GetLabResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLabServicesArmClient(client).GetLabResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabServicesScheduleResource"/> object. </returns>
         public static LabServicesScheduleResource GetLabServicesScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLabServicesArmClient(client).GetLabServicesScheduleResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabUserResource"/> object. </returns>
         public static LabUserResource GetLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLabServicesArmClient(client).GetLabUserResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabVirtualMachineResource"/> object. </returns>
         public static LabVirtualMachineResource GetLabVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLabServicesArmClient(client).GetLabVirtualMachineResource(id);
         }
@@ -179,10 +159,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An object representing collection of LabPlanResources and their operations over a LabPlanResource. </returns>
         public static LabPlanCollection GetLabPlans(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabPlans();
         }
@@ -220,10 +197,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static async Task<Response<LabPlanResource>> GetLabPlanAsync(this ResourceGroupResource resourceGroupResource, string labPlanName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabPlanAsync(labPlanName, cancellationToken).ConfigureAwait(false);
         }
@@ -261,10 +235,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static Response<LabPlanResource> GetLabPlan(this ResourceGroupResource resourceGroupResource, string labPlanName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabPlan(labPlanName, cancellationToken);
         }
@@ -281,10 +252,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An object representing collection of LabResources and their operations over a LabResource. </returns>
         public static LabCollection GetLabs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabs();
         }
@@ -322,10 +290,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static async Task<Response<LabResource>> GetLabAsync(this ResourceGroupResource resourceGroupResource, string labName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabAsync(labName, cancellationToken).ConfigureAwait(false);
         }
@@ -363,10 +328,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static Response<LabResource> GetLab(this ResourceGroupResource resourceGroupResource, string labName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLab(labName, cancellationToken);
         }
@@ -403,10 +365,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabPlanResource> GetLabPlansAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
         }
@@ -443,10 +402,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabPlanResource> GetLabPlans(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabPlans(filter, cancellationToken);
         }
@@ -483,10 +439,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabResource> GetLabsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabsAsync(filter, cancellationToken);
         }
@@ -523,10 +476,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabResource> GetLabs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabs(filter, cancellationToken);
         }
@@ -559,10 +509,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="AvailableLabServicesSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableLabServicesSku> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
@@ -595,10 +542,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="AvailableLabServicesSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableLabServicesSku> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetSkus(filter, cancellationToken);
         }
@@ -632,10 +576,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabServicesUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabServicesUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
@@ -669,10 +610,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabServicesUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabServicesUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }

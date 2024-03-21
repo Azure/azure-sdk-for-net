@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -19,10 +18,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SendChatMessageRequest(string content)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
             Metadata = new ChangeTrackingDictionary<string, string>();

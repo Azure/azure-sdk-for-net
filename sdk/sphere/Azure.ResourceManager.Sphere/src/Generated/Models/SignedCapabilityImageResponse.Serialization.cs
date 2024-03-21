@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sphere.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Image != null)
+            if (options.Format != "W" && Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);

@@ -30,37 +30,37 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AccountId != null)
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (CollectionNamePattern != null)
+            if (Optional.IsDefined(CollectionNamePattern))
             {
                 writer.WritePropertyName("collectionNamePattern"u8);
                 writer.WriteStringValue(CollectionNamePattern);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (DocumentId != null)
+            if (Optional.IsDefined(DocumentId))
             {
                 writer.WritePropertyName("documentId"u8);
                 writer.WriteStringValue(DocumentId);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());

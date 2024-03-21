@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -21,10 +22,7 @@ namespace Azure.Maps.Search.Models
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
         public GeoJsonFeature(GeoJsonGeometry geometry)
         {
-            if (geometry == null)
-            {
-                throw new ArgumentNullException(nameof(geometry));
-            }
+            Argument.AssertNotNull(geometry, nameof(geometry));
 
             Geometry = geometry;
             Type = GeoJsonObjectType.GeoJsonFeature;

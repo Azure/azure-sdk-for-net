@@ -5,11 +5,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/4307895c13b5bc76d3d6e5d6346a32577842ac17/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/98df3588284c0b77389e981ef04aa93fed89037e/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -22,7 +21,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -286,6 +285,8 @@ prepend-rp-prefix:
   - ScriptAction
   - ScriptActivity
   - ScriptType
+  - ExpressionV2
+  - ExpressionV2Type
 
 override-operation-name:
   ActivityRuns_QueryByPipelineRun: GetActivityRun

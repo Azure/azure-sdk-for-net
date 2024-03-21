@@ -54,22 +54,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primaryDnsIPAddress"/>, <paramref name="domainName"/>, <paramref name="domainNetBiosName"/> or <paramref name="cacheNetBiosName"/> is null. </exception>
         public StorageCacheActiveDirectorySettings(IPAddress primaryDnsIPAddress, string domainName, string domainNetBiosName, string cacheNetBiosName)
         {
-            if (primaryDnsIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(primaryDnsIPAddress));
-            }
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainNetBiosName == null)
-            {
-                throw new ArgumentNullException(nameof(domainNetBiosName));
-            }
-            if (cacheNetBiosName == null)
-            {
-                throw new ArgumentNullException(nameof(cacheNetBiosName));
-            }
+            Argument.AssertNotNull(primaryDnsIPAddress, nameof(primaryDnsIPAddress));
+            Argument.AssertNotNull(domainName, nameof(domainName));
+            Argument.AssertNotNull(domainNetBiosName, nameof(domainNetBiosName));
+            Argument.AssertNotNull(cacheNetBiosName, nameof(cacheNetBiosName));
 
             PrimaryDnsIPAddress = primaryDnsIPAddress;
             DomainName = domainName;

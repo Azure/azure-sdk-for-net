@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (IsConfigurationParameter.HasValue)
+            if (Optional.IsDefined(IsConfigurationParameter))
             {
                 if (IsConfigurationParameter != null)
                 {

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (On.HasValue)
+            if (Optional.IsDefined(On))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(On.Value, "O");
             }
-            if (Cost.HasValue)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteNumberValue(Cost.Value);
             }
-            if (CostType.HasValue)
+            if (Optional.IsDefined(CostType))
             {
                 writer.WritePropertyName("costType"u8);
                 writer.WriteStringValue(CostType.Value.ToString());

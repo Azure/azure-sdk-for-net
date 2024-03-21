@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (EndIPAddress != null)
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (StartIPAddress != null)
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());

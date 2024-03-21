@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
         internal MessageImageFileContent(InternalMessageImageFileDetails internalDetails)
         {
-            if (internalDetails == null)
-            {
-                throw new ArgumentNullException(nameof(internalDetails));
-            }
+            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
             Type = "image_file";
             InternalDetails = internalDetails;

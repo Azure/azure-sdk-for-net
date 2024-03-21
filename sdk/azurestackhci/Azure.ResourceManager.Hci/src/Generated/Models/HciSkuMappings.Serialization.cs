@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (CatalogPlanId != null)
+            if (Optional.IsDefined(CatalogPlanId))
             {
                 writer.WritePropertyName("catalogPlanId"u8);
                 writer.WriteStringValue(CatalogPlanId);
             }
-            if (MarketplaceSkuId != null)
+            if (Optional.IsDefined(MarketplaceSkuId))
             {
                 writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
-            if (!(MarketplaceSkuVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
             {
                 writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();

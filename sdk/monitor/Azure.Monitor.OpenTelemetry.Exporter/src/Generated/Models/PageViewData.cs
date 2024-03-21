@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -21,14 +20,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         public PageViewData(int version, string id, string name) : base(version)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(name, nameof(name));
 
             Id = id;
             Name = name;

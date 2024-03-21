@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (QueryParameterStripDirective.HasValue)
+            if (Optional.IsDefined(QueryParameterStripDirective))
             {
                 writer.WritePropertyName("queryParameterStripDirective"u8);
                 writer.WriteStringValue(QueryParameterStripDirective.Value.ToString());
             }
-            if (QueryParameters != null)
+            if (Optional.IsDefined(QueryParameters))
             {
                 writer.WritePropertyName("queryParameters"u8);
                 writer.WriteStringValue(QueryParameters);
             }
-            if (DynamicCompression.HasValue)
+            if (Optional.IsDefined(DynamicCompression))
             {
                 writer.WritePropertyName("dynamicCompression"u8);
                 writer.WriteStringValue(DynamicCompression.Value.ToString());
             }
-            if (CacheDuration.HasValue)
+            if (Optional.IsDefined(CacheDuration))
             {
                 writer.WritePropertyName("cacheDuration"u8);
                 writer.WriteStringValue(CacheDuration.Value, "P");

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (PathPattern != null)
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (RefreshInterval != null)
+            if (Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshInterval"u8);
                 writer.WriteStringValue(RefreshInterval);
             }
-            if (RefreshType.HasValue)
+            if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());

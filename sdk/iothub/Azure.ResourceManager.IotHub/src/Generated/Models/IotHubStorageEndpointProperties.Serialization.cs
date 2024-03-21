@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (SasTtlAsIso8601.HasValue)
+            if (Optional.IsDefined(SasTtlAsIso8601))
             {
                 writer.WritePropertyName("sasTtlAsIso8601"u8);
                 writer.WriteStringValue(SasTtlAsIso8601.Value, "P");
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);

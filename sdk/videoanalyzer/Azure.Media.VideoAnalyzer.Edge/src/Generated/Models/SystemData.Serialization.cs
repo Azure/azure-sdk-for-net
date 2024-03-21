@@ -16,12 +16,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CreatedAt.HasValue)
+            if (Optional.IsDefined(CreatedAt))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedAt.Value, "O");
             }
-            if (LastModifiedAt.HasValue)
+            if (Optional.IsDefined(LastModifiedAt))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedAt.Value, "O");

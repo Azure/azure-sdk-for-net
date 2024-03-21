@@ -19,10 +19,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="currencyCode"/> is null. </exception>
         public ShortCodeCost(double amount, string currencyCode, BillingFrequency billingFrequency)
         {
-            if (currencyCode == null)
-            {
-                throw new ArgumentNullException(nameof(currencyCode));
-            }
+            Argument.AssertNotNull(currencyCode, nameof(currencyCode));
 
             Amount = amount;
             CurrencyCode = currencyCode;

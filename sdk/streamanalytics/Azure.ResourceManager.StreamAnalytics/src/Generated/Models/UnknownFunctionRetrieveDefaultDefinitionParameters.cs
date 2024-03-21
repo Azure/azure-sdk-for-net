@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> The UnknownFunctionRetrieveDefaultDefinitionParameters. </summary>
+    /// <summary> Unknown version of FunctionRetrieveDefaultDefinitionParameters. </summary>
     internal partial class UnknownFunctionRetrieveDefaultDefinitionParameters : FunctionRetrieveDefaultDefinitionContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionRetrieveDefaultDefinitionParameters"/>. </summary>

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (FilesystemSubnet != null)
+            if (Optional.IsDefined(FilesystemSubnet))
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (StorageCapacityTiB.HasValue)
+            if (Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);

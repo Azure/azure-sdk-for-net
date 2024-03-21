@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceBusNamespace != null)
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (SharedAccessPolicyName != null)
+            if (Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (SharedAccessPolicyKey != null)
+            if (Optional.IsDefined(SharedAccessPolicyKey))
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (QueueName != null)
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (!(PropertyColumns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyColumns))
             {
                 writer.WritePropertyName("propertyColumns"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SystemPropertyColumns is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SystemPropertyColumns))
             {
                 writer.WritePropertyName("systemPropertyColumns"u8);
                 writer.WriteStartObject();

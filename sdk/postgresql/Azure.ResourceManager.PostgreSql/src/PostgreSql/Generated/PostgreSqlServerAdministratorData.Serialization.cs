@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorType.HasValue)
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (LoginAccountName != null)
+            if (Optional.IsDefined(LoginAccountName))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(LoginAccountName);
             }
-            if (SecureId.HasValue)
+            if (Optional.IsDefined(SecureId))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(SecureId.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

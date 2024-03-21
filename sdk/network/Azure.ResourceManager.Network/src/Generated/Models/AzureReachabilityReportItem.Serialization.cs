@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (AzureLocation.HasValue)
+            if (Optional.IsDefined(AzureLocation))
             {
                 writer.WritePropertyName("azureLocation"u8);
                 writer.WriteStringValue(AzureLocation.Value);
             }
-            if (!(Latencies is ChangeTrackingList<AzureReachabilityReportLatencyInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Latencies))
             {
                 writer.WritePropertyName("latencies"u8);
                 writer.WriteStartArray();

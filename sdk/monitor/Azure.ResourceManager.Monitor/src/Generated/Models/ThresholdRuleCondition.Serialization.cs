@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (TimeAggregation.HasValue)
+            if (Optional.IsDefined(TimeAggregation))
             {
                 writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToSerialString());
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NewRelicObservability
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NewRelicMonitorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string monitorName, NewRelicMonitorResourceData data, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NewRelicMonitorResource> CreateOrUpdate(WaitUntil waitUntil, string monitorName, NewRelicMonitorResourceData data, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<NewRelicMonitorResource>> GetAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<NewRelicMonitorResource> Get(string monitorName, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual Response<bool> Exists(string monitorName, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual async Task<NullableResponse<NewRelicMonitorResource>> GetIfExistsAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         public virtual NullableResponse<NewRelicMonitorResource> GetIfExists(string monitorName, CancellationToken cancellationToken = default)
         {
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var scope = _newRelicMonitorResourceMonitorsClientDiagnostics.CreateScope("NewRelicMonitorResourceCollection.GetIfExists");
             scope.Start();

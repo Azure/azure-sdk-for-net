@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Synapse.Mocking;
 using Azure.ResourceManager.Synapse.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource"/> object. </returns>
         public static SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseAadOnlyAuthenticationResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource"/> object. </returns>
         public static SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseIPFirewallRuleInfoResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseKeyResource"/> object. </returns>
         public static SynapseKeyResource GetSynapseKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseKeyResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource"/> object. </returns>
         public static SynapsePrivateEndpointConnectionResource GetSynapsePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapsePrivateEndpointConnectionResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource"/> object. </returns>
         public static SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseWorkspacePrivateLinkResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateLinkResource"/> object. </returns>
         public static SynapsePrivateLinkResource GetSynapsePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapsePrivateLinkResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource"/> object. </returns>
         public static SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapsePrivateLinkHubResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/> object. </returns>
         public static SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolResource"/> object. </returns>
         public static SynapseSqlPoolResource GetSynapseSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource"/> object. </returns>
         public static SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseMetadataSyncConfigurationResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource"/> object. </returns>
         public static SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseGeoBackupPolicyResource(id);
         }
@@ -291,10 +256,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource"/> object. </returns>
         public static SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDataWarehouseUserActivityResource(id);
         }
@@ -313,10 +275,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRestorePointResource"/> object. </returns>
         public static SynapseRestorePointResource GetSynapseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseRestorePointResource(id);
         }
@@ -335,10 +294,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseReplicationLinkResource"/> object. </returns>
         public static SynapseReplicationLinkResource GetSynapseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseReplicationLinkResource(id);
         }
@@ -357,10 +313,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource"/> object. </returns>
         public static SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseMaintenanceWindowResource(id);
         }
@@ -379,10 +332,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource"/> object. </returns>
         public static SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseMaintenanceWindowOptionResource(id);
         }
@@ -401,10 +351,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource"/> object. </returns>
         public static SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseTransparentDataEncryptionResource(id);
         }
@@ -423,10 +370,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolBlobAuditingPolicyResource(id);
         }
@@ -445,10 +389,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSensitivityLabelResource"/> object. </returns>
         public static SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSensitivityLabelResource(id);
         }
@@ -467,10 +408,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource"/> object. </returns>
         public static SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolSchemaResource(id);
         }
@@ -489,10 +427,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolTableResource"/> object. </returns>
         public static SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolTableResource(id);
         }
@@ -511,10 +446,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource"/> object. </returns>
         public static SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolConnectionPolicyResource(id);
         }
@@ -533,10 +465,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource"/> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolVulnerabilityAssessmentResource(id);
         }
@@ -555,10 +484,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource"/> object. </returns>
         public static SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseVulnerabilityAssessmentScanRecordResource(id);
         }
@@ -577,10 +503,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> object. </returns>
         public static SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolSecurityAlertPolicyResource(id);
         }
@@ -599,10 +522,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(id);
         }
@@ -621,10 +541,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(id);
         }
@@ -643,10 +560,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource"/> object. </returns>
         public static SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDataMaskingPolicyResource(id);
         }
@@ -665,10 +579,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource"/> object. </returns>
         public static SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDataMaskingRuleResource(id);
         }
@@ -687,10 +598,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource"/> object. </returns>
         public static SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSqlPoolColumnResource(id);
         }
@@ -709,10 +617,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkloadGroupResource"/> object. </returns>
         public static SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseWorkloadGroupResource(id);
         }
@@ -731,10 +636,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource"/> object. </returns>
         public static SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseWorkloadClassifierResource(id);
         }
@@ -753,10 +655,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseServerBlobAuditingPolicyResource(id);
         }
@@ -775,10 +674,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource"/> object. </returns>
         public static SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseExtendedServerBlobAuditingPolicyResource(id);
         }
@@ -797,10 +693,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource"/> object. </returns>
         public static SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseServerSecurityAlertPolicyResource(id);
         }
@@ -819,10 +712,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource"/> object. </returns>
         public static SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseServerVulnerabilityAssessmentResource(id);
         }
@@ -841,10 +731,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource"/> object. </returns>
         public static SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseEncryptionProtectorResource(id);
         }
@@ -863,10 +750,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource"/> object. </returns>
         public static SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseRecoverableSqlPoolResource(id);
         }
@@ -885,10 +769,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> object. </returns>
         public static SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDedicatedSqlMinimalTlsSettingResource(id);
         }
@@ -907,10 +788,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceResource"/> object. </returns>
         public static SynapseWorkspaceResource GetSynapseWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseWorkspaceResource(id);
         }
@@ -929,10 +807,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource"/> object. </returns>
         public static SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseWorkspaceAdministratorResource(id);
         }
@@ -951,10 +826,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource"/> object. </returns>
         public static SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseWorkspaceSqlAdministratorResource(id);
         }
@@ -973,10 +845,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource"/> object. </returns>
         public static SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseManagedIdentitySqlControlSettingResource(id);
         }
@@ -995,10 +864,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource"/> object. </returns>
         public static SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseRestorableDroppedSqlPoolResource(id);
         }
@@ -1017,10 +883,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource"/> object. </returns>
         public static SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseBigDataPoolInfoResource(id);
         }
@@ -1039,10 +902,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseLibraryResource"/> object. </returns>
         public static SynapseLibraryResource GetSynapseLibraryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseLibraryResource(id);
         }
@@ -1061,10 +921,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource"/> object. </returns>
         public static SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseIntegrationRuntimeResource(id);
         }
@@ -1083,10 +940,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSparkConfigurationResource"/> object. </returns>
         public static SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseSparkConfigurationResource(id);
         }
@@ -1105,10 +959,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseKustoPoolResource"/> object. </returns>
         public static SynapseKustoPoolResource GetSynapseKustoPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseKustoPoolResource(id);
         }
@@ -1127,10 +978,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource"/> object. </returns>
         public static SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseAttachedDatabaseConfigurationResource(id);
         }
@@ -1149,10 +997,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDatabaseResource"/> object. </returns>
         public static SynapseDatabaseResource GetSynapseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDatabaseResource(id);
         }
@@ -1171,10 +1016,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataConnectionResource"/> object. </returns>
         public static SynapseDataConnectionResource GetSynapseDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDataConnectionResource(id);
         }
@@ -1193,10 +1035,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource"/> object. </returns>
         public static SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseClusterPrincipalAssignmentResource(id);
         }
@@ -1215,10 +1054,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource"/> object. </returns>
         public static SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableSynapseArmClient(client).GetSynapseDatabasePrincipalAssignmentResource(id);
         }
@@ -1235,10 +1071,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
         public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapsePrivateLinkHubs();
         }
@@ -1276,10 +1109,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapsePrivateLinkHubAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
         }
@@ -1317,10 +1147,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapsePrivateLinkHub(privateLinkHubName, cancellationToken);
         }
@@ -1337,10 +1164,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
         public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapseWorkspaces();
         }
@@ -1378,10 +1202,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapseWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -1419,10 +1240,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static Response<SynapseWorkspaceResource> GetSynapseWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapseWorkspace(workspaceName, cancellationToken);
         }
@@ -1458,10 +1276,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
         }
@@ -1497,10 +1312,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
         }
@@ -1536,10 +1348,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
         }
@@ -1575,10 +1384,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
         }
@@ -1614,10 +1420,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="KustoPoolSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
         }
@@ -1653,10 +1456,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="KustoPoolSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSkusKustoPools(cancellationToken);
         }
@@ -1693,10 +1493,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableSynapseSubscriptionResource(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1733,10 +1530,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSynapseSubscriptionResource(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
         }

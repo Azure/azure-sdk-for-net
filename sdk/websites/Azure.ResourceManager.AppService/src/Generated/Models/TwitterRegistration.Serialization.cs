@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ConsumerKey != null)
+            if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
                 writer.WriteStringValue(ConsumerKey);
             }
-            if (ConsumerSecretSettingName != null)
+            if (Optional.IsDefined(ConsumerSecretSettingName))
             {
                 writer.WritePropertyName("consumerSecretSettingName"u8);
                 writer.WriteStringValue(ConsumerSecretSettingName);

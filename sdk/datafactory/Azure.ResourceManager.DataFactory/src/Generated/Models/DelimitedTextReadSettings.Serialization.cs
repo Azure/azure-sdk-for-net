@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (SkipLineCount != null)
+            if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 JsonSerializer.Serialize(writer, SkipLineCount);
             }
-            if (CompressionProperties != null)
+            if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);

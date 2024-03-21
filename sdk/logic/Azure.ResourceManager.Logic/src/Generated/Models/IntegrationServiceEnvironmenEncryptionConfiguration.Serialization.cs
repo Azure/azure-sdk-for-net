@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionKeyReference != null)
+            if (Optional.IsDefined(EncryptionKeyReference))
             {
                 writer.WritePropertyName("encryptionKeyReference"u8);
                 writer.WriteObjectValue(EncryptionKeyReference);

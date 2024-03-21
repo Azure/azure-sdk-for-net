@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>

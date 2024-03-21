@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (MinReplicas.HasValue)
+            if (Optional.IsDefined(MinReplicas))
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (MaxReplicas.HasValue)
+            if (Optional.IsDefined(MaxReplicas))
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (!(Rules is ChangeTrackingList<ContainerAppScaleRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

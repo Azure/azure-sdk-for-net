@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (StreamingUnits.HasValue)
+            if (Optional.IsDefined(StreamingUnits))
             {
                 writer.WritePropertyName("streamingUnits"u8);
                 writer.WriteNumberValue(StreamingUnits.Value);

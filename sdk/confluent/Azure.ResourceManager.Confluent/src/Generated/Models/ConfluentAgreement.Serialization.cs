@@ -42,49 +42,49 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (LicenseTextLink != null)
+            if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (PrivacyPolicyLink != null)
+            if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (RetrieveOn.HasValue)
+            if (Optional.IsDefined(RetrieveOn))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveOn.Value, "O");
             }
-            if (Signature != null)
+            if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (IsAccepted.HasValue)
+            if (Optional.IsDefined(IsAccepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(IsAccepted.Value);

@@ -20,10 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public ExtractedSummarySentence(string text, double rankScore, int offset, int length)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             RankScore = rankScore;

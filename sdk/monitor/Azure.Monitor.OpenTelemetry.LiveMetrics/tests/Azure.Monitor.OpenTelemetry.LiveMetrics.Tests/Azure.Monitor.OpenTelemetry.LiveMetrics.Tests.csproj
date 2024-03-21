@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Workaround to fix CI build failure in macOS. This package is being used indirectly by Azure analyzers. -->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\EventSourceTestHelper.cs" LinkBase="CommonTestFramework" />
     <Compile Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\CommonTestFramework\TestEventListener.cs" LinkBase="CommonTestFramework" />
   </ItemGroup>

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -69,38 +68,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/> or <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +96,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/> or <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -203,38 +146,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/> or <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceEndpointPolicyDefinitionData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,38 +179,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/> or <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceEndpointPolicyDefinitionData> Get(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName);
             _pipeline.Send(message, cancellationToken);
@@ -352,42 +239,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/> or <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,42 +268,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceEndpointPolicyName"/> or <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, string serviceEndpointPolicyDefinitionName, ServiceEndpointPolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (serviceEndpointPolicyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyDefinitionName, nameof(serviceEndpointPolicyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName, serviceEndpointPolicyDefinitionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -491,30 +316,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceEndpointPolicyDefinitionListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +345,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceEndpointPolicyDefinitionListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, serviceEndpointPolicyName);
             _pipeline.Send(message, cancellationToken);
@@ -606,34 +389,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceEndpointPolicyDefinitionListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceEndpointPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -661,34 +420,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceEndpointPolicyDefinitionListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, serviceEndpointPolicyName);
             _pipeline.Send(message, cancellationToken);

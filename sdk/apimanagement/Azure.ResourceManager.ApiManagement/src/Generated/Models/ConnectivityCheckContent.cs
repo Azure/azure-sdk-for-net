@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
         public ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
 
             Source = source;
             Destination = destination;

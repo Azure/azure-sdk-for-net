@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -54,59 +54,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RecommendationName != null)
+            if (Optional.IsDefined(RecommendationName))
             {
                 writer.WritePropertyName("recommendationName"u8);
                 writer.WriteStringValue(RecommendationName);
             }
-            if (options.Format != "W" && RecommendationDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationDisplayName))
             {
                 writer.WritePropertyName("recommendationDisplayName"u8);
                 writer.WriteStringValue(RecommendationDisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && RecommendationTypeId != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationTypeId))
             {
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (options.Format != "W" && DetectedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(DetectedBy))
             {
                 writer.WritePropertyName("detectedBy"u8);
                 writer.WriteStringValue(DetectedBy);
             }
-            if (options.Format != "W" && RemediationSteps != null)
+            if (options.Format != "W" && Optional.IsDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStringValue(RemediationSteps);
             }
-            if (options.Format != "W" && ReportedSeverity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && HealthyDevices.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthyDevices))
             {
                 writer.WritePropertyName("healthyDevices"u8);
                 writer.WriteNumberValue(HealthyDevices.Value);
             }
-            if (options.Format != "W" && UnhealthyDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyDeviceCount))
             {
                 writer.WritePropertyName("unhealthyDeviceCount"u8);
                 writer.WriteNumberValue(UnhealthyDeviceCount.Value);
             }
-            if (options.Format != "W" && LogAnalyticsQuery != null)
+            if (options.Format != "W" && Optional.IsDefined(LogAnalyticsQuery))
             {
                 writer.WritePropertyName("logAnalyticsQuery"u8);
                 writer.WriteStringValue(LogAnalyticsQuery);

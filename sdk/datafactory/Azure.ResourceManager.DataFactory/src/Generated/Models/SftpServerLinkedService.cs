@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public SftpServerLinkedService(DataFactoryElement<string> host)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(host, nameof(host));
 
             Host = host;
             LinkedServiceType = "Sftp";
@@ -46,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="passPhrase"> The password to decrypt the SSH private key if the SSH private key is encrypted. </param>
         /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
-        internal SftpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactorySecretBaseDefinition privateKeyContent, DataFactorySecretBaseDefinition passPhrase, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal SftpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactorySecret privateKeyContent, DataFactorySecret passPhrase, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -76,15 +73,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username used to log on to the SFTP server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to logon the SFTP server for Basic authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
         /// <summary> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PrivateKeyPath { get; set; }
         /// <summary> Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. </summary>
-        public DataFactorySecretBaseDefinition PrivateKeyContent { get; set; }
+        public DataFactorySecret PrivateKeyContent { get; set; }
         /// <summary> The password to decrypt the SSH private key if the SSH private key is encrypted. </summary>
-        public DataFactorySecretBaseDefinition PassPhrase { get; set; }
+        public DataFactorySecret PassPhrase { get; set; }
         /// <summary> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> SkipHostKeyValidation { get; set; }
         /// <summary> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </summary>

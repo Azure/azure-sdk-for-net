@@ -24,12 +24,12 @@ namespace Azure.AI.Language.QuestionAnswering
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ItemKey != null)
+            if (Optional.IsDefined(ItemKey))
             {
                 writer.WritePropertyName("itemKey"u8);
                 writer.WriteStringValue(ItemKey);
             }
-            if (SortOrder.HasValue)
+            if (Optional.IsDefined(SortOrder))
             {
                 writer.WritePropertyName("sortOrder"u8);
                 writer.WriteStringValue(SortOrder.Value.ToString());

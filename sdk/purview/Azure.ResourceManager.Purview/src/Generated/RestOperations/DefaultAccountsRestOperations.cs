@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Purview.Models;
@@ -188,10 +187,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public async Task<Response<DefaultPurviewAccountPayload>> SetAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            if (defaultAccountPayload == null)
-            {
-                throw new ArgumentNullException(nameof(defaultAccountPayload));
-            }
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
             using var message = CreateSetRequest(defaultAccountPayload);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -215,10 +211,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public Response<DefaultPurviewAccountPayload> Set(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            if (defaultAccountPayload == null)
-            {
-                throw new ArgumentNullException(nameof(defaultAccountPayload));
-            }
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
 
             using var message = CreateSetRequest(defaultAccountPayload);
             _pipeline.Send(message, cancellationToken);

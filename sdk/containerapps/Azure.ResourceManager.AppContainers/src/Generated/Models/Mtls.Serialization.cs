@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (IsMtlsEnabled.HasValue)
+            if (Optional.IsDefined(IsMtlsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsMtlsEnabled.Value);

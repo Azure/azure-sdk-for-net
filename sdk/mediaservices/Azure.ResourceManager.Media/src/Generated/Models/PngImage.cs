@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="start"/> is null. </exception>
         public PngImage(string start) : base(start)
         {
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
+            Argument.AssertNotNull(start, nameof(start));
 
             Layers = new ChangeTrackingList<PngLayer>();
             OdataType = "#Microsoft.Media.PngImage";

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Contents != null)
+            if (Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteStringValue(Contents);

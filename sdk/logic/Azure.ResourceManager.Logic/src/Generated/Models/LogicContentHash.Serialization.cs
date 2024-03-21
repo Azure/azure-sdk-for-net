@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Algorithm != null)
+            if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

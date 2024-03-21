@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (options.Format != "W" && DatabaseId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
             {
                 writer.WritePropertyName("databaseId"u8);
                 writer.WriteStringValue(DatabaseId.Value);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);

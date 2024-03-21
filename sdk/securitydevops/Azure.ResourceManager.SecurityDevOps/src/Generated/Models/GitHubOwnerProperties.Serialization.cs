@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OwnerUri != null)
+            if (Optional.IsDefined(OwnerUri))
             {
                 writer.WritePropertyName("ownerUrl"u8);
                 writer.WriteStringValue(OwnerUri.AbsoluteUri);

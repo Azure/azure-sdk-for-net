@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
-            if (Association != null)
+            if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
                 writer.WriteObjectValue(Association);
             }
-            if (!(EffectiveSecurityRules is ChangeTrackingList<EffectiveNetworkSecurityRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
                 writer.WritePropertyName("effectiveSecurityRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TagToIPAddresses is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TagToIPAddresses))
             {
                 writer.WritePropertyName("tagMap"u8);
                 writer.WriteStartObject();

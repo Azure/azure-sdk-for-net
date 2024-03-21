@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="status"/> or <paramref name="serviceStatuses"/> is null. </exception>
         internal ClusterInstanceViewResult(string name, ClusterInstanceViewStatus status, IEnumerable<HDInsightServiceStatus> serviceStatuses)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (status == null)
-            {
-                throw new ArgumentNullException(nameof(status));
-            }
-            if (serviceStatuses == null)
-            {
-                throw new ArgumentNullException(nameof(serviceStatuses));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(status, nameof(status));
+            Argument.AssertNotNull(serviceStatuses, nameof(serviceStatuses));
 
             Name = name;
             Status = status;

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownOnlineDeployment. </summary>
+    /// <summary> Unknown version of OnlineDeployment. </summary>
     internal partial class UnknownOnlineDeployment : MachineLearningOnlineDeploymentProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOnlineDeployment"/>. </summary>

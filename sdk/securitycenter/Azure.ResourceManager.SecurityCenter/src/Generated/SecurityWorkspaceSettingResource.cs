@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -279,10 +277,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SecurityWorkspaceSettingResource>> UpdateAsync(SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Update");
             scope.Start();
@@ -324,10 +319,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SecurityWorkspaceSettingResource> Update(SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingResource.Update");
             scope.Start();

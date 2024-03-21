@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sphere.Models
             }
 
             writer.WriteStartObject();
-            if (DeviceGroupName != null)
+            if (Optional.IsDefined(DeviceGroupName))
             {
                 writer.WritePropertyName("deviceGroupName"u8);
                 writer.WriteStringValue(DeviceGroupName);

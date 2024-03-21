@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DefenderEasm.Models;
 
 namespace Azure.ResourceManager.DefenderEasm
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<EasmLabelResource>> UpdateAsync(EasmLabelPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Update");
             scope.Start();
@@ -326,10 +321,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<EasmLabelResource> Update(EasmLabelPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _easmLabelLabelsClientDiagnostics.CreateScope("EasmLabelResource.Update");
             scope.Start();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (StorageSizeInGB.HasValue)
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Iops.HasValue)
+            if (Optional.IsDefined(Iops))
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
             }
-            if (AutoGrow.HasValue)
+            if (Optional.IsDefined(AutoGrow))
             {
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
-            if (LogOnDisk.HasValue)
+            if (Optional.IsDefined(LogOnDisk))
             {
                 writer.WritePropertyName("logOnDisk"u8);
                 writer.WriteStringValue(LogOnDisk.Value.ToString());
             }
-            if (options.Format != "W" && StorageSku != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageSku))
             {
                 writer.WritePropertyName("storageSku"u8);
                 writer.WriteStringValue(StorageSku);
             }
-            if (AutoIoScaling.HasValue)
+            if (Optional.IsDefined(AutoIoScaling))
             {
                 writer.WritePropertyName("autoIoScaling"u8);
                 writer.WriteStringValue(AutoIoScaling.Value.ToString());

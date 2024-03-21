@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DevCenter.Mocking;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterResource"/> object. </returns>
         public static DevCenterResource GetDevCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterProjectResource"/> object. </returns>
         public static DevCenterProjectResource GetDevCenterProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterProjectResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource"/> object. </returns>
         public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetProjectAttachedNetworkConnectionResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="AttachedNetworkConnectionResource"/> object. </returns>
         public static AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetAttachedNetworkConnectionResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterGalleryResource"/> object. </returns>
         public static DevCenterGalleryResource GetDevCenterGalleryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterGalleryResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterImageResource"/> object. </returns>
         public static DevCenterImageResource GetDevCenterImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterImageResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="ImageVersionResource"/> object. </returns>
         public static ImageVersionResource GetImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetImageVersionResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterCatalogResource"/> object. </returns>
         public static DevCenterCatalogResource GetDevCenterCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterCatalogResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource"/> object. </returns>
         public static DevCenterEnvironmentTypeResource GetDevCenterEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterEnvironmentTypeResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource"/> object. </returns>
         public static AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetAllowedEnvironmentTypeResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource"/> object. </returns>
         public static DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterProjectEnvironmentResource(id);
         }
@@ -291,10 +256,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevBoxDefinitionResource"/> object. </returns>
         public static DevBoxDefinitionResource GetDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevBoxDefinitionResource(id);
         }
@@ -313,10 +275,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource"/> object. </returns>
         public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetProjectDevBoxDefinitionResource(id);
         }
@@ -335,10 +294,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterPoolResource"/> object. </returns>
         public static DevCenterPoolResource GetDevCenterPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterPoolResource(id);
         }
@@ -357,10 +313,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterScheduleResource"/> object. </returns>
         public static DevCenterScheduleResource GetDevCenterScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterScheduleResource(id);
         }
@@ -379,10 +332,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource"/> object. </returns>
         public static DevCenterNetworkConnectionResource GetDevCenterNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetDevCenterNetworkConnectionResource(id);
         }
@@ -401,10 +351,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="HealthCheckStatusDetailResource"/> object. </returns>
         public static HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDevCenterArmClient(client).GetHealthCheckStatusDetailResource(id);
         }
@@ -421,10 +368,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
         public static DevCenterCollection GetDevCenters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenters();
         }
@@ -462,10 +406,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterResource>> GetDevCenterAsync(this ResourceGroupResource resourceGroupResource, string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterAsync(devCenterName, cancellationToken).ConfigureAwait(false);
         }
@@ -503,10 +444,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static Response<DevCenterResource> GetDevCenter(this ResourceGroupResource resourceGroupResource, string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenter(devCenterName, cancellationToken);
         }
@@ -523,10 +461,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
         public static DevCenterProjectCollection GetDevCenterProjects(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterProjects();
         }
@@ -564,10 +499,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterProjectResource>> GetDevCenterProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterProjectAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
@@ -605,10 +537,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static Response<DevCenterProjectResource> GetDevCenterProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterProject(projectName, cancellationToken);
         }
@@ -625,10 +554,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
         public static DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterNetworkConnections();
         }
@@ -666,10 +592,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterNetworkConnectionAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
         }
@@ -707,10 +630,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDevCenterResourceGroupResource(resourceGroupResource).GetDevCenterNetworkConnection(networkConnectionName, cancellationToken);
         }
@@ -747,10 +667,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
         }
@@ -787,10 +704,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenters(top, cancellationToken);
         }
@@ -827,10 +741,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
         }
@@ -867,10 +778,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterProjectResource> GetDevCenterProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
         }
@@ -904,10 +812,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<DevCenterOperationStatus>> GetDevCenterOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
@@ -941,10 +846,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static Response<DevCenterOperationStatus> GetDevCenterOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
         }
@@ -977,10 +879,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
         }
@@ -1013,10 +912,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
         }
@@ -1048,10 +944,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDevCenterSubscriptionResource(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -1083,10 +976,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
         }
@@ -1119,10 +1009,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
         }
@@ -1155,10 +1042,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterSkuDetails"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
         }
@@ -1195,10 +1079,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
         }
@@ -1235,10 +1116,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDevCenterSubscriptionResource(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
         }

@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentResponse"/> is null. </exception>
         internal RoleAssignmentListResult(int count, IEnumerable<RoleAssignmentDetail> roleAssignmentResponse)
         {
-            if (roleAssignmentResponse == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentResponse));
-            }
+            Argument.AssertNotNull(roleAssignmentResponse, nameof(roleAssignmentResponse));
 
             Count = count;
             RoleAssignmentResponse = roleAssignmentResponse.ToList();

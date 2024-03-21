@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -196,10 +194,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DownloadResponse>> DownloadAsync(WaitUntil waitUntil, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResource.Download");
             scope.Start();
@@ -245,10 +240,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DownloadResponse> Download(WaitUntil waitUntil, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResource.Download");
             scope.Start();

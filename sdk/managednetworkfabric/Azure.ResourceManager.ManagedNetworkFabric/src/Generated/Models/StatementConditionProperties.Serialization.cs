@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (RoutePolicyConditionType.HasValue)
+            if (Optional.IsDefined(RoutePolicyConditionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
             }
-            if (IPPrefixId != null)
+            if (Optional.IsDefined(IPPrefixId))
             {
                 writer.WritePropertyName("ipPrefixId"u8);
                 writer.WriteStringValue(IPPrefixId);
             }
-            if (!(IPExtendedCommunityIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPExtendedCommunityIds))
             {
                 writer.WritePropertyName("ipExtendedCommunityIds"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPCommunityIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPCommunityIds))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();

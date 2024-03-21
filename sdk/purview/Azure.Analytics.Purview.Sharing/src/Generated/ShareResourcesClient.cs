@@ -7,7 +7,6 @@
 
 using System;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -49,14 +48,8 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ShareResourcesClient(Uri endpoint, TokenCredential credential, PurviewShareClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewShareClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);

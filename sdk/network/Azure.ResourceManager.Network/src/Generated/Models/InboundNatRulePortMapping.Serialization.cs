@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && InboundNatRuleName != null)
+            if (options.Format != "W" && Optional.IsDefined(InboundNatRuleName))
             {
                 writer.WritePropertyName("inboundNatRuleName"u8);
                 writer.WriteStringValue(InboundNatRuleName);
             }
-            if (options.Format != "W" && Protocol.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (options.Format != "W" && FrontendPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (options.Format != "W" && BackendPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);

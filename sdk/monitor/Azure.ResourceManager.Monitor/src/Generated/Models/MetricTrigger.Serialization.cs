@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("metricResourceUri"u8);
             writer.WriteStringValue(MetricResourceId);
-            if (MetricResourceLocation.HasValue)
+            if (Optional.IsDefined(MetricResourceLocation))
             {
                 writer.WritePropertyName("metricResourceLocation"u8);
                 writer.WriteStringValue(MetricResourceLocation.Value);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (!(Dimensions is ChangeTrackingList<AutoscaleRuleMetricDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 if (Dimensions != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (IsDividedPerInstance.HasValue)
+            if (Optional.IsDefined(IsDividedPerInstance))
             {
                 writer.WritePropertyName("dividePerInstance"u8);
                 writer.WriteBooleanValue(IsDividedPerInstance.Value);

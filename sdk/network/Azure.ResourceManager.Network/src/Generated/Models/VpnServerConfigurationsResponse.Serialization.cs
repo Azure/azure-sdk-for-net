@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(VpnServerConfigurationResourceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnServerConfigurationResourceIds))
             {
                 writer.WritePropertyName("vpnServerConfigurationResourceIds"u8);
                 writer.WriteStartArray();

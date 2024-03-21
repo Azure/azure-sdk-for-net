@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MigrationState != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState);
             }
-            if (options.Format != "W" && FullBackupSetInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
                 writer.WriteObjectValue(FullBackupSetInfo);
             }
-            if (options.Format != "W" && LastRestoredBackupSetInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
                 writer.WriteObjectValue(LastRestoredBackupSetInfo);
             }
-            if (options.Format != "W" && !(ActiveBackupSets is ChangeTrackingList<SqlBackupSetInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
                 writer.WritePropertyName("activeBackupSets"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(InvalidFiles is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InvalidFiles))
             {
                 writer.WritePropertyName("invalidFiles"u8);
                 writer.WriteStartArray();
@@ -61,27 +61,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && BlobContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(BlobContainerName))
             {
                 writer.WritePropertyName("blobContainerName"u8);
                 writer.WriteStringValue(BlobContainerName);
             }
-            if (options.Format != "W" && IsFullBackupRestored.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsFullBackupRestored))
             {
                 writer.WritePropertyName("isFullBackupRestored"u8);
                 writer.WriteBooleanValue(IsFullBackupRestored.Value);
             }
-            if (options.Format != "W" && RestoreBlockingReason != null)
+            if (options.Format != "W" && Optional.IsDefined(RestoreBlockingReason))
             {
                 writer.WritePropertyName("restoreBlockingReason"u8);
                 writer.WriteStringValue(RestoreBlockingReason);
             }
-            if (options.Format != "W" && CompleteRestoreErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(CompleteRestoreErrorMessage))
             {
                 writer.WritePropertyName("completeRestoreErrorMessage"u8);
                 writer.WriteStringValue(CompleteRestoreErrorMessage);
             }
-            if (options.Format != "W" && !(FileUploadBlockingErrors is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FileUploadBlockingErrors))
             {
                 writer.WritePropertyName("fileUploadBlockingErrors"u8);
                 writer.WriteStartArray();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CurrentRestoringFilename != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFilename))
             {
                 writer.WritePropertyName("currentRestoringFilename"u8);
                 writer.WriteStringValue(CurrentRestoringFilename);
             }
-            if (options.Format != "W" && LastRestoredFilename != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredFilename))
             {
                 writer.WritePropertyName("lastRestoredFilename"u8);
                 writer.WriteStringValue(LastRestoredFilename);
             }
-            if (options.Format != "W" && PendingLogBackupsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingLogBackupsCount))
             {
                 writer.WritePropertyName("pendingLogBackupsCount"u8);
                 writer.WriteNumberValue(PendingLogBackupsCount.Value);

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
 {
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SenderUsernameResource>> UpdateAsync(WaitUntil waitUntil, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SenderUsernameResource> Update(WaitUntil waitUntil, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResource.Update");
             scope.Start();

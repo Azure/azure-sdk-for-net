@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -71,8 +70,8 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "queueAndMatch": return QueueAndMatchMode.DeserializeQueueAndMatchMode(element, options);
+                    case "scheduleAndSuspend": return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "suspend": return SuspendMode.DeserializeSuspendMode(element, options);
                 }
             }

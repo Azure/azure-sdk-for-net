@@ -32,6 +32,8 @@
     <Compile Remove="Shared\*.cs" />
     <Compile Remove="Shared\ClientsideEncryption\*.cs;Shared\ClientsideEncryption\Models\*.cs" />
     <Compile Remove="Shared\AesGcm\**\*.cs" />
+    <Compile Include="Shared\Argument.cs" />
+    <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <!--we're defining the Shared Source in Common, but we only want to build in the files that Common names use of-->
     <Compile Include="Shared\Constants.cs" />
     <Compile Include="Shared\Errors.cs" />
@@ -46,6 +48,7 @@
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
     <Compile Include="Shared\StorageCrc64Calculator.cs" />
     <Compile Include="Shared\StorageCrc64Composer.cs" />
+    <Compile Include="Shared\SyncAsyncEventHandlerExtensions.cs" />
     <Compile Include="Shared\UriExtensions.cs" />
     <Compile Include="Shared\UriQueryParamsCollection.cs" />
     <Compile Include="Shared\StorageBearerTokenChallengeAuthorizationPolicy.cs" />

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The UnknownRestoreRequest. </summary>
+    /// <summary> Unknown version of RestoreRequest. </summary>
     internal partial class UnknownRestoreRequest : RestoreContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRestoreRequest"/>. </summary>

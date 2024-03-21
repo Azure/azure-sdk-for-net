@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPv4Addresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Addresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AgFoodPlatform.Models;
@@ -164,14 +163,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FarmBeatsExtensionData>> GetAsync(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var message = CreateGetRequest(farmBeatsExtensionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -198,14 +190,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentException"> <paramref name="farmBeatsExtensionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FarmBeatsExtensionData> Get(string farmBeatsExtensionId, CancellationToken cancellationToken = default)
         {
-            if (farmBeatsExtensionId == null)
-            {
-                throw new ArgumentNullException(nameof(farmBeatsExtensionId));
-            }
-            if (farmBeatsExtensionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(farmBeatsExtensionId));
-            }
+            Argument.AssertNotNullOrEmpty(farmBeatsExtensionId, nameof(farmBeatsExtensionId));
 
             using var message = CreateGetRequest(farmBeatsExtensionId);
             _pipeline.Send(message, cancellationToken);
@@ -253,10 +238,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<FarmBeatsExtensionListResponse>> ListNextPageAsync(string nextLink, IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, maxPageSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -288,10 +270,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<FarmBeatsExtensionListResponse> ListNextPage(string nextLink, IEnumerable<string> farmBeatsExtensionIds = null, IEnumerable<string> farmBeatsExtensionNames = null, IEnumerable<string> extensionCategories = null, IEnumerable<string> publisherIds = null, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, farmBeatsExtensionIds, farmBeatsExtensionNames, extensionCategories, publisherIds, maxPageSize);
             _pipeline.Send(message, cancellationToken);

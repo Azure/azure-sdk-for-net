@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsEligibleForMigration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEligibleForMigration))
             {
                 writer.WritePropertyName("isEligibleForMigration"u8);
                 writer.WriteBooleanValue(IsEligibleForMigration.Value);
             }
-            if (options.Format != "W" && !(ValidationMessages is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationMessages))
             {
                 writer.WritePropertyName("validationMessages"u8);
                 writer.WriteStartArray();

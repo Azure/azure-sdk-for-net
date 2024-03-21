@@ -30,42 +30,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (TokenUserPrincipalName != null)
+            if (Optional.IsDefined(TokenUserPrincipalName))
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (TokenUserDisplayName != null)
+            if (Optional.IsDefined(TokenUserDisplayName))
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStringValue(Dataset);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (GroupId.HasValue)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId.Value);
             }
-            if (GroupName != null)
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());

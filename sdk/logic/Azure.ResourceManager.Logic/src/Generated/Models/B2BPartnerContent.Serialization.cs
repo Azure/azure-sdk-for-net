@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(BusinessIdentities is ChangeTrackingList<IntegrationAccountBusinessIdentity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BusinessIdentities))
             {
                 writer.WritePropertyName("businessIdentities"u8);
                 writer.WriteStartArray();

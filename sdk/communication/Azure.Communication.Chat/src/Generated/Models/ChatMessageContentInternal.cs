@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {

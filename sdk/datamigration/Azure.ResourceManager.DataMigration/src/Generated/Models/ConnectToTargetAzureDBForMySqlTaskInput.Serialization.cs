@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(SourceConnectionInfo);
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            if (IsOfflineMigration.HasValue)
+            if (Optional.IsDefined(IsOfflineMigration))
             {
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);

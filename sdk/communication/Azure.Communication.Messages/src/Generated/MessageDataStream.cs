@@ -50,10 +50,7 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         internal MessageDataStream(BinaryData body)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             Body = body;
         }

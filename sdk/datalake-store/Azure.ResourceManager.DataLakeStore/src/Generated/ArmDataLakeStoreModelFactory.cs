@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.DataLakeStore;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore.Models

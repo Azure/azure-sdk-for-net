@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automanage.Models
             }
 
             writer.WriteStartObject();
-            if (ConfigurationProfile != null)
+            if (Optional.IsDefined(ConfigurationProfile))
             {
                 writer.WritePropertyName("configurationProfile"u8);
                 writer.WriteStringValue(ConfigurationProfile);
             }
-            if (options.Format != "W" && TargetId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetId))
             {
                 writer.WritePropertyName("targetId"u8);
                 writer.WriteStringValue(TargetId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

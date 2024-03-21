@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            if (IsReadOnly.HasValue)
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
-            if (StorageAccountKey != null)
+            if (Optional.IsDefined(StorageAccountKey))
             {
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);

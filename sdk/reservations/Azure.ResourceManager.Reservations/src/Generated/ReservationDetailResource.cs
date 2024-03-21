@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations
@@ -198,10 +196,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ReservationDetailResource>> UpdateAsync(WaitUntil waitUntil, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.Update");
             scope.Start();
@@ -247,10 +242,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ReservationDetailResource> Update(WaitUntil waitUntil, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.Update");
             scope.Start();
@@ -297,10 +289,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AvailableScopesProperties>> GetAvailableScopesAsync(WaitUntil waitUntil, AvailableScopesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.GetAvailableScopes");
             scope.Start();
@@ -347,10 +336,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AvailableScopesProperties> GetAvailableScopes(WaitUntil waitUntil, AvailableScopesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationDetailReservationClientDiagnostics.CreateScope("ReservationDetailResource.GetAvailableScopes");
             scope.Start();

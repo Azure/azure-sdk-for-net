@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (OrganizationalData != null)
+            if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
-            if (ProjectDetails != null)
+            if (Optional.IsDefined(ProjectDetails))
             {
                 writer.WritePropertyName("projectDetails"u8);
                 writer.WriteObjectValue(ProjectDetails);
             }
-            if (ScanInterval.HasValue)
+            if (Optional.IsDefined(ScanInterval))
             {
                 writer.WritePropertyName("scanInterval"u8);
                 writer.WriteNumberValue(ScanInterval.Value);

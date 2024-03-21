@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="receiverName"/> is null. </exception>
         public ActionGroupEnableContent(string receiverName)
         {
-            if (receiverName == null)
-            {
-                throw new ArgumentNullException(nameof(receiverName));
-            }
+            Argument.AssertNotNull(receiverName, nameof(receiverName));
 
             ReceiverName = receiverName;
         }

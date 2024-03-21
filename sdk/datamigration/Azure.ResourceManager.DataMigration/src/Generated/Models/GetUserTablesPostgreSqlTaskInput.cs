@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
         public GetUserTablesPostgreSqlTaskInput(PostgreSqlConnectionInfo connectionInfo, IEnumerable<string> selectedDatabases)
         {
-            if (connectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(connectionInfo));
-            }
-            if (selectedDatabases == null)
-            {
-                throw new ArgumentNullException(nameof(selectedDatabases));
-            }
+            Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
+            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
 
             ConnectionInfo = connectionInfo;
             SelectedDatabases = selectedDatabases.ToList();

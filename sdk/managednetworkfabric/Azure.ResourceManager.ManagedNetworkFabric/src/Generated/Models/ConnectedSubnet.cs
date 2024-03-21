@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
         public ConnectedSubnet(string prefix)
         {
-            if (prefix == null)
-            {
-                throw new ArgumentNullException(nameof(prefix));
-            }
+            Argument.AssertNotNull(prefix, nameof(prefix));
 
             Prefix = prefix;
         }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (OSConfiguration != null)
+            if (Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
                 writer.WriteObjectValue(OSConfiguration);

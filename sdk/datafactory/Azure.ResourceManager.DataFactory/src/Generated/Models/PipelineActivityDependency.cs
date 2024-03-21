@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -21,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="activity"/> or <paramref name="dependencyConditions"/> is null. </exception>
         public PipelineActivityDependency(string activity, IEnumerable<DependencyCondition> dependencyConditions)
         {
-            if (activity == null)
-            {
-                throw new ArgumentNullException(nameof(activity));
-            }
-            if (dependencyConditions == null)
-            {
-                throw new ArgumentNullException(nameof(dependencyConditions));
-            }
+            Argument.AssertNotNull(activity, nameof(activity));
+            Argument.AssertNotNull(dependencyConditions, nameof(dependencyConditions));
 
             Activity = activity;
             DependencyConditions = dependencyConditions.ToList();

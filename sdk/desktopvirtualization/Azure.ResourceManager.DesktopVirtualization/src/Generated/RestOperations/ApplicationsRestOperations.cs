@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -69,38 +68,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualApplicationData>> GetAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +101,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualApplicationData> Get(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName);
             _pipeline.Send(message, cancellationToken);
@@ -218,42 +161,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualApplicationData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, VirtualApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -283,42 +195,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualApplicationData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, VirtualApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -369,38 +250,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -424,38 +277,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName);
             _pipeline.Send(message, cancellationToken);
@@ -506,42 +331,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VirtualApplicationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, VirtualApplicationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -570,42 +364,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="applicationGroupName"/> or <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VirtualApplicationData> Update(string subscriptionId, string resourceGroupName, string applicationGroupName, string applicationName, VirtualApplicationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
-            if (applicationName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationName));
-            }
-            if (applicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, applicationGroupName, applicationName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -668,30 +431,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationList>> ListAsync(string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, applicationGroupName, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -721,30 +463,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationList> List(string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, applicationGroupName, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);
@@ -789,34 +510,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, applicationGroupName, pageSize, isDescending, initialSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -847,34 +544,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string applicationGroupName, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (applicationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationGroupName));
-            }
-            if (applicationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, applicationGroupName, pageSize, isDescending, initialSkip);
             _pipeline.Send(message, cancellationToken);

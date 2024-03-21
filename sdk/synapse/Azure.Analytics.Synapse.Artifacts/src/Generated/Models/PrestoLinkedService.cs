@@ -21,18 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/>, <paramref name="serverVersion"/> or <paramref name="catalog"/> is null. </exception>
         public PrestoLinkedService(object host, object serverVersion, object catalog, PrestoAuthenticationType authenticationType)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (serverVersion == null)
-            {
-                throw new ArgumentNullException(nameof(serverVersion));
-            }
-            if (catalog == null)
-            {
-                throw new ArgumentNullException(nameof(catalog));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(serverVersion, nameof(serverVersion));
+            Argument.AssertNotNull(catalog, nameof(catalog));
 
             Host = host;
             ServerVersion = serverVersion;

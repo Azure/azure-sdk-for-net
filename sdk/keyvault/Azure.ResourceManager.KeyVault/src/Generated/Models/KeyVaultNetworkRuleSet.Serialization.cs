@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Bypass.HasValue)
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(IPRules is ChangeTrackingList<KeyVaultIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<KeyVaultVirtualNetworkRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();

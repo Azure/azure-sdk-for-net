@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ReplicationProviderSettings != null)
+            if (Optional.IsDefined(ReplicationProviderSettings))
             {
                 writer.WritePropertyName("replicationProviderSettings"u8);
                 writer.WriteObjectValue(ReplicationProviderSettings);

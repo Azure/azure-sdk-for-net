@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && TargetType != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ParametersSchema != null)
+            if (options.Format != "W" && Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
                 writer.WriteStringValue(ParametersSchema);
             }
-            if (options.Format != "W" && Urn != null)
+            if (options.Format != "W" && Optional.IsDefined(Urn))
             {
                 writer.WritePropertyName("urn"u8);
                 writer.WriteStringValue(Urn);

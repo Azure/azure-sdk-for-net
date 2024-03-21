@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (MonitorWorkspaceResourceId != null)
+            if (Optional.IsDefined(MonitorWorkspaceResourceId))
             {
                 writer.WritePropertyName("azureMonitorWorkspaceResourceId"u8);
                 writer.WriteStringValue(MonitorWorkspaceResourceId);

@@ -17,10 +17,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="analysisInputValue"/> is null. </exception>
         public AnalysisInput(MultiLanguageBatchInput analysisInputValue)
         {
-            if (analysisInputValue == null)
-            {
-                throw new ArgumentNullException(nameof(analysisInputValue));
-            }
+            Argument.AssertNotNull(analysisInputValue, nameof(analysisInputValue));
 
             AnalysisInputValue = analysisInputValue;
         }

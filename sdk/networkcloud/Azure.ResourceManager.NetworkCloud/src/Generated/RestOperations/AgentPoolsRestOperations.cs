@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkCloud.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AgentPoolList>> ListByKubernetesClusterAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AgentPoolList> ListByKubernetesCluster(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
             _pipeline.Send(message, cancellationToken);
@@ -190,38 +147,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkCloudAgentPoolData>> GetAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +180,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkCloudAgentPoolData> Get(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -339,42 +240,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,42 +269,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, data);
             _pipeline.Send(message, cancellationToken);
@@ -480,38 +319,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -536,38 +347,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -619,42 +402,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -679,42 +431,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="kubernetesClusterName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName, NetworkCloudAgentPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (agentPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(agentPoolName));
-            }
-            if (agentPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentPoolName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, kubernetesClusterName, agentPoolName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -752,34 +473,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AgentPoolList>> ListByKubernetesClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var message = CreateListByKubernetesClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, kubernetesClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -807,34 +504,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AgentPoolList> ListByKubernetesClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var message = CreateListByKubernetesClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, kubernetesClusterName);
             _pipeline.Send(message, cancellationToken);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId.HasValue)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 if (TenantId != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tenantId");
                 }
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 if (ClientSecret != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientSecret");
                 }
             }
-            if (ClientCertificate != null)
+            if (Optional.IsDefined(ClientCertificate))
             {
                 if (ClientCertificate != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificate");
                 }
             }
-            if (ClientCertificatePassword != null)
+            if (Optional.IsDefined(ClientCertificatePassword))
             {
                 if (ClientCertificatePassword != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificatePassword");
                 }
             }
-            if (ClientCertificateSendChain.HasValue)
+            if (Optional.IsDefined(ClientCertificateSendChain))
             {
                 writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);

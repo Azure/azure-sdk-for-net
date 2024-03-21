@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("wholeMetricConfiguration"u8);
             writer.WriteObjectValue(WholeSeriesDetectionConditions);
-            if (!(SeriesGroupDetectionConditions is ChangeTrackingList<MetricSeriesGroupDetectionCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
                 writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SeriesDetectionConditions is ChangeTrackingList<MetricSingleSeriesDetectionCondition> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SeriesDetectionConditions))
             {
                 writer.WritePropertyName("seriesOverrideConfigurations"u8);
                 writer.WriteStartArray();

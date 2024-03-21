@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteBooleanValue(IsSystemCollection);
             writer.WritePropertyName("isView"u8);
             writer.WriteBooleanValue(IsView);
-            if (ShardKey != null)
+            if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);
-            if (ViewOf != null)
+            if (Optional.IsDefined(ViewOf))
             {
                 writer.WritePropertyName("viewOf"u8);
                 writer.WriteStringValue(ViewOf);

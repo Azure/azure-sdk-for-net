@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FilterTrackPropertyCondition(FilterTrackPropertyType property, string value, FilterTrackPropertyCompareOperation operation)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Property = property;
             Value = value;

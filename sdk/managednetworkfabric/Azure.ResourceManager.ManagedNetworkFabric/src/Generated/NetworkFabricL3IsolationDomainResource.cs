@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
@@ -421,10 +419,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricL3IsolationDomainResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricL3IsolationDomainPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.Update");
             scope.Start();
@@ -470,10 +465,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricL3IsolationDomainResource> Update(WaitUntil waitUntil, NetworkFabricL3IsolationDomainPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.Update");
             scope.Start();
@@ -519,10 +511,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.UpdateAdministrativeState");
             scope.Start();
@@ -568,10 +557,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.UpdateAdministrativeState");
             scope.Start();
@@ -785,14 +771,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricL3IsolationDomainResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.AddTag");
             scope.Start();
@@ -853,14 +833,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkFabricL3IsolationDomainResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.AddTag");
             scope.Start();
@@ -920,10 +894,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricL3IsolationDomainResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.SetTags");
             scope.Start();
@@ -980,10 +951,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkFabricL3IsolationDomainResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.SetTags");
             scope.Start();
@@ -1040,10 +1008,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricL3IsolationDomainResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.RemoveTag");
             scope.Start();
@@ -1103,10 +1068,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkFabricL3IsolationDomainResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkFabricL3IsolationDomainL3IsolationDomainsClientDiagnostics.CreateScope("NetworkFabricL3IsolationDomainResource.RemoveTag");
             scope.Start();

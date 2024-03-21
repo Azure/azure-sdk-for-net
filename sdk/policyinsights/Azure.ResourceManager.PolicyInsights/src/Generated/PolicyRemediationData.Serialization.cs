@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PolicyAssignmentId != null)
+            if (Optional.IsDefined(PolicyAssignmentId))
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
                 writer.WriteStringValue(PolicyAssignmentId);
             }
-            if (PolicyDefinitionReferenceId != null)
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (ResourceDiscoveryMode.HasValue)
+            if (Optional.IsDefined(ResourceDiscoveryMode))
             {
                 writer.WritePropertyName("resourceDiscoveryMode"u8);
                 writer.WriteStringValue(ResourceDiscoveryMode.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedOn"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (options.Format != "W" && DeploymentStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteObjectValue(DeploymentStatus);
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (ResourceCount.HasValue)
+            if (Optional.IsDefined(ResourceCount))
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (ParallelDeployments.HasValue)
+            if (Optional.IsDefined(ParallelDeployments))
             {
                 writer.WritePropertyName("parallelDeployments"u8);
                 writer.WriteNumberValue(ParallelDeployments.Value);
             }
-            if (FailureThreshold != null)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteObjectValue(FailureThreshold);

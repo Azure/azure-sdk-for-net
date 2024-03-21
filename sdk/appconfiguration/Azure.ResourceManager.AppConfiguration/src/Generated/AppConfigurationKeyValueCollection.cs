@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -79,18 +77,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppConfigurationKeyValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string keyValueName, AppConfigurationKeyValueData data, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.CreateOrUpdate");
             scope.Start();
@@ -138,18 +126,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppConfigurationKeyValueResource> CreateOrUpdate(WaitUntil waitUntil, string keyValueName, AppConfigurationKeyValueData data, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.CreateOrUpdate");
             scope.Start();
@@ -195,14 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Get");
             scope.Start();
@@ -247,14 +218,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         public virtual Response<AppConfigurationKeyValueResource> Get(string keyValueName, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Get");
             scope.Start();
@@ -299,14 +263,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Exists");
             scope.Start();
@@ -349,14 +306,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         public virtual Response<bool> Exists(string keyValueName, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.Exists");
             scope.Start();
@@ -399,14 +349,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppConfigurationKeyValueResource>> GetIfExistsAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
             scope.Start();
@@ -451,14 +394,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
         public virtual NullableResponse<AppConfigurationKeyValueResource> GetIfExists(string keyValueName, CancellationToken cancellationToken = default)
         {
-            if (keyValueName == null)
-            {
-                throw new ArgumentNullException(nameof(keyValueName));
-            }
-            if (keyValueName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(keyValueName));
-            }
+            Argument.AssertNotNullOrEmpty(keyValueName, nameof(keyValueName));
 
             using var scope = _appConfigurationKeyValueKeyValuesClientDiagnostics.CreateScope("AppConfigurationKeyValueCollection.GetIfExists");
             scope.Start();

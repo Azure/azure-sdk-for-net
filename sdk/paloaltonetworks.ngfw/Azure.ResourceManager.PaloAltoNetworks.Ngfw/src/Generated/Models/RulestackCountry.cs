@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal RulestackCountry(string code)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
+            Argument.AssertNotNull(code, nameof(code));
 
             Code = code;
         }

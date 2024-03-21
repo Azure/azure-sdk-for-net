@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ArcScVmm
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,89 +59,89 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && ComputerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (options.Format != "W" && MemoryMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (options.Format != "W" && CpuCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (options.Format != "W" && LimitCpuForMigration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LimitCpuForMigration))
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
-            if (options.Format != "W" && DynamicMemoryEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DynamicMemoryEnabled))
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
-            if (options.Format != "W" && IsCustomizable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCustomizable))
             {
                 writer.WritePropertyName("isCustomizable"u8);
                 writer.WriteStringValue(IsCustomizable.Value.ToString());
             }
-            if (options.Format != "W" && DynamicMemoryMaxMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DynamicMemoryMaxMB))
             {
                 writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
-            if (options.Format != "W" && DynamicMemoryMinMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DynamicMemoryMinMB))
             {
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
-            if (options.Format != "W" && IsHighlyAvailable != null)
+            if (options.Format != "W" && Optional.IsDefined(IsHighlyAvailable))
             {
                 writer.WritePropertyName("isHighlyAvailable"u8);
                 writer.WriteStringValue(IsHighlyAvailable);
             }
-            if (options.Format != "W" && Generation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteNumberValue(Generation.Value);
             }
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkInterfaces> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Disks is ChangeTrackingList<VirtualDisk> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

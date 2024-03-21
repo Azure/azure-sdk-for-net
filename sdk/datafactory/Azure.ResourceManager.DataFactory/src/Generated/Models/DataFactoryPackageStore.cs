@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="packageStoreLinkedService"/> is null. </exception>
         public DataFactoryPackageStore(string name, EntityReference packageStoreLinkedService)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (packageStoreLinkedService == null)
-            {
-                throw new ArgumentNullException(nameof(packageStoreLinkedService));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(packageStoreLinkedService, nameof(packageStoreLinkedService));
 
             Name = name;
             PackageStoreLinkedService = packageStoreLinkedService;

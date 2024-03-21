@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Add != null)
+            if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);

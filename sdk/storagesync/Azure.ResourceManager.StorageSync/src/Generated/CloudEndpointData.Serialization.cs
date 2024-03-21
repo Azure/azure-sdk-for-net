@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (AzureFileShareName != null)
+            if (Optional.IsDefined(AzureFileShareName))
             {
                 writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
-            if (StorageAccountTenantId.HasValue)
+            if (Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
-            if (PartnershipId != null)
+            if (Optional.IsDefined(PartnershipId))
             {
                 writer.WritePropertyName("partnershipId"u8);
                 writer.WriteStringValue(PartnershipId);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && IsBackupEnabled != null)
+            if (options.Format != "W" && Optional.IsDefined(IsBackupEnabled))
             {
                 writer.WritePropertyName("backupEnabled"u8);
                 writer.WriteStringValue(IsBackupEnabled);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (LastWorkflowId != null)
+            if (Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (LastOperationName != null)
+            if (Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (options.Format != "W" && ChangeEnumerationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ChangeEnumerationStatus))
             {
                 writer.WritePropertyName("changeEnumerationStatus"u8);
                 writer.WriteObjectValue(ChangeEnumerationStatus);

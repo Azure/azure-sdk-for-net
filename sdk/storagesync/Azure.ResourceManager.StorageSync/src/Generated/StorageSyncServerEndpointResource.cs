@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageSyncServerEndpointResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncServerEndpointPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<StorageSyncServerEndpointResource> Update(WaitUntil waitUntil, StorageSyncServerEndpointPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointResource.Update");
             scope.Start();
@@ -381,10 +373,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> RecallActionAsync(WaitUntil waitUntil, RecallActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointResource.RecallAction");
             scope.Start();
@@ -430,10 +419,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation RecallAction(WaitUntil waitUntil, RecallActionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointResource.RecallAction");
             scope.Start();

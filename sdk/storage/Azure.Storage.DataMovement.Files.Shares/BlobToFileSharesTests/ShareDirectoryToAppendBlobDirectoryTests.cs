@@ -15,6 +15,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Files.Shares;

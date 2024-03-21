@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(LogDirectories is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LogDirectories))
             {
                 writer.WritePropertyName("logDirectories"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceEndpointPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceEndpointPolicyName, ServiceEndpointPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceEndpointPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string serviceEndpointPolicyName, ServiceEndpointPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual async Task<Response<ServiceEndpointPolicyResource>> GetAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual Response<ServiceEndpointPolicyResource> Get(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceEndpointPolicyResource>> GetIfExistsAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
         public virtual NullableResponse<ServiceEndpointPolicyResource> GetIfExists(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (serviceEndpointPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpointPolicyName));
-            }
-            if (serviceEndpointPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceEndpointPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
             using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();

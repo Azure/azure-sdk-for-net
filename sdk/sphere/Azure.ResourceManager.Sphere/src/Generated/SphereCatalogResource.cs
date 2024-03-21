@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sphere.Models;
 
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +180,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,7 +188,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -213,7 +211,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,7 +219,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -251,7 +249,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +280,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +311,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +351,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -393,7 +391,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -435,7 +433,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -477,7 +475,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -490,10 +488,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<SphereCatalogResource>> UpdateAsync(SphereCatalogPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.Update");
             scope.Start();
@@ -522,7 +517,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -535,10 +530,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<SphereCatalogResource> Update(SphereCatalogPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.Update");
             scope.Start();
@@ -567,7 +559,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -576,7 +568,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CountDeviceResult>> CountDevicesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CountDevicesResult>> CountDevicesAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.CountDevices");
             scope.Start();
@@ -605,7 +597,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +606,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CountDeviceResult> CountDevices(CancellationToken cancellationToken = default)
+        public virtual Response<CountDevicesResult> CountDevices(CancellationToken cancellationToken = default)
         {
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.CountDevices");
             scope.Start();
@@ -643,7 +635,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -677,7 +669,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -711,7 +703,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -729,10 +721,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An async collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereDeviceGroupResource> GetDeviceGroupsAsync(ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
@@ -752,7 +741,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -770,10 +759,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereDeviceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereDeviceGroupResource> GetDeviceGroups(ListSphereDeviceGroupsContent content, string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, filter, top, skip, pageSizeHint);
@@ -793,7 +779,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,7 +813,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -861,7 +847,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -895,7 +881,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -917,6 +903,98 @@ namespace Azure.ResourceManager.Sphere
         }
 
         /// <summary>
+        /// Creates an image. Use this action when the image ID is unknown.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/uploadImage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_UploadImage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Image upload request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation> UploadImageAsync(WaitUntil waitUntil, SphereImageData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.UploadImage");
+            scope.Start();
+            try
+            {
+                var response = await _sphereCatalogCatalogsRestClient.UploadImageAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SphereArmOperation(_sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateUploadImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates an image. Use this action when the image ID is unknown.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}/uploadImage</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Catalogs_UploadImage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SphereCatalogResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Image upload request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation UploadImage(WaitUntil waitUntil, SphereImageData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.UploadImage");
+            scope.Start();
+            try
+            {
+                var response = _sphereCatalogCatalogsRestClient.UploadImage(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var operation = new SphereArmOperation(_sphereCatalogCatalogsClientDiagnostics, Pipeline, _sphereCatalogCatalogsRestClient.CreateUploadImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -929,7 +1007,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -943,14 +1021,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SphereCatalogResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.AddTag");
             scope.Start();
@@ -997,7 +1069,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1011,14 +1083,8 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SphereCatalogResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.AddTag");
             scope.Start();
@@ -1065,7 +1131,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1078,10 +1144,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SphereCatalogResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.SetTags");
             scope.Start();
@@ -1125,7 +1188,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1138,10 +1201,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SphereCatalogResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.SetTags");
             scope.Start();
@@ -1185,7 +1245,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1198,10 +1258,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SphereCatalogResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.RemoveTag");
             scope.Start();
@@ -1248,7 +1305,7 @@ namespace Azure.ResourceManager.Sphere
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-09-01-preview</description>
+        /// <description>2024-04-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1261,10 +1318,7 @@ namespace Azure.ResourceManager.Sphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SphereCatalogResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sphereCatalogCatalogsClientDiagnostics.CreateScope("SphereCatalogResource.RemoveTag");
             scope.Start();

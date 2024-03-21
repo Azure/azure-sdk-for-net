@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -352,10 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayParameters == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
-            }
+            Argument.AssertNotNull(expressRouteGatewayParameters, nameof(expressRouteGatewayParameters));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.Update");
             scope.Start();
@@ -401,10 +396,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayParameters"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteGatewayResource> Update(WaitUntil waitUntil, NetworkTagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayParameters == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayParameters));
-            }
+            Argument.AssertNotNull(expressRouteGatewayParameters, nameof(expressRouteGatewayParameters));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.Update");
             scope.Start();
@@ -450,14 +442,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteGatewayResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.AddTag");
             scope.Start();
@@ -518,14 +504,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ExpressRouteGatewayResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.AddTag");
             scope.Start();
@@ -585,10 +565,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteGatewayResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.SetTags");
             scope.Start();
@@ -645,10 +622,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ExpressRouteGatewayResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.SetTags");
             scope.Start();
@@ -705,10 +679,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteGatewayResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.RemoveTag");
             scope.Start();
@@ -768,10 +739,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ExpressRouteGatewayResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayResource.RemoveTag");
             scope.Start();

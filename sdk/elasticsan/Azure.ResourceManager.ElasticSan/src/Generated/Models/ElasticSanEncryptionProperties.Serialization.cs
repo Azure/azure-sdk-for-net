@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (EncryptionIdentity != null)
+            if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);

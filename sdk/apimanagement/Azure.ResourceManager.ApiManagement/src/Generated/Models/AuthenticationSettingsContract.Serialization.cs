@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (OAuth2 != null)
+            if (Optional.IsDefined(OAuth2))
             {
                 writer.WritePropertyName("oAuth2"u8);
                 writer.WriteObjectValue(OAuth2);
             }
-            if (OpenId != null)
+            if (Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
                 writer.WriteObjectValue(OpenId);

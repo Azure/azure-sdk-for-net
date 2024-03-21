@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display);
             }
-            if (Origin != null)
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);

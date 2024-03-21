@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (ScaleType.HasValue)
+            if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());

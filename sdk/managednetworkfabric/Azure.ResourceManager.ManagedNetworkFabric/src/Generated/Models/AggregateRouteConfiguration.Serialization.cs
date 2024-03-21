@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPv4Routes is ChangeTrackingList<AggregateRoute> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Routes))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Routes is ChangeTrackingList<AggregateRoute> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Routes))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();

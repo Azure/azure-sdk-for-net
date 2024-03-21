@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);

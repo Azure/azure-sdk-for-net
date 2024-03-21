@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -31,7 +30,7 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Name);
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (!(Values is ChangeTrackingList<MessageTemplateValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +40,7 @@ namespace Azure.Communication.Messages
                 }
                 writer.WriteEndArray();
             }
-            if (Bindings != null)
+            if (Optional.IsDefined(Bindings))
             {
                 writer.WritePropertyName("bindings"u8);
                 writer.WriteObjectValue(Bindings);

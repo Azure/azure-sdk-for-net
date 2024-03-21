@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 
 namespace Azure.ResourceManager.Kusto.Mocking
@@ -192,10 +189,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = KustoClusterClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability");
             scope.Start();
@@ -238,10 +232,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = KustoClusterClustersClientDiagnostics.CreateScope("MockableKustoSubscriptionResource.CheckKustoClusterNameAvailability");
             scope.Start();

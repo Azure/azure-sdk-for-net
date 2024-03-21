@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 

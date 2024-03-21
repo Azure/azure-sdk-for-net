@@ -53,18 +53,9 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="variable"/>, <paramref name="timestamps"/> or <paramref name="values"/> is null. </exception>
         public VariableValues(string variable, IEnumerable<string> timestamps, IEnumerable<float> values)
         {
-            if (variable == null)
-            {
-                throw new ArgumentNullException(nameof(variable));
-            }
-            if (timestamps == null)
-            {
-                throw new ArgumentNullException(nameof(timestamps));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(variable, nameof(variable));
+            Argument.AssertNotNull(timestamps, nameof(timestamps));
+            Argument.AssertNotNull(values, nameof(values));
 
             Variable = variable;
             Timestamps = timestamps.ToList();

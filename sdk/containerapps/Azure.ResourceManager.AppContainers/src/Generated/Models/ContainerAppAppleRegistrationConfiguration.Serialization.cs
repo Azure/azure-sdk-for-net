@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecretSettingName != null)
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);

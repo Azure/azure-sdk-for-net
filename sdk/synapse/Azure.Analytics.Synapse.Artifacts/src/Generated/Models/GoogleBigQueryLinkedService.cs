@@ -19,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
         public GoogleBigQueryLinkedService(object project, GoogleBigQueryAuthenticationType authenticationType)
         {
-            if (project == null)
-            {
-                throw new ArgumentNullException(nameof(project));
-            }
+            Argument.AssertNotNull(project, nameof(project));
 
             Project = project;
             AuthenticationType = authenticationType;

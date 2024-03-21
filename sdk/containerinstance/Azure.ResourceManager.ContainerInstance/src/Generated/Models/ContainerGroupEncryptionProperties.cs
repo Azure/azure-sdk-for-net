@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUri"/>, <paramref name="keyName"/> or <paramref name="keyVersion"/> is null. </exception>
         public ContainerGroupEncryptionProperties(Uri vaultBaseUri, string keyName, string keyVersion)
         {
-            if (vaultBaseUri == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUri));
-            }
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
-            if (keyVersion == null)
-            {
-                throw new ArgumentNullException(nameof(keyVersion));
-            }
+            Argument.AssertNotNull(vaultBaseUri, nameof(vaultBaseUri));
+            Argument.AssertNotNull(keyName, nameof(keyName));
+            Argument.AssertNotNull(keyVersion, nameof(keyVersion));
 
             VaultBaseUri = vaultBaseUri;
             KeyName = keyName;

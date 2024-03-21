@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -28,14 +27,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
         internal OperationDetails(string operationId, DocumentOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (resourceLocation == null)
-            {
-                throw new ArgumentNullException(nameof(resourceLocation));
-            }
+            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
             OperationId = operationId;
             Status = status;

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryIPv4Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (PrimaryIPv6Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (SecondaryIPv4Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (SecondaryIPv6Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);

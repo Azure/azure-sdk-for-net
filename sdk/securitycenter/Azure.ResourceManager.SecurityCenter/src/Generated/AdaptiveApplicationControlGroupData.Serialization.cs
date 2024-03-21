@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EnforcementMode.HasValue)
+            if (Optional.IsDefined(EnforcementMode))
             {
                 writer.WritePropertyName("enforcementMode"u8);
                 writer.WriteStringValue(EnforcementMode.Value.ToString());
             }
-            if (ProtectionMode != null)
+            if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
                 writer.WriteObjectValue(ProtectionMode);
             }
-            if (options.Format != "W" && ConfigurationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationStatus))
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
-            if (options.Format != "W" && RecommendationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationStatus))
             {
                 writer.WritePropertyName("recommendationStatus"u8);
                 writer.WriteStringValue(RecommendationStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(Issues is ChangeTrackingList<AdaptiveApplicationControlIssueSummary> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SourceSystem.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceSystem))
             {
                 writer.WritePropertyName("sourceSystem"u8);
                 writer.WriteStringValue(SourceSystem.Value.ToString());
             }
-            if (!(VmRecommendations is ChangeTrackingList<VmRecommendation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmRecommendations))
             {
                 writer.WritePropertyName("vmRecommendations"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(PathRecommendations is ChangeTrackingList<PathRecommendation> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PathRecommendations))
             {
                 writer.WritePropertyName("pathRecommendations"u8);
                 writer.WriteStartArray();

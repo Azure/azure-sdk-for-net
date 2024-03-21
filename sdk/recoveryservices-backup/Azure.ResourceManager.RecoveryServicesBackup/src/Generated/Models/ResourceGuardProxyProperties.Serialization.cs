@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceGuardResourceId"u8);
             writer.WriteStringValue(ResourceGuardResourceId);
-            if (!(ResourceGuardOperationDetails is ChangeTrackingList<ResourceGuardOperationDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

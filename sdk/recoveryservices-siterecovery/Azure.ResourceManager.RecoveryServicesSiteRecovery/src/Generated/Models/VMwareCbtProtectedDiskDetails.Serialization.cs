@@ -26,77 +26,77 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && DiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (options.Format != "W" && DiskPath != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskPath))
             {
                 writer.WritePropertyName("diskPath"u8);
                 writer.WriteStringValue(DiskPath);
             }
-            if (options.Format != "W" && IsOSDisk != null)
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && CapacityInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && LogStorageAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (options.Format != "W" && LogStorageAccountSasSecretName != null)
+            if (options.Format != "W" && Optional.IsDefined(LogStorageAccountSasSecretName))
             {
                 writer.WritePropertyName("logStorageAccountSasSecretName"u8);
                 writer.WriteStringValue(LogStorageAccountSasSecretName);
             }
-            if (options.Format != "W" && DiskEncryptionSetId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (options.Format != "W" && SeedManagedDiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(SeedManagedDiskId))
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (options.Format != "W" && SeedBlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SeedBlobUri))
             {
                 writer.WritePropertyName("seedBlobUri"u8);
                 writer.WriteStringValue(SeedBlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && TargetManagedDiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetManagedDiskId))
             {
                 writer.WritePropertyName("targetManagedDiskId"u8);
                 writer.WriteStringValue(TargetManagedDiskId);
             }
-            if (options.Format != "W" && TargetBlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetBlobUri))
             {
                 writer.WritePropertyName("targetBlobUri"u8);
                 writer.WriteStringValue(TargetBlobUri.AbsoluteUri);
             }
-            if (TargetDiskName != null)
+            if (Optional.IsDefined(TargetDiskName))
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
             }
-            if (options.Format != "W" && GatewayOperationDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
                 writer.WriteObjectValue(GatewayOperationDetails);

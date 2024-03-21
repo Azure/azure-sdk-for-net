@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("assetName"u8);
             writer.WriteStringValue(AssetName);
-            if (!(Files is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Start != null)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteObjectValue(Start);
             }
-            if (End != null)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteObjectValue(End);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (!(InputDefinitions is ChangeTrackingList<MediaJobInputDefinition> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InputDefinitions))
             {
                 writer.WritePropertyName("inputDefinitions"u8);
                 writer.WriteStartArray();

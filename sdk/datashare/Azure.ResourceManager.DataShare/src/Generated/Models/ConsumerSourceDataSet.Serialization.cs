@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DataSetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetId))
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (options.Format != "W" && DataSetLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetLocation))
             {
                 writer.WritePropertyName("dataSetLocation"u8);
                 writer.WriteStringValue(DataSetLocation.Value);
             }
-            if (options.Format != "W" && DataSetName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataSetName))
             {
                 writer.WritePropertyName("dataSetName"u8);
                 writer.WriteStringValue(DataSetName);
             }
-            if (options.Format != "W" && DataSetPath != null)
+            if (options.Format != "W" && Optional.IsDefined(DataSetPath))
             {
                 writer.WritePropertyName("dataSetPath"u8);
                 writer.WriteStringValue(DataSetPath);
             }
-            if (options.Format != "W" && DataSetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetType))
             {
                 writer.WritePropertyName("dataSetType"u8);
                 writer.WriteStringValue(DataSetType.Value.ToString());

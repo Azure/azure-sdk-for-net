@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (PossibleCauses != null)
+            if (Optional.IsDefined(PossibleCauses))
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (RecommendedAction != null)
+            if (Optional.IsDefined(RecommendedAction))
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (ActivityId != null)
+            if (Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Provision.HasValue)
+            if (Optional.IsDefined(Provision))
             {
                 writer.WritePropertyName("provision"u8);
                 writer.WriteStringValue(Provision.Value.ToSerialString());
             }
-            if (!(IPAddressIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAddressIds))
             {
                 writer.WritePropertyName("ipAddressIds"u8);
                 writer.WriteStartArray();

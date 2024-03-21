@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (SasUrlSettingName != null)
+            if (Optional.IsDefined(SasUrlSettingName))
             {
                 writer.WritePropertyName("sasUrlSettingName"u8);
                 writer.WriteStringValue(SasUrlSettingName);

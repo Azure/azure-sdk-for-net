@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (AccessType.HasValue)
+            if (Optional.IsDefined(AccessType))
             {
                 writer.WritePropertyName("accessType"u8);
                 writer.WriteStringValue(AccessType.Value.ToString());
             }
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);

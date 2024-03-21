@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (NotificationDestination != null)
+            if (Optional.IsDefined(NotificationDestination))
             {
                 writer.WritePropertyName("notificationDestination"u8);
                 writer.WriteStringValue(NotificationDestination);
             }
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();

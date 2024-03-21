@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (FailureThreshold.HasValue)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (HttpGet != null)
+            if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
                 writer.WriteObjectValue(HttpGet);
             }
-            if (InitialDelaySeconds.HasValue)
+            if (Optional.IsDefined(InitialDelaySeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelaySeconds.Value);
             }
-            if (PeriodSeconds.HasValue)
+            if (Optional.IsDefined(PeriodSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodSeconds.Value);
             }
-            if (SuccessThreshold.HasValue)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (TcpSocket != null)
+            if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
                 writer.WriteObjectValue(TcpSocket);
             }
-            if (TerminationGracePeriodSeconds.HasValue)
+            if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (ProbeType.HasValue)
+            if (Optional.IsDefined(ProbeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProbeType.Value.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (DateOn.HasValue)
+            if (Optional.IsDefined(DateOn))
             {
                 writer.WritePropertyName("dateTime"u8);
                 writer.WriteStringValue(DateOn.Value, "O");
             }
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);

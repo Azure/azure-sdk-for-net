@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (NamespacePath != null)
+            if (Optional.IsDefined(NamespacePath))
             {
                 writer.WritePropertyName("namespacePath"u8);
                 writer.WriteStringValue(NamespacePath);
             }
-            if (TargetPath != null)
+            if (Optional.IsDefined(TargetPath))
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
             }
-            if (NfsExport != null)
+            if (Optional.IsDefined(NfsExport))
             {
                 writer.WritePropertyName("nfsExport"u8);
                 writer.WriteStringValue(NfsExport);
             }
-            if (NfsAccessPolicy != null)
+            if (Optional.IsDefined(NfsAccessPolicy))
             {
                 writer.WritePropertyName("nfsAccessPolicy"u8);
                 writer.WriteStringValue(NfsAccessPolicy);

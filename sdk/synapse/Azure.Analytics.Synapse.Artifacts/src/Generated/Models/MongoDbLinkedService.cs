@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="databaseName"/> is null. </exception>
         public MongoDbLinkedService(object server, object databaseName)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             Server = server;
             DatabaseName = databaseName;

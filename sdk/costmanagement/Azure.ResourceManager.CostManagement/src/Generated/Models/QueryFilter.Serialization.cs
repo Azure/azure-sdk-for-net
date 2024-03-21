@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(And is ChangeTrackingList<QueryFilter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Or is ChangeTrackingList<QueryFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Or))
             {
                 writer.WritePropertyName("or"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);

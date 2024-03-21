@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
@@ -561,10 +559,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<StreamingJobResource>> UpdateAsync(StreamingJobData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.Update");
             scope.Start();
@@ -607,10 +602,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<StreamingJobResource> Update(StreamingJobData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.Update");
             scope.Start();
@@ -909,14 +901,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<StreamingJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.AddTag");
             scope.Start();
@@ -977,14 +963,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<StreamingJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.AddTag");
             scope.Start();
@@ -1044,10 +1024,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<StreamingJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.SetTags");
             scope.Start();
@@ -1104,10 +1081,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<StreamingJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.SetTags");
             scope.Start();
@@ -1164,10 +1138,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<StreamingJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.RemoveTag");
             scope.Start();
@@ -1227,10 +1198,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<StreamingJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _streamingJobClientDiagnostics.CreateScope("StreamingJobResource.RemoveTag");
             scope.Start();

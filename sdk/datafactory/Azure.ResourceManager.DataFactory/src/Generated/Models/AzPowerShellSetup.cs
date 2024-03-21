@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public AzPowerShellSetup(string version)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNull(version, nameof(version));
 
             Version = version;
             CustomSetupBaseType = "AzPowerShellSetup";

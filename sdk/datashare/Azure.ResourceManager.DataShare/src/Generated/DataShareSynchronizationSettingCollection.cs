@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataShareSynchronizationSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string synchronizationSettingName, DataShareSynchronizationSettingData data, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataShareSynchronizationSettingResource> CreateOrUpdate(WaitUntil waitUntil, string synchronizationSettingName, DataShareSynchronizationSettingData data, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
         public virtual async Task<Response<DataShareSynchronizationSettingResource>> GetAsync(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
         public virtual Response<DataShareSynchronizationSettingResource> Get(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataShareSynchronizationSettingResource>> GetIfExistsAsync(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="synchronizationSettingName"/> is null. </exception>
         public virtual NullableResponse<DataShareSynchronizationSettingResource> GetIfExists(string synchronizationSettingName, CancellationToken cancellationToken = default)
         {
-            if (synchronizationSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationSettingName));
-            }
-            if (synchronizationSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(synchronizationSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(synchronizationSettingName, nameof(synchronizationSettingName));
 
             using var scope = _dataShareSynchronizationSettingSynchronizationSettingsClientDiagnostics.CreateScope("DataShareSynchronizationSettingCollection.GetIfExists");
             scope.Start();

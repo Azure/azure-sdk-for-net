@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (EmailAddress != null)
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (PhoneNumber != null)
+            if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);

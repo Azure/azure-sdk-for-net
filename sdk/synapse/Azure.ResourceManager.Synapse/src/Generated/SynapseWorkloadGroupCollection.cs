@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseWorkloadGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workloadGroupName, SynapseWorkloadGroupData data, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseWorkloadGroupResource> CreateOrUpdate(WaitUntil waitUntil, string workloadGroupName, SynapseWorkloadGroupData data, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual async Task<Response<SynapseWorkloadGroupResource>> GetAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual Response<SynapseWorkloadGroupResource> Get(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseWorkloadGroupResource>> GetIfExistsAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
         public virtual NullableResponse<SynapseWorkloadGroupResource> GetIfExists(string workloadGroupName, CancellationToken cancellationToken = default)
         {
-            if (workloadGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(workloadGroupName));
-            }
-            if (workloadGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workloadGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(workloadGroupName, nameof(workloadGroupName));
 
             using var scope = _synapseWorkloadGroupSqlPoolWorkloadGroupClientDiagnostics.CreateScope("SynapseWorkloadGroupCollection.GetIfExists");
             scope.Start();

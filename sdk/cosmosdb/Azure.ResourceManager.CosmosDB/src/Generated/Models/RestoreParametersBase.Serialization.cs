@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (RestoreSource != null)
+            if (Optional.IsDefined(RestoreSource))
             {
                 writer.WritePropertyName("restoreSource"u8);
                 writer.WriteStringValue(RestoreSource);
             }
-            if (RestoreTimestampInUtc.HasValue)
+            if (Optional.IsDefined(RestoreTimestampInUtc))
             {
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");

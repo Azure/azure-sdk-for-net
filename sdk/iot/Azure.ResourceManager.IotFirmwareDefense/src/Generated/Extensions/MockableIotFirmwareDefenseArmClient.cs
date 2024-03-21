@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 {
@@ -37,27 +35,39 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotFirmwareResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotFirmwareResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareResource"/> object. </returns>
-        public virtual FirmwareResource GetFirmwareResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotFirmwareResource"/> object. </returns>
+        public virtual IotFirmwareResource GetIotFirmwareResource(ResourceIdentifier id)
         {
-            FirmwareResource.ValidateResourceId(id);
-            return new FirmwareResource(Client, id);
+            IotFirmwareResource.ValidateResourceId(id);
+            return new IotFirmwareResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisSummaryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareWorkspaceResource"/> object. </returns>
-        public virtual FirmwareWorkspaceResource GetFirmwareWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirmwareAnalysisSummaryResource"/> object. </returns>
+        public virtual FirmwareAnalysisSummaryResource GetFirmwareAnalysisSummaryResource(ResourceIdentifier id)
         {
-            FirmwareWorkspaceResource.ValidateResourceId(id);
-            return new FirmwareWorkspaceResource(Client, id);
+            FirmwareAnalysisSummaryResource.ValidateResourceId(id);
+            return new FirmwareAnalysisSummaryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
+        public virtual FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier id)
+        {
+            FirmwareAnalysisWorkspaceResource.ValidateResourceId(id);
+            return new FirmwareAnalysisWorkspaceResource(Client, id);
         }
     }
 }

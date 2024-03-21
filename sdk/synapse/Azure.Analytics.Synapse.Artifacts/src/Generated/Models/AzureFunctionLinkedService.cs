@@ -18,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUrl"/> is null. </exception>
         public AzureFunctionLinkedService(object functionAppUrl)
         {
-            if (functionAppUrl == null)
-            {
-                throw new ArgumentNullException(nameof(functionAppUrl));
-            }
+            Argument.AssertNotNull(functionAppUrl, nameof(functionAppUrl));
 
             FunctionAppUrl = functionAppUrl;
             Type = "AzureFunction";

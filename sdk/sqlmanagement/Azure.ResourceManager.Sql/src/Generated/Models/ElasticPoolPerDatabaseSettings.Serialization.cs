@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (MinCapacity.HasValue)
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (MaxCapacity.HasValue)
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);

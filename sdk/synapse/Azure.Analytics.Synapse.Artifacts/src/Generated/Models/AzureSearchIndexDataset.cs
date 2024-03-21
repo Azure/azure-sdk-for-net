@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="indexName"/> is null. </exception>
         public AzureSearchIndexDataset(LinkedServiceReference linkedServiceName, object indexName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException(nameof(indexName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(indexName, nameof(indexName));
 
             IndexName = indexName;
             Type = "AzureSearchIndex";

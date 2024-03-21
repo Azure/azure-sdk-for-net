@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (InformationProtection != null)
+            if (Optional.IsDefined(InformationProtection))
             {
                 writer.WritePropertyName("informationProtection"u8);
                 writer.WriteObjectValue(InformationProtection);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Common;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -21,8 +22,8 @@ namespace Azure.Maps.Search.Models
 
         internal static PolygonObject DeserializePolygonObject(JsonElement element)
         {
-            Optional<string> providerID = default;
-            Optional<GeoObject> geometryData = default;
+            string providerID = default;
+            GeoObject geometryData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("providerID"))
@@ -53,11 +54,11 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PolygonObject(providerID.Value, geometryData.Value);
+            return new PolygonObject(providerID, geometryData);
         }
 
-        private static Optional<GeoObject> DeserializeFeatureCollection(JsonProperty property) {
-            Optional<GeoObject> result = default;
+        private static GeoObject DeserializeFeatureCollection(JsonProperty property) {
+            GeoObject result = default;
             foreach (var geoProperty in property.Value.EnumerateObject()) {
                 if (geoProperty.NameEquals("features")) {
                     List<GeoObject> array = new List<GeoObject>();
@@ -76,8 +77,8 @@ namespace Azure.Maps.Search.Models
             return result;
         }
 
-        private static Optional<GeoObject> DeserializeObject(JsonElement value) {
-            Optional<GeoObject> geometryData = default;
+        private static GeoObject DeserializeObject(JsonElement value) {
+            GeoObject geometryData = default;
             // The fastest path is .NET 6+ with no custom serializer
             #if NET6_0_OR_GREATER
             geometryData = JsonSerializer.Deserialize<GeoObject>(value);

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -287,10 +285,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCrossConnectionPeeringResource>> UpdateAsync(WaitUntil waitUntil, ExpressRouteCrossConnectionPeeringData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.Update");
             scope.Start();
@@ -336,10 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCrossConnectionPeeringResource> Update(WaitUntil waitUntil, ExpressRouteCrossConnectionPeeringData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.Update");
             scope.Start();
@@ -386,14 +378,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCircuitsArpTableListResult>> GetArpTableExpressRouteCrossConnectionAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
-            if (devicePath == null)
-            {
-                throw new ArgumentNullException(nameof(devicePath));
-            }
-            if (devicePath.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devicePath));
-            }
+            Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetArpTableExpressRouteCrossConnection");
             scope.Start();
@@ -440,14 +425,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCircuitsArpTableListResult> GetArpTableExpressRouteCrossConnection(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
-            if (devicePath == null)
-            {
-                throw new ArgumentNullException(nameof(devicePath));
-            }
-            if (devicePath.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devicePath));
-            }
+            Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetArpTableExpressRouteCrossConnection");
             scope.Start();
@@ -494,14 +472,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult>> GetRoutesTableSummaryExpressRouteCrossConnectionAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
-            if (devicePath == null)
-            {
-                throw new ArgumentNullException(nameof(devicePath));
-            }
-            if (devicePath.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devicePath));
-            }
+            Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableSummaryExpressRouteCrossConnection");
             scope.Start();
@@ -548,14 +519,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> GetRoutesTableSummaryExpressRouteCrossConnection(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
-            if (devicePath == null)
-            {
-                throw new ArgumentNullException(nameof(devicePath));
-            }
-            if (devicePath.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devicePath));
-            }
+            Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableSummaryExpressRouteCrossConnection");
             scope.Start();
@@ -602,14 +566,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCircuitsRoutesTableListResult>> GetRoutesTableExpressRouteCrossConnectionAsync(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
-            if (devicePath == null)
-            {
-                throw new ArgumentNullException(nameof(devicePath));
-            }
-            if (devicePath.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devicePath));
-            }
+            Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableExpressRouteCrossConnection");
             scope.Start();
@@ -656,14 +613,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="devicePath"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCircuitsRoutesTableListResult> GetRoutesTableExpressRouteCrossConnection(WaitUntil waitUntil, string devicePath, CancellationToken cancellationToken = default)
         {
-            if (devicePath == null)
-            {
-                throw new ArgumentNullException(nameof(devicePath));
-            }
-            if (devicePath.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devicePath));
-            }
+            Argument.AssertNotNullOrEmpty(devicePath, nameof(devicePath));
 
             using var scope = _expressRouteCrossConnectionClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringResource.GetRoutesTableExpressRouteCrossConnection");
             scope.Start();

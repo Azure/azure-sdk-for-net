@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeliveryConfiguration != null)
+            if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
                 writer.WriteObjectValue(DeliveryConfiguration);
             }
-            if (EventDeliverySchema.HasValue)
+            if (Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (FiltersConfiguration != null)
+            if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration);

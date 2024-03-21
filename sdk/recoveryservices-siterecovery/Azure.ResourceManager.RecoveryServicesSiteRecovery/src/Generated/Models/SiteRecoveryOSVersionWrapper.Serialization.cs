@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ServicePack != null)
+            if (Optional.IsDefined(ServicePack))
             {
                 writer.WritePropertyName("servicePack"u8);
                 writer.WriteStringValue(ServicePack);

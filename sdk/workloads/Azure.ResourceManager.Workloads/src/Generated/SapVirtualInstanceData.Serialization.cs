@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Workloads
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -74,32 +74,32 @@ namespace Azure.ResourceManager.Workloads
             writer.WriteStringValue(SapProduct.ToString());
             writer.WritePropertyName("configuration"u8);
             writer.WriteObjectValue(Configuration);
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);

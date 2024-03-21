@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagementGroupNetworkManagerConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkManagerConnectionName, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagementGroupNetworkManagerConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string networkManagerConnectionName, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupNetworkManagerConnectionResource>> GetAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual Response<ManagementGroupNetworkManagerConnectionResource> Get(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.Exists");
             scope.Start();
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagementGroupNetworkManagerConnectionResource>> GetIfExistsAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.GetIfExists");
             scope.Start();
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
         public virtual NullableResponse<ManagementGroupNetworkManagerConnectionResource> GetIfExists(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
-            if (networkManagerConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkManagerConnectionName));
-            }
-            if (networkManagerConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkManagerConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
 
             using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionCollection.GetIfExists");
             scope.Start();

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -25,22 +24,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataWarehouseName"/>, <paramref name="schemaName"/>, <paramref name="sqlServerResourceId"/> or <paramref name="tableName"/> is null. </exception>
         public SqlDWTableDataSetMapping(Guid dataSetId, string dataWarehouseName, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName)
         {
-            if (dataWarehouseName == null)
-            {
-                throw new ArgumentNullException(nameof(dataWarehouseName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (sqlServerResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sqlServerResourceId));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(dataWarehouseName, nameof(dataWarehouseName));
+            Argument.AssertNotNull(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(sqlServerResourceId, nameof(sqlServerResourceId));
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             DataSetId = dataSetId;
             DataWarehouseName = dataWarehouseName;

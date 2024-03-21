@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (JwtClaimChecks != null)
+            if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
                 writer.WriteObjectValue(JwtClaimChecks);
             }
-            if (!(AllowedAudiences is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultAuthorizationPolicy != null)
+            if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
                 writer.WriteObjectValue(DefaultAuthorizationPolicy);

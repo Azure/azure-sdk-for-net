@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="groupByVariables"/> is null. </exception>
         public GroupByUserSession(IEnumerable<GroupByVariable> groupByVariables)
         {
-            if (groupByVariables == null)
-            {
-                throw new ArgumentNullException(nameof(groupByVariables));
-            }
+            Argument.AssertNotNull(groupByVariables, nameof(groupByVariables));
 
             GroupByVariables = groupByVariables.ToList();
         }

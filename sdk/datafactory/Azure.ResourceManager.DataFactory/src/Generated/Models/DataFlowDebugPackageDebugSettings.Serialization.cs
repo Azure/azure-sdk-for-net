@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (!(SourceSettings is ChangeTrackingList<DataFlowSourceSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceSettings))
             {
                 writer.WritePropertyName("sourceSettings"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DatasetParameters != null)
+            if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
 #if NET6_0_OR_GREATER

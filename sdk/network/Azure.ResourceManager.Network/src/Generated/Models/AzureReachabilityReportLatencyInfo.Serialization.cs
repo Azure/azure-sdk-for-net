@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (TimeStamp.HasValue)
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (Score.HasValue)
+            if (Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);

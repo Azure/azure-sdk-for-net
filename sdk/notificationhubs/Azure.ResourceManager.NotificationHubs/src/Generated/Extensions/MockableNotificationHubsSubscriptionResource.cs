@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NotificationHubs;
 using Azure.ResourceManager.NotificationHubs.Models;
 
 namespace Azure.ResourceManager.NotificationHubs.Mocking
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability");
             scope.Start();
@@ -116,10 +110,7 @@ namespace Azure.ResourceManager.NotificationHubs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = NotificationHubNamespaceNamespacesClientDiagnostics.CreateScope("MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability");
             scope.Start();

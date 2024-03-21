@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RepoId != null)
+            if (Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (OrgName != null)
+            if (Optional.IsDefined(OrgName))
             {
                 writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
-            if (ProjectName != null)
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);

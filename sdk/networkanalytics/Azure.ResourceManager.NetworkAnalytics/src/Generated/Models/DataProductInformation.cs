@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/>, <paramref name="description"/> or <paramref name="dataProductVersions"/> is null. </exception>
         public DataProductInformation(string dataProductName, string description, IEnumerable<DataProductVersion> dataProductVersions)
         {
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-            if (dataProductVersions == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductVersions));
-            }
+            Argument.AssertNotNull(dataProductName, nameof(dataProductName));
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(dataProductVersions, nameof(dataProductVersions));
 
             DataProductName = dataProductName;
             Description = description;

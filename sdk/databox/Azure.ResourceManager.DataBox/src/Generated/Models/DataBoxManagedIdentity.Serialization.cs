@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityType != null)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType);
             }
-            if (UserAssigned != null)
+            if (Optional.IsDefined(UserAssigned))
             {
                 writer.WritePropertyName("userAssigned"u8);
                 writer.WriteObjectValue(UserAssigned);

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabric;
 using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Mocking
@@ -206,14 +203,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
@@ -244,14 +234,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersions", "value", null, cancellationToken);
@@ -283,14 +266,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
@@ -322,14 +298,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(e), ClusterVersionsClientDiagnostics, Pipeline, "MockableServiceFabricSubscriptionResource.GetClusterVersionsByEnvironment", "value", null, cancellationToken);

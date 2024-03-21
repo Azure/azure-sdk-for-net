@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppConfiguration
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,34 +63,34 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -107,27 +107,27 @@ namespace Azure.ResourceManager.AppConfiguration
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (SoftDeleteRetentionInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (EnablePurgeProtection.HasValue)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());

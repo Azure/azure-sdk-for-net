@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerAzureADOnlyAuthenticationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AuthenticationName authenticationName, SqlServerAzureADOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerAzureADOnlyAuthenticationResource> CreateOrUpdate(WaitUntil waitUntil, AuthenticationName authenticationName, SqlServerAzureADOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();

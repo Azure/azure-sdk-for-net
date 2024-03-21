@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorizationEndpoint != null)
+            if (Optional.IsDefined(AuthorizationEndpoint))
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (TokenEndpoint != null)
+            if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (CertificationUri != null)
+            if (Optional.IsDefined(CertificationUri))
             {
                 writer.WritePropertyName("certificationUri"u8);
                 writer.WriteStringValue(CertificationUri.AbsoluteUri);
             }
-            if (WellKnownOpenIdConfiguration != null)
+            if (Optional.IsDefined(WellKnownOpenIdConfiguration))
             {
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);

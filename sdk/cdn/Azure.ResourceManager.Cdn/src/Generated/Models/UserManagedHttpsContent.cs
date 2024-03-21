@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
         public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(protocolType)
         {
-            if (certificateSourceParameters == null)
-            {
-                throw new ArgumentNullException(nameof(certificateSourceParameters));
-            }
+            Argument.AssertNotNull(certificateSourceParameters, nameof(certificateSourceParameters));
 
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = CertificateSource.AzureKeyVault;

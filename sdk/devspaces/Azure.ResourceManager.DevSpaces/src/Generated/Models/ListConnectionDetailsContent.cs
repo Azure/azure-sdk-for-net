@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetContainerHostResourceId"/> is null. </exception>
         public ListConnectionDetailsContent(string targetContainerHostResourceId)
         {
-            if (targetContainerHostResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(targetContainerHostResourceId));
-            }
+            Argument.AssertNotNull(targetContainerHostResourceId, nameof(targetContainerHostResourceId));
 
             TargetContainerHostResourceId = targetContainerHostResourceId;
         }

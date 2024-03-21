@@ -51,14 +51,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
         public InternalFunctionDefinition(string name, BinaryData parameters)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             Name = name;
             Parameters = parameters;

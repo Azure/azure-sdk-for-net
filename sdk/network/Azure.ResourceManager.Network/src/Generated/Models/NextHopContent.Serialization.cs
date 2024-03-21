@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SourceIPAddress);
             writer.WritePropertyName("destinationIPAddress"u8);
             writer.WriteStringValue(DestinationIPAddress);
-            if (TargetNicResourceId != null)
+            if (Optional.IsDefined(TargetNicResourceId))
             {
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);

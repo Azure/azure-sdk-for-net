@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Maps.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uniqueName"/> or <paramref name="id"/> is null. </exception>
         public MapsLinkedResource(string uniqueName, string id)
         {
-            if (uniqueName == null)
-            {
-                throw new ArgumentNullException(nameof(uniqueName));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(uniqueName, nameof(uniqueName));
+            Argument.AssertNotNull(id, nameof(id));
 
             UniqueName = uniqueName;
             Id = id;

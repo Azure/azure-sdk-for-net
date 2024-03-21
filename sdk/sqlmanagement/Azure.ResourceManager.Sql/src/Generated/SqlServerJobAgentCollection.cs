@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerJobAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobAgentName, SqlServerJobAgentData data, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerJobAgentResource> CreateOrUpdate(WaitUntil waitUntil, string jobAgentName, SqlServerJobAgentData data, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual async Task<Response<SqlServerJobAgentResource>> GetAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual Response<SqlServerJobAgentResource> Get(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerJobAgentResource>> GetIfExistsAsync(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="jobAgentName"/> is null. </exception>
         public virtual NullableResponse<SqlServerJobAgentResource> GetIfExists(string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var scope = _sqlServerJobAgentJobAgentsClientDiagnostics.CreateScope("SqlServerJobAgentCollection.GetIfExists");
             scope.Start();

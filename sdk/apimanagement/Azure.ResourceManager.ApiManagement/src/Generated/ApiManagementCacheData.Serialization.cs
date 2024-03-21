@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (UseFromLocation != null)
+            if (Optional.IsDefined(UseFromLocation))
             {
                 writer.WritePropertyName("useFromLocation"u8);
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);

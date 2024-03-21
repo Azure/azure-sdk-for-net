@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
         public SynapseSparkConfigurationData(IDictionary<string, string> configs)
         {
-            if (configs == null)
-            {
-                throw new ArgumentNullException(nameof(configs));
-            }
+            Argument.AssertNotNull(configs, nameof(configs));
 
             Configs = configs;
             Annotations = new ChangeTrackingList<string>();

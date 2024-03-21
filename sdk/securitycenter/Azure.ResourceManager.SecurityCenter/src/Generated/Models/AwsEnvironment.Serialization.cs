@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (OrganizationalData != null)
+            if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
                 writer.WriteObjectValue(OrganizationalData);
             }
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ScanInterval.HasValue)
+            if (Optional.IsDefined(ScanInterval))
             {
                 writer.WritePropertyName("scanInterval"u8);
                 writer.WriteNumberValue(ScanInterval.Value);

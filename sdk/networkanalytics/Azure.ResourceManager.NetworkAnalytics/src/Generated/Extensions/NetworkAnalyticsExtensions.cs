@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkAnalytics.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> Returns a <see cref="DataProductResource"/> object. </returns>
         public static DataProductResource GetDataProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkAnalyticsArmClient(client).GetDataProductResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> Returns a <see cref="DataProductsCatalogResource"/> object. </returns>
         public static DataProductsCatalogResource GetDataProductsCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkAnalyticsArmClient(client).GetDataProductsCatalogResource(id);
         }
@@ -90,10 +82,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> An object representing collection of DataProductResources and their operations over a DataProductResource. </returns>
         public static DataProductCollection GetDataProducts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProducts();
         }
@@ -131,10 +120,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<DataProductResource>> GetDataProductAsync(this ResourceGroupResource resourceGroupResource, string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProductAsync(dataProductName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,10 +158,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         [ForwardsClientCalls]
         public static Response<DataProductResource> GetDataProduct(this ResourceGroupResource resourceGroupResource, string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProduct(dataProductName, cancellationToken);
         }
@@ -192,10 +175,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> Returns a <see cref="DataProductsCatalogResource"/> object. </returns>
         public static DataProductsCatalogResource GetDataProductsCatalog(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProductsCatalog();
         }
@@ -231,10 +211,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> An async collection of <see cref="DataProductResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProductResource> GetDataProductsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProductsAsync(cancellationToken);
         }
@@ -270,10 +247,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> A collection of <see cref="DataProductResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProductResource> GetDataProducts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProducts(cancellationToken);
         }
@@ -309,10 +283,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> An async collection of <see cref="DataProductsCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProductsCatalogResource> GetDataProductsCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProductsCatalogsAsync(cancellationToken);
         }
@@ -348,10 +319,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <returns> A collection of <see cref="DataProductsCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProductsCatalogResource> GetDataProductsCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProductsCatalogs(cancellationToken);
         }

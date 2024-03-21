@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="lastBackupName"/> is null. </exception>
         public CompleteDatabaseRestoreDefinition(string lastBackupName)
         {
-            if (lastBackupName == null)
-            {
-                throw new ArgumentNullException(nameof(lastBackupName));
-            }
+            Argument.AssertNotNull(lastBackupName, nameof(lastBackupName));
 
             LastBackupName = lastBackupName;
         }

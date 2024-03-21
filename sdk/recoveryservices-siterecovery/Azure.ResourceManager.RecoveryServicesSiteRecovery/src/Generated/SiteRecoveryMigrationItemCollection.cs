@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryMigrationItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryMigrationItemResource> CreateOrUpdate(WaitUntil waitUntil, string migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryMigrationItemResource>> GetAsync(string migrationItemName, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
         public virtual Response<SiteRecoveryMigrationItemResource> Get(string migrationItemName, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.Get");
             scope.Start();
@@ -369,14 +333,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string migrationItemName, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.Exists");
             scope.Start();
@@ -419,14 +376,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string migrationItemName, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.Exists");
             scope.Start();
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryMigrationItemResource>> GetIfExistsAsync(string migrationItemName, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryMigrationItemResource> GetIfExists(string migrationItemName, CancellationToken cancellationToken = default)
         {
-            if (migrationItemName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationItemName));
-            }
-            if (migrationItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationItemName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationItemName, nameof(migrationItemName));
 
             using var scope = _siteRecoveryMigrationItemReplicationMigrationItemsClientDiagnostics.CreateScope("SiteRecoveryMigrationItemCollection.GetIfExists");
             scope.Start();

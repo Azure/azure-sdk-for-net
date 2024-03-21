@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (!(SignedIdentifiers is ChangeTrackingList<StorageTableSignedIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();

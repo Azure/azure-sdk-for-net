@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);

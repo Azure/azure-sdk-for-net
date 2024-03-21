@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointId"u8);
             writer.WriteStringValue(RecoveryPointId);
-            if (RehydrationPriority.HasValue)
+            if (Optional.IsDefined(RehydrationPriority))
             {
                 writer.WritePropertyName("rehydrationPriority"u8);
                 writer.WriteStringValue(RehydrationPriority.Value.ToString());

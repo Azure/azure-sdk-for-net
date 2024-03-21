@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         public FeatureSubset(IEnumerable<string> features)
         {
-            if (features == null)
-            {
-                throw new ArgumentNullException(nameof(features));
-            }
+            Argument.AssertNotNull(features, nameof(features));
 
             Features = features.ToList();
             FilterType = MonitoringFeatureFilterType.FeatureSubset;

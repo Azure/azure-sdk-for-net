@@ -7,13 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> The UnknownChargeSummary. </summary>
+    /// <summary> Unknown version of ChargeSummary. </summary>
     internal partial class UnknownChargeSummary : ConsumptionChargeSummary
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChargeSummary"/>. </summary>

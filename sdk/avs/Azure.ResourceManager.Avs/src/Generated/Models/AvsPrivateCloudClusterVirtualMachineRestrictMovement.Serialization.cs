@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (RestrictMovement.HasValue)
+            if (Optional.IsDefined(RestrictMovement))
             {
                 writer.WritePropertyName("restrictMovement"u8);
                 writer.WriteStringValue(RestrictMovement.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(OutputFiles is ChangeTrackingList<MediaOutputFile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputFiles))
             {
                 writer.WritePropertyName("outputFiles"u8);
                 writer.WriteStartArray();

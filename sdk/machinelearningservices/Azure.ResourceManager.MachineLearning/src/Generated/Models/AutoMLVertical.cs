@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         protected AutoMLVertical(MachineLearningTableJobInput trainingData)
         {
-            if (trainingData == null)
-            {
-                throw new ArgumentNullException(nameof(trainingData));
-            }
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
 
             TrainingData = trainingData;
         }

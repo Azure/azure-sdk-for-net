@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
         public ManagementPolicySchema(IEnumerable<ManagementPolicyRule> rules)
         {
-            if (rules == null)
-            {
-                throw new ArgumentNullException(nameof(rules));
-            }
+            Argument.AssertNotNull(rules, nameof(rules));
 
             Rules = rules.ToList();
         }

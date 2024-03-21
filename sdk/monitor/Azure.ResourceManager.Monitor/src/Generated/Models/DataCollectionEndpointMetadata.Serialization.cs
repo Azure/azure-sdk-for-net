@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisionedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedBy))
             {
                 writer.WritePropertyName("provisionedBy"u8);
                 writer.WriteStringValue(ProvisionedBy);
             }
-            if (options.Format != "W" && ProvisionedByResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedByResourceId))
             {
                 writer.WritePropertyName("provisionedByResourceId"u8);
                 writer.WriteStringValue(ProvisionedByResourceId);

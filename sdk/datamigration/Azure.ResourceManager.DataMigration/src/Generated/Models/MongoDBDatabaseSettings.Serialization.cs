@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (TargetRUs.HasValue)
+            if (Optional.IsDefined(TargetRUs))
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);

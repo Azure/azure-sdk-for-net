@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -50,14 +48,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         internal WorkspaceList()
         {
-            Value = new ChangeTrackingList<FirmwareWorkspaceData>();
+            Value = new ChangeTrackingList<FirmwareAnalysisWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceList"/>. </summary>
         /// <param name="value"> The list of firmware analysis workspaces. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceList(IReadOnlyList<FirmwareWorkspaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkspaceList(IReadOnlyList<FirmwareAnalysisWorkspaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -65,7 +63,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of firmware analysis workspaces. </summary>
-        public IReadOnlyList<FirmwareWorkspaceData> Value { get; }
+        public IReadOnlyList<FirmwareAnalysisWorkspaceData> Value { get; }
         /// <summary> The uri to fetch the next page of asset. </summary>
         public string NextLink { get; }
     }

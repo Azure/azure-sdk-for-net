@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -146,14 +145,8 @@ namespace Azure.Storage.Blobs.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SubmitBatchAsync(long contentLength, string multipartContentType, RequestContent content, int? timeout = null, RequestContext context = null)
         {
-            if (multipartContentType == null)
-            {
-                throw new ArgumentNullException(nameof(multipartContentType));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Service.SubmitBatch");
             scope.Start();
@@ -189,14 +182,8 @@ namespace Azure.Storage.Blobs.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response SubmitBatch(long contentLength, string multipartContentType, RequestContent content, int? timeout = null, RequestContext context = null)
         {
-            if (multipartContentType == null)
-            {
-                throw new ArgumentNullException(nameof(multipartContentType));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Service.SubmitBatch");
             scope.Start();

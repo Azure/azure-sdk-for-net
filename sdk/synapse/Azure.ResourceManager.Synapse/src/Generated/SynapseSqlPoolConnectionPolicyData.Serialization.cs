@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -52,44 +52,44 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SecurityEnabledAccess != null)
+            if (Optional.IsDefined(SecurityEnabledAccess))
             {
                 writer.WritePropertyName("securityEnabledAccess"u8);
                 writer.WriteStringValue(SecurityEnabledAccess);
             }
-            if (ProxyDnsName != null)
+            if (Optional.IsDefined(ProxyDnsName))
             {
                 writer.WritePropertyName("proxyDnsName"u8);
                 writer.WriteStringValue(ProxyDnsName);
             }
-            if (ProxyPort != null)
+            if (Optional.IsDefined(ProxyPort))
             {
                 writer.WritePropertyName("proxyPort"u8);
                 writer.WriteStringValue(ProxyPort);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (UseServerDefault != null)
+            if (Optional.IsDefined(UseServerDefault))
             {
                 writer.WritePropertyName("useServerDefault"u8);
                 writer.WriteStringValue(UseServerDefault);
             }
-            if (RedirectionState != null)
+            if (Optional.IsDefined(RedirectionState))
             {
                 writer.WritePropertyName("redirectionState"u8);
                 writer.WriteStringValue(RedirectionState);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);

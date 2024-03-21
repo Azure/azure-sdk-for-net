@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataProtectionBackup;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Mocking
@@ -226,10 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.CheckDataProtectionBackupVaultNameAvailability");
             scope.Start();
@@ -272,10 +266,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.CheckDataProtectionBackupVaultNameAvailability");
             scope.Start();
@@ -319,10 +310,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreRequestObject"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> TriggerCrossRegionRestoreBackupInstanceAsync(WaitUntil waitUntil, AzureLocation location, CrossRegionRestoreRequestObject crossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
-            if (crossRegionRestoreRequestObject == null)
-            {
-                throw new ArgumentNullException(nameof(crossRegionRestoreRequestObject));
-            }
+            Argument.AssertNotNull(crossRegionRestoreRequestObject, nameof(crossRegionRestoreRequestObject));
 
             using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.TriggerCrossRegionRestoreBackupInstance");
             scope.Start();
@@ -369,10 +357,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="crossRegionRestoreRequestObject"/> is null. </exception>
         public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> TriggerCrossRegionRestoreBackupInstance(WaitUntil waitUntil, AzureLocation location, CrossRegionRestoreRequestObject crossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
-            if (crossRegionRestoreRequestObject == null)
-            {
-                throw new ArgumentNullException(nameof(crossRegionRestoreRequestObject));
-            }
+            Argument.AssertNotNull(crossRegionRestoreRequestObject, nameof(crossRegionRestoreRequestObject));
 
             using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.TriggerCrossRegionRestoreBackupInstance");
             scope.Start();
@@ -419,10 +404,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="validateCrossRegionRestoreRequestObject"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProtectionOperationJobExtendedInfo>> ValidateCrossRegionRestoreBackupInstanceAsync(WaitUntil waitUntil, AzureLocation location, ValidateCrossRegionRestoreRequestObject validateCrossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
-            if (validateCrossRegionRestoreRequestObject == null)
-            {
-                throw new ArgumentNullException(nameof(validateCrossRegionRestoreRequestObject));
-            }
+            Argument.AssertNotNull(validateCrossRegionRestoreRequestObject, nameof(validateCrossRegionRestoreRequestObject));
 
             using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.ValidateCrossRegionRestoreBackupInstance");
             scope.Start();
@@ -469,10 +451,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="validateCrossRegionRestoreRequestObject"/> is null. </exception>
         public virtual ArmOperation<DataProtectionOperationJobExtendedInfo> ValidateCrossRegionRestoreBackupInstance(WaitUntil waitUntil, AzureLocation location, ValidateCrossRegionRestoreRequestObject validateCrossRegionRestoreRequestObject, CancellationToken cancellationToken = default)
         {
-            if (validateCrossRegionRestoreRequestObject == null)
-            {
-                throw new ArgumentNullException(nameof(validateCrossRegionRestoreRequestObject));
-            }
+            Argument.AssertNotNull(validateCrossRegionRestoreRequestObject, nameof(validateCrossRegionRestoreRequestObject));
 
             using var scope = DataProtectionBackupInstanceBackupInstancesClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.ValidateCrossRegionRestoreBackupInstance");
             scope.Start();
@@ -517,10 +496,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> An async collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPointsAsync(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => FetchSecondaryRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchSecondaryRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
@@ -553,10 +529,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetSecondaryRecoveryPoints(AzureLocation location, FetchSecondaryRPsRequestContent content, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => FetchSecondaryRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchSecondaryRecoveryPointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter, skipToken);
@@ -586,10 +559,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataProtectionBackupJobResource>> GetCrossRegionRestoreJobAsync(AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FetchCrossRegionRestoreJobClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJob");
             scope.Start();
@@ -628,10 +598,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataProtectionBackupJobResource> GetCrossRegionRestoreJob(AzureLocation location, CrossRegionRestoreJobContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FetchCrossRegionRestoreJobClientDiagnostics.CreateScope("MockableDataProtectionBackupResourceGroupResource.GetCrossRegionRestoreJob");
             scope.Start();
@@ -672,10 +639,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> An async collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobsAsync(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => FetchCrossRegionRestoreJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchCrossRegionRestoreJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
@@ -707,10 +671,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <returns> A collection of <see cref="DataProtectionBackupJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupJobResource> GetCrossRegionRestoreJobs(AzureLocation location, CrossRegionRestoreJobsContent content, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => FetchCrossRegionRestoreJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FetchCrossRegionRestoreJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content, filter);

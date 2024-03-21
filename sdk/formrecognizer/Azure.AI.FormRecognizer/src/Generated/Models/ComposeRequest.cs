@@ -19,10 +19,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="modelIds"/> is null. </exception>
         public ComposeRequest(IEnumerable<Guid> modelIds)
         {
-            if (modelIds == null)
-            {
-                throw new ArgumentNullException(nameof(modelIds));
-            }
+            Argument.AssertNotNull(modelIds, nameof(modelIds));
 
             ModelIds = modelIds.ToList();
         }

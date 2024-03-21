@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (EndpointType.HasValue)
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());

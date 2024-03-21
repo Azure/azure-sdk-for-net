@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SasUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);

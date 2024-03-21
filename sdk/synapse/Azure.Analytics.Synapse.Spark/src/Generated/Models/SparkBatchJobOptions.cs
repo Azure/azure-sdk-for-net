@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="file"/> is null. </exception>
         public SparkBatchJobOptions(string name, string file)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (file == null)
-            {
-                throw new ArgumentNullException(nameof(file));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(file, nameof(file));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Name = name;

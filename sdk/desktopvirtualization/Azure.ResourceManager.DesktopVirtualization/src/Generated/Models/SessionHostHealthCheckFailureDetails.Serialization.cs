@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && LastHealthCheckOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHealthCheckOn))
             {
                 writer.WritePropertyName("lastHealthCheckDateTime"u8);
                 writer.WriteStringValue(LastHealthCheckOn.Value, "O");

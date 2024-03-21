@@ -211,7 +211,7 @@ public static partial class AssistantsModelFactory
     /// <returns> A new instance of MessageImageFileContent. </returns>
     public static MessageImageFileContent MessageImageFileContent(string fileId)
     {
-        return new MessageImageFileContent(new InternalMessageImageFileDetails(new InternalMessageImageFileIdDetails(fileId)));
+        return new MessageImageFileContent(new InternalMessageImageFileDetails(fileId));
     }
 
     /// <summary>

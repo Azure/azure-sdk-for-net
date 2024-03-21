@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public ComponentSetup(string componentName)
         {
-            if (componentName == null)
-            {
-                throw new ArgumentNullException(nameof(componentName));
-            }
+            Argument.AssertNotNull(componentName, nameof(componentName));
 
             ComponentName = componentName;
             CustomSetupBaseType = "ComponentSetup";
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey"> The license key to activate the component. </param>
-        internal ComponentSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string componentName, DataFactorySecretBaseDefinition licenseKey) : base(customSetupBaseType, serializedAdditionalRawData)
+        internal ComponentSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string componentName, DataFactorySecret licenseKey) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             ComponentName = componentName;
             LicenseKey = licenseKey;
@@ -48,6 +45,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of the 3rd party component. </summary>
         public string ComponentName { get; set; }
         /// <summary> The license key to activate the component. </summary>
-        public DataFactorySecretBaseDefinition LicenseKey { get; set; }
+        public DataFactorySecret LicenseKey { get; set; }
     }
 }

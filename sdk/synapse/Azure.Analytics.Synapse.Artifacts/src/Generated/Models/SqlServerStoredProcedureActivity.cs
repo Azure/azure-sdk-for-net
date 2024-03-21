@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="storedProcedureName"/> is null. </exception>
         public SqlServerStoredProcedureActivity(string name, object storedProcedureName) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
 
             StoredProcedureName = storedProcedureName;
             Type = "SqlServerStoredProcedure";

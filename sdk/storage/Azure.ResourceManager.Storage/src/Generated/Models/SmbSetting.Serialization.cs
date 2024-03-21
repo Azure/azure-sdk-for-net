@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Multichannel != null)
+            if (Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
                 writer.WriteObjectValue(Multichannel);
             }
-            if (Versions != null)
+            if (Optional.IsDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStringValue(Versions);
             }
-            if (AuthenticationMethods != null)
+            if (Optional.IsDefined(AuthenticationMethods))
             {
                 writer.WritePropertyName("authenticationMethods"u8);
                 writer.WriteStringValue(AuthenticationMethods);
             }
-            if (KerberosTicketEncryption != null)
+            if (Optional.IsDefined(KerberosTicketEncryption))
             {
                 writer.WritePropertyName("kerberosTicketEncryption"u8);
                 writer.WriteStringValue(KerberosTicketEncryption);
             }
-            if (ChannelEncryption != null)
+            if (Optional.IsDefined(ChannelEncryption))
             {
                 writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);

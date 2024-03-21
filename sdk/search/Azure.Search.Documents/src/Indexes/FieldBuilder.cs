@@ -27,6 +27,8 @@ namespace Azure.Search.Documents.Indexes
                 new Dictionary<Type, SearchFieldDataType>()
                 {
                     [typeof(string)] = SearchFieldDataType.String,
+                    [typeof(sbyte)] = SearchFieldDataType.SByte,
+                    [typeof(short)] = SearchFieldDataType.Int16,
                     [typeof(int)] = SearchFieldDataType.Int32,
                     [typeof(long)] = SearchFieldDataType.Int64,
                     [typeof(double)] = SearchFieldDataType.Double,

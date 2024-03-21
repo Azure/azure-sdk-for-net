@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streamName"u8);
             writer.WriteStringValue(StreamName);
-            if (RowLimits.HasValue)
+            if (Optional.IsDefined(RowLimits))
             {
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);

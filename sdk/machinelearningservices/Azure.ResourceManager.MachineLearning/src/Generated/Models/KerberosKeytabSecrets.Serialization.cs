@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (KerberosKeytab != null)
+            if (Optional.IsDefined(KerberosKeytab))
             {
                 if (KerberosKeytab != null)
                 {

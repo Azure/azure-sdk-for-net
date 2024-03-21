@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (ValidationKey != null)
+            if (Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (IsSubscriptions != null)
+            if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteObjectValue(IsSubscriptions);
             }
-            if (IsUserRegistration != null)
+            if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
                 writer.WriteObjectValue(IsUserRegistration);
             }
-            if (IsRedirectEnabled.HasValue)
+            if (Optional.IsDefined(IsRedirectEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
-            if (TermsOfService != null)
+            if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
                 writer.WriteObjectValue(TermsOfService);

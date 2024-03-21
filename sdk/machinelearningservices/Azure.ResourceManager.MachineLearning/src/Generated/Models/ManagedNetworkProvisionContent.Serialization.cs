@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IncludeSpark.HasValue)
+            if (Optional.IsDefined(IncludeSpark))
             {
                 writer.WritePropertyName("includeSpark"u8);
                 writer.WriteBooleanValue(IncludeSpark.Value);

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -75,10 +74,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingScope"/> is null. </exception>
         public async Task<Response<BenefitRecommendationsListResult>> ListAsync(string billingScope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (billingScope == null)
-            {
-                throw new ArgumentNullException(nameof(billingScope));
-            }
+            Argument.AssertNotNull(billingScope, nameof(billingScope));
 
             using var message = CreateListRequest(billingScope, filter, orderby, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,10 +101,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingScope"/> is null. </exception>
         public Response<BenefitRecommendationsListResult> List(string billingScope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (billingScope == null)
-            {
-                throw new ArgumentNullException(nameof(billingScope));
-            }
+            Argument.AssertNotNull(billingScope, nameof(billingScope));
 
             using var message = CreateListRequest(billingScope, filter, orderby, expand);
             _pipeline.Send(message, cancellationToken);
@@ -150,14 +143,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingScope"/> is null. </exception>
         public async Task<Response<BenefitRecommendationsListResult>> ListNextPageAsync(string nextLink, string billingScope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingScope == null)
-            {
-                throw new ArgumentNullException(nameof(billingScope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(billingScope, nameof(billingScope));
 
             using var message = CreateListNextPageRequest(nextLink, billingScope, filter, orderby, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -185,14 +172,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingScope"/> is null. </exception>
         public Response<BenefitRecommendationsListResult> ListNextPage(string nextLink, string billingScope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (billingScope == null)
-            {
-                throw new ArgumentNullException(nameof(billingScope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(billingScope, nameof(billingScope));
 
             using var message = CreateListNextPageRequest(nextLink, billingScope, filter, orderby, expand);
             _pipeline.Send(message, cancellationToken);

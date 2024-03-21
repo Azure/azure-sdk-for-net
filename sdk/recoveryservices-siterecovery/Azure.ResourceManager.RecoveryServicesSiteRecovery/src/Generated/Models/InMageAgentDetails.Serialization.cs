@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (AgentUpdateStatus != null)
+            if (Optional.IsDefined(AgentUpdateStatus))
             {
                 writer.WritePropertyName("agentUpdateStatus"u8);
                 writer.WriteStringValue(AgentUpdateStatus);
             }
-            if (PostUpdateRebootStatus != null)
+            if (Optional.IsDefined(PostUpdateRebootStatus))
             {
                 writer.WritePropertyName("postUpdateRebootStatus"u8);
                 writer.WriteStringValue(PostUpdateRebootStatus);
             }
-            if (AgentExpireOn.HasValue)
+            if (Optional.IsDefined(AgentExpireOn))
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");

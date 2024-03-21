@@ -22,9 +22,9 @@ Generated assets.json file contents
 If flag InitialPush is set, recordings will be automatically pushed to the assets repo and the Tag property updated.
 
 .PARAMETER TestProxyExe
-The executable used during the "InitialPush" action. Defaults to the dotnet tool test-proxy, but also supports "docker" or "podman".
+The executable used during the "InitialPush" action. Defaults to the dotnet tool test-proxy, but also supports custom executables as well.
 
-If the user provides their own value that doesn't match options "test-proxy", "docker", or "podman", the script will use this input as the test-proxy exe
+If the user provides their own value that doesn't match options "test-proxy" the script will use this input as the test-proxy exe
 when invoking commands. EG "$TestProxyExe push -a sdk/keyvault/azure-keyvault-keys/assets.json."
 
 .PARAMETER InitialPush

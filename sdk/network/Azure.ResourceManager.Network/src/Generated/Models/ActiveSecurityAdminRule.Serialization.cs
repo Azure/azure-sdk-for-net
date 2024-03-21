@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (CommitOn.HasValue)
+            if (Optional.IsDefined(CommitOn))
             {
                 writer.WritePropertyName("commitTime"u8);
                 writer.WriteStringValue(CommitOn.Value, "O");
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (ConfigurationDescription != null)
+            if (Optional.IsDefined(ConfigurationDescription))
             {
                 writer.WritePropertyName("configurationDescription"u8);
                 writer.WriteStringValue(ConfigurationDescription);
             }
-            if (RuleCollectionDescription != null)
+            if (Optional.IsDefined(RuleCollectionDescription))
             {
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroups))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(Sources is ChangeTrackingList<AddressPrefixItem> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Destinations is ChangeTrackingList<AddressPrefixItem> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourcePortRanges is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPortRanges is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -125,27 +125,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Access.HasValue)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);

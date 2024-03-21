@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceServerTrustCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, ServerTrustCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceServerTrustCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, ServerTrustCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<ManagedInstanceServerTrustCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<ManagedInstanceServerTrustCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedInstanceServerTrustCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual NullableResponse<ManagedInstanceServerTrustCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _managedInstanceServerTrustCertificateServerTrustCertificatesClientDiagnostics.CreateScope("ManagedInstanceServerTrustCertificateCollection.GetIfExists");
             scope.Start();

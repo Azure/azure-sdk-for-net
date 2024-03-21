@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(Criteria is ChangeTrackingList<DataProtectionBackupCriteria> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteStartArray();

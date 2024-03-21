@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MarketplaceSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStringValue(OfferId);
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
-            if (MarketplaceSubscriptionStatus.HasValue)
+            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());

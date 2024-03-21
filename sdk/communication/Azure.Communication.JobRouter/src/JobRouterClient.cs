@@ -1289,7 +1289,8 @@ namespace Azure.Communication.JobRouter
                 var request = new RouterWorker
                 {
                     Capacity = options.Capacity,
-                    AvailableForOffers = options?.AvailableForOffers
+                    AvailableForOffers = options?.AvailableForOffers,
+                    MaxConcurrentOffers = options?.MaxConcurrentOffers,
                 };
 
                 request.Queues.AddRange(options.Queues);
@@ -1336,7 +1337,8 @@ namespace Azure.Communication.JobRouter
                 var request = new RouterWorker
                 {
                     Capacity = options.Capacity,
-                    AvailableForOffers = options?.AvailableForOffers
+                    AvailableForOffers = options?.AvailableForOffers,
+                    MaxConcurrentOffers = options?.MaxConcurrentOffers,
                 };
 
                 request.Queues.AddRange(options.Queues);

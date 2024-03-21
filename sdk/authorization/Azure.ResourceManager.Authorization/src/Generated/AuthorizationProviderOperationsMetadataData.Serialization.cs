@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Authorization
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<AuthorizationProviderResourceType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (!(Operations is ChangeTrackingList<AuthorizationProviderOperationInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);

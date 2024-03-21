@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (IsSuppressed.HasValue)
+            if (Optional.IsDefined(IsSuppressed))
             {
                 writer.WritePropertyName("isSuppressed"u8);
                 writer.WriteBooleanValue(IsSuppressed.Value);

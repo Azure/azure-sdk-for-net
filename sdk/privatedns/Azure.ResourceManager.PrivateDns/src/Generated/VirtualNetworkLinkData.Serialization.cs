@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -30,12 +29,12 @@ namespace Azure.ResourceManager.PrivateDns
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,29 +62,29 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualNetwork != null)
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (RegistrationEnabled.HasValue)
+            if (Optional.IsDefined(RegistrationEnabled))
             {
                 writer.WritePropertyName("registrationEnabled"u8);
                 writer.WriteBooleanValue(RegistrationEnabled.Value);
             }
-            if (options.Format != "W" && VirtualNetworkLinkState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VirtualNetworkLinkState))
             {
                 writer.WritePropertyName("virtualNetworkLinkState"u8);
                 writer.WriteStringValue(VirtualNetworkLinkState.Value.ToString());
             }
-            if (options.Format != "W" && PrivateDnsProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateDnsProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(PrivateDnsProvisioningState.Value.ToString());

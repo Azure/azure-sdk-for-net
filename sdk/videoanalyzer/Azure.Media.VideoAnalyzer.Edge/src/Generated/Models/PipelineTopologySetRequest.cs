@@ -24,10 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineTopology"/> is null. </exception>
         public PipelineTopologySetRequest(PipelineTopology pipelineTopology)
         {
-            if (pipelineTopology == null)
-            {
-                throw new ArgumentNullException(nameof(pipelineTopology));
-            }
+            Argument.AssertNotNull(pipelineTopology, nameof(pipelineTopology));
 
             PipelineTopology = pipelineTopology;
             MethodName = "pipelineTopologySet";

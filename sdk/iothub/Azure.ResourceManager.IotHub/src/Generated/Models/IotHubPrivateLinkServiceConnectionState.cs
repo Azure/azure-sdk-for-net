@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
         public IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description)
         {
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(description, nameof(description));
 
             Status = status;
             Description = description;

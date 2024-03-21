@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Region != null)
+            if (options.Format != "W" && Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Details != null)
+            if (options.Format != "W" && Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (options.Format != "W" && Progress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);

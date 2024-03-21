@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectName != null)
+            if (Optional.IsDefined(ObjectName))
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ExperimentEndpointA != null)
+            if (Optional.IsDefined(ExperimentEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
                 writer.WriteObjectValue(ExperimentEndpointA);
             }
-            if (ExperimentEndpointB != null)
+            if (Optional.IsDefined(ExperimentEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
                 writer.WriteObjectValue(ExperimentEndpointB);
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ScriptFileUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ScriptFileUri))
             {
                 writer.WritePropertyName("scriptFileUri"u8);
                 writer.WriteStringValue(ScriptFileUri.AbsoluteUri);

@@ -21,22 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceID"/>, <paramref name="sellerID"/> or <paramref name="accessKeyId"/> is null. </exception>
         public AmazonMWSLinkedService(object endpoint, object marketplaceID, object sellerID, object accessKeyId)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (marketplaceID == null)
-            {
-                throw new ArgumentNullException(nameof(marketplaceID));
-            }
-            if (sellerID == null)
-            {
-                throw new ArgumentNullException(nameof(sellerID));
-            }
-            if (accessKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(accessKeyId));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(marketplaceID, nameof(marketplaceID));
+            Argument.AssertNotNull(sellerID, nameof(sellerID));
+            Argument.AssertNotNull(accessKeyId, nameof(accessKeyId));
 
             Endpoint = endpoint;
             MarketplaceID = marketplaceID;

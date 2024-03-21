@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (SqlServerResourceId != null)
+            if (Optional.IsDefined(SqlServerResourceId))
             {
                 writer.WritePropertyName("sqlServerResourceId"u8);
                 writer.WriteStringValue(SqlServerResourceId);

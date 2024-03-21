@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(SupportedServerEditions is ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerEditions))
             {
                 writer.WritePropertyName("supportedServerEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedServerVersions is ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SupportFastProvisioning.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportFastProvisioning))
             {
                 writer.WritePropertyName("fastProvisioningSupported"u8);
                 writer.WriteStringValue(SupportFastProvisioning.Value.ToString());
             }
-            if (options.Format != "W" && !(SupportedFastProvisioningEditions is ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFastProvisioningEditions))
             {
                 writer.WritePropertyName("supportedFastProvisioningEditions"u8);
                 writer.WriteStartArray();
@@ -66,42 +66,42 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && GeoBackupSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(GeoBackupSupported))
             {
                 writer.WritePropertyName("geoBackupSupported"u8);
                 writer.WriteStringValue(GeoBackupSupported.Value.ToString());
             }
-            if (options.Format != "W" && ZoneRedundantHaSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ZoneRedundantHaSupported))
             {
                 writer.WritePropertyName("zoneRedundantHaSupported"u8);
                 writer.WriteStringValue(ZoneRedundantHaSupported.Value.ToString());
             }
-            if (options.Format != "W" && ZoneRedundantHaAndGeoBackupSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ZoneRedundantHaAndGeoBackupSupported))
             {
                 writer.WritePropertyName("zoneRedundantHaAndGeoBackupSupported"u8);
                 writer.WriteStringValue(ZoneRedundantHaAndGeoBackupSupported.Value.ToString());
             }
-            if (options.Format != "W" && StorageAutoGrowthSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageAutoGrowthSupported))
             {
                 writer.WritePropertyName("storageAutoGrowthSupported"u8);
                 writer.WriteStringValue(StorageAutoGrowthSupported.Value.ToString());
             }
-            if (options.Format != "W" && OnlineResizeSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OnlineResizeSupported))
             {
                 writer.WritePropertyName("onlineResizeSupported"u8);
                 writer.WriteStringValue(OnlineResizeSupported.Value.ToString());
             }
-            if (options.Format != "W" && Restricted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Restricted))
             {
                 writer.WritePropertyName("restricted"u8);
                 writer.WriteStringValue(Restricted.Value.ToString());
             }
-            if (options.Format != "W" && CapabilityStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

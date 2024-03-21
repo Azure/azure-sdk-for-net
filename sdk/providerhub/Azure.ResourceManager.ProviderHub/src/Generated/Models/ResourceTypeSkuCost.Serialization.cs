@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("meterId"u8);
             writer.WriteStringValue(MeterId);
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (ExtendedUnit != null)
+            if (Optional.IsDefined(ExtendedUnit))
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);

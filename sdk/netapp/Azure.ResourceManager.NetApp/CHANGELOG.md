@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2024-03-15)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-netapp-2023-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ac74f8d5cf37351c5b26ecf2df17128d0408bd8e/specification/netapp/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.38.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2
 
 ## 1.5.0-beta.1 (2024-02-28)
 

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteNumberValue(MaxPercentUpgradeDomainDeltaUnhealthyNodes);
             writer.WritePropertyName("maxPercentDeltaUnhealthyApplications"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyApplications);
-            if (!(ApplicationDeltaHealthPolicies is ChangeTrackingDictionary<string, ApplicationDeltaHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationDeltaHealthPolicies))
             {
                 writer.WritePropertyName("applicationDeltaHealthPolicies"u8);
                 writer.WriteStartObject();

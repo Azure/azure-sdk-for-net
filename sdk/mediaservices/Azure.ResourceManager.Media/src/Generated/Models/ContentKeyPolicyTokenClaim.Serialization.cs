@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (ClaimType != null)
+            if (Optional.IsDefined(ClaimType))
             {
                 writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
-            if (ClaimValue != null)
+            if (Optional.IsDefined(ClaimValue))
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);

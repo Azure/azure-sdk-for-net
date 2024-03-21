@@ -15,17 +15,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MediaUri != null)
+            if (Optional.IsDefined(MediaUri))
             {
                 writer.WritePropertyName("mediaUri"u8);
                 writer.WriteObjectValue(MediaUri);
             }
-            if (VideoEncoderConfiguration != null)
+            if (Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
                 writer.WriteObjectValue(VideoEncoderConfiguration);

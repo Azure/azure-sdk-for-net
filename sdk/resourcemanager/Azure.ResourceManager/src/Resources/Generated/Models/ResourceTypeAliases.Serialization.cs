@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (!(Aliases is ChangeTrackingList<ResourceTypeAlias> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();

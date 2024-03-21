@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (InstanceName != null)
+            if (Optional.IsDefined(InstanceName))
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);

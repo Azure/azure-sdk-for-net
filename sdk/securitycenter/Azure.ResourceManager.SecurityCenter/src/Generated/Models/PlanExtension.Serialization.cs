@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteStringValue(IsEnabled.ToString());
-            if (!(AdditionalExtensionProperties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalExtensionProperties))
             {
                 writer.WritePropertyName("additionalExtensionProperties"u8);
                 writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && OperationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(OperationStatus);

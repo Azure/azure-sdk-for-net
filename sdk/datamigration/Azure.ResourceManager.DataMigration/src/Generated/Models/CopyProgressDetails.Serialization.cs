@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ParallelCopyType != null)
+            if (options.Format != "W" && Optional.IsDefined(ParallelCopyType))
             {
                 writer.WritePropertyName("parallelCopyType"u8);
                 writer.WriteStringValue(ParallelCopyType);
             }
-            if (options.Format != "W" && UsedParallelCopies.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedParallelCopies))
             {
                 writer.WritePropertyName("usedParallelCopies"u8);
                 writer.WriteNumberValue(UsedParallelCopies.Value);
             }
-            if (options.Format != "W" && DataRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataRead))
             {
                 writer.WritePropertyName("dataRead"u8);
                 writer.WriteNumberValue(DataRead.Value);
             }
-            if (options.Format != "W" && DataWritten.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataWritten))
             {
                 writer.WritePropertyName("dataWritten"u8);
                 writer.WriteNumberValue(DataWritten.Value);
             }
-            if (options.Format != "W" && RowsRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RowsRead))
             {
                 writer.WritePropertyName("rowsRead"u8);
                 writer.WriteNumberValue(RowsRead.Value);
             }
-            if (options.Format != "W" && RowsCopied.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RowsCopied))
             {
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && CopyStart.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyStart))
             {
                 writer.WritePropertyName("copyStart"u8);
                 writer.WriteStringValue(CopyStart.Value, "O");
             }
-            if (options.Format != "W" && CopyThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
             {
                 writer.WritePropertyName("copyThroughput"u8);
                 writer.WriteNumberValue(CopyThroughput.Value);
             }
-            if (options.Format != "W" && CopyDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
             {
                 writer.WritePropertyName("copyDuration"u8);
                 writer.WriteNumberValue(CopyDuration.Value);

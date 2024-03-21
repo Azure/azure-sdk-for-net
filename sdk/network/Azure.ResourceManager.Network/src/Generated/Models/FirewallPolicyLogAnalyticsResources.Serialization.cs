@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Workspaces is ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultWorkspaceId != null)
+            if (Optional.IsDefined(DefaultWorkspaceId))
             {
                 writer.WritePropertyName("defaultWorkspaceId"u8);
                 JsonSerializer.Serialize(writer, DefaultWorkspaceId);

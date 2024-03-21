@@ -17,17 +17,17 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (SenderDisplayName != null)
+            if (Optional.IsDefined(SenderDisplayName))
             {
                 writer.WritePropertyName("senderDisplayName"u8);
                 writer.WriteStringValue(SenderDisplayName);
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

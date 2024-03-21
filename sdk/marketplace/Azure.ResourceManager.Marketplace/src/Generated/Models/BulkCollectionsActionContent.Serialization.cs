@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);

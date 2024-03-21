@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (!(Permissions is ChangeTrackingList<PermissionType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStartArray();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);

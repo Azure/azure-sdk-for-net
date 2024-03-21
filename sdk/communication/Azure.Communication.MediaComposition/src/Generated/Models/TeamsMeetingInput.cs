@@ -18,10 +18,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="teamsJoinUrl"/> is null. </exception>
         public TeamsMeetingInput(string teamsJoinUrl)
         {
-            if (teamsJoinUrl == null)
-            {
-                throw new ArgumentNullException(nameof(teamsJoinUrl));
-            }
+            Argument.AssertNotNull(teamsJoinUrl, nameof(teamsJoinUrl));
 
             TeamsJoinUrl = teamsJoinUrl;
             Kind = MediaInputType.TeamsMeeting;

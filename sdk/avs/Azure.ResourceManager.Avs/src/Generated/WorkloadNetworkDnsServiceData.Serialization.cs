@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (DnsServiceIP != null)
+            if (Optional.IsDefined(DnsServiceIP))
             {
                 writer.WritePropertyName("dnsServiceIp"u8);
                 writer.WriteStringValue(DnsServiceIP.ToString());
             }
-            if (DefaultDnsZone != null)
+            if (Optional.IsDefined(DefaultDnsZone))
             {
                 writer.WritePropertyName("defaultDnsZone"u8);
                 writer.WriteStringValue(DefaultDnsZone);
             }
-            if (!(FqdnZones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FqdnZones))
             {
                 writer.WritePropertyName("fqdnZones"u8);
                 writer.WriteStartArray();
@@ -76,22 +76,22 @@ namespace Azure.ResourceManager.Avs
                 }
                 writer.WriteEndArray();
             }
-            if (LogLevel.HasValue)
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 writer.WriteStringValue(LogLevel.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Revision.HasValue)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);

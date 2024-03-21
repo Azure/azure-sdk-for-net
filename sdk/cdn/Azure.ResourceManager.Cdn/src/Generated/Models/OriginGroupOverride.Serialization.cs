@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (OriginGroup != null)
+            if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
-            if (ForwardingProtocol.HasValue)
+            if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());

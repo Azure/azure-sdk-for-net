@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningBatchEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, MachineLearningBatchEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningBatchEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, MachineLearningBatchEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<MachineLearningBatchEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<MachineLearningBatchEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningBatchEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual NullableResponse<MachineLearningBatchEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (endpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(endpointName));
-            }
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
             using var scope = _machineLearningBatchEndpointBatchEndpointsClientDiagnostics.CreateScope("MachineLearningBatchEndpointCollection.GetIfExists");
             scope.Start();

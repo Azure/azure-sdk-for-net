@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (DateTimeBegin.HasValue)
+            if (Optional.IsDefined(DateTimeBegin))
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (DateTimeEnd.HasValue)
+            if (Optional.IsDefined(DateTimeEnd))
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (!(Groups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Data is ChangeTrackingList<WafRankingsResponseDataItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();

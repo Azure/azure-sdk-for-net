@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (ArtifactName != null)
+            if (Optional.IsDefined(ArtifactName))
             {
                 writer.WritePropertyName("artifactName"u8);
                 writer.WriteStringValue(ArtifactName);
             }
-            if (ArtifactType.HasValue)
+            if (Optional.IsDefined(ArtifactType))
             {
                 writer.WritePropertyName("artifactType"u8);
                 writer.WriteStringValue(ArtifactType.Value.ToString());
             }
-            if (ArtifactVersion != null)
+            if (Optional.IsDefined(ArtifactVersion))
             {
                 writer.WritePropertyName("artifactVersion"u8);
                 writer.WriteStringValue(ArtifactVersion);

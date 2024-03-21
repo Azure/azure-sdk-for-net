@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Reservations.Models;
 using Azure.ResourceManager.Resources;
 
@@ -83,10 +81,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReservationOrderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.CreateOrUpdate");
             scope.Start();
@@ -133,10 +128,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReservationOrderResource> CreateOrUpdate(WaitUntil waitUntil, Guid reservationOrderId, ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _reservationOrderClientDiagnostics.CreateScope("ReservationOrderCollection.CreateOrUpdate");
             scope.Start();

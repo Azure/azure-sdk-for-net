@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterName, EventHubsClusterData data, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterName, EventHubsClusterData data, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<EventHubsClusterResource>> GetAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<EventHubsClusterResource> Get(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubsClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         public virtual NullableResponse<EventHubsClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
         {
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var scope = _eventHubsClusterClustersClientDiagnostics.CreateScope("EventHubsClusterCollection.GetIfExists");
             scope.Start();

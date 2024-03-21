@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPrefixes))
             {
                 writer.WritePropertyName("ipPrefixes"u8);
                 writer.WriteStartArray();

@@ -30,24 +30,24 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (SasKey != null)
+            if (Optional.IsDefined(SasKey))
             {
                 writer.WritePropertyName("sasKey"u8);
                 writer.WriteStringValue(SasKey);
             }
-            if (BlobfuseOptions != null)
+            if (Optional.IsDefined(BlobfuseOptions))
             {
                 writer.WritePropertyName("blobfuseOptions"u8);
                 writer.WriteStringValue(BlobfuseOptions);
             }
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);

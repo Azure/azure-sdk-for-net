@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);

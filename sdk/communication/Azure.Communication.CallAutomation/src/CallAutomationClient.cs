@@ -254,7 +254,6 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
-            request.SourceCallerIdNumber = options.SourceCallerIdNumber == null ? null : new PhoneNumberIdentifierModel(options.SourceCallerIdNumber.PhoneNumber);
 
             return request;
         }

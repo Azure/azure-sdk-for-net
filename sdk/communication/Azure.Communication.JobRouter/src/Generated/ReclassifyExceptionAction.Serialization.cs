@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -27,12 +26,12 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (ClassificationPolicyId != null)
+            if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (!(_labelsToUpsert is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(_labelsToUpsert))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

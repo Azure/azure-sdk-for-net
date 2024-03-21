@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EdgeOrderItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EdgeOrderItemResource> CreateOrUpdate(WaitUntil waitUntil, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual async Task<Response<EdgeOrderItemResource>> GetAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual Response<EdgeOrderItemResource> Get(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Get");
             scope.Start();
@@ -372,14 +336,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Exists");
             scope.Start();
@@ -423,14 +380,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.Exists");
             scope.Start();
@@ -474,14 +424,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual async Task<NullableResponse<EdgeOrderItemResource>> GetIfExistsAsync(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetIfExists");
             scope.Start();
@@ -527,14 +470,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <exception cref="ArgumentNullException"> <paramref name="orderItemName"/> is null. </exception>
         public virtual NullableResponse<EdgeOrderItemResource> GetIfExists(string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (orderItemName == null)
-            {
-                throw new ArgumentNullException(nameof(orderItemName));
-            }
-            if (orderItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(orderItemName));
-            }
+            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
 
             using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetIfExists");
             scope.Start();

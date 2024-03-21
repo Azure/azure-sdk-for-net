@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The UnknownDataConnection. </summary>
+    /// <summary> Unknown version of DataConnection. </summary>
     internal partial class UnknownDataConnection : KustoDataConnectionData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataConnection"/>. </summary>

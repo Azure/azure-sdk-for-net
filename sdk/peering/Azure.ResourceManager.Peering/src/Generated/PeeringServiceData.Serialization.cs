@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Peering
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,39 +61,39 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PeeringServiceLocation != null)
+            if (Optional.IsDefined(PeeringServiceLocation))
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (PeeringServiceProvider != null)
+            if (Optional.IsDefined(PeeringServiceProvider))
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ProviderPrimaryPeeringLocation != null)
+            if (Optional.IsDefined(ProviderPrimaryPeeringLocation))
             {
                 writer.WritePropertyName("providerPrimaryPeeringLocation"u8);
                 writer.WriteStringValue(ProviderPrimaryPeeringLocation);
             }
-            if (ProviderBackupPeeringLocation != null)
+            if (Optional.IsDefined(ProviderBackupPeeringLocation))
             {
                 writer.WritePropertyName("providerBackupPeeringLocation"u8);
                 writer.WriteStringValue(ProviderBackupPeeringLocation);
             }
-            if (LogAnalyticsWorkspaceProperties != null)
+            if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
                 writer.WriteObjectValue(LogAnalyticsWorkspaceProperties);

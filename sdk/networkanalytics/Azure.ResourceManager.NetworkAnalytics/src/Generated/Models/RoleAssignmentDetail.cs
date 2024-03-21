@@ -57,30 +57,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleId"/>, <paramref name="principalId"/>, <paramref name="userName"/>, <paramref name="dataTypeScope"/>, <paramref name="principalType"/> or <paramref name="roleAssignmentId"/> is null. </exception>
         public RoleAssignmentDetail(string roleId, string principalId, string userName, IEnumerable<string> dataTypeScope, string principalType, DataProductUserRole role, string roleAssignmentId)
         {
-            if (roleId == null)
-            {
-                throw new ArgumentNullException(nameof(roleId));
-            }
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (dataTypeScope == null)
-            {
-                throw new ArgumentNullException(nameof(dataTypeScope));
-            }
-            if (principalType == null)
-            {
-                throw new ArgumentNullException(nameof(principalType));
-            }
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
+            Argument.AssertNotNull(roleId, nameof(roleId));
+            Argument.AssertNotNull(principalId, nameof(principalId));
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(dataTypeScope, nameof(dataTypeScope));
+            Argument.AssertNotNull(principalType, nameof(principalType));
+            Argument.AssertNotNull(roleAssignmentId, nameof(roleAssignmentId));
 
             RoleId = roleId;
             PrincipalId = principalId;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Storage.Queues

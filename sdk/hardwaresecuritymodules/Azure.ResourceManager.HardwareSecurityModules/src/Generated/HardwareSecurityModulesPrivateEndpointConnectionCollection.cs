@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
@@ -87,18 +85,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HardwareSecurityModulesPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peConnectionName, HardwareSecurityModulesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -146,18 +134,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HardwareSecurityModulesPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string peConnectionName, HardwareSecurityModulesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -203,14 +181,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<Response<HardwareSecurityModulesPrivateEndpointConnectionResource>> GetAsync(string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -255,14 +226,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual Response<HardwareSecurityModulesPrivateEndpointConnectionResource> Get(string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<HardwareSecurityModulesPrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
         public virtual NullableResponse<HardwareSecurityModulesPrivateEndpointConnectionResource> GetIfExists(string peConnectionName, CancellationToken cancellationToken = default)
         {
-            if (peConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(peConnectionName));
-            }
-            if (peConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
             using var scope = _hardwareSecurityModulesPrivateEndpointConnectionCloudHsmClusterPrivateEndpointConnectionsClientDiagnostics.CreateScope("HardwareSecurityModulesPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

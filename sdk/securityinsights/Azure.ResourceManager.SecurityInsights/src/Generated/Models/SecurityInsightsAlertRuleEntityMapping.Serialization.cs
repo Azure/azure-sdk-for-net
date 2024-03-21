@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (EntityType.HasValue)
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToString());
             }
-            if (!(FieldMappings is ChangeTrackingList<SecurityInsightsFieldMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FieldMappings))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();

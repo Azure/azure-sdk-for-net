@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NameAvailability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NameAvailability))
             {
                 writer.WritePropertyName("nameAvailability"u8);
                 writer.WriteStringValue(NameAvailability.Value.ToString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

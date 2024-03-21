@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -560,10 +558,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<AppConfigurationStoreResource>> UpdateAsync(WaitUntil waitUntil, AppConfigurationStorePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Update");
             scope.Start();
@@ -609,10 +604,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<AppConfigurationStoreResource> Update(WaitUntil waitUntil, AppConfigurationStorePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.Update");
             scope.Start();
@@ -719,10 +711,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationStoreApiKey>> RegenerateKeyAsync(AppConfigurationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RegenerateKey");
             scope.Start();
@@ -764,10 +753,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppConfigurationStoreApiKey> RegenerateKey(AppConfigurationRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RegenerateKey");
             scope.Start();
@@ -810,14 +796,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationStoreResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.AddTag");
             scope.Start();
@@ -878,14 +858,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AppConfigurationStoreResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.AddTag");
             scope.Start();
@@ -945,10 +919,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationStoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.SetTags");
             scope.Start();
@@ -1005,10 +976,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AppConfigurationStoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.SetTags");
             scope.Start();
@@ -1065,10 +1033,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationStoreResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RemoveTag");
             scope.Start();
@@ -1128,10 +1093,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AppConfigurationStoreResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _appConfigurationStoreConfigurationStoresClientDiagnostics.CreateScope("AppConfigurationStoreResource.RemoveTag");
             scope.Start();

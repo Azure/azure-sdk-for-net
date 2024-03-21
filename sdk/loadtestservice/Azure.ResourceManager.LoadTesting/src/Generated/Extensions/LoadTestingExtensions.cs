@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> Returns a <see cref="LoadTestingQuotaResource"/> object. </returns>
         public static LoadTestingQuotaResource GetLoadTestingQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLoadTestingArmClient(client).GetLoadTestingQuotaResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> Returns a <see cref="LoadTestingResource"/> object. </returns>
         public static LoadTestingResource GetLoadTestingResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableLoadTestingArmClient(client).GetLoadTestingResource(id);
         }
@@ -90,10 +82,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
         public static LoadTestingResourceCollection GetLoadTestingResources(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLoadTestingResourceGroupResource(resourceGroupResource).GetLoadTestingResources();
         }
@@ -131,10 +120,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableLoadTestingResourceGroupResource(resourceGroupResource).GetLoadTestingResourceAsync(loadTestName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,10 +158,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static Response<LoadTestingResource> GetLoadTestingResource(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableLoadTestingResourceGroupResource(resourceGroupResource).GetLoadTestingResource(loadTestName, cancellationToken);
         }
@@ -193,10 +176,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An object representing collection of LoadTestingQuotaResources and their operations over a LoadTestingQuotaResource. </returns>
         public static LoadTestingQuotaCollection GetAllLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetAllLoadTestingQuota(location);
         }
@@ -235,10 +215,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static async Task<Response<LoadTestingQuotaResource>> GetLoadTestingQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingQuotaAsync(location, quotaBucketName, cancellationToken).ConfigureAwait(false);
         }
@@ -277,10 +254,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static Response<LoadTestingQuotaResource> GetLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingQuota(location, quotaBucketName, cancellationToken);
         }
@@ -316,10 +290,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An async collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
         }
@@ -355,10 +326,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> A collection of <see cref="LoadTestingResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadTestingResource> GetLoadTestingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingResources(cancellationToken);
         }

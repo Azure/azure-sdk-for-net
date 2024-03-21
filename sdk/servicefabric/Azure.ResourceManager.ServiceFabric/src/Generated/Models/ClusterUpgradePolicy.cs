@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="healthPolicy"/> is null. </exception>
         public ClusterUpgradePolicy(TimeSpan upgradeReplicaSetCheckTimeout, TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, TimeSpan healthCheckRetryTimeout, TimeSpan upgradeTimeout, TimeSpan upgradeDomainTimeout, ClusterHealthPolicy healthPolicy)
         {
-            if (healthPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(healthPolicy));
-            }
+            Argument.AssertNotNull(healthPolicy, nameof(healthPolicy));
 
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
             HealthCheckWaitDuration = healthCheckWaitDuration;

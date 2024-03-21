@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,79 +61,79 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NamespaceName != null)
+            if (Optional.IsDefined(NamespaceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && MetricId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetricId))
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (ServiceBusEndpoint != null)
+            if (Optional.IsDefined(ServiceBusEndpoint))
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ScaleUnit != null)
+            if (Optional.IsDefined(ScaleUnit))
             {
                 writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteStringValue(ScaleUnit);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (IsCritical.HasValue)
+            if (Optional.IsDefined(IsCritical))
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(IsCritical.Value);
             }
-            if (DataCenter != null)
+            if (Optional.IsDefined(DataCenter))
             {
                 writer.WritePropertyName("dataCenter"u8);
                 writer.WriteStringValue(DataCenter);
             }
-            if (NamespaceType.HasValue)
+            if (Optional.IsDefined(NamespaceType))
             {
                 writer.WritePropertyName("namespaceType"u8);
                 writer.WriteStringValue(NamespaceType.Value.ToSerialString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(ContentKeys is ChangeTrackingList<StreamingLocatorContentKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteStartArray();

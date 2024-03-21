@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public virtual async Task<Response<DefaultSecurityRuleResource>> GetAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            if (defaultSecurityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
-            }
-            if (defaultSecurityRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public virtual Response<DefaultSecurityRuleResource> Get(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            if (defaultSecurityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
-            }
-            if (defaultSecurityRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            if (defaultSecurityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
-            }
-            if (defaultSecurityRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            if (defaultSecurityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
-            }
-            if (defaultSecurityRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<DefaultSecurityRuleResource>> GetIfExistsAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            if (defaultSecurityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
-            }
-            if (defaultSecurityRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
         public virtual NullableResponse<DefaultSecurityRuleResource> GetIfExists(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
-            if (defaultSecurityRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(defaultSecurityRuleName));
-            }
-            if (defaultSecurityRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(defaultSecurityRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(defaultSecurityRuleName, nameof(defaultSecurityRuleName));
 
             using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleCollection.GetIfExists");
             scope.Start();

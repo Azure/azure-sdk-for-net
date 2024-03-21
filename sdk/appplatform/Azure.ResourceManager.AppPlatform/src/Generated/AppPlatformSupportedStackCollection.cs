@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformSupportedStackResource>> GetAsync(string stackName, CancellationToken cancellationToken = default)
         {
-            if (stackName == null)
-            {
-                throw new ArgumentNullException(nameof(stackName));
-            }
-            if (stackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stackName));
-            }
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
 
             using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
         public virtual Response<AppPlatformSupportedStackResource> Get(string stackName, CancellationToken cancellationToken = default)
         {
-            if (stackName == null)
-            {
-                throw new ArgumentNullException(nameof(stackName));
-            }
-            if (stackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stackName));
-            }
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
 
             using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.Get");
             scope.Start();
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string stackName, CancellationToken cancellationToken = default)
         {
-            if (stackName == null)
-            {
-                throw new ArgumentNullException(nameof(stackName));
-            }
-            if (stackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stackName));
-            }
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
 
             using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.Exists");
             scope.Start();
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
         public virtual Response<bool> Exists(string stackName, CancellationToken cancellationToken = default)
         {
-            if (stackName == null)
-            {
-                throw new ArgumentNullException(nameof(stackName));
-            }
-            if (stackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stackName));
-            }
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
 
             using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.Exists");
             scope.Start();
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformSupportedStackResource>> GetIfExistsAsync(string stackName, CancellationToken cancellationToken = default)
         {
-            if (stackName == null)
-            {
-                throw new ArgumentNullException(nameof(stackName));
-            }
-            if (stackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stackName));
-            }
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
 
             using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.GetIfExists");
             scope.Start();
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="stackName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformSupportedStackResource> GetIfExists(string stackName, CancellationToken cancellationToken = default)
         {
-            if (stackName == null)
-            {
-                throw new ArgumentNullException(nameof(stackName));
-            }
-            if (stackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stackName));
-            }
+            Argument.AssertNotNullOrEmpty(stackName, nameof(stackName));
 
             using var scope = _appPlatformSupportedStackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedStackCollection.GetIfExists");
             scope.Start();

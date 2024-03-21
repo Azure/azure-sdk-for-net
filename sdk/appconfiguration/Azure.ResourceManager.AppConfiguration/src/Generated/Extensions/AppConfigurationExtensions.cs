@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Mocking;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationStoreResource"/> object. </returns>
         public static AppConfigurationStoreResource GetAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationStoreResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource"/> object. </returns>
         public static DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetDeletedAppConfigurationStoreResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource"/> object. </returns>
         public static AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateEndpointConnectionResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource"/> object. </returns>
         public static AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateLinkResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationKeyValueResource"/> object. </returns>
         public static AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationKeyValueResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationReplicaResource"/> object. </returns>
         public static AppConfigurationReplicaResource GetAppConfigurationReplicaResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAppConfigurationArmClient(client).GetAppConfigurationReplicaResource(id);
         }
@@ -179,10 +159,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
         public static AppConfigurationStoreCollection GetAppConfigurationStores(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStores();
         }
@@ -220,10 +197,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<AppConfigurationStoreResource>> GetAppConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStoreAsync(configStoreName, cancellationToken).ConfigureAwait(false);
         }
@@ -261,10 +235,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static Response<AppConfigurationStoreResource> GetAppConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStore(configStoreName, cancellationToken);
         }
@@ -281,10 +252,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
         public static DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStores();
         }
@@ -323,10 +291,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStoreAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
         }
@@ -365,10 +330,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static Response<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStore(location, configStoreName, cancellationToken);
         }
@@ -405,10 +367,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
         }
@@ -445,10 +404,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="AppConfigurationStoreResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
         }
@@ -480,10 +436,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -515,10 +468,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }

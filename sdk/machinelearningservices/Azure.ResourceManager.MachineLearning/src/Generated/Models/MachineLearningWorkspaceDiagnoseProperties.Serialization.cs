@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (!(ApplicationInsights is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ContainerRegistry is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(DnsResolution is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResolution))
             {
                 writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(KeyVault is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Nsg is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Nsg))
             {
                 writer.WritePropertyName("nsg"u8);
                 writer.WriteStartObject();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Others is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Others))
             {
                 writer.WritePropertyName("others"u8);
                 writer.WriteStartObject();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ResourceLock is ChangeTrackingDictionary<string, BinaryData> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceLock))
             {
                 writer.WritePropertyName("resourceLock"u8);
                 writer.WriteStartObject();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(StorageAccount is ChangeTrackingDictionary<string, BinaryData> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStartObject();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Udr is ChangeTrackingDictionary<string, BinaryData> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Udr))
             {
                 writer.WritePropertyName("udr"u8);
                 writer.WriteStartObject();

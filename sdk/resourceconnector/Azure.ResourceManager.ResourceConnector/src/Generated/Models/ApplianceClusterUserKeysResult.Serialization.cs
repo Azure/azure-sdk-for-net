@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ArtifactProfiles is ChangeTrackingDictionary<string, ApplianceArtifactProfile> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ArtifactProfiles))
             {
                 writer.WritePropertyName("artifactProfiles"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<ApplianceCredentialKubeconfig> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SshKeys is ChangeTrackingDictionary<string, ApplianceSshKey> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SshKeys))
             {
                 writer.WritePropertyName("sshKeys"u8);
                 writer.WriteStartObject();

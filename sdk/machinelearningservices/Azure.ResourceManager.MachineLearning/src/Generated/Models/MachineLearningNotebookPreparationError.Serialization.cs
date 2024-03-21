@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);

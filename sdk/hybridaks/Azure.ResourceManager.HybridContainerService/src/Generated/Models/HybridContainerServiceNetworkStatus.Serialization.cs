@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (OperationStatus != null)
+            if (Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(OperationStatus);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointExpireOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");

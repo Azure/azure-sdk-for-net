@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ProtectionStatus != null)
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
             }
-            if (ReplicationProtectedItemId != null)
+            if (Optional.IsDefined(ReplicationProtectedItemId))
             {
                 writer.WritePropertyName("replicationProtectedItemId"u8);
                 writer.WriteStringValue(ReplicationProtectedItemId);
             }
-            if (RecoveryServicesProviderId != null)
+            if (Optional.IsDefined(RecoveryServicesProviderId))
             {
                 writer.WritePropertyName("recoveryServicesProviderId"u8);
                 writer.WriteStringValue(RecoveryServicesProviderId);
             }
-            if (!(ProtectionReadinessErrors is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectionReadinessErrors))
             {
                 writer.WritePropertyName("protectionReadinessErrors"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedReplicationProviders is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedReplicationProviders))
             {
                 writer.WritePropertyName("supportedReplicationProviders"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CustomDetails != null)
+            if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);

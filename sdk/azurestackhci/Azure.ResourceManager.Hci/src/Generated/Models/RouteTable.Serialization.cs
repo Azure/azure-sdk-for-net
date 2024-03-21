@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag != null)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && RouteTableType != null)
+            if (options.Format != "W" && Optional.IsDefined(RouteTableType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RouteTableType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Routes is ChangeTrackingList<Route> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();

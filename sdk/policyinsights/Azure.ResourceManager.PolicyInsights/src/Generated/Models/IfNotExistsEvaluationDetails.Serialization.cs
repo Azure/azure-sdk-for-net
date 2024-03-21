@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (TotalResources.HasValue)
+            if (Optional.IsDefined(TotalResources))
             {
                 writer.WritePropertyName("totalResources"u8);
                 writer.WriteNumberValue(TotalResources.Value);

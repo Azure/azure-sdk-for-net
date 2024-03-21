@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (StartupScript != null)
+            if (Optional.IsDefined(StartupScript))
             {
                 writer.WritePropertyName("startupScript"u8);
                 writer.WriteObjectValue(StartupScript);
             }
-            if (CreationScript != null)
+            if (Optional.IsDefined(CreationScript))
             {
                 writer.WritePropertyName("creationScript"u8);
                 writer.WriteObjectValue(CreationScript);

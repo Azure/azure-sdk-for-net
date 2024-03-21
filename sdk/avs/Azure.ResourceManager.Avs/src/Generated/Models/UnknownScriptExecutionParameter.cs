@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The UnknownScriptExecutionParameter. </summary>
+    /// <summary> Unknown version of ScriptExecutionParameter. </summary>
     internal partial class UnknownScriptExecutionParameter : ScriptExecutionParameterDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/>. </summary>

@@ -22,7 +22,6 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Azure.Security.Attestation.Designer.cs">

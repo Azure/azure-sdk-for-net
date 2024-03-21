@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shippingAddress"/> is null. </exception>
         public DataBoxValidateAddressContent(DataBoxShippingAddress shippingAddress, DataBoxSkuName deviceType)
         {
-            if (shippingAddress == null)
-            {
-                throw new ArgumentNullException(nameof(shippingAddress));
-            }
+            Argument.AssertNotNull(shippingAddress, nameof(shippingAddress));
 
             ShippingAddress = shippingAddress;
             DeviceType = deviceType;

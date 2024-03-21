@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PreserveOriginal.HasValue)
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);

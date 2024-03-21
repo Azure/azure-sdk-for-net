@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);

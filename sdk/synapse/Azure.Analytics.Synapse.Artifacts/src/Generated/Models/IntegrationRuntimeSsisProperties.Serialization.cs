@@ -19,32 +19,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CatalogInfo != null)
+            if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
                 writer.WriteObjectValue(CatalogInfo);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (CustomSetupScriptProperties != null)
+            if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
                 writer.WriteObjectValue(CustomSetupScriptProperties);
             }
-            if (DataProxyProperties != null)
+            if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
                 writer.WriteObjectValue(DataProxyProperties);
             }
-            if (Edition.HasValue)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (!(ExpressCustomSetupProperties is ChangeTrackingList<CustomSetupBase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (CopyMode.HasValue)
+            if (Optional.IsDefined(CopyMode))
             {
                 writer.WritePropertyName("copyMode"u8);
                 writer.WriteStringValue(CopyMode.Value.ToString());
             }
-            if (AgentName != null)
+            if (Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);

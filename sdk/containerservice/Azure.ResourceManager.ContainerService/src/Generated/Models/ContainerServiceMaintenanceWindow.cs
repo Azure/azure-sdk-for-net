@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -53,14 +52,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="startTime"/> is null. </exception>
         public ContainerServiceMaintenanceWindow(ContainerServiceMaintenanceSchedule schedule, int durationHours, string startTime)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
-            if (startTime == null)
-            {
-                throw new ArgumentNullException(nameof(startTime));
-            }
+            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(startTime, nameof(startTime));
 
             Schedule = schedule;
             DurationHours = durationHours;

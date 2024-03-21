@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (EnforceCertificateNameCheck.HasValue)
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteStringValue(EnforceCertificateNameCheck.Value.ToString());
             }
-            if (SendRecvTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(SendRecvTimeoutInSeconds))
             {
                 writer.WritePropertyName("sendRecvTimeoutSeconds"u8);
                 writer.WriteNumberValue(SendRecvTimeoutInSeconds.Value);

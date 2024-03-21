@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (CreationToken != null)
+            if (Optional.IsDefined(CreationToken))
             {
                 writer.WritePropertyName("creationToken"u8);
                 writer.WriteStringValue(CreationToken);

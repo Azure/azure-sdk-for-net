@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -27,12 +26,12 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (LocationName != null)
+            if (Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);

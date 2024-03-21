@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (!(QueryParams is ChangeTrackingList<DataMaskingEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QueryParams))
             {
                 writer.WritePropertyName("queryParams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<DataMaskingEntity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();

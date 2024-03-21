@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -69,18 +68,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CancelAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CancelAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
-            if (solutionId == null)
-            {
-                throw new ArgumentNullException(nameof(solutionId));
-            }
-            if (solutionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SolutionInference.Cancel");
             scope.Start();
@@ -116,18 +105,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Cancel(string,RequestContent,RequestContext)']/*" />
         public virtual Response Cancel(string solutionId, RequestContent content, RequestContext context = null)
         {
-            if (solutionId == null)
-            {
-                throw new ArgumentNullException(nameof(solutionId));
-            }
-            if (solutionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SolutionInference.Cancel");
             scope.Start();
@@ -163,18 +142,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='FetchAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> FetchAsync(string solutionId, RequestContent content, RequestContext context = null)
         {
-            if (solutionId == null)
-            {
-                throw new ArgumentNullException(nameof(solutionId));
-            }
-            if (solutionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SolutionInference.Fetch");
             scope.Start();
@@ -210,18 +179,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='Fetch(string,RequestContent,RequestContext)']/*" />
         public virtual Response Fetch(string solutionId, RequestContent content, RequestContext context = null)
         {
-            if (solutionId == null)
-            {
-                throw new ArgumentNullException(nameof(solutionId));
-            }
-            if (solutionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SolutionInference.Fetch");
             scope.Start();
@@ -258,18 +217,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdateAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
-            if (solutionId == null)
-            {
-                throw new ArgumentNullException(nameof(solutionId));
-            }
-            if (solutionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SolutionInference.CreateOrUpdate");
             scope.Start();
@@ -306,18 +255,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SolutionInference.xml" path="doc/members/member[@name='CreateOrUpdate(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrUpdate(WaitUntil waitUntil, string solutionId, RequestContent content, RequestContext context = null)
         {
-            if (solutionId == null)
-            {
-                throw new ArgumentNullException(nameof(solutionId));
-            }
-            if (solutionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(solutionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(solutionId, nameof(solutionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("SolutionInference.CreateOrUpdate");
             scope.Start();

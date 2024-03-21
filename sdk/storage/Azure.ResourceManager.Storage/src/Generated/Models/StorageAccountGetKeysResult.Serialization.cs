@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Keys is ChangeTrackingList<StorageAccountKey> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();

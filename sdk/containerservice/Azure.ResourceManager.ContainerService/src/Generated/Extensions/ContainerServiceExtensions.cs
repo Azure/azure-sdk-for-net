@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Mocking;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="OSOptionProfileResource"/> object. </returns>
         public static OSOptionProfileResource GetOSOptionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetOSOptionProfileResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
         public static ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetManagedClusterUpgradeProfileResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource"/> object. </returns>
         public static ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceManagedClusterResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="MeshRevisionProfileResource"/> object. </returns>
         public static MeshRevisionProfileResource GetMeshRevisionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetMeshRevisionProfileResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="MeshUpgradeProfileResource"/> object. </returns>
         public static MeshUpgradeProfileResource GetMeshUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetMeshUpgradeProfileResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource"/> object. </returns>
         public static ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource"/> object. </returns>
         public static ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceAgentPoolResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public static AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetAgentPoolUpgradeProfileResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServicePrivateEndpointConnectionResource"/> object. </returns>
         public static ContainerServicePrivateEndpointConnectionResource GetContainerServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServicePrivateEndpointConnectionResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="AgentPoolSnapshotResource"/> object. </returns>
         public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetAgentPoolSnapshotResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> object. </returns>
         public static ContainerServiceTrustedAccessRoleBindingResource GetContainerServiceTrustedAccessRoleBindingResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerServiceArmClient(client).GetContainerServiceTrustedAccessRoleBindingResource(id);
         }
@@ -289,10 +254,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
         public static ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedClusters();
         }
@@ -330,10 +292,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceManagedClusterResource>> GetContainerServiceManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedClusterAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -371,10 +330,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<ContainerServiceManagedClusterResource> GetContainerServiceManagedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedCluster(resourceName, cancellationToken);
         }
@@ -391,10 +347,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
         public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshots();
         }
@@ -432,10 +385,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<AgentPoolSnapshotResource>> GetAgentPoolSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -473,10 +423,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<AgentPoolSnapshotResource> GetAgentPoolSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshot(resourceName, cancellationToken);
         }
@@ -494,10 +441,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An object representing collection of MeshRevisionProfileResources and their operations over a MeshRevisionProfileResource. </returns>
         public static MeshRevisionProfileCollection GetMeshRevisionProfiles(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMeshRevisionProfiles(location);
         }
@@ -536,10 +480,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<MeshRevisionProfileResource>> GetMeshRevisionProfileAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string mode, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMeshRevisionProfileAsync(location, mode, cancellationToken).ConfigureAwait(false);
         }
@@ -578,10 +519,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<MeshRevisionProfileResource> GetMeshRevisionProfile(this SubscriptionResource subscriptionResource, AzureLocation location, string mode, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMeshRevisionProfile(location, mode, cancellationToken);
         }
@@ -613,10 +551,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsManagedClusterAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -648,10 +583,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsManagedCluster(location, cancellationToken);
         }
@@ -687,10 +619,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
         }
@@ -726,10 +655,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
         }
@@ -765,10 +691,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
@@ -804,10 +727,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="AgentPoolSnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
         }
@@ -840,10 +760,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
         }
@@ -876,10 +793,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
         }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PublicIPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateIPAddresses is ChangeTrackingList<IPAddress> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPAddresses))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -71,27 +71,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (VirtualNetworkConfiguration != null)
+            if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
                 writer.WriteObjectValue(VirtualNetworkConfiguration);
             }
-            if (options.Format != "W" && GatewayRegionalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
             {
                 writer.WritePropertyName("gatewayRegionalUrl"u8);
                 writer.WriteStringValue(GatewayRegionalUri.AbsoluteUri);
             }
-            if (DisableGateway.HasValue)
+            if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
-            if (options.Format != "W" && PlatformVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PlatformVersion))
             {
                 writer.WritePropertyName("platformVersion"u8);
                 writer.WriteStringValue(PlatformVersion.Value.ToString());

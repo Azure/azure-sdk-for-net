@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
@@ -285,10 +283,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -335,10 +330,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataFactoryPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DataFactoryPrivateEndpointConnectionCreateOrUpdateContent content, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataFactoryPrivateEndpointConnectionPrivateEndpointConnectionClientDiagnostics.CreateScope("DataFactoryPrivateEndpointConnectionResource.Update");
             scope.Start();

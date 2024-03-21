@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (IsProbeDisabled.HasValue)
+            if (Optional.IsDefined(IsProbeDisabled))
             {
                 writer.WritePropertyName("disableProbe"u8);
                 writer.WriteBooleanValue(IsProbeDisabled.Value);

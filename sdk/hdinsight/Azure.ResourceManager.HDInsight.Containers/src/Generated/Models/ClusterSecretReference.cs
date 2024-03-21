@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> or <paramref name="keyVaultObjectName"/> is null. </exception>
         public ClusterSecretReference(string referenceName, KeyVaultObjectType keyVaultObjectType, string keyVaultObjectName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
-            if (keyVaultObjectName == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultObjectName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            Argument.AssertNotNull(keyVaultObjectName, nameof(keyVaultObjectName));
 
             ReferenceName = referenceName;
             KeyVaultObjectType = keyVaultObjectType;

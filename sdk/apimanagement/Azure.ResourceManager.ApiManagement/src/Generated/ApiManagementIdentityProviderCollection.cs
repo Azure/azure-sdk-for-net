@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -83,10 +81,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementIdentityProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, IdentityProviderType identityProviderName, ApiManagementIdentityProviderCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -134,10 +129,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementIdentityProviderResource> CreateOrUpdate(WaitUntil waitUntil, IdentityProviderType identityProviderName, ApiManagementIdentityProviderCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementIdentityProviderIdentityProviderClientDiagnostics.CreateScope("ApiManagementIdentityProviderCollection.CreateOrUpdate");
             scope.Start();

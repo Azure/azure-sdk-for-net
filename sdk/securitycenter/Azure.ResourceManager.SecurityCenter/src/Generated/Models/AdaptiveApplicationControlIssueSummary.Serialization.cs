@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Issue.HasValue)
+            if (Optional.IsDefined(Issue))
             {
                 writer.WritePropertyName("issue"u8);
                 writer.WriteStringValue(Issue.Value.ToString());
             }
-            if (NumberOfVms.HasValue)
+            if (Optional.IsDefined(NumberOfVms))
             {
                 writer.WritePropertyName("numberOfVms"u8);
                 writer.WriteNumberValue(NumberOfVms.Value);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(ReferenceName);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(KeyVaultObjectType.ToString());
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

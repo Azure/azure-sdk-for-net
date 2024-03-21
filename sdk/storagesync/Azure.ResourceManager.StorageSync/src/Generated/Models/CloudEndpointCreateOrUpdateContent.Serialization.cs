@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (AzureFileShareName != null)
+            if (Optional.IsDefined(AzureFileShareName))
             {
                 writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
-            if (StorageAccountTenantId.HasValue)
+            if (Optional.IsDefined(StorageAccountTenantId))
             {
                 writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);

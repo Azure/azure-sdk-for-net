@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Strategy.HasValue)
+            if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
                 writer.WriteStringValue(Strategy.Value.ToString());
             }
-            if (Zone.HasValue)
+            if (Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteNumberValue(Zone.Value);
             }
-            if (SecondaryZone.HasValue)
+            if (Optional.IsDefined(SecondaryZone))
             {
                 writer.WritePropertyName("secondaryZone"u8);
                 writer.WriteNumberValue(SecondaryZone.Value);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,84 +26,84 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (IntervalInSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (UnhealthyThreshold.HasValue)
+            if (Optional.IsDefined(UnhealthyThreshold))
             {
                 writer.WritePropertyName("unhealthyThreshold"u8);
                 writer.WriteNumberValue(UnhealthyThreshold.Value);
             }
-            if (PickHostNameFromBackendHttpSettings.HasValue)
+            if (Optional.IsDefined(PickHostNameFromBackendHttpSettings))
             {
                 writer.WritePropertyName("pickHostNameFromBackendHttpSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendHttpSettings.Value);
             }
-            if (PickHostNameFromBackendSettings.HasValue)
+            if (Optional.IsDefined(PickHostNameFromBackendSettings))
             {
                 writer.WritePropertyName("pickHostNameFromBackendSettings"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendSettings.Value);
             }
-            if (MinServers.HasValue)
+            if (Optional.IsDefined(MinServers))
             {
                 writer.WritePropertyName("minServers"u8);
                 writer.WriteNumberValue(MinServers.Value);
             }
-            if (Match != null)
+            if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
                 writer.WriteObjectValue(Match);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);

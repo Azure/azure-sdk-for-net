@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IssuerCertificateThumbprint != null)
+            if (Optional.IsDefined(IssuerCertificateThumbprint))
             {
                 writer.WritePropertyName("issuerCertificateThumbprint"u8);
                 writer.WriteStringValue(IssuerCertificateThumbprint);

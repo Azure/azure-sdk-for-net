@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples

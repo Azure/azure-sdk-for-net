@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (PortName != null)
+            if (Optional.IsDefined(PortName))
             {
                 writer.WritePropertyName("portName"u8);
                 writer.WriteStringValue(PortName);

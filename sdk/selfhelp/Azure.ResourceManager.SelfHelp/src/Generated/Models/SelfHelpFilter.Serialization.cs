@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Values != null)
+            if (Optional.IsDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Operator != null)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);

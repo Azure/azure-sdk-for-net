@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         public BlobTrigger(string folderPath, int maxConcurrency, LinkedServiceReference linkedService)
         {
-            if (folderPath == null)
-            {
-                throw new ArgumentNullException(nameof(folderPath));
-            }
-            if (linkedService == null)
-            {
-                throw new ArgumentNullException(nameof(linkedService));
-            }
+            Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(linkedService, nameof(linkedService));
 
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;

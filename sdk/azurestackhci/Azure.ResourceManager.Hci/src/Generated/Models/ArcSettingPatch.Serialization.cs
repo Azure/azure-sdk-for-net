@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConnectivityProperties != null)
+            if (Optional.IsDefined(ConnectivityProperties))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
 #if NET6_0_OR_GREATER

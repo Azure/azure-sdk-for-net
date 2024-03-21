@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (CommunityGalleryImageId != null)
+            if (Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (VirtualMachineId != null)
+            if (Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

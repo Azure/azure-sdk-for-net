@@ -19,10 +19,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="zones"/> is null. </exception>
         public SpatialAnalysisPersonZoneCrossingOperation(IEnumerable<SpatialAnalysisPersonZoneCrossingZoneEvents> zones)
         {
-            if (zones == null)
-            {
-                throw new ArgumentNullException(nameof(zones));
-            }
+            Argument.AssertNotNull(zones, nameof(zones));
 
             Zones = zones.ToList();
             Type = "#Microsoft.VideoAnalyzer.SpatialAnalysisPersonZoneCrossingOperation";

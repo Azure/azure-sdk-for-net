@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Subscription.Models
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

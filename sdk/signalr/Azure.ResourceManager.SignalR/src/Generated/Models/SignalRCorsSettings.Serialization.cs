@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllowedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedOrigins))
             {
                 writer.WritePropertyName("allowedOrigins"u8);
                 writer.WriteStartArray();

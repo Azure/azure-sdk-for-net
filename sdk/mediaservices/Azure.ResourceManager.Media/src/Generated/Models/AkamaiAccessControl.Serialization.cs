@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(AkamaiSignatureHeaderAuthenticationKeyList is ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AkamaiSignatureHeaderAuthenticationKeyList))
             {
                 writer.WritePropertyName("akamaiSignatureHeaderAuthenticationKeyList"u8);
                 writer.WriteStartArray();

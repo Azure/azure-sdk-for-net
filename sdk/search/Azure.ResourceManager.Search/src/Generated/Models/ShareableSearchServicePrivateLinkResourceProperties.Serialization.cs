@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ShareablePrivateLinkResourcePropertiesType != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);
             }
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Capacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && ProcessUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessUtilization))
             {
                 writer.WritePropertyName("processUtilization"u8);
                 writer.WriteNumberValue(ProcessUtilization.Value);
             }
-            if (options.Format != "W" && TotalUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalUtilization))
             {
                 writer.WritePropertyName("totalUtilization"u8);
                 writer.WriteNumberValue(TotalUtilization.Value);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

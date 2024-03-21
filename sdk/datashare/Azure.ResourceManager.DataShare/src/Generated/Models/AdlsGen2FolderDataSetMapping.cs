@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -26,26 +25,11 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileSystem"/>, <paramref name="folderPath"/>, <paramref name="resourceGroup"/>, <paramref name="storageAccountName"/> or <paramref name="subscriptionId"/> is null. </exception>
         public AdlsGen2FolderDataSetMapping(Guid dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId)
         {
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (folderPath == null)
-            {
-                throw new ArgumentNullException(nameof(folderPath));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(fileSystem, nameof(fileSystem));
+            Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             DataSetId = dataSetId;
             FileSystem = fileSystem;

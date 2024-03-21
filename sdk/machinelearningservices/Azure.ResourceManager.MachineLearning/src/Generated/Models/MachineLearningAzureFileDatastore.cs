@@ -24,18 +24,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="fileShareName"/> is null. </exception>
         public MachineLearningAzureFileDatastore(MachineLearningDatastoreCredentials credentials, string accountName, string fileShareName) : base(credentials)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileShareName == null)
-            {
-                throw new ArgumentNullException(nameof(fileShareName));
-            }
+            Argument.AssertNotNull(credentials, nameof(credentials));
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(fileShareName, nameof(fileShareName));
 
             AccountName = accountName;
             FileShareName = fileShareName;

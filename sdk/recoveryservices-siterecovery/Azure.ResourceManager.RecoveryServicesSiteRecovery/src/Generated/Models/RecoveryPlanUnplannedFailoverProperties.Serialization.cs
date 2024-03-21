@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(FailoverDirection.ToString());
             writer.WritePropertyName("sourceSiteOperations"u8);
             writer.WriteStringValue(SourceSiteOperation.ToString());
-            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificFailoverContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();

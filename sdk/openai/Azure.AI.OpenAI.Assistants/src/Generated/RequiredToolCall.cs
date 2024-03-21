@@ -54,10 +54,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         protected RequiredToolCall(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }

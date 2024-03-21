@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
     {
         private static readonly string rgName = "testRg";
         private static ResourceGroupResource rg;
-        private static FirmwareData testFirmware;
+        private static IotFirmwareData testFirmware;
 
         public FirmwareTest(bool isAsync)
             : base(isAsync)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         [SetUp]
         public void setup()
         {
-            testFirmware = new FirmwareData
+            testFirmware = new IotFirmwareData
             {
                 FileName = "testFileName",
                 FileSize = 1,
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestCreateFirmware()
         {
             var workspace = await getWorkspace();
-            var response = await workspace.GetFirmwares().CreateOrUpdateAsync(
+            var response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
                 testFirmware);
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestGetFirmware()
         {
             var workspace = await getWorkspace();
-            var _ = await workspace.GetFirmwares().CreateOrUpdateAsync(
+            var _ = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
                 testFirmware);
-            var response = await workspace.GetFirmwareAsync(_.Value.Data.Name);
+            var response = await workspace.GetIotFirmwareAsync(_.Value.Data.Name);
             response.Value.Data.Name.Should().Equals(testFirmware.Name);
         }
 
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestUpdateFirmware()
         {
             var name = Recording.GenerateAssetName("resource");
-            var updatedFirmware = new FirmwareData()
+            var updatedFirmware = new IotFirmwareData()
             {
                 Description = "updatedDescription"
             };
             var workspace = await getWorkspace();
-            var response = await workspace.GetFirmwares().CreateOrUpdateAsync(
+            var response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 name,
                 testFirmware);
             response.Value.Data.Description.Should().Equals(testFirmware.Description);
 
-            response = await workspace.GetFirmwares().CreateOrUpdateAsync(
+            response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 name,
                 updatedFirmware);
@@ -89,26 +89,26 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         public async Task TestDeleteFirmware()
         {
             var workspace = await getWorkspace();
-            var _ = await workspace.GetFirmwares().CreateOrUpdateAsync(
+            var _ = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
                 testFirmware);
             var testFirmwareId = _.Value.Data.Name;
-            var response = await workspace.GetFirmwareAsync(testFirmwareId);
+            var response = await workspace.GetIotFirmwareAsync(testFirmwareId);
             await response.Value.DeleteAsync(WaitUntil.Completed);
 
-            var action = async () => await workspace.GetFirmwareAsync(testFirmwareId);
+            var action = async () => await workspace.GetIotFirmwareAsync(testFirmwareId);
             await action.Should().ThrowAsync<Exception>();
         }
 
-        private async Task<FirmwareWorkspaceResource> getWorkspace()
+        private async Task<FirmwareAnalysisWorkspaceResource> getWorkspace()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             rg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
-            var _ = await rg.GetFirmwareWorkspaces().CreateOrUpdateAsync(
+            var _ = await rg.GetFirmwareAnalysisWorkspaces().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
-                new FirmwareWorkspaceData(AzureLocation.EastUS));
+                new FirmwareAnalysisWorkspaceData(AzureLocation.EastUS));
             return _.Value;
         }
     }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
 
             writer.WriteStartObject();
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (ResourceProviderNamespace != null)
+            if (Optional.IsDefined(ResourceProviderNamespace))
             {
                 writer.WritePropertyName("resourceProviderNamespace"u8);
                 writer.WriteStringValue(ResourceProviderNamespace);
             }
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);

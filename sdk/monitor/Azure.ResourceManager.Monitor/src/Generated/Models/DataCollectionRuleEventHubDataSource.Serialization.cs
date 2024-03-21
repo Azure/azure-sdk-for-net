@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ConsumerGroup != null)
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Stream != null)
+            if (Optional.IsDefined(Stream))
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteStringValue(Stream);

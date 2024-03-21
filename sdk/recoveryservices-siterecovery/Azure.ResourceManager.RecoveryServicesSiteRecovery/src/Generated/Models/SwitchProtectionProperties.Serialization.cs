@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (ReplicationProtectedItemName != null)
+            if (Optional.IsDefined(ReplicationProtectedItemName))
             {
                 writer.WritePropertyName("replicationProtectedItemName"u8);
                 writer.WriteStringValue(ReplicationProtectedItemName);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

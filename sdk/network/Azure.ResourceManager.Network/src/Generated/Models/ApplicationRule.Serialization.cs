@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(SourceAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Protocols is ChangeTrackingList<FirewallPolicyRuleApplicationProtocol> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TargetFqdns is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetFqdns))
             {
                 writer.WritePropertyName("targetFqdns"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TargetUrls is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetUrls))
             {
                 writer.WritePropertyName("targetUrls"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FqdnTags is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(FqdnTags))
             {
                 writer.WritePropertyName("fqdnTags"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceIPGroups is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TerminateTLS.HasValue)
+            if (Optional.IsDefined(TerminateTLS))
             {
                 writer.WritePropertyName("terminateTLS"u8);
                 writer.WriteBooleanValue(TerminateTLS.Value);
             }
-            if (!(WebCategories is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(WebCategories))
             {
                 writer.WritePropertyName("webCategories"u8);
                 writer.WriteStartArray();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HttpHeadersToInsert is ChangeTrackingList<FirewallPolicyHttpHeaderToInsert> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpHeadersToInsert))
             {
                 writer.WritePropertyName("httpHeadersToInsert"u8);
                 writer.WriteStartArray();
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NetworkDeviceId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceId))
             {
                 writer.WritePropertyName("networkDeviceId"u8);
                 writer.WriteStringValue(NetworkDeviceId);
             }
-            if (PrimaryIPv4Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (PrimaryIPv6Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (SecondaryIPv4Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (SecondaryIPv6Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);

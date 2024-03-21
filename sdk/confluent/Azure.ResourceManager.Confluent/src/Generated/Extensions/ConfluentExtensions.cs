@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Confluent.Mocking;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> Returns a <see cref="ConfluentOrganizationResource"/> object. </returns>
         public static ConfluentOrganizationResource GetConfluentOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableConfluentArmClient(client).GetConfluentOrganizationResource(id);
         }
@@ -69,10 +64,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
         public static ConfluentOrganizationCollection GetConfluentOrganizations(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableConfluentResourceGroupResource(resourceGroupResource).GetConfluentOrganizations();
         }
@@ -90,7 +82,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,10 +102,7 @@ namespace Azure.ResourceManager.Confluent
         [ForwardsClientCalls]
         public static async Task<Response<ConfluentOrganizationResource>> GetConfluentOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableConfluentResourceGroupResource(resourceGroupResource).GetConfluentOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
@@ -131,7 +120,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,10 +140,7 @@ namespace Azure.ResourceManager.Confluent
         [ForwardsClientCalls]
         public static Response<ConfluentOrganizationResource> GetConfluentOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableConfluentResourceGroupResource(resourceGroupResource).GetConfluentOrganization(organizationName, cancellationToken);
         }
@@ -172,7 +158,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -188,10 +174,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationAsync(organizationName, data, cancellationToken).ConfigureAwait(false);
         }
@@ -209,7 +192,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -225,12 +208,77 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public static Response<ConfluentOrganizationResource> ValidateOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganization(organizationName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Organization Validate proxy resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validations_ValidateOrganizationV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="data"> Organization resource model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<ConfluentOrganizationValidationResult>> ValidateOrganizationV2Async(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2Async(organizationName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Organization Validate proxy resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validations_ValidateOrganizationV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="data"> Organization resource model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<ConfluentOrganizationValidationResult> ValidateOrganizationV2(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2(organizationName, data, cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +294,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -260,10 +308,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfluentSubscriptionResource(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
@@ -281,7 +326,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -295,10 +340,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentAgreement"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfluentAgreement> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfluentSubscriptionResource(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
@@ -316,7 +358,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -330,10 +372,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableConfluentSubscriptionResource(subscriptionResource).CreateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
@@ -351,7 +390,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -365,10 +404,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<ConfluentAgreement> CreateMarketplaceAgreement(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfluentSubscriptionResource(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
         }
@@ -386,7 +422,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -404,10 +440,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfluentSubscriptionResource(subscriptionResource).GetConfluentOrganizationsAsync(cancellationToken);
         }
@@ -425,7 +458,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-12-01</description>
+        /// <description>2024-02-13</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,10 +476,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableConfluentSubscriptionResource(subscriptionResource).GetConfluentOrganizations(cancellationToken);
         }

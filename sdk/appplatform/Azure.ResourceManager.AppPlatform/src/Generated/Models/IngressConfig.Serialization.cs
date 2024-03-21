@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (ReadTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ReadTimeoutInSeconds))
             {
                 writer.WritePropertyName("readTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ReadTimeoutInSeconds.Value);

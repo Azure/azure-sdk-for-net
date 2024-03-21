@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2023-12-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,14 +63,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapabilitySetsList>> ListAsync(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,14 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapabilitySetsList> List(string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);
@@ -151,22 +136,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MySqlFlexibleServersCapabilityData>> GetAsync(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, capabilitySetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,22 +166,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MySqlFlexibleServersCapabilityData> Get(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (capabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilitySetName));
-            }
-            if (capabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
 
             using var message = CreateGetRequest(subscriptionId, locationName, capabilitySetName);
             _pipeline.Send(message, cancellationToken);
@@ -253,18 +210,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapabilitySetsList>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,18 +238,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapabilitySetsList> ListNextPage(string nextLink, string subscriptionId, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, locationName);
             _pipeline.Send(message, cancellationToken);

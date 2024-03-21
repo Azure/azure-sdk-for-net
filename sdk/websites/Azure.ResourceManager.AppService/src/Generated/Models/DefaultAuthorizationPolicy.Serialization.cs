@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (AllowedPrincipals != null)
+            if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
                 writer.WriteObjectValue(AllowedPrincipals);
             }
-            if (!(AllowedApplications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedApplications))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();

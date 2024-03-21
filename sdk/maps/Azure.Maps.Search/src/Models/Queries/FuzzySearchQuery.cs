@@ -5,6 +5,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {

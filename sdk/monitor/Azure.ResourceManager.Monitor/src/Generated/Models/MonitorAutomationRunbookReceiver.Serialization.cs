@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(WebhookResourceId);
             writer.WritePropertyName("isGlobalRunbook"u8);
             writer.WriteBooleanValue(IsGlobalRunbook);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="displayName"/> is null. </exception>
         public NotebookKernelSpec(string name, string displayName)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (displayName == null)
-            {
-                throw new ArgumentNullException(nameof(displayName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(displayName, nameof(displayName));
 
             Name = name;
             DisplayName = displayName;

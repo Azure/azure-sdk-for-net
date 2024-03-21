@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(MeshRevisions is ChangeTrackingList<MeshRevision> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MeshRevisions))
             {
                 writer.WritePropertyName("meshRevisions"u8);
                 writer.WriteStartArray();

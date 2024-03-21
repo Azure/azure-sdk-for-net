@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Instructions != null)
+            if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
-            if (Observation != null)
+            if (Optional.IsDefined(Observation))
             {
                 writer.WritePropertyName("observation"u8);
                 writer.WriteStringValue(Observation);

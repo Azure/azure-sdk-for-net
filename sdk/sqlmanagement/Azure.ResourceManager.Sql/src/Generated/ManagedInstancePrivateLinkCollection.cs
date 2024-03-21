@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<ManagedInstancePrivateLinkResource>> GetAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<ManagedInstancePrivateLinkResource> Get(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual Response<bool> Exists(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedInstancePrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         public virtual NullableResponse<ManagedInstancePrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
         {
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (groupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
-            }
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
             using var scope = _managedInstancePrivateLinkManagedInstancePrivateLinkResourcesClientDiagnostics.CreateScope("ManagedInstancePrivateLinkCollection.GetIfExists");
             scope.Start();

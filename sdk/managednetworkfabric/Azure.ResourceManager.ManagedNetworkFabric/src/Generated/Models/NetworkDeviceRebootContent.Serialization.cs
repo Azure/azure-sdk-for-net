@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (RebootType.HasValue)
+            if (Optional.IsDefined(RebootType))
             {
                 writer.WritePropertyName("rebootType"u8);
                 writer.WriteStringValue(RebootType.Value.ToString());

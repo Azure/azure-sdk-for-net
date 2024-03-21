@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && BackupType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (options.Format != "W" && !(BackupFiles is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFiles))
             {
                 writer.WritePropertyName("backupFiles"u8);
                 writer.WriteStartArray();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Position.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (options.Format != "W" && IsDamaged.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDamaged))
             {
                 writer.WritePropertyName("isDamaged"u8);
                 writer.WriteBooleanValue(IsDamaged.Value);
             }
-            if (options.Format != "W" && IsCompressed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCompressed))
             {
                 writer.WritePropertyName("isCompressed"u8);
                 writer.WriteBooleanValue(IsCompressed.Value);
             }
-            if (options.Format != "W" && FamilyCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FamilyCount))
             {
                 writer.WritePropertyName("familyCount"u8);
                 writer.WriteNumberValue(FamilyCount.Value);
             }
-            if (options.Format != "W" && BackupFinishOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupFinishOn))
             {
                 writer.WritePropertyName("backupFinishDate"u8);
                 writer.WriteStringValue(BackupFinishOn.Value, "O");

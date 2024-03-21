@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (SubscriptionStatus.HasValue)
+            if (Optional.IsDefined(SubscriptionStatus))
             {
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && BillingStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
             {
                 writer.WritePropertyName("billingStartDate"u8);
                 writer.WriteStringValue(BillingStartOn.Value, "O");
             }
-            if (options.Format != "W" && EnrollmentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentOn))
             {
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
-            if (options.Format != "W" && DisenrollmentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");

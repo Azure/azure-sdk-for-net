@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ScoringUri != null)
+            if (Optional.IsDefined(ScoringUri))
             {
                 if (ScoringUri != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (AuthenticationKey != null)
+            if (Optional.IsDefined(AuthenticationKey))
             {
                 if (AuthenticationKey != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("key");
                 }
             }
-            if (RawResourceId != null)
+            if (Optional.IsDefined(RawResourceId))
             {
                 if (RawResourceId != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("timeout");
                 }
             }
-            if (RawLocation != null)
+            if (Optional.IsDefined(RawLocation))
             {
                 if (RawLocation != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("region");
                 }
             }
-            if (DegreeOfParallelism.HasValue)
+            if (Optional.IsDefined(DegreeOfParallelism))
             {
                 if (DegreeOfParallelism != null)
                 {
@@ -91,17 +91,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);

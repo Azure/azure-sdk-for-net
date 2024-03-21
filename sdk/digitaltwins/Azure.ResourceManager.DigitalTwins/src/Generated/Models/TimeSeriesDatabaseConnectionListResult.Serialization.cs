@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 if (NextLink != null)
                 {
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (!(Value is ChangeTrackingList<TimeSeriesDatabaseConnectionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

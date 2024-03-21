@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -71,22 +70,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='GetTillageDataAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTillageDataAsync(string partyId, string tillageDataId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
-            if (tillageDataId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tillageDataId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(tillageDataId, nameof(tillageDataId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.GetTillageData");
             scope.Start();
@@ -122,22 +107,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='GetTillageData(string,string,RequestContext)']/*" />
         public virtual Response GetTillageData(string partyId, string tillageDataId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
-            if (tillageDataId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tillageDataId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(tillageDataId, nameof(tillageDataId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.GetTillageData");
             scope.Start();
@@ -174,26 +145,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string tillageDataId, RequestContent content, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
-            if (tillageDataId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tillageDataId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(tillageDataId, nameof(tillageDataId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.CreateOrUpdate");
             scope.Start();
@@ -230,26 +184,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string tillageDataId, RequestContent content, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
-            if (tillageDataId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tillageDataId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(tillageDataId, nameof(tillageDataId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.CreateOrUpdate");
             scope.Start();
@@ -285,22 +222,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string tillageDataId, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
-            if (tillageDataId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tillageDataId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(tillageDataId, nameof(tillageDataId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.Delete");
             scope.Start();
@@ -336,22 +259,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string tillageDataId, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
-            if (tillageDataId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tillageDataId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(tillageDataId, nameof(tillageDataId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.Delete");
             scope.Start();
@@ -386,14 +295,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -428,14 +330,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -500,14 +395,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='GetAllTillageDataByPartyIdAsync(string,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllTillageDataByPartyIdAsync(string partyId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllTillageDataByPartyIdRequest(partyId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllTillageDataByPartyIdNextPageRequest(nextLink, partyId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -563,14 +451,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='GetAllTillageDataByPartyId(string,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllTillageDataByPartyId(string partyId, double? minTillageDepth, double? maxTillageDepth, double? minTillagePressure, double? maxTillagePressure, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllTillageDataByPartyIdRequest(partyId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllTillageDataByPartyIdNextPageRequest(nextLink, partyId, minTillageDepth, maxTillageDepth, minTillagePressure, maxTillagePressure, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -701,22 +582,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string tillageDataId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
+            Argument.AssertNotNull(tillageDataId, nameof(tillageDataId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.CreateCascadeDeleteJob");
             scope.Start();
@@ -754,22 +622,9 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/TillageData.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string tillageDataId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (tillageDataId == null)
-            {
-                throw new ArgumentNullException(nameof(tillageDataId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
+            Argument.AssertNotNull(tillageDataId, nameof(tillageDataId));
 
             using var scope = ClientDiagnostics.CreateScope("TillageData.CreateCascadeDeleteJob");
             scope.Start();

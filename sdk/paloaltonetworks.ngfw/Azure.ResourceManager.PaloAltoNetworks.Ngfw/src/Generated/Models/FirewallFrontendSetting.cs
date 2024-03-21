@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="frontendConfiguration"/> or <paramref name="backendConfiguration"/> is null. </exception>
         public FirewallFrontendSetting(string name, FirewallProtocolType protocol, FirewallEndpointConfiguration frontendConfiguration, FirewallEndpointConfiguration backendConfiguration)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (frontendConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(frontendConfiguration));
-            }
-            if (backendConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(backendConfiguration));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(frontendConfiguration, nameof(frontendConfiguration));
+            Argument.AssertNotNull(backendConfiguration, nameof(backendConfiguration));
 
             Name = name;
             Protocol = protocol;

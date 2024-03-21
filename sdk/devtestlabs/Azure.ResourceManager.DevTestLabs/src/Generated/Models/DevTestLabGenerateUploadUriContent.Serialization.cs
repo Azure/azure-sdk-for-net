@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (BlobName != null)
+            if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);

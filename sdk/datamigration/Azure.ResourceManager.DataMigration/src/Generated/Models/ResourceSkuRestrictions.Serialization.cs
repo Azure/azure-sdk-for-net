@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RestrictionsType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionsType.Value.ToString());
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ReasonCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());

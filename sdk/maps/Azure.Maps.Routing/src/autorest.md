@@ -23,6 +23,7 @@ public-clients: false
 clear-output-folder: true
 data-plane: true
 skip-csproj: true
+helper-namespace: Azure.Maps.Common
 ```
 
 ```yaml

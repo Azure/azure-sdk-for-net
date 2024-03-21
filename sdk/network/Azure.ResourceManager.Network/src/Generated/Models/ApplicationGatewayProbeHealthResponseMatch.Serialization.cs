@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
 #endif
             }
-            if (!(StatusCodes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();

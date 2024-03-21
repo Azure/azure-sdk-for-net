@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<SiteDeploymentResource>> GetAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<SiteDeploymentResource> Get(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<bool> Exists(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteDeploymentResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual NullableResponse<SiteDeploymentResource> GetIfExists(string id, CancellationToken cancellationToken = default)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var scope = _siteDeploymentWebAppsClientDiagnostics.CreateScope("SiteDeploymentCollection.GetIfExists");
             scope.Start();

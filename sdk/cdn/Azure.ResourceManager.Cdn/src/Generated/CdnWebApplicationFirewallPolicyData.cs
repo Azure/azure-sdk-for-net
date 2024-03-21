@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -59,10 +58,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public CdnWebApplicationFirewallPolicyData(AzureLocation location, CdnSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             EndpointLinks = new ChangeTrackingList<SubResource>();

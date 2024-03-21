@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(HealthErrors is ChangeTrackingList<ResolveHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();

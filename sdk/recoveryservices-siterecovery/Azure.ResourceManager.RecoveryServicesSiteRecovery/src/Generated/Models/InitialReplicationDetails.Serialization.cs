@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (InitialReplicationType != null)
+            if (Optional.IsDefined(InitialReplicationType))
             {
                 writer.WritePropertyName("initialReplicationType"u8);
                 writer.WriteStringValue(InitialReplicationType);
             }
-            if (InitialReplicationProgressPercentage != null)
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
             {
                 writer.WritePropertyName("initialReplicationProgressPercentage"u8);
                 writer.WriteStringValue(InitialReplicationProgressPercentage);

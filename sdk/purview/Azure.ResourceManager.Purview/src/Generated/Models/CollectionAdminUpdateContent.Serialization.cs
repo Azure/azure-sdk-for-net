@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (AdminObjectId != null)
+            if (Optional.IsDefined(AdminObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(AdminObjectId);

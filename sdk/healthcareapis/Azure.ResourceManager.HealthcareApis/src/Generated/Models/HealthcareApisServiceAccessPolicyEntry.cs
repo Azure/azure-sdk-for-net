@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public HealthcareApisServiceAccessPolicyEntry(string objectId)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
+            Argument.AssertNotNull(objectId, nameof(objectId));
 
             ObjectId = objectId;
         }

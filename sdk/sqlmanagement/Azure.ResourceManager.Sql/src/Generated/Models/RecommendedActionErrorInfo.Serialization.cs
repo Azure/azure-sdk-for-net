@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && IsRetryable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRetryable))
             {
                 writer.WritePropertyName("isRetryable"u8);
                 writer.WriteStringValue(IsRetryable.Value.ToSerialString());

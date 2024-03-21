@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (RedirectType.HasValue)
+            if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (RedirectProtocol.HasValue)
+            if (Optional.IsDefined(RedirectProtocol))
             {
                 writer.WritePropertyName("redirectProtocol"u8);
                 writer.WriteStringValue(RedirectProtocol.Value.ToString());
             }
-            if (CustomHost != null)
+            if (Optional.IsDefined(CustomHost))
             {
                 writer.WritePropertyName("customHost"u8);
                 writer.WriteStringValue(CustomHost);
             }
-            if (CustomPath != null)
+            if (Optional.IsDefined(CustomPath))
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (CustomFragment != null)
+            if (Optional.IsDefined(CustomFragment))
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
-            if (CustomQueryString != null)
+            if (Optional.IsDefined(CustomQueryString))
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);

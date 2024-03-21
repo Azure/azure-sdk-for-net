@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Network != null)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network);
             }
-            if (NextHop != null)
+            if (Optional.IsDefined(NextHop))
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (LocPrf != null)
+            if (Optional.IsDefined(LocPrf))
             {
                 writer.WritePropertyName("locPrf"u8);
                 writer.WriteStringValue(LocPrf);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);

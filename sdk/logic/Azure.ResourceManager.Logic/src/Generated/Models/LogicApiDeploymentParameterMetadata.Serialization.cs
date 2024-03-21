@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ApiDeploymentParameterMetadataType != null)
+            if (Optional.IsDefined(ApiDeploymentParameterMetadataType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiDeploymentParameterMetadataType);
             }
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Visibility.HasValue)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());

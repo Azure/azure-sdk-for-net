@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Test;

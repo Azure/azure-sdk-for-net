@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (SizeInGB.HasValue)
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (options.Format != "W" && UsedInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedInGB))
             {
                 writer.WritePropertyName("usedInGB"u8);
                 writer.WriteNumberValue(UsedInGB.Value);
             }
-            if (MountPath != null)
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);

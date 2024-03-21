@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ArcScVmm
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScVmmAvailabilitySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string availabilitySetName, ScVmmAvailabilitySetData data, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScVmmAvailabilitySetResource> CreateOrUpdate(WaitUntil waitUntil, string availabilitySetName, ScVmmAvailabilitySetData data, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
         public virtual async Task<Response<ScVmmAvailabilitySetResource>> GetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
         public virtual Response<ScVmmAvailabilitySetResource> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
         public virtual Response<bool> Exists(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScVmmAvailabilitySetResource>> GetIfExistsAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="availabilitySetName"/> is null. </exception>
         public virtual NullableResponse<ScVmmAvailabilitySetResource> GetIfExists(string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            if (availabilitySetName == null)
-            {
-                throw new ArgumentNullException(nameof(availabilitySetName));
-            }
-            if (availabilitySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilitySetName));
-            }
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
 
             using var scope = _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics.CreateScope("ScVmmAvailabilitySetCollection.GetIfExists");
             scope.Start();

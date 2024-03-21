@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -61,18 +60,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/>, <paramref name="publisherEmail"/> or <paramref name="publisherName"/> is null. </exception>
         public ApiManagementServiceData(AzureLocation location, ApiManagementServiceSkuProperties sku, string publisherEmail, string publisherName) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
-            if (publisherEmail == null)
-            {
-                throw new ArgumentNullException(nameof(publisherEmail));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(publisherEmail, nameof(publisherEmail));
+            Argument.AssertNotNull(publisherName, nameof(publisherName));
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();

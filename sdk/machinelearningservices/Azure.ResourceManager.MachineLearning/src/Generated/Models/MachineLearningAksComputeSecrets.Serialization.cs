@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (UserKubeConfig != null)
+            if (Optional.IsDefined(UserKubeConfig))
             {
                 writer.WritePropertyName("userKubeConfig"u8);
                 writer.WriteStringValue(UserKubeConfig);
             }
-            if (AdminKubeConfig != null)
+            if (Optional.IsDefined(AdminKubeConfig))
             {
                 writer.WritePropertyName("adminKubeConfig"u8);
                 writer.WriteStringValue(AdminKubeConfig);
             }
-            if (ImagePullSecretName != null)
+            if (Optional.IsDefined(ImagePullSecretName))
             {
                 if (ImagePullSecretName != null)
                 {

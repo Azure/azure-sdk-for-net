@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
         public ManagedClusterServiceEndpoint(string service)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException(nameof(service));
-            }
+            Argument.AssertNotNull(service, nameof(service));
 
             Service = service;
             Locations = new ChangeTrackingList<AzureLocation>();

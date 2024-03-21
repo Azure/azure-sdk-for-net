@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DeletedSiteId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedSiteId))
             {
                 writer.WritePropertyName("deletedSiteId"u8);
                 writer.WriteNumberValue(DeletedSiteId.Value);
             }
-            if (options.Format != "W" && DeletedTimestamp != null)
+            if (options.Format != "W" && Optional.IsDefined(DeletedTimestamp))
             {
                 writer.WritePropertyName("deletedTimestamp"u8);
                 writer.WriteStringValue(DeletedTimestamp);
             }
-            if (options.Format != "W" && Subscription != null)
+            if (options.Format != "W" && Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteStringValue(Subscription);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && DeletedSiteName != null)
+            if (options.Format != "W" && Optional.IsDefined(DeletedSiteName))
             {
                 writer.WritePropertyName("deletedSiteName"u8);
                 writer.WriteStringValue(DeletedSiteName);
             }
-            if (options.Format != "W" && Slot != null)
+            if (options.Format != "W" && Optional.IsDefined(Slot))
             {
                 writer.WritePropertyName("slot"u8);
                 writer.WriteStringValue(Slot);
             }
-            if (options.Format != "W" && KindPropertiesKind != null)
+            if (options.Format != "W" && Optional.IsDefined(KindPropertiesKind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(KindPropertiesKind);
             }
-            if (options.Format != "W" && GeoRegionName != null)
+            if (options.Format != "W" && Optional.IsDefined(GeoRegionName))
             {
                 writer.WritePropertyName("geoRegionName"u8);
                 writer.WriteStringValue(GeoRegionName);

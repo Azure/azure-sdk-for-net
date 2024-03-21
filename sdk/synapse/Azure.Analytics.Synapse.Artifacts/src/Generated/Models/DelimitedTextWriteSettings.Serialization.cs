@@ -19,19 +19,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (QuoteAllText != null)
+            if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
                 writer.WriteObjectValue(QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
             writer.WriteObjectValue(FileExtension);
-            if (MaxRowsPerFile != null)
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 writer.WriteObjectValue(MaxRowsPerFile);
             }
-            if (FileNamePrefix != null)
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 writer.WriteObjectValue(FileNamePrefix);

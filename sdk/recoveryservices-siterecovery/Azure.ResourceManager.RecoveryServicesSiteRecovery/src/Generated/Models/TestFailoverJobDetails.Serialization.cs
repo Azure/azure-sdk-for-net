@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (TestFailoverStatus != null)
+            if (Optional.IsDefined(TestFailoverStatus))
             {
                 writer.WritePropertyName("testFailoverStatus"u8);
                 writer.WriteStringValue(TestFailoverStatus);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (NetworkName != null)
+            if (Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (NetworkFriendlyName != null)
+            if (Optional.IsDefined(NetworkFriendlyName))
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (NetworkType != null)
+            if (Optional.IsDefined(NetworkType))
             {
                 writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
             }
-            if (!(ProtectedItemDetails is ChangeTrackingList<FailoverReplicationProtectedItemDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();

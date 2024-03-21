@@ -52,7 +52,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run that this run step is a part of. </param>
         /// <param name="status"> The status of this run step. </param>
-        /// <param name="stepDetails"> The details for this run step. </param>
+        /// <param name="stepDetails">
+        /// The details for this run step.
+        /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
+        /// </param>
         /// <param name="lastError"> If applicable, information about the last error encountered by this run step. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiredAt"> The Unix timestamp, in seconds, representing when this item expired. </param>
@@ -63,26 +67,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="assistantId"/>, <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepDetails"/> is null. </exception>
         internal RunStep(string id, RunStepType type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (stepDetails == null)
-            {
-                throw new ArgumentNullException(nameof(stepDetails));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNull(stepDetails, nameof(stepDetails));
 
             Id = id;
             Type = type;
@@ -108,7 +97,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread that was run. </param>
         /// <param name="runId"> The ID of the run that this run step is a part of. </param>
         /// <param name="status"> The status of this run step. </param>
-        /// <param name="stepDetails"> The details for this run step. </param>
+        /// <param name="stepDetails">
+        /// The details for this run step.
+        /// Please note <see cref="RunStepDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RunStepMessageCreationDetails"/> and <see cref="RunStepToolCallDetails"/>.
+        /// </param>
         /// <param name="lastError"> If applicable, information about the last error encountered by this run step. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiredAt"> The Unix timestamp, in seconds, representing when this item expired. </param>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (IsSubscriptionDelegationEnabled.HasValue)
+            if (Optional.IsDefined(IsSubscriptionDelegationEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsSubscriptionDelegationEnabled.Value);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (SkippedReason != null)
+            if (Optional.IsDefined(SkippedReason))
             {
                 writer.WritePropertyName("skippedReason"u8);
                 writer.WriteStringValue(SkippedReason);
             }
-            if (SkippedReasonString != null)
+            if (Optional.IsDefined(SkippedReasonString))
             {
                 writer.WritePropertyName("skippedReasonString"u8);
                 writer.WriteStringValue(SkippedReasonString);
             }
-            if (JobTask != null)
+            if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AccessRulesVersion != null)
+            if (Optional.IsDefined(AccessRulesVersion))
             {
                 writer.WritePropertyName("accessRulesVersion"u8);
                 writer.WriteStringValue(AccessRulesVersion);
             }
-            if (!(AccessRules is ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessRules))
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DiagnosticSettingsVersion != null)
+            if (Optional.IsDefined(DiagnosticSettingsVersion))
             {
                 writer.WritePropertyName("diagnosticSettingsVersion"u8);
                 writer.WriteStringValue(DiagnosticSettingsVersion);
             }
-            if (!(EnabledLogCategories is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EnabledLogCategories))
             {
                 writer.WritePropertyName("enabledLogCategories"u8);
                 writer.WriteStartArray();

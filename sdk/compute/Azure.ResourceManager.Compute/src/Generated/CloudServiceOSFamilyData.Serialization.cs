@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,24 +53,24 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && OSFamilyName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSFamilyName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(OSFamilyName);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && !(Versions is ChangeTrackingList<OSVersionPropertiesBase> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ScriptSource != null)
+            if (Optional.IsDefined(ScriptSource))
             {
                 writer.WritePropertyName("scriptSource"u8);
                 writer.WriteStringValue(ScriptSource);
             }
-            if (ScriptData != null)
+            if (Optional.IsDefined(ScriptData))
             {
                 writer.WritePropertyName("scriptData"u8);
                 writer.WriteStringValue(ScriptData);
             }
-            if (ScriptArguments != null)
+            if (Optional.IsDefined(ScriptArguments))
             {
                 writer.WritePropertyName("scriptArguments"u8);
                 writer.WriteStringValue(ScriptArguments);
             }
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);

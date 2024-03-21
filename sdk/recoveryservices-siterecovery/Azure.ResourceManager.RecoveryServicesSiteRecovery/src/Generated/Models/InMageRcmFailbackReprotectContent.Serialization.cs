@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("processServerId"u8);
             writer.WriteStringValue(ProcessServerId);
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);

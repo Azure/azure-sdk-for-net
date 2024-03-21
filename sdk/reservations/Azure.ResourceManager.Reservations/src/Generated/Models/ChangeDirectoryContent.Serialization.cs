@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (DestinationTenantId.HasValue)
+            if (Optional.IsDefined(DestinationTenantId))
             {
                 writer.WritePropertyName("destinationTenantId"u8);
                 writer.WriteStringValue(DestinationTenantId.Value);

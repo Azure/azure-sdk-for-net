@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SecurityAlertSupportingEvidenceType != null)
+            if (options.Format != "W" && Optional.IsDefined(SecurityAlertSupportingEvidenceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecurityAlertSupportingEvidenceType);

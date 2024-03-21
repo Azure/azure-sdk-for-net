@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(ScrubbingRules is ChangeTrackingList<WebApplicationFirewallScrubbingRules> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScrubbingRules))
             {
                 writer.WritePropertyName("scrubbingRules"u8);
                 writer.WriteStartArray();

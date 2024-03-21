@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.Communication.JobRouter
 {
@@ -56,7 +55,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
-        /// <param name="mode"> Mode governing the specific distribution method. </param>
+        /// <param name="mode">
+        /// Mode governing the specific distribution method.
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DistributionPolicy(ETag eTag, string id, string name, TimeSpan? offerExpiresAfter, DistributionMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

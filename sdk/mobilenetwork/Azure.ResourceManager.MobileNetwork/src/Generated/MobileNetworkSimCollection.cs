@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkSimResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string simName, MobileNetworkSimData data, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkSimResource> CreateOrUpdate(WaitUntil waitUntil, string simName, MobileNetworkSimData data, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSimResource>> GetAsync(string simName, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
         public virtual Response<MobileNetworkSimResource> Get(string simName, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string simName, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
         public virtual Response<bool> Exists(string simName, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkSimResource>> GetIfExistsAsync(string simName, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkSimResource> GetIfExists(string simName, CancellationToken cancellationToken = default)
         {
-            if (simName == null)
-            {
-                throw new ArgumentNullException(nameof(simName));
-            }
-            if (simName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(simName));
-            }
+            Argument.AssertNotNullOrEmpty(simName, nameof(simName));
 
             using var scope = _mobileNetworkSimSimsClientDiagnostics.CreateScope("MobileNetworkSimCollection.GetIfExists");
             scope.Start();

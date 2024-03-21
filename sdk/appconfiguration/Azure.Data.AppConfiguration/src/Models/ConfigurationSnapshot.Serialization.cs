@@ -46,17 +46,17 @@ namespace Azure.Data.AppConfiguration
 
         internal static ConfigurationSnapshot DeserializeSnapshot(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<ConfigurationSnapshotStatus> status = default;
+            string name = default;
+            ConfigurationSnapshotStatus status = default;
             IList<ConfigurationSettingsFilter> filters = default;
-            Optional<SnapshotComposition> snapshotComposition = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset?> expires = default;
-            Optional<long> retentionPeriod = default;
-            Optional<long> size = default;
-            Optional<long> itemsCount = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> etag = default;
+            SnapshotComposition? snapshotComposition = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? expires = default;
+            long? retentionPeriod = default;
+            long? size = default;
+            long? itemsCount = default;
+            IDictionary<string, string> tags = default;
+            string etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -165,7 +165,18 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSnapshot(name.Value, Optional.ToNullable(status), filters, Optional.ToNullable(snapshotComposition), Optional.ToNullable(created), Optional.ToNullable(expires), Optional.ToNullable(retentionPeriod), Optional.ToNullable(size), Optional.ToNullable(itemsCount), Optional.ToDictionary(tags), new ETag(etag.Value));
+            return new ConfigurationSnapshot(
+                name,
+                status,
+                filters,
+                snapshotComposition,
+                created,
+                expires,
+                retentionPeriod,
+                size,
+                itemsCount,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                new ETag(etag));
         }
 
         // Mapping raw response to model

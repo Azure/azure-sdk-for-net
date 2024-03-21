@@ -20,10 +20,10 @@ namespace Azure.Monitor.Query.Models
         // TODO, remove after https://github.com/Azure/azure-sdk-for-net/issues/21655 is fixed
         internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
         {
-            Optional<JsonElement> error = default;
+            JsonElement error = default;
             IReadOnlyList<LogsTable> tables = default;
-            Optional<JsonElement> statistics = default;
-            Optional<JsonElement> render = default;
+            JsonElement statistics = default;
+            JsonElement render = default;
 
             // This is the workaround to remove the double-encoding
             if (element.ValueKind == JsonValueKind.String)

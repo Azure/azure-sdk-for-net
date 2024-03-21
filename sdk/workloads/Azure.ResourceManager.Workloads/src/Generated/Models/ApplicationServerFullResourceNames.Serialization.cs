@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (!(VirtualMachines is ChangeTrackingList<VirtualMachineResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);

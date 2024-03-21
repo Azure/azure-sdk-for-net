@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (DataStoreType.HasValue)
+            if (Optional.IsDefined(DataStoreType))
             {
                 writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
-            if (StorageSettingType.HasValue)
+            if (Optional.IsDefined(StorageSettingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());

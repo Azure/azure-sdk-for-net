@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="machineArmId"/> is null. </exception>
         public SpringBootAppInstancesItem(ResourceIdentifier machineArmId)
         {
-            if (machineArmId == null)
-            {
-                throw new ArgumentNullException(nameof(machineArmId));
-            }
+            Argument.AssertNotNull(machineArmId, nameof(machineArmId));
 
             MachineArmId = machineArmId;
         }

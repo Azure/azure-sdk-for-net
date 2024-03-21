@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
         public virtual async Task<Response<FrontendIPConfigurationResource>> GetAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (frontendIPConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurationName));
-            }
-            if (frontendIPConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendIPConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
             using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
         public virtual Response<FrontendIPConfigurationResource> Get(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (frontendIPConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurationName));
-            }
-            if (frontendIPConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendIPConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
             using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (frontendIPConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurationName));
-            }
-            if (frontendIPConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendIPConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
             using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (frontendIPConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurationName));
-            }
-            if (frontendIPConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendIPConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
             using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontendIPConfigurationResource>> GetIfExistsAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (frontendIPConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurationName));
-            }
-            if (frontendIPConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendIPConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
             using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
         public virtual NullableResponse<FrontendIPConfigurationResource> GetIfExists(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (frontendIPConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(frontendIPConfigurationName));
-            }
-            if (frontendIPConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(frontendIPConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(frontendIPConfigurationName, nameof(frontendIPConfigurationName));
 
             using var scope = _frontendIPConfigurationLoadBalancerFrontendIPConfigurationsClientDiagnostics.CreateScope("FrontendIPConfigurationCollection.GetIfExists");
             scope.Start();

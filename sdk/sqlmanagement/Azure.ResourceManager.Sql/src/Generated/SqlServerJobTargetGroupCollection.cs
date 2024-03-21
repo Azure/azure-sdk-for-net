@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerJobTargetGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string targetGroupName, SqlServerJobTargetGroupData data, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerJobTargetGroupResource> CreateOrUpdate(WaitUntil waitUntil, string targetGroupName, SqlServerJobTargetGroupData data, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual async Task<Response<SqlServerJobTargetGroupResource>> GetAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual Response<SqlServerJobTargetGroupResource> Get(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerJobTargetGroupResource>> GetIfExistsAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
         public virtual NullableResponse<SqlServerJobTargetGroupResource> GetIfExists(string targetGroupName, CancellationToken cancellationToken = default)
         {
-            if (targetGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(targetGroupName));
-            }
-            if (targetGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(targetGroupName, nameof(targetGroupName));
 
             using var scope = _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics.CreateScope("SqlServerJobTargetGroupCollection.GetIfExists");
             scope.Start();

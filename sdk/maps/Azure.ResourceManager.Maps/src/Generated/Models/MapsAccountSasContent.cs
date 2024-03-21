@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
@@ -55,18 +54,9 @@ namespace Azure.ResourceManager.Maps.Models
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/>, <paramref name="start"/> or <paramref name="expiry"/> is null. </exception>
         public MapsAccountSasContent(MapsSigningKey signingKey, string principalId, int maxRatePerSecond, string start, string expiry)
         {
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
-            if (start == null)
-            {
-                throw new ArgumentNullException(nameof(start));
-            }
-            if (expiry == null)
-            {
-                throw new ArgumentNullException(nameof(expiry));
-            }
+            Argument.AssertNotNull(principalId, nameof(principalId));
+            Argument.AssertNotNull(start, nameof(start));
+            Argument.AssertNotNull(expiry, nameof(expiry));
 
             SigningKey = signingKey;
             PrincipalId = principalId;

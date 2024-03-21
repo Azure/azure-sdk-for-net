@@ -19,37 +19,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ColumnMappings != null)
+            if (Optional.IsDefined(ColumnMappings))
             {
                 writer.WritePropertyName("columnMappings"u8);
                 writer.WriteObjectValue(ColumnMappings);
             }
-            if (SchemaMapping != null)
+            if (Optional.IsDefined(SchemaMapping))
             {
                 writer.WritePropertyName("schemaMapping"u8);
                 writer.WriteObjectValue(SchemaMapping);
             }
-            if (CollectionReference != null)
+            if (Optional.IsDefined(CollectionReference))
             {
                 writer.WritePropertyName("collectionReference"u8);
                 writer.WriteObjectValue(CollectionReference);
             }
-            if (MapComplexValuesToString != null)
+            if (Optional.IsDefined(MapComplexValuesToString))
             {
                 writer.WritePropertyName("mapComplexValuesToString"u8);
                 writer.WriteObjectValue(MapComplexValuesToString);
             }
-            if (Mappings != null)
+            if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (TypeConversion != null)
+            if (Optional.IsDefined(TypeConversion))
             {
                 writer.WritePropertyName("typeConversion"u8);
                 writer.WriteObjectValue(TypeConversion);
             }
-            if (TypeConversionSettings != null)
+            if (Optional.IsDefined(TypeConversionSettings))
             {
                 writer.WritePropertyName("typeConversionSettings"u8);
                 writer.WriteObjectValue(TypeConversionSettings);

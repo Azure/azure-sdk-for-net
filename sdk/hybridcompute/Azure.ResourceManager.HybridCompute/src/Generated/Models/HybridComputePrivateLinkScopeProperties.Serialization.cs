@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && PrivateLinkScopeId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkScopeId))
             {
                 writer.WritePropertyName("privateLinkScopeId"u8);
                 writer.WriteStringValue(PrivateLinkScopeId);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnectionDataModel> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();

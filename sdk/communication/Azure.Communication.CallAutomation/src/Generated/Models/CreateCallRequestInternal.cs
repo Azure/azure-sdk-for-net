@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,14 +20,8 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, string callbackUri)
         {
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
+            Argument.AssertNotNull(targets, nameof(targets));
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
             CallbackUri = callbackUri;

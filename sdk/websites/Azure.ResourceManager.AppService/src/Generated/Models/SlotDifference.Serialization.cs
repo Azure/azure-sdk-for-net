@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,44 +47,44 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Level != null)
+            if (options.Format != "W" && Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (options.Format != "W" && SettingType != null)
+            if (options.Format != "W" && Optional.IsDefined(SettingType))
             {
                 writer.WritePropertyName("settingType"u8);
                 writer.WriteStringValue(SettingType);
             }
-            if (options.Format != "W" && DiffRule != null)
+            if (options.Format != "W" && Optional.IsDefined(DiffRule))
             {
                 writer.WritePropertyName("diffRule"u8);
                 writer.WriteStringValue(DiffRule);
             }
-            if (options.Format != "W" && SettingName != null)
+            if (options.Format != "W" && Optional.IsDefined(SettingName))
             {
                 writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName);
             }
-            if (options.Format != "W" && ValueInCurrentSlot != null)
+            if (options.Format != "W" && Optional.IsDefined(ValueInCurrentSlot))
             {
                 writer.WritePropertyName("valueInCurrentSlot"u8);
                 writer.WriteStringValue(ValueInCurrentSlot);
             }
-            if (options.Format != "W" && ValueInTargetSlot != null)
+            if (options.Format != "W" && Optional.IsDefined(ValueInTargetSlot))
             {
                 writer.WritePropertyName("valueInTargetSlot"u8);
                 writer.WriteStringValue(ValueInTargetSlot);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

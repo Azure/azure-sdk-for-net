@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (UserPrincipalName != null)
+            if (Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (ApplicationType.HasValue)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (SessionState.HasValue)
+            if (Optional.IsDefined(SessionState))
             {
                 writer.WritePropertyName("sessionState"u8);
                 writer.WriteStringValue(SessionState.Value.ToString());
             }
-            if (ActiveDirectoryUserName != null)
+            if (Optional.IsDefined(ActiveDirectoryUserName))
             {
                 writer.WritePropertyName("activeDirectoryUserName"u8);
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
-            if (CreateOn.HasValue)
+            if (Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");

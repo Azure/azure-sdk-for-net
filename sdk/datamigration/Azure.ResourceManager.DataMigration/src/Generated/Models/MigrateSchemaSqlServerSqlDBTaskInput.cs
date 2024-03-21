@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
         public MigrateSchemaSqlServerSqlDBTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSchemaSqlServerSqlDBDatabaseInput> selectedDatabases) : base(sourceConnectionInfo, targetConnectionInfo)
         {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
-            if (targetConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(targetConnectionInfo));
-            }
-            if (selectedDatabases == null)
-            {
-                throw new ArgumentNullException(nameof(selectedDatabases));
-            }
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
+            Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
+            Argument.AssertNotNull(selectedDatabases, nameof(selectedDatabases));
 
             SelectedDatabases = selectedDatabases.ToList();
         }

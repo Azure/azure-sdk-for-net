@@ -7,8 +7,6 @@
 
 using System;
 using System.Threading;
-using Azure;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ChangeAnalysis.Mocking;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 using Azure.ResourceManager.Resources;
@@ -63,10 +61,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChangeAnalysisResourceGroupResource(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
         }
@@ -101,10 +96,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChangeAnalysisResourceGroupResource(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
         }
@@ -139,10 +131,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChangeAnalysisSubscriptionResource(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
         }
@@ -177,10 +166,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesBySubscription(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChangeAnalysisSubscriptionResource(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
         }
@@ -217,10 +203,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableChangeAnalysisTenantResource(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
@@ -257,10 +240,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableChangeAnalysisTenantResource(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
         }

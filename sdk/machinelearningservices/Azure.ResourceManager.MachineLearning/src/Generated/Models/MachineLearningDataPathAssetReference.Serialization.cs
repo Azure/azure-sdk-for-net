@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DatastoreId != null)
+            if (Optional.IsDefined(DatastoreId))
             {
                 if (DatastoreId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("datastoreId");
                 }
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {

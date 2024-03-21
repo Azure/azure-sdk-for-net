@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (!(Members is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Members))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();

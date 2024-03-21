@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudKubernetesClusterResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudKubernetesClusterResource>> GetAsync(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         public virtual Response<NetworkCloudKubernetesClusterResource> Get(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudKubernetesClusterResource>> GetIfExistsAsync(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudKubernetesClusterResource> GetIfExists(string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            if (kubernetesClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(kubernetesClusterName));
-            }
-            if (kubernetesClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kubernetesClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
             using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.GetIfExists");
             scope.Start();

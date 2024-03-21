@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(LinkTables is ChangeTrackingList<LinkTableRequest> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkTables))
             {
                 writer.WritePropertyName("linkTables"u8);
                 writer.WriteStartArray();

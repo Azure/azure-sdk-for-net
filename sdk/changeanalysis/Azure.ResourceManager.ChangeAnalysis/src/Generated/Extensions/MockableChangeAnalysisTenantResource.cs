@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ChangeAnalysis;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Mocking
@@ -71,14 +68,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
@@ -112,14 +102,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);

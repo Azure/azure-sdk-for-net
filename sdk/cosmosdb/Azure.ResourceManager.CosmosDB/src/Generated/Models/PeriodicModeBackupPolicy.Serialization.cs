@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (PeriodicModeProperties != null)
+            if (Optional.IsDefined(PeriodicModeProperties))
             {
                 writer.WritePropertyName("periodicModeProperties"u8);
                 writer.WriteObjectValue(PeriodicModeProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(BackupPolicyType.ToString());
-            if (MigrationState != null)
+            if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteObjectValue(MigrationState);

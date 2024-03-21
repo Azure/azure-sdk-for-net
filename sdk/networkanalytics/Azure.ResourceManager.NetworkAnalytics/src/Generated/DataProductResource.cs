@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkAnalytics.Models;
 using Azure.ResourceManager.Resources;
 
@@ -288,10 +286,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DataProductResource>> UpdateAsync(WaitUntil waitUntil, DataProductPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.Update");
             scope.Start();
@@ -337,10 +332,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DataProductResource> Update(WaitUntil waitUntil, DataProductPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.Update");
             scope.Start();
@@ -385,10 +377,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<RoleAssignmentDetail>> AddUserRoleAsync(RoleAssignmentCommonProperties body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.AddUserRole");
             scope.Start();
@@ -430,10 +419,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<RoleAssignmentDetail> AddUserRole(RoleAssignmentCommonProperties body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.AddUserRole");
             scope.Start();
@@ -475,10 +461,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AccountSasToken>> GenerateStorageAccountSasTokenAsync(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.GenerateStorageAccountSasToken");
             scope.Start();
@@ -520,10 +503,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AccountSasToken> GenerateStorageAccountSasToken(AccountSasContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.GenerateStorageAccountSasToken");
             scope.Start();
@@ -565,10 +545,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response<RoleAssignmentListResult>> GetRolesAssignmentsAsync(BinaryData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.GetRolesAssignments");
             scope.Start();
@@ -610,10 +587,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response<RoleAssignmentListResult> GetRolesAssignments(BinaryData body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.GetRolesAssignments");
             scope.Start();
@@ -655,10 +629,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<Response> RemoveUserRoleAsync(RoleAssignmentDetail body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.RemoveUserRole");
             scope.Start();
@@ -700,10 +671,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual Response RemoveUserRole(RoleAssignmentDetail body, CancellationToken cancellationToken = default)
         {
-            if (body == null)
-            {
-                throw new ArgumentNullException(nameof(body));
-            }
+            Argument.AssertNotNull(body, nameof(body));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.RemoveUserRole");
             scope.Start();
@@ -745,10 +713,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> RotateKeyAsync(NetworkAnalyticsKeyVaultContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.RotateKey");
             scope.Start();
@@ -790,10 +755,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response RotateKey(NetworkAnalyticsKeyVaultContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.RotateKey");
             scope.Start();
@@ -888,14 +850,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DataProductResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.AddTag");
             scope.Start();
@@ -956,14 +912,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DataProductResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.AddTag");
             scope.Start();
@@ -1023,10 +973,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataProductResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.SetTags");
             scope.Start();
@@ -1083,10 +1030,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataProductResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.SetTags");
             scope.Start();
@@ -1143,10 +1087,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DataProductResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.RemoveTag");
             scope.Start();
@@ -1206,10 +1147,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DataProductResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataProductClientDiagnostics.CreateScope("DataProductResource.RemoveTag");
             scope.Start();

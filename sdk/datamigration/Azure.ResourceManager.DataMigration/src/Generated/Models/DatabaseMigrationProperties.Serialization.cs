@@ -28,67 +28,67 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && MigrationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
             {
                 writer.WritePropertyName("migrationStatus"u8);
                 writer.WriteStringValue(MigrationStatus);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (SourceSqlConnection != null)
+            if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
-            if (SourceDatabaseName != null)
+            if (Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && SourceServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerName))
             {
                 writer.WritePropertyName("sourceServerName"u8);
                 writer.WriteStringValue(SourceServerName);
             }
-            if (MigrationService != null)
+            if (Optional.IsDefined(MigrationService))
             {
                 writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
-            if (MigrationOperationId != null)
+            if (Optional.IsDefined(MigrationOperationId))
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
-            if (options.Format != "W" && MigrationFailureError != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
                 writer.WriteObjectValue(MigrationFailureError);
             }
-            if (TargetDatabaseCollation != null)
+            if (Optional.IsDefined(TargetDatabaseCollation))
             {
                 writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
-            if (ProvisioningError != null)
+            if (Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 switch (discriminator.GetString())
                 {
                     case "SqlDb": return DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(element, options);
-                    case "SqlVm": return DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(element, options);
                     case "SqlMi": return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element, options);
+                    case "SqlVm": return DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(element, options);
                 }
             }
             return UnknownDatabaseMigrationProperties.DeserializeUnknownDatabaseMigrationProperties(element, options);

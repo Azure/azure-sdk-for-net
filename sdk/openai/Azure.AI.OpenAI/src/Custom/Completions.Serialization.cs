@@ -25,7 +25,7 @@ public partial class Completions
         }
         string id = default;
         DateTimeOffset created = default;
-        Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptFilterResults = default;
+        IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults = default;
         IReadOnlyList<Choice> choices = default;
         CompletionsUsage usage = default;
         IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -78,6 +78,6 @@ public partial class Completions
             }
         }
         serializedAdditionalRawData = additionalPropertiesDictionary;
-        return new Completions(id, created, Optional.ToList(promptFilterResults), choices, usage, serializedAdditionalRawData);
+        return new Completions(id, created, promptFilterResults ?? new ChangeTrackingList<ContentFilterResultsForPrompt>(), choices, usage, serializedAdditionalRawData);
     }
 }

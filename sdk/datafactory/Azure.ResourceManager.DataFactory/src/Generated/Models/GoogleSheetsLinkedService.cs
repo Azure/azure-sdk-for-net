@@ -17,12 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
         /// <param name="apiToken"> The api token for the GoogleSheets source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
-        public GoogleSheetsLinkedService(DataFactorySecretBaseDefinition apiToken)
+        public GoogleSheetsLinkedService(DataFactorySecret apiToken)
         {
-            if (apiToken == null)
-            {
-                throw new ArgumentNullException(nameof(apiToken));
-            }
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
 
             ApiToken = apiToken;
             LinkedServiceType = "GoogleSheets";
@@ -37,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="apiToken"> The api token for the GoogleSheets source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleSheetsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactorySecretBaseDefinition apiToken, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleSheetsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactorySecret apiToken, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The api token for the GoogleSheets source. </summary>
-        public DataFactorySecretBaseDefinition ApiToken { get; set; }
+        public DataFactorySecret ApiToken { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (MaxConcurrentTrials.HasValue)
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (MaxTrials.HasValue)
+            if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PreferredDataArchiveAuthMethod != null)
+            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (StorageSubscriptionId != null)
+            if (Optional.IsDefined(StorageSubscriptionId))
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);

@@ -3,7 +3,9 @@
   <PropertyGroup>
     <Description>This is the implementation of the DataFactoryExpressions</Description>
     <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
-    <Version>1.0.0-beta.7</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>azure;datafactory</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -12,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" VersionOverride="1.36.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

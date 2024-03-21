@@ -8,8 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceGraph.Mocking;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.Resources;
@@ -51,10 +49,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ResourceQueryResult>> GetResourcesAsync(this TenantResource tenantResource, ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableResourceGraphTenantResource(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -86,10 +81,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ResourceQueryResult> GetResources(this TenantResource tenantResource, ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableResourceGraphTenantResource(tenantResource).GetResources(content, cancellationToken);
         }
@@ -121,10 +113,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<BinaryData>> GetResourceHistoryAsync(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableResourceGraphTenantResource(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -156,10 +145,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<BinaryData> GetResourceHistory(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableResourceGraphTenantResource(tenantResource).GetResourceHistory(content, cancellationToken);
         }

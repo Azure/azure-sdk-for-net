@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (ComputeType != null)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (TimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (IntegrationRuntime != null)
+            if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);

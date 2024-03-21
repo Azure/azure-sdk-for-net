@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownSwitchProtectionProviderSpecificContent. </summary>
+    /// <summary> Unknown version of SwitchProtectionProviderSpecificInput. </summary>
     internal partial class UnknownSwitchProtectionProviderSpecificContent : SwitchProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSwitchProtectionProviderSpecificContent"/>. </summary>

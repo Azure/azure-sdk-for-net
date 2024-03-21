@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
@@ -86,14 +85,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SnapshotResourceList>> ListAsync(string reportName, string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateListRequest(reportName, skipToken, top, select, reportCreatorTenantId, offerGuid);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,14 +115,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SnapshotResourceList> List(string reportName, string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateListRequest(reportName, skipToken, top, select, reportCreatorTenantId, offerGuid);
             _pipeline.Send(message, cancellationToken);
@@ -175,18 +160,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SnapshotResourceList>> ListNextPageAsync(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateListNextPageRequest(nextLink, reportName, skipToken, top, select, reportCreatorTenantId, offerGuid);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -217,18 +192,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SnapshotResourceList> ListNextPage(string nextLink, string reportName, string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (reportName == null)
-            {
-                throw new ArgumentNullException(nameof(reportName));
-            }
-            if (reportName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(reportName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
 
             using var message = CreateListNextPageRequest(nextLink, reportName, skipToken, top, select, reportCreatorTenantId, offerGuid);
             _pipeline.Send(message, cancellationToken);

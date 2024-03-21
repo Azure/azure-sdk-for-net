@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 
@@ -195,10 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SensitivitySettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SensitivitySettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sensitivitySettingClientDiagnostics.CreateScope("SensitivitySettingResource.CreateOrUpdate");
             scope.Start();
@@ -244,10 +239,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SensitivitySettingResource> CreateOrUpdate(WaitUntil waitUntil, SensitivitySettingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _sensitivitySettingClientDiagnostics.CreateScope("SensitivitySettingResource.CreateOrUpdate");
             scope.Start();

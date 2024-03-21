@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (!(Configurations is ChangeTrackingList<SourceConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();

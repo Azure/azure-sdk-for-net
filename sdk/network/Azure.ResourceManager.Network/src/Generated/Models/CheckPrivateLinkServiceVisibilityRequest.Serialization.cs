@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateLinkServiceAlias != null)
+            if (Optional.IsDefined(PrivateLinkServiceAlias))
             {
                 writer.WritePropertyName("privateLinkServiceAlias"u8);
                 writer.WriteStringValue(PrivateLinkServiceAlias);

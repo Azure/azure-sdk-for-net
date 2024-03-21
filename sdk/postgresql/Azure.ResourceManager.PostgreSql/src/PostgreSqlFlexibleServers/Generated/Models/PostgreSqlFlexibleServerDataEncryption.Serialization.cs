@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryKeyUri != null)
+            if (Optional.IsDefined(PrimaryKeyUri))
             {
                 writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
-            if (PrimaryUserAssignedIdentityId != null)
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (GeoBackupKeyUri != null)
+            if (Optional.IsDefined(GeoBackupKeyUri))
             {
                 writer.WritePropertyName("geoBackupKeyURI"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
-            if (GeoBackupUserAssignedIdentityId != null)
+            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
             {
                 writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
-            if (KeyType.HasValue)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (PrimaryEncryptionKeyStatus.HasValue)
+            if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
             {
                 writer.WritePropertyName("primaryEncryptionKeyStatus"u8);
                 writer.WriteStringValue(PrimaryEncryptionKeyStatus.Value.ToString());
             }
-            if (GeoBackupEncryptionKeyStatus.HasValue)
+            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus))
             {
                 writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
                 writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());

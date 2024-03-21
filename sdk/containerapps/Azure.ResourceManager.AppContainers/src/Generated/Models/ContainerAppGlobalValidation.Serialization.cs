@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (UnauthenticatedClientAction.HasValue)
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (RedirectToProvider != null)
+            if (Optional.IsDefined(RedirectToProvider))
             {
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (!(ExcludedPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();

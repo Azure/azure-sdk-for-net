@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="policyId"/> is null. </exception>
         public InMageRcmFailbackReprotectContent(Guid processServerId, ResourceIdentifier policyId)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
+            Argument.AssertNotNull(policyId, nameof(policyId));
 
             ProcessServerId = processServerId;
             PolicyId = policyId;

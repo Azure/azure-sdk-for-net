@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            if (Created != null)
+            if (Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created);

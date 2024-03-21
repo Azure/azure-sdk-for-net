@@ -19,14 +19,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="internalDetails"/> is null. </exception>
         internal RequiredFunctionToolCall(string id, InternalRequiredFunctionToolCallDetails internalDetails) : base(id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (internalDetails == null)
-            {
-                throw new ArgumentNullException(nameof(internalDetails));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
             Type = "function";
             InternalDetails = internalDetails;

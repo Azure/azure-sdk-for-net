@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("field"u8);
             writer.WriteStringValue(Field);
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();

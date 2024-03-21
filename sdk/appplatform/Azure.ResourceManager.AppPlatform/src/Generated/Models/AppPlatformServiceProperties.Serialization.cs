@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (VnetAddons != null)
+            if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
-            if (options.Format != "W" && Version.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && ServiceInstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceInstanceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceInstanceId);
             }
-            if (options.Format != "W" && PowerState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState.Value.ToString());
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);

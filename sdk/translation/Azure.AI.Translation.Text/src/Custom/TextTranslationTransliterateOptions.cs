@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
@@ -32,7 +33,7 @@ namespace Azure.AI.Translation.Text
         /// <summary>
         /// A client-generated GUID to uniquely identify the request.
         /// </summary>
-        public string ClientTraceId { get; set; }
+        public Guid ClientTraceId { get; set; }
 
         /// <summary> Initializes new instance of TextTranslationTransliterateOptions. </summary>
         /// <param name="language">
@@ -50,7 +51,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="content"> Array of the text to be transliterated. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, IEnumerable<string> content, string clientTraceId = null): base()
+        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, IEnumerable<string> content, Guid clientTraceId = default): base()
         {
             Language = language;
             FromScript = fromScript;
@@ -75,7 +76,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="content"> The text to be transliterated. </param>
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
-        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, string content, string clientTraceId = null)
+        public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, string content, Guid clientTraceId = default)
         {
             Language = language;
             FromScript = fromScript;

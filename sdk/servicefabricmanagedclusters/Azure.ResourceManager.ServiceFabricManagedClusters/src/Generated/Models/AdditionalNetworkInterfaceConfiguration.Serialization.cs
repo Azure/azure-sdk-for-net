@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (EnableAcceleratedNetworking.HasValue)
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (DscpConfiguration != null)
+            if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);

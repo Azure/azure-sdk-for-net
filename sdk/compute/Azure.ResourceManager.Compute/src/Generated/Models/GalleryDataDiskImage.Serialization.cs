@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (options.Format != "W" && SizeInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (HostCaching.HasValue)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (GallerySource != null)
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);

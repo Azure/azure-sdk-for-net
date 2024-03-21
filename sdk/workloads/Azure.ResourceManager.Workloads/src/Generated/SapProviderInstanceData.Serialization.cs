@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Workloads
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -49,24 +48,24 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 JsonSerializer.Serialize(writer, Errors);
             }
-            if (ProviderSettings != null)
+            if (Optional.IsDefined(ProviderSettings))
             {
                 writer.WritePropertyName("providerSettings"u8);
                 writer.WriteObjectValue(ProviderSettings);

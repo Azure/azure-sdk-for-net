@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(SiteNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SiteNames))
             {
                 writer.WritePropertyName("siteNames"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AzureResourceName != null)
+            if (Optional.IsDefined(AzureResourceName))
             {
                 writer.WritePropertyName("azureResourceName"u8);
                 writer.WriteStringValue(AzureResourceName);
             }
-            if (AzureResourceType.HasValue)
+            if (Optional.IsDefined(AzureResourceType))
             {
                 writer.WritePropertyName("azureResourceType"u8);
                 writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
             }
-            if (CustomHostNameDnsRecordType.HasValue)
+            if (Optional.IsDefined(CustomHostNameDnsRecordType))
             {
                 writer.WritePropertyName("customHostNameDnsRecordType"u8);
                 writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
             }
-            if (HostNameType.HasValue)
+            if (Optional.IsDefined(HostNameType))
             {
                 writer.WritePropertyName("hostNameType"u8);
                 writer.WriteStringValue(HostNameType.Value.ToSerialString());

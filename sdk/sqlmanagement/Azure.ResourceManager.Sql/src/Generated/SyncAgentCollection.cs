@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SyncAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string syncAgentName, SyncAgentData data, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SyncAgentResource> CreateOrUpdate(WaitUntil waitUntil, string syncAgentName, SyncAgentData data, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
         public virtual async Task<Response<SyncAgentResource>> GetAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
         public virtual Response<SyncAgentResource> Get(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
         public virtual Response<bool> Exists(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
         public virtual async Task<NullableResponse<SyncAgentResource>> GetIfExistsAsync(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="syncAgentName"/> is null. </exception>
         public virtual NullableResponse<SyncAgentResource> GetIfExists(string syncAgentName, CancellationToken cancellationToken = default)
         {
-            if (syncAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(syncAgentName));
-            }
-            if (syncAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(syncAgentName, nameof(syncAgentName));
 
             using var scope = _syncAgentClientDiagnostics.CreateScope("SyncAgentCollection.GetIfExists");
             scope.Start();

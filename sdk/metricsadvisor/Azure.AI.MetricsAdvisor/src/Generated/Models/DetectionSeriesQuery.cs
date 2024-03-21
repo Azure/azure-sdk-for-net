@@ -21,10 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<SeriesIdentity> series)
         {
-            if (series == null)
-            {
-                throw new ArgumentNullException(nameof(series));
-            }
+            Argument.AssertNotNull(series, nameof(series));
 
             StartTime = startTime;
             EndTime = endTime;

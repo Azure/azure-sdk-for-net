@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (OnError.HasValue)
+            if (Optional.IsDefined(OnError))
             {
                 writer.WritePropertyName("onError"u8);
                 writer.WriteStringValue(OnError.Value.ToString());
             }
-            if (RelativePriority.HasValue)
+            if (Optional.IsDefined(RelativePriority))
             {
                 writer.WritePropertyName("relativePriority"u8);
                 writer.WriteStringValue(RelativePriority.Value.ToString());

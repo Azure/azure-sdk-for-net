@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices
@@ -534,10 +532,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ResetPasswordAsync(WaitUntil waitUntil, LabVirtualMachineResetPasswordContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineResource.ResetPassword");
             scope.Start();
@@ -583,10 +578,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ResetPassword(WaitUntil waitUntil, LabVirtualMachineResetPasswordContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineResource.ResetPassword");
             scope.Start();

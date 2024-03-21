@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsDirectAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsDirectAccessEnabled.Value);

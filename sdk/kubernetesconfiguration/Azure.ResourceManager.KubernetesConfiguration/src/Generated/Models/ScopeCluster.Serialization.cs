@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (ReleaseNamespace != null)
+            if (Optional.IsDefined(ReleaseNamespace))
             {
                 writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);

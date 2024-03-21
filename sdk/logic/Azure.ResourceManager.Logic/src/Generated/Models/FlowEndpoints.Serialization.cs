@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(OutgoingIPAddresses is ChangeTrackingList<FlowEndpointIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutgoingIPAddresses))
             {
                 writer.WritePropertyName("outgoingIpAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AccessEndpointIPAddresses is ChangeTrackingList<FlowEndpointIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AccessEndpointIPAddresses))
             {
                 writer.WritePropertyName("accessEndpointIpAddresses"u8);
                 writer.WriteStartArray();

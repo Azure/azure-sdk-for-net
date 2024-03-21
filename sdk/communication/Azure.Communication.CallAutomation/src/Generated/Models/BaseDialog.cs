@@ -22,10 +22,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="context"/> is null. </exception>
         protected BaseDialog(IDictionary<string, object> context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
+            Argument.AssertNotNull(context, nameof(context));
 
             Context = context;
         }

@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.IotCentral;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral.Models

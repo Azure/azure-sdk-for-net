@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FailoverDirection != null)
+            if (Optional.IsDefined(FailoverDirection))
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);

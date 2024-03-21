@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Evacuate.HasValue)
+            if (Optional.IsDefined(Evacuate))
             {
                 writer.WritePropertyName("evacuate"u8);
                 writer.WriteStringValue(Evacuate.Value.ToString());

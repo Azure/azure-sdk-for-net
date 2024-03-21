@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -53,18 +52,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="namespace"/> or <paramref name="identity"/> is null. </exception>
         public ManagedClusterPodIdentity(string name, string @namespace, ContainerServiceUserAssignedIdentity identity)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (@namespace == null)
-            {
-                throw new ArgumentNullException(nameof(@namespace));
-            }
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(@namespace, nameof(@namespace));
+            Argument.AssertNotNull(identity, nameof(identity));
 
             Name = name;
             Namespace = @namespace;

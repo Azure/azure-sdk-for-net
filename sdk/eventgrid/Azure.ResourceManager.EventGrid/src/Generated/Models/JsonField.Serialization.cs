@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (SourceField != null)
+            if (Optional.IsDefined(SourceField))
             {
                 writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);

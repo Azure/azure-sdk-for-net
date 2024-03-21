@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorRouteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeName, FrontDoorRouteData data, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorRouteResource> CreateOrUpdate(WaitUntil waitUntil, string routeName, FrontDoorRouteData data, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorRouteResource>> GetAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<FrontDoorRouteResource> Get(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorRouteResource>> GetIfExistsAsync(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorRouteResource> GetIfExists(string routeName, CancellationToken cancellationToken = default)
         {
-            if (routeName == null)
-            {
-                throw new ArgumentNullException(nameof(routeName));
-            }
-            if (routeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeName));
-            }
+            Argument.AssertNotNullOrEmpty(routeName, nameof(routeName));
 
             using var scope = _frontDoorRouteClientDiagnostics.CreateScope("FrontDoorRouteCollection.GetIfExists");
             scope.Start();

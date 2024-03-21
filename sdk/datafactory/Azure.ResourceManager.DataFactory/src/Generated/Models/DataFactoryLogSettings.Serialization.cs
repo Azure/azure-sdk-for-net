@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (EnableCopyActivityLog != null)
+            if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
                 JsonSerializer.Serialize(writer, EnableCopyActivityLog);
             }
-            if (CopyActivityLogSettings != null)
+            if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);

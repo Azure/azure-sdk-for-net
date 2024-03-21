@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Phase.HasValue)
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Ready.HasValue)
+            if (Optional.IsDefined(Ready))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(Ready.Value);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

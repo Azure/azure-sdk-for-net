@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && AvailableHosts.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailableHosts))
             {
                 writer.WritePropertyName("availableHosts"u8);
                 writer.WriteNumberValue(AvailableHosts.Value);

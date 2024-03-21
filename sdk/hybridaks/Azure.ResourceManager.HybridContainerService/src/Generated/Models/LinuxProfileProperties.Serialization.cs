@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);

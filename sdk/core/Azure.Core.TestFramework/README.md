@@ -382,10 +382,10 @@ The key integration points between the Test Framework and the Test Proxy are:
  - InstrumentClientOptions method of `RecordedTestBase` - calling this on your client options will set the [ClientOptions.Transport property](https://learn.microsoft.com/dotnet/api/azure.core.clientoptions.transport?view=azure-dotnet) to be [ProxyTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/ProxyTransport.cs) to your client options when in `Playback` or `Record` mode. The ProxyTransport will send all requests to the Test Proxy.
  - [TestProxy.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestProxy.cs) - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in `Record` or `Playback` mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
 
-#### Including Test Proxy Logs
+#### Including Test Proxy Debug Logs
 
-In order to enable Test Proxy logging, you can either set the `AZURE_ENABLE_TEST_PROXY_LOGGING` 
-environment variable or the `EnableTestProxyLogging` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
+In order to enable Test Proxy debug logs, you can either set the `AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS`
+environment variable or the `EnableTestProxyDebugLogs` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 ## Unit tests
 

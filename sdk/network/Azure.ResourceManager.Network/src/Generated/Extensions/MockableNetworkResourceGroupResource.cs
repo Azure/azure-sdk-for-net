@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network.Mocking
@@ -3389,10 +3386,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            if (checkPrivateLinkServiceVisibilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(checkPrivateLinkServiceVisibilityRequest));
-            }
+            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService");
             scope.Start();
@@ -3435,10 +3429,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
         public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
         {
-            if (checkPrivateLinkServiceVisibilityRequest == null)
-            {
-                throw new ArgumentNullException(nameof(checkPrivateLinkServiceVisibilityRequest));
-            }
+            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
 
             using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkResourceGroupResource.CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService");
             scope.Start();

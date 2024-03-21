@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastSkuUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
             {
                 writer.WritePropertyName("lastSkuUpdate"u8);
                 writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && MinCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);

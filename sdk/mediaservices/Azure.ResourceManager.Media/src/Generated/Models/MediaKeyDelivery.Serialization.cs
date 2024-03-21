@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (AccessControl != null)
+            if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
                 writer.WriteObjectValue(AccessControl);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerGroupName != null)
+            if (Optional.IsDefined(ContainerGroupName))
             {
                 writer.WritePropertyName("containerGroupName"u8);
                 writer.WriteStringValue(ContainerGroupName);

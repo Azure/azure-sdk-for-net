@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Throughput.HasValue)
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);

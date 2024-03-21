@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="paramName"/> is null. </exception>
         public UriSigningParamIdentifier(ParamIndicator paramIndicator, string paramName)
         {
-            if (paramName == null)
-            {
-                throw new ArgumentNullException(nameof(paramName));
-            }
+            Argument.AssertNotNull(paramName, nameof(paramName));
 
             ParamIndicator = paramIndicator;
             ParamName = paramName;

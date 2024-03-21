@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageTargetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageTargetName, StorageTargetData data, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageTargetResource> CreateOrUpdate(WaitUntil waitUntil, string storageTargetName, StorageTargetData data, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
         public virtual async Task<Response<StorageTargetResource>> GetAsync(string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
         public virtual Response<StorageTargetResource> Get(string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageTargetResource>> GetIfExistsAsync(string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
         public virtual NullableResponse<StorageTargetResource> GetIfExists(string storageTargetName, CancellationToken cancellationToken = default)
         {
-            if (storageTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(storageTargetName));
-            }
-            if (storageTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(storageTargetName, nameof(storageTargetName));
 
             using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetCollection.GetIfExists");
             scope.Start();

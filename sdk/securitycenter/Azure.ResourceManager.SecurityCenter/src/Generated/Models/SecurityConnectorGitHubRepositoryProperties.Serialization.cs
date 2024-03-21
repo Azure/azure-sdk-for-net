@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RepoId != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (options.Format != "W" && RepoName != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoName))
             {
                 writer.WritePropertyName("repoName"u8);
                 writer.WriteStringValue(RepoName);
             }
-            if (options.Format != "W" && RepoFullName != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoFullName))
             {
                 writer.WritePropertyName("repoFullName"u8);
                 writer.WriteStringValue(RepoFullName);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (options.Format != "W" && RepoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (ParentOwnerName != null)
+            if (Optional.IsDefined(ParentOwnerName))
             {
                 writer.WritePropertyName("parentOwnerName"u8);
                 writer.WriteStringValue(ParentOwnerName);

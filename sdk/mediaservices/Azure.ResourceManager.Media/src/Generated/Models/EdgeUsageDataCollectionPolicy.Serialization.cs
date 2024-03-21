@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (DataCollectionFrequency != null)
+            if (Optional.IsDefined(DataCollectionFrequency))
             {
                 writer.WritePropertyName("dataCollectionFrequency"u8);
                 writer.WriteStringValue(DataCollectionFrequency);
             }
-            if (DataReportingFrequency != null)
+            if (Optional.IsDefined(DataReportingFrequency))
             {
                 writer.WritePropertyName("dataReportingFrequency"u8);
                 writer.WriteStringValue(DataReportingFrequency);
             }
-            if (MaxAllowedUnreportedUsageDuration.HasValue)
+            if (Optional.IsDefined(MaxAllowedUnreportedUsageDuration))
             {
                 writer.WritePropertyName("maxAllowedUnreportedUsageDuration"u8);
                 writer.WriteStringValue(MaxAllowedUnreportedUsageDuration.Value, "P");
             }
-            if (EventHubDetails != null)
+            if (Optional.IsDefined(EventHubDetails))
             {
                 writer.WritePropertyName("eventHubDetails"u8);
                 writer.WriteObjectValue(EventHubDetails);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (ImmutabilitySettings != null)
+            if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
             }
-            if (SoftDeleteSettings != null)
+            if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
                 writer.WriteObjectValue(SoftDeleteSettings);
             }
-            if (options.Format != "W" && MultiUserAuthorization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
             {
                 writer.WritePropertyName("multiUserAuthorization"u8);
                 writer.WriteStringValue(MultiUserAuthorization.Value.ToString());

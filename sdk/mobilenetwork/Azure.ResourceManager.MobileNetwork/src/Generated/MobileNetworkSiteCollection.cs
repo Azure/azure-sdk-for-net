@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkSiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteName, MobileNetworkSiteData data, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkSiteResource> CreateOrUpdate(WaitUntil waitUntil, string siteName, MobileNetworkSiteData data, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSiteResource>> GetAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<MobileNetworkSiteResource> Get(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual Response<bool> Exists(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkSiteResource>> GetIfExistsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkSiteResource> GetIfExists(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             using var scope = _mobileNetworkSiteSitesClientDiagnostics.CreateScope("MobileNetworkSiteCollection.GetIfExists");
             scope.Start();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotCentral
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<IotCentralPrivateLinkResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<IotCentralPrivateLinkResource> Get(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<NullableResponse<IotCentralPrivateLinkResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual NullableResponse<IotCentralPrivateLinkResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _iotCentralPrivateLinkResourcePrivateLinksClientDiagnostics.CreateScope("IotCentralPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

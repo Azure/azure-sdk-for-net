@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ClassificationPolicy : IUtf8JsonSerializable
+    public partial class ClassificationPolicy
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
         /// <param name="classificationPolicyId"> Id of a classification policy. </param>

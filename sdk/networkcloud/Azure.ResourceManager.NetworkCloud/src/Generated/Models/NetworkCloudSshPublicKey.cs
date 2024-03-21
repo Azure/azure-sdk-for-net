@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public NetworkCloudSshPublicKey(string keyData)
         {
-            if (keyData == null)
-            {
-                throw new ArgumentNullException(nameof(keyData));
-            }
+            Argument.AssertNotNull(keyData, nameof(keyData));
 
             KeyData = keyData;
         }

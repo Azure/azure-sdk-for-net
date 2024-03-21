@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedServerDnsAliasResource>> UpdateAsync(WaitUntil waitUntil, ManagedServerDnsAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ManagedServerDnsAliasResource> Update(WaitUntil waitUntil, ManagedServerDnsAliasCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasResource.Update");
             scope.Start();
@@ -380,10 +372,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedServerDnsAliasAcquisition"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedServerDnsAliasResource>> AcquireAsync(WaitUntil waitUntil, ManagedServerDnsAliasAcquisition managedServerDnsAliasAcquisition, CancellationToken cancellationToken = default)
         {
-            if (managedServerDnsAliasAcquisition == null)
-            {
-                throw new ArgumentNullException(nameof(managedServerDnsAliasAcquisition));
-            }
+            Argument.AssertNotNull(managedServerDnsAliasAcquisition, nameof(managedServerDnsAliasAcquisition));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasResource.Acquire");
             scope.Start();
@@ -429,10 +418,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="managedServerDnsAliasAcquisition"/> is null. </exception>
         public virtual ArmOperation<ManagedServerDnsAliasResource> Acquire(WaitUntil waitUntil, ManagedServerDnsAliasAcquisition managedServerDnsAliasAcquisition, CancellationToken cancellationToken = default)
         {
-            if (managedServerDnsAliasAcquisition == null)
-            {
-                throw new ArgumentNullException(nameof(managedServerDnsAliasAcquisition));
-            }
+            Argument.AssertNotNull(managedServerDnsAliasAcquisition, nameof(managedServerDnsAliasAcquisition));
 
             using var scope = _managedServerDnsAliasClientDiagnostics.CreateScope("ManagedServerDnsAliasResource.Acquire");
             scope.Start();

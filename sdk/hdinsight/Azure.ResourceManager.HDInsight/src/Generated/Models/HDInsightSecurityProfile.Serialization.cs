@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (DirectoryType.HasValue)
+            if (Optional.IsDefined(DirectoryType))
             {
                 writer.WritePropertyName("directoryType"u8);
                 writer.WriteStringValue(DirectoryType.Value.ToString());
             }
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (OrganizationalUnitDN != null)
+            if (Optional.IsDefined(OrganizationalUnitDN))
             {
                 writer.WritePropertyName("organizationalUnitDN"u8);
                 writer.WriteStringValue(OrganizationalUnitDN);
             }
-            if (!(LdapUris is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LdapUris))
             {
                 writer.WritePropertyName("ldapsUrls"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DomainUsername != null)
+            if (Optional.IsDefined(DomainUsername))
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (DomainUserPassword != null)
+            if (Optional.IsDefined(DomainUserPassword))
             {
                 writer.WritePropertyName("domainUserPassword"u8);
                 writer.WriteStringValue(DomainUserPassword);
             }
-            if (!(ClusterUsersGroupDNs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterUsersGroupDNs))
             {
                 writer.WritePropertyName("clusterUsersGroupDNs"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AaddsResourceId != null)
+            if (Optional.IsDefined(AaddsResourceId))
             {
                 writer.WritePropertyName("aaddsResourceId"u8);
                 writer.WriteStringValue(AaddsResourceId);
             }
-            if (MsiResourceId != null)
+            if (Optional.IsDefined(MsiResourceId))
             {
                 writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);

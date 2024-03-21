@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (BlobContainer != null)
+            if (Optional.IsDefined(BlobContainer))
             {
                 writer.WritePropertyName("blobContainer"u8);
                 writer.WriteStringValue(BlobContainer);
             }
-            if (ArchiveNameFormat != null)
+            if (Optional.IsDefined(ArchiveNameFormat))
             {
                 writer.WritePropertyName("archiveNameFormat"u8);
                 writer.WriteStringValue(ArchiveNameFormat);
             }
-            if (DataLakeSubscriptionId.HasValue)
+            if (Optional.IsDefined(DataLakeSubscriptionId))
             {
                 writer.WritePropertyName("dataLakeSubscriptionId"u8);
                 writer.WriteStringValue(DataLakeSubscriptionId.Value);
             }
-            if (DataLakeAccountName != null)
+            if (Optional.IsDefined(DataLakeAccountName))
             {
                 writer.WritePropertyName("dataLakeAccountName"u8);
                 writer.WriteStringValue(DataLakeAccountName);
             }
-            if (DataLakeFolderPath != null)
+            if (Optional.IsDefined(DataLakeFolderPath))
             {
                 writer.WritePropertyName("dataLakeFolderPath"u8);
                 writer.WriteStringValue(DataLakeFolderPath);

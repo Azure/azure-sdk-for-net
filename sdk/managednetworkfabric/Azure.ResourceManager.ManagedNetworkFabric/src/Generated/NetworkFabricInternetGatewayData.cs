@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerId"/> is null. </exception>
         public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : base(location)
         {
-            if (networkFabricControllerId == null)
-            {
-                throw new ArgumentNullException(nameof(networkFabricControllerId));
-            }
+            Argument.AssertNotNull(networkFabricControllerId, nameof(networkFabricControllerId));
 
             TypePropertiesType = typePropertiesType;
             NetworkFabricControllerId = networkFabricControllerId;

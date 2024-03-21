@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

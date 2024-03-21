@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -280,10 +278,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseWorkspaceAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseWorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics.CreateScope("SynapseWorkspaceAdministratorResource.CreateOrUpdate");
             scope.Start();
@@ -329,10 +324,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<SynapseWorkspaceAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, SynapseWorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _synapseWorkspaceAdministratorResourceWorkspaceAadAdminsClientDiagnostics.CreateScope("SynapseWorkspaceAdministratorResource.CreateOrUpdate");
             scope.Start();

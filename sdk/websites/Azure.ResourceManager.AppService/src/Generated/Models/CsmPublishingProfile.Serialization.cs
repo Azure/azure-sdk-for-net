@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (IsIncludeDisasterRecoveryEndpoints.HasValue)
+            if (Optional.IsDefined(IsIncludeDisasterRecoveryEndpoints))
             {
                 writer.WritePropertyName("includeDisasterRecoveryEndpoints"u8);
                 writer.WriteBooleanValue(IsIncludeDisasterRecoveryEndpoints.Value);

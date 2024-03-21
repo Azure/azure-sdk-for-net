@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary>
     /// Base class for MongoDB migration outputs
     /// Please note <see cref="MongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MongoDBDatabaseProgress"/>, <see cref="MongoDBMigrationProgress"/> and <see cref="MongoDBCollectionProgress"/>.
+    /// The available derived classes include <see cref="MongoDBCollectionProgress"/>, <see cref="MongoDBDatabaseProgress"/> and <see cref="MongoDBMigrationProgress"/>.
     /// </summary>
     public abstract partial class MongoDBProgress
     {
@@ -62,14 +62,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
         protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments)
         {
-            if (elapsedTime == null)
-            {
-                throw new ArgumentNullException(nameof(elapsedTime));
-            }
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
+            Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
+            Argument.AssertNotNull(errors, nameof(errors));
 
             BytesCopied = bytesCopied;
             DocumentsCopied = documentsCopied;

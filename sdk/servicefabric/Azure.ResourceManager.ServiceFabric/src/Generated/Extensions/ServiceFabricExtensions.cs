@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabric.Mocking;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> Returns a <see cref="ServiceFabricClusterResource"/> object. </returns>
         public static ServiceFabricClusterResource GetServiceFabricClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricArmClient(client).GetServiceFabricClusterResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> Returns a <see cref="ServiceFabricVmSizeResource"/> object. </returns>
         public static ServiceFabricVmSizeResource GetServiceFabricVmSizeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricArmClient(client).GetServiceFabricVmSizeResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> Returns a <see cref="ServiceFabricApplicationTypeResource"/> object. </returns>
         public static ServiceFabricApplicationTypeResource GetServiceFabricApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricArmClient(client).GetServiceFabricApplicationTypeResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> Returns a <see cref="ServiceFabricApplicationTypeVersionResource"/> object. </returns>
         public static ServiceFabricApplicationTypeVersionResource GetServiceFabricApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricArmClient(client).GetServiceFabricApplicationTypeVersionResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> Returns a <see cref="ServiceFabricApplicationResource"/> object. </returns>
         public static ServiceFabricApplicationResource GetServiceFabricApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricArmClient(client).GetServiceFabricApplicationResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> Returns a <see cref="ServiceFabricServiceResource"/> object. </returns>
         public static ServiceFabricServiceResource GetServiceFabricServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricArmClient(client).GetServiceFabricServiceResource(id);
         }
@@ -179,10 +159,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An object representing collection of ServiceFabricClusterResources and their operations over a ServiceFabricClusterResource. </returns>
         public static ServiceFabricClusterCollection GetServiceFabricClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetServiceFabricClusters();
         }
@@ -220,10 +197,7 @@ namespace Azure.ResourceManager.ServiceFabric
         [ForwardsClientCalls]
         public static async Task<Response<ServiceFabricClusterResource>> GetServiceFabricClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetServiceFabricClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -261,10 +235,7 @@ namespace Azure.ResourceManager.ServiceFabric
         [ForwardsClientCalls]
         public static Response<ServiceFabricClusterResource> GetServiceFabricCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableServiceFabricResourceGroupResource(resourceGroupResource).GetServiceFabricCluster(clusterName, cancellationToken);
         }
@@ -282,10 +253,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An object representing collection of ServiceFabricVmSizeResources and their operations over a ServiceFabricVmSizeResource. </returns>
         public static ServiceFabricVmSizeResourceCollection GetServiceFabricVmSizeResources(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricVmSizeResources(location);
         }
@@ -324,10 +292,7 @@ namespace Azure.ResourceManager.ServiceFabric
         [ForwardsClientCalls]
         public static async Task<Response<ServiceFabricVmSizeResource>> GetServiceFabricVmSizeResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricVmSizeResourceAsync(location, vmSize, cancellationToken).ConfigureAwait(false);
         }
@@ -366,10 +331,7 @@ namespace Azure.ResourceManager.ServiceFabric
         [ForwardsClientCalls]
         public static Response<ServiceFabricVmSizeResource> GetServiceFabricVmSizeResource(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricVmSizeResource(location, vmSize, cancellationToken);
         }
@@ -405,10 +367,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricClustersAsync(cancellationToken);
         }
@@ -444,10 +403,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetServiceFabricClusters(cancellationToken);
         }
@@ -482,10 +438,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsAsync(location, clusterVersion, cancellationToken);
         }
@@ -520,10 +473,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterCodeVersionsResult> GetClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersions(location, clusterVersion, cancellationToken);
         }
@@ -559,10 +509,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, clusterVersion, cancellationToken);
         }
@@ -598,10 +545,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, clusterVersion, cancellationToken);
         }
@@ -634,10 +578,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsAsync(location, cancellationToken);
         }
@@ -670,10 +611,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterCodeVersionsResult> GetClusterVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersions(location, cancellationToken);
         }
@@ -707,10 +645,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironmentAsync(location, environment, cancellationToken);
         }
@@ -744,10 +679,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(this SubscriptionResource subscriptionResource, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableServiceFabricSubscriptionResource(subscriptionResource).GetClusterVersionsByEnvironment(location, environment, cancellationToken);
         }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -145,18 +133,8 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsForwardingRulesetVirtualNetworkLinkResource> CreateOrUpdate(WaitUntil waitUntil, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +180,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual async Task<Response<DnsForwardingRulesetVirtualNetworkLinkResource>> GetAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual Response<DnsForwardingRulesetVirtualNetworkLinkResource> Get(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.Get");
             scope.Start();
@@ -368,14 +332,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual async Task<NullableResponse<DnsForwardingRulesetVirtualNetworkLinkResource>> GetIfExistsAsync(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetIfExists");
             scope.Start();
@@ -520,14 +463,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkLinkName"/> is null. </exception>
         public virtual NullableResponse<DnsForwardingRulesetVirtualNetworkLinkResource> GetIfExists(string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
-            if (virtualNetworkLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualNetworkLinkName));
-            }
-            if (virtualNetworkLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualNetworkLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
             using var scope = _dnsForwardingRulesetVirtualNetworkLinkVirtualNetworkLinksClientDiagnostics.CreateScope("DnsForwardingRulesetVirtualNetworkLinkCollection.GetIfExists");
             scope.Start();

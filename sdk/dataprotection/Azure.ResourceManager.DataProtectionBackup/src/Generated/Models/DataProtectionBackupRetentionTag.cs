@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public DataProtectionBackupRetentionTag(string tagName)
         {
-            if (tagName == null)
-            {
-                throw new ArgumentNullException(nameof(tagName));
-            }
+            Argument.AssertNotNull(tagName, nameof(tagName));
 
             TagName = tagName;
         }

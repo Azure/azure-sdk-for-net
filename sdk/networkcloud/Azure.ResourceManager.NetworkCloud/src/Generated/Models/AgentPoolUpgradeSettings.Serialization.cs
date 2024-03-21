@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (MaxSurge != null)
+            if (Optional.IsDefined(MaxSurge))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);

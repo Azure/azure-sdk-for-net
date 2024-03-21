@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             JsonSerializer.Serialize(writer, DatasetCompressionType);
-            if (Level != null)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 JsonSerializer.Serialize(writer, Level);

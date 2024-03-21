@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AutoDiscovery.HasValue)
+            if (Optional.IsDefined(AutoDiscovery))
             {
                 writer.WritePropertyName("autoDiscovery"u8);
                 writer.WriteStringValue(AutoDiscovery.Value.ToString());
             }
-            if (!(Repos is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Repos))
             {
                 writer.WritePropertyName("repos"u8);
                 writer.WriteStartArray();

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryTriggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string triggerName, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryTriggerResource> CreateOrUpdate(WaitUntil waitUntil, string triggerName, DataFactoryTriggerData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +179,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryTriggerResource>> GetAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<DataFactoryTriggerResource> Get(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<bool> Exists(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.Exists");
             scope.Start();
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryTriggerResource>> GetIfExistsAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.GetIfExists");
             scope.Start();
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryTriggerResource> GetIfExists(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _dataFactoryTriggerTriggersClientDiagnostics.CreateScope("DataFactoryTriggerCollection.GetIfExists");
             scope.Start();

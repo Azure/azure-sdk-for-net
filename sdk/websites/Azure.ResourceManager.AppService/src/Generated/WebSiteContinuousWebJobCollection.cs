@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual async Task<Response<WebSiteContinuousWebJobResource>> GetAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
-            if (webJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<WebSiteContinuousWebJobResource> Get(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
-            if (webJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
-            if (webJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual Response<bool> Exists(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
-            if (webJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteContinuousWebJobResource>> GetIfExistsAsync(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
-            if (webJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="webJobName"/> is null. </exception>
         public virtual NullableResponse<WebSiteContinuousWebJobResource> GetIfExists(string webJobName, CancellationToken cancellationToken = default)
         {
-            if (webJobName == null)
-            {
-                throw new ArgumentNullException(nameof(webJobName));
-            }
-            if (webJobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webJobName));
-            }
+            Argument.AssertNotNullOrEmpty(webJobName, nameof(webJobName));
 
             using var scope = _webSiteContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteContinuousWebJobCollection.GetIfExists");
             scope.Start();

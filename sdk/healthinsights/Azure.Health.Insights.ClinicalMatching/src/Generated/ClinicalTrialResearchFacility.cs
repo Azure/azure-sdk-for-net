@@ -51,14 +51,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="countryOrRegion"/> is null. </exception>
         public ClinicalTrialResearchFacility(string name, string countryOrRegion)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (countryOrRegion == null)
-            {
-                throw new ArgumentNullException(nameof(countryOrRegion));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(countryOrRegion, nameof(countryOrRegion));
 
             Name = name;
             CountryOrRegion = countryOrRegion;

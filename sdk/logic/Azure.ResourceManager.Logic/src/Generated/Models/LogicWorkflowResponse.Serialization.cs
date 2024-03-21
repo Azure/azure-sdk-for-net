@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Headers != null)
+            if (Optional.IsDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
-            if (BodyLink != null)
+            if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
                 writer.WriteObjectValue(BodyLink);

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.Health.Insights.CancerProfiling
 {

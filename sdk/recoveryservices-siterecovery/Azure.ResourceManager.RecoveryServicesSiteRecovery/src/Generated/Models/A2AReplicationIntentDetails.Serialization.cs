@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (PrimaryLocation.HasValue)
+            if (Optional.IsDefined(PrimaryLocation))
             {
                 writer.WritePropertyName("primaryLocation"u8);
                 writer.WriteStringValue(PrimaryLocation.Value);
             }
-            if (RecoveryLocation.HasValue)
+            if (Optional.IsDefined(RecoveryLocation))
             {
                 writer.WritePropertyName("recoveryLocation"u8);
                 writer.WriteStringValue(RecoveryLocation.Value);
             }
-            if (RecoverySubscriptionId != null)
+            if (Optional.IsDefined(RecoverySubscriptionId))
             {
                 writer.WritePropertyName("recoverySubscriptionId"u8);
                 writer.WriteStringValue(RecoverySubscriptionId);
             }
-            if (!(VmDisks is ChangeTrackingList<A2AProtectionIntentDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmManagedDisks is ChangeTrackingList<A2AProtectionIntentManagedDiskDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmManagedDisks))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
@@ -66,79 +66,79 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (ProtectionProfile != null)
+            if (Optional.IsDefined(ProtectionProfile))
             {
                 writer.WritePropertyName("protectionProfile"u8);
                 writer.WriteObjectValue(ProtectionProfile);
             }
-            if (PrimaryStagingStorageAccount != null)
+            if (Optional.IsDefined(PrimaryStagingStorageAccount))
             {
                 writer.WritePropertyName("primaryStagingStorageAccount"u8);
                 writer.WriteObjectValue(PrimaryStagingStorageAccount);
             }
-            if (RecoveryAvailabilitySet != null)
+            if (Optional.IsDefined(RecoveryAvailabilitySet))
             {
                 writer.WritePropertyName("recoveryAvailabilitySet"u8);
                 writer.WriteObjectValue(RecoveryAvailabilitySet);
             }
-            if (RecoveryVirtualNetwork != null)
+            if (Optional.IsDefined(RecoveryVirtualNetwork))
             {
                 writer.WritePropertyName("recoveryVirtualNetwork"u8);
                 writer.WriteObjectValue(RecoveryVirtualNetwork);
             }
-            if (RecoveryProximityPlacementGroup != null)
+            if (Optional.IsDefined(RecoveryProximityPlacementGroup))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroup"u8);
                 writer.WriteObjectValue(RecoveryProximityPlacementGroup);
             }
-            if (AutoProtectionOfDataDisk.HasValue)
+            if (Optional.IsDefined(AutoProtectionOfDataDisk))
             {
                 writer.WritePropertyName("autoProtectionOfDataDisk"u8);
                 writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
             }
-            if (MultiVmGroupName != null)
+            if (Optional.IsDefined(MultiVmGroupName))
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            if (MultiVmGroupId != null)
+            if (Optional.IsDefined(MultiVmGroupId))
             {
                 writer.WritePropertyName("multiVmGroupId"u8);
                 writer.WriteStringValue(MultiVmGroupId);
             }
-            if (RecoveryBootDiagStorageAccount != null)
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccount))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccount"u8);
                 writer.WriteObjectValue(RecoveryBootDiagStorageAccount);
             }
-            if (DiskEncryptionInfo != null)
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
-            if (RecoveryAvailabilityZone != null)
+            if (Optional.IsDefined(RecoveryAvailabilityZone))
             {
                 writer.WritePropertyName("recoveryAvailabilityZone"u8);
                 writer.WriteStringValue(RecoveryAvailabilityZone);
             }
             writer.WritePropertyName("recoveryAvailabilityType"u8);
             writer.WriteStringValue(RecoveryAvailabilityType);
-            if (AgentAutoUpdateStatus.HasValue)
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
                 writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
             }
-            if (AutomationAccountArmId != null)
+            if (Optional.IsDefined(AutomationAccountArmId))
             {
                 writer.WritePropertyName("automationAccountArmId"u8);
                 writer.WriteStringValue(AutomationAccountArmId);
             }
-            if (AutomationAccountAuthenticationType.HasValue)
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
                 writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());

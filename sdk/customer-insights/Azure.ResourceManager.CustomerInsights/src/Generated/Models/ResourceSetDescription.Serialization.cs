@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (!(Elements is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Elements))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Exceptions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Exceptions))
             {
                 writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();

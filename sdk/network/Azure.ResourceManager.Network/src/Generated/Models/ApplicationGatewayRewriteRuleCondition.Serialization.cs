@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Variable != null)
+            if (Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (IgnoreCase.HasValue)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Negate.HasValue)
+            if (Optional.IsDefined(Negate))
             {
                 writer.WritePropertyName("negate"u8);
                 writer.WriteBooleanValue(Negate.Value);

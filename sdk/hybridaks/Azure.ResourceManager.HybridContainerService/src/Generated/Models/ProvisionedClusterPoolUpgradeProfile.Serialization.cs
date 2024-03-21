@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (!(Upgrades is ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();

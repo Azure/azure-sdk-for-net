@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -29,32 +28,32 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,27 +66,27 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Subnet != null)
+            if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (options.Format != "W" && VirtualNetwork != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (IPAllocationType.HasValue)
+            if (Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (PrefixLength.HasValue)
+            if (Optional.IsDefined(PrefixLength))
             {
                 if (PrefixLength != null)
                 {
@@ -99,17 +98,17 @@ namespace Azure.ResourceManager.Network
                     writer.WriteNull("prefixLength");
                 }
             }
-            if (PrefixType.HasValue)
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (IpamAllocationId != null)
+            if (Optional.IsDefined(IpamAllocationId))
             {
                 writer.WritePropertyName("ipamAllocationId"u8);
                 writer.WriteStringValue(IpamAllocationId);
             }
-            if (!(AllocationTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllocationTags))
             {
                 writer.WritePropertyName("allocationTags"u8);
                 writer.WriteStartObject();

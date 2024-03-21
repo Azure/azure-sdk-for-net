@@ -26,26 +26,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/>, <paramref name="endpoint"/>, <paramref name="image"/> or <paramref name="dataTransfer"/> is null. </exception>
         public GrpcExtension(string name, IEnumerable<NodeInput> inputs, EndpointBase endpoint, ImageProperties image, GrpcExtensionDataTransfer dataTransfer) : base(name, inputs, endpoint, image)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
-            if (dataTransfer == null)
-            {
-                throw new ArgumentNullException(nameof(dataTransfer));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(image, nameof(image));
+            Argument.AssertNotNull(dataTransfer, nameof(dataTransfer));
 
             DataTransfer = dataTransfer;
             Type = "#Microsoft.VideoAnalyzer.GrpcExtension";

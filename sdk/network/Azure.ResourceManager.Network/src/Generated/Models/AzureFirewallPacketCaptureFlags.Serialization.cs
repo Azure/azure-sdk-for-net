@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (FlagsType.HasValue)
+            if (Optional.IsDefined(FlagsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FlagsType.Value.ToString());

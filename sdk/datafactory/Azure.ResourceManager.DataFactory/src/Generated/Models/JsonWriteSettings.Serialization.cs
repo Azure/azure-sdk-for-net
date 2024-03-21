@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (FilePattern != null)
+            if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
                 JsonSerializer.Serialize(writer, FilePattern);

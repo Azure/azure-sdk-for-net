@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConsistencyPolicy != null)
+            if (Optional.IsDefined(ConsistencyPolicy))
             {
                 writer.WritePropertyName("consistencyPolicy"u8);
                 writer.WriteObjectValue(ConsistencyPolicy);
             }
-            if (!(Locations is ChangeTrackingList<CosmosDBAccountLocation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPRules is ChangeTrackingList<CosmosDBIPAddressOrRange> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsVirtualNetworkFilterEnabled.HasValue)
+            if (Optional.IsDefined(IsVirtualNetworkFilterEnabled))
             {
                 writer.WritePropertyName("isVirtualNetworkFilterEnabled"u8);
                 writer.WriteBooleanValue(IsVirtualNetworkFilterEnabled.Value);
             }
-            if (EnableAutomaticFailover.HasValue)
+            if (Optional.IsDefined(EnableAutomaticFailover))
             {
                 writer.WritePropertyName("enableAutomaticFailover"u8);
                 writer.WriteBooleanValue(EnableAutomaticFailover.Value);
             }
-            if (!(Capabilities is ChangeTrackingList<CosmosDBAccountCapability> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<CosmosDBVirtualNetworkRule> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -106,67 +106,67 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EnableMultipleWriteLocations.HasValue)
+            if (Optional.IsDefined(EnableMultipleWriteLocations))
             {
                 writer.WritePropertyName("enableMultipleWriteLocations"u8);
                 writer.WriteBooleanValue(EnableMultipleWriteLocations.Value);
             }
-            if (EnableCassandraConnector.HasValue)
+            if (Optional.IsDefined(EnableCassandraConnector))
             {
                 writer.WritePropertyName("enableCassandraConnector"u8);
                 writer.WriteBooleanValue(EnableCassandraConnector.Value);
             }
-            if (ConnectorOffer.HasValue)
+            if (Optional.IsDefined(ConnectorOffer))
             {
                 writer.WritePropertyName("connectorOffer"u8);
                 writer.WriteStringValue(ConnectorOffer.Value.ToString());
             }
-            if (DisableKeyBasedMetadataWriteAccess.HasValue)
+            if (Optional.IsDefined(DisableKeyBasedMetadataWriteAccess))
             {
                 writer.WritePropertyName("disableKeyBasedMetadataWriteAccess"u8);
                 writer.WriteBooleanValue(DisableKeyBasedMetadataWriteAccess.Value);
             }
-            if (KeyVaultKeyUri != null)
+            if (Optional.IsDefined(KeyVaultKeyUri))
             {
                 writer.WritePropertyName("keyVaultKeyUri"u8);
                 writer.WriteStringValue(KeyVaultKeyUri.AbsoluteUri);
             }
-            if (DefaultIdentity != null)
+            if (Optional.IsDefined(DefaultIdentity))
             {
                 writer.WritePropertyName("defaultIdentity"u8);
                 writer.WriteStringValue(DefaultIdentity);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (IsFreeTierEnabled.HasValue)
+            if (Optional.IsDefined(IsFreeTierEnabled))
             {
                 writer.WritePropertyName("enableFreeTier"u8);
                 writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
-            if (ApiProperties != null)
+            if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties);
             }
-            if (IsAnalyticalStorageEnabled.HasValue)
+            if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
                 writer.WritePropertyName("enableAnalyticalStorage"u8);
                 writer.WriteBooleanValue(IsAnalyticalStorageEnabled.Value);
             }
-            if (AnalyticalStorageConfiguration != null)
+            if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
                 writer.WriteObjectValue(AnalyticalStorageConfiguration);
             }
-            if (BackupPolicy != null)
+            if (Optional.IsDefined(BackupPolicy))
             {
                 writer.WritePropertyName("backupPolicy"u8);
                 writer.WriteObjectValue(BackupPolicy);
             }
-            if (!(Cors is ChangeTrackingList<CosmosDBAccountCorsPolicy> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteStartArray();
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NetworkAclBypass.HasValue)
+            if (Optional.IsDefined(NetworkAclBypass))
             {
                 writer.WritePropertyName("networkAclBypass"u8);
                 writer.WriteStringValue(NetworkAclBypass.Value.ToSerialString());
             }
-            if (!(NetworkAclBypassResourceIds is ChangeTrackingList<ResourceIdentifier> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkAclBypassResourceIds))
             {
                 writer.WritePropertyName("networkAclBypassResourceIds"u8);
                 writer.WriteStartArray();
@@ -196,57 +196,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DiagnosticLogSettings != null)
+            if (Optional.IsDefined(DiagnosticLogSettings))
             {
                 writer.WritePropertyName("diagnosticLogSettings"u8);
                 writer.WriteObjectValue(DiagnosticLogSettings);
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (EnableMaterializedViews.HasValue)
+            if (Optional.IsDefined(EnableMaterializedViews))
             {
                 writer.WritePropertyName("enableMaterializedViews"u8);
                 writer.WriteBooleanValue(EnableMaterializedViews.Value);
             }
-            if (options.Format != "W" && KeysMetadata != null)
+            if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
                 writer.WritePropertyName("keysMetadata"u8);
                 writer.WriteObjectValue(KeysMetadata);
             }
-            if (EnablePartitionMerge.HasValue)
+            if (Optional.IsDefined(EnablePartitionMerge))
             {
                 writer.WritePropertyName("enablePartitionMerge"u8);
                 writer.WriteBooleanValue(EnablePartitionMerge.Value);
             }
-            if (EnableBurstCapacity.HasValue)
+            if (Optional.IsDefined(EnableBurstCapacity))
             {
                 writer.WritePropertyName("enableBurstCapacity"u8);
                 writer.WriteBooleanValue(EnableBurstCapacity.Value);
             }
-            if (MinimalTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (CustomerManagedKeyStatus.HasValue)
+            if (Optional.IsDefined(CustomerManagedKeyStatus))
             {
                 writer.WritePropertyName("customerManagedKeyStatus"u8);
                 writer.WriteStringValue(CustomerManagedKeyStatus.Value.ToString());
             }
-            if (EnablePriorityBasedExecution.HasValue)
+            if (Optional.IsDefined(EnablePriorityBasedExecution))
             {
                 writer.WritePropertyName("enablePriorityBasedExecution"u8);
                 writer.WriteBooleanValue(EnablePriorityBasedExecution.Value);
             }
-            if (DefaultPriorityLevel.HasValue)
+            if (Optional.IsDefined(DefaultPriorityLevel))
             {
                 writer.WritePropertyName("defaultPriorityLevel"u8);
                 writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());

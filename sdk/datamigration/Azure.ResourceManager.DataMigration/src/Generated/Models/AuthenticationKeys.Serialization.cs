@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (AuthKey1 != null)
+            if (Optional.IsDefined(AuthKey1))
             {
                 writer.WritePropertyName("authKey1"u8);
                 writer.WriteStringValue(AuthKey1);
             }
-            if (AuthKey2 != null)
+            if (Optional.IsDefined(AuthKey2))
             {
                 writer.WritePropertyName("authKey2"u8);
                 writer.WriteStringValue(AuthKey2);

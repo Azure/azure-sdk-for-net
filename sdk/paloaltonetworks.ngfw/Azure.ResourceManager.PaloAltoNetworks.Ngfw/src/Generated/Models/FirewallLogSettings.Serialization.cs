@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (LogType.HasValue)
+            if (Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("logType"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (LogOption.HasValue)
+            if (Optional.IsDefined(LogOption))
             {
                 writer.WritePropertyName("logOption"u8);
                 writer.WriteStringValue(LogOption.Value.ToString());
             }
-            if (ApplicationInsights != null)
+            if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteObjectValue(ApplicationInsights);
             }
-            if (CommonDestination != null)
+            if (Optional.IsDefined(CommonDestination))
             {
                 writer.WritePropertyName("commonDestination"u8);
                 writer.WriteObjectValue(CommonDestination);
             }
-            if (TrafficLogDestination != null)
+            if (Optional.IsDefined(TrafficLogDestination))
             {
                 writer.WritePropertyName("trafficLogDestination"u8);
                 writer.WriteObjectValue(TrafficLogDestination);
             }
-            if (ThreatLogDestination != null)
+            if (Optional.IsDefined(ThreatLogDestination))
             {
                 writer.WritePropertyName("threatLogDestination"u8);
                 writer.WriteObjectValue(ThreatLogDestination);
             }
-            if (DecryptLogDestination != null)
+            if (Optional.IsDefined(DecryptLogDestination))
             {
                 writer.WritePropertyName("decryptLogDestination"u8);
                 writer.WriteObjectValue(DecryptLogDestination);

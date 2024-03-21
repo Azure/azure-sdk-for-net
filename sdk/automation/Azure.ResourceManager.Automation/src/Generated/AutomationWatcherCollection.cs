@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationWatcherResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string watcherName, AutomationWatcherData data, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutomationWatcherResource> CreateOrUpdate(WaitUntil waitUntil, string watcherName, AutomationWatcherData data, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         public virtual async Task<Response<AutomationWatcherResource>> GetAsync(string watcherName, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         public virtual Response<AutomationWatcherResource> Get(string watcherName, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string watcherName, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         public virtual Response<bool> Exists(string watcherName, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationWatcherResource>> GetIfExistsAsync(string watcherName, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
         public virtual NullableResponse<AutomationWatcherResource> GetIfExists(string watcherName, CancellationToken cancellationToken = default)
         {
-            if (watcherName == null)
-            {
-                throw new ArgumentNullException(nameof(watcherName));
-            }
-            if (watcherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watcherName));
-            }
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
 
             using var scope = _automationWatcherWatcherClientDiagnostics.CreateScope("AutomationWatcherCollection.GetIfExists");
             scope.Start();

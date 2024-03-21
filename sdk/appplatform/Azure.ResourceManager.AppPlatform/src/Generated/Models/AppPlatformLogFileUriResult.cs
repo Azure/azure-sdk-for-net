@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         internal AppPlatformLogFileUriResult(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }

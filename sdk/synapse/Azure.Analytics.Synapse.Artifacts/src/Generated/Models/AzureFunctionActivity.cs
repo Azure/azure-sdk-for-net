@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, object functionName) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(functionName, nameof(functionName));
 
             Method = method;
             FunctionName = functionName;

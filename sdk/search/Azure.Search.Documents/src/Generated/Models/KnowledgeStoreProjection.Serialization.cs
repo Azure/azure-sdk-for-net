@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Tables is ChangeTrackingList<KnowledgeStoreTableProjectionSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Objects is ChangeTrackingList<KnowledgeStoreObjectProjectionSelector> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Objects))
             {
                 writer.WritePropertyName("objects"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Files is ChangeTrackingList<KnowledgeStoreFileProjectionSelector> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();

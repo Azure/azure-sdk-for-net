@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -52,14 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="script"/> is null. </exception>
         public GalleryApplicationCustomAction(string name, string script)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (script == null)
-            {
-                throw new ArgumentNullException(nameof(script));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(script, nameof(script));
 
             Name = name;
             Script = script;

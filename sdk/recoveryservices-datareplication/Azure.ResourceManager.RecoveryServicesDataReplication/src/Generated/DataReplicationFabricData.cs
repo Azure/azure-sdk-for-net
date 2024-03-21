@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataReplicationFabricData(AzureLocation location, DataReplicationFabricProperties properties) : base(location)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element, options);
                     case "ManagedIdentity": return DataFactoryManagedIdentityCredentialProperties.DeserializeDataFactoryManagedIdentityCredentialProperties(element, options);
+                    case "ServicePrincipal": return ServicePrincipalCredential.DeserializeServicePrincipalCredential(element, options);
                 }
             }
             return UnknownCredential.DeserializeUnknownCredential(element, options);

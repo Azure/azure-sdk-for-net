@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (MemoryMB.HasValue)
+            if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (CpuCount.HasValue)
+            if (Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (LimitCpuForMigration.HasValue)
+            if (Optional.IsDefined(LimitCpuForMigration))
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
-            if (DynamicMemoryEnabled.HasValue)
+            if (Optional.IsDefined(DynamicMemoryEnabled))
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
-            if (DynamicMemoryMaxMB.HasValue)
+            if (Optional.IsDefined(DynamicMemoryMaxMB))
             {
                 writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
-            if (DynamicMemoryMinMB.HasValue)
+            if (Optional.IsDefined(DynamicMemoryMinMB))
             {
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);

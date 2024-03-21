@@ -19,12 +19,12 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (!(Layers is ChangeTrackingList<OciDescriptor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {

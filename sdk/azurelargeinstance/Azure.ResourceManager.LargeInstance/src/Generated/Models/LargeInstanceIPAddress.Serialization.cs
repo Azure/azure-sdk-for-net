@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);

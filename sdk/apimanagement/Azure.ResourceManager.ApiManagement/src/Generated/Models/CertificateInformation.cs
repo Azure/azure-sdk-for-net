@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> or <paramref name="subject"/> is null. </exception>
         public CertificateInformation(DateTimeOffset expireOn, string thumbprint, string subject)
         {
-            if (thumbprint == null)
-            {
-                throw new ArgumentNullException(nameof(thumbprint));
-            }
-            if (subject == null)
-            {
-                throw new ArgumentNullException(nameof(subject));
-            }
+            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+            Argument.AssertNotNull(subject, nameof(subject));
 
             ExpireOn = expireOn;
             Thumbprint = thumbprint;

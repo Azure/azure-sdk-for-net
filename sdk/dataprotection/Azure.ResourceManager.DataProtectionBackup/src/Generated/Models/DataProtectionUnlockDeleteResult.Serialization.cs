@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UnlockDeleteExpiryTime != null)
+            if (Optional.IsDefined(UnlockDeleteExpiryTime))
             {
                 writer.WritePropertyName("unlockDeleteExpiryTime"u8);
                 writer.WriteStringValue(UnlockDeleteExpiryTime);

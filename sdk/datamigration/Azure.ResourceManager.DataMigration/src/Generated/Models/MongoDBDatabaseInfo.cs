@@ -25,18 +25,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="qualifiedName"/> or <paramref name="collections"/> is null. </exception>
         internal MongoDBDatabaseInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IEnumerable<MongoDBCollectionInfo> collections, bool supportsSharding) : base(averageDocumentSize, dataSize, documentCount, name, qualifiedName)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (qualifiedName == null)
-            {
-                throw new ArgumentNullException(nameof(qualifiedName));
-            }
-            if (collections == null)
-            {
-                throw new ArgumentNullException(nameof(collections));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(qualifiedName, nameof(qualifiedName));
+            Argument.AssertNotNull(collections, nameof(collections));
 
             Collections = collections.ToList();
             SupportsSharding = supportsSharding;

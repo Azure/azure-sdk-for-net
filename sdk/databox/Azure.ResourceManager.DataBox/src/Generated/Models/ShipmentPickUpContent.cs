@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shipmentLocation"/> is null. </exception>
         public ShipmentPickUpContent(DateTimeOffset startOn, DateTimeOffset endOn, string shipmentLocation)
         {
-            if (shipmentLocation == null)
-            {
-                throw new ArgumentNullException(nameof(shipmentLocation));
-            }
+            Argument.AssertNotNull(shipmentLocation, nameof(shipmentLocation));
 
             StartOn = startOn;
             EndOn = endOn;

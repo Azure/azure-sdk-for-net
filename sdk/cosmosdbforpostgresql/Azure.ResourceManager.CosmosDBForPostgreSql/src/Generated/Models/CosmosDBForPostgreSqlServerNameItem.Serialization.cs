@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && FullyQualifiedDomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -71,8 +70,8 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return ChatMessageTextContentItem.DeserializeChatMessageTextContentItem(element, options);
                     case "image_url": return ChatMessageImageContentItem.DeserializeChatMessageImageContentItem(element, options);
+                    case "text": return ChatMessageTextContentItem.DeserializeChatMessageTextContentItem(element, options);
                 }
             }
             return UnknownChatMessageContentItem.DeserializeUnknownChatMessageContentItem(element, options);

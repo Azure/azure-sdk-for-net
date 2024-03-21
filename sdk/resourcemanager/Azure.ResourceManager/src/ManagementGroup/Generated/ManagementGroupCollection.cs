@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Resources;
 
@@ -91,18 +89,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -153,18 +141,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ManagementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string groupId, ManagementGroupCreateOrUpdateContent content, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -215,14 +193,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupResource>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
@@ -272,14 +243,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<ManagementGroupResource> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
@@ -397,10 +361,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupNameAvailabilityResult>> CheckNameAvailabilityAsync(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
             scope.Start();
@@ -442,10 +403,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ManagementGroupNameAvailabilityResult> CheckNameAvailability(ManagementGroupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.CheckNameAvailability");
             scope.Start();
@@ -552,14 +510,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
@@ -606,14 +557,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual Response<bool> Exists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
@@ -660,14 +604,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagementGroupResource>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
             scope.Start();
@@ -716,14 +653,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         public virtual NullableResponse<ManagementGroupResource> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (groupId == null)
-            {
-                throw new ArgumentNullException(nameof(groupId));
-            }
-            if (groupId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groupId));
-            }
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
             scope.Start();

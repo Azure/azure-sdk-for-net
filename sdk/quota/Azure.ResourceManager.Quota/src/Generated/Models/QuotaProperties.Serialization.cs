@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Limit != null)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteObjectValue(Limit);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (ResourceTypeName != null)
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName);
             }
-            if (options.Format != "W" && QuotaPeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod.Value, "P");
             }
-            if (options.Format != "W" && IsQuotaApplicable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsQuotaApplicable))
             {
                 writer.WritePropertyName("isQuotaApplicable"u8);
                 writer.WriteBooleanValue(IsQuotaApplicable.Value);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyspaceName"/> is null. </exception>
         public ExtendedCassandraKeyspaceResourceInfo(string keyspaceName) : base(keyspaceName)
         {
-            if (keyspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(keyspaceName));
-            }
+            Argument.AssertNotNull(keyspaceName, nameof(keyspaceName));
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedCassandraKeyspaceResourceInfo"/>. </summary>

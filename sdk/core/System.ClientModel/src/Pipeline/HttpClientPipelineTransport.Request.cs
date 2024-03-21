@@ -103,7 +103,7 @@ public partial class HttpClientPipelineTransport
             }
 
             int i = 0;
-            while (headers.GetNextValue(i++, out string headerName, out object headerValue))
+            while (headers.GetNextValue(i++, out string headerName, out object? headerValue))
             {
                 switch (headerValue)
                 {

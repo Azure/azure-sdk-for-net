@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
         public GraphServicesAccountResourceProperties(string appId)
         {
-            if (appId == null)
-            {
-                throw new ArgumentNullException(nameof(appId));
-            }
+            Argument.AssertNotNull(appId, nameof(appId));
 
             AppId = appId;
         }

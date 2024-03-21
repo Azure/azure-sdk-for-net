@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceSasToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceSasToken))
             {
                 writer.WritePropertyName("serviceSasToken"u8);
                 writer.WriteStringValue(ServiceSasToken);

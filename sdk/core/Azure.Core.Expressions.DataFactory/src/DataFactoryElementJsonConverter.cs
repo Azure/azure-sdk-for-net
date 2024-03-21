@@ -393,7 +393,7 @@ namespace Azure.Core.Expressions.DataFactory
                 }
                 else
                 {
-                    element = DataFactoryElement<T?>.FromSecretBase(DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(json)!);
+                    element = DataFactoryElement<T?>.FromSecretBase(DataFactorySecret.DeserializeDataFactorySecretBaseDefinition(json)!);
                 }
             }
 

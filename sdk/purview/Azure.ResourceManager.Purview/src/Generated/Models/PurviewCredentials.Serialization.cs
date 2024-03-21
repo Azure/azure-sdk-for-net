@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (IdentityId != null)
+            if (Optional.IsDefined(IdentityId))
             {
                 writer.WritePropertyName("identityId"u8);
                 writer.WriteStringValue(IdentityId);
             }
-            if (CredentialsType.HasValue)
+            if (Optional.IsDefined(CredentialsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CredentialsType.Value.ToString());

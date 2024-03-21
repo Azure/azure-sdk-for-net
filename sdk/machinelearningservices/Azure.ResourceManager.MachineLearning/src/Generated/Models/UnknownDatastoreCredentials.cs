@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDatastoreCredentials. </summary>
+    /// <summary> Unknown version of DatastoreCredentials. </summary>
     internal partial class UnknownDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatastoreCredentials"/>. </summary>

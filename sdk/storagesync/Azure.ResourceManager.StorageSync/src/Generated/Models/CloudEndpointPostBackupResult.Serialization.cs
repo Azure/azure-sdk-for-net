@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             writer.WriteStartObject();
             writer.WritePropertyName("backupMetadata"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CloudEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudEndpointName))
             {
                 writer.WritePropertyName("cloudEndpointName"u8);
                 writer.WriteStringValue(CloudEndpointName);

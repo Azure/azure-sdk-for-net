@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (CloudRoleArn != null)
+            if (Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
-            if (ScanningMode.HasValue)
+            if (Optional.IsDefined(ScanningMode))
             {
                 writer.WritePropertyName("scanningMode"u8);
                 writer.WriteStringValue(ScanningMode.Value.ToString());
             }
-            if (!(ExclusionTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExclusionTags))
             {
                 writer.WritePropertyName("exclusionTags"u8);
                 writer.WriteStartObject();

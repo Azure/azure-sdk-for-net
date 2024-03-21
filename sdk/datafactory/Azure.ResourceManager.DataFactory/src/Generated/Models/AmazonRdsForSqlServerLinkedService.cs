@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public AmazonRdsForSqlServerLinkedService(DataFactoryElement<string> connectionString)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             ConnectionString = connectionString;
             LinkedServiceType = "AmazonRdsForSqlServer";
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password"> The on-premises Windows authentication password. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
-        internal AmazonRdsForSqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRdsForSqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             UserName = userName;
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The on-premises Windows authentication user name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The on-premises Windows authentication password. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
         /// <summary> Sql always encrypted properties. </summary>

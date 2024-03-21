@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (NaptConfiguration != null)
+            if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
                 writer.WriteObjectValue(NaptConfiguration);
             }
-            if (!(UserEquipmentAddressPoolPrefix is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
                 writer.WritePropertyName("userEquipmentAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserEquipmentStaticAddressPoolPrefix is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(UserEquipmentStaticAddressPoolPrefix))
             {
                 writer.WritePropertyName("userEquipmentStaticAddressPoolPrefix"u8);
                 writer.WriteStartArray();

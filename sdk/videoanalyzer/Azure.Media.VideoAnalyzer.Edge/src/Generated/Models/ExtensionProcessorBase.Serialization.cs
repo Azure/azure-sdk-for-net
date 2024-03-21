@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (SamplingOptions != null)
+            if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);

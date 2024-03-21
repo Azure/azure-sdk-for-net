@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformConfigurationServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationServiceName, AppPlatformConfigurationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformConfigurationServiceResource> CreateOrUpdate(WaitUntil waitUntil, string configurationServiceName, AppPlatformConfigurationServiceData data, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformConfigurationServiceResource>> GetAsync(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         public virtual Response<AppPlatformConfigurationServiceResource> Get(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformConfigurationServiceResource>> GetIfExistsAsync(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="configurationServiceName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformConfigurationServiceResource> GetIfExists(string configurationServiceName, CancellationToken cancellationToken = default)
         {
-            if (configurationServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationServiceName));
-            }
-            if (configurationServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationServiceName, nameof(configurationServiceName));
 
             using var scope = _appPlatformConfigurationServiceConfigurationServicesClientDiagnostics.CreateScope("AppPlatformConfigurationServiceCollection.GetIfExists");
             scope.Start();

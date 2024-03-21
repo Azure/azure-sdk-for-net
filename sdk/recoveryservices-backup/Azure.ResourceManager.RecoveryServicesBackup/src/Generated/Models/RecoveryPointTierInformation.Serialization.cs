@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (TierType.HasValue)
+            if (Optional.IsDefined(TierType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TierType.Value.ToSerialString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (!(ExtendedInfo is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteStartObject();

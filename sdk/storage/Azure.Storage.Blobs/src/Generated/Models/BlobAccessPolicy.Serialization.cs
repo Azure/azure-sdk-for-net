@@ -9,6 +9,7 @@ using System;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -17,19 +18,19 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "AccessPolicy");
-            if (PolicyStartsOn.HasValue)
+            if (Common.Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(PolicyStartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (PolicyExpiresOn.HasValue)
+            if (Common.Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
                 writer.WriteValue(PolicyExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Permissions != null)
+            if (Common.Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);

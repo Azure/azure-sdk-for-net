@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataExportDetails is ChangeTrackingList<DataExportDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataImportDetails is ChangeTrackingList<DataImportDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();

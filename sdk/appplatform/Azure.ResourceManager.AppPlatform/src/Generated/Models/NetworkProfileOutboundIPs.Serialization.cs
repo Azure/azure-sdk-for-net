@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PublicIPs is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();

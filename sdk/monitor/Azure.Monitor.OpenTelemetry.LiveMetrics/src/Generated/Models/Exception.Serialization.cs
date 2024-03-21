@@ -15,19 +15,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ExceptionType != null)
+            if (Optional.IsDefined(ExceptionType))
             {
                 writer.WritePropertyName("ExceptionType"u8);
                 writer.WriteStringValue(ExceptionType);
             }
-            if (ExceptionMessage != null)
+            if (Optional.IsDefined(ExceptionMessage))
             {
                 writer.WritePropertyName("ExceptionMessage"u8);
                 writer.WriteStringValue(ExceptionMessage);
             }
             writer.WritePropertyName("DocumentType"u8);
             writer.WriteStringValue(DocumentType.ToString());
-            if (!(DocumentStreamIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DocumentStreamIds))
             {
                 writer.WritePropertyName("DocumentStreamIds"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Properties is ChangeTrackingList<KeyValuePairString> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStartArray();

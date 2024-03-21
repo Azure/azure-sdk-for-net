@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ConditionType.ToString());
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(SocketAddressOperator.ToString());
-            if (NegateCondition.HasValue)
+            if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (!(MatchValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Transforms is ChangeTrackingList<PreTransformCategory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier.AbsoluteUri);

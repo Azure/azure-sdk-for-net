@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="batchGroupName"/> or <paramref name="releaseCriteria"/> is null. </exception>
         public IntegrationAccountBatchConfigurationProperties(string batchGroupName, IntegrationAccountBatchReleaseCriteria releaseCriteria)
         {
-            if (batchGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(batchGroupName));
-            }
-            if (releaseCriteria == null)
-            {
-                throw new ArgumentNullException(nameof(releaseCriteria));
-            }
+            Argument.AssertNotNull(batchGroupName, nameof(batchGroupName));
+            Argument.AssertNotNull(releaseCriteria, nameof(releaseCriteria));
 
             BatchGroupName = batchGroupName;
             ReleaseCriteria = releaseCriteria;

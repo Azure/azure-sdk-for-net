@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetDatabase != null)
+            if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
                 writer.WriteStringValue(TargetDatabase);
             }
-            if (SourceEndpoint != null)
+            if (Optional.IsDefined(SourceEndpoint))
             {
                 writer.WritePropertyName("sourceEndpoint"u8);
                 writer.WriteStringValue(SourceEndpoint);
             }
-            if (PrimaryAvailabilityGroupName != null)
+            if (Optional.IsDefined(PrimaryAvailabilityGroupName))
             {
                 writer.WritePropertyName("primaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(PrimaryAvailabilityGroupName);
             }
-            if (SecondaryAvailabilityGroupName != null)
+            if (Optional.IsDefined(SecondaryAvailabilityGroupName))
             {
                 writer.WritePropertyName("secondaryAvailabilityGroupName"u8);
                 writer.WriteStringValue(SecondaryAvailabilityGroupName);
             }
-            if (ReplicationMode.HasValue)
+            if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (options.Format != "W" && DistributedAvailabilityGroupId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DistributedAvailabilityGroupId))
             {
                 writer.WritePropertyName("distributedAvailabilityGroupId"u8);
                 writer.WriteStringValue(DistributedAvailabilityGroupId.Value);
             }
-            if (options.Format != "W" && SourceReplicaId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceReplicaId))
             {
                 writer.WritePropertyName("sourceReplicaId"u8);
                 writer.WriteStringValue(SourceReplicaId.Value);
             }
-            if (options.Format != "W" && TargetReplicaId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetReplicaId))
             {
                 writer.WritePropertyName("targetReplicaId"u8);
                 writer.WriteStringValue(TargetReplicaId.Value);
             }
-            if (options.Format != "W" && LinkState != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkState))
             {
                 writer.WritePropertyName("linkState"u8);
                 writer.WriteStringValue(LinkState);
             }
-            if (options.Format != "W" && LastHardenedLsn != null)
+            if (options.Format != "W" && Optional.IsDefined(LastHardenedLsn))
             {
                 writer.WritePropertyName("lastHardenedLsn"u8);
                 writer.WriteStringValue(LastHardenedLsn);

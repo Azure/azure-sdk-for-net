@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,52 +74,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AccountEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountEntityId))
             {
                 writer.WritePropertyName("accountEntityId"u8);
                 writer.WriteStringValue(AccountEntityId);
             }
-            if (options.Format != "W" && CommandLine != null)
+            if (options.Format != "W" && Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ElevationToken.HasValue)
+            if (Optional.IsDefined(ElevationToken))
             {
                 writer.WritePropertyName("elevationToken"u8);
                 writer.WriteStringValue(ElevationToken.Value.ToSerialString());
             }
-            if (options.Format != "W" && HostEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
             {
                 writer.WritePropertyName("hostEntityId"u8);
                 writer.WriteStringValue(HostEntityId);
             }
-            if (options.Format != "W" && HostLogonSessionEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostLogonSessionEntityId))
             {
                 writer.WritePropertyName("hostLogonSessionEntityId"u8);
                 writer.WriteStringValue(HostLogonSessionEntityId);
             }
-            if (options.Format != "W" && ImageFileEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageFileEntityId))
             {
                 writer.WritePropertyName("imageFileEntityId"u8);
                 writer.WriteStringValue(ImageFileEntityId);
             }
-            if (options.Format != "W" && ParentProcessEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ParentProcessEntityId))
             {
                 writer.WritePropertyName("parentProcessEntityId"u8);
                 writer.WriteStringValue(ParentProcessEntityId);
             }
-            if (options.Format != "W" && ProcessId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProcessId))
             {
                 writer.WritePropertyName("processId"u8);
                 writer.WriteStringValue(ProcessId);

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public KeyVaultVirtualNetworkRule(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }

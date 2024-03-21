@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);

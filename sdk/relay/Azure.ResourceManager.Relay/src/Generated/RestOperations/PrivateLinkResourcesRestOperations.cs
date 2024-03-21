@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Relay.Models;
@@ -69,38 +68,10 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RelayPrivateLinkResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, privateLinkResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +101,10 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RelayPrivateLinkResourceData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, namespaceName, privateLinkResourceName);
             _pipeline.Send(message, cancellationToken);
@@ -211,30 +154,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PrivateLinkResourcesListResult>> ListAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, namespaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -261,30 +183,9 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PrivateLinkResourcesListResult> List(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, namespaceName);
             _pipeline.Send(message, cancellationToken);

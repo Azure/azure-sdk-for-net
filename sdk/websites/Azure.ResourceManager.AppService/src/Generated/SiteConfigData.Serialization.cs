@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NumberOfWorkers.HasValue)
+            if (Optional.IsDefined(NumberOfWorkers))
             {
                 if (NumberOfWorkers != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("numberOfWorkers");
                 }
             }
-            if (!(DefaultDocuments is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultDocuments))
             {
                 if (DefaultDocuments != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("defaultDocuments");
                 }
             }
-            if (NetFrameworkVersion != null)
+            if (Optional.IsDefined(NetFrameworkVersion))
             {
                 if (NetFrameworkVersion != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("netFrameworkVersion");
                 }
             }
-            if (PhpVersion != null)
+            if (Optional.IsDefined(PhpVersion))
             {
                 if (PhpVersion != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("phpVersion");
                 }
             }
-            if (PythonVersion != null)
+            if (Optional.IsDefined(PythonVersion))
             {
                 if (PythonVersion != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("pythonVersion");
                 }
             }
-            if (NodeVersion != null)
+            if (Optional.IsDefined(NodeVersion))
             {
                 if (NodeVersion != null)
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("nodeVersion");
                 }
             }
-            if (PowerShellVersion != null)
+            if (Optional.IsDefined(PowerShellVersion))
             {
                 if (PowerShellVersion != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("powerShellVersion");
                 }
             }
-            if (LinuxFxVersion != null)
+            if (Optional.IsDefined(LinuxFxVersion))
             {
                 if (LinuxFxVersion != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("linuxFxVersion");
                 }
             }
-            if (WindowsFxVersion != null)
+            if (Optional.IsDefined(WindowsFxVersion))
             {
                 if (WindowsFxVersion != null)
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("windowsFxVersion");
                 }
             }
-            if (IsRequestTracingEnabled.HasValue)
+            if (Optional.IsDefined(IsRequestTracingEnabled))
             {
                 if (IsRequestTracingEnabled != null)
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("requestTracingEnabled");
                 }
             }
-            if (RequestTracingExpirationOn.HasValue)
+            if (Optional.IsDefined(RequestTracingExpirationOn))
             {
                 if (RequestTracingExpirationOn != null)
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("requestTracingExpirationTime");
                 }
             }
-            if (IsRemoteDebuggingEnabled.HasValue)
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
                 if (IsRemoteDebuggingEnabled != null)
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("remoteDebuggingEnabled");
                 }
             }
-            if (RemoteDebuggingVersion != null)
+            if (Optional.IsDefined(RemoteDebuggingVersion))
             {
                 if (RemoteDebuggingVersion != null)
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("remoteDebuggingVersion");
                 }
             }
-            if (IsHttpLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsHttpLoggingEnabled))
             {
                 if (IsHttpLoggingEnabled != null)
                 {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("httpLoggingEnabled");
                 }
             }
-            if (UseManagedIdentityCreds.HasValue)
+            if (Optional.IsDefined(UseManagedIdentityCreds))
             {
                 if (UseManagedIdentityCreds != null)
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("acrUseManagedIdentityCreds");
                 }
             }
-            if (AcrUserManagedIdentityId != null)
+            if (Optional.IsDefined(AcrUserManagedIdentityId))
             {
                 if (AcrUserManagedIdentityId != null)
                 {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("acrUserManagedIdentityID");
                 }
             }
-            if (LogsDirectorySizeLimit.HasValue)
+            if (Optional.IsDefined(LogsDirectorySizeLimit))
             {
                 if (LogsDirectorySizeLimit != null)
                 {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("logsDirectorySizeLimit");
                 }
             }
-            if (IsDetailedErrorLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsDetailedErrorLoggingEnabled))
             {
                 if (IsDetailedErrorLoggingEnabled != null)
                 {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("detailedErrorLoggingEnabled");
                 }
             }
-            if (PublishingUsername != null)
+            if (Optional.IsDefined(PublishingUsername))
             {
                 if (PublishingUsername != null)
                 {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("publishingUsername");
                 }
             }
-            if (!(AppSettings is ChangeTrackingList<AppServiceNameValuePair> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AppSettings))
             {
                 if (AppSettings != null)
                 {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("appSettings");
                 }
             }
-            if (!(ConnectionStrings is ChangeTrackingList<ConnStringInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionStrings))
             {
                 if (ConnectionStrings != null)
                 {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("connectionStrings");
                 }
             }
-            if (options.Format != "W" && MachineKey != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineKey))
             {
                 if (MachineKey != null)
                 {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("machineKey");
                 }
             }
-            if (!(HandlerMappings is ChangeTrackingList<HttpRequestHandlerMapping> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(HandlerMappings))
             {
                 if (HandlerMappings != null)
                 {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("handlerMappings");
                 }
             }
-            if (DocumentRoot != null)
+            if (Optional.IsDefined(DocumentRoot))
             {
                 if (DocumentRoot != null)
                 {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("documentRoot");
                 }
             }
-            if (ScmType.HasValue)
+            if (Optional.IsDefined(ScmType))
             {
                 if (ScmType != null)
                 {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("scmType");
                 }
             }
-            if (Use32BitWorkerProcess.HasValue)
+            if (Optional.IsDefined(Use32BitWorkerProcess))
             {
                 if (Use32BitWorkerProcess != null)
                 {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("use32BitWorkerProcess");
                 }
             }
-            if (IsWebSocketsEnabled.HasValue)
+            if (Optional.IsDefined(IsWebSocketsEnabled))
             {
                 if (IsWebSocketsEnabled != null)
                 {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("webSocketsEnabled");
                 }
             }
-            if (IsAlwaysOn.HasValue)
+            if (Optional.IsDefined(IsAlwaysOn))
             {
                 if (IsAlwaysOn != null)
                 {
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("alwaysOn");
                 }
             }
-            if (JavaVersion != null)
+            if (Optional.IsDefined(JavaVersion))
             {
                 if (JavaVersion != null)
                 {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("javaVersion");
                 }
             }
-            if (JavaContainer != null)
+            if (Optional.IsDefined(JavaContainer))
             {
                 if (JavaContainer != null)
                 {
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("javaContainer");
                 }
             }
-            if (JavaContainerVersion != null)
+            if (Optional.IsDefined(JavaContainerVersion))
             {
                 if (JavaContainerVersion != null)
                 {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("javaContainerVersion");
                 }
             }
-            if (AppCommandLine != null)
+            if (Optional.IsDefined(AppCommandLine))
             {
                 if (AppCommandLine != null)
                 {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("appCommandLine");
                 }
             }
-            if (ManagedPipelineMode.HasValue)
+            if (Optional.IsDefined(ManagedPipelineMode))
             {
                 if (ManagedPipelineMode != null)
                 {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("managedPipelineMode");
                 }
             }
-            if (!(VirtualApplications is ChangeTrackingList<VirtualApplication> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualApplications))
             {
                 if (VirtualApplications != null)
                 {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("virtualApplications");
                 }
             }
-            if (LoadBalancing.HasValue)
+            if (Optional.IsDefined(LoadBalancing))
             {
                 if (LoadBalancing != null)
                 {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("loadBalancing");
                 }
             }
-            if (Experiments != null)
+            if (Optional.IsDefined(Experiments))
             {
                 if (Experiments != null)
                 {
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("experiments");
                 }
             }
-            if (Limits != null)
+            if (Optional.IsDefined(Limits))
             {
                 if (Limits != null)
                 {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("limits");
                 }
             }
-            if (IsAutoHealEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoHealEnabled))
             {
                 if (IsAutoHealEnabled != null)
                 {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("autoHealEnabled");
                 }
             }
-            if (AutoHealRules != null)
+            if (Optional.IsDefined(AutoHealRules))
             {
                 if (AutoHealRules != null)
                 {
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("autoHealRules");
                 }
             }
-            if (TracingOptions != null)
+            if (Optional.IsDefined(TracingOptions))
             {
                 if (TracingOptions != null)
                 {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("tracingOptions");
                 }
             }
-            if (VnetName != null)
+            if (Optional.IsDefined(VnetName))
             {
                 if (VnetName != null)
                 {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("vnetName");
                 }
             }
-            if (IsVnetRouteAllEnabled.HasValue)
+            if (Optional.IsDefined(IsVnetRouteAllEnabled))
             {
                 if (IsVnetRouteAllEnabled != null)
                 {
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("vnetRouteAllEnabled");
                 }
             }
-            if (VnetPrivatePortsCount.HasValue)
+            if (Optional.IsDefined(VnetPrivatePortsCount))
             {
                 if (VnetPrivatePortsCount != null)
                 {
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("vnetPrivatePortsCount");
                 }
             }
-            if (Cors != null)
+            if (Optional.IsDefined(Cors))
             {
                 if (Cors != null)
                 {
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("cors");
                 }
             }
-            if (Push != null)
+            if (Optional.IsDefined(Push))
             {
                 if (Push != null)
                 {
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("push");
                 }
             }
-            if (ApiDefinition != null)
+            if (Optional.IsDefined(ApiDefinition))
             {
                 if (ApiDefinition != null)
                 {
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("apiDefinition");
                 }
             }
-            if (ApiManagementConfig != null)
+            if (Optional.IsDefined(ApiManagementConfig))
             {
                 if (ApiManagementConfig != null)
                 {
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("apiManagementConfig");
                 }
             }
-            if (AutoSwapSlotName != null)
+            if (Optional.IsDefined(AutoSwapSlotName))
             {
                 if (AutoSwapSlotName != null)
                 {
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("autoSwapSlotName");
                 }
             }
-            if (IsLocalMySqlEnabled.HasValue)
+            if (Optional.IsDefined(IsLocalMySqlEnabled))
             {
                 if (IsLocalMySqlEnabled != null)
                 {
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("localMySqlEnabled");
                 }
             }
-            if (ManagedServiceIdentityId.HasValue)
+            if (Optional.IsDefined(ManagedServiceIdentityId))
             {
                 if (ManagedServiceIdentityId != null)
                 {
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("managedServiceIdentityId");
                 }
             }
-            if (XManagedServiceIdentityId.HasValue)
+            if (Optional.IsDefined(XManagedServiceIdentityId))
             {
                 if (XManagedServiceIdentityId != null)
                 {
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("xManagedServiceIdentityId");
                 }
             }
-            if (KeyVaultReferenceIdentity != null)
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
             {
                 if (KeyVaultReferenceIdentity != null)
                 {
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("keyVaultReferenceIdentity");
                 }
             }
-            if (!(IPSecurityRestrictions is ChangeTrackingList<AppServiceIPSecurityRestriction> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
             {
                 if (IPSecurityRestrictions != null)
                 {
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("ipSecurityRestrictions");
                 }
             }
-            if (!(ScmIPSecurityRestrictions is ChangeTrackingList<AppServiceIPSecurityRestriction> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
             {
                 if (ScmIPSecurityRestrictions != null)
                 {
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("scmIpSecurityRestrictions");
                 }
             }
-            if (AllowIPSecurityRestrictionsForScmToUseMain.HasValue)
+            if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
             {
                 if (AllowIPSecurityRestrictionsForScmToUseMain != null)
                 {
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("scmIpSecurityRestrictionsUseMain");
                 }
             }
-            if (IsHttp20Enabled.HasValue)
+            if (Optional.IsDefined(IsHttp20Enabled))
             {
                 if (IsHttp20Enabled != null)
                 {
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("http20Enabled");
                 }
             }
-            if (MinTlsVersion.HasValue)
+            if (Optional.IsDefined(MinTlsVersion))
             {
                 if (MinTlsVersion != null)
                 {
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("minTlsVersion");
                 }
             }
-            if (ScmMinTlsVersion.HasValue)
+            if (Optional.IsDefined(ScmMinTlsVersion))
             {
                 if (ScmMinTlsVersion != null)
                 {
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("scmMinTlsVersion");
                 }
             }
-            if (FtpsState.HasValue)
+            if (Optional.IsDefined(FtpsState))
             {
                 if (FtpsState != null)
                 {
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("ftpsState");
                 }
             }
-            if (PreWarmedInstanceCount.HasValue)
+            if (Optional.IsDefined(PreWarmedInstanceCount))
             {
                 if (PreWarmedInstanceCount != null)
                 {
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("preWarmedInstanceCount");
                 }
             }
-            if (FunctionAppScaleLimit.HasValue)
+            if (Optional.IsDefined(FunctionAppScaleLimit))
             {
                 if (FunctionAppScaleLimit != null)
                 {
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("functionAppScaleLimit");
                 }
             }
-            if (HealthCheckPath != null)
+            if (Optional.IsDefined(HealthCheckPath))
             {
                 if (HealthCheckPath != null)
                 {
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("healthCheckPath");
                 }
             }
-            if (IsFunctionsRuntimeScaleMonitoringEnabled.HasValue)
+            if (Optional.IsDefined(IsFunctionsRuntimeScaleMonitoringEnabled))
             {
                 if (IsFunctionsRuntimeScaleMonitoringEnabled != null)
                 {
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("functionsRuntimeScaleMonitoringEnabled");
                 }
             }
-            if (WebsiteTimeZone != null)
+            if (Optional.IsDefined(WebsiteTimeZone))
             {
                 if (WebsiteTimeZone != null)
                 {
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("websiteTimeZone");
                 }
             }
-            if (MinimumElasticInstanceCount.HasValue)
+            if (Optional.IsDefined(MinimumElasticInstanceCount))
             {
                 if (MinimumElasticInstanceCount != null)
                 {
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("minimumElasticInstanceCount");
                 }
             }
-            if (!(AzureStorageAccounts is ChangeTrackingDictionary<string, AppServiceStorageAccessInfo> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureStorageAccounts))
             {
                 if (AzureStorageAccounts != null)
                 {
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("azureStorageAccounts");
                 }
             }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {

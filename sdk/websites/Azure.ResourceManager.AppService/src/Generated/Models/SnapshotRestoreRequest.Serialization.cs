@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SnapshotTime != null)
+            if (Optional.IsDefined(SnapshotTime))
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (RecoverySource != null)
+            if (Optional.IsDefined(RecoverySource))
             {
                 writer.WritePropertyName("recoverySource"u8);
                 writer.WriteObjectValue(RecoverySource);
             }
-            if (CanOverwrite.HasValue)
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (RecoverConfiguration.HasValue)
+            if (Optional.IsDefined(RecoverConfiguration))
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
-            if (IgnoreConflictingHostNames.HasValue)
+            if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
                 writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (UseDRSecondary.HasValue)
+            if (Optional.IsDefined(UseDRSecondary))
             {
                 writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DestinationType.HasValue)
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("destinationType"u8);
                 writer.WriteStringValue(DestinationType.Value.ToString());
             }
-            if (DestinationId != null)
+            if (Optional.IsDefined(DestinationId))
             {
                 writer.WritePropertyName("destinationId"u8);
                 writer.WriteStringValue(DestinationId);
             }
-            if (IsolationDomainProperties != null)
+            if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
                 writer.WriteObjectValue(IsolationDomainProperties);
             }
-            if (DestinationTapRuleId != null)
+            if (Optional.IsDefined(DestinationTapRuleId))
             {
                 writer.WritePropertyName("destinationTapRuleId"u8);
                 writer.WriteStringValue(DestinationTapRuleId);

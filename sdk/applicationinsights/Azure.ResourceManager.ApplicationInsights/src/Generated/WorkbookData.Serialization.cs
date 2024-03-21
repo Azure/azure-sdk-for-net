@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
@@ -29,22 +28,22 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,19 +71,19 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (SerializedData != null)
+            if (Optional.IsDefined(SerializedData))
             {
                 if (SerializedData != null)
                 {
@@ -96,32 +95,32 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("serializedData");
                 }
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("timeModified"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (SourceId != null)
+            if (Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
-            if (StorageUri != null)
+            if (Optional.IsDefined(StorageUri))
             {
                 if (StorageUri != null)
                 {
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("storageUri");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteNull("description");
                 }
             }
-            if (options.Format != "W" && Revision != null)
+            if (options.Format != "W" && Optional.IsDefined(Revision))
             {
                 if (Revision != null)
                 {

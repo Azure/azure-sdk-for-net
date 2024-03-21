@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (!(Rules is ChangeTrackingList<ManagedRuleOverride> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();

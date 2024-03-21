@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (IPv6Address != null)
+            if (Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());

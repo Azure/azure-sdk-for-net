@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (ActionHostName != null)
+            if (Optional.IsDefined(ActionHostName))
             {
                 writer.WritePropertyName("actionHostName"u8);
                 writer.WriteStringValue(ActionHostName);
             }
-            if (ReroutePercentage.HasValue)
+            if (Optional.IsDefined(ReroutePercentage))
             {
                 writer.WritePropertyName("reroutePercentage"u8);
                 writer.WriteNumberValue(ReroutePercentage.Value);
             }
-            if (ChangeStep.HasValue)
+            if (Optional.IsDefined(ChangeStep))
             {
                 writer.WritePropertyName("changeStep"u8);
                 writer.WriteNumberValue(ChangeStep.Value);
             }
-            if (ChangeIntervalInMinutes.HasValue)
+            if (Optional.IsDefined(ChangeIntervalInMinutes))
             {
                 writer.WritePropertyName("changeIntervalInMinutes"u8);
                 writer.WriteNumberValue(ChangeIntervalInMinutes.Value);
             }
-            if (MinReroutePercentage.HasValue)
+            if (Optional.IsDefined(MinReroutePercentage))
             {
                 writer.WritePropertyName("minReroutePercentage"u8);
                 writer.WriteNumberValue(MinReroutePercentage.Value);
             }
-            if (MaxReroutePercentage.HasValue)
+            if (Optional.IsDefined(MaxReroutePercentage))
             {
                 writer.WritePropertyName("maxReroutePercentage"u8);
                 writer.WriteNumberValue(MaxReroutePercentage.Value);
             }
-            if (ChangeDecisionCallbackUri != null)
+            if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl"u8);
                 writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

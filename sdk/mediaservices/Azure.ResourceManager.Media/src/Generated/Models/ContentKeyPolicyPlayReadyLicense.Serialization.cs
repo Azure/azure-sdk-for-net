@@ -28,37 +28,37 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("allowTestDevices"u8);
             writer.WriteBooleanValue(AllowTestDevices);
-            if (SecurityLevel.HasValue)
+            if (Optional.IsDefined(SecurityLevel))
             {
                 writer.WritePropertyName("securityLevel"u8);
                 writer.WriteStringValue(SecurityLevel.Value.ToString());
             }
-            if (BeginOn.HasValue)
+            if (Optional.IsDefined(BeginOn))
             {
                 writer.WritePropertyName("beginDate"u8);
                 writer.WriteStringValue(BeginOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (RelativeBeginDate.HasValue)
+            if (Optional.IsDefined(RelativeBeginDate))
             {
                 writer.WritePropertyName("relativeBeginDate"u8);
                 writer.WriteStringValue(RelativeBeginDate.Value, "P");
             }
-            if (RelativeExpirationDate.HasValue)
+            if (Optional.IsDefined(RelativeExpirationDate))
             {
                 writer.WritePropertyName("relativeExpirationDate"u8);
                 writer.WriteStringValue(RelativeExpirationDate.Value, "P");
             }
-            if (GracePeriod.HasValue)
+            if (Optional.IsDefined(GracePeriod))
             {
                 writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod.Value, "P");
             }
-            if (PlayRight != null)
+            if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
                 writer.WriteObjectValue(PlayRight);

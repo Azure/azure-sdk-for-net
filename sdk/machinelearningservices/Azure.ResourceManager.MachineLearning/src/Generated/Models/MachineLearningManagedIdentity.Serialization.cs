@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ClientId.HasValue)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 if (ObjectId != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("objectId");
                 }
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 if (ResourceId != null)
                 {

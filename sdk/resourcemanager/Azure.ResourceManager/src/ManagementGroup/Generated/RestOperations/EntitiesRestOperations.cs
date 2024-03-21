@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups.Models;
@@ -221,10 +220,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<EntityListResult>> ListNextPageAsync(string nextLink, string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,10 +267,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<EntityListResult> ListNextPage(string nextLink, string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             _pipeline.Send(message, cancellationToken);

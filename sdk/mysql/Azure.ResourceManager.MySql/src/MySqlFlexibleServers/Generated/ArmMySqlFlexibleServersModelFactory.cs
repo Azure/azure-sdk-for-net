@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -114,6 +112,32 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerValidateBackupResult MySqlFlexibleServerValidateBackupResult(int? numberOfContainers = null)
         {
             return new MySqlFlexibleServerValidateBackupResult(numberOfContainers, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="backupNameV2"> Backup name. </param>
+        /// <param name="backupType"></param>
+        /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
+        /// <param name="source"> Backup source. </param>
+        /// <param name="provisioningState"> The provisioning state of backup resource. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupNameV2 = null, MySqlFlexibleServerBackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, MySqlFlexibleServerBackupProvisioningState? provisioningState = null)
+        {
+            return new MySqlFlexibleServerBackupV2Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupNameV2,
+                backupType,
+                completedOn,
+                source,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerConfigurationData"/>. </summary>
@@ -291,12 +315,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
+        /// <param name="backupIntervalHours"> Backup interval hours for the server. </param>
         /// <param name="geoRedundantBackup"> Whether or not geo redundant backup is enabled. </param>
         /// <param name="earliestRestoreOn"> Earliest restore point creation time (ISO8601 format). </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupProperties"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupProperties MySqlFlexibleServerBackupProperties(int? backupRetentionDays = null, MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
+        public static MySqlFlexibleServerBackupProperties MySqlFlexibleServerBackupProperties(int? backupRetentionDays = null, int? backupIntervalHours = null, MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = null, DateTimeOffset? earliestRestoreOn = null)
         {
-            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
+            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, backupIntervalHours, geoRedundantBackup, earliestRestoreOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerHighAvailability"/>. </summary>
@@ -331,6 +356,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 groupIds?.ToList(),
                 privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
                 connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HighAvailabilityValidationEstimation"/>. </summary>
+        /// <param name="estimatedDowntime"> Estimated seconds of downtime for the deployment. </param>
+        /// <param name="scheduledStandbyAvailabilityZone"> Scheduled Availability zone of the standby server. </param>
+        /// <param name="expectedStandbyAvailabilityZone"> Expected Availability zone of the standby server. </param>
+        /// <returns> A new <see cref="Models.HighAvailabilityValidationEstimation"/> instance for mocking. </returns>
+        public static HighAvailabilityValidationEstimation HighAvailabilityValidationEstimation(int? estimatedDowntime = null, string scheduledStandbyAvailabilityZone = null, string expectedStandbyAvailabilityZone = null)
+        {
+            return new HighAvailabilityValidationEstimation(estimatedDowntime, scheduledStandbyAvailabilityZone, expectedStandbyAvailabilityZone, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.AdvancedThreatProtectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> Specifies the UTC creation time of the policy. </param>
+        /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
+        /// <param name="provisioningState"> Provisioning state of the Threat Protection. </param>
+        /// <returns> A new <see cref="FlexibleServers.AdvancedThreatProtectionData"/> instance for mocking. </returns>
+        public static AdvancedThreatProtectionData AdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, AdvancedThreatProtectionState? state = null, AdvancedThreatProtectionProvisioningState? provisioningState = null)
+        {
+            return new AdvancedThreatProtectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                state,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
@@ -395,8 +452,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maxStorageSize"> The maximum supported storage size. </param>
         /// <param name="minBackupRetentionDays"> Minimal backup retention days. </param>
         /// <param name="maxBackupRetentionDays"> Maximum backup retention days. </param>
+        /// <param name="minBackupIntervalHours"> Minimal backup interval hours. </param>
+        /// <param name="maxBackupIntervalHours"> Maximum backup interval hours. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerStorageEditionCapability"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerStorageEditionCapability MySqlFlexibleServerStorageEditionCapability(string name = null, long? minStorageSize = null, long? maxStorageSize = null, long? minBackupRetentionDays = null, long? maxBackupRetentionDays = null)
+        public static MySqlFlexibleServerStorageEditionCapability MySqlFlexibleServerStorageEditionCapability(string name = null, long? minStorageSize = null, long? maxStorageSize = null, long? minBackupRetentionDays = null, long? maxBackupRetentionDays = null, long? minBackupIntervalHours = null, long? maxBackupIntervalHours = null)
         {
             return new MySqlFlexibleServerStorageEditionCapability(
                 name,
@@ -404,6 +463,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 maxStorageSize,
                 minBackupRetentionDays,
                 maxBackupRetentionDays,
+                minBackupIntervalHours,
+                maxBackupIntervalHours,
                 serializedAdditionalRawData: null);
         }
 
@@ -612,6 +673,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = null)
         {
             return new MySqlFlexibleServerPrivateDnsZoneSuffixResponse(privateDnsZoneSuffix, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.MySqlFlexibleServerMaintenanceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="maintenanceType"> A string defines maintenance type. </param>
+        /// <param name="maintenanceState"> A string describes the maintenance status. </param>
+        /// <param name="maintenanceStartOn"> The start time for a maintenance. </param>
+        /// <param name="maintenanceEndOn"> The end time for a maintenance. </param>
+        /// <param name="maintenanceExecutionStartOn"> The start time for a maintenance execution. </param>
+        /// <param name="maintenanceExecutionEndOn"> The end time for a maintenance execution. </param>
+        /// <param name="maintenanceAvailableScheduleMinOn"> The min time the maintenance can be rescheduled. </param>
+        /// <param name="maintenanceAvailableScheduleMaxOn"> The max time the maintenance can be rescheduled. </param>
+        /// <param name="maintenanceTitle"> The maintenance title. </param>
+        /// <param name="maintenanceDescription"> The maintenance description. </param>
+        /// <param name="provisioningState"> Provisioning state of the Maintenance. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerMaintenanceData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerMaintenanceData MySqlFlexibleServerMaintenanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerMaintenanceType? maintenanceType = null, MySqlFlexibleServerMaintenanceState? maintenanceState = null, DateTimeOffset? maintenanceStartOn = null, DateTimeOffset? maintenanceEndOn = null, DateTimeOffset? maintenanceExecutionStartOn = null, DateTimeOffset? maintenanceExecutionEndOn = null, DateTimeOffset? maintenanceAvailableScheduleMinOn = null, DateTimeOffset? maintenanceAvailableScheduleMaxOn = null, string maintenanceTitle = null, string maintenanceDescription = null, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState = null)
+        {
+            return new MySqlFlexibleServerMaintenanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                maintenanceType,
+                maintenanceState,
+                maintenanceStartOn,
+                maintenanceEndOn,
+                maintenanceExecutionStartOn,
+                maintenanceExecutionEndOn,
+                maintenanceAvailableScheduleMinOn,
+                maintenanceAvailableScheduleMaxOn,
+                maintenanceTitle,
+                maintenanceDescription,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

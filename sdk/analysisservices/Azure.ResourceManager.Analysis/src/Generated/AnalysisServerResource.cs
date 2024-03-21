@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -284,10 +282,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<AnalysisServerResource>> UpdateAsync(WaitUntil waitUntil, AnalysisServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.Update");
             scope.Start();
@@ -333,10 +328,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<AnalysisServerResource> Update(WaitUntil waitUntil, AnalysisServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.Update");
             scope.Start();
@@ -760,14 +752,8 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AnalysisServerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.AddTag");
             scope.Start();
@@ -828,14 +814,8 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AnalysisServerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.AddTag");
             scope.Start();
@@ -895,10 +875,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AnalysisServerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.SetTags");
             scope.Start();
@@ -955,10 +932,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AnalysisServerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.SetTags");
             scope.Start();
@@ -1015,10 +989,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AnalysisServerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.RemoveTag");
             scope.Start();
@@ -1078,10 +1049,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AnalysisServerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _analysisServerServersClientDiagnostics.CreateScope("AnalysisServerResource.RemoveTag");
             scope.Start();

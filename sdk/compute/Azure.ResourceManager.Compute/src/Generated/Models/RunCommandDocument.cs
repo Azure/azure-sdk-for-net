@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -25,26 +24,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, <paramref name="description"/> or <paramref name="script"/> is null. </exception>
         internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
         {
-            if (schema == null)
-            {
-                throw new ArgumentNullException(nameof(schema));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (label == null)
-            {
-                throw new ArgumentNullException(nameof(label));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-            if (script == null)
-            {
-                throw new ArgumentNullException(nameof(script));
-            }
+            Argument.AssertNotNull(schema, nameof(schema));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(label, nameof(label));
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(script, nameof(script));
 
             Script = script.ToList();
             Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();

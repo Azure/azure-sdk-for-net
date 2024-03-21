@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual async Task<ArmOperation<DomainTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.CreateOrUpdate");
             scope.Start();
@@ -135,14 +126,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual ArmOperation<DomainTopicResource> CreateOrUpdate(WaitUntil waitUntil, string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +172,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual async Task<Response<DomainTopicResource>> GetAsync(string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Get");
             scope.Start();
@@ -240,14 +217,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual Response<DomainTopicResource> Get(string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Get");
             scope.Start();
@@ -356,14 +326,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Exists");
             scope.Start();
@@ -406,14 +369,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Exists");
             scope.Start();
@@ -456,14 +412,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual async Task<NullableResponse<DomainTopicResource>> GetIfExistsAsync(string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.GetIfExists");
             scope.Start();
@@ -508,14 +457,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
         public virtual NullableResponse<DomainTopicResource> GetIfExists(string domainTopicName, CancellationToken cancellationToken = default)
         {
-            if (domainTopicName == null)
-            {
-                throw new ArgumentNullException(nameof(domainTopicName));
-            }
-            if (domainTopicName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainTopicName));
-            }
+            Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
             using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.GetIfExists");
             scope.Start();

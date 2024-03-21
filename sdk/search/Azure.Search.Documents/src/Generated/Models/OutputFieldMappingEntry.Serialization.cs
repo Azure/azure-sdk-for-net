@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TargetName != null)
+            if (Optional.IsDefined(TargetName))
             {
                 writer.WritePropertyName("targetName"u8);
                 writer.WriteStringValue(TargetName);

@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (EnableCopyActivityLog != null)
+            if (Optional.IsDefined(EnableCopyActivityLog))
             {
                 writer.WritePropertyName("enableCopyActivityLog"u8);
                 writer.WriteObjectValue(EnableCopyActivityLog);
             }
-            if (CopyActivityLogSettings != null)
+            if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
                 writer.WriteObjectValue(CopyActivityLogSettings);

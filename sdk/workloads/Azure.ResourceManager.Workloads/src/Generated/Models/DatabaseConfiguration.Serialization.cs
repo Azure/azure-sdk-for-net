@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (DatabaseType.HasValue)
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(VirtualMachineConfiguration);
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
-            if (DiskConfiguration != null)
+            if (Optional.IsDefined(DiskConfiguration))
             {
                 writer.WritePropertyName("diskConfiguration"u8);
                 writer.WriteObjectValue(DiskConfiguration);

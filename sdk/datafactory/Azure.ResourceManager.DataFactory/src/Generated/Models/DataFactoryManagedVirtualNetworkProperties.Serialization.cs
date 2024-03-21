@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VnetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (options.Format != "W" && Alias != null)
+            if (options.Format != "W" && Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);

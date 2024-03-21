@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IPPoolType.HasValue)
+            if (Optional.IsDefined(IPPoolType))
             {
                 writer.WritePropertyName("ipPoolType"u8);
                 writer.WriteStringValue(IPPoolType.Value.ToSerialString());
             }
-            if (Start != null)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);
             }
-            if (End != null)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End);
             }
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
                 writer.WriteObjectValue(Info);

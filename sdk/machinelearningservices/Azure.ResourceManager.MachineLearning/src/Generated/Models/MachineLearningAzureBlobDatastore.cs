@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
         public MachineLearningAzureBlobDatastore(MachineLearningDatastoreCredentials credentials) : base(credentials)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
+            Argument.AssertNotNull(credentials, nameof(credentials));
 
             DatastoreType = DatastoreType.AzureBlob;
         }

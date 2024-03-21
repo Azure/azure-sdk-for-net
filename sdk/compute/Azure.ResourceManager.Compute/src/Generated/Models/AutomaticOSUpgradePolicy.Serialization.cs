@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (EnableAutomaticOSUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticOSUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
             }
-            if (DisableAutomaticRollback.HasValue)
+            if (Optional.IsDefined(DisableAutomaticRollback))
             {
                 writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
-            if (UseRollingUpgradePolicy.HasValue)
+            if (Optional.IsDefined(UseRollingUpgradePolicy))
             {
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
-            if (OSRollingUpgradeDeferral.HasValue)
+            if (Optional.IsDefined(OSRollingUpgradeDeferral))
             {
                 writer.WritePropertyName("osRollingUpgradeDeferral"u8);
                 writer.WriteBooleanValue(OSRollingUpgradeDeferral.Value);

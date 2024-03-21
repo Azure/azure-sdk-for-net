@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceObjectiveName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceObjectiveName))
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (options.Format != "W" && IsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (options.Format != "W" && IsSystem.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSystem))
             {
                 writer.WritePropertyName("isSystem"u8);
                 writer.WriteBooleanValue(IsSystem.Value);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

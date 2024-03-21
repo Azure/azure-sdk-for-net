@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         internal ContentKeyPolicyProperties(IEnumerable<ContentKeyPolicyOption> options)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(options, nameof(options));
 
             Options = options.ToList();
         }

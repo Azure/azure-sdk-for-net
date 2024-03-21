@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="queryInputType"/> is null. </exception>
         public StreamAnalyticsQueryInput(string name, string queryInputType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (queryInputType == null)
-            {
-                throw new ArgumentNullException(nameof(queryInputType));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(queryInputType, nameof(queryInputType));
 
             Name = name;
             QueryInputType = queryInputType;

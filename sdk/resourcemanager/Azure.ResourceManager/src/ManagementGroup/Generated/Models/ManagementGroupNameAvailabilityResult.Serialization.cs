@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NameAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(NameAvailable.Value);
             }
-            if (options.Format != "W" && Reason.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToSerialString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);

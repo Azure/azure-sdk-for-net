@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownOverlay. </summary>
+    /// <summary> Unknown version of Overlay. </summary>
     internal partial class UnknownOverlay : MediaOverlayBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownOverlay"/>. </summary>

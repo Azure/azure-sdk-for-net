@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (IntegrationServiceEnvironmentId != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironmentId))
             {
                 writer.WritePropertyName("integrationServiceEnvironmentId"u8);
                 writer.WriteStringValue(IntegrationServiceEnvironmentId);
             }
-            if (EndpointsConfiguration != null)
+            if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
                 writer.WriteObjectValue(EndpointsConfiguration);
             }
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
             }
-            if (EncryptionConfiguration != null)
+            if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
                 writer.WriteObjectValue(EncryptionConfiguration);

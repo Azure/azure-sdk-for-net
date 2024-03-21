@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ProjectionMode.HasValue)
+            if (Optional.IsDefined(ProjectionMode))
             {
                 writer.WritePropertyName("projectionMode"u8);
                 writer.WriteStringValue(ProjectionMode.Value.ToString());

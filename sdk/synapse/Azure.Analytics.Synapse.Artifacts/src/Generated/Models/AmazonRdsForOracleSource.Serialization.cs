@@ -19,44 +19,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OracleReaderQuery != null)
+            if (Optional.IsDefined(OracleReaderQuery))
             {
                 writer.WritePropertyName("oracleReaderQuery"u8);
                 writer.WriteObjectValue(OracleReaderQuery);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (PartitionOption != null)
+            if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
-            if (PartitionSettings != null)
+            if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (AllowSqlRedirect.HasValue)
+            if (Optional.IsDefined(AllowSqlRedirect))
             {
                 writer.WritePropertyName("allowSqlRedirect"u8);
                 writer.WriteBooleanValue(AllowSqlRedirect.Value);

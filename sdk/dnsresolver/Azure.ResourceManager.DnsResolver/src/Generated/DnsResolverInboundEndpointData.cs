@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -59,10 +58,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
         public DnsResolverInboundEndpointData(AzureLocation location, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations) : base(location)
         {
-            if (ipConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurations));
-            }
+            Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             IPConfigurations = ipConfigurations.ToList();
         }

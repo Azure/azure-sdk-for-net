@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ChangeNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(ChangeNumber))
             {
                 writer.WritePropertyName("changeNumber"u8);
                 writer.WriteStringValue(ChangeNumber);

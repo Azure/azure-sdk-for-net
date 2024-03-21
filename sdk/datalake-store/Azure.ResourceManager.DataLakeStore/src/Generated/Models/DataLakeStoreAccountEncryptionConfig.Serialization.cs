@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConfigType.ToSerialString());
-            if (KeyVaultMetaInfo != null)
+            if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
                 writer.WriteObjectValue(KeyVaultMetaInfo);

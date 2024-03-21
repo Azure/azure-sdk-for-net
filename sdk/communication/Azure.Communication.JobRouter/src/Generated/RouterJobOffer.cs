@@ -51,10 +51,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         internal RouterJobOffer(string jobId, int capacityCost)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
             JobId = jobId;
             CapacityCost = capacityCost;

@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
-        protected string ServiceVersionString { get; } = "2023-10-31-preview";
+        protected string ServiceVersionString { get; } = "2024-02-29-preview";
 
         protected DocumentIntelligenceClient CreateDocumentIntelligenceClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
+            var options = InstrumentClientOptions(new DocumentIntelligenceClientOptions());
 
             DocumentIntelligenceClient nonInstrumentedClient;
 
@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient(bool useTokenCredential = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
+            var options = InstrumentClientOptions(new DocumentIntelligenceClientOptions());
 
             DocumentIntelligenceAdministrationClient nonInstrumentedClient;
 

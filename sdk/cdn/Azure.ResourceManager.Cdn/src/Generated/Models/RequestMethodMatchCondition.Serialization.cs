@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(ConditionType.ToString());
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(RequestMethodOperator.ToString());
-            if (NegateCondition.HasValue)
+            if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (!(Transforms is ChangeTrackingList<PreTransformCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MatchValues is ChangeTrackingList<RequestMethodMatchConditionMatchValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();

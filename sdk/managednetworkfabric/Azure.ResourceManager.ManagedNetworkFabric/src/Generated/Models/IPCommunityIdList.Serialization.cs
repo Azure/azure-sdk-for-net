@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPCommunityIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPCommunityIds))
             {
                 writer.WritePropertyName("ipCommunityIds"u8);
                 writer.WriteStartArray();

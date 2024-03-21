@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, DataReplicationProtectedItemData data, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, DataReplicationProtectedItemData data, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationProtectedItemResource>> GetAsync(string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual Response<DataReplicationProtectedItemResource> Get(string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationProtectedItemResource>> GetIfExistsAsync(string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationProtectedItemResource> GetIfExists(string protectedItemName, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _dataReplicationProtectedItemProtectedItemClientDiagnostics.CreateScope("DataReplicationProtectedItemCollection.GetIfExists");
             scope.Start();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerSettings != null)
+            if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
             }
-            if (StorageAccountSettings != null)
+            if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
                 writer.WriteObjectValue(StorageAccountSettings);
             }
-            if (CleanupPreference.HasValue)
+            if (Optional.IsDefined(CleanupPreference))
             {
                 writer.WritePropertyName("cleanupPreference"u8);
                 writer.WriteStringValue(CleanupPreference.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && Outputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER

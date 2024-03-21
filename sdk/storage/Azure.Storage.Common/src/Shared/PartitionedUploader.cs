@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Shared;
 
 #pragma warning disable SA1402  // File may only contain a single type

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Benchmark != null)
+            if (Optional.IsDefined(Benchmark))
             {
                 writer.WritePropertyName("benchmark"u8);
                 writer.WriteStringValue(Benchmark);
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);

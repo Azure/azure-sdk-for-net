@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryMetric.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (FeaturizationSettings != null)
+            if (Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (FixedParameters != null)
+            if (Optional.IsDefined(FixedParameters))
             {
                 if (FixedParameters != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fixedParameters");
                 }
             }
-            if (LimitSettings != null)
+            if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (!(SearchSpace is ChangeTrackingList<NlpParameterSubspace> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchSpace))
             {
                 if (SearchSpace != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            if (SweepSettings != null)
+            if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (ValidationData != null)
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (LogVerbosity.HasValue)
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (TargetColumnName != null)
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {

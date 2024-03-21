@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,44 +48,44 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (IsManualIntegration.HasValue)
+            if (Optional.IsDefined(IsManualIntegration))
             {
                 writer.WritePropertyName("isManualIntegration"u8);
                 writer.WriteBooleanValue(IsManualIntegration.Value);
             }
-            if (IsGitHubAction.HasValue)
+            if (Optional.IsDefined(IsGitHubAction))
             {
                 writer.WritePropertyName("isGitHubAction"u8);
                 writer.WriteBooleanValue(IsGitHubAction.Value);
             }
-            if (IsDeploymentRollbackEnabled.HasValue)
+            if (Optional.IsDefined(IsDeploymentRollbackEnabled))
             {
                 writer.WritePropertyName("deploymentRollbackEnabled"u8);
                 writer.WriteBooleanValue(IsDeploymentRollbackEnabled.Value);
             }
-            if (IsMercurial.HasValue)
+            if (Optional.IsDefined(IsMercurial))
             {
                 writer.WritePropertyName("isMercurial"u8);
                 writer.WriteBooleanValue(IsMercurial.Value);
             }
-            if (GitHubActionConfiguration != null)
+            if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 if (GitHubActionConfiguration != null)
                 {

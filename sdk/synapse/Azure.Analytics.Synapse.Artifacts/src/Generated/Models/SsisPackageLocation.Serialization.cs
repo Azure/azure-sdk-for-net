@@ -19,54 +19,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PackagePath != null)
+            if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
                 writer.WriteObjectValue(PackagePath);
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (PackagePassword != null)
+            if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
                 writer.WriteObjectValue(PackagePassword);
             }
-            if (AccessCredential != null)
+            if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
                 writer.WriteObjectValue(AccessCredential);
             }
-            if (ConfigurationPath != null)
+            if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
                 writer.WriteObjectValue(ConfigurationPath);
             }
-            if (ConfigurationAccessCredential != null)
+            if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
                 writer.WriteObjectValue(ConfigurationAccessCredential);
             }
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
-            if (PackageContent != null)
+            if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
                 writer.WriteObjectValue(PackageContent);
             }
-            if (PackageLastModifiedDate != null)
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
             }
-            if (!(ChildPackages is ChangeTrackingList<SsisChildPackage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildPackages))
             {
                 writer.WritePropertyName("childPackages"u8);
                 writer.WriteStartArray();

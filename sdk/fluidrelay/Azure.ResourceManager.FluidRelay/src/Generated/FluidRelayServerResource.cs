@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FluidRelay.Models;
 using Azure.ResourceManager.Resources;
 
@@ -351,10 +349,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<FluidRelayServerResource>> UpdateAsync(FluidRelayServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.Update");
             scope.Start();
@@ -396,10 +391,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<FluidRelayServerResource> Update(FluidRelayServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.Update");
             scope.Start();
@@ -441,10 +433,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<FluidRelayServerKeys>> RegenerateKeysAsync(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RegenerateKeys");
             scope.Start();
@@ -486,10 +475,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<FluidRelayServerKeys> RegenerateKeys(RegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RegenerateKeys");
             scope.Start();
@@ -608,14 +594,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<FluidRelayServerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.AddTag");
             scope.Start();
@@ -676,14 +656,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<FluidRelayServerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.AddTag");
             scope.Start();
@@ -743,10 +717,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<FluidRelayServerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.SetTags");
             scope.Start();
@@ -803,10 +774,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<FluidRelayServerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.SetTags");
             scope.Start();
@@ -863,10 +831,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<FluidRelayServerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RemoveTag");
             scope.Start();
@@ -926,10 +891,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<FluidRelayServerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _fluidRelayServerClientDiagnostics.CreateScope("FluidRelayServerResource.RemoveTag");
             scope.Start();

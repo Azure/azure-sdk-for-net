@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (SendToOwners != null)
+            if (Optional.IsDefined(SendToOwners))
             {
                 writer.WritePropertyName("sendToOwners"u8);
                 writer.WriteStringValue(SendToOwners);
             }
-            if (!(CustomEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmailAddresses))
             {
                 writer.WritePropertyName("customEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Locale != null)
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);

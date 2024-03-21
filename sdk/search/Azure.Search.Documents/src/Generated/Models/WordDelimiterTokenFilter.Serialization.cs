@@ -16,52 +16,52 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (GenerateWordParts.HasValue)
+            if (Optional.IsDefined(GenerateWordParts))
             {
                 writer.WritePropertyName("generateWordParts"u8);
                 writer.WriteBooleanValue(GenerateWordParts.Value);
             }
-            if (GenerateNumberParts.HasValue)
+            if (Optional.IsDefined(GenerateNumberParts))
             {
                 writer.WritePropertyName("generateNumberParts"u8);
                 writer.WriteBooleanValue(GenerateNumberParts.Value);
             }
-            if (CatenateWords.HasValue)
+            if (Optional.IsDefined(CatenateWords))
             {
                 writer.WritePropertyName("catenateWords"u8);
                 writer.WriteBooleanValue(CatenateWords.Value);
             }
-            if (CatenateNumbers.HasValue)
+            if (Optional.IsDefined(CatenateNumbers))
             {
                 writer.WritePropertyName("catenateNumbers"u8);
                 writer.WriteBooleanValue(CatenateNumbers.Value);
             }
-            if (CatenateAll.HasValue)
+            if (Optional.IsDefined(CatenateAll))
             {
                 writer.WritePropertyName("catenateAll"u8);
                 writer.WriteBooleanValue(CatenateAll.Value);
             }
-            if (SplitOnCaseChange.HasValue)
+            if (Optional.IsDefined(SplitOnCaseChange))
             {
                 writer.WritePropertyName("splitOnCaseChange"u8);
                 writer.WriteBooleanValue(SplitOnCaseChange.Value);
             }
-            if (PreserveOriginal.HasValue)
+            if (Optional.IsDefined(PreserveOriginal))
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
             }
-            if (SplitOnNumerics.HasValue)
+            if (Optional.IsDefined(SplitOnNumerics))
             {
                 writer.WritePropertyName("splitOnNumerics"u8);
                 writer.WriteBooleanValue(SplitOnNumerics.Value);
             }
-            if (StemEnglishPossessive.HasValue)
+            if (Optional.IsDefined(StemEnglishPossessive))
             {
                 writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (!(ProtectedWords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedWords))
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();

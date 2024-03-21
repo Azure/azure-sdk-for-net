@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VMwareVCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vcenterName, VMwareVCenterData data, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VMwareVCenterResource> CreateOrUpdate(WaitUntil waitUntil, string vcenterName, VMwareVCenterData data, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual async Task<Response<VMwareVCenterResource>> GetAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual Response<VMwareVCenterResource> Get(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual Response<bool> Exists(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual async Task<NullableResponse<VMwareVCenterResource>> GetIfExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
         public virtual NullableResponse<VMwareVCenterResource> GetIfExists(string vcenterName, CancellationToken cancellationToken = default)
         {
-            if (vcenterName == null)
-            {
-                throw new ArgumentNullException(nameof(vcenterName));
-            }
-            if (vcenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcenterName));
-            }
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
             using var scope = _vMwareVCenterVCentersClientDiagnostics.CreateScope("VMwareVCenterCollection.GetIfExists");
             scope.Start();

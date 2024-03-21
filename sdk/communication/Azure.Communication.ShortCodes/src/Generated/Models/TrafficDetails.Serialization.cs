@@ -15,32 +15,32 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TotalMonthlyVolume.HasValue)
+            if (Optional.IsDefined(TotalMonthlyVolume))
             {
                 writer.WritePropertyName("totalMonthlyVolume"u8);
                 writer.WriteNumberValue(TotalMonthlyVolume.Value);
             }
-            if (MonthlyAverageMessagesFromUser.HasValue)
+            if (Optional.IsDefined(MonthlyAverageMessagesFromUser))
             {
                 writer.WritePropertyName("monthlyAverageMessagesFromUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesFromUser.Value);
             }
-            if (MonthlyAverageMessagesToUser.HasValue)
+            if (Optional.IsDefined(MonthlyAverageMessagesToUser))
             {
                 writer.WritePropertyName("monthlyAverageMessagesToUser"u8);
                 writer.WriteNumberValue(MonthlyAverageMessagesToUser.Value);
             }
-            if (IsSpiky.HasValue)
+            if (Optional.IsDefined(IsSpiky))
             {
                 writer.WritePropertyName("isSpiky"u8);
                 writer.WriteBooleanValue(IsSpiky.Value);
             }
-            if (SpikeDetails != null)
+            if (Optional.IsDefined(SpikeDetails))
             {
                 writer.WritePropertyName("spikeDetails"u8);
                 writer.WriteStringValue(SpikeDetails);
             }
-            if (EstimatedRampUpTimeInDays.HasValue)
+            if (Optional.IsDefined(EstimatedRampUpTimeInDays))
             {
                 writer.WritePropertyName("estimatedRampUpTimeInDays"u8);
                 writer.WriteNumberValue(EstimatedRampUpTimeInDays.Value);

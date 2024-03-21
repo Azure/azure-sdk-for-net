@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ContactDetails != null)
+            if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
             }
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
-            if (options.Format != "W" && IsUpdated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsUpdated))
             {
                 writer.WritePropertyName("isUpdated"u8);
                 writer.WriteBooleanValue(IsUpdated.Value);

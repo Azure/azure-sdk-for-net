@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (B2B != null)
+            if (Optional.IsDefined(B2B))
             {
                 writer.WritePropertyName("b2b"u8);
                 writer.WriteObjectValue(B2B);

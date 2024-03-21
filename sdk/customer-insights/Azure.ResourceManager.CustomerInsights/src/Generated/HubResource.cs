@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -1125,10 +1123,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<HubResource>> UpdateAsync(HubData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.Update");
             scope.Start();
@@ -1170,10 +1165,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<HubResource> Update(HubData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.Update");
             scope.Start();
@@ -1263,10 +1255,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<Response<ImageDefinition>> GetUploadUrlForEntityTypeImageAsync(GetImageUploadUrlInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _imagesClientDiagnostics.CreateScope("HubResource.GetUploadUrlForEntityTypeImage");
             scope.Start();
@@ -1304,10 +1293,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual Response<ImageDefinition> GetUploadUrlForEntityTypeImage(GetImageUploadUrlInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _imagesClientDiagnostics.CreateScope("HubResource.GetUploadUrlForEntityTypeImage");
             scope.Start();
@@ -1345,10 +1331,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<Response<ImageDefinition>> GetUploadUrlForDataImageAsync(GetImageUploadUrlInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _imagesClientDiagnostics.CreateScope("HubResource.GetUploadUrlForDataImage");
             scope.Start();
@@ -1386,10 +1369,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual Response<ImageDefinition> GetUploadUrlForDataImage(GetImageUploadUrlInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _imagesClientDiagnostics.CreateScope("HubResource.GetUploadUrlForDataImage");
             scope.Start();
@@ -1432,14 +1412,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<HubResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.AddTag");
             scope.Start();
@@ -1500,14 +1474,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<HubResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.AddTag");
             scope.Start();
@@ -1567,10 +1535,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HubResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.SetTags");
             scope.Start();
@@ -1627,10 +1592,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HubResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.SetTags");
             scope.Start();
@@ -1687,10 +1649,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<HubResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.RemoveTag");
             scope.Start();
@@ -1750,10 +1709,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<HubResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubResource.RemoveTag");
             scope.Start();

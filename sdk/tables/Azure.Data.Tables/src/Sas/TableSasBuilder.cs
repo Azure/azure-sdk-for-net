@@ -142,7 +142,7 @@ namespace Azure.Data.Tables.Sas
         public string PartitionKeyEnd { get; set; }
 
         /// <summary>
-        /// The optional end of the partition key values range being made available.
+        /// The optional end of the row key values range being made available.
         /// <see cref="RowKeyStart"/> must be specified if this value is set.
         /// </summary>
         public string RowKeyEnd { get; set; }

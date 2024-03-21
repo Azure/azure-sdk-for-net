@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);

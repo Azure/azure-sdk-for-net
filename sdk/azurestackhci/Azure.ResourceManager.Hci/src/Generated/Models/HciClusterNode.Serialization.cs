@@ -26,72 +26,72 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Id.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (options.Format != "W" && WindowsServerSubscription.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WindowsServerSubscription))
             {
                 writer.WritePropertyName("windowsServerSubscription"u8);
                 writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
             }
-            if (options.Format != "W" && NodeType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeType))
             {
                 writer.WritePropertyName("nodeType"u8);
                 writer.WriteStringValue(NodeType.Value.ToString());
             }
-            if (options.Format != "W" && EhcResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(EhcResourceId))
             {
                 writer.WritePropertyName("ehcResourceId"u8);
                 writer.WriteStringValue(EhcResourceId);
             }
-            if (options.Format != "W" && Manufacturer != null)
+            if (options.Format != "W" && Optional.IsDefined(Manufacturer))
             {
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (options.Format != "W" && Model != null)
+            if (options.Format != "W" && Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && OSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (options.Format != "W" && OSDisplayVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(OSDisplayVersion))
             {
                 writer.WritePropertyName("osDisplayVersion"u8);
                 writer.WriteStringValue(OSDisplayVersion);
             }
-            if (options.Format != "W" && SerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && CoreCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (options.Format != "W" && MemoryInGiB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryInGiB))
             {
                 writer.WritePropertyName("memoryInGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
-            if (options.Format != "W" && LastLicensingTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastLicensingTimestamp))
             {
                 writer.WritePropertyName("lastLicensingTimestamp"u8);
                 writer.WriteStringValue(LastLicensingTimestamp.Value, "O");

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;

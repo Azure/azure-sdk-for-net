@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUrl"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);

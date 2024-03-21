@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (FileFilter != null)
+            if (Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
                 writer.WriteStringValue(FileFilter);
             }
-            if (HasHeader.HasValue)
+            if (Optional.IsDefined(HasHeader))
             {
                 writer.WritePropertyName("hasHeader"u8);
                 writer.WriteBooleanValue(HasHeader.Value);

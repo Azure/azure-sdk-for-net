@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryFabricLocation.HasValue)
+            if (Optional.IsDefined(PrimaryFabricLocation))
             {
                 writer.WritePropertyName("primaryFabricLocation"u8);
                 writer.WriteStringValue(PrimaryFabricLocation.Value);
             }
-            if (RecoveryFabricLocation.HasValue)
+            if (Optional.IsDefined(RecoveryFabricLocation))
             {
                 writer.WritePropertyName("recoveryFabricLocation"u8);
                 writer.WriteStringValue(RecoveryFabricLocation.Value);

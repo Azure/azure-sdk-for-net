@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (AppConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            if (CrashConsistentFrequencyInMinutes.HasValue)
+            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);

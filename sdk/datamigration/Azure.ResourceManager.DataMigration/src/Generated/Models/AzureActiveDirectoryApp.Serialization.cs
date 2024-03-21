@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (AppKey != null)
+            if (Optional.IsDefined(AppKey))
             {
                 writer.WritePropertyName("appKey"u8);
                 writer.WriteStringValue(AppKey);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IgnoreAzurePermissions.HasValue)
+            if (Optional.IsDefined(IgnoreAzurePermissions))
             {
                 writer.WritePropertyName("ignoreAzurePermissions"u8);
                 writer.WriteBooleanValue(IgnoreAzurePermissions.Value);

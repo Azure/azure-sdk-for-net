@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(CompletedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CompletedRegions))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailedOrSkippedRegions is ChangeTrackingDictionary<string, ExtendedErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (InstantRpRetentionRangeInDays.HasValue)
+            if (Optional.IsDefined(InstantRpRetentionRangeInDays))
             {
                 writer.WritePropertyName("instantRpRetentionRangeInDays"u8);
                 writer.WriteNumberValue(InstantRpRetentionRangeInDays.Value);
             }
-            if (InstantRPDetails != null)
+            if (Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
                 writer.WriteStringValue(InstantRPDetails);
             }
-            if (UserAssignedManagedIdentityDetails != null)
+            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
                 writer.WriteObjectValue(UserAssignedManagedIdentityDetails);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (LeaseId != null)
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (LeaseTimeSeconds != null)
+            if (Optional.IsDefined(LeaseTimeSeconds))
             {
                 writer.WritePropertyName("leaseTimeSeconds"u8);
                 writer.WriteStringValue(LeaseTimeSeconds);

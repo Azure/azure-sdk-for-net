@@ -54,14 +54,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="queueId"/> is null. </exception>
         internal RouterJobPositionDetails(string jobId, int position, string queueId, int queueLength, TimeSpan estimatedWaitTime)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(queueId, nameof(queueId));
 
             JobId = jobId;
             Position = position;

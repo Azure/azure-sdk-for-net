@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryProtectableItemResource>> GetAsync(string protectableItemName, CancellationToken cancellationToken = default)
         {
-            if (protectableItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectableItemName));
-            }
-            if (protectableItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectableItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectableItemName, nameof(protectableItemName));
 
             using var scope = _siteRecoveryProtectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("SiteRecoveryProtectableItemCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
         public virtual Response<SiteRecoveryProtectableItemResource> Get(string protectableItemName, CancellationToken cancellationToken = default)
         {
-            if (protectableItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectableItemName));
-            }
-            if (protectableItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectableItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectableItemName, nameof(protectableItemName));
 
             using var scope = _siteRecoveryProtectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("SiteRecoveryProtectableItemCollection.Get");
             scope.Start();
@@ -250,14 +234,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string protectableItemName, CancellationToken cancellationToken = default)
         {
-            if (protectableItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectableItemName));
-            }
-            if (protectableItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectableItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectableItemName, nameof(protectableItemName));
 
             using var scope = _siteRecoveryProtectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("SiteRecoveryProtectableItemCollection.Exists");
             scope.Start();
@@ -300,14 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string protectableItemName, CancellationToken cancellationToken = default)
         {
-            if (protectableItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectableItemName));
-            }
-            if (protectableItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectableItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectableItemName, nameof(protectableItemName));
 
             using var scope = _siteRecoveryProtectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("SiteRecoveryProtectableItemCollection.Exists");
             scope.Start();
@@ -350,14 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryProtectableItemResource>> GetIfExistsAsync(string protectableItemName, CancellationToken cancellationToken = default)
         {
-            if (protectableItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectableItemName));
-            }
-            if (protectableItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectableItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectableItemName, nameof(protectableItemName));
 
             using var scope = _siteRecoveryProtectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("SiteRecoveryProtectableItemCollection.GetIfExists");
             scope.Start();
@@ -402,14 +365,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryProtectableItemResource> GetIfExists(string protectableItemName, CancellationToken cancellationToken = default)
         {
-            if (protectableItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectableItemName));
-            }
-            if (protectableItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectableItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectableItemName, nameof(protectableItemName));
 
             using var scope = _siteRecoveryProtectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("SiteRecoveryProtectableItemCollection.GetIfExists");
             scope.Start();

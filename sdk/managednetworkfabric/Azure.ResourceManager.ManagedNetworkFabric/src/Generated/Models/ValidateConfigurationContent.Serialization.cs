@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (ValidateAction.HasValue)
+            if (Optional.IsDefined(ValidateAction))
             {
                 writer.WritePropertyName("validateAction"u8);
                 writer.WriteStringValue(ValidateAction.Value.ToString());

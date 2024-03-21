@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (SubnetResourceId != null)
+            if (Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);

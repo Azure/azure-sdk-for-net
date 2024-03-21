@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownDataImportSource. </summary>
+    /// <summary> Unknown version of DataImportSource. </summary>
     internal partial class UnknownDataImportSource : DataImportSource
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataImportSource"/>. </summary>

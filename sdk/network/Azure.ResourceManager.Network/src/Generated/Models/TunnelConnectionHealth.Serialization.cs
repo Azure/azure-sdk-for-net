@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Tunnel != null)
+            if (options.Format != "W" && Optional.IsDefined(Tunnel))
             {
                 writer.WritePropertyName("tunnel"u8);
                 writer.WriteStringValue(Tunnel);
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && LastConnectionEstablishedOn != null)
+            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
             {
                 writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
                 writer.WriteStringValue(LastConnectionEstablishedOn);

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -72,46 +71,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -136,46 +100,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName);
             _pipeline.Send(message, cancellationToken);
@@ -229,50 +158,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, NetworkServiceDesignVersionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -298,50 +189,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, NetworkServiceDesignVersionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -390,46 +243,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkServiceDesignVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -460,46 +278,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkServiceDesignVersionData> Get(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName);
             _pipeline.Send(message, cancellationToken);
@@ -559,50 +342,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkServiceDesignVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName, tagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -632,50 +377,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkServiceDesignVersionData> Update(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
-            if (tagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(tagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName, tagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -726,38 +433,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkServiceDesignVersionListResult>> ListByNetworkServiceDesignGroupAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var message = CreateListByNetworkServiceDesignGroupRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -785,38 +464,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkServiceDesignVersionListResult> ListByNetworkServiceDesignGroup(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var message = CreateListByNetworkServiceDesignGroupRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -875,50 +526,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, NetworkServiceDesignVersionUpdateState networkServiceDesignVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionUpdateState == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionUpdateState));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            Argument.AssertNotNull(networkServiceDesignVersionUpdateState, nameof(networkServiceDesignVersionUpdateState));
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName, networkServiceDesignVersionUpdateState);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -944,50 +557,12 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkServiceDesignGroupName"/> or <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName, NetworkServiceDesignVersionUpdateState networkServiceDesignVersionUpdateState, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignVersionName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignVersionName));
-            }
-            if (networkServiceDesignVersionUpdateState == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignVersionUpdateState));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+            Argument.AssertNotNull(networkServiceDesignVersionUpdateState, nameof(networkServiceDesignVersionUpdateState));
 
             using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName, networkServiceDesignVersionName, networkServiceDesignVersionUpdateState);
             _pipeline.Send(message, cancellationToken);
@@ -1026,42 +601,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<NetworkServiceDesignVersionListResult>> ListByNetworkServiceDesignGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var message = CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1090,42 +634,11 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<NetworkServiceDesignVersionListResult> ListByNetworkServiceDesignGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (publisherName == null)
-            {
-                throw new ArgumentNullException(nameof(publisherName));
-            }
-            if (publisherName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherName));
-            }
-            if (networkServiceDesignGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(networkServiceDesignGroupName));
-            }
-            if (networkServiceDesignGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkServiceDesignGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
 
             using var message = CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, networkServiceDesignGroupName);
             _pipeline.Send(message, cancellationToken);

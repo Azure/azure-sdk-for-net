@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (EventName.HasValue)
+            if (Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName.Value.ToString());

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(SupportedMaxSizes is ChangeTrackingList<MaxSizeRangeCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaxSizes))
             {
                 writer.WritePropertyName("supportedMaxSizes"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PerformanceLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
             {
                 writer.WritePropertyName("performanceLevel"u8);
                 writer.WriteObjectValue(PerformanceLevel);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && !(SupportedLicenseTypes is ChangeTrackingList<LicenseTypeCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
                 writer.WritePropertyName("supportedLicenseTypes"u8);
                 writer.WriteStartArray();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IncludedMaxSize != null)
+            if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
                 writer.WriteObjectValue(IncludedMaxSize);
             }
-            if (options.Format != "W" && IsZoneRedundant.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (options.Format != "W" && SupportedAutoPauseDelay != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
             {
                 writer.WritePropertyName("supportedAutoPauseDelay"u8);
                 writer.WriteObjectValue(SupportedAutoPauseDelay);
             }
-            if (options.Format != "W" && !(SupportedMinCapacities is ChangeTrackingList<MinCapacityCapability> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMinCapacities))
             {
                 writer.WritePropertyName("supportedMinCapacities"u8);
                 writer.WriteStartArray();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ComputeModel != null)
+            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
             {
                 writer.WritePropertyName("computeModel"u8);
                 writer.WriteStringValue(ComputeModel);
             }
-            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<MaintenanceConfigurationCapability> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
                 writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

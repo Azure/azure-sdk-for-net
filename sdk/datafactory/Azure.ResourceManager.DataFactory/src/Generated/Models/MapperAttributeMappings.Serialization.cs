@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (!(AttributeMappings is ChangeTrackingList<MapperAttributeMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AttributeMappings))
             {
                 writer.WritePropertyName("attributeMappings"u8);
                 writer.WriteStartArray();

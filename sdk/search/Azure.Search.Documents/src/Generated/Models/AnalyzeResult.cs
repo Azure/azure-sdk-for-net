@@ -19,10 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tokens"/> is null. </exception>
         internal AnalyzeResult(IEnumerable<AnalyzedTokenInfo> tokens)
         {
-            if (tokens == null)
-            {
-                throw new ArgumentNullException(nameof(tokens));
-            }
+            Argument.AssertNotNull(tokens, nameof(tokens));
 
             Tokens = tokens.ToList();
         }

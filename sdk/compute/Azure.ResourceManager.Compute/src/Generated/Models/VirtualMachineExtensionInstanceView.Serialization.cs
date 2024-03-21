@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (VirtualMachineExtensionInstanceViewType != null)
+            if (Optional.IsDefined(VirtualMachineExtensionInstanceViewType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VirtualMachineExtensionInstanceViewType);
             }
-            if (TypeHandlerVersion != null)
+            if (Optional.IsDefined(TypeHandlerVersion))
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (!(Substatuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Substatuses))
             {
                 writer.WritePropertyName("substatuses"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

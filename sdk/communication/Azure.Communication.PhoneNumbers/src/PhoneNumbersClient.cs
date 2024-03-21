@@ -162,15 +162,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +14255550123. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId">Campaign brief identifier</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
             try
             {
-                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
+                return await InternalClient.StartUpdateCapabilitiesAsync(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -183,15 +184,16 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +14255550123. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId">Campaign brief identifier</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartUpdateCapabilities)}");
             scope.Start();
             try
             {
-                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
+                return InternalClient.StartUpdateCapabilities(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -712,6 +714,60 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Search for operator information about specified phone numbers. </summary>
         /// <param name="phoneNumbers"> The phone numbers to search. </param>
+        /// <param name="options">Options to modify the search.  Please note: use of options can affect the cost of the search.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperatorInformationResult>> SearchOperatorInformationAsync(IEnumerable<string> phoneNumbers, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+            if (options?.IncludeAdditionalOperatorDetails == null)
+            {
+                options = new OperatorInformationOptions();
+                options.IncludeAdditionalOperatorDetails = false;
+            }
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, options, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
+        /// <param name="options">Options to modify the search.  Please note: use of options can affect the cost of the search.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperatorInformationResult> SearchOperatorInformation(IEnumerable<string> phoneNumbers, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+            if (options?.IncludeAdditionalOperatorDetails == null)
+            {
+                options = new OperatorInformationOptions();
+                options.IncludeAdditionalOperatorDetails = false;
+            }
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = InternalClient.OperatorInformationSearch(phoneNumbers, options, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OperatorInformationResult>> SearchOperatorInformationAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
@@ -794,10 +850,6 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
-                    if (skip > pageSizeHint)
-                    {
-                        return null;
-                    }
 
                     return RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, null);
                 }
@@ -851,10 +903,6 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
-                    if (skip > pageSizeHint)
-                    {
-                        return null;
-                    }
 
                     return RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, null);
                 }

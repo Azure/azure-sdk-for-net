@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="instanceType"/> is null. </exception>
         internal TaskModelCustomProperties(string instanceType)
         {
-            if (instanceType == null)
-            {
-                throw new ArgumentNullException(nameof(instanceType));
-            }
+            Argument.AssertNotNull(instanceType, nameof(instanceType));
 
             InstanceType = instanceType;
         }

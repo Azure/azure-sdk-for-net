@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);

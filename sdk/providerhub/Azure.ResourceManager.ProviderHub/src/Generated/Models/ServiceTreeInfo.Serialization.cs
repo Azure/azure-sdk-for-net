@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (ServiceId != null)
+            if (Optional.IsDefined(ServiceId))
             {
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);

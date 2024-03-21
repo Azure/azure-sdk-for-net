@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kekType"u8);
             writer.WriteStringValue(KekType.ToSerialString());
-            if (ManagedIdentity != null)
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identityProperties"u8);
                 writer.WriteObjectValue(ManagedIdentity);
             }
-            if (KekUri != null)
+            if (Optional.IsDefined(KekUri))
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (KekVaultResourceId != null)
+            if (Optional.IsDefined(KekVaultResourceId))
             {
                 writer.WritePropertyName("kekVaultResourceID"u8);
                 writer.WriteStringValue(KekVaultResourceId);

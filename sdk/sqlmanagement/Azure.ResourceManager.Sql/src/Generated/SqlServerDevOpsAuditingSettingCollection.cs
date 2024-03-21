@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerDevOpsAuditingSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerDevOpsAuditingSettingResource> CreateOrUpdate(WaitUntil waitUntil, string devOpsAuditingSettingsName, SqlServerDevOpsAuditingSettingData data, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual async Task<Response<SqlServerDevOpsAuditingSettingResource>> GetAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual Response<SqlServerDevOpsAuditingSettingResource> Get(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual Response<bool> Exists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerDevOpsAuditingSettingResource>> GetIfExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
         public virtual NullableResponse<SqlServerDevOpsAuditingSettingResource> GetIfExists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
         {
-            if (devOpsAuditingSettingsName == null)
-            {
-                throw new ArgumentNullException(nameof(devOpsAuditingSettingsName));
-            }
-            if (devOpsAuditingSettingsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devOpsAuditingSettingsName));
-            }
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
 
             using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
             scope.Start();

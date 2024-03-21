@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scheme"/> or <paramref name="parameter"/> is null. </exception>
         public BackendAuthorizationHeaderCredentials(string scheme, string parameter)
         {
-            if (scheme == null)
-            {
-                throw new ArgumentNullException(nameof(scheme));
-            }
-            if (parameter == null)
-            {
-                throw new ArgumentNullException(nameof(parameter));
-            }
+            Argument.AssertNotNull(scheme, nameof(scheme));
+            Argument.AssertNotNull(parameter, nameof(parameter));
 
             Scheme = scheme;
             Parameter = parameter;

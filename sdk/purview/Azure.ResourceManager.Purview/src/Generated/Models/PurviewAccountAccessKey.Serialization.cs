@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (AtlasKafkaPrimaryEndpoint != null)
+            if (Optional.IsDefined(AtlasKafkaPrimaryEndpoint))
             {
                 writer.WritePropertyName("atlasKafkaPrimaryEndpoint"u8);
                 writer.WriteStringValue(AtlasKafkaPrimaryEndpoint);
             }
-            if (AtlasKafkaSecondaryEndpoint != null)
+            if (Optional.IsDefined(AtlasKafkaSecondaryEndpoint))
             {
                 writer.WritePropertyName("atlasKafkaSecondaryEndpoint"u8);
                 writer.WriteStringValue(AtlasKafkaSecondaryEndpoint);

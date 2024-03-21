@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("registrationDefinitionId"u8);
             writer.WriteStringValue(RegistrationId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RegistrationDefinition != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationDefinition))
             {
                 writer.WritePropertyName("registrationDefinition"u8);
                 writer.WriteObjectValue(RegistrationDefinition);

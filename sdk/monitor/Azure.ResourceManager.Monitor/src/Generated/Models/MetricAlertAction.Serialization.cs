@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (ActionGroupId != null)
+            if (Optional.IsDefined(ActionGroupId))
             {
                 writer.WritePropertyName("actionGroupId"u8);
                 writer.WriteStringValue(ActionGroupId);
             }
-            if (!(WebHookProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WebHookProperties))
             {
                 writer.WritePropertyName("webHookProperties"u8);
                 writer.WriteStartObject();

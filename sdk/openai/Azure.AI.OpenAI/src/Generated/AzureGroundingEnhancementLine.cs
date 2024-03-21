@@ -52,14 +52,8 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="spans"/> is null. </exception>
         internal AzureGroundingEnhancementLine(string text, IEnumerable<AzureGroundingEnhancementLineSpan> spans)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             Text = text;
             Spans = spans.ToList();

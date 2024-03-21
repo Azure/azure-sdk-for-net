@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<SqlDatabaseSchemaResource>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<SqlDatabaseSchemaResource> Get(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.Get");
             scope.Start();
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.Exists");
             scope.Start();
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.Exists");
             scope.Start();
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlDatabaseSchemaResource>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.GetIfExists");
             scope.Start();
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual NullableResponse<SqlDatabaseSchemaResource> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.GetIfExists");
             scope.Start();

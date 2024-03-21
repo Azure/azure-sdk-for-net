@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (RequestMessage != null)
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (ResourceRegion.HasValue)
+            if (Optional.IsDefined(ResourceRegion))
             {
                 writer.WritePropertyName("resourceRegion"u8);
                 writer.WriteStringValue(ResourceRegion.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());

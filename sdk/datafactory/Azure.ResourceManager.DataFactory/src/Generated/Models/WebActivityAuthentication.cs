@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userTenant"> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactorySecretBaseDefinition pfx, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactorySecret pfx, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebActivityAuthenticationType = webActivityAuthenticationType;
             Pfx = pfx;
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </summary>
         public string WebActivityAuthenticationType { get; set; }
         /// <summary> Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal. </summary>
-        public DataFactorySecretBaseDefinition Pfx { get; set; }
+        public DataFactorySecret Pfx { get; set; }
         /// <summary> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for the PFX file or basic authentication / Secret when used for ServicePrincipal. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Resource { get; set; }
         /// <summary> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </summary>

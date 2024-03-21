@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="artifactName"/> is null. </exception>
         protected OneLakeArtifact(string artifactName)
         {
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
+            Argument.AssertNotNull(artifactName, nameof(artifactName));
 
             ArtifactName = artifactName;
         }

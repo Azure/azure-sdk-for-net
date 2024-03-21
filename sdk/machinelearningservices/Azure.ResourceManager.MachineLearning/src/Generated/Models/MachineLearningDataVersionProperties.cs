@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
         public MachineLearningDataVersionProperties(Uri dataUri)
         {
-            if (dataUri == null)
-            {
-                throw new ArgumentNullException(nameof(dataUri));
-            }
+            Argument.AssertNotNull(dataUri, nameof(dataUri));
 
             DataUri = dataUri;
         }

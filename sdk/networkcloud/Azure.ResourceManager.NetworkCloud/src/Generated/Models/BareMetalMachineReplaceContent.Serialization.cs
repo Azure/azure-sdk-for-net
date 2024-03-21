@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (BmcCredentials != null)
+            if (Optional.IsDefined(BmcCredentials))
             {
                 writer.WritePropertyName("bmcCredentials"u8);
                 writer.WriteObjectValue(BmcCredentials);
             }
-            if (BmcMacAddress != null)
+            if (Optional.IsDefined(BmcMacAddress))
             {
                 writer.WritePropertyName("bmcMacAddress"u8);
                 writer.WriteStringValue(BmcMacAddress);
             }
-            if (BootMacAddress != null)
+            if (Optional.IsDefined(BootMacAddress))
             {
                 writer.WritePropertyName("bootMacAddress"u8);
                 writer.WriteStringValue(BootMacAddress);
             }
-            if (MachineName != null)
+            if (Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);

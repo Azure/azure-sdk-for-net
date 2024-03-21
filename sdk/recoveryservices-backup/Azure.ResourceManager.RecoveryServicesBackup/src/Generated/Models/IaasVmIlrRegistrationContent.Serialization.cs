@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (VirtualMachineId != null)
+            if (Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (InitiatorName != null)
+            if (Optional.IsDefined(InitiatorName))
             {
                 writer.WritePropertyName("initiatorName"u8);
                 writer.WriteStringValue(InitiatorName);
             }
-            if (RenewExistingRegistration.HasValue)
+            if (Optional.IsDefined(RenewExistingRegistration))
             {
                 writer.WritePropertyName("renewExistingRegistration"u8);
                 writer.WriteBooleanValue(RenewExistingRegistration.Value);

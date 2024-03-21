@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (!(PublicIPs is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (RequestLogging != null)
+            if (Optional.IsDefined(RequestLogging))
             {
                 if (RequestLogging != null)
                 {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("requestLogging");
                 }
             }
-            if (RollingRate.HasValue)
+            if (Optional.IsDefined(RollingRate))
             {
                 writer.WritePropertyName("rollingRate"u8);
                 writer.WriteStringValue(RollingRate.Value.ToString());

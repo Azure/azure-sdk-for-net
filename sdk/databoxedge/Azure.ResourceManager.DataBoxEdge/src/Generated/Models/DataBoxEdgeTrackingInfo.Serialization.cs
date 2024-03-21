@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (CarrierName != null)
+            if (Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (TrackingId != null)
+            if (Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (TrackingUri != null)
+            if (Optional.IsDefined(TrackingUri))
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);

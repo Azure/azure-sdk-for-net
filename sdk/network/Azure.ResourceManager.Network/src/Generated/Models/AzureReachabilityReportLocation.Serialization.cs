@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);

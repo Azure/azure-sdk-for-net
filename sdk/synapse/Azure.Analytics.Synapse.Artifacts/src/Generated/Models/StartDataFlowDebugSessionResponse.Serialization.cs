@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (JobVersion != null)
+            if (Optional.IsDefined(JobVersion))
             {
                 writer.WritePropertyName("jobVersion"u8);
                 writer.WriteStringValue(JobVersion);

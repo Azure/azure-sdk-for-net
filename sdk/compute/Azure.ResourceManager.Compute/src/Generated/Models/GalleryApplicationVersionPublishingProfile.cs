@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public GalleryApplicationVersionPublishingProfile(UserArtifactSource source)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
             AdvancedSettings = new ChangeTrackingDictionary<string, string>();

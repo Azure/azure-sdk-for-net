@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (CertificateUri != null)
+            if (Optional.IsDefined(CertificateUri))
             {
                 writer.WritePropertyName("certificateUrl"u8);
                 writer.WriteStringValue(CertificateUri.AbsoluteUri);

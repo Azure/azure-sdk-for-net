@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -80,54 +80,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ServerVersion);
             writer.WritePropertyName("catalog"u8);
             JsonSerializer.Serialize(writer, Catalog);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (EnableSsl != null)
+            if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 JsonSerializer.Serialize(writer, EnableSsl);
             }
-            if (TrustedCertPath != null)
+            if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 JsonSerializer.Serialize(writer, TrustedCertPath);
             }
-            if (UseSystemTrustStore != null)
+            if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 JsonSerializer.Serialize(writer, UseSystemTrustStore);
             }
-            if (AllowHostNameCNMismatch != null)
+            if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
                 JsonSerializer.Serialize(writer, AllowHostNameCNMismatch);
             }
-            if (AllowSelfSignedServerCert != null)
+            if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 JsonSerializer.Serialize(writer, AllowSelfSignedServerCert);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneID"u8);
                 JsonSerializer.Serialize(writer, TimeZoneId);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             PrestoAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"u8))

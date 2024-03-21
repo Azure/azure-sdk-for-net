@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ReservationToReturn != null)
+            if (Optional.IsDefined(ReservationToReturn))
             {
                 writer.WritePropertyName("reservationToReturn"u8);
                 writer.WriteObjectValue(ReservationToReturn);

@@ -64,10 +64,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, Guid objectId, AadObjectIdentifierType objectType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ObjectId = objectId;

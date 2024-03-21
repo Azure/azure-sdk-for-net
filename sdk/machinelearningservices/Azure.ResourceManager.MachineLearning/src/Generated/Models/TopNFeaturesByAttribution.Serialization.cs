@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);

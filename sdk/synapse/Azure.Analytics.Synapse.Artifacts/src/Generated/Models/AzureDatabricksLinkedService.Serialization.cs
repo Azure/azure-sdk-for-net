@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,47 +61,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue(Domain);
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteObjectValue(AccessToken);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteObjectValue(WorkspaceResourceId);
             }
-            if (ExistingClusterId != null)
+            if (Optional.IsDefined(ExistingClusterId))
             {
                 writer.WritePropertyName("existingClusterId"u8);
                 writer.WriteObjectValue(ExistingClusterId);
             }
-            if (InstancePoolId != null)
+            if (Optional.IsDefined(InstancePoolId))
             {
                 writer.WritePropertyName("instancePoolId"u8);
                 writer.WriteObjectValue(InstancePoolId);
             }
-            if (NewClusterVersion != null)
+            if (Optional.IsDefined(NewClusterVersion))
             {
                 writer.WritePropertyName("newClusterVersion"u8);
                 writer.WriteObjectValue(NewClusterVersion);
             }
-            if (NewClusterNumOfWorker != null)
+            if (Optional.IsDefined(NewClusterNumOfWorker))
             {
                 writer.WritePropertyName("newClusterNumOfWorker"u8);
                 writer.WriteObjectValue(NewClusterNumOfWorker);
             }
-            if (NewClusterNodeType != null)
+            if (Optional.IsDefined(NewClusterNodeType))
             {
                 writer.WritePropertyName("newClusterNodeType"u8);
                 writer.WriteObjectValue(NewClusterNodeType);
             }
-            if (!(NewClusterSparkConf is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NewClusterSparkConf))
             {
                 writer.WritePropertyName("newClusterSparkConf"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(NewClusterSparkEnvVars is ChangeTrackingDictionary<string, object> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
             {
                 writer.WritePropertyName("newClusterSparkEnvVars"u8);
                 writer.WriteStartObject();
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(NewClusterCustomTags is ChangeTrackingDictionary<string, object> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(NewClusterCustomTags))
             {
                 writer.WritePropertyName("newClusterCustomTags"u8);
                 writer.WriteStartObject();
@@ -149,37 +149,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (NewClusterLogDestination != null)
+            if (Optional.IsDefined(NewClusterLogDestination))
             {
                 writer.WritePropertyName("newClusterLogDestination"u8);
                 writer.WriteObjectValue(NewClusterLogDestination);
             }
-            if (NewClusterDriverNodeType != null)
+            if (Optional.IsDefined(NewClusterDriverNodeType))
             {
                 writer.WritePropertyName("newClusterDriverNodeType"u8);
                 writer.WriteObjectValue(NewClusterDriverNodeType);
             }
-            if (NewClusterInitScripts != null)
+            if (Optional.IsDefined(NewClusterInitScripts))
             {
                 writer.WritePropertyName("newClusterInitScripts"u8);
                 writer.WriteObjectValue(NewClusterInitScripts);
             }
-            if (NewClusterEnableElasticDisk != null)
+            if (Optional.IsDefined(NewClusterEnableElasticDisk))
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk"u8);
                 writer.WriteObjectValue(NewClusterEnableElasticDisk);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteObjectValue(PolicyId);
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);

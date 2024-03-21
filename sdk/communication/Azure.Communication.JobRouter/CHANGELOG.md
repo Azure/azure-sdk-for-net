@@ -4,6 +4,9 @@
 
 ### Features Added
 
+#### RouterWorker && CreateWorkerOptions
+- Added `MaxConcurrentOffers`
+
 ### Breaking Changes
 
 ### Bugs Fixed

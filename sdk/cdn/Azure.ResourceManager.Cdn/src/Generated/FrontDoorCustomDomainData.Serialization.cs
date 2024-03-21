@@ -44,29 +44,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (TlsSettings != null)
+            if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
                 writer.WriteObjectValue(TlsSettings);
             }
-            if (DnsZone != null)
+            if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
                 JsonSerializer.Serialize(writer, DnsZone);
             }
-            if (PreValidatedCustomDomainResource != null)
+            if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 if (PreValidatedCustomDomainResource != null)
                 {
@@ -78,27 +78,27 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("preValidatedCustomDomainResourceId");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());
             }
-            if (options.Format != "W" && DomainValidationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DomainValidationState))
             {
                 writer.WritePropertyName("domainValidationState"u8);
                 writer.WriteStringValue(DomainValidationState.Value.ToString());
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && ValidationProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
             {
                 writer.WritePropertyName("validationProperties"u8);
                 writer.WriteObjectValue(ValidationProperties);

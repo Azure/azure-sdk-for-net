@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(PublicKeys is ChangeTrackingList<SshPublicKeyConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicKeys))
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteStartArray();

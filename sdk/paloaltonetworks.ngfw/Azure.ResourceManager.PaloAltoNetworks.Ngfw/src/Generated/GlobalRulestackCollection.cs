@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GlobalRulestackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string globalRulestackName, GlobalRulestackData data, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GlobalRulestackResource> CreateOrUpdate(WaitUntil waitUntil, string globalRulestackName, GlobalRulestackData data, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         public virtual async Task<Response<GlobalRulestackResource>> GetAsync(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         public virtual Response<GlobalRulestackResource> Get(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         public virtual Response<bool> Exists(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         public virtual async Task<NullableResponse<GlobalRulestackResource>> GetIfExistsAsync(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         public virtual NullableResponse<GlobalRulestackResource> GetIfExists(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackCollection.GetIfExists");
             scope.Start();

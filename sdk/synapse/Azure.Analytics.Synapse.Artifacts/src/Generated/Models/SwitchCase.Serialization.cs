@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (!(Activities is ChangeTrackingList<Activity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();

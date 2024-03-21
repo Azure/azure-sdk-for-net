@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlMigrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlMigrationResource> CreateOrUpdate(WaitUntil waitUntil, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlMigrationResource>> GetAsync(string migrationName, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         public virtual Response<PostgreSqlMigrationResource> Get(string migrationName, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Get");
             scope.Start();
@@ -365,14 +329,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string migrationName, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Exists");
             scope.Start();
@@ -415,14 +372,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         public virtual Response<bool> Exists(string migrationName, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.Exists");
             scope.Start();
@@ -465,14 +415,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlMigrationResource>> GetIfExistsAsync(string migrationName, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.GetIfExists");
             scope.Start();
@@ -517,14 +460,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlMigrationResource> GetIfExists(string migrationName, CancellationToken cancellationToken = default)
         {
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlMigrationCollection.GetIfExists");
             scope.Start();

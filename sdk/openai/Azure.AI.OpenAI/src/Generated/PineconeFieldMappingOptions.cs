@@ -51,10 +51,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="contentFieldNames"/> is null. </exception>
         public PineconeFieldMappingOptions(IEnumerable<string> contentFieldNames)
         {
-            if (contentFieldNames == null)
-            {
-                throw new ArgumentNullException(nameof(contentFieldNames));
-            }
+            Argument.AssertNotNull(contentFieldNames, nameof(contentFieldNames));
 
             ContentFieldNames = contentFieldNames.ToList();
         }

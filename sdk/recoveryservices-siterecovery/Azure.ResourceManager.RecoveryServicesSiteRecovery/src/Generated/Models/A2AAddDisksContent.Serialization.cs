@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(VmDisks is ChangeTrackingList<A2AVmDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmManagedDisks is ChangeTrackingList<A2AVmManagedDiskDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmManagedDisks))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();

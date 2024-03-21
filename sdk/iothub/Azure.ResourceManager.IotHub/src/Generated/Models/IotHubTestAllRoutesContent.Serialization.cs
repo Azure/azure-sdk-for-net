@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (RoutingSource.HasValue)
+            if (Optional.IsDefined(RoutingSource))
             {
                 writer.WritePropertyName("routingSource"u8);
                 writer.WriteStringValue(RoutingSource.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
-            if (Twin != null)
+            if (Optional.IsDefined(Twin))
             {
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);

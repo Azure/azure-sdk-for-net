@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CniConfigType != null)
+            if (options.Format != "W" && Optional.IsDefined(CniConfigType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CniConfigType);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && PodSubnet != null)
+            if (options.Format != "W" && Optional.IsDefined(PodSubnet))
             {
                 writer.WritePropertyName("podSubnet"u8);
                 writer.WriteStringValue(PodSubnet);
             }
-            if (options.Format != "W" && ServiceSubnet != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceSubnet))
             {
                 writer.WritePropertyName("serviceSubnet"u8);
                 writer.WriteStringValue(ServiceSubnet);

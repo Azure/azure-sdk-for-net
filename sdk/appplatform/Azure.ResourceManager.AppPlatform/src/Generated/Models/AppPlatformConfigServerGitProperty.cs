@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AppPlatformConfigServerGitProperty(Uri uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Repositories = new ChangeTrackingList<ConfigServerGitPatternRepository>();
             Uri = uri;

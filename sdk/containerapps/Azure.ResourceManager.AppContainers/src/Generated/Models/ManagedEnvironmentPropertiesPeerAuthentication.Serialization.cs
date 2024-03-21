@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Mtls != null)
+            if (Optional.IsDefined(Mtls))
             {
                 writer.WritePropertyName("mtls"u8);
                 writer.WriteObjectValue(Mtls);

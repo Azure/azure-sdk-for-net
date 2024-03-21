@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (!(ResourceTypes is ChangeTrackingList<ResourceType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroups))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(OSTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(OSTypes))
             {
                 writer.WritePropertyName("osTypes"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Locations is ChangeTrackingList<AzureLocation> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TagSettings != null)
+            if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings);

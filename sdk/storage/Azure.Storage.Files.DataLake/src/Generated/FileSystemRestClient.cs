@@ -11,9 +11,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 
 namespace Azure.Storage.Files.DataLake
@@ -412,7 +412,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 uri.AppendQuery("maxResults", maxResults.Value, true);
             }
-            if (include != null && !(include is ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
+            if (include != null && !(include is Common.ChangeTrackingList<ListBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

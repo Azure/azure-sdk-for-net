@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="streams"/> is null. </exception>
         public WindowsFirewallLogsDataSource(IEnumerable<string> streams)
         {
-            if (streams == null)
-            {
-                throw new ArgumentNullException(nameof(streams));
-            }
+            Argument.AssertNotNull(streams, nameof(streams));
 
             Streams = streams.ToList();
         }

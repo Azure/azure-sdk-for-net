@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CustomerInsights
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hubName, HubData data, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HubResource> CreateOrUpdate(WaitUntil waitUntil, string hubName, HubData data, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual async Task<Response<HubResource>> GetAsync(string hubName, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual Response<HubResource> Get(string hubName, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual Response<bool> Exists(string hubName, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual async Task<NullableResponse<HubResource>> GetIfExistsAsync(string hubName, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <exception cref="ArgumentNullException"> <paramref name="hubName"/> is null. </exception>
         public virtual NullableResponse<HubResource> GetIfExists(string hubName, CancellationToken cancellationToken = default)
         {
-            if (hubName == null)
-            {
-                throw new ArgumentNullException(nameof(hubName));
-            }
-            if (hubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hubName));
-            }
+            Argument.AssertNotNullOrEmpty(hubName, nameof(hubName));
 
             using var scope = _hubClientDiagnostics.CreateScope("HubCollection.GetIfExists");
             scope.Start();

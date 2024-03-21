@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ResourceHealth.Models;
@@ -70,10 +69,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<ResourceHealthAvailabilityStatus>> GetByResourceAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateGetByResourceRequest(resourceUri, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -99,10 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<ResourceHealthAvailabilityStatus> GetByResource(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateGetByResourceRequest(resourceUri, filter, expand);
             _pipeline.Send(message, cancellationToken);
@@ -153,10 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<ResourceHealthAvailabilityStatusListResult>> ListAsync(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,10 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<ResourceHealthAvailabilityStatusListResult> List(string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, filter, expand);
             _pipeline.Send(message, cancellationToken);
@@ -226,14 +213,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<ResourceHealthAvailabilityStatusListResult>> ListNextPageAsync(string nextLink, string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListNextPageRequest(nextLink, resourceUri, filter, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -260,14 +241,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
         public Response<ResourceHealthAvailabilityStatusListResult> ListNextPage(string nextLink, string resourceUri, string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListNextPageRequest(nextLink, resourceUri, filter, expand);
             _pipeline.Send(message, cancellationToken);

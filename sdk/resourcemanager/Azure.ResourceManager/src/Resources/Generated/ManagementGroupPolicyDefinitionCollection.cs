@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagementGroupPolicyDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagementGroupPolicyDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string policyDefinitionName, PolicyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual async Task<Response<ManagementGroupPolicyDefinitionResource>> GetAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual Response<ManagementGroupPolicyDefinitionResource> Get(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.Exists");
             scope.Start();
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagementGroupPolicyDefinitionResource>> GetIfExistsAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetIfExists");
             scope.Start();
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
         public virtual NullableResponse<ManagementGroupPolicyDefinitionResource> GetIfExists(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (policyDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(policyDefinitionName));
-            }
-            if (policyDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
 
             using var scope = _managementGroupPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicyDefinitionCollection.GetIfExists");
             scope.Start();

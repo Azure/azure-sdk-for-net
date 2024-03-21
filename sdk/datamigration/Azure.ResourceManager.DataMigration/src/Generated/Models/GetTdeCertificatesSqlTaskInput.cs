@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/>, <paramref name="backupFileShare"/> or <paramref name="selectedCertificates"/> is null. </exception>
         public GetTdeCertificatesSqlTaskInput(SqlConnectionInfo connectionInfo, FileShare backupFileShare, IEnumerable<SelectedCertificateInput> selectedCertificates)
         {
-            if (connectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(connectionInfo));
-            }
-            if (backupFileShare == null)
-            {
-                throw new ArgumentNullException(nameof(backupFileShare));
-            }
-            if (selectedCertificates == null)
-            {
-                throw new ArgumentNullException(nameof(selectedCertificates));
-            }
+            Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
+            Argument.AssertNotNull(backupFileShare, nameof(backupFileShare));
+            Argument.AssertNotNull(selectedCertificates, nameof(selectedCertificates));
 
             ConnectionInfo = connectionInfo;
             BackupFileShare = backupFileShare;

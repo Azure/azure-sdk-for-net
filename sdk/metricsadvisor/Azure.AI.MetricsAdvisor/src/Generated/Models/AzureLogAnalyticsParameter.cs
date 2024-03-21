@@ -18,14 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
         public AzureLogAnalyticsParameter(string workspaceId, string query)
         {
-            if (workspaceId == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceId));
-            }
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+            Argument.AssertNotNull(workspaceId, nameof(workspaceId));
+            Argument.AssertNotNull(query, nameof(query));
 
             WorkspaceId = workspaceId;
             Query = query;

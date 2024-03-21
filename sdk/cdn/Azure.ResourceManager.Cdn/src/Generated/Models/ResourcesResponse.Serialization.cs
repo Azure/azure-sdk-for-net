@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (!(Endpoints is ChangeTrackingList<ResourcesResponseEndpointsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomDomains is ChangeTrackingList<ResourcesResponseCustomDomainsItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();

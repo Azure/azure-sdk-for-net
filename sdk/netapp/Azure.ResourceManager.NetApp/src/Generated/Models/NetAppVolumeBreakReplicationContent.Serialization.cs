@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (ForceBreakReplication.HasValue)
+            if (Optional.IsDefined(ForceBreakReplication))
             {
                 writer.WritePropertyName("forceBreakReplication"u8);
                 writer.WriteBooleanValue(ForceBreakReplication.Value);

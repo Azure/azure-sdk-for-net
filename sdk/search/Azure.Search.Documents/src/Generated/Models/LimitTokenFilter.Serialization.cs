@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenCount.HasValue)
+            if (Optional.IsDefined(MaxTokenCount))
             {
                 writer.WritePropertyName("maxTokenCount"u8);
                 writer.WriteNumberValue(MaxTokenCount.Value);
             }
-            if (ConsumeAllTokens.HasValue)
+            if (Optional.IsDefined(ConsumeAllTokens))
             {
                 writer.WritePropertyName("consumeAllTokens"u8);
                 writer.WriteBooleanValue(ConsumeAllTokens.Value);

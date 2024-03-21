@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Dynatrace
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DynatraceTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, DynatraceTagRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DynatraceTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, DynatraceTagRuleData data, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<DynatraceTagRuleResource>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<DynatraceTagRuleResource> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<NullableResponse<DynatraceTagRuleResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual NullableResponse<DynatraceTagRuleResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _dynatraceTagRuleTagRulesClientDiagnostics.CreateScope("DynatraceTagRuleCollection.GetIfExists");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Extensions is ChangeTrackingList<CloudServiceExtension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();

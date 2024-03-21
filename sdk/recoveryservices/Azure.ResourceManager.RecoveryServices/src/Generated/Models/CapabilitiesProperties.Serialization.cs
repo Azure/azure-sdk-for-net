@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (!(DnsZones is ChangeTrackingList<DnsZone> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsZones))
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();

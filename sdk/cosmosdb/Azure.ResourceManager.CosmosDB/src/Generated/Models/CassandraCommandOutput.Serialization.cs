@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (CommandOutput != null)
+            if (Optional.IsDefined(CommandOutput))
             {
                 writer.WritePropertyName("commandOutput"u8);
                 writer.WriteStringValue(CommandOutput);

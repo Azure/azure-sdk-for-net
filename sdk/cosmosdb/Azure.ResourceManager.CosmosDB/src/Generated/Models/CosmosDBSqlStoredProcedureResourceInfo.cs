@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public CosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName)
         {
-            if (storedProcedureName == null)
-            {
-                throw new ArgumentNullException(nameof(storedProcedureName));
-            }
+            Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
 
             StoredProcedureName = storedProcedureName;
         }

@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AvailableCapacity.HasValue)
+            if (Optional.IsDefined(AvailableCapacity))
             {
                 writer.WritePropertyName("availableCapacity"u8);
                 writer.WriteNumberValue(AvailableCapacity.Value);
             }
-            if (TotalCapacity.HasValue)
+            if (Optional.IsDefined(TotalCapacity))
             {
                 writer.WritePropertyName("totalCapacity"u8);
                 writer.WriteNumberValue(TotalCapacity.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (ComputeMode.HasValue)
+            if (Optional.IsDefined(ComputeMode))
             {
                 writer.WritePropertyName("computeMode"u8);
                 writer.WriteStringValue(ComputeMode.Value.ToSerialString());
             }
-            if (WorkerSize.HasValue)
+            if (Optional.IsDefined(WorkerSize))
             {
                 writer.WritePropertyName("workerSize"u8);
                 writer.WriteStringValue(WorkerSize.Value.ToSerialString());
             }
-            if (WorkerSizeId.HasValue)
+            if (Optional.IsDefined(WorkerSizeId))
             {
                 writer.WritePropertyName("workerSizeId"u8);
                 writer.WriteNumberValue(WorkerSizeId.Value);
             }
-            if (ExcludeFromCapacityAllocation.HasValue)
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation))
             {
                 writer.WritePropertyName("excludeFromCapacityAllocation"u8);
                 writer.WriteBooleanValue(ExcludeFromCapacityAllocation.Value);
             }
-            if (IsApplicableForAllComputeModes.HasValue)
+            if (Optional.IsDefined(IsApplicableForAllComputeModes))
             {
                 writer.WritePropertyName("isApplicableForAllComputeModes"u8);
                 writer.WriteBooleanValue(IsApplicableForAllComputeModes.Value);
             }
-            if (SiteMode != null)
+            if (Optional.IsDefined(SiteMode))
             {
                 writer.WritePropertyName("siteMode"u8);
                 writer.WriteStringValue(SiteMode);
             }
-            if (IsLinux.HasValue)
+            if (Optional.IsDefined(IsLinux))
             {
                 writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);

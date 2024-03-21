@@ -53,30 +53,19 @@ namespace Azure.AI.OpenAI
         /// <param name="containerName"> The name of the Azure Cosmos DB resource container. </param>
         /// <param name="indexName"> The MongoDB vCore index name to use with Azure Cosmos DB. </param>
         /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OnYourDataEndpointVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="containerName"/>, <paramref name="indexName"/>, <paramref name="fieldMappingOptions"/> or <paramref name="embeddingDependency"/> is null. </exception>
         public AzureCosmosDBChatExtensionParameters(string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (indexName == null)
-            {
-                throw new ArgumentNullException(nameof(indexName));
-            }
-            if (fieldMappingOptions == null)
-            {
-                throw new ArgumentNullException(nameof(fieldMappingOptions));
-            }
-            if (embeddingDependency == null)
-            {
-                throw new ArgumentNullException(nameof(embeddingDependency));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+            Argument.AssertNotNull(fieldMappingOptions, nameof(fieldMappingOptions));
+            Argument.AssertNotNull(embeddingDependency, nameof(embeddingDependency));
 
             DatabaseName = databaseName;
             ContainerName = containerName;
@@ -92,6 +81,8 @@ namespace Azure.AI.OpenAI
         /// the data source for supported mechanisms.
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
         /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
@@ -101,7 +92,11 @@ namespace Azure.AI.OpenAI
         /// <param name="containerName"> The name of the Azure Cosmos DB resource container. </param>
         /// <param name="indexName"> The MongoDB vCore index name to use with Azure Cosmos DB. </param>
         /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OnYourDataEndpointVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AzureCosmosDBChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -125,7 +120,7 @@ namespace Azure.AI.OpenAI
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
         /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </summary>
         public OnYourDataAuthenticationOptions Authentication { get; set; }
         /// <summary> The configured top number of documents to feature for the configured query. </summary>

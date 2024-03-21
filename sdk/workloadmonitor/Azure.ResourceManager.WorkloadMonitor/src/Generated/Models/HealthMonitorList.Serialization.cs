@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.WorkloadMonitor;
 
 namespace Azure.ResourceManager.WorkloadMonitor.Models
 {
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<HealthMonitorData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);

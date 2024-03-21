@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (BucketName != null)
+            if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
                 writer.WriteStringValue(BucketName);
             }
-            if (UseInsecureCommunication.HasValue)
+            if (Optional.IsDefined(UseInsecureCommunication))
             {
                 writer.WritePropertyName("insecure"u8);
                 writer.WriteBooleanValue(UseInsecureCommunication.Value);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 if (AccessKey != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("accessKey");
                 }
             }
-            if (LocalAuthRef != null)
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobId"/> is null. </exception>
         public PrimingJobContent(string primingJobId)
         {
-            if (primingJobId == null)
-            {
-                throw new ArgumentNullException(nameof(primingJobId));
-            }
+            Argument.AssertNotNull(primingJobId, nameof(primingJobId));
 
             PrimingJobId = primingJobId;
         }

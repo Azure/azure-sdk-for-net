@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public OnYourDataConnectionStringAuthenticationOptions(string connectionString)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             Type = OnYourDataAuthenticationType.ConnectionString;
             ConnectionString = connectionString;

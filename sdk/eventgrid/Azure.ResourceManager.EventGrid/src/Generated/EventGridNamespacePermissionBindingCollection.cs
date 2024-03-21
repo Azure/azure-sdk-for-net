@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventGridNamespacePermissionBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string permissionBindingName, EventGridNamespacePermissionBindingData data, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventGridNamespacePermissionBindingResource> CreateOrUpdate(WaitUntil waitUntil, string permissionBindingName, EventGridNamespacePermissionBindingData data, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
         public virtual async Task<Response<EventGridNamespacePermissionBindingResource>> GetAsync(string permissionBindingName, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
         public virtual Response<EventGridNamespacePermissionBindingResource> Get(string permissionBindingName, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string permissionBindingName, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
         public virtual Response<bool> Exists(string permissionBindingName, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventGridNamespacePermissionBindingResource>> GetIfExistsAsync(string permissionBindingName, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
         public virtual NullableResponse<EventGridNamespacePermissionBindingResource> GetIfExists(string permissionBindingName, CancellationToken cancellationToken = default)
         {
-            if (permissionBindingName == null)
-            {
-                throw new ArgumentNullException(nameof(permissionBindingName));
-            }
-            if (permissionBindingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permissionBindingName));
-            }
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
 
             using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.GetIfExists");
             scope.Start();

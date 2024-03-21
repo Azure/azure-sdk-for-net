@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -31,7 +30,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteNumberValue(MinConcurrentOffers);
             writer.WritePropertyName("maxConcurrentOffers"u8);
             writer.WriteNumberValue(MaxConcurrentOffers);
-            if (BypassSelectors.HasValue)
+            if (Optional.IsDefined(BypassSelectors))
             {
                 writer.WritePropertyName("bypassSelectors"u8);
                 writer.WriteBooleanValue(BypassSelectors.Value);

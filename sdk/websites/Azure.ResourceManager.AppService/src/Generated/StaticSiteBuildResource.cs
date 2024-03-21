@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -347,10 +345,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateAppSettingsAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateAppSettings");
             scope.Start();
@@ -388,10 +383,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual Response<AppServiceConfigurationDictionary> CreateOrUpdateAppSettings(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateAppSettings");
             scope.Start();
@@ -429,10 +421,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual async Task<Response<AppServiceConfigurationDictionary>> CreateOrUpdateFunctionAppSettingsAsync(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateFunctionAppSettings");
             scope.Start();
@@ -470,10 +459,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="appSettings"/> is null. </exception>
         public virtual Response<AppServiceConfigurationDictionary> CreateOrUpdateFunctionAppSettings(AppServiceConfigurationDictionary appSettings, CancellationToken cancellationToken = default)
         {
-            if (appSettings == null)
-            {
-                throw new ArgumentNullException(nameof(appSettings));
-            }
+            Argument.AssertNotNull(appSettings, nameof(appSettings));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateOrUpdateFunctionAppSettings");
             scope.Start();
@@ -728,10 +714,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateZipDeploymentAsync(WaitUntil waitUntil, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateZipDeployment");
             scope.Start();
@@ -777,10 +760,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="staticSiteZipDeploymentEnvelope"/> is null. </exception>
         public virtual ArmOperation CreateZipDeployment(WaitUntil waitUntil, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope, CancellationToken cancellationToken = default)
         {
-            if (staticSiteZipDeploymentEnvelope == null)
-            {
-                throw new ArgumentNullException(nameof(staticSiteZipDeploymentEnvelope));
-            }
+            Argument.AssertNotNull(staticSiteZipDeploymentEnvelope, nameof(staticSiteZipDeploymentEnvelope));
 
             using var scope = _staticSiteBuildStaticSitesClientDiagnostics.CreateScope("StaticSiteBuildResource.CreateZipDeployment");
             scope.Start();

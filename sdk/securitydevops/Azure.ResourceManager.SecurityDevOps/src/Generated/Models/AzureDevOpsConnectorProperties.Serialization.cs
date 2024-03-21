@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Authorization != null)
+            if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (!(Orgs is ChangeTrackingList<AzureDevOpsOrgMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Orgs))
             {
                 writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();

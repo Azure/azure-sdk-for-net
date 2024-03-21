@@ -16,12 +16,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FromDhcp.HasValue)
+            if (Optional.IsDefined(FromDhcp))
             {
                 writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
-            if (!(Ipv4Address is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ipv6Address is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStartArray();

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("prefix"u8);
             writer.WriteStringValue(Prefix);
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);

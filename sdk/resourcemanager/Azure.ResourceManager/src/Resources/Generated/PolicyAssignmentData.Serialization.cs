@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Resources
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ManagedIdentity != null)
+            if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, ManagedIdentity);
@@ -53,29 +53,29 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PolicyDefinitionId != null)
+            if (Optional.IsDefined(PolicyDefinitionId))
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (options.Format != "W" && Scope != null)
+            if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (!(ExcludedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("notScopes"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameterValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (EnforcementMode.HasValue)
+            if (Optional.IsDefined(EnforcementMode))
             {
                 writer.WritePropertyName("enforcementMode"u8);
                 writer.WriteStringValue(EnforcementMode.Value.ToString());
             }
-            if (!(NonComplianceMessages is ChangeTrackingList<NonComplianceMessage> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NonComplianceMessages))
             {
                 writer.WritePropertyName("nonComplianceMessages"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceSelectors is ChangeTrackingList<ResourceSelector> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceSelectors))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(Overrides is ChangeTrackingList<PolicyOverride> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Overrides))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();

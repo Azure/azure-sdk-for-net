@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MySql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, MySqlConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, MySqlConfigurationData data, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<MySqlConfigurationResource>> GetAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<MySqlConfigurationResource> Get(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlConfigurationResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         public virtual NullableResponse<MySqlConfigurationResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
         {
-            if (configurationName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationName));
-            }
-            if (configurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
             using var scope = _mySqlConfigurationConfigurationsClientDiagnostics.CreateScope("MySqlConfigurationCollection.GetIfExists");
             scope.Start();

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -351,10 +349,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<LabPlanResource>> UpdateAsync(WaitUntil waitUntil, LabPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanResource.Update");
             scope.Start();
@@ -400,10 +395,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<LabPlanResource> Update(WaitUntil waitUntil, LabPlanPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanResource.Update");
             scope.Start();
@@ -449,10 +441,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> SaveImageAsync(WaitUntil waitUntil, LabVirtualMachineImageContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanResource.SaveImage");
             scope.Start();
@@ -498,10 +487,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation SaveImage(WaitUntil waitUntil, LabVirtualMachineImageContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _labPlanClientDiagnostics.CreateScope("LabPlanResource.SaveImage");
             scope.Start();

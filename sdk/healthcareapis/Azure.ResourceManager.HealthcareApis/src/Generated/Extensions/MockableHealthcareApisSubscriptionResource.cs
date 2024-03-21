@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HealthcareApis;
 using Azure.ResourceManager.HealthcareApis.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Mocking
@@ -135,10 +132,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("MockableHealthcareApisSubscriptionResource.CheckHealthcareApisNameAvailability");
             scope.Start();
@@ -180,10 +174,7 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = HealthcareApisServiceServicesClientDiagnostics.CreateScope("MockableHealthcareApisSubscriptionResource.CheckHealthcareApisNameAvailability");
             scope.Start();

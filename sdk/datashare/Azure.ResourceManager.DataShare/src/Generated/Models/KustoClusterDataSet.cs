@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -21,10 +20,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="kustoClusterResourceId"/> is null. </exception>
         public KustoClusterDataSet(ResourceIdentifier kustoClusterResourceId)
         {
-            if (kustoClusterResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(kustoClusterResourceId));
-            }
+            Argument.AssertNotNull(kustoClusterResourceId, nameof(kustoClusterResourceId));
 
             KustoClusterResourceId = kustoClusterResourceId;
             Kind = DataSetKind.KustoCluster;

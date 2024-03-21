@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             }
 
             writer.WriteStartObject();
-            if (ChangeType.HasValue)
+            if (Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (ChangeCategory.HasValue)
+            if (Optional.IsDefined(ChangeCategory))
             {
                 writer.WritePropertyName("changeCategory"u8);
                 writer.WriteStringValue(ChangeCategory.Value.ToSerialString());
             }
-            if (JsonPath != null)
+            if (Optional.IsDefined(JsonPath))
             {
                 writer.WritePropertyName("jsonPath"u8);
                 writer.WriteStringValue(JsonPath);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (OldValue != null)
+            if (Optional.IsDefined(OldValue))
             {
                 writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
-            if (NewValue != null)
+            if (Optional.IsDefined(NewValue))
             {
                 writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
-            if (IsDataMasked.HasValue)
+            if (Optional.IsDefined(IsDataMasked))
             {
                 writer.WritePropertyName("isDataMasked"u8);
                 writer.WriteBooleanValue(IsDataMasked.Value);

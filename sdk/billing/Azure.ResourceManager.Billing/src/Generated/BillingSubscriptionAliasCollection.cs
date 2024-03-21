@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -88,18 +86,8 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BillingSubscriptionAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string aliasName, BillingSubscriptionAliasData data, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -147,18 +135,8 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BillingSubscriptionAliasResource> CreateOrUpdate(WaitUntil waitUntil, string aliasName, BillingSubscriptionAliasData data, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.CreateOrUpdate");
             scope.Start();
@@ -204,14 +182,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         public virtual async Task<Response<BillingSubscriptionAliasResource>> GetAsync(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Get");
             scope.Start();
@@ -256,14 +227,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         public virtual Response<BillingSubscriptionAliasResource> Get(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Get");
             scope.Start();
@@ -368,14 +332,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         public virtual Response<bool> Exists(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         public virtual async Task<NullableResponse<BillingSubscriptionAliasResource>> GetIfExistsAsync(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
             scope.Start();
@@ -520,14 +463,7 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
         public virtual NullableResponse<BillingSubscriptionAliasResource> GetIfExists(string aliasName, CancellationToken cancellationToken = default)
         {
-            if (aliasName == null)
-            {
-                throw new ArgumentNullException(nameof(aliasName));
-            }
-            if (aliasName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(aliasName));
-            }
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
             using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
             scope.Start();

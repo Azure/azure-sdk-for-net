@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Recommendation != null)
+            if (Optional.IsDefined(Recommendation))
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (ProtectedItemName != null)
+            if (Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);

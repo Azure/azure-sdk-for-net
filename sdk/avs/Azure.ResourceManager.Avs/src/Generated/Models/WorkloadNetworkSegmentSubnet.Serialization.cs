@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (!(DhcpRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DhcpRanges))
             {
                 writer.WritePropertyName("dhcpRanges"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (GatewayAddress != null)
+            if (Optional.IsDefined(GatewayAddress))
             {
                 writer.WritePropertyName("gatewayAddress"u8);
                 writer.WriteStringValue(GatewayAddress);

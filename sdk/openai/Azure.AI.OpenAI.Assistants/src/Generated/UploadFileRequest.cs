@@ -51,10 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             Data = data;
             Purpose = purpose;

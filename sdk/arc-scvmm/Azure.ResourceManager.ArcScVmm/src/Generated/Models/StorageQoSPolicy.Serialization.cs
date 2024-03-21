@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (IopsMaximum.HasValue)
+            if (Optional.IsDefined(IopsMaximum))
             {
                 writer.WritePropertyName("iopsMaximum"u8);
                 writer.WriteNumberValue(IopsMaximum.Value);
             }
-            if (IopsMinimum.HasValue)
+            if (Optional.IsDefined(IopsMinimum))
             {
                 writer.WritePropertyName("iopsMinimum"u8);
                 writer.WriteNumberValue(IopsMinimum.Value);
             }
-            if (BandwidthLimit.HasValue)
+            if (Optional.IsDefined(BandwidthLimit))
             {
                 writer.WritePropertyName("bandwidthLimit"u8);
                 writer.WriteNumberValue(BandwidthLimit.Value);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);

@@ -18,34 +18,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SchemaLinkedService != null)
+            if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 writer.WriteObjectValue(SchemaLinkedService);
             }
-            if (RejectedDataLinkedService != null)
+            if (Optional.IsDefined(RejectedDataLinkedService))
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
                 writer.WriteObjectValue(RejectedDataLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Flowlet != null)
+            if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);

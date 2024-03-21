@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public ContainerResourceRequirements(ContainerResourceRequestsContent requests)
         {
-            if (requests == null)
-            {
-                throw new ArgumentNullException(nameof(requests));
-            }
+            Argument.AssertNotNull(requests, nameof(requests));
 
             Requests = requests;
         }

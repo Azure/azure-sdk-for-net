@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (BindingType.HasValue)
+            if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (LaunchProperties != null)
+            if (Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
                 writer.WriteObjectValue(LaunchProperties);

@@ -18,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ZohoLinkedService(object endpoint)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
             Type = "Zoho";

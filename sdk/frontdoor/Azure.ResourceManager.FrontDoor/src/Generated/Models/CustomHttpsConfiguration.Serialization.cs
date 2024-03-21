@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStringValue(MinimumTlsVersion.ToString());
             writer.WritePropertyName("frontDoorCertificateSourceParameters"u8);
             writer.WriteStartObject();
-            if (CertificateType.HasValue)
+            if (Optional.IsDefined(CertificateType))
             {
                 writer.WritePropertyName("certificateType"u8);
                 writer.WriteStringValue(CertificateType.Value.ToString());
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteEndObject();
             writer.WritePropertyName("keyVaultCertificateSourceParameters"u8);
             writer.WriteStartObject();
-            if (Vault != null)
+            if (Optional.IsDefined(Vault))
             {
                 writer.WritePropertyName("vault"u8);
                 JsonSerializer.Serialize(writer, Vault);
             }
-            if (SecretName != null)
+            if (Optional.IsDefined(SecretName))
             {
                 writer.WritePropertyName("secretName"u8);
                 writer.WriteStringValue(SecretName);
             }
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);

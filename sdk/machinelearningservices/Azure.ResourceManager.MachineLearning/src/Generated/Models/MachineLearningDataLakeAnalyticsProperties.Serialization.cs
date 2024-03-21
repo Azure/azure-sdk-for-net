@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (DataLakeStoreAccountName != null)
+            if (Optional.IsDefined(DataLakeStoreAccountName))
             {
                 writer.WritePropertyName("dataLakeStoreAccountName"u8);
                 writer.WriteStringValue(DataLakeStoreAccountName);

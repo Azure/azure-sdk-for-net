@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsActiveCmk.HasValue)
+            if (Optional.IsDefined(IsActiveCmk))
             {
                 writer.WritePropertyName("isActiveCMK"u8);
                 writer.WriteBooleanValue(IsActiveCmk.Value);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);

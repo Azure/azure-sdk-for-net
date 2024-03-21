@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateDnsZoneGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateDnsZoneGroupName, PrivateDnsZoneGroupData data, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateDnsZoneGroupResource> CreateOrUpdate(WaitUntil waitUntil, string privateDnsZoneGroupName, PrivateDnsZoneGroupData data, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual async Task<Response<PrivateDnsZoneGroupResource>> GetAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual Response<PrivateDnsZoneGroupResource> Get(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<PrivateDnsZoneGroupResource>> GetIfExistsAsync(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         public virtual NullableResponse<PrivateDnsZoneGroupResource> GetIfExists(string privateDnsZoneGroupName, CancellationToken cancellationToken = default)
         {
-            if (privateDnsZoneGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(privateDnsZoneGroupName));
-            }
-            if (privateDnsZoneGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateDnsZoneGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(privateDnsZoneGroupName, nameof(privateDnsZoneGroupName));
 
             using var scope = _privateDnsZoneGroupClientDiagnostics.CreateScope("PrivateDnsZoneGroupCollection.GetIfExists");
             scope.Start();

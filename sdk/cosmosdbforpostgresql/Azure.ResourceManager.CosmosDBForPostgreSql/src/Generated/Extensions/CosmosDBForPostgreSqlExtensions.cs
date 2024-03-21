@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Mocking;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource"/> object. </returns>
         public static CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlClusterResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource"/> object. </returns>
         public static CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlClusterServerResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource"/> object. </returns>
         public static CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlConfigurationResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> object. </returns>
         public static CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> object. </returns>
         public static CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlNodeConfigurationResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> object. </returns>
         public static CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlFirewallRuleResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource"/> object. </returns>
         public static CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlRoleResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource"/> object. </returns>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionResource GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateLinkResource"/> object. </returns>
         public static CosmosDBForPostgreSqlPrivateLinkResource GetCosmosDBForPostgreSqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCosmosDBForPostgreSqlArmClient(client).GetCosmosDBForPostgreSqlPrivateLinkResource(id);
         }
@@ -245,10 +216,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterResources and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
         public static CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCosmosDBForPostgreSqlResourceGroupResource(resourceGroupResource).GetCosmosDBForPostgreSqlClusters();
         }
@@ -286,10 +254,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBForPostgreSqlClusterResource>> GetCosmosDBForPostgreSqlClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCosmosDBForPostgreSqlResourceGroupResource(resourceGroupResource).GetCosmosDBForPostgreSqlClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -327,10 +292,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         [ForwardsClientCalls]
         public static Response<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCosmosDBForPostgreSqlResourceGroupResource(resourceGroupResource).GetCosmosDBForPostgreSqlCluster(clusterName, cancellationToken);
         }
@@ -366,10 +328,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).GetCosmosDBForPostgreSqlClustersAsync(cancellationToken);
         }
@@ -405,10 +364,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
         }
@@ -444,10 +400,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -483,10 +436,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCosmosDBForPostgreSqlSubscriptionResource(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
         }

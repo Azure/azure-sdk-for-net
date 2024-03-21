@@ -147,16 +147,17 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, string? proofOfPossessionNonce = null, Azure.Core.Request? request = null) { throw null; }
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = null, Azure.Core.Request? request = null) { throw null; }
         public string? Claims { get { throw null; } }
         public System.Net.Http.HttpMethod? HttpMethod { get { throw null; } }
         public bool IsCaeEnabled { get { throw null; } }
+        public bool IsProofOfPossessionEnabled { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string? ProofOfPossessionNonce { get { throw null; } }
         public string[] Scopes { get { throw null; } }
         public string? TenantId { get { throw null; } }
         public System.Uri? Uri { get { throw null; } }
-        public static Azure.Core.PopTokenRequestContext FromTokenRequestContext(Azure.Core.TokenRequestContext context, Azure.Core.Request? request = null) { throw null; }
+        public static Azure.Core.PopTokenRequestContext FromTokenRequestContext(Azure.Core.TokenRequestContext context, Azure.Core.Request? request = null, bool? isProofOfPossessionEnabled = false) { throw null; }
         public static implicit operator Azure.Core.TokenRequestContext (Azure.Core.PopTokenRequestContext context) { throw null; }
         public Azure.Core.TokenRequestContext ToTokenRequestContext() { throw null; }
     }

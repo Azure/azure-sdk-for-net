@@ -16,17 +16,17 @@ namespace Azure.AI.Personalizer
     {
         internal static PersonalizerEvaluation DeserializePersonalizerEvaluation(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> jobId = default;
-            Optional<PersonalizerEvaluationJobStatus> status = default;
-            Optional<IReadOnlyList<PersonalizerPolicyResult>> policyResults = default;
-            Optional<IReadOnlyList<IList<string>>> featureImportance = default;
-            Optional<PersonalizerEvaluationType> evaluationType = default;
-            Optional<string> optimalPolicy = default;
-            Optional<DateTimeOffset> creationTime = default;
+            string id = default;
+            string name = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string jobId = default;
+            PersonalizerEvaluationJobStatus? status = default;
+            IReadOnlyList<PersonalizerPolicyResult> policyResults = default;
+            IReadOnlyList<IList<string>> featureImportance = default;
+            PersonalizerEvaluationType? evaluationType = default;
+            string optimalPolicy = default;
+            DateTimeOffset? creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -135,7 +135,18 @@ namespace Azure.AI.Personalizer
                     continue;
                 }
             }
-            return new PersonalizerEvaluation(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), jobId.Value, Optional.ToNullable(status), Optional.ToList(policyResults), Optional.ToList(featureImportance), Optional.ToNullable(evaluationType), optimalPolicy.Value, Optional.ToNullable(creationTime));
+            return new PersonalizerEvaluation(
+                id,
+                name,
+                startTime,
+                endTime,
+                jobId,
+                status,
+                policyResults ?? new ChangeTrackingList<PersonalizerPolicyResult>(),
+                featureImportance ?? new ChangeTrackingList<IList<string>>(),
+                evaluationType,
+                optimalPolicy,
+                creationTime);
         }
     }
 }

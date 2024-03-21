@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Media
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MediaServicesAccountId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MediaServicesAccountId))
             {
                 writer.WritePropertyName("mediaServiceId"u8);
                 writer.WriteStringValue(MediaServicesAccountId.Value);
             }
-            if (!(StorageAccounts is ChangeTrackingList<MediaServicesStorageAccount> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (StorageAuthentication.HasValue)
+            if (Optional.IsDefined(StorageAuthentication))
             {
                 if (StorageAuthentication != null)
                 {
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("storageAuthentication");
                 }
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (KeyDelivery != null)
+            if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
                 writer.WriteObjectValue(KeyDelivery);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MediaServicesPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());

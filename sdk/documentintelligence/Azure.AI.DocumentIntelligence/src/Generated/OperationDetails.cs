@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary>
     /// Operation info.
     /// Please note <see cref="OperationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/> and <see cref="DocumentClassifierBuildOperationDetails"/>.
+    /// The available derived classes include <see cref="DocumentClassifierBuildOperationDetails"/>, <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/> and <see cref="DocumentModelCopyToOperationDetails"/>.
     /// </summary>
     public abstract partial class OperationDetails
     {
@@ -52,49 +51,43 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation)
+        protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation)
         {
-            if (operationId == null)
-            {
-                throw new ArgumentNullException(nameof(operationId));
-            }
-            if (resourceLocation == null)
-            {
-                throw new ArgumentNullException(nameof(resourceLocation));
-            }
+            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
             OperationId = operationId;
             Status = status;
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             ResourceLocation = resourceLocation;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             Status = status;
             PercentCompleted = percentCompleted;
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Kind = kind;
             ResourceLocation = resourceLocation;
             ApiVersion = apiVersion;
@@ -107,14 +100,17 @@ namespace Azure.AI.DocumentIntelligence
         internal OperationDetails()
         {
         }
-        /// <summary> Operation status. </summary>
+
+        /// <summary> Operation ID. </summary>
+        public string OperationId { get; }
+        /// <summary> Operation status.  notStarted, running, completed, or failed. </summary>
         public OperationStatus Status { get; }
         /// <summary> Operation progress (0-100). </summary>
         public int? PercentCompleted { get; }
         /// <summary> Date and time (UTC) when the operation was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> Type of operation. </summary>
         internal OperationKind Kind { get; set; }
         /// <summary> URL of the resource targeted by this operation. </summary>

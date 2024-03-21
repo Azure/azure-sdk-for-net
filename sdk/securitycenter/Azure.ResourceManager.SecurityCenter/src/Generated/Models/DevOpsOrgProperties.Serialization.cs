@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdatedOn))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);

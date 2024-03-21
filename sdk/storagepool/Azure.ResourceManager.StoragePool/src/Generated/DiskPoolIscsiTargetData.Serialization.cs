@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StoragePool
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (!(StaticAcls is ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StaticAcls))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (!(Luns is ChangeTrackingList<ManagedDiskIscsiLun> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (!(Endpoints is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && !(Sessions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sessions))
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteStartArray();

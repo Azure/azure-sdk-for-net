@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (PointInTimeUTC.HasValue)
+            if (Optional.IsDefined(PointInTimeUTC))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);

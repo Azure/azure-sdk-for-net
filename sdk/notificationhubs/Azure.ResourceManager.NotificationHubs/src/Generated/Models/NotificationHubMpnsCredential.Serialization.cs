@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MpnsCertificate != null)
+            if (Optional.IsDefined(MpnsCertificate))
             {
                 writer.WritePropertyName("mpnsCertificate"u8);
                 writer.WriteStringValue(MpnsCertificate);
             }
-            if (CertificateKey != null)
+            if (Optional.IsDefined(CertificateKey))
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);

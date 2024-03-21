@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Resources;
 
@@ -284,10 +282,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<VMwareDatastoreResource>> UpdateAsync(VMwareResourcePatchContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.Update");
             scope.Start();
@@ -329,10 +324,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<VMwareDatastoreResource> Update(VMwareResourcePatchContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.Update");
             scope.Start();
@@ -375,14 +367,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<VMwareDatastoreResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.AddTag");
             scope.Start();
@@ -443,14 +429,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<VMwareDatastoreResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.AddTag");
             scope.Start();
@@ -510,10 +490,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<VMwareDatastoreResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.SetTags");
             scope.Start();
@@ -570,10 +547,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<VMwareDatastoreResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.SetTags");
             scope.Start();
@@ -630,10 +604,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<VMwareDatastoreResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.RemoveTag");
             scope.Start();
@@ -693,10 +664,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<VMwareDatastoreResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _vMwareDatastoreDatastoresClientDiagnostics.CreateScope("VMwareDatastoreResource.RemoveTag");
             scope.Start();

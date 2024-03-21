@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (StandbyAvailabilityZone != null)
+            if (Optional.IsDefined(StandbyAvailabilityZone))
             {
                 writer.WritePropertyName("standbyAvailabilityZone"u8);
                 writer.WriteStringValue(StandbyAvailabilityZone);

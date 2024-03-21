@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -25,22 +24,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/>, <paramref name="schemaName"/>, <paramref name="sqlServerResourceId"/> or <paramref name="tableName"/> is null. </exception>
         public SqlDBTableDataSetMapping(string databaseName, Guid dataSetId, string schemaName, ResourceIdentifier sqlServerResourceId, string tableName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (sqlServerResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sqlServerResourceId));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(schemaName, nameof(schemaName));
+            Argument.AssertNotNull(sqlServerResourceId, nameof(sqlServerResourceId));
+            Argument.AssertNotNull(tableName, nameof(tableName));
 
             DatabaseName = databaseName;
             DataSetId = dataSetId;

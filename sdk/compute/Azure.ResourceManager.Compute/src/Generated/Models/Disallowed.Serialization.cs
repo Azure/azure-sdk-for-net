@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(DiskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskTypes))
             {
                 writer.WritePropertyName("diskTypes"u8);
                 writer.WriteStartArray();

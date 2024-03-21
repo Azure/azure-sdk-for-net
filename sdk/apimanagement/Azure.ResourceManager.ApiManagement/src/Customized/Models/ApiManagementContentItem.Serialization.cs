@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, BinaryData>> properties = default;
+            IDictionary<string, BinaryData> properties = default;
             string id = default;
             string name = default;
             ResourceType type = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementContentItem(id, name, type, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new ApiManagementContentItem(id, name, type, properties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementContentItem>.Write(ModelReaderWriterOptions options)

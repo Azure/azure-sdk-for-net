@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);

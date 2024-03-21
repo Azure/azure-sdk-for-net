@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HdfsLinkedService(DataFactoryElement<string> uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
             LinkedServiceType = "Hdfs";
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="userName"> User name for Windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for Windows authentication. </param>
-        internal HdfsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactoryElement<string> authenticationType, string encryptedCredential, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HdfsLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactoryElement<string> authenticationType, string encryptedCredential, DataFactoryElement<string> userName, DataFactorySecret password) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
@@ -64,6 +61,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> User name for Windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for Windows authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
     }
 }

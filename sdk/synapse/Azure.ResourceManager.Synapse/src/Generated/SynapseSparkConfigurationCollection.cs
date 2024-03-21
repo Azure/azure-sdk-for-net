@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -85,14 +83,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual async Task<Response<SynapseSparkConfigurationResource>> GetAsync(string sparkConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (sparkConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkConfigurationName));
-            }
-            if (sparkConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sparkConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(sparkConfigurationName, nameof(sparkConfigurationName));
 
             using var scope = _synapseSparkConfigurationSparkConfigurationClientDiagnostics.CreateScope("SynapseSparkConfigurationCollection.Get");
             scope.Start();
@@ -137,14 +128,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual Response<SynapseSparkConfigurationResource> Get(string sparkConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (sparkConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkConfigurationName));
-            }
-            if (sparkConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sparkConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(sparkConfigurationName, nameof(sparkConfigurationName));
 
             using var scope = _synapseSparkConfigurationSparkConfigurationClientDiagnostics.CreateScope("SynapseSparkConfigurationCollection.Get");
             scope.Start();
@@ -249,14 +233,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sparkConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (sparkConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkConfigurationName));
-            }
-            if (sparkConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sparkConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(sparkConfigurationName, nameof(sparkConfigurationName));
 
             using var scope = _synapseSparkConfigurationSparkConfigurationClientDiagnostics.CreateScope("SynapseSparkConfigurationCollection.Exists");
             scope.Start();
@@ -299,14 +276,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string sparkConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (sparkConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkConfigurationName));
-            }
-            if (sparkConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sparkConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(sparkConfigurationName, nameof(sparkConfigurationName));
 
             using var scope = _synapseSparkConfigurationSparkConfigurationClientDiagnostics.CreateScope("SynapseSparkConfigurationCollection.Exists");
             scope.Start();
@@ -349,14 +319,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseSparkConfigurationResource>> GetIfExistsAsync(string sparkConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (sparkConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkConfigurationName));
-            }
-            if (sparkConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sparkConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(sparkConfigurationName, nameof(sparkConfigurationName));
 
             using var scope = _synapseSparkConfigurationSparkConfigurationClientDiagnostics.CreateScope("SynapseSparkConfigurationCollection.GetIfExists");
             scope.Start();
@@ -401,14 +364,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual NullableResponse<SynapseSparkConfigurationResource> GetIfExists(string sparkConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (sparkConfigurationName == null)
-            {
-                throw new ArgumentNullException(nameof(sparkConfigurationName));
-            }
-            if (sparkConfigurationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sparkConfigurationName));
-            }
+            Argument.AssertNotNullOrEmpty(sparkConfigurationName, nameof(sparkConfigurationName));
 
             using var scope = _synapseSparkConfigurationSparkConfigurationClientDiagnostics.CreateScope("SynapseSparkConfigurationCollection.GetIfExists");
             scope.Start();

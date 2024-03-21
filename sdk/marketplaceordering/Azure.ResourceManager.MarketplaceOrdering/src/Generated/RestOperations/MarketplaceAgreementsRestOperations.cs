@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MarketplaceOrdering.Models;
@@ -74,38 +73,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAgreementTermData>> GetAsync(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateGetRequest(subscriptionId, offerType, publisherId, offerId, planId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -136,38 +107,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAgreementTermData> Get(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateGetRequest(subscriptionId, offerType, publisherId, offerId, planId);
             _pipeline.Send(message, cancellationToken);
@@ -228,42 +171,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAgreementTermData>> CreateAsync(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, MarketplaceAgreementTermData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, offerType, publisherId, offerId, planId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -293,42 +205,11 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAgreementTermData> Create(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, MarketplaceAgreementTermData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, offerType, publisherId, offerId, planId, data);
             _pipeline.Send(message, cancellationToken);
@@ -379,38 +260,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAgreementTermData>> SignAsync(string subscriptionId, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateSignRequest(subscriptionId, publisherId, offerId, planId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,38 +291,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAgreementTermData> Sign(string subscriptionId, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateSignRequest(subscriptionId, publisherId, offerId, planId);
             _pipeline.Send(message, cancellationToken);
@@ -520,38 +345,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAgreementTermData>> CancelAsync(string subscriptionId, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateCancelRequest(subscriptionId, publisherId, offerId, planId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -579,38 +376,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAgreementTermData> Cancel(string subscriptionId, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateCancelRequest(subscriptionId, publisherId, offerId, planId);
             _pipeline.Send(message, cancellationToken);
@@ -660,38 +429,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAgreementTermData>> GetAgreementAsync(string subscriptionId, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateGetAgreementRequest(subscriptionId, publisherId, offerId, planId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -721,38 +462,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherId"/>, <paramref name="offerId"/> or <paramref name="planId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAgreementTermData> GetAgreement(string subscriptionId, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (publisherId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(publisherId));
-            }
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(planId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(publisherId, nameof(publisherId));
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
+            Argument.AssertNotNullOrEmpty(planId, nameof(planId));
 
             using var message = CreateGetAgreementRequest(subscriptionId, publisherId, offerId, planId);
             _pipeline.Send(message, cancellationToken);
@@ -796,14 +509,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<MarketplaceAgreementTermData>>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -833,14 +539,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<MarketplaceAgreementTermData>> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);

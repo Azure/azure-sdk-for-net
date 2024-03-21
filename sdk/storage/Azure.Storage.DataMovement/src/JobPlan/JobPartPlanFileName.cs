@@ -5,6 +5,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.JobPlan
 {

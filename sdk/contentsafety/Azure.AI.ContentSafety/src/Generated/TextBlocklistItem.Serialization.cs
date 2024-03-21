@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -32,7 +31,7 @@ namespace Azure.AI.ContentSafety
                 writer.WritePropertyName("blocklistItemId"u8);
                 writer.WriteStringValue(BlocklistItemId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

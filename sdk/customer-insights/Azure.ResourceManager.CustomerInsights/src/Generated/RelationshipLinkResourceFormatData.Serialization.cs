@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (InteractionType != null)
+            if (Optional.IsDefined(InteractionType))
             {
                 writer.WritePropertyName("interactionType"u8);
                 writer.WriteStringValue(InteractionType);
             }
-            if (options.Format != "W" && LinkName != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkName))
             {
                 writer.WritePropertyName("linkName"u8);
                 writer.WriteStringValue(LinkName);
             }
-            if (!(Mappings is ChangeTrackingList<RelationshipLinkFieldMapping> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (RelationshipName != null)
+            if (Optional.IsDefined(RelationshipName))
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
             }
-            if (options.Format != "W" && RelationshipGuidId != null)
+            if (options.Format != "W" && Optional.IsDefined(RelationshipGuidId))
             {
                 writer.WritePropertyName("relationshipGuidId"u8);
                 writer.WriteStringValue(RelationshipGuidId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);

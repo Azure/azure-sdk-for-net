@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ForecastColumnType != null)
+            if (Optional.IsDefined(ForecastColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ForecastColumnType);

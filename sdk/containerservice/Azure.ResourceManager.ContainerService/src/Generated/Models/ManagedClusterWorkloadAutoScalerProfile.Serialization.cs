@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Keda != null)
+            if (Optional.IsDefined(Keda))
             {
                 writer.WritePropertyName("keda"u8);
                 writer.WriteObjectValue(Keda);
             }
-            if (VerticalPodAutoscaler != null)
+            if (Optional.IsDefined(VerticalPodAutoscaler))
             {
                 writer.WritePropertyName("verticalPodAutoscaler"u8);
                 writer.WriteObjectValue(VerticalPodAutoscaler);

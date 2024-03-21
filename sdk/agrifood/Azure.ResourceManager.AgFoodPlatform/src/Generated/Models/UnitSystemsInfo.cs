@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="values"/> is null. </exception>
         internal UnitSystemsInfo(string key, IEnumerable<string> values)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(values, nameof(values));
 
             Key = key;
             Values = values.ToList();

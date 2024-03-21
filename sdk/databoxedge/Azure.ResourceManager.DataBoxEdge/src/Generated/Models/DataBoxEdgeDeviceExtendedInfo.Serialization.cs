@@ -42,54 +42,54 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EncryptionKeyThumbprint != null)
+            if (Optional.IsDefined(EncryptionKeyThumbprint))
             {
                 writer.WritePropertyName("encryptionKeyThumbprint"u8);
                 writer.WriteStringValue(EncryptionKeyThumbprint);
             }
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
                 writer.WritePropertyName("encryptionKey"u8);
                 writer.WriteStringValue(EncryptionKey);
             }
-            if (options.Format != "W" && ResourceKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceKey))
             {
                 writer.WritePropertyName("resourceKey"u8);
                 writer.WriteStringValue(ResourceKey);
             }
-            if (ClientSecretStoreId != null)
+            if (Optional.IsDefined(ClientSecretStoreId))
             {
                 writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
-            if (ClientSecretStoreUri != null)
+            if (Optional.IsDefined(ClientSecretStoreUri))
             {
                 writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
-            if (ChannelIntegrityKeyName != null)
+            if (Optional.IsDefined(ChannelIntegrityKeyName))
             {
                 writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
-            if (ChannelIntegrityKeyVersion != null)
+            if (Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
                 writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
-            if (KeyVaultSyncStatus.HasValue)
+            if (Optional.IsDefined(KeyVaultSyncStatus))
             {
                 writer.WritePropertyName("keyVaultSyncStatus"u8);
                 writer.WriteStringValue(KeyVaultSyncStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(DeviceSecrets is ChangeTrackingDictionary<string, DataBoxEdgeDeviceSecret> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeviceSecrets))
             {
                 writer.WritePropertyName("deviceSecrets"u8);
                 writer.WriteStartObject();
@@ -100,32 +100,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && ClusterWitnessType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterWitnessType))
             {
                 writer.WritePropertyName("clusterWitnessType"u8);
                 writer.WriteStringValue(ClusterWitnessType.Value.ToString());
             }
-            if (options.Format != "W" && FileShareWitnessLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(FileShareWitnessLocation))
             {
                 writer.WritePropertyName("fileShareWitnessLocation"u8);
                 writer.WriteStringValue(FileShareWitnessLocation);
             }
-            if (options.Format != "W" && FileShareWitnessUsername != null)
+            if (options.Format != "W" && Optional.IsDefined(FileShareWitnessUsername))
             {
                 writer.WritePropertyName("fileShareWitnessUsername"u8);
                 writer.WriteStringValue(FileShareWitnessUsername);
             }
-            if (options.Format != "W" && CloudWitnessStorageAccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudWitnessStorageAccountName))
             {
                 writer.WritePropertyName("cloudWitnessStorageAccountName"u8);
                 writer.WriteStringValue(CloudWitnessStorageAccountName);
             }
-            if (options.Format != "W" && CloudWitnessContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudWitnessContainerName))
             {
                 writer.WritePropertyName("cloudWitnessContainerName"u8);
                 writer.WriteStringValue(CloudWitnessContainerName);
             }
-            if (options.Format != "W" && CloudWitnessStorageEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudWitnessStorageEndpoint))
             {
                 writer.WritePropertyName("cloudWitnessStorageEndpoint"u8);
                 writer.WriteStringValue(CloudWitnessStorageEndpoint);

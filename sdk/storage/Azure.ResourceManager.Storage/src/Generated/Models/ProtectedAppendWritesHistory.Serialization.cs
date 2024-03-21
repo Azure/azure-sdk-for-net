@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (AllowProtectedAppendWritesAll.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");

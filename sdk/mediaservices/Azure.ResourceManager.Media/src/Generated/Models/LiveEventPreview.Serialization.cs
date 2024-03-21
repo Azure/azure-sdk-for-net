@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (!(Endpoints is ChangeTrackingList<LiveEventEndpoint> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AccessControl != null)
+            if (Optional.IsDefined(AccessControl))
             {
                 if (AccessControl != null)
                 {
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("accessControl");
                 }
             }
-            if (PreviewLocator != null)
+            if (Optional.IsDefined(PreviewLocator))
             {
                 writer.WritePropertyName("previewLocator"u8);
                 writer.WriteStringValue(PreviewLocator);
             }
-            if (StreamingPolicyName != null)
+            if (Optional.IsDefined(StreamingPolicyName))
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (AlternativeMediaId != null)
+            if (Optional.IsDefined(AlternativeMediaId))
             {
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);

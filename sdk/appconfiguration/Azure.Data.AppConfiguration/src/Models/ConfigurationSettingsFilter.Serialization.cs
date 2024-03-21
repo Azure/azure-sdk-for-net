@@ -24,7 +24,7 @@ namespace Azure.Data.AppConfiguration
         internal static ConfigurationSettingsFilter DeserializeKeyValueFilter(JsonElement element)
         {
             string key = default;
-            Optional<string> label = default;
+            string label = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -38,7 +38,7 @@ namespace Azure.Data.AppConfiguration
                     continue;
                 }
             }
-            return new ConfigurationSettingsFilter(key, label.Value);
+            return new ConfigurationSettingsFilter(key, label);
         }
     }
 }

@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptSecureStringExecutionParameterDetails(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             ParameterType = ScriptExecutionParameterType.SecureValue;
         }

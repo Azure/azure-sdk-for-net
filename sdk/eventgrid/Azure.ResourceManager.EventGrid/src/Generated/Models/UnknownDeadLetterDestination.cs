@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownDeadLetterDestination. </summary>
+    /// <summary> Unknown version of DeadLetterDestination. </summary>
     internal partial class UnknownDeadLetterDestination : DeadLetterDestination
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeadLetterDestination"/>. </summary>

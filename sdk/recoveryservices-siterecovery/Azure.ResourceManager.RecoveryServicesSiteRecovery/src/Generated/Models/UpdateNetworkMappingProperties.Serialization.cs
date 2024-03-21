@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryFabricName != null)
+            if (Optional.IsDefined(RecoveryFabricName))
             {
                 writer.WritePropertyName("recoveryFabricName"u8);
                 writer.WriteStringValue(RecoveryFabricName);
             }
-            if (RecoveryNetworkId != null)
+            if (Optional.IsDefined(RecoveryNetworkId))
             {
                 writer.WritePropertyName("recoveryNetworkId"u8);
                 writer.WriteStringValue(RecoveryNetworkId);
             }
-            if (FabricSpecificDetails != null)
+            if (Optional.IsDefined(FabricSpecificDetails))
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
                 writer.WriteObjectValue(FabricSpecificDetails);

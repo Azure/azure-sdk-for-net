@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (MappingRuleName != null)
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (ManagedIdentityResourceId != null)
+            if (Optional.IsDefined(ManagedIdentityResourceId))
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
-            if (options.Format != "W" && ManagedIdentityObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
             {
                 writer.WritePropertyName("managedIdentityObjectId"u8);
                 writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
-            if (CosmosDBAccountResourceId != null)
+            if (Optional.IsDefined(CosmosDBAccountResourceId))
             {
                 writer.WritePropertyName("cosmosDbAccountResourceId"u8);
                 writer.WriteStringValue(CosmosDBAccountResourceId);
             }
-            if (CosmosDBDatabase != null)
+            if (Optional.IsDefined(CosmosDBDatabase))
             {
                 writer.WritePropertyName("cosmosDbDatabase"u8);
                 writer.WriteStringValue(CosmosDBDatabase);
             }
-            if (CosmosDBContainer != null)
+            if (Optional.IsDefined(CosmosDBContainer))
             {
                 writer.WritePropertyName("cosmosDbContainer"u8);
                 writer.WriteStringValue(CosmosDBContainer);
             }
-            if (RetrievalStartOn.HasValue)
+            if (Optional.IsDefined(RetrievalStartOn))
             {
                 writer.WritePropertyName("retrievalStartDate"u8);
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

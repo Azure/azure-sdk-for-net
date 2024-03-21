@@ -18,10 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MetricDataPoint(string name, double value)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Value = value;

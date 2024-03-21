@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Cpu != null)
+            if (Optional.IsDefined(Cpu))
             {
                 if (Cpu != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cpu");
                 }
             }
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 if (Gpu != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gpu");
                 }
             }
-            if (Memory != null)
+            if (Optional.IsDefined(Memory))
             {
                 if (Memory != null)
                 {

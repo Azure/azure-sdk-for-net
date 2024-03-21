@@ -20,14 +20,8 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="targets"/> is null. </exception>
         public DocumentTranslationInput(TranslationSource source, IEnumerable<TranslationTarget> targets)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(targets, nameof(targets));
 
             Source = source;
             Targets = targets.ToList();

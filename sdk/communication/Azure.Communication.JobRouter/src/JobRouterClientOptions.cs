@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The latest version of the Router service.
         /// </summary>
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_01_18_Preview;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JobRouterClientOptions"/>.
@@ -24,6 +24,7 @@ namespace Azure.Communication.JobRouter
             Version = version switch
             {
                 ServiceVersion.V2023_11_01 => "2023-11-01",
+                ServiceVersion.V2024_01_18_Preview => "2024-01-18-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }

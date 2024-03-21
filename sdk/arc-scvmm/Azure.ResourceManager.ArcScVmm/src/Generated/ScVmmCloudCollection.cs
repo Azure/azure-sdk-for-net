@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ArcScVmm
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ScVmmCloudResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudName, ScVmmCloudData data, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ScVmmCloudResource> CreateOrUpdate(WaitUntil waitUntil, string cloudName, ScVmmCloudData data, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
         public virtual async Task<Response<ScVmmCloudResource>> GetAsync(string cloudName, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
         public virtual Response<ScVmmCloudResource> Get(string cloudName, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string cloudName, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
         public virtual Response<bool> Exists(string cloudName, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
         public virtual async Task<NullableResponse<ScVmmCloudResource>> GetIfExistsAsync(string cloudName, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
         public virtual NullableResponse<ScVmmCloudResource> GetIfExists(string cloudName, CancellationToken cancellationToken = default)
         {
-            if (cloudName == null)
-            {
-                throw new ArgumentNullException(nameof(cloudName));
-            }
-            if (cloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cloudName));
-            }
+            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.GetIfExists");
             scope.Start();

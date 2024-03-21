@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServiceBusQueues is ChangeTrackingList<RoutingServiceBusQueueEndpointProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceBusQueues))
             {
                 writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceBusTopics is ChangeTrackingList<RoutingServiceBusTopicEndpointProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceBusTopics))
             {
                 writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventHubs is ChangeTrackingList<RoutingEventHubProperties> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubs))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageContainers is ChangeTrackingList<RoutingStorageContainerProperties> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageContainers))
             {
                 writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CosmosDBSqlContainers is ChangeTrackingList<RoutingCosmosDBSqlApiProperties> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(CosmosDBSqlContainers))
             {
                 writer.WritePropertyName("cosmosDBSqlContainers"u8);
                 writer.WriteStartArray();

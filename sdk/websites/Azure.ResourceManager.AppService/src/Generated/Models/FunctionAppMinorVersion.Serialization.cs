@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayText != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && StackSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(StackSettings))
             {
                 writer.WritePropertyName("stackSettings"u8);
                 writer.WriteObjectValue(StackSettings);

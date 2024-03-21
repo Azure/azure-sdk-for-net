@@ -43,26 +43,26 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ContainerStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContainerStatus))
             {
                 writer.WritePropertyName("containerStatus"u8);
                 writer.WriteStringValue(ContainerStatus.Value.ToString());
             }
             writer.WritePropertyName("dataFormat"u8);
             writer.WriteStringValue(DataFormat.ToString());
-            if (options.Format != "W" && RefreshDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
                 writer.WriteObjectValue(RefreshDetails);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");

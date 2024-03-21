@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -59,82 +59,82 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Server != null)
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteObjectValue(Server);
             }
-            if (SystemNumber != null)
+            if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
                 writer.WriteObjectValue(SystemNumber);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue(ClientId);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteObjectValue(Language);
             }
-            if (SystemId != null)
+            if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
                 writer.WriteObjectValue(SystemId);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (MessageServer != null)
+            if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
                 writer.WriteObjectValue(MessageServer);
             }
-            if (MessageServerService != null)
+            if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
                 writer.WriteObjectValue(MessageServerService);
             }
-            if (SncMode != null)
+            if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
                 writer.WriteObjectValue(SncMode);
             }
-            if (SncMyName != null)
+            if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
                 writer.WriteObjectValue(SncMyName);
             }
-            if (SncPartnerName != null)
+            if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
                 writer.WriteObjectValue(SncPartnerName);
             }
-            if (SncLibraryPath != null)
+            if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
                 writer.WriteObjectValue(SncLibraryPath);
             }
-            if (SncQop != null)
+            if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
                 writer.WriteObjectValue(SncQop);
             }
-            if (LogonGroup != null)
+            if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
                 writer.WriteObjectValue(LogonGroup);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);

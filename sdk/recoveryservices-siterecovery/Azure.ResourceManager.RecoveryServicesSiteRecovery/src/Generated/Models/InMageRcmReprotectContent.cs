@@ -21,18 +21,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="reprotectAgentId"/>, <paramref name="datastoreName"/> or <paramref name="logStorageAccountId"/> is null. </exception>
         public InMageRcmReprotectContent(string reprotectAgentId, string datastoreName, ResourceIdentifier logStorageAccountId)
         {
-            if (reprotectAgentId == null)
-            {
-                throw new ArgumentNullException(nameof(reprotectAgentId));
-            }
-            if (datastoreName == null)
-            {
-                throw new ArgumentNullException(nameof(datastoreName));
-            }
-            if (logStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(logStorageAccountId));
-            }
+            Argument.AssertNotNull(reprotectAgentId, nameof(reprotectAgentId));
+            Argument.AssertNotNull(datastoreName, nameof(datastoreName));
+            Argument.AssertNotNull(logStorageAccountId, nameof(logStorageAccountId));
 
             ReprotectAgentId = reprotectAgentId;
             DatastoreName = datastoreName;

@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OperationId != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && TriggerType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (options.Format != "W" && UpgradedResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(UpgradedResourceId))
             {
                 writer.WritePropertyName("upgradedResourceId"u8);
                 writer.WriteStringValue(UpgradedResourceId);
             }
-            if (options.Format != "W" && PreviousResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(PreviousResourceId))
             {
                 writer.WritePropertyName("previousResourceId"u8);
                 writer.WriteStringValue(PreviousResourceId);

@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nicId"/> or <paramref name="isPrimaryNic"/> is null. </exception>
         public VMwareCbtNicContent(string nicId, string isPrimaryNic)
         {
-            if (nicId == null)
-            {
-                throw new ArgumentNullException(nameof(nicId));
-            }
-            if (isPrimaryNic == null)
-            {
-                throw new ArgumentNullException(nameof(isPrimaryNic));
-            }
+            Argument.AssertNotNull(nicId, nameof(nicId));
+            Argument.AssertNotNull(isPrimaryNic, nameof(isPrimaryNic));
 
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;

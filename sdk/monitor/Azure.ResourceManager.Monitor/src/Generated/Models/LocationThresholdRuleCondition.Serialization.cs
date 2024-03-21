@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(FailedLocationCount);
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (DataSource != null)
+            if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);

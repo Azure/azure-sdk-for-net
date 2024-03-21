@@ -9,7 +9,7 @@ using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownDataChangeDetectionPolicy. </summary>
+    /// <summary> Unknown version of DataChangeDetectionPolicy. </summary>
     internal partial class UnknownDataChangeDetectionPolicy : DataChangeDetectionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataChangeDetectionPolicy"/>. </summary>

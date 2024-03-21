@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -49,14 +48,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -85,10 +78,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CheckPrincipalAccessAsync(RequestContent,ContentType,RequestContext)']/*" />
         public virtual async Task<Response> CheckPrincipalAccessAsync(RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
             scope.Start();
@@ -123,10 +113,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CheckPrincipalAccess(RequestContent,ContentType,RequestContext)']/*" />
         public virtual Response CheckPrincipalAccess(RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
             scope.Start();
@@ -231,18 +218,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CreateRoleAssignmentAsync(string,RequestContent,ContentType,RequestContext)']/*" />
         public virtual async Task<Response> CreateRoleAssignmentAsync(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
-            if (roleAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope.Start();
@@ -279,18 +256,8 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='CreateRoleAssignment(string,RequestContent,ContentType,RequestContext)']/*" />
         public virtual Response CreateRoleAssignment(string roleAssignmentId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
-            if (roleAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.CreateRoleAssignment");
             scope.Start();
@@ -325,14 +292,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentByIdAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context)
         {
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
-            if (roleAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope.Start();
@@ -367,14 +327,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentById(string,RequestContext)']/*" />
         public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context)
         {
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
-            if (roleAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignmentById");
             scope.Start();
@@ -410,14 +363,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='DeleteRoleAssignmentByIdAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteRoleAssignmentByIdAsync(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
-            if (roleAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();
@@ -453,14 +399,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='DeleteRoleAssignmentById(string,string,RequestContext)']/*" />
         public virtual Response DeleteRoleAssignmentById(string roleAssignmentId, string scope = null, RequestContext context = null)
         {
-            if (roleAssignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentId));
-            }
-            if (roleAssignmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleAssignmentId));
-            }
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.DeleteRoleAssignmentById");
             scope0.Start();

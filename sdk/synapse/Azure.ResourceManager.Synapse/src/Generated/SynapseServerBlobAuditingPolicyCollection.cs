@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseServerBlobAuditingPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseBlobAuditingPolicyName blobAuditingPolicyName, SynapseServerBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SynapseServerBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseServerBlobAuditingPolicyResource> CreateOrUpdate(WaitUntil waitUntil, SynapseBlobAuditingPolicyName blobAuditingPolicyName, SynapseServerBlobAuditingPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseServerBlobAuditingPolicyWorkspaceManagedSqlServerBlobAuditingPoliciesClientDiagnostics.CreateScope("SynapseServerBlobAuditingPolicyCollection.CreateOrUpdate");
             scope.Start();

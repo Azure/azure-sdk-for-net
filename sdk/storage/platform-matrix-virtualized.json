@@ -5,8 +5,8 @@
   "matrix": {
     "Agent": {
       "Ubuntu-20.04_NET6.0": {
-        "OSVmImage": "MMSUbuntu20.04",
-        "Pool": "azsdk-pool-mms-ubuntu-2004-general",
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net6.0"
       }
     },

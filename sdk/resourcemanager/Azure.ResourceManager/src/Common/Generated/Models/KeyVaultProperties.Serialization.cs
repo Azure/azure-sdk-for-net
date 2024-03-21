@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);

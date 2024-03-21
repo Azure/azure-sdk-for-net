@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (Set != null)
+            if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
                 writer.WriteObjectValue(Set);
             }
-            if (Add != null)
+            if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);

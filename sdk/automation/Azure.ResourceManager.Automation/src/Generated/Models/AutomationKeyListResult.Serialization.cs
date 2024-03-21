@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (!(Keys is ChangeTrackingList<AutomationKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();

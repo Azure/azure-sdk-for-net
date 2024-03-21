@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="username"/> is null. </exception>
         public ConcurLinkedService(object clientId, object username)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(username, nameof(username));
 
             ClientId = clientId;
             Username = username;

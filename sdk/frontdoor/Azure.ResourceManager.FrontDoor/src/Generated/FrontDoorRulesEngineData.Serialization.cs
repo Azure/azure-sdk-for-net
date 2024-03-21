@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Rules is ChangeTrackingList<RulesEngineRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());

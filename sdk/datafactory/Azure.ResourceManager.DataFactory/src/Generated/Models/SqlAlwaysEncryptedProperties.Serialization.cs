@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alwaysEncryptedAkvAuthType"u8);
             writer.WriteStringValue(AlwaysEncryptedAkvAuthType.ToString());
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (ServicePrincipalKey != null)
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("credential"u8))

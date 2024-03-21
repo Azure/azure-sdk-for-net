@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -66,30 +65,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerAppManagedEnvironmentData>> GetRootAsync(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetRootRequest(subscriptionId, resourceGroupName, environmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -118,30 +96,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerAppManagedEnvironmentData> GetRoot(string subscriptionId, string resourceGroupName, string environmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var message = CreateGetRootRequest(subscriptionId, resourceGroupName, environmentName);
             _pipeline.Send(message, cancellationToken);

@@ -17,10 +17,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         public DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(string ifMatch)
         {
-            if (ifMatch == null)
-            {
-                throw new ArgumentNullException(nameof(ifMatch));
-            }
+            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             IfMatch = ifMatch;
         }

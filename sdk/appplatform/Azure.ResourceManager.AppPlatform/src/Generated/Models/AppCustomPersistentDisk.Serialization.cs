@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (CustomPersistentDiskProperties != null)
+            if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
                 writer.WriteObjectValue(CustomPersistentDiskProperties);

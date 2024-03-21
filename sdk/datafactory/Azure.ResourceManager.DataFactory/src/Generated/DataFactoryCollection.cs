@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataFactory
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string factoryName, DataFactoryData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.CreateOrUpdate");
             scope.Start();
@@ -144,18 +132,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryResource> CreateOrUpdate(WaitUntil waitUntil, string factoryName, DataFactoryData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +180,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryResource>> GetAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Get");
             scope.Start();
@@ -255,14 +226,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual Response<DataFactoryResource> Get(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Get");
             scope.Start();
@@ -368,14 +332,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Exists");
             scope.Start();
@@ -419,14 +376,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual Response<bool> Exists(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.Exists");
             scope.Start();
@@ -470,14 +420,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryResource>> GetIfExistsAsync(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetIfExists");
             scope.Start();
@@ -523,14 +466,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="factoryName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryResource> GetIfExists(string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var scope = _dataFactoryFactoriesClientDiagnostics.CreateScope("DataFactoryCollection.GetIfExists");
             scope.Start();

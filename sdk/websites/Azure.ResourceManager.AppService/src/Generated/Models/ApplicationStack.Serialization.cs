@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Dependency != null)
+            if (Optional.IsDefined(Dependency))
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (!(MajorVersions is ChangeTrackingList<StackMajorVersion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MajorVersions))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Frameworks is ChangeTrackingList<ApplicationStack> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Frameworks))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IsDeprecated is ChangeTrackingList<ApplicationStack> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();

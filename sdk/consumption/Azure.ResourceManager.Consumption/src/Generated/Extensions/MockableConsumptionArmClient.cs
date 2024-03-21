@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption.Mocking
@@ -177,10 +174,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> An async collection of <see cref="ConsumptionUsageDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageDetailsRestClient.CreateListRequest(scope, expand, filter, skipToken, top, metric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageDetailsRestClient.CreateListNextPageRequest(nextLink, scope, expand, filter, skipToken, top, metric);
@@ -215,10 +209,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> A collection of <see cref="ConsumptionUsageDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionUsageDetail> GetConsumptionUsageDetails(ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = null, ConsumptionMetricType? metric = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageDetailsRestClient.CreateListRequest(scope, expand, filter, skipToken, top, metric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageDetailsRestClient.CreateListNextPageRequest(nextLink, scope, expand, filter, skipToken, top, metric);
@@ -251,10 +242,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> An async collection of <see cref="ConsumptionMarketplace"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplacesRestClient.CreateListRequest(scope, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplacesRestClient.CreateListNextPageRequest(nextLink, scope, filter, top, skipToken);
@@ -287,10 +275,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> A collection of <see cref="ConsumptionMarketplace"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionMarketplace> GetConsumptionMarketPlaces(ResourceIdentifier scope, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplacesRestClient.CreateListRequest(scope, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplacesRestClient.CreateListNextPageRequest(nextLink, scope, filter, top, skipToken);
@@ -319,10 +304,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual async Task<Response<ConsumptionTagsResult>> GetConsumptionTagsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = TagsClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetConsumptionTags");
             scope0.Start();
@@ -360,10 +342,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public virtual Response<ConsumptionTagsResult> GetConsumptionTags(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var scope0 = TagsClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetConsumptionTags");
             scope0.Start();
@@ -406,10 +385,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> An async collection of <see cref="ConsumptionChargeSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionChargeSummary> GetConsumptionChargesAsync(ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChargesRestClient.CreateListRequest(scope, startDate, endDate, filter, apply);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(e), ChargesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionCharges", "value", null, cancellationToken);
@@ -442,10 +418,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> A collection of <see cref="ConsumptionChargeSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionChargeSummary> GetConsumptionCharges(ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChargesRestClient.CreateListRequest(scope, startDate, endDate, filter, apply);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(e), ChargesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionCharges", "value", null, cancellationToken);
@@ -475,14 +448,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> An async collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListRequest(scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListNextPageRequest(nextLink, scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
@@ -513,14 +480,8 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> A collection of <see cref="ConsumptionReservationSummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationSummary> GetConsumptionReservationsSummaries(ResourceIdentifier scope, ArmResourceGetConsumptionReservationsSummariesOptions options, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListRequest(scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListNextPageRequest(nextLink, scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
@@ -555,10 +516,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> An async collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationDetail> GetConsumptionReservationsDetailsAsync(ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListRequest(scope, startDate, endDate, filter, reservationId, reservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListNextPageRequest(nextLink, scope, startDate, endDate, filter, reservationId, reservationOrderId);
@@ -593,10 +551,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> A collection of <see cref="ConsumptionReservationDetail"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationDetail> GetConsumptionReservationsDetails(ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListRequest(scope, startDate, endDate, filter, reservationId, reservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListNextPageRequest(nextLink, scope, startDate, endDate, filter, reservationId, reservationOrderId);
@@ -627,10 +582,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> An async collection of <see cref="ConsumptionReservationRecommendation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendationsAsync(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationRecommendationsRestClient.CreateListRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter);
@@ -661,10 +613,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> A collection of <see cref="ConsumptionReservationRecommendation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConsumptionReservationRecommendation> GetConsumptionReservationRecommendations(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationRecommendationsRestClient.CreateListRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter);
@@ -698,18 +647,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(region, nameof(region));
+            Argument.AssertNotNull(product, nameof(product));
 
             using var scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails");
             scope0.Start();
@@ -752,18 +692,9 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         public virtual Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(region, nameof(region));
+            Argument.AssertNotNull(product, nameof(product));
 
             using var scope0 = ReservationRecommendationDetailsClientDiagnostics.CreateScope("MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails");
             scope0.Start();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ErrorCode.HasValue)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (ErrorString != null)
+            if (Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (ErrorTitle != null)
+            if (Optional.IsDefined(ErrorTitle))
             {
                 writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
-            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AdditionalDetails != null)
+            if (Optional.IsDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);

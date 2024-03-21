@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateBlob != null)
+            if (Optional.IsDefined(PrivateBlob))
             {
                 writer.WritePropertyName("privateBlob"u8);
                 writer.WriteStringValue(PrivateBlob);
             }
-            if (CertPassword != null)
+            if (Optional.IsDefined(CertPassword))
             {
                 writer.WritePropertyName("certPassword"u8);
                 writer.WriteStringValue(CertPassword);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
             writer.WriteObjectValue(OSDisk);
-            if (!(VolumeAttachments is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();

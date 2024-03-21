@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -77,14 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<DataBoxEdgeJobResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _dataBoxEdgeJobJobsClientDiagnostics.CreateScope("DataBoxEdgeJobCollection.Get");
             scope.Start();
@@ -129,14 +120,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<DataBoxEdgeJobResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _dataBoxEdgeJobJobsClientDiagnostics.CreateScope("DataBoxEdgeJobCollection.Get");
             scope.Start();
@@ -181,14 +165,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _dataBoxEdgeJobJobsClientDiagnostics.CreateScope("DataBoxEdgeJobCollection.Exists");
             scope.Start();
@@ -231,14 +208,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _dataBoxEdgeJobJobsClientDiagnostics.CreateScope("DataBoxEdgeJobCollection.Exists");
             scope.Start();
@@ -281,14 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeJobResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _dataBoxEdgeJobJobsClientDiagnostics.CreateScope("DataBoxEdgeJobCollection.GetIfExists");
             scope.Start();
@@ -333,14 +296,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<DataBoxEdgeJobResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _dataBoxEdgeJobJobsClientDiagnostics.CreateScope("DataBoxEdgeJobCollection.GetIfExists");
             scope.Start();

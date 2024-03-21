@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public MapsCorsRule(IEnumerable<string> allowedOrigins)
         {
-            if (allowedOrigins == null)
-            {
-                throw new ArgumentNullException(nameof(allowedOrigins));
-            }
+            Argument.AssertNotNull(allowedOrigins, nameof(allowedOrigins));
 
             AllowedOrigins = allowedOrigins.ToList();
         }

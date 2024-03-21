@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformApiPortalCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppPlatformApiPortalCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformApiPortalCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppPlatformApiPortalCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformApiPortalCustomDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<AppPlatformApiPortalCustomDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual Response<bool> Exists(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformApiPortalCustomDomainResource>> GetIfExistsAsync(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformApiPortalCustomDomainResource> GetIfExists(string domainName, CancellationToken cancellationToken = default)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (domainName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(domainName));
-            }
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
             using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.GetIfExists");
             scope.Start();

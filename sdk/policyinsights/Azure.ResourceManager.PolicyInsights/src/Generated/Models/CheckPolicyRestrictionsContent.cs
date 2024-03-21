@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/> is null. </exception>
         public CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails)
         {
-            if (resourceDetails == null)
-            {
-                throw new ArgumentNullException(nameof(resourceDetails));
-            }
+            Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
 
             ResourceDetails = resourceDetails;
             PendingFields = new ChangeTrackingList<PendingField>();

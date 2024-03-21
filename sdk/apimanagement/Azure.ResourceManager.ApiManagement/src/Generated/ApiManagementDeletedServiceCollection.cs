@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -79,14 +77,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<ApiManagementDeletedServiceResource>> GetAsync(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _apiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("ApiManagementDeletedServiceCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<ApiManagementDeletedServiceResource> Get(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _apiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("ApiManagementDeletedServiceCollection.Get");
             scope.Start();
@@ -185,14 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _apiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("ApiManagementDeletedServiceCollection.Exists");
             scope.Start();
@@ -236,14 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<bool> Exists(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _apiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("ApiManagementDeletedServiceCollection.Exists");
             scope.Start();
@@ -287,14 +257,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementDeletedServiceResource>> GetIfExistsAsync(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _apiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("ApiManagementDeletedServiceCollection.GetIfExists");
             scope.Start();
@@ -340,14 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual NullableResponse<ApiManagementDeletedServiceResource> GetIfExists(AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _apiManagementDeletedServiceDeletedServicesClientDiagnostics.CreateScope("ApiManagementDeletedServiceCollection.GetIfExists");
             scope.Start();

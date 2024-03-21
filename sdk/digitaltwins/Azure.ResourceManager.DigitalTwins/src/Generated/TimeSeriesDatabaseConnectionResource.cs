@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DigitalTwins.Models;
 
 namespace Azure.ResourceManager.DigitalTwins
@@ -284,10 +282,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TimeSeriesDatabaseConnectionResource>> UpdateAsync(WaitUntil waitUntil, TimeSeriesDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionResource.Update");
             scope.Start();
@@ -333,10 +328,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TimeSeriesDatabaseConnectionResource> Update(WaitUntil waitUntil, TimeSeriesDatabaseConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _timeSeriesDatabaseConnectionClientDiagnostics.CreateScope("TimeSeriesDatabaseConnectionResource.Update");
             scope.Start();

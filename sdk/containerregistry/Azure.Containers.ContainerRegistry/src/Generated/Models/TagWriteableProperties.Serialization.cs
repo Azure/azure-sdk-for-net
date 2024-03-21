@@ -15,22 +15,22 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CanDelete.HasValue)
+            if (Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("deleteEnabled"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (CanWrite.HasValue)
+            if (Optional.IsDefined(CanWrite))
             {
                 writer.WritePropertyName("writeEnabled"u8);
                 writer.WriteBooleanValue(CanWrite.Value);
             }
-            if (CanList.HasValue)
+            if (Optional.IsDefined(CanList))
             {
                 writer.WritePropertyName("listEnabled"u8);
                 writer.WriteBooleanValue(CanList.Value);
             }
-            if (CanRead.HasValue)
+            if (Optional.IsDefined(CanRead))
             {
                 writer.WritePropertyName("readEnabled"u8);
                 writer.WriteBooleanValue(CanRead.Value);

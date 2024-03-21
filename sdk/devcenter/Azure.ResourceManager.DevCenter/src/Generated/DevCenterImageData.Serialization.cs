@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Offer != null)
+            if (options.Format != "W" && Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && RecommendedMachineConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedMachineConfiguration))
             {
                 writer.WritePropertyName("recommendedMachineConfiguration"u8);
                 writer.WriteObjectValue(RecommendedMachineConfiguration);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && HibernateSupport.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());

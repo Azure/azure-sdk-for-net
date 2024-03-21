@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary> Provisioning state of the resource. </summary>
+    /// <summary> Provisioning state of resource. </summary>
     public readonly partial struct SphereProvisioningState : IEquatable<SphereProvisioningState>
     {
         private readonly string _value;

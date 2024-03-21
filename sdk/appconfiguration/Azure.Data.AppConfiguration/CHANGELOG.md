@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0-beta.1 (2024-03-07)
+
+### Features Added
+
+- Added property `MatchConditions` to `SettingSelector` which allows specifying request conditions to `GetConfigurationSettings` requests.
 
 ## 1.3.0 (2023-11-08)
 

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Attributes != null)
+            if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
             }
-            if (options.Format != "W" && SecretUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUri"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (options.Format != "W" && SecretUriWithVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SecretUriWithVersion))
             {
                 writer.WritePropertyName("secretUriWithVersion"u8);
                 writer.WriteStringValue(SecretUriWithVersion);

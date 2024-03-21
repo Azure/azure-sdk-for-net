@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (RenderingProperties != null)
+            if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);

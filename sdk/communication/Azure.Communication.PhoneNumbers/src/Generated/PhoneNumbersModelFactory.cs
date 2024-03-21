@@ -136,9 +136,19 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="operatorName"> Name of the operator that provided the number. </param>
         /// <param name="phoneNumberSource"> Source of the number, e.g. Cloud or OperatorConnect. </param>
         /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumber"/> instance for mocking. </returns>
-        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null, string operatorId = null, string operatorName = null, PhoneNumberSource? phoneNumberSource = null)
+        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PurchasedPhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null, string operatorId = null, string operatorName = null, PhoneNumberSource? phoneNumberSource = null)
         {
             return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId, operatorName, phoneNumberSource);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PurchasedPhoneNumberCapabilities"/>. </summary>
+        /// <param name="calling"> Capability value for calling. </param>
+        /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Ten DLC campaign brief id attached to the number. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumberCapabilities"/> instance for mocking. </returns>
+        public static PurchasedPhoneNumberCapabilities PurchasedPhoneNumberCapabilities(PhoneNumberCapabilityType calling = default, PhoneNumberCapabilityType sms = default, string tenDLCCampaignBriefId = null)
+        {
+            return new PurchasedPhoneNumberCapabilities(calling, sms, tenDLCCampaignBriefId);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformationResult"/>. </summary>

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

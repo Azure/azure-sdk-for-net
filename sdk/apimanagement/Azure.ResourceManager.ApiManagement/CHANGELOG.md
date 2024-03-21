@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by changing the  the way how `BackendResponseCode` is serialized and deserialized.
+
 ### Other Changes
 
 ## 1.1.0 (2023-11-27)

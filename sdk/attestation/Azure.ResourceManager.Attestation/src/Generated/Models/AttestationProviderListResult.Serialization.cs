@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Attestation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
@@ -28,12 +27,12 @@ namespace Azure.ResourceManager.Attestation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            if (!(Value is ChangeTrackingList<AttestationProviderData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

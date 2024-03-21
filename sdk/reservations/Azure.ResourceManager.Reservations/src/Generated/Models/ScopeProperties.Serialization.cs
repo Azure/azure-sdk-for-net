@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -70,14 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='GetSeasonAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSeasonAsync(string seasonId, RequestContext context)
         {
-            if (seasonId == null)
-            {
-                throw new ArgumentNullException(nameof(seasonId));
-            }
-            if (seasonId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
-            }
+            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.GetSeason");
             scope.Start();
@@ -112,14 +104,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='GetSeason(string,RequestContext)']/*" />
         public virtual Response GetSeason(string seasonId, RequestContext context)
         {
-            if (seasonId == null)
-            {
-                throw new ArgumentNullException(nameof(seasonId));
-            }
-            if (seasonId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
-            }
+            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.GetSeason");
             scope.Start();
@@ -155,18 +140,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string seasonId, RequestContent content, RequestContext context = null)
         {
-            if (seasonId == null)
-            {
-                throw new ArgumentNullException(nameof(seasonId));
-            }
-            if (seasonId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.CreateOrUpdate");
             scope.Start();
@@ -202,18 +177,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string seasonId, RequestContent content, RequestContext context = null)
         {
-            if (seasonId == null)
-            {
-                throw new ArgumentNullException(nameof(seasonId));
-            }
-            if (seasonId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.CreateOrUpdate");
             scope.Start();
@@ -248,14 +213,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string seasonId, RequestContext context = null)
         {
-            if (seasonId == null)
-            {
-                throw new ArgumentNullException(nameof(seasonId));
-            }
-            if (seasonId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
-            }
+            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.Delete");
             scope.Start();
@@ -290,14 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Seasons.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string seasonId, RequestContext context = null)
         {
-            if (seasonId == null)
-            {
-                throw new ArgumentNullException(nameof(seasonId));
-            }
-            if (seasonId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(seasonId));
-            }
+            Argument.AssertNotNullOrEmpty(seasonId, nameof(seasonId));
 
             using var scope = ClientDiagnostics.CreateScope("Seasons.Delete");
             scope.Start();

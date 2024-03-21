@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Occurrence.HasValue)
+            if (Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
             }
-            if (Day.HasValue)
+            if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());

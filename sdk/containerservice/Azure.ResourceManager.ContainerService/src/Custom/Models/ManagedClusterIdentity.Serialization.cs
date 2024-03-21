@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
             ManagedServiceIdentityType type = default;
-            Optional<IDictionary<string, ManagedClusterDelegatedIdentity>> delegatedResources = default;
-            Optional<IDictionary<ResourceIdentifier, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, ManagedClusterDelegatedIdentity> delegatedResources = default;
+            IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type, Optional.ToDictionary(delegatedResources), Optional.ToDictionary(userAssignedIdentities), serializedAdditionalRawData);
+            return new ManagedClusterIdentity(principalId, tenantId, type, delegatedResources ?? new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>(), userAssignedIdentities ?? new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterIdentity>.Write(ModelReaderWriterOptions options)

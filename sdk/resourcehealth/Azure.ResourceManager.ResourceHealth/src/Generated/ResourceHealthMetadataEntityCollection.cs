@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceHealth
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<ResourceHealthMetadataEntityResource>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<ResourceHealthMetadataEntityResource> Get(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.Get");
             scope.Start();
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.Exists");
             scope.Start();
@@ -295,14 +272,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.Exists");
             scope.Start();
@@ -345,14 +315,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceHealthMetadataEntityResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.GetIfExists");
             scope.Start();
@@ -397,14 +360,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public virtual NullableResponse<ResourceHealthMetadataEntityResource> GetIfExists(string name, CancellationToken cancellationToken = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = _resourceHealthMetadataEntityMetadataClientDiagnostics.CreateScope("ResourceHealthMetadataEntityCollection.GetIfExists");
             scope.Start();

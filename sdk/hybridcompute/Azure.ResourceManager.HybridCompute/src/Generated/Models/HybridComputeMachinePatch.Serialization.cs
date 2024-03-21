@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,32 +50,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LocationData != null)
+            if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
                 writer.WriteObjectValue(LocationData);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (CloudMetadata != null)
+            if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
                 writer.WriteObjectValue(CloudMetadata);
             }
-            if (AgentUpgrade != null)
+            if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
                 writer.WriteObjectValue(AgentUpgrade);
             }
-            if (ParentClusterResourceId != null)
+            if (Optional.IsDefined(ParentClusterResourceId))
             {
                 writer.WritePropertyName("parentClusterResourceId"u8);
                 writer.WriteStringValue(ParentClusterResourceId);
             }
-            if (PrivateLinkScopeResourceId != null)
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
             {
                 writer.WritePropertyName("privateLinkScopeResourceId"u8);
                 writer.WriteStringValue(PrivateLinkScopeResourceId);

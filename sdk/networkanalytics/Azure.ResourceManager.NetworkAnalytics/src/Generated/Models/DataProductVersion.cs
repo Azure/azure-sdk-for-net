@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public DataProductVersion(string version)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNull(version, nameof(version));
 
             Version = version;
         }

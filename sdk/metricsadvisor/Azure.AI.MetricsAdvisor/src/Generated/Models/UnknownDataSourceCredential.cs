@@ -9,7 +9,7 @@ using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The UnknownDataSourceCredential. </summary>
+    /// <summary> Unknown version of DataSourceCredential. </summary>
     internal partial class UnknownDataSourceCredential : DataSourceCredentialEntity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataSourceCredential"/>. </summary>

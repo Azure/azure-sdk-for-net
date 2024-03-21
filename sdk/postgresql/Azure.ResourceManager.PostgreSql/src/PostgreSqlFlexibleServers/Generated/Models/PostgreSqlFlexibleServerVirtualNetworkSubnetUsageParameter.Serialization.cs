@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualNetworkArmResourceId != null)
+            if (Optional.IsDefined(VirtualNetworkArmResourceId))
             {
                 writer.WritePropertyName("virtualNetworkArmResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkArmResourceId);

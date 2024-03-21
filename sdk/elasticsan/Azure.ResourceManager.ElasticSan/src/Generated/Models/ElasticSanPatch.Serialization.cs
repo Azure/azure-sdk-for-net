@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaseSizeTiB.HasValue)
+            if (Optional.IsDefined(BaseSizeTiB))
             {
                 writer.WritePropertyName("baseSizeTiB"u8);
                 writer.WriteNumberValue(BaseSizeTiB.Value);
             }
-            if (ExtendedCapacitySizeTiB.HasValue)
+            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
             {
                 writer.WritePropertyName("extendedCapacitySizeTiB"u8);
                 writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

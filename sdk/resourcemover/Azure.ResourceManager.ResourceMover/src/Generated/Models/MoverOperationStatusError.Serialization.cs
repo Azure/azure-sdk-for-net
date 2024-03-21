@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<MoverOperationStatusError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AdditionalInfo is ChangeTrackingList<MoverOperationErrorAdditionalInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalInfo))
             {
                 if (AdditionalInfo != null)
                 {

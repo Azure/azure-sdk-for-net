@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LargeInstance
@@ -82,14 +80,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         public virtual async Task<Response<LargeInstanceResource>> GetAsync(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeInstanceName));
-            }
-            if (azureLargeInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
 
             using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceCollection.Get");
             scope.Start();
@@ -135,14 +126,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         public virtual Response<LargeInstanceResource> Get(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeInstanceName));
-            }
-            if (azureLargeInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
 
             using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceCollection.Get");
             scope.Start();
@@ -249,14 +233,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeInstanceName));
-            }
-            if (azureLargeInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
 
             using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceCollection.Exists");
             scope.Start();
@@ -299,14 +276,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeInstanceName));
-            }
-            if (azureLargeInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
 
             using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceCollection.Exists");
             scope.Start();
@@ -349,14 +319,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<LargeInstanceResource>> GetIfExistsAsync(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeInstanceName));
-            }
-            if (azureLargeInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
 
             using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceCollection.GetIfExists");
             scope.Start();
@@ -401,14 +364,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeInstanceName"/> is null. </exception>
         public virtual NullableResponse<LargeInstanceResource> GetIfExists(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeInstanceName));
-            }
-            if (azureLargeInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
 
             using var scope = _largeInstanceAzureLargeInstanceClientDiagnostics.CreateScope("LargeInstanceCollection.GetIfExists");
             scope.Start();

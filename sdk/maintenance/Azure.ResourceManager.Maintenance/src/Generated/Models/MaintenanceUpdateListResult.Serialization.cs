@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<MaintenanceUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();

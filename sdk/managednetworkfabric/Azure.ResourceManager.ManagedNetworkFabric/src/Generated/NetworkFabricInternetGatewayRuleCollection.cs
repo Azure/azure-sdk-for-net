@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricInternetGatewayRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string internetGatewayRuleName, NetworkFabricInternetGatewayRuleData data, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricInternetGatewayRuleResource> CreateOrUpdate(WaitUntil waitUntil, string internetGatewayRuleName, NetworkFabricInternetGatewayRuleData data, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricInternetGatewayRuleResource>> GetAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         public virtual Response<NetworkFabricInternetGatewayRuleResource> Get(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricInternetGatewayRuleResource>> GetIfExistsAsync(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricInternetGatewayRuleResource> GetIfExists(string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (internetGatewayRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(internetGatewayRuleName));
-            }
-            if (internetGatewayRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(internetGatewayRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(internetGatewayRuleName, nameof(internetGatewayRuleName));
 
             using var scope = _networkFabricInternetGatewayRuleInternetGatewayRulesClientDiagnostics.CreateScope("NetworkFabricInternetGatewayRuleCollection.GetIfExists");
             scope.Start();

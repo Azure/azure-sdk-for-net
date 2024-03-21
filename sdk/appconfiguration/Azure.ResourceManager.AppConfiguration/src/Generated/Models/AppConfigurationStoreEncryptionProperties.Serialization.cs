@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 if (KeyVaultProperties != null)
                 {

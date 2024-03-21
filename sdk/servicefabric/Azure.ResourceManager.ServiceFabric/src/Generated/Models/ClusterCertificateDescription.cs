@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="thumbprint"/> is null. </exception>
         public ClusterCertificateDescription(BinaryData thumbprint)
         {
-            if (thumbprint == null)
-            {
-                throw new ArgumentNullException(nameof(thumbprint));
-            }
+            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
 
             Thumbprint = thumbprint;
         }

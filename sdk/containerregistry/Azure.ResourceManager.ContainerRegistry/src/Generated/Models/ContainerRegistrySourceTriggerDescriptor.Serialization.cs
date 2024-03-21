@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (CommitId != null)
+            if (Optional.IsDefined(CommitId))
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
             }
-            if (PullRequestId != null)
+            if (Optional.IsDefined(PullRequestId))
             {
                 writer.WritePropertyName("pullRequestId"u8);
                 writer.WriteStringValue(PullRequestId);
             }
-            if (RepositoryUri != null)
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (BranchName != null)
+            if (Optional.IsDefined(BranchName))
             {
                 writer.WritePropertyName("branchName"u8);
                 writer.WriteStringValue(BranchName);
             }
-            if (ProviderType != null)
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);

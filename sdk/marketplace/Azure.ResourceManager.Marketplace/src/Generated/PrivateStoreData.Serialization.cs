@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
@@ -44,44 +43,44 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Availability.HasValue)
+            if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (options.Format != "W" && PrivateStoreId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
             {
                 writer.WritePropertyName("privateStoreId"u8);
                 writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (PrivateStoreName != null)
+            if (Optional.IsDefined(PrivateStoreName))
             {
                 writer.WritePropertyName("privateStoreName"u8);
                 writer.WriteStringValue(PrivateStoreName);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsGov.HasValue)
+            if (Optional.IsDefined(IsGov))
             {
                 writer.WritePropertyName("isGov"u8);
                 writer.WriteBooleanValue(IsGov.Value);
             }
-            if (options.Format != "W" && !(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (!(Branding is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Branding))
             {
                 writer.WritePropertyName("branding"u8);
                 writer.WriteStartObject();
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Marketplace
             }
             writer.WritePropertyName("notificationsSettings"u8);
             writer.WriteStartObject();
-            if (!(Recipients is ChangeTrackingList<NotificationRecipient> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
                 writer.WriteStartArray();
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (SendToAllMarketplaceAdmins.HasValue)
+            if (Optional.IsDefined(SendToAllMarketplaceAdmins))
             {
                 writer.WritePropertyName("sendToAllMarketplaceAdmins"u8);
                 writer.WriteBooleanValue(SendToAllMarketplaceAdmins.Value);

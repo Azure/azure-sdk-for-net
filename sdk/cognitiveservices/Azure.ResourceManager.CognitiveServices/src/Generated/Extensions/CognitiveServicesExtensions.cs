@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices.Mocking;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesAccountResource"/> object. </returns>
         public static CognitiveServicesAccountResource GetCognitiveServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesAccountResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesDeletedAccountResource"/> object. </returns>
         public static CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesDeletedAccountResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesPrivateEndpointConnectionResource"/> object. </returns>
         public static CognitiveServicesPrivateEndpointConnectionResource GetCognitiveServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesPrivateEndpointConnectionResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesAccountDeploymentResource"/> object. </returns>
         public static CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesAccountDeploymentResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CommitmentPlanResource"/> object. </returns>
         public static CommitmentPlanResource GetCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCommitmentPlanResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanResource"/> object. </returns>
         public static CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesCommitmentPlanResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CommitmentPlanAccountAssociationResource"/> object. </returns>
         public static CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCognitiveServicesArmClient(client).GetCommitmentPlanAccountAssociationResource(id);
         }
@@ -201,10 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesAccountResources and their operations over a CognitiveServicesAccountResource. </returns>
         public static CognitiveServicesAccountCollection GetCognitiveServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesAccounts();
         }
@@ -242,10 +216,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -283,10 +254,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesAccountResource> GetCognitiveServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesAccount(accountName, cancellationToken);
         }
@@ -303,10 +271,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
         public static CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
         }
@@ -344,10 +309,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesCommitmentPlanAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
         }
@@ -385,10 +347,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesCommitmentPlan(commitmentPlanName, cancellationToken);
         }
@@ -405,10 +364,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesDeletedAccountResources and their operations over a CognitiveServicesDeletedAccountResource. </returns>
         public static CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesDeletedAccounts();
         }
@@ -448,10 +404,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesDeletedAccountAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -491,10 +444,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesDeletedAccount(location, resourceGroupName, accountName, cancellationToken);
         }
@@ -530,10 +480,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
         }
@@ -569,10 +516,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
         }
@@ -608,10 +552,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
@@ -647,10 +588,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
@@ -682,10 +620,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="AvailableCognitiveServicesSku"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableCognitiveServicesSku> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetResourceSkusAsync(cancellationToken);
         }
@@ -717,10 +652,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="AvailableCognitiveServicesSku"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableCognitiveServicesSku> GetResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetResourceSkus(cancellationToken);
         }
@@ -754,10 +686,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceAccountUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
@@ -791,10 +720,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="ServiceAccountUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceAccountUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
@@ -828,10 +754,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesSkuAvailabilityList"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckSkuAvailabilityAsync(location, content, cancellationToken);
         }
@@ -865,10 +788,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckSkuAvailability(location, content, cancellationToken);
         }
@@ -900,10 +820,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckDomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -935,10 +852,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckDomainAvailability(content, cancellationToken);
         }
@@ -971,10 +885,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CommitmentTier"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CommitmentTier> GetCommitmentTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCommitmentTiersAsync(location, cancellationToken);
         }
@@ -1007,10 +918,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CommitmentTier"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CommitmentTier> GetCommitmentTiers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
         }
@@ -1043,10 +951,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesModel"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesModel> GetModelsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetModelsAsync(location, cancellationToken);
         }
@@ -1079,10 +984,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesModel"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesModel> GetModels(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetModels(location, cancellationToken);
         }
@@ -1118,10 +1020,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
         }
@@ -1157,10 +1056,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
         }

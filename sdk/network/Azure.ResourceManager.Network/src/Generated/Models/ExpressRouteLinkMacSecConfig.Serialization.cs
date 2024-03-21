@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (CknSecretIdentifier != null)
+            if (Optional.IsDefined(CknSecretIdentifier))
             {
                 writer.WritePropertyName("cknSecretIdentifier"u8);
                 writer.WriteStringValue(CknSecretIdentifier);
             }
-            if (CakSecretIdentifier != null)
+            if (Optional.IsDefined(CakSecretIdentifier))
             {
                 writer.WritePropertyName("cakSecretIdentifier"u8);
                 writer.WriteStringValue(CakSecretIdentifier);
             }
-            if (Cipher.HasValue)
+            if (Optional.IsDefined(Cipher))
             {
                 writer.WritePropertyName("cipher"u8);
                 writer.WriteStringValue(Cipher.Value.ToString());
             }
-            if (SciState.HasValue)
+            if (Optional.IsDefined(SciState))
             {
                 writer.WritePropertyName("sciState"u8);
                 writer.WriteStringValue(SciState.Value.ToString());

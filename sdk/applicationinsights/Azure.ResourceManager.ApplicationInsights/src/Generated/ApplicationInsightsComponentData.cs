@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
@@ -58,10 +57,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
         public ApplicationInsightsComponentData(AzureLocation location, string kind) : base(location)
         {
-            if (kind == null)
-            {
-                throw new ArgumentNullException(nameof(kind));
-            }
+            Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
             PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceContent>();

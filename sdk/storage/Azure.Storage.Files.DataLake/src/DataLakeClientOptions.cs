@@ -136,7 +136,12 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// The 2024-02-04 service version.
             /// </summary>
-            V2024_02_04 = 21
+            V2024_02_04 = 21,
+
+            /// <summary>
+            /// The 2024-05-04 service version.
+            /// </summary>
+            V2024_05_04 = 22
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

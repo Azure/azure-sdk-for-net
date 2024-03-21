@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deliveryInfo"/> or <paramref name="definition"/> is null. </exception>
         public CommonExportProperties(ExportDeliveryInfo deliveryInfo, ExportDefinition definition)
         {
-            if (deliveryInfo == null)
-            {
-                throw new ArgumentNullException(nameof(deliveryInfo));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(deliveryInfo, nameof(deliveryInfo));
+            Argument.AssertNotNull(definition, nameof(definition));
 
             DeliveryInfo = deliveryInfo;
             Definition = definition;

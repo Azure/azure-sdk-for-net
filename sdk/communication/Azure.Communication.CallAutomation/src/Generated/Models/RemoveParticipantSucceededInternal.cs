@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The participant removed event. </summary>

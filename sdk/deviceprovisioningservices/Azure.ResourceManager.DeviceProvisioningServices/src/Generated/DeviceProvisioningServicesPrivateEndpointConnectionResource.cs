@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, DeviceProvisioningServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Update");
             scope.Start();
@@ -330,10 +325,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceProvisioningServicesPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, DeviceProvisioningServicesPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceProvisioningServicesPrivateEndpointConnectionIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateEndpointConnectionResource.Update");
             scope.Start();

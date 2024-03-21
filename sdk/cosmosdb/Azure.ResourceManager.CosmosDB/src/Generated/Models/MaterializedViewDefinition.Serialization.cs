@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SourceCollectionRid != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceCollectionRid))
             {
                 writer.WritePropertyName("sourceCollectionRid"u8);
                 writer.WriteStringValue(SourceCollectionRid);

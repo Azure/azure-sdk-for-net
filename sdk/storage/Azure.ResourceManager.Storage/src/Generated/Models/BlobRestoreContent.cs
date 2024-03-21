@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobRanges"/> is null. </exception>
         public BlobRestoreContent(DateTimeOffset timeToRestore, IEnumerable<BlobRestoreRange> blobRanges)
         {
-            if (blobRanges == null)
-            {
-                throw new ArgumentNullException(nameof(blobRanges));
-            }
+            Argument.AssertNotNull(blobRanges, nameof(blobRanges));
 
             TimeToRestore = timeToRestore;
             BlobRanges = blobRanges.ToList();

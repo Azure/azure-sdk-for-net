@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Mocking;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationDraResource"/> object. </returns>
         public static DataReplicationDraResource GetDataReplicationDraResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationDraResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationEmailConfigurationResource"/> object. </returns>
         public static DataReplicationEmailConfigurationResource GetDataReplicationEmailConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationEmailConfigurationResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationEventResource"/> object. </returns>
         public static DataReplicationEventResource GetDataReplicationEventResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationEventResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationFabricResource"/> object. </returns>
         public static DataReplicationFabricResource GetDataReplicationFabricResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationFabricResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationPolicyResource"/> object. </returns>
         public static DataReplicationPolicyResource GetDataReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationPolicyResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationProtectedItemResource"/> object. </returns>
         public static DataReplicationProtectedItemResource GetDataReplicationProtectedItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationProtectedItemResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationRecoveryPointResource"/> object. </returns>
         public static DataReplicationRecoveryPointResource GetDataReplicationRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationRecoveryPointResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationReplicationExtensionResource"/> object. </returns>
         public static DataReplicationReplicationExtensionResource GetDataReplicationReplicationExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationReplicationExtensionResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationVaultResource"/> object. </returns>
         public static DataReplicationVaultResource GetDataReplicationVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationVaultResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> Returns a <see cref="DataReplicationWorkflowResource"/> object. </returns>
         public static DataReplicationWorkflowResource GetDataReplicationWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationWorkflowResource(id);
         }
@@ -267,10 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationFabricResources and their operations over a DataReplicationFabricResource. </returns>
         public static DataReplicationFabricCollection GetDataReplicationFabrics(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetDataReplicationFabrics();
         }
@@ -308,10 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         [ForwardsClientCalls]
         public static async Task<Response<DataReplicationFabricResource>> GetDataReplicationFabricAsync(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetDataReplicationFabricAsync(fabricName, cancellationToken).ConfigureAwait(false);
         }
@@ -349,10 +311,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         [ForwardsClientCalls]
         public static Response<DataReplicationFabricResource> GetDataReplicationFabric(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetDataReplicationFabric(fabricName, cancellationToken);
         }
@@ -369,10 +328,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationVaultResources and their operations over a DataReplicationVaultResource. </returns>
         public static DataReplicationVaultCollection GetDataReplicationVaults(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetDataReplicationVaults();
         }
@@ -410,10 +366,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         [ForwardsClientCalls]
         public static async Task<Response<DataReplicationVaultResource>> GetDataReplicationVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetDataReplicationVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
@@ -451,10 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         [ForwardsClientCalls]
         public static Response<DataReplicationVaultResource> GetDataReplicationVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).GetDataReplicationVault(vaultName, cancellationToken);
         }
@@ -488,10 +438,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentId"/> is null. </exception>
         public static async Task<Response<DeploymentPreflightModel>> DeploymentPreflightAsync(this ResourceGroupResource resourceGroupResource, string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).DeploymentPreflightAsync(deploymentId, body, cancellationToken).ConfigureAwait(false);
         }
@@ -525,10 +472,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentId"/> is null. </exception>
         public static Response<DeploymentPreflightModel> DeploymentPreflight(this ResourceGroupResource resourceGroupResource, string deploymentId, DeploymentPreflightModel body = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRecoveryServicesDataReplicationResourceGroupResource(resourceGroupResource).DeploymentPreflight(deploymentId, body, cancellationToken);
         }
@@ -565,10 +509,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An async collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataReplicationFabricResource> GetDataReplicationFabricsAsync(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesDataReplicationSubscriptionResource(subscriptionResource).GetDataReplicationFabricsAsync(continuationToken, cancellationToken);
         }
@@ -605,10 +546,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> A collection of <see cref="DataReplicationFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataReplicationFabricResource> GetDataReplicationFabrics(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesDataReplicationSubscriptionResource(subscriptionResource).GetDataReplicationFabrics(continuationToken, cancellationToken);
         }
@@ -641,10 +579,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<DataReplicationNameAvailabilityResult>> CheckDataReplicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRecoveryServicesDataReplicationSubscriptionResource(subscriptionResource).CheckDataReplicationNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -677,10 +612,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<DataReplicationNameAvailabilityResult> CheckDataReplicationNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataReplicationNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesDataReplicationSubscriptionResource(subscriptionResource).CheckDataReplicationNameAvailability(location, content, cancellationToken);
         }
@@ -717,10 +649,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An async collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataReplicationVaultResource> GetDataReplicationVaultsAsync(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesDataReplicationSubscriptionResource(subscriptionResource).GetDataReplicationVaultsAsync(continuationToken, cancellationToken);
         }
@@ -757,10 +686,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> A collection of <see cref="DataReplicationVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataReplicationVaultResource> GetDataReplicationVaults(this SubscriptionResource subscriptionResource, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesDataReplicationSubscriptionResource(subscriptionResource).GetDataReplicationVaults(continuationToken, cancellationToken);
         }

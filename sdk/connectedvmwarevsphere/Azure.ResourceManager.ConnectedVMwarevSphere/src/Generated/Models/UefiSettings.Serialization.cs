@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (SecureBootEnabled.HasValue)
+            if (Optional.IsDefined(SecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(SecureBootEnabled.Value);

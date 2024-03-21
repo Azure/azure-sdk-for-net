@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="managedIdentityResourceId"/> is null. </exception>
         public OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId)
         {
-            if (managedIdentityResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(managedIdentityResourceId));
-            }
+            Argument.AssertNotNull(managedIdentityResourceId, nameof(managedIdentityResourceId));
 
             Type = OnYourDataAuthenticationType.UserAssignedManagedIdentity;
             ManagedIdentityResourceId = managedIdentityResourceId;

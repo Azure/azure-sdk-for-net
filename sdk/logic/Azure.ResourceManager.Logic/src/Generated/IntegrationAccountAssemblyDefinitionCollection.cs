@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountAssemblyDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assemblyArtifactName, IntegrationAccountAssemblyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountAssemblyDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string assemblyArtifactName, IntegrationAccountAssemblyDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountAssemblyDefinitionResource>> GetAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         public virtual Response<IntegrationAccountAssemblyDefinitionResource> Get(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         public virtual Response<bool> Exists(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountAssemblyDefinitionResource>> GetIfExistsAsync(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="assemblyArtifactName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountAssemblyDefinitionResource> GetIfExists(string assemblyArtifactName, CancellationToken cancellationToken = default)
         {
-            if (assemblyArtifactName == null)
-            {
-                throw new ArgumentNullException(nameof(assemblyArtifactName));
-            }
-            if (assemblyArtifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(assemblyArtifactName));
-            }
+            Argument.AssertNotNullOrEmpty(assemblyArtifactName, nameof(assemblyArtifactName));
 
             using var scope = _integrationAccountAssemblyDefinitionIntegrationAccountAssembliesClientDiagnostics.CreateScope("IntegrationAccountAssemblyDefinitionCollection.GetIfExists");
             scope.Start();

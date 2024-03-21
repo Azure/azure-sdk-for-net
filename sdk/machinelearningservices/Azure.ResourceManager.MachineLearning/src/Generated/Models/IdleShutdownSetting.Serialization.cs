@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (IdleTimeBeforeShutdown != null)
+            if (Optional.IsDefined(IdleTimeBeforeShutdown))
             {
                 writer.WritePropertyName("idleTimeBeforeShutdown"u8);
                 writer.WriteStringValue(IdleTimeBeforeShutdown);

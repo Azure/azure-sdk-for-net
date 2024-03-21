@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion

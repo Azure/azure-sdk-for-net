@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Percentage.HasValue)
+            if (Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);

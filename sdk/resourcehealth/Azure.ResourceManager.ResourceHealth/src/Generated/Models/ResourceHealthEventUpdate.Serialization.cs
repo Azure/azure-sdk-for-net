@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updateDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");

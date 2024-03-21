@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (CoresUsed.HasValue)
+            if (Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);

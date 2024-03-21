@@ -39,6 +39,12 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(firstItem, Is.Not.Null);
             Assert.That(firstItem.Index, Is.EqualTo(0));
             Assert.That(firstItem.Embedding, Is.Not.Null.Or.Empty);
+
+            Assert.That(response.Value.Data[0].Embedding.Span.Length, Is.EqualTo(1536));
+
+            embeddingsOptions.Dimensions = 718;
+            response = await client.GetEmbeddingsAsync(embeddingsOptions);
+            Assert.That(response.Value.Data[0].Embedding.Span.Length, Is.EqualTo(embeddingsOptions.Dimensions));
         }
     }
 }

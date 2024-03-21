@@ -42,6 +42,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private Task _cachedEventsBackgroundTask;
             private CancellationTokenSource _cachedEventsBackgroundTaskCts;
             private SemaphoreSlim _cachedEventsGuard;
+            private readonly CancellationToken _listenerCancellationToken;
             private readonly CancellationToken _functionExecutionToken;
             private readonly CancellationTokenSource _ownershipLostTokenSource;
 
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             /// </summary>
             internal PartitionProcessorEventsManager CachedEventsManager { get; }
 
-            public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, CancellationToken functionExecutionToken)
+            public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, CancellationToken listenerCancellationToken, CancellationToken functionExecutionToken)
             {
                 _executor = executor;
                 _singleDispatch = singleDispatch;
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _firstFunctionInvocation = true;
                 _maxWaitTime = options.MaxWaitTime;
                 _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
+                _listenerCancellationToken = listenerCancellationToken;
                 _functionExecutionToken = functionExecutionToken;
                 _ownershipLostTokenSource = new CancellationTokenSource();
 
@@ -215,8 +217,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     // and wait to send until we receive enough events or total max wait time has passed.
                 }
 
-                // Checkpoint if we processed any events and cancellation has not been signaled.
-                // Don't checkpoint if no events. This can reset the sequence counter to 0.
+                // Checkpoint if we processed any events, the listener is not stopping, and
+                // cancellation has not been signaled.  Don't checkpoint if no events. This
+                // can reset the sequence counter to 0.
+                //
                 // Note: we intentionally checkpoint the batch regardless of function
                 // success/failure. EventHub doesn't support any sort "poison event" model,
                 // so that is the responsibility of the user's function currently. E.g.
@@ -225,10 +229,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 // Don't checkpoint if cancellation has been requested as this can lead to data loss,
                 // since the user may not actually process the event.
 
-                if (eventToCheckpoint != null &&
+                if (eventToCheckpoint != null
                     // IMPORTANT - explicitly check each token to avoid data loss as the linkedCts is not canceled atomically when each of the
                     // sources are canceled.
-                    !_functionExecutionToken.IsCancellationRequested && !_ownershipLostTokenSource.IsCancellationRequested)
+                    && !_listenerCancellationToken.IsCancellationRequested
+                    && !_functionExecutionToken.IsCancellationRequested
+                    && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
                     await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("path");
                 }
             }
-            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 if (DependsOn != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("dependsOn");
                 }
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (RetryIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("retryIntervalInSeconds");
                 }
             }
-            if (Prune.HasValue)
+            if (Optional.IsDefined(Prune))
             {
                 if (Prune != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("prune");
                 }
             }
-            if (Force.HasValue)
+            if (Optional.IsDefined(Force))
             {
                 if (Force != null)
                 {

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Synapse.Models;
 
@@ -1603,10 +1601,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseWorkspaceResource>> UpdateAsync(WaitUntil waitUntil, SynapseWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.Update");
             scope.Start();
@@ -1652,10 +1647,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SynapseWorkspaceResource> Update(WaitUntil waitUntil, SynapseWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.Update");
             scope.Start();
@@ -1701,10 +1693,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ReplaceAllFirewallRulesOperationResult>> ReplaceAllIpFirewallRuleAsync(WaitUntil waitUntil, ReplaceAllIPFirewallRulesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseWorkspaceResource.ReplaceAllIpFirewallRule");
             scope.Start();
@@ -1750,10 +1739,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ReplaceAllFirewallRulesOperationResult> ReplaceAllIpFirewallRule(WaitUntil waitUntil, ReplaceAllIPFirewallRulesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseWorkspaceResource.ReplaceAllIpFirewallRule");
             scope.Start();
@@ -1851,14 +1837,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SynapseWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.AddTag");
             scope.Start();
@@ -1919,14 +1899,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SynapseWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.AddTag");
             scope.Start();
@@ -1986,10 +1960,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SynapseWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.SetTags");
             scope.Start();
@@ -2046,10 +2017,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SynapseWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.SetTags");
             scope.Start();
@@ -2106,10 +2074,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SynapseWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.RemoveTag");
             scope.Start();
@@ -2169,10 +2134,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SynapseWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _synapseWorkspaceWorkspacesClientDiagnostics.CreateScope("SynapseWorkspaceResource.RemoveTag");
             scope.Start();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (ControlPlaneEndpoint != null)
+            if (Optional.IsDefined(ControlPlaneEndpoint))
             {
                 writer.WritePropertyName("controlPlaneEndpoint"u8);
                 writer.WriteObjectValue(ControlPlaneEndpoint);

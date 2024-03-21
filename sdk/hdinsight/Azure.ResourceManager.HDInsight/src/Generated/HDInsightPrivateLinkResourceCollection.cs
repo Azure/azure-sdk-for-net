@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<HDInsightPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<HDInsightPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<HDInsightPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<HDInsightPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkResourceName));
-            }
-            if (privateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
             using var scope = _hdInsightPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("HDInsightPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

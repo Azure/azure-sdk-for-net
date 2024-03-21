@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The UnknownDataTransferDataSourceSink. </summary>
+    /// <summary> Unknown version of DataTransferDataSourceSink. </summary>
     internal partial class UnknownDataTransferDataSourceSink : DataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDataTransferDataSourceSink"/>. </summary>

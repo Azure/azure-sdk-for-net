@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (!(StorageAccounts is ChangeTrackingList<HDInsightStorageAccountInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();

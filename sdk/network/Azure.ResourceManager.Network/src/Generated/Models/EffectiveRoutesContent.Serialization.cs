@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (VirtualWanResourceType != null)
+            if (Optional.IsDefined(VirtualWanResourceType))
             {
                 writer.WritePropertyName("virtualWanResourceType"u8);
                 writer.WriteStringValue(VirtualWanResourceType);

@@ -52,14 +52,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assistantId"/> is null. </exception>
         internal AssistantFile(string id, DateTimeOffset createdAt, string assistantId)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
 
             Id = id;
             CreatedAt = createdAt;

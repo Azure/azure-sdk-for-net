@@ -22,18 +22,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/> or <paramref name="text"/> is null. </exception>
         public SentenceAssessment(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
         {
-            if (sentiment == null)
-            {
-                throw new ArgumentNullException(nameof(sentiment));
-            }
-            if (confidenceScores == null)
-            {
-                throw new ArgumentNullException(nameof(confidenceScores));
-            }
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(sentiment, nameof(sentiment));
+            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
+            Argument.AssertNotNull(text, nameof(text));
 
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;

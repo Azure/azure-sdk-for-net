@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && IncludedMaxSize != null)
+            if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
                 writer.WriteObjectValue(IncludedMaxSize);
             }
-            if (options.Format != "W" && !(SupportedStorageSizes is ChangeTrackingList<MaxSizeRangeCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageSizes))
             {
                 writer.WritePropertyName("supportedStorageSizes"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsInstancePoolSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsInstancePoolSupported))
             {
                 writer.WritePropertyName("instancePoolSupported"u8);
                 writer.WriteBooleanValue(IsInstancePoolSupported.Value);
             }
-            if (options.Format != "W" && IsStandaloneSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsStandaloneSupported))
             {
                 writer.WritePropertyName("standaloneSupported"u8);
                 writer.WriteBooleanValue(IsStandaloneSupported.Value);
             }
-            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
                 writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);

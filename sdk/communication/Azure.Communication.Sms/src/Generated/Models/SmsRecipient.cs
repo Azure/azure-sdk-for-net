@@ -17,10 +17,7 @@ namespace Azure.Communication.Sms.Models
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public SmsRecipient(string to)
         {
-            if (to == null)
-            {
-                throw new ArgumentNullException(nameof(to));
-            }
+            Argument.AssertNotNull(to, nameof(to));
 
             To = to;
         }

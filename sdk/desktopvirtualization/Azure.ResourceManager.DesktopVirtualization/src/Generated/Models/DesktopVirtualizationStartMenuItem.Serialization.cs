@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AppAlias != null)
+            if (Optional.IsDefined(AppAlias))
             {
                 writer.WritePropertyName("appAlias"u8);
                 writer.WriteStringValue(AppAlias);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (CommandLineArguments != null)
+            if (Optional.IsDefined(CommandLineArguments))
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (IconPath != null)
+            if (Optional.IsDefined(IconPath))
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (IconIndex.HasValue)
+            if (Optional.IsDefined(IconIndex))
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Mocking;
 using Azure.ResourceManager.Storage.Models;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountResource"/> object. </returns>
         public static StorageAccountResource GetStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetStorageAccountResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="DeletedAccountResource"/> object. </returns>
         public static DeletedAccountResource GetDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetDeletedAccountResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
         public static StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetStorageAccountManagementPolicyResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
         public static BlobInventoryPolicyResource GetBlobInventoryPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetBlobInventoryPolicyResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource"/> object. </returns>
         public static StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetStoragePrivateEndpointConnectionResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="ObjectReplicationPolicyResource"/> object. </returns>
         public static ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetObjectReplicationPolicyResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountLocalUserResource"/> object. </returns>
         public static StorageAccountLocalUserResource GetStorageAccountLocalUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetStorageAccountLocalUserResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="EncryptionScopeResource"/> object. </returns>
         public static EncryptionScopeResource GetEncryptionScopeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetEncryptionScopeResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
         public static BlobServiceResource GetBlobServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetBlobServiceResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobContainerResource"/> object. </returns>
         public static BlobContainerResource GetBlobContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetBlobContainerResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public static ImmutabilityPolicyResource GetImmutabilityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetImmutabilityPolicyResource(id);
         }
@@ -291,10 +256,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
         public static FileServiceResource GetFileServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetFileServiceResource(id);
         }
@@ -313,10 +275,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="FileShareResource"/> object. </returns>
         public static FileShareResource GetFileShareResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetFileShareResource(id);
         }
@@ -335,10 +294,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
         public static QueueServiceResource GetQueueServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetQueueServiceResource(id);
         }
@@ -357,10 +313,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageQueueResource"/> object. </returns>
         public static StorageQueueResource GetStorageQueueResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetStorageQueueResource(id);
         }
@@ -379,10 +332,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
         public static TableServiceResource GetTableServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetTableServiceResource(id);
         }
@@ -401,10 +351,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="TableResource"/> object. </returns>
         public static TableResource GetTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableStorageArmClient(client).GetTableResource(id);
         }
@@ -421,10 +368,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
         public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableStorageResourceGroupResource(resourceGroupResource).GetStorageAccounts();
         }
@@ -463,10 +407,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static async Task<Response<StorageAccountResource>> GetStorageAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableStorageResourceGroupResource(resourceGroupResource).GetStorageAccountAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -505,10 +446,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static Response<StorageAccountResource> GetStorageAccount(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableStorageResourceGroupResource(resourceGroupResource).GetStorageAccount(accountName, expand, cancellationToken);
         }
@@ -525,10 +463,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
         public static DeletedAccountCollection GetDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts();
         }
@@ -567,10 +502,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static async Task<Response<DeletedAccountResource>> GetDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
         }
@@ -609,10 +541,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static Response<DeletedAccountResource> GetDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccount(location, deletedAccountName, cancellationToken);
         }
@@ -644,10 +573,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken);
         }
@@ -679,10 +605,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
         }
@@ -718,10 +641,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableStorageSubscriptionResource(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -757,10 +677,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
         }
@@ -796,10 +713,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageAccountResource> GetStorageAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
         }
@@ -835,10 +749,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageAccountResource> GetStorageAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetStorageAccounts(cancellationToken);
         }
@@ -874,10 +785,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
@@ -913,10 +821,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
@@ -949,10 +854,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
@@ -985,10 +887,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableStorageSubscriptionResource(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }

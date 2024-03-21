@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OnlyOnSamePosition.HasValue)
+            if (Optional.IsDefined(OnlyOnSamePosition))
             {
                 writer.WritePropertyName("onlyOnSamePosition"u8);
                 writer.WriteBooleanValue(OnlyOnSamePosition.Value);

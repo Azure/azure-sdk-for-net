@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expressRouteCircuitId"u8);
             writer.WriteStringValue(ExpressRouteCircuitId);
-            if (ExpressRouteAuthorizationKey != null)
+            if (Optional.IsDefined(ExpressRouteAuthorizationKey))
             {
                 writer.WritePropertyName("expressRouteAuthorizationKey"u8);
                 writer.WriteStringValue(ExpressRouteAuthorizationKey);

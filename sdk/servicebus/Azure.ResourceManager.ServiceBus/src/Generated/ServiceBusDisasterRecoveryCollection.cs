@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceBus
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceBusDisasterRecoveryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string @alias, ServiceBusDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceBusDisasterRecoveryResource> CreateOrUpdate(WaitUntil waitUntil, string @alias, ServiceBusDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual async Task<Response<ServiceBusDisasterRecoveryResource>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<ServiceBusDisasterRecoveryResource> Get(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual Response<bool> Exists(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceBusDisasterRecoveryResource>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
         public virtual NullableResponse<ServiceBusDisasterRecoveryResource> GetIfExists(string @alias, CancellationToken cancellationToken = default)
         {
-            if (@alias == null)
-            {
-                throw new ArgumentNullException(nameof(@alias));
-            }
-            if (@alias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(@alias));
-            }
+            Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
             using var scope = _serviceBusDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryCollection.GetIfExists");
             scope.Start();

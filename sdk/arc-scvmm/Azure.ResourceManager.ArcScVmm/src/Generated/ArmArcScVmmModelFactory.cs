@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.ArcScVmm;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 

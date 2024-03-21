@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (DisableTraceRoute.HasValue)
+            if (Optional.IsDefined(DisableTraceRoute))
             {
                 writer.WritePropertyName("disableTraceRoute"u8);
                 writer.WriteBooleanValue(DisableTraceRoute.Value);
             }
-            if (DestinationPortBehavior.HasValue)
+            if (Optional.IsDefined(DestinationPortBehavior))
             {
                 writer.WritePropertyName("destinationPortBehavior"u8);
                 writer.WriteStringValue(DestinationPortBehavior.Value.ToString());

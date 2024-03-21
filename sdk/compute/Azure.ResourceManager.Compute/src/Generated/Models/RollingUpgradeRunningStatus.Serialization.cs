@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToSerialString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAction))
             {
                 writer.WritePropertyName("lastAction"u8);
                 writer.WriteStringValue(LastAction.Value.ToSerialString());
             }
-            if (options.Format != "W" && LastActionOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastActionOn))
             {
                 writer.WritePropertyName("lastActionTime"u8);
                 writer.WriteStringValue(LastActionOn.Value, "O");

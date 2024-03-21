@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.IO;
@@ -40,6 +41,17 @@ public abstract class BinaryContent : IDisposable
     /// <returns>An instance of <see cref="BinaryContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
     public static BinaryContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
         => new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions);
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="Stream"/> instance.
+    /// </summary>
+    /// <param name="stream">The <see cref="Stream"/> containing the bytes
+    /// this <see cref="BinaryContent"/> will hold.</param>
+    /// <returns>An an instance of <see cref="BinaryContent"/> that contains the
+    /// bytes held in the provided <see cref="Stream"/> instance.</returns>
+    public static BinaryContent Create(Stream stream)
+        => new StreamBinaryContent(stream);
 
     /// <summary>
     /// Attempts to compute the length of the underlying body content, if available.
@@ -121,10 +133,7 @@ public abstract class BinaryContent : IDisposable
                     throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
                 }
 
-                if (_sequenceReader == null)
-                {
-                    _sequenceReader = new ModelWriter<T>(jsonModel, _options).ExtractReader();
-                }
+                _sequenceReader ??= new ModelWriter<T>(jsonModel, _options).ExtractReader();
                 return _sequenceReader;
             }
         }
@@ -189,6 +198,49 @@ public abstract class BinaryContent : IDisposable
                 _sequenceReader = null;
                 sequenceReader.Dispose();
             }
+        }
+    }
+
+    private sealed class StreamBinaryContent : BinaryContent
+    {
+        private readonly Stream _stream;
+        private readonly long _origin;
+
+        public StreamBinaryContent(Stream stream)
+        {
+            if (!stream.CanSeek)
+            {
+                throw new ArgumentException("Stream must be seekable.", nameof(stream));
+            }
+
+            _stream = stream;
+            _origin = stream.Position;
+        }
+
+        public override bool TryComputeLength(out long length)
+        {
+            // CanSeek is validated in constructor - it will always be true.
+            length = _stream.Length - _origin;
+            return true;
+        }
+
+        public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+        {
+            _stream.Seek(_origin, SeekOrigin.Begin);
+            _stream.CopyTo(stream, cancellationToken);
+            _stream.Flush();
+        }
+
+        public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            _stream.Seek(_origin, SeekOrigin.Begin);
+            await _stream.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
+            await _stream.FlushAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public override void Dispose()
+        {
+            _stream.Dispose();
         }
     }
 }

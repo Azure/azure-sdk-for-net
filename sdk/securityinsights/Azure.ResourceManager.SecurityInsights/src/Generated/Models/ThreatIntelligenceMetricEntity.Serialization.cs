@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (MetricName != null)
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (MetricValue.HasValue)
+            if (Optional.IsDefined(MetricValue))
             {
                 writer.WritePropertyName("metricValue"u8);
                 writer.WriteNumberValue(MetricValue.Value);

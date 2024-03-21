@@ -11,8 +11,10 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -38,8 +40,8 @@ namespace Azure.ResourceManager.NetApp
         internal NetAppVolumeBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _netAppVolumeBackupBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeBackupResource.ResourceType.Namespace, Diagnostics);
-            // Volume backup resource was removed after 2022-11-01
-            _netAppVolumeBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
+            TryGetApiVersion(NetAppVolumeBackupResource.ResourceType, out string netAppVolumeBackupBackupsApiVersion);
+            _netAppVolumeBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeBackupBackupsApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif

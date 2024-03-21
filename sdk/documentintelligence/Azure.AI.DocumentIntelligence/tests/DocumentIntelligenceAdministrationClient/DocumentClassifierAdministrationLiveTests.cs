@@ -65,8 +65,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
             Assert.That(classifier.Description, Is.EqualTo(description));
             Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(classifier.CreatedDateTime, Is.GreaterThan(startTime));
-            Assert.That(classifier.ExpirationDateTime, Is.GreaterThan(classifier.CreatedDateTime));
+            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
+            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
             DocumentAssert.AreEquivalent(docTypes, classifier.DocTypes);
 
@@ -122,8 +122,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(classifier.ClassifierId, Is.EqualTo(classifierId));
             Assert.That(classifier.Description, Is.EqualTo(description));
             Assert.That(classifier.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(classifier.CreatedDateTime, Is.GreaterThan(startTime));
-            Assert.That(classifier.ExpirationDateTime, Is.GreaterThan(classifier.CreatedDateTime));
+            Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
+            Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
             DocumentAssert.AreEquivalent(docTypes, classifier.DocTypes);
 

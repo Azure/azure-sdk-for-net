@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media.Mocking
@@ -132,10 +129,7 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableMediaSubscriptionResource.CheckMediaServicesNameAvailability");
             scope.Start();
@@ -174,10 +168,7 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableMediaSubscriptionResource.CheckMediaServicesNameAvailability");
             scope.Start();

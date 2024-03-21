@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);

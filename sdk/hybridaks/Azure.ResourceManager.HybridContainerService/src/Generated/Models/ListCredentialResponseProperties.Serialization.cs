@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<HybridContainerServiceCredential> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();

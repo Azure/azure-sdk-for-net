@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (BgpCommunities != null)
+            if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
                 writer.WriteStringValue(BgpCommunities);
             }
-            if (AsPath != null)
+            if (Optional.IsDefined(AsPath))
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);

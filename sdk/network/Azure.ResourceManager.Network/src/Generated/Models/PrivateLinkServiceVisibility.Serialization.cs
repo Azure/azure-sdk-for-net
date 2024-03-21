@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Visible.HasValue)
+            if (Optional.IsDefined(Visible))
             {
                 writer.WritePropertyName("visible"u8);
                 writer.WriteBooleanValue(Visible.Value);

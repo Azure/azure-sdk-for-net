@@ -21,10 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
         internal HealthcareRelation(RelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
         {
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
+            Argument.AssertNotNull(entities, nameof(entities));
 
             RelationType = relationType;
             Entities = entities.ToList();

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBuildpackBindingResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformBuildpackBindingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingResource.Update");
             scope.Start();
@@ -332,10 +327,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBuildpackBindingResource> Update(WaitUntil waitUntil, AppPlatformBuildpackBindingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformBuildpackBindingBuildpackBindingClientDiagnostics.CreateScope("AppPlatformBuildpackBindingResource.Update");
             scope.Start();

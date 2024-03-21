@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (EphemeralOSDiskSettings != null)
+            if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
                 writer.WriteObjectValue(EphemeralOSDiskSettings);
             }
-            if (Caching.HasValue)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (IsWriteAcceleratorEnabled.HasValue)
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);

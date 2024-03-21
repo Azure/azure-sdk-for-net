@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (EncryptionType.HasValue)
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());

@@ -54,7 +54,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="lastError"> The last error, if any, encountered by this assistant thread run. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="instructions"> The overridden system instructions used for this assistant thread run. </param>
-        /// <param name="tools"> The overridden enabled tools used for this assistant thread run. </param>
+        /// <param name="tools">
+        /// The overridden enabled tools used for this assistant thread run.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
@@ -66,34 +70,13 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="threadId"/>, <paramref name="assistantId"/>, <paramref name="model"/>, <paramref name="instructions"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
         internal ThreadRun(string id, string threadId, string assistantId, RunStatus status, RunError lastError, string model, string instructions, IEnumerable<ToolDefinition> tools, IEnumerable<string> fileIds, DateTimeOffset createdAt, DateTimeOffset? expiresAt, DateTimeOffset? startedAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (threadId == null)
-            {
-                throw new ArgumentNullException(nameof(threadId));
-            }
-            if (assistantId == null)
-            {
-                throw new ArgumentNullException(nameof(assistantId));
-            }
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-            if (instructions == null)
-            {
-                throw new ArgumentNullException(nameof(instructions));
-            }
-            if (tools == null)
-            {
-                throw new ArgumentNullException(nameof(tools));
-            }
-            if (fileIds == null)
-            {
-                throw new ArgumentNullException(nameof(fileIds));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(instructions, nameof(instructions));
+            Argument.AssertNotNull(tools, nameof(tools));
+            Argument.AssertNotNull(fileIds, nameof(fileIds));
 
             Id = id;
             ThreadId = threadId;
@@ -119,11 +102,19 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
         /// <param name="assistantId"> The ID of the assistant associated with the thread this run was performed against. </param>
         /// <param name="status"> The status of the assistant thread run. </param>
-        /// <param name="requiredAction"> The details of the action required for the assistant thread run to continue. </param>
+        /// <param name="requiredAction">
+        /// The details of the action required for the assistant thread run to continue.
+        /// Please note <see cref="Assistants.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
+        /// </param>
         /// <param name="lastError"> The last error, if any, encountered by this assistant thread run. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="instructions"> The overridden system instructions used for this assistant thread run. </param>
-        /// <param name="tools"> The overridden enabled tools used for this assistant thread run. </param>
+        /// <param name="tools">
+        /// The overridden enabled tools used for this assistant thread run.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="expiresAt"> The Unix timestamp, in seconds, representing when this item expires. </param>
@@ -185,7 +176,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The overridden enabled tools used for this assistant thread run.
         /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="RetrievalToolDefinition"/> and <see cref="FunctionToolDefinition"/>.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
         /// </summary>
         public IReadOnlyList<ToolDefinition> Tools { get; }
         /// <summary> A list of attached file IDs, ordered by creation date in ascending order. </summary>

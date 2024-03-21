@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowRunActionResource>> GetAsync(string actionName, CancellationToken cancellationToken = default)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
-            if (actionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
-            }
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
             using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         public virtual Response<LogicWorkflowRunActionResource> Get(string actionName, CancellationToken cancellationToken = default)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
-            if (actionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
-            }
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
             using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.Get");
             scope.Start();
@@ -248,14 +232,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string actionName, CancellationToken cancellationToken = default)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
-            if (actionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
-            }
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
             using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.Exists");
             scope.Start();
@@ -298,14 +275,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         public virtual Response<bool> Exists(string actionName, CancellationToken cancellationToken = default)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
-            if (actionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
-            }
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
             using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.Exists");
             scope.Start();
@@ -348,14 +318,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowRunActionResource>> GetIfExistsAsync(string actionName, CancellationToken cancellationToken = default)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
-            if (actionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
-            }
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
             using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.GetIfExists");
             scope.Start();
@@ -400,14 +363,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowRunActionResource> GetIfExists(string actionName, CancellationToken cancellationToken = default)
         {
-            if (actionName == null)
-            {
-                throw new ArgumentNullException(nameof(actionName));
-            }
-            if (actionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(actionName));
-            }
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
             using var scope = _logicWorkflowRunActionWorkflowRunActionsClientDiagnostics.CreateScope("LogicWorkflowRunActionCollection.GetIfExists");
             scope.Start();

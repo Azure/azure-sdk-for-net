@@ -23,14 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/> or <paramref name="accessToken"/> is null. </exception>
         public AzureDatabricksDeltaLakeLinkedService(object domain, SecretBase accessToken)
         {
-            if (domain == null)
-            {
-                throw new ArgumentNullException(nameof(domain));
-            }
-            if (accessToken == null)
-            {
-                throw new ArgumentNullException(nameof(accessToken));
-            }
+            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNull(accessToken, nameof(accessToken));
 
             Domain = domain;
             AccessToken = accessToken;

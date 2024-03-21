@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (SourceUri != null)
+            if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("scaleMode"u8);
             writer.WriteStringValue(ScaleMode.ToSerialString());
-            if (ScaleLookAheadTime.HasValue)
+            if (Optional.IsDefined(ScaleLookAheadTime))
             {
                 writer.WritePropertyName("scaleLookAheadTime"u8);
                 writer.WriteStringValue(ScaleLookAheadTime.Value, "P");

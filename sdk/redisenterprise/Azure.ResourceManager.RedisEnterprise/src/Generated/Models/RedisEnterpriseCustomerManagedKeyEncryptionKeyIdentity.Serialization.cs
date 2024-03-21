@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentityResourceId != null)
+            if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
                 writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);
             }
-            if (IdentityType.HasValue)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());

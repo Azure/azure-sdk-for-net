@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
 
@@ -510,10 +508,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Update");
             scope.Start();
@@ -555,10 +550,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<HostPoolResource> Update(HostPoolPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Update");
             scope.Start();
@@ -865,10 +857,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            if (msixImageUri == null)
-            {
-                throw new ArgumentNullException(nameof(msixImageUri));
-            }
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _msixImagesRestClient.CreateExpandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixImagesRestClient.CreateExpandNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
@@ -898,10 +887,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            if (msixImageUri == null)
-            {
-                throw new ArgumentNullException(nameof(msixImageUri));
-            }
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _msixImagesRestClient.CreateExpandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixImagesRestClient.CreateExpandNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
@@ -935,14 +921,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<HostPoolResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.AddTag");
             scope.Start();
@@ -1003,14 +983,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<HostPoolResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.AddTag");
             scope.Start();
@@ -1070,10 +1044,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HostPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.SetTags");
             scope.Start();
@@ -1130,10 +1101,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HostPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.SetTags");
             scope.Start();
@@ -1190,10 +1158,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<HostPoolResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RemoveTag");
             scope.Start();
@@ -1253,10 +1218,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<HostPoolResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RemoveTag");
             scope.Start();

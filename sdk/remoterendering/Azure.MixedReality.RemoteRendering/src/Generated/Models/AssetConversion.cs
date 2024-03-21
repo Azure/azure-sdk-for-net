@@ -21,14 +21,8 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="conversionId"/> or <paramref name="options"/> is null. </exception>
         internal AssetConversion(string conversionId, AssetConversionOptions options, RemoteRenderingServiceError error, AssetConversionStatus status, DateTimeOffset createdOn)
         {
-            if (conversionId == null)
-            {
-                throw new ArgumentNullException(nameof(conversionId));
-            }
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
+            Argument.AssertNotNull(conversionId, nameof(conversionId));
+            Argument.AssertNotNull(options, nameof(options));
 
             ConversionId = conversionId;
             Options = options;

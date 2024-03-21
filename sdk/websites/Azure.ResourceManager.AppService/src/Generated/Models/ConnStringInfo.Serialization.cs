@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (ConnectionStringType.HasValue)
+            if (Optional.IsDefined(ConnectionStringType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionStringType.Value.ToSerialString());

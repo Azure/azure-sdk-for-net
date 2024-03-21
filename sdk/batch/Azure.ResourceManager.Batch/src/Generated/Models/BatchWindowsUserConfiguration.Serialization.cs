@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (LoginMode.HasValue)
+            if (Optional.IsDefined(LoginMode))
             {
                 writer.WritePropertyName("loginMode"u8);
                 writer.WriteStringValue(LoginMode.Value.ToSerialString());

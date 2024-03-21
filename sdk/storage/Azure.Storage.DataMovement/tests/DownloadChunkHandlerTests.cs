@@ -11,6 +11,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Storage.Tests.Shared;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
 {

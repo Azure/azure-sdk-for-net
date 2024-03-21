@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (BuiltInOperation != null)
+            if (Optional.IsDefined(BuiltInOperation))
             {
                 writer.WritePropertyName("builtInOperation"u8);
                 writer.WriteStringValue(BuiltInOperation);
             }
-            if (ItemsPath != null)
+            if (Optional.IsDefined(ItemsPath))
             {
                 writer.WritePropertyName("itemsPath"u8);
                 writer.WriteStringValue(ItemsPath);
             }
-            if (ItemValuePath != null)
+            if (Optional.IsDefined(ItemValuePath))
             {
                 writer.WritePropertyName("itemValuePath"u8);
                 writer.WriteStringValue(ItemValuePath);
             }
-            if (ItemTitlePath != null)
+            if (Optional.IsDefined(ItemTitlePath))
             {
                 writer.WritePropertyName("itemTitlePath"u8);
                 writer.WriteStringValue(ItemTitlePath);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

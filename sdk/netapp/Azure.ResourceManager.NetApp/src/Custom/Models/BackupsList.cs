@@ -16,10 +16,19 @@ namespace Azure.ResourceManager.NetApp.Models
     internal partial class BackupsList
     {
         /// <summary> Initializes a new instance of BackupsList. </summary>
+        internal BackupsList()
+        {
+            Value = new ChangeTrackingList<NetAppBackupData>();
+        }
+
+        /// <summary> Initializes a new instance of BackupsList. </summary>
         /// <param name="value"> A list of Backups. </param>
         internal BackupsList(IReadOnlyList<NetAppBackupData> value)
         {
             Value = value;
         }
+
+        /// <summary> A list of Backups. </summary>        
+        public IReadOnlyList<NetAppBackupData> Value { get; }
     }
 }

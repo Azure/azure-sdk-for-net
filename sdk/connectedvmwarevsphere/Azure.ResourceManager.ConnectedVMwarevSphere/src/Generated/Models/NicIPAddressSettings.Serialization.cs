@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AllocationMethod != null)
+            if (options.Format != "W" && Optional.IsDefined(AllocationMethod))
             {
                 writer.WritePropertyName("allocationMethod"u8);
                 writer.WriteStringValue(AllocationMethod);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && SubnetMask != null)
+            if (options.Format != "W" && Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);

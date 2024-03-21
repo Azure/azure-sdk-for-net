@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Resources;
 
@@ -197,10 +195,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckLoadTestingQuotaAvailabilityAsync(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
@@ -242,10 +237,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<LoadTestingQuotaAvailabilityResult> CheckLoadTestingQuotaAvailability(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();

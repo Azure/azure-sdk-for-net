@@ -30,47 +30,47 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Server != null)
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (RefreshType.HasValue)
+            if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
             }
-            if (RefreshInterval.HasValue)
+            if (Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshRate"u8);
                 writer.WriteStringValue(RefreshInterval.Value, "T");
             }
-            if (FullSnapshotQuery != null)
+            if (Optional.IsDefined(FullSnapshotQuery))
             {
                 writer.WritePropertyName("fullSnapshotQuery"u8);
                 writer.WriteStringValue(FullSnapshotQuery);
             }
-            if (DeltaSnapshotQuery != null)
+            if (Optional.IsDefined(DeltaSnapshotQuery))
             {
                 writer.WritePropertyName("deltaSnapshotQuery"u8);
                 writer.WriteStringValue(DeltaSnapshotQuery);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());

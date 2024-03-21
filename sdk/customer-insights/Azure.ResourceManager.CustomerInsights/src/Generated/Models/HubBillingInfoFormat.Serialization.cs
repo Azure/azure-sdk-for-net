@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (SkuName != null)
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (MinUnits.HasValue)
+            if (Optional.IsDefined(MinUnits))
             {
                 writer.WritePropertyName("minUnits"u8);
                 writer.WriteNumberValue(MinUnits.Value);
             }
-            if (MaxUnits.HasValue)
+            if (Optional.IsDefined(MaxUnits))
             {
                 writer.WritePropertyName("maxUnits"u8);
                 writer.WriteNumberValue(MaxUnits.Value);

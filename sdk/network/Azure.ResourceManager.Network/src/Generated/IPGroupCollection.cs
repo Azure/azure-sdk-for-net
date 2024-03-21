@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IPGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IPGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual async Task<Response<IPGroupResource>> GetAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual Response<IPGroupResource> Get(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Exists");
             scope.Start();
@@ -468,14 +418,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual async Task<NullableResponse<IPGroupResource>> GetIfExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
         public virtual NullableResponse<IPGroupResource> GetIfExists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (ipGroupsName == null)
-            {
-                throw new ArgumentNullException(nameof(ipGroupsName));
-            }
-            if (ipGroupsName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipGroupsName));
-            }
+            Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
             using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.GetIfExists");
             scope.Start();

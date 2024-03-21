@@ -105,7 +105,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.NotNull(account2.Data.ActiveDirectories[0]);
             account2.Data.ActiveDirectories[0].Should().BeEquivalentTo(account1.Data.ActiveDirectories[0]);
 
-            //delete storage account
+            //remove ad
+            account1.Data.ActiveDirectories.Clear();
+            account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, account1.Data)).Value;
+            Assert.IsEmpty(account1.Data.ActiveDirectories);
+
+            //delete NetApp account
             await account1.DeleteAsync(WaitUntil.Completed);
             //validate if deleted successfully
             Assert.IsFalse(await netAppAccountCollection.ExistsAsync(accountName));

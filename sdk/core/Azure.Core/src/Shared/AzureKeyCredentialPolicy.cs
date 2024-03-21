@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.Pipeline;
 
 #nullable enable
@@ -22,8 +23,18 @@ namespace Azure.Core
         /// a value of "SharedAccessKey {credential.Key}" being stamped on the request header with header key of <paramref name="name"/>.</param>
         public AzureKeyCredentialPolicy(AzureKeyCredential credential, string name, string? prefix = null)
         {
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (credential is null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
             _credential = credential;
             _name = name;
             _prefix = prefix;

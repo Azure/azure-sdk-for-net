@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             // EXCEPTIONS
             internal const string ExceptionsPerSecondMetricIdValue = @"\ApplicationInsights\Exceptions/Sec";
 
-            // PERFORMANCE COUNTERS
+            // PROCESS METRICS
             internal const string MemoryCommittedBytesMetricIdValue = @"\Memory\Committed Bytes";
             internal const string ProcessorTimeMetricIdValue = @"\Processor(_Total)\% Processor Time";
         }

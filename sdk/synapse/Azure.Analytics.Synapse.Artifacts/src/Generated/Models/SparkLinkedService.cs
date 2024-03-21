@@ -20,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="port"/> is null. </exception>
         public SparkLinkedService(object host, object port, SparkAuthenticationType authenticationType)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
-            if (port == null)
-            {
-                throw new ArgumentNullException(nameof(port));
-            }
+            Argument.AssertNotNull(host, nameof(host));
+            Argument.AssertNotNull(port, nameof(port));
 
             Host = host;
             Port = port;

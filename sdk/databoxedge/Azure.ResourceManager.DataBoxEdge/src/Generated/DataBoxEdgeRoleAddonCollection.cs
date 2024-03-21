@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeRoleAddonResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string addonName, DataBoxEdgeRoleAddonData data, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeRoleAddonResource> CreateOrUpdate(WaitUntil waitUntil, string addonName, DataBoxEdgeRoleAddonData data, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<Response<DataBoxEdgeRoleAddonResource>> GetAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<DataBoxEdgeRoleAddonResource> Get(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual Response<bool> Exists(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeRoleAddonResource>> GetIfExistsAsync(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
         public virtual NullableResponse<DataBoxEdgeRoleAddonResource> GetIfExists(string addonName, CancellationToken cancellationToken = default)
         {
-            if (addonName == null)
-            {
-                throw new ArgumentNullException(nameof(addonName));
-            }
-            if (addonName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(addonName));
-            }
+            Argument.AssertNotNullOrEmpty(addonName, nameof(addonName));
 
             using var scope = _dataBoxEdgeRoleAddonAddonsClientDiagnostics.CreateScope("DataBoxEdgeRoleAddonCollection.GetIfExists");
             scope.Start();

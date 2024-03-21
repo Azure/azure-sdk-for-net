@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (DefaultKey != null)
+            if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
                 writer.WriteObjectValue(DefaultKey);
             }
-            if (!(KeyToTrackMappings is ChangeTrackingList<StreamingPolicyContentKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
                 writer.WritePropertyName("keyToTrackMappings"u8);
                 writer.WriteStartArray();

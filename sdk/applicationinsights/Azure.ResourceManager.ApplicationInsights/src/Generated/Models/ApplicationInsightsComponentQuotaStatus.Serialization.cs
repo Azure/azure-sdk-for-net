@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AppId != null)
+            if (options.Format != "W" && Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("AppId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && ShouldBeThrottled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShouldBeThrottled))
             {
                 writer.WritePropertyName("ShouldBeThrottled"u8);
                 writer.WriteBooleanValue(ShouldBeThrottled.Value);
             }
-            if (options.Format != "W" && ExpirationTime != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
             {
                 writer.WritePropertyName("ExpirationTime"u8);
                 writer.WriteStringValue(ExpirationTime);

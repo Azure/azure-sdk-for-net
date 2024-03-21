@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (BackupParameters != null)
+            if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
                 writer.WriteObjectValue(BackupParameters);

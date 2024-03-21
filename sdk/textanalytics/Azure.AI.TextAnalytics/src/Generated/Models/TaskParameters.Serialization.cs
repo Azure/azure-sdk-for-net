@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alexaSkillId"u8);
             writer.WriteStringValue(AlexaSkillId);
-            if (options.Format != "W" && UriFragment != null)
+            if (options.Format != "W" && Optional.IsDefined(UriFragment))
             {
                 writer.WritePropertyName("urlFragment"u8);
                 writer.WriteStringValue(UriFragment);
             }
-            if (options.Format != "W" && ServiceEndpointUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceEndpointUri))
             {
                 writer.WritePropertyName("serviceEndpointUri"u8);
                 writer.WriteStringValue(ServiceEndpointUri.AbsoluteUri);

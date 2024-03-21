@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (TenantName != null)
+            if (Optional.IsDefined(TenantName))
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);

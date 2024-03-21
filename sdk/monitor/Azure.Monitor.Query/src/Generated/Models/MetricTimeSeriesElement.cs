@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
-        /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
+        /// <param name="metadatavalues"> The metadata values returned if $filter was specified in the call. </param>
         /// <param name="values"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
         internal MetricTimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> values)
         {

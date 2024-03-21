@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WorkloadNetworkSegmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WorkloadNetworkSegmentResource> CreateOrUpdate(WaitUntil waitUntil, string segmentId, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetAsync(string segmentId, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual Response<WorkloadNetworkSegmentResource> Get(string segmentId, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string segmentId, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual Response<bool> Exists(string segmentId, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual async Task<NullableResponse<WorkloadNetworkSegmentResource>> GetIfExistsAsync(string segmentId, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
         public virtual NullableResponse<WorkloadNetworkSegmentResource> GetIfExists(string segmentId, CancellationToken cancellationToken = default)
         {
-            if (segmentId == null)
-            {
-                throw new ArgumentNullException(nameof(segmentId));
-            }
-            if (segmentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(segmentId));
-            }
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentCollection.GetIfExists");
             scope.Start();

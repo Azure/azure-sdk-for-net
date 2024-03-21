@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);

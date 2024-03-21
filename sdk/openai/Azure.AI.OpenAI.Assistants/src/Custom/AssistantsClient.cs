@@ -758,6 +758,9 @@ public partial class AssistantsClient
     internal HttpMessage CreateGetFileRequest(string fileId, RequestContext context)
         => CreateRequestMessage($"/files/{fileId}", content: null, context, RequestMethod.Get);
 
+    internal HttpMessage CreateGetFileContentRequest(string fileId, RequestContext context)
+        => CreateRequestMessage($"/files/{fileId}/content", content: null, context, RequestMethod.Get);
+
     private static TokenCredential CreateDelegatedToken(string token)
     {
         var accessToken = new AccessToken(token, DateTimeOffset.Now.AddDays(180));

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public FileShare(string path)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
+            Argument.AssertNotNull(path, nameof(path));
 
             Path = path;
         }

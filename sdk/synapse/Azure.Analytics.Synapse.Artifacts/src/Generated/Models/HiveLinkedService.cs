@@ -19,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HiveLinkedService(object host, HiveAuthenticationType authenticationType)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(host, nameof(host));
 
             Host = host;
             AuthenticationType = authenticationType;

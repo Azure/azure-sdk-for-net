@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -70,14 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -112,14 +104,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -162,50 +147,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,string,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
-            if (insightId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(insightId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.CreateOrUpdate");
             scope.Start();
@@ -248,50 +195,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContent content, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
-            if (insightId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(insightId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.CreateOrUpdate");
             scope.Start();
@@ -333,46 +242,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightAsync(string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetInsightAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
-            if (insightId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(insightId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.GetInsight");
             scope.Start();
@@ -414,46 +288,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsight(string,string,string,string,string,RequestContext)']/*" />
         public virtual Response GetInsight(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
-            if (insightId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(insightId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.GetInsight");
             scope.Start();
@@ -495,46 +334,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='DeleteAsync(string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
-            if (insightId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(insightId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.Delete");
             scope.Start();
@@ -576,46 +380,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='Delete(string,string,string,string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
-            if (insightId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(insightId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
+            Argument.AssertNotNullOrEmpty(insightId, nameof(insightId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.Delete");
             scope.Start();
@@ -678,38 +447,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByPartyIdModelIdAndResourceAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetInsightsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -763,38 +504,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByPartyIdModelIdAndResource(string,string,string,string,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetInsightsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (partyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (modelId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (resourceId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceId));
-            }
+            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -826,34 +539,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(insightId, nameof(insightId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.CreateCascadeDeleteJob");
             scope.Start();
@@ -894,34 +585,12 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (jobId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
-            }
-            if (partyId == null)
-            {
-                throw new ArgumentNullException(nameof(partyId));
-            }
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (insightId == null)
-            {
-                throw new ArgumentNullException(nameof(insightId));
-            }
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(partyId, nameof(partyId));
+            Argument.AssertNotNull(modelId, nameof(modelId));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(insightId, nameof(insightId));
 
             using var scope = ClientDiagnostics.CreateScope("Insights.CreateCascadeDeleteJob");
             scope.Start();

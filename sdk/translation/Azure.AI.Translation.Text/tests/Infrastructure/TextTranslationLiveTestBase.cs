@@ -18,6 +18,7 @@ namespace Azure.AI.Translation.Text.Tests
             : base(isAsync)
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
+            SanitizedHeaders.Add("Ocp-Apim-ResourceId");
         }
 
         public TextTranslationClient GetClient(
@@ -25,6 +26,7 @@ namespace Azure.AI.Translation.Text.Tests
             AzureKeyCredential credential = default,
             string region = default,
             TokenCredential token = default,
+            bool useAADAuth = false,
             TextTranslationClientOptions options = default)
         {
             endpoint ??= new Uri(TestEnvironment.Endpoint);
@@ -37,7 +39,21 @@ namespace Azure.AI.Translation.Text.Tests
                 }
             };
 
-            if (token != null)
+            if (useAADAuth)
+            {
+                TokenCredential aadCredential;
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    aadCredential = new StaticAccessTokenCredential(new AccessToken(string.Empty, DateTimeOffset.Now.AddDays(1)));
+                }
+                else
+                {
+                    aadCredential = new Azure.Identity.ClientSecretCredential(TestEnvironment.AADTenantId, TestEnvironment.AADClientId, TestEnvironment.AADSecret);
+                }
+
+                return InstrumentClient(new TextTranslationClient(aadCredential, resourceId: TestEnvironment.AADResourceId, region: TestEnvironment.AADRegion, options: InstrumentClientOptions(options)));
+            }
+            else if (token != null)
             {
                 return InstrumentClient(new TextTranslationClient(token, endpoint, InstrumentClientOptions(options)));
             }

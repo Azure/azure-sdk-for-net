@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (FirstName != null)
+            if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (LastName != null)
+            if (Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (CompanyName != null)
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (EmailAddress != null)
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (CompanyInfo != null)
+            if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
                 writer.WriteObjectValue(CompanyInfo);

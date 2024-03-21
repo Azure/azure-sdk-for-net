@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastValidationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastValidationOn))
             {
                 writer.WritePropertyName("lastValidationTime"u8);
                 writer.WriteStringValue(LastValidationOn.Value, "O");
             }
-            if (options.Format != "W" && Result.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToString());

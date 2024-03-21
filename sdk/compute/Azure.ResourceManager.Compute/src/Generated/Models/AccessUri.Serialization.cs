@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccessSas != null)
+            if (options.Format != "W" && Optional.IsDefined(AccessSas))
             {
                 writer.WritePropertyName("accessSAS"u8);
                 writer.WriteStringValue(AccessSas);
             }
-            if (options.Format != "W" && SecurityDataAccessSas != null)
+            if (options.Format != "W" && Optional.IsDefined(SecurityDataAccessSas))
             {
                 writer.WritePropertyName("securityDataAccessSAS"u8);
                 writer.WriteStringValue(SecurityDataAccessSas);

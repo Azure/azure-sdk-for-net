@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (AggregationKind.HasValue)
+            if (Optional.IsDefined(AggregationKind))
             {
                 writer.WritePropertyName("aggregationKind"u8);
                 writer.WriteStringValue(AggregationKind.Value.ToString());

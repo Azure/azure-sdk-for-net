@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Question != null)
+            if (Optional.IsDefined(Question))
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Answer != null)
+            if (Optional.IsDefined(Answer))
             {
                 writer.WritePropertyName("answer"u8);
                 writer.WriteStringValue(Answer);
             }
-            if (LocaleCode != null)
+            if (Optional.IsDefined(LocaleCode))
             {
                 writer.WritePropertyName("localeCode"u8);
                 writer.WriteStringValue(LocaleCode);

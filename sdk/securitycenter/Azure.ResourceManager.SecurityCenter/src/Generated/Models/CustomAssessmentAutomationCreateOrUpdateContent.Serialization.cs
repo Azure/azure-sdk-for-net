@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CompressedQuery != null)
+            if (Optional.IsDefined(CompressedQuery))
             {
                 writer.WritePropertyName("compressedQuery"u8);
                 writer.WriteStringValue(CompressedQuery);
             }
-            if (SupportedCloud.HasValue)
+            if (Optional.IsDefined(SupportedCloud))
             {
                 writer.WritePropertyName("supportedCloud"u8);
                 writer.WriteStringValue(SupportedCloud.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RemediationDescription != null)
+            if (Optional.IsDefined(RemediationDescription))
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);

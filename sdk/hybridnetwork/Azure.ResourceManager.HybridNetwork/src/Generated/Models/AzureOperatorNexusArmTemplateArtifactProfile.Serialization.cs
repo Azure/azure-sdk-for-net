@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (TemplateArtifactProfile != null)
+            if (Optional.IsDefined(TemplateArtifactProfile))
             {
                 writer.WritePropertyName("templateArtifactProfile"u8);
                 writer.WriteObjectValue(TemplateArtifactProfile);
             }
-            if (ArtifactStore != null)
+            if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);

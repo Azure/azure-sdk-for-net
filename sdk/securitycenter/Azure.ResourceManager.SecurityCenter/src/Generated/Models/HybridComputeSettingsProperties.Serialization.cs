@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HybridComputeProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HybridComputeProvisioningState))
             {
                 writer.WritePropertyName("hybridComputeProvisioningState"u8);
                 writer.WriteStringValue(HybridComputeProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("autoProvision"u8);
             writer.WriteStringValue(AutoProvision.ToString());
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (ProxyServer != null)
+            if (Optional.IsDefined(ProxyServer))
             {
                 writer.WritePropertyName("proxyServer"u8);
                 writer.WriteObjectValue(ProxyServer);
             }
-            if (ServicePrincipal != null)
+            if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);

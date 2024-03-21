@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServiceFabricManagedServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, ServiceFabricManagedServiceData data, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServiceFabricManagedServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, ServiceFabricManagedServiceData data, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<ServiceFabricManagedServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<ServiceFabricManagedServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceFabricManagedServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         public virtual NullableResponse<ServiceFabricManagedServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var scope = _serviceFabricManagedServiceServicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceCollection.GetIfExists");
             scope.Start();

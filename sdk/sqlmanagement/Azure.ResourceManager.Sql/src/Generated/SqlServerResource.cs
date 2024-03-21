@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Sql.Models;
 
@@ -2288,10 +2286,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerResource>> UpdateAsync(WaitUntil waitUntil, SqlServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.Update");
             scope.Start();
@@ -2337,10 +2332,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<SqlServerResource> Update(WaitUntil waitUntil, SqlServerPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.Update");
             scope.Start();
@@ -2484,10 +2476,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
         public virtual async Task<ArmOperation> CreateTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
-            if (tdeCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(tdeCertificate));
-            }
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
 
             using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
             scope.Start();
@@ -2529,10 +2518,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
         public virtual ArmOperation CreateTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
-            if (tdeCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(tdeCertificate));
-            }
+            Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
 
             using var scope = _tdeCertificatesClientDiagnostics.CreateScope("SqlServerResource.CreateTdeCertificate");
             scope.Start();
@@ -2698,10 +2684,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
         public virtual async Task<ArmOperation<ImportExportOperationResult>> ImportDatabaseAsync(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
         {
-            if (databaseImportDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(databaseImportDefinition));
-            }
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
             scope.Start();
@@ -2747,10 +2730,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseImportDefinition"/> is null. </exception>
         public virtual ArmOperation<ImportExportOperationResult> ImportDatabase(WaitUntil waitUntil, DatabaseImportDefinition databaseImportDefinition, CancellationToken cancellationToken = default)
         {
-            if (databaseImportDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(databaseImportDefinition));
-            }
+            Argument.AssertNotNull(databaseImportDefinition, nameof(databaseImportDefinition));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.ImportDatabase");
             scope.Start();
@@ -2880,14 +2860,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SqlServerResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.AddTag");
             scope.Start();
@@ -2948,14 +2922,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SqlServerResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.AddTag");
             scope.Start();
@@ -3015,10 +2983,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SqlServerResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.SetTags");
             scope.Start();
@@ -3075,10 +3040,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SqlServerResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.SetTags");
             scope.Start();
@@ -3135,10 +3097,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SqlServerResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RemoveTag");
             scope.Start();
@@ -3198,10 +3157,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SqlServerResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerResource.RemoveTag");
             scope.Start();

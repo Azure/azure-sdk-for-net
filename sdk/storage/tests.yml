@@ -16,7 +16,8 @@ extends:
     SupportedClouds: Preview, PrivatePreview
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
-      - Pool=(.*)-general/$1-storage
+      - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage
+      - Pool=.*WINDOWSPOOL.*/azsdk-pool-mms-win-2022-general
     ${{ if contains(variables['Build.DefinitionName'], 'tests-weekly') }}:
       MatrixConfigs:
         - Name: Storage_all_versions

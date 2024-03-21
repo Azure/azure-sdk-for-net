@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ProviderName != null)
+            if (Optional.IsDefined(ProviderName))
             {
                 if (ProviderName != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("providerName");
                 }
             }
-            if (CognitiveServiceSubscriptionKey != null)
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (CognitiveServiceRegion != null)
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (CognitiveServiceResourceId != null)
+            if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 if (CognitiveServiceResourceId != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceResourceId");
                 }
             }
-            if (DefaultLocale != null)
+            if (Optional.IsDefined(DefaultLocale))
             {
                 if (DefaultLocale != null)
                 {

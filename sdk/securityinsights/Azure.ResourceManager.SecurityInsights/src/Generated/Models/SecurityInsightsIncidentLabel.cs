@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         public SecurityInsightsIncidentLabel(string labelName)
         {
-            if (labelName == null)
-            {
-                throw new ArgumentNullException(nameof(labelName));
-            }
+            Argument.AssertNotNull(labelName, nameof(labelName));
 
             LabelName = labelName;
         }

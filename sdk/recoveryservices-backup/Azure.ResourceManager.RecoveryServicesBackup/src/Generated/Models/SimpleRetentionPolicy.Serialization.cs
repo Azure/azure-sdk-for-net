@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RetentionDuration != null)
+            if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);

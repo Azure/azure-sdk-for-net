@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ComputeSubnetId != null)
+            if (Optional.IsDefined(ComputeSubnetId))
             {
                 writer.WritePropertyName("computeSubnetId"u8);
                 writer.WriteStringValue(ComputeSubnetId);

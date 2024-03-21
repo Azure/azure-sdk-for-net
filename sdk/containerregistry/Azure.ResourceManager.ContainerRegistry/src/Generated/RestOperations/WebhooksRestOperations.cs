@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ContainerRegistry.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookListResult>> ListAsync(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookListResult> List(string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, registryName);
             _pipeline.Send(message, cancellationToken);
@@ -190,38 +147,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookData>> GetAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +180,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookData> Get(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             _pipeline.Send(message, cancellationToken);
@@ -339,42 +240,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, ContainerRegistryWebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, registryName, webhookName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,42 +269,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string registryName, string webhookName, ContainerRegistryWebhookCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, registryName, webhookName, content);
             _pipeline.Send(message, cancellationToken);
@@ -479,38 +318,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -535,38 +346,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             _pipeline.Send(message, cancellationToken);
@@ -618,42 +401,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, ContainerRegistryWebhookPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, webhookName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -678,42 +430,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string registryName, string webhookName, ContainerRegistryWebhookPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, webhookName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -760,38 +481,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookEventInfo>> PingAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreatePingRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -819,38 +512,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookEventInfo> Ping(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreatePingRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             _pipeline.Send(message, cancellationToken);
@@ -901,38 +566,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookEventListResult>> ListEventsAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateListEventsRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -960,38 +597,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookEventListResult> ListEvents(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateListEventsRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             _pipeline.Send(message, cancellationToken);
@@ -1042,38 +651,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookCallbackConfig>> GetCallbackConfigAsync(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateGetCallbackConfigRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1101,38 +682,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookCallbackConfig> GetCallbackConfig(string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateGetCallbackConfigRequest(subscriptionId, resourceGroupName, registryName, webhookName);
             _pipeline.Send(message, cancellationToken);
@@ -1174,34 +727,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1229,34 +758,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName);
             _pipeline.Send(message, cancellationToken);
@@ -1299,42 +804,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ContainerRegistryWebhookEventListResult>> ListEventsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateListEventsNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName, webhookName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1363,42 +837,11 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ContainerRegistryWebhookEventListResult> ListEventsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string webhookName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (registryName == null)
-            {
-                throw new ArgumentNullException(nameof(registryName));
-            }
-            if (registryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(registryName));
-            }
-            if (webhookName == null)
-            {
-                throw new ArgumentNullException(nameof(webhookName));
-            }
-            if (webhookName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(webhookName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
 
             using var message = CreateListEventsNextPageRequest(nextLink, subscriptionId, resourceGroupName, registryName, webhookName);
             _pipeline.Send(message, cancellationToken);

@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsPublic.HasValue)
+            if (Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (IsHttpsOnly.HasValue)
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (SsoProperties != null)
+            if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
                 writer.WriteObjectValue(SsoProperties);
             }
-            if (ApiMetadataProperties != null)
+            if (Optional.IsDefined(ApiMetadataProperties))
             {
                 writer.WritePropertyName("apiMetadataProperties"u8);
                 writer.WriteObjectValue(ApiMetadataProperties);
             }
-            if (CorsProperties != null)
+            if (Optional.IsDefined(CorsProperties))
             {
                 writer.WritePropertyName("corsProperties"u8);
                 writer.WriteObjectValue(CorsProperties);
             }
-            if (ResourceRequests != null)
+            if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformGatewayInstance> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && OperatorProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(OperatorProperties))
             {
                 writer.WritePropertyName("operatorProperties"u8);
                 writer.WriteObjectValue(OperatorProperties);

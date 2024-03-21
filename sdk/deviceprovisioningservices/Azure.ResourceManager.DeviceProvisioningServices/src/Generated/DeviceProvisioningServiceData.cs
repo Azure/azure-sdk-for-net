@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
@@ -59,14 +58,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="sku"/> is null. </exception>
         public DeviceProvisioningServiceData(AzureLocation location, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku) : base(location)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Properties = properties;
             Sku = sku;

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -31,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteBase64StringValue(Data.ToArray(), "D");
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);

@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             string.Format(CultureInfo.InvariantCulture, "Failed to create a filter {0}.", filterInfo),
                             e,
                             Tuple.Create("FilterFieldName", filterInfo.FieldName),
-                            Tuple.Create("FilterPredicate", filterInfo.Predicate.ToString()),
+                            Tuple.Create("FilterPredicate", filterInfo.Predicate?.ToString() ?? "null"),
                             Tuple.Create("FilterComparand", filterInfo.Comparand)));
                 }
             }

@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<RemoteDeviceAdapter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);

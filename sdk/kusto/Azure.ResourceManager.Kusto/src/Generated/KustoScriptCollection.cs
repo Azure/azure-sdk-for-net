@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<KustoScriptResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scriptName, KustoScriptData data, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<KustoScriptResource> CreateOrUpdate(WaitUntil waitUntil, string scriptName, KustoScriptData data, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual async Task<Response<KustoScriptResource>> GetAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<KustoScriptResource> Get(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual Response<bool> Exists(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual async Task<NullableResponse<KustoScriptResource>> GetIfExistsAsync(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
         public virtual NullableResponse<KustoScriptResource> GetIfExists(string scriptName, CancellationToken cancellationToken = default)
         {
-            if (scriptName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptName));
-            }
-            if (scriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptName));
-            }
+            Argument.AssertNotNullOrEmpty(scriptName, nameof(scriptName));
 
             using var scope = _kustoScriptScriptsClientDiagnostics.CreateScope("KustoScriptCollection.GetIfExists");
             scope.Start();

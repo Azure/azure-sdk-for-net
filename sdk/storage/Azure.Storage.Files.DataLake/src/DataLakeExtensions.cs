@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.DataLake
                     PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
                 };
 
-        internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext) =>
+        internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext, string accessControlList) =>
             new FileDownloadDetails()
             {
                 LastModified = blobDownloadProperties.LastModified,
@@ -68,18 +68,20 @@ namespace Azure.Storage.Files.DataLake
                 EncryptionKeySha256 = blobDownloadProperties.EncryptionKeySha256,
                 ContentHash = blobDownloadProperties.BlobContentHash,
                 CreatedOn = blobDownloadProperties.CreatedOn,
-                EncryptionContext = encryptionContext
+                EncryptionContext = encryptionContext,
+                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(accessControlList)
             };
 
         internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadInfo> blobDownloadInfoResponse)
         {
             blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            blobDownloadInfoResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.AclHeaderName, out string accessControlList);
             FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
                 ContentLength = blobDownloadInfoResponse.Value.ContentLength,
                 Content = blobDownloadInfoResponse.Value.Content,
                 ContentHash = blobDownloadInfoResponse.Value.ContentHash,
-                Properties = blobDownloadInfoResponse.Value.Details.ToFileDownloadDetails(encryptionContext)
+                Properties = blobDownloadInfoResponse.Value.Details.ToFileDownloadDetails(encryptionContext, accessControlList)
             };
             return fileDownloadInfo;
         }
@@ -87,12 +89,13 @@ namespace Azure.Storage.Files.DataLake
         internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadStreamingResult> blobDownloadStreamingResultResponse)
         {
             blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.EncryptionContextHeaderName, out string encryptionContext);
+            blobDownloadStreamingResultResponse.GetRawResponse().Headers.TryGetValue(Constants.DataLake.AclHeaderName, out string accessControlList);
             FileDownloadInfo fileDownloadInfo = new FileDownloadInfo()
             {
                 ContentLength = blobDownloadStreamingResultResponse.Value.Details.ContentLength,
                 Content = blobDownloadStreamingResultResponse.Value.Content,
                 ContentHash = blobDownloadStreamingResultResponse.Value.Details.ContentHash,
-                Properties = blobDownloadStreamingResultResponse.Value.Details.ToFileDownloadDetails(encryptionContext)
+                Properties = blobDownloadStreamingResultResponse.Value.Details.ToFileDownloadDetails(encryptionContext, accessControlList)
             };
             return fileDownloadInfo;
         }
@@ -153,6 +156,12 @@ namespace Azure.Storage.Files.DataLake
                 out string permissions))
             {
                 pathProperties.Permissions = permissions;
+            }
+            if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
+                Constants.DataLake.AclHeaderName,
+                out string accessControlList))
+            {
+                pathProperties.AccessControlList = PathAccessControlExtensions.ParseAccessControlList(accessControlList);
             }
             return pathProperties;
         }

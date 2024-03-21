@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MigrationItemResyncContent(MigrationItemResyncProperties properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }

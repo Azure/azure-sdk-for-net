@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Nocopy.HasValue)
+            if (Optional.IsDefined(Nocopy))
             {
                 if (Nocopy != null)
                 {

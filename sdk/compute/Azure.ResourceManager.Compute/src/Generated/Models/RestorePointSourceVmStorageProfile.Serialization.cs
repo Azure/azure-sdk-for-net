@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (OSDisk != null)
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (!(DataDiskList is ChangeTrackingList<RestorePointSourceVmDataDisk> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskList))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DiskControllerType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskControllerType))
             {
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());

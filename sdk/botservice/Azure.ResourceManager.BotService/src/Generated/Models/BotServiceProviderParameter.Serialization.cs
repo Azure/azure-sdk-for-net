@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ServiceProviderParameterType != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceProviderParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ServiceProviderParameterType);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && HelpUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HelpUri))
             {
                 writer.WritePropertyName("helpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Default != null)
+            if (options.Format != "W" && Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);

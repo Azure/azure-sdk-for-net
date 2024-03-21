@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (!(KbNumbersToExclude is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClassificationsToInclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsExcludeKbsRebootRequired.HasValue)
+            if (Optional.IsDefined(IsExcludeKbsRebootRequired))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(IsExcludeKbsRebootRequired.Value);

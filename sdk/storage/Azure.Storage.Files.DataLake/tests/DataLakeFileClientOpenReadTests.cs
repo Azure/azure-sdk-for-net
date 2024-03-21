@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;

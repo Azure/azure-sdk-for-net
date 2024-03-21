@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Complexity.HasValue)
+            if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (InterleaveOutput.HasValue)
+            if (Optional.IsDefined(InterleaveOutput))
             {
                 writer.WritePropertyName("interleaveOutput"u8);
                 writer.WriteStringValue(InterleaveOutput.Value.ToString());
             }
-            if (KeyFrameIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(KeyFrameIntervalInSeconds))
             {
                 writer.WritePropertyName("keyFrameIntervalInSeconds"u8);
                 writer.WriteNumberValue(KeyFrameIntervalInSeconds.Value);
             }
-            if (MaxBitrateBps.HasValue)
+            if (Optional.IsDefined(MaxBitrateBps))
             {
                 writer.WritePropertyName("maxBitrateBps"u8);
                 writer.WriteNumberValue(MaxBitrateBps.Value);
             }
-            if (MaxHeight.HasValue)
+            if (Optional.IsDefined(MaxHeight))
             {
                 writer.WritePropertyName("maxHeight"u8);
                 writer.WriteNumberValue(MaxHeight.Value);
             }
-            if (MaxLayers.HasValue)
+            if (Optional.IsDefined(MaxLayers))
             {
                 writer.WritePropertyName("maxLayers"u8);
                 writer.WriteNumberValue(MaxLayers.Value);
             }
-            if (MinBitrateBps.HasValue)
+            if (Optional.IsDefined(MinBitrateBps))
             {
                 writer.WritePropertyName("minBitrateBps"u8);
                 writer.WriteNumberValue(MinBitrateBps.Value);
             }
-            if (MinHeight.HasValue)
+            if (Optional.IsDefined(MinHeight))
             {
                 writer.WritePropertyName("minHeight"u8);
                 writer.WriteNumberValue(MinHeight.Value);

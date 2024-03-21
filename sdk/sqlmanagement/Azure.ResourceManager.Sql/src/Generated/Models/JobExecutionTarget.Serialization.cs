@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TargetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);

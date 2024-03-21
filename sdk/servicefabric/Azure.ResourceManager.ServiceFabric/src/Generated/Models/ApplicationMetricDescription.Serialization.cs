@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MaximumCapacity.HasValue)
+            if (Optional.IsDefined(MaximumCapacity))
             {
                 writer.WritePropertyName("maximumCapacity"u8);
                 writer.WriteNumberValue(MaximumCapacity.Value);
             }
-            if (ReservationCapacity.HasValue)
+            if (Optional.IsDefined(ReservationCapacity))
             {
                 writer.WritePropertyName("reservationCapacity"u8);
                 writer.WriteNumberValue(ReservationCapacity.Value);
             }
-            if (TotalApplicationCapacity.HasValue)
+            if (Optional.IsDefined(TotalApplicationCapacity))
             {
                 writer.WritePropertyName("totalApplicationCapacity"u8);
                 writer.WriteNumberValue(TotalApplicationCapacity.Value);

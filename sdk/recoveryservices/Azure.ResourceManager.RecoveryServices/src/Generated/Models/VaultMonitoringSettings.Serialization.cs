@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (AzureMonitorAlertSettings != null)
+            if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
-            if (ClassicAlertSettings != null)
+            if (Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
                 writer.WriteObjectValue(ClassicAlertSettings);

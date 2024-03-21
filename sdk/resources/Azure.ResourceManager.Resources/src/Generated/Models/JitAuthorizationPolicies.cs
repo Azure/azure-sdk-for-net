@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public JitAuthorizationPolicies(Guid principalId, string roleDefinitionId)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;

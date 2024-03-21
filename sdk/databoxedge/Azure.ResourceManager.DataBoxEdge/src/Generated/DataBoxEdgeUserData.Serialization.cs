@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EncryptedPassword != null)
+            if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
                 writer.WriteObjectValue(EncryptedPassword);
             }
-            if (options.Format != "W" && !(ShareAccessRights is ChangeTrackingList<ShareAccessRight> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
             {
                 writer.WritePropertyName("shareAccessRights"u8);
                 writer.WriteStartArray();

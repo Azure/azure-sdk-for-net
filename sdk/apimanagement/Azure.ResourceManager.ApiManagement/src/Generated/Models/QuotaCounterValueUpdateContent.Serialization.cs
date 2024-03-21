@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CallsCount.HasValue)
+            if (Optional.IsDefined(CallsCount))
             {
                 writer.WritePropertyName("callsCount"u8);
                 writer.WriteNumberValue(CallsCount.Value);
             }
-            if (KbTransferred.HasValue)
+            if (Optional.IsDefined(KbTransferred))
             {
                 writer.WritePropertyName("kbTransferred"u8);
                 writer.WriteNumberValue(KbTransferred.Value);

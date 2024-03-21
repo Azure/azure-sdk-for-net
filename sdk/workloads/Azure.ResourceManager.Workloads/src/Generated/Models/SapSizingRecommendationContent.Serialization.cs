@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (DBScaleMethod.HasValue)
+            if (Optional.IsDefined(DBScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (HighAvailabilityType.HasValue)
+            if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());

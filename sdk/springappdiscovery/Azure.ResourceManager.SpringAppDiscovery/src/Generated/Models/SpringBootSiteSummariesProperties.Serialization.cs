@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiscoveredServers.HasValue)
+            if (Optional.IsDefined(DiscoveredServers))
             {
                 writer.WritePropertyName("discoveredServers"u8);
                 writer.WriteNumberValue(DiscoveredServers.Value);
             }
-            if (DiscoveredApps.HasValue)
+            if (Optional.IsDefined(DiscoveredApps))
             {
                 writer.WritePropertyName("discoveredApps"u8);
                 writer.WriteNumberValue(DiscoveredApps.Value);
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

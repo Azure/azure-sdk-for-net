@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Use32BitWorkerProcess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Use32BitWorkerProcess))
             {
                 writer.WritePropertyName("use32BitWorkerProcess"u8);
                 writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
             }
-            if (options.Format != "W" && LinuxFxVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LinuxFxVersion))
             {
                 writer.WritePropertyName("linuxFxVersion"u8);
                 writer.WriteStringValue(LinuxFxVersion);
             }
-            if (options.Format != "W" && JavaVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(JavaVersion))
             {
                 writer.WritePropertyName("javaVersion"u8);
                 writer.WriteStringValue(JavaVersion);
             }
-            if (options.Format != "W" && PowerShellVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(PowerShellVersion))
             {
                 writer.WritePropertyName("powerShellVersion"u8);
                 writer.WriteStringValue(PowerShellVersion);

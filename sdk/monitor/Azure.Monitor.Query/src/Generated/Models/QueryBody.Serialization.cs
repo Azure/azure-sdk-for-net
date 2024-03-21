@@ -17,12 +17,12 @@ namespace Azure.Monitor.Query.Models
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Timespan != null)
+            if (Optional.IsDefined(Timespan))
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan);
             }
-            if (!(Workspaces is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();

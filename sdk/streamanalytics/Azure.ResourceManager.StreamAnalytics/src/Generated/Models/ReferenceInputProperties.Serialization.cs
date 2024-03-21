@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -27,39 +26,39 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Datasource != null)
+            if (Optional.IsDefined(Datasource))
             {
                 writer.WritePropertyName("datasource"u8);
                 writer.WriteObjectValue(Datasource);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(InputPropertiesType);
-            if (Serialization != null)
+            if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
                 writer.WriteObjectValue(Serialization);
             }
-            if (options.Format != "W" && Diagnostics != null)
+            if (options.Format != "W" && Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteObjectValue(Diagnostics);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Compression != null)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (WatermarkSettings != null)
+            if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
                 writer.WriteObjectValue(WatermarkSettings);

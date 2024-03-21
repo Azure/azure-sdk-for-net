@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (BindDistinguishedName != null)
+            if (Optional.IsDefined(BindDistinguishedName))
             {
                 writer.WritePropertyName("bindDn"u8);
                 writer.WriteStringValue(BindDistinguishedName);
             }
-            if (BindPassword != null)
+            if (Optional.IsDefined(BindPassword))
             {
                 writer.WritePropertyName("bindPassword"u8);
                 writer.WriteStringValue(BindPassword);

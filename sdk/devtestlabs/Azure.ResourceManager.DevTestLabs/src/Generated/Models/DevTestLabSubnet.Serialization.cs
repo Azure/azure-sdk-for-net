@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LabSubnetName != null)
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (AllowPublicIP.HasValue)
+            if (Optional.IsDefined(AllowPublicIP))
             {
                 writer.WritePropertyName("allowPublicIp"u8);
                 writer.WriteStringValue(AllowPublicIP.Value.ToString());

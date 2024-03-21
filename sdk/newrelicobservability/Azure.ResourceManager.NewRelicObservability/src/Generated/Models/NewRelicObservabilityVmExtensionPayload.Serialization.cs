@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (IngestionKey != null)
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);

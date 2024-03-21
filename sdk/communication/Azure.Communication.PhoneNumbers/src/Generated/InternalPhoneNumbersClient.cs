@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -34,7 +33,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-10-01-preview")
+        internal InternalPhoneNumbersClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2024-01-31-preview")
         {
             RestClient = new InternalPhoneNumbersRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
@@ -162,14 +161,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberAreaCode> ListAreaCodesAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
-            }
-            if (twoLetterIsoCountryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
-            }
+            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
@@ -189,14 +181,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberAreaCode> ListAreaCodes(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip = null, int? maxPageSize = null, PhoneNumberAssignmentType? assignmentType = null, string locality = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
-            }
-            if (twoLetterIsoCountryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
-            }
+            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAreaCodesRequest(twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, maxPageSize, assignmentType, locality, administrativeDivision, acceptLanguage);
@@ -237,14 +222,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberLocality> ListAvailableLocalitiesAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
-            }
-            if (twoLetterIsoCountryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
-            }
+            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
@@ -261,14 +239,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberLocality> ListAvailableLocalities(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
-            }
-            if (twoLetterIsoCountryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
-            }
+            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage);
@@ -286,14 +257,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual AsyncPageable<PhoneNumberOffering> ListOfferingsAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
-            }
-            if (twoLetterIsoCountryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
-            }
+            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
@@ -311,14 +275,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
         public virtual Pageable<PhoneNumberOffering> ListOfferings(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, string acceptLanguage = null, CancellationToken cancellationToken = default)
         {
-            if (twoLetterIsoCountryName == null)
-            {
-                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
-            }
-            if (twoLetterIsoCountryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(twoLetterIsoCountryName));
-            }
+            Argument.AssertNotNullOrEmpty(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListOfferingsRequest(twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListOfferingsNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, phoneNumberType, assignmentType, acceptLanguage);
@@ -451,9 +408,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual async Task<UpdatePhoneNumberCapabilitiesOperation> StartUpdateCapabilitiesAsync(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -464,8 +422,8 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = await RestClient.UpdateCapabilitiesAsync(phoneNumber, calling, sms, cancellationToken).ConfigureAwait(false);
-                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+                var originalResponse = await RestClient.UpdateCapabilitiesAsync(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken).ConfigureAwait(false);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -478,9 +436,10 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="phoneNumber"> The phone number id in E.164 format. The leading plus can be either + or encoded as %2B, e.g. +11234567890. </param>
         /// <param name="calling"> Capability value for calling. </param>
         /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="tenDLCCampaignBriefId"> Campaign Brief Id to attach to a number. For adding SMS to local numbers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, CancellationToken cancellationToken = default)
+        public virtual UpdatePhoneNumberCapabilitiesOperation StartUpdateCapabilities(string phoneNumber, PhoneNumberCapabilityType? calling = null, PhoneNumberCapabilityType? sms = null, string tenDLCCampaignBriefId = null, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -491,8 +450,8 @@ namespace Azure.Communication.PhoneNumbers
             scope.Start();
             try
             {
-                var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
-                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+                var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, tenDLCCampaignBriefId, cancellationToken);
+                return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms, tenDLCCampaignBriefId).Request, originalResponse);
             }
             catch (Exception e)
             {

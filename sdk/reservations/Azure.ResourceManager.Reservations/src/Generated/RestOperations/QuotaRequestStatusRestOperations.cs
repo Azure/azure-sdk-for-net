@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -69,22 +68,8 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaRequestDetailData>> GetAsync(string subscriptionId, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (providerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
             using var message = CreateGetRequest(subscriptionId, providerId, location, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -114,22 +99,8 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaRequestDetailData> Get(string subscriptionId, string providerId, AzureLocation location, Guid id, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (providerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
             using var message = CreateGetRequest(subscriptionId, providerId, location, id);
             _pipeline.Send(message, cancellationToken);
@@ -198,22 +169,8 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaRequestDetailsList>> ListAsync(string subscriptionId, string providerId, AzureLocation location, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (providerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
             using var message = CreateListRequest(subscriptionId, providerId, location, filter, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -247,22 +204,8 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaRequestDetailsList> List(string subscriptionId, string providerId, AzureLocation location, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (providerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
             using var message = CreateListRequest(subscriptionId, providerId, location, filter, top, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -311,26 +254,9 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaRequestDetailsList>> ListNextPageAsync(string nextLink, string subscriptionId, string providerId, AzureLocation location, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (providerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, providerId, location, filter, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -365,26 +291,9 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaRequestDetailsList> ListNextPage(string nextLink, string subscriptionId, string providerId, AzureLocation location, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (providerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerId, nameof(providerId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, providerId, location, filter, top, skiptoken);
             _pipeline.Send(message, cancellationToken);

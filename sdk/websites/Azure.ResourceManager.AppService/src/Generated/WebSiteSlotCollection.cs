@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<WebSiteSlotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<WebSiteSlotResource> CreateOrUpdate(WaitUntil waitUntil, string slot, WebSiteData data, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotResource>> GetAsync(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual Response<WebSiteSlotResource> Get(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual Response<bool> Exists(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual async Task<NullableResponse<WebSiteSlotResource>> GetIfExistsAsync(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="slot"/> is null. </exception>
         public virtual NullableResponse<WebSiteSlotResource> GetIfExists(string slot, CancellationToken cancellationToken = default)
         {
-            if (slot == null)
-            {
-                throw new ArgumentNullException(nameof(slot));
-            }
-            if (slot.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(slot));
-            }
+            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
 
             using var scope = _webSiteSlotWebAppsClientDiagnostics.CreateScope("WebSiteSlotCollection.GetIfExists");
             scope.Start();

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (ColumnName != null)
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);

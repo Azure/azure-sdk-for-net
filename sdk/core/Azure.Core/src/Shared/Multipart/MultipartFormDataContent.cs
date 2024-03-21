@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -42,7 +43,11 @@ namespace Azure.Core
         /// <param name="content">The Request content to add to the collection.</param>
         public override void Add(RequestContent content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
             AddInternal(content, null, null, null);
         }
 
@@ -54,8 +59,14 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public override void Add(RequestContent content, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(headers, nameof(headers));
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (headers is null)
+            {
+                throw new ArgumentNullException(nameof(headers));
+            }
 
             AddInternal(content, headers, null, null);
         }
@@ -69,8 +80,18 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public void Add(RequestContent content, string name, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(name));
+            }
 
             AddInternal(content, headers, name, null);
         }
@@ -85,9 +106,26 @@ namespace Azure.Core
         /// <param name="headers">The headers to add to the collection.</param>
         public void Add(RequestContent content, string name, string fileName, Dictionary<string, string> headers)
         {
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrWhiteSpace(name, nameof(name));
-            Argument.AssertNotNullOrWhiteSpace(fileName, nameof(fileName));
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(name));
+            }
+            if (fileName is null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
+            }
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(fileName));
+            }
 
             AddInternal(content, headers, name, fileName);
         }

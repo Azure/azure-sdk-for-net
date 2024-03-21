@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (LowerCaseKeepWords.HasValue)
+            if (Optional.IsDefined(LowerCaseKeepWords))
             {
                 writer.WritePropertyName("keepWordsCase"u8);
                 writer.WriteBooleanValue(LowerCaseKeepWords.Value);

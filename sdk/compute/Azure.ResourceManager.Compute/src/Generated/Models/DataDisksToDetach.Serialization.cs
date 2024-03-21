@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (DetachOption.HasValue)
+            if (Optional.IsDefined(DetachOption))
             {
                 writer.WritePropertyName("detachOption"u8);
                 writer.WriteStringValue(DetachOption.Value.ToString());

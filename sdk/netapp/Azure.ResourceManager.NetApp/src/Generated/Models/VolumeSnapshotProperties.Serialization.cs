@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (SnapshotPolicyId != null)
+            if (Optional.IsDefined(SnapshotPolicyId))
             {
                 writer.WritePropertyName("snapshotPolicyId"u8);
                 writer.WriteStringValue(SnapshotPolicyId);

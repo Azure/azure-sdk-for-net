@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UnlockDeleteExpireOn.HasValue)
+            if (Optional.IsDefined(UnlockDeleteExpireOn))
             {
                 writer.WritePropertyName("unlockDeleteExpiryTime"u8);
                 writer.WriteStringValue(UnlockDeleteExpireOn.Value, "O");

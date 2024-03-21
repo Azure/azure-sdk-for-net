@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerRunOptions != null)
+            if (Optional.IsDefined(ContainerRunOptions))
             {
                 writer.WritePropertyName("containerRunOptions"u8);
                 writer.WriteStringValue(ContainerRunOptions);
             }
             writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
-            if (Registry != null)
+            if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteObjectValue(Registry);
             }
-            if (WorkingDirectory.HasValue)
+            if (Optional.IsDefined(WorkingDirectory))
             {
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());

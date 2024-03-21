@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (KeyVaultSecretName != null)
+            if (Optional.IsDefined(KeyVaultSecretName))
             {
                 writer.WritePropertyName("keyVaultSecretName"u8);
                 writer.WriteStringValue(KeyVaultSecretName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());

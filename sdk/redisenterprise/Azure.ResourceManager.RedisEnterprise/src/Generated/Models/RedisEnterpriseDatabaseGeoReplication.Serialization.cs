@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (GroupNickname != null)
+            if (Optional.IsDefined(GroupNickname))
             {
                 writer.WritePropertyName("groupNickname"u8);
                 writer.WriteStringValue(GroupNickname);
             }
-            if (!(LinkedDatabases is ChangeTrackingList<RedisEnterpriseLinkedDatabase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedDatabases))
             {
                 writer.WritePropertyName("linkedDatabases"u8);
                 writer.WriteStartArray();

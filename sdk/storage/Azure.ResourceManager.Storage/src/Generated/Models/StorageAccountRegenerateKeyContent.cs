@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public StorageAccountRegenerateKeyContent(string keyName)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
         }

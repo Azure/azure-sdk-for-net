@@ -22,28 +22,13 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/> or <paramref name="cost"/> is null. </exception>
-        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
+        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PurchasedPhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-            if (countryCode == null)
-            {
-                throw new ArgumentNullException(nameof(countryCode));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
-            if (cost == null)
-            {
-                throw new ArgumentNullException(nameof(cost));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+            Argument.AssertNotNull(countryCode, nameof(countryCode));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
+            Argument.AssertNotNull(cost, nameof(cost));
 
             Id = id;
             PhoneNumber = phoneNumber;
@@ -67,7 +52,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="operatorId"> Id of the operator that provided the number. </param>
         /// <param name="operatorName"> Name of the operator that provided the number. </param>
         /// <param name="phoneNumberSource"> Source of the number, e.g. Cloud or OperatorConnect. </param>
-        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost, string operatorId, string operatorName, PhoneNumberSource? phoneNumberSource)
+        internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PurchasedPhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost, string operatorId, string operatorName, PhoneNumberSource? phoneNumberSource)
         {
             Id = id;
             PhoneNumber = phoneNumber;
@@ -91,7 +76,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> The phone number's type, e.g. geographic, tollFree. </summary>
         public PhoneNumberType PhoneNumberType { get; }
         /// <summary> Capabilities of a phone number. </summary>
-        public PhoneNumberCapabilities Capabilities { get; }
+        public PurchasedPhoneNumberCapabilities Capabilities { get; }
         /// <summary> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </summary>
         public PhoneNumberAssignmentType AssignmentType { get; }
         /// <summary> The date and time that the phone number was purchased. </summary>

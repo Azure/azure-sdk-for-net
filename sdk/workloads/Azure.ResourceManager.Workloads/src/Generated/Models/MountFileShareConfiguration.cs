@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileShareId"/> or <paramref name="privateEndpointId"/> is null. </exception>
         public MountFileShareConfiguration(ResourceIdentifier fileShareId, ResourceIdentifier privateEndpointId)
         {
-            if (fileShareId == null)
-            {
-                throw new ArgumentNullException(nameof(fileShareId));
-            }
-            if (privateEndpointId == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointId));
-            }
+            Argument.AssertNotNull(fileShareId, nameof(fileShareId));
+            Argument.AssertNotNull(privateEndpointId, nameof(privateEndpointId));
 
             FileShareId = fileShareId;
             PrivateEndpointId = privateEndpointId;

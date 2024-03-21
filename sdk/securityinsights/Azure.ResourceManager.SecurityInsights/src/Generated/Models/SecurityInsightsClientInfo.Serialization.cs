@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (UserPrincipalName != null)
+            if (Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);

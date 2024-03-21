@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="relativeMountPath"/> is null. </exception>
         public BatchNfsMountConfiguration(string source, string relativeMountPath)
         {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (relativeMountPath == null)
-            {
-                throw new ArgumentNullException(nameof(relativeMountPath));
-            }
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
 
             Source = source;
             RelativeMountPath = relativeMountPath;

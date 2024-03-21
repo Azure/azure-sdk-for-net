@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> The UnknownThreeTierCustomResourceNames. </summary>
+    /// <summary> Unknown version of ThreeTierCustomResourceNames. </summary>
     internal partial class UnknownThreeTierCustomResourceNames : ThreeTierCustomResourceNames
     {
         /// <summary> Initializes a new instance of <see cref="UnknownThreeTierCustomResourceNames"/>. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);

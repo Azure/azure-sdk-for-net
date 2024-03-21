@@ -19,10 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>
         internal TargetRelation(TargetRelationType relationType, string @ref)
         {
-            if (@ref == null)
-            {
-                throw new ArgumentNullException(nameof(@ref));
-            }
+            Argument.AssertNotNull(@ref, nameof(@ref));
 
             RelationType = relationType;
             Ref = @ref;

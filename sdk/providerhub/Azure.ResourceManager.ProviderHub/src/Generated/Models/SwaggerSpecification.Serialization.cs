@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SwaggerSpecFolderUri != null)
+            if (Optional.IsDefined(SwaggerSpecFolderUri))
             {
                 writer.WritePropertyName("swaggerSpecFolderUri"u8);
                 writer.WriteStringValue(SwaggerSpecFolderUri.AbsoluteUri);

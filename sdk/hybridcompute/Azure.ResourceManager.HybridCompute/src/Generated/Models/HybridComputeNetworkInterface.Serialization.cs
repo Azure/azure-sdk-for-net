@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (!(IPAddresses is ChangeTrackingList<HybridComputeIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();

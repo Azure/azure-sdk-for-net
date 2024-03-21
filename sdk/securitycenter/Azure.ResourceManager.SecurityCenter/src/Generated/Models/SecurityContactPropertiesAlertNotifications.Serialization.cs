@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (MinimalSeverity.HasValue)
+            if (Optional.IsDefined(MinimalSeverity))
             {
                 writer.WritePropertyName("minimalSeverity"u8);
                 writer.WriteStringValue(MinimalSeverity.Value.ToString());

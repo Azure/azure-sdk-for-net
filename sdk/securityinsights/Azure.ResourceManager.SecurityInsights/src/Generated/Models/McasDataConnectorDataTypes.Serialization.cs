@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (DiscoveryLogs != null)
+            if (Optional.IsDefined(DiscoveryLogs))
             {
                 writer.WritePropertyName("discoveryLogs"u8);
                 writer.WriteObjectValue(DiscoveryLogs);
             }
-            if (Alerts != null)
+            if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (OriginGroupOverride != null)
+            if (Optional.IsDefined(OriginGroupOverride))
             {
                 if (OriginGroupOverride != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("originGroupOverride");
                 }
             }
-            if (CacheConfiguration != null)
+            if (Optional.IsDefined(CacheConfiguration))
             {
                 writer.WritePropertyName("cacheConfiguration"u8);
                 writer.WriteObjectValue(CacheConfiguration);

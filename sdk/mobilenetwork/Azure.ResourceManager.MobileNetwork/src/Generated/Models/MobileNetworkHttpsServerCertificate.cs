@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateUri"/> is null. </exception>
         public MobileNetworkHttpsServerCertificate(Uri certificateUri)
         {
-            if (certificateUri == null)
-            {
-                throw new ArgumentNullException(nameof(certificateUri));
-            }
+            Argument.AssertNotNull(certificateUri, nameof(certificateUri));
 
             CertificateUri = certificateUri;
         }

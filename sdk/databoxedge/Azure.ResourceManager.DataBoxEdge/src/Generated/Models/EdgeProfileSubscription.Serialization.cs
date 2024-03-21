@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (RegistrationId.HasValue)
+            if (Optional.IsDefined(RegistrationId))
             {
                 writer.WritePropertyName("registrationId"u8);
                 writer.WriteStringValue(RegistrationId.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RegistrationDate != null)
+            if (Optional.IsDefined(RegistrationDate))
             {
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistrationDate);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (LocationPlacementId != null)
+            if (Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            if (QuotaId != null)
+            if (Optional.IsDefined(QuotaId))
             {
                 writer.WritePropertyName("quotaId"u8);
                 writer.WriteStringValue(QuotaId);
             }
-            if (SerializedDetails != null)
+            if (Optional.IsDefined(SerializedDetails))
             {
                 writer.WritePropertyName("serializedDetails"u8);
                 writer.WriteStringValue(SerializedDetails);
             }
-            if (!(RegisteredFeatures is ChangeTrackingList<SubscriptionRegisteredFeatures> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();

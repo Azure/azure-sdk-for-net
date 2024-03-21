@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (NextTrafficRegion.HasValue)
+            if (Optional.IsDefined(NextTrafficRegion))
             {
                 writer.WritePropertyName("nextTrafficRegion"u8);
                 writer.WriteStringValue(NextTrafficRegion.Value.ToString());
             }
-            if (NextTrafficRegionScheduledOn.HasValue)
+            if (Optional.IsDefined(NextTrafficRegionScheduledOn))
             {
                 writer.WritePropertyName("nextTrafficRegionScheduledTime"u8);
                 writer.WriteStringValue(NextTrafficRegionScheduledOn.Value, "O");
             }
-            if (SubscriptionReregistrationResult.HasValue)
+            if (Optional.IsDefined(SubscriptionReregistrationResult))
             {
                 writer.WritePropertyName("subscriptionReregistrationResult"u8);
                 writer.WriteStringValue(SubscriptionReregistrationResult.Value.ToString());
             }
-            if (!(CompletedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CompletedRegions))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailedOrSkippedRegions is ChangeTrackingDictionary<string, ExtendedErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();

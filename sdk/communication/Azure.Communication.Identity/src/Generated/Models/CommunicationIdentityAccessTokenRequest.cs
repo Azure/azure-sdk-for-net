@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Identity;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -20,10 +19,7 @@ namespace Azure.Communication.Identity.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes)
         {
-            if (scopes == null)
-            {
-                throw new ArgumentNullException(nameof(scopes));
-            }
+            Argument.AssertNotNull(scopes, nameof(scopes));
 
             Scopes = scopes.ToList();
         }

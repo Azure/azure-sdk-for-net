@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(ClusterResourceId);
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && TableLevelSharingProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
             }
-            if (options.Format != "W" && DatabaseShareOrigin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
                 writer.WritePropertyName("databaseShareOrigin"u8);
                 writer.WriteStringValue(DatabaseShareOrigin.Value.ToString());

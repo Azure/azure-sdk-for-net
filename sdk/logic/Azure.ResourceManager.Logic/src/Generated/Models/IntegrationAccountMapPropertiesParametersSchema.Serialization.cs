@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Ref != null)
+            if (Optional.IsDefined(Ref))
             {
                 writer.WritePropertyName("ref"u8);
                 writer.WriteStringValue(Ref);

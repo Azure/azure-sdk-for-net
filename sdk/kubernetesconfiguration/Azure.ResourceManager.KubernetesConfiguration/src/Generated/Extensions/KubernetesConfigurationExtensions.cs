@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -43,10 +41,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> Returns a <see cref="KubernetesClusterExtensionResource"/> object. </returns>
         public static KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesClusterExtensionResource(id);
         }
@@ -65,10 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource"/> object. </returns>
         public static KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesFluxConfigurationResource(id);
         }
@@ -87,10 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource"/> object. </returns>
         public static KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesSourceControlConfigurationResource(id);
         }
@@ -111,10 +100,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An object representing collection of KubernetesClusterExtensionResources and their operations over a KubernetesClusterExtensionResource. </returns>
         public static KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
         }
@@ -155,10 +141,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensionAsync(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken).ConfigureAwait(false);
         }
@@ -199,10 +182,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtension(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken);
         }
@@ -223,10 +203,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An object representing collection of KubernetesFluxConfigurationResources and their operations over a KubernetesFluxConfigurationResource. </returns>
         public static KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
         }
@@ -267,10 +244,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesFluxConfigurationResource>> GetKubernetesFluxConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfigurationAsync(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken).ConfigureAwait(false);
         }
@@ -311,10 +285,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static Response<KubernetesFluxConfigurationResource> GetKubernetesFluxConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfiguration(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken);
         }
@@ -335,10 +306,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An object representing collection of KubernetesSourceControlConfigurationResources and their operations over a KubernetesSourceControlConfigurationResource. </returns>
         public static KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
         }
@@ -379,10 +347,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesSourceControlConfigurationResource>> GetKubernetesSourceControlConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfigurationAsync(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
         }
@@ -423,10 +388,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static Response<KubernetesSourceControlConfigurationResource> GetKubernetesSourceControlConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfiguration(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken);
         }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -53,10 +52,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="authorizations"/> is null. </exception>
         internal ManagedServicesMarketplaceRegistrationProperties(Guid managedByTenantId, IEnumerable<ManagedServicesAuthorization> authorizations)
         {
-            if (authorizations == null)
-            {
-                throw new ArgumentNullException(nameof(authorizations));
-            }
+            Argument.AssertNotNull(authorizations, nameof(authorizations));
 
             ManagedByTenantId = managedByTenantId;
             Authorizations = authorizations.ToList();

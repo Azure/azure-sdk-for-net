@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ActiveRevisionsMode.HasValue)
+            if (Optional.IsDefined(ActiveRevisionsMode))
             {
                 writer.WritePropertyName("activeRevisionsMode"u8);
                 writer.WriteStringValue(ActiveRevisionsMode.Value.ToString());
             }
-            if (Ingress != null)
+            if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
                 writer.WriteObjectValue(Ingress);
             }
-            if (!(Registries is ChangeTrackingList<ContainerAppRegistryCredentials> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Registries))
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Dapr != null)
+            if (Optional.IsDefined(Dapr))
             {
                 writer.WritePropertyName("dapr"u8);
                 writer.WriteObjectValue(Dapr);
             }
-            if (MaxInactiveRevisions.HasValue)
+            if (Optional.IsDefined(MaxInactiveRevisions))
             {
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
             }
-            if (Service != null)
+            if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteObjectValue(Service);

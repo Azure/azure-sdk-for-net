@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ArmApplicationDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationDefinitionName, ArmApplicationDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ArmApplicationDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string applicationDefinitionName, ArmApplicationDefinitionData data, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual async Task<Response<ArmApplicationDefinitionResource>> GetAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual Response<ArmApplicationDefinitionResource> Get(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ArmApplicationDefinitionResource>> GetIfExistsAsync(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="applicationDefinitionName"/> is null. </exception>
         public virtual NullableResponse<ArmApplicationDefinitionResource> GetIfExists(string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            if (applicationDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationDefinitionName));
-            }
-            if (applicationDefinitionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationDefinitionName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationDefinitionName, nameof(applicationDefinitionName));
 
             using var scope = _armApplicationDefinitionApplicationDefinitionsClientDiagnostics.CreateScope("ArmApplicationDefinitionCollection.GetIfExists");
             scope.Start();

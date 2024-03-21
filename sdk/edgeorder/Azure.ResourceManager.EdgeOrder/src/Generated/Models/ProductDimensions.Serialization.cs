@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Length.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Length))
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
             }
-            if (options.Format != "W" && Height.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (options.Format != "W" && Width.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (options.Format != "W" && LengthHeightUnit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LengthHeightUnit))
             {
                 writer.WritePropertyName("lengthHeightUnit"u8);
                 writer.WriteStringValue(LengthHeightUnit.Value.ToString());
             }
-            if (options.Format != "W" && Weight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (options.Format != "W" && Depth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Depth))
             {
                 writer.WritePropertyName("depth"u8);
                 writer.WriteNumberValue(Depth.Value);
             }
-            if (options.Format != "W" && WeightUnit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WeightUnit))
             {
                 writer.WritePropertyName("weightUnit"u8);
                 writer.WriteStringValue(WeightUnit.Value.ToString());

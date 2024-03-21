@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Alias != null)
+            if (Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
             }
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (BaseUserDN != null)
+            if (Optional.IsDefined(BaseUserDN))
             {
                 writer.WritePropertyName("baseUserDN"u8);
                 writer.WriteStringValue(BaseUserDN);
             }
-            if (BaseGroupDN != null)
+            if (Optional.IsDefined(BaseGroupDN))
             {
                 writer.WritePropertyName("baseGroupDN"u8);
                 writer.WriteStringValue(BaseGroupDN);
             }
-            if (PrimaryServer != null)
+            if (Optional.IsDefined(PrimaryServer))
             {
                 writer.WritePropertyName("primaryServer"u8);
                 writer.WriteStringValue(PrimaryServer.AbsoluteUri);
             }
-            if (SecondaryServer != null)
+            if (Optional.IsDefined(SecondaryServer))
             {
                 writer.WritePropertyName("secondaryServer"u8);
                 writer.WriteStringValue(SecondaryServer.AbsoluteUri);
             }
-            if (Ssl.HasValue)
+            if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteStringValue(Ssl.Value.ToString());
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);

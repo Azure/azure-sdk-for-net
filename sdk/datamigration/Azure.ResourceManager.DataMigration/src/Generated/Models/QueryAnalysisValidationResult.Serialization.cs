@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (QueryResults != null)
+            if (Optional.IsDefined(QueryResults))
             {
                 writer.WritePropertyName("queryResults"u8);
                 writer.WriteObjectValue(QueryResults);
             }
-            if (ValidationErrors != null)
+            if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);

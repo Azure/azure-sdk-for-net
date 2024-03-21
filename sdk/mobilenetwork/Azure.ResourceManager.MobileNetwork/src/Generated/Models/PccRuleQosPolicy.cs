@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="maximumBitRate"/> is null. </exception>
         public PccRuleQosPolicy(Ambr maximumBitRate) : base(maximumBitRate)
         {
-            if (maximumBitRate == null)
-            {
-                throw new ArgumentNullException(nameof(maximumBitRate));
-            }
+            Argument.AssertNotNull(maximumBitRate, nameof(maximumBitRate));
         }
 
         /// <summary> Initializes a new instance of <see cref="PccRuleQosPolicy"/>. </summary>

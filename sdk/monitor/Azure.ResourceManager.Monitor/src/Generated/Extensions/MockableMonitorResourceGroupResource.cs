@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor.Mocking
@@ -757,14 +754,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public virtual async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            if (asyncOperationId == null)
-            {
-                throw new ArgumentNullException(nameof(asyncOperationId));
-            }
-            if (asyncOperationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(asyncOperationId));
-            }
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
             using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus");
             scope.Start();
@@ -803,14 +793,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public virtual Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            if (asyncOperationId == null)
-            {
-                throw new ArgumentNullException(nameof(asyncOperationId));
-            }
-            if (asyncOperationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(asyncOperationId));
-            }
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
             using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus");
             scope.Start();

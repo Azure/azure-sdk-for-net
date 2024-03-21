@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string eventHubName, EventHubData data, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubResource> CreateOrUpdate(WaitUntil waitUntil, string eventHubName, EventHubData data, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual async Task<Response<EventHubResource>> GetAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual Response<EventHubResource> Get(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual Response<bool> Exists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubResource>> GetIfExistsAsync(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="eventHubName"/> is null. </exception>
         public virtual NullableResponse<EventHubResource> GetIfExists(string eventHubName, CancellationToken cancellationToken = default)
         {
-            if (eventHubName == null)
-            {
-                throw new ArgumentNullException(nameof(eventHubName));
-            }
-            if (eventHubName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(eventHubName));
-            }
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
 
             using var scope = _eventHubClientDiagnostics.CreateScope("EventHubCollection.GetIfExists");
             scope.Start();

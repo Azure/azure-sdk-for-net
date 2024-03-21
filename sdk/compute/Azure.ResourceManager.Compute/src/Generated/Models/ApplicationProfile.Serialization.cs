@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(GalleryApplications is ChangeTrackingList<VirtualMachineGalleryApplication> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GalleryApplications))
             {
                 writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();

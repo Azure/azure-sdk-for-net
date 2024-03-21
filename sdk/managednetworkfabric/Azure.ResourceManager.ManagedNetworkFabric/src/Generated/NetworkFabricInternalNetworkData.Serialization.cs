@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (!(ConnectedIPv4Subnets is ChangeTrackingList<ConnectedSubnet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectedIPv4Subnets))
             {
                 writer.WritePropertyName("connectedIPv4Subnets"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConnectedIPv6Subnets is ChangeTrackingList<ConnectedSubnet> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectedIPv6Subnets))
             {
                 writer.WritePropertyName("connectedIPv6Subnets"u8);
                 writer.WriteStartArray();
@@ -80,69 +80,69 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (ImportRoutePolicyId != null)
+            if (Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
                 writer.WriteStringValue(ImportRoutePolicyId);
             }
-            if (ExportRoutePolicyId != null)
+            if (Optional.IsDefined(ExportRoutePolicyId))
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (ImportRoutePolicy != null)
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (ExportRoutePolicy != null)
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (IngressAclId != null)
+            if (Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
-            if (EgressAclId != null)
+            if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (IsMonitoringEnabled.HasValue)
+            if (Optional.IsDefined(IsMonitoringEnabled))
             {
                 writer.WritePropertyName("isMonitoringEnabled"u8);
                 writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
             }
-            if (Extension.HasValue)
+            if (Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension.Value.ToString());
             }
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
-            if (BgpConfiguration != null)
+            if (Optional.IsDefined(BgpConfiguration))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
                 writer.WriteObjectValue(BgpConfiguration);
             }
-            if (StaticRouteConfiguration != null)
+            if (Optional.IsDefined(StaticRouteConfiguration))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
                 writer.WriteObjectValue(StaticRouteConfiguration);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());

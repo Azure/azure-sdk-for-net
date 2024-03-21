@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="mlPipelineId"/> is null. </exception>
         public AzureMLExecutePipelineActivity(string name, object mlPipelineId) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (mlPipelineId == null)
-            {
-                throw new ArgumentNullException(nameof(mlPipelineId));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(mlPipelineId, nameof(mlPipelineId));
 
             MlPipelineId = mlPipelineId;
             Type = "AzureMLExecutePipeline";

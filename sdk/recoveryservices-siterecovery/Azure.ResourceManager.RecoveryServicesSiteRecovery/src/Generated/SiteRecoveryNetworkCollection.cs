@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryNetworkResource>> GetAsync(string networkName, CancellationToken cancellationToken = default)
         {
-            if (networkName == null)
-            {
-                throw new ArgumentNullException(nameof(networkName));
-            }
-            if (networkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkName));
-            }
+            Argument.AssertNotNullOrEmpty(networkName, nameof(networkName));
 
             using var scope = _siteRecoveryNetworkReplicationNetworksClientDiagnostics.CreateScope("SiteRecoveryNetworkCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         public virtual Response<SiteRecoveryNetworkResource> Get(string networkName, CancellationToken cancellationToken = default)
         {
-            if (networkName == null)
-            {
-                throw new ArgumentNullException(nameof(networkName));
-            }
-            if (networkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkName));
-            }
+            Argument.AssertNotNullOrEmpty(networkName, nameof(networkName));
 
             using var scope = _siteRecoveryNetworkReplicationNetworksClientDiagnostics.CreateScope("SiteRecoveryNetworkCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string networkName, CancellationToken cancellationToken = default)
         {
-            if (networkName == null)
-            {
-                throw new ArgumentNullException(nameof(networkName));
-            }
-            if (networkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkName));
-            }
+            Argument.AssertNotNullOrEmpty(networkName, nameof(networkName));
 
             using var scope = _siteRecoveryNetworkReplicationNetworksClientDiagnostics.CreateScope("SiteRecoveryNetworkCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         public virtual Response<bool> Exists(string networkName, CancellationToken cancellationToken = default)
         {
-            if (networkName == null)
-            {
-                throw new ArgumentNullException(nameof(networkName));
-            }
-            if (networkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkName));
-            }
+            Argument.AssertNotNullOrEmpty(networkName, nameof(networkName));
 
             using var scope = _siteRecoveryNetworkReplicationNetworksClientDiagnostics.CreateScope("SiteRecoveryNetworkCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryNetworkResource>> GetIfExistsAsync(string networkName, CancellationToken cancellationToken = default)
         {
-            if (networkName == null)
-            {
-                throw new ArgumentNullException(nameof(networkName));
-            }
-            if (networkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkName));
-            }
+            Argument.AssertNotNullOrEmpty(networkName, nameof(networkName));
 
             using var scope = _siteRecoveryNetworkReplicationNetworksClientDiagnostics.CreateScope("SiteRecoveryNetworkCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="networkName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryNetworkResource> GetIfExists(string networkName, CancellationToken cancellationToken = default)
         {
-            if (networkName == null)
-            {
-                throw new ArgumentNullException(nameof(networkName));
-            }
-            if (networkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(networkName));
-            }
+            Argument.AssertNotNullOrEmpty(networkName, nameof(networkName));
 
             using var scope = _siteRecoveryNetworkReplicationNetworksClientDiagnostics.CreateScope("SiteRecoveryNetworkCollection.GetIfExists");
             scope.Start();

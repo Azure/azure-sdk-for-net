@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (TriggerUri != null)
+            if (Optional.IsDefined(TriggerUri))
             {
                 writer.WritePropertyName("trigger_url"u8);
                 writer.WriteStringValue(TriggerUri.AbsoluteUri);

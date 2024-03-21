@@ -56,7 +56,7 @@ SteveMSFT is an invalid user. Ensure the user exists, is public member of Azure 
 msyache is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 longli0 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 ShaoAnLin is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-lulululululu is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+lulululululu is not a public member of Azure.
 ctstone is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 vkurpad is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 conhua is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -276,3 +276,6 @@ JialinXin is not a public member of Azure.
 orenmichaely is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 tyclintw is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 JieZhou000 is not a public member of Azure.
+ethanann-ms is not a public member of Azure.
+tmahmood-microsoft is not a public member of Azure.
+Aviv-Yaniv is not a public member of Azure.

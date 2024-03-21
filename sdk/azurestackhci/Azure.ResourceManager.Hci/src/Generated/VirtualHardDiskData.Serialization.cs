@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Hci
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,59 +61,59 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BlockSizeBytes.HasValue)
+            if (Optional.IsDefined(BlockSizeBytes))
             {
                 writer.WritePropertyName("blockSizeBytes"u8);
                 writer.WriteNumberValue(BlockSizeBytes.Value);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Dynamic.HasValue)
+            if (Optional.IsDefined(Dynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteBooleanValue(Dynamic.Value);
             }
-            if (LogicalSectorBytes.HasValue)
+            if (Optional.IsDefined(LogicalSectorBytes))
             {
                 writer.WritePropertyName("logicalSectorBytes"u8);
                 writer.WriteNumberValue(LogicalSectorBytes.Value);
             }
-            if (PhysicalSectorBytes.HasValue)
+            if (Optional.IsDefined(PhysicalSectorBytes))
             {
                 writer.WritePropertyName("physicalSectorBytes"u8);
                 writer.WriteNumberValue(PhysicalSectorBytes.Value);
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (DiskFileFormat.HasValue)
+            if (Optional.IsDefined(DiskFileFormat))
             {
                 writer.WritePropertyName("diskFileFormat"u8);
                 writer.WriteStringValue(DiskFileFormat.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);

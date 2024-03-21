@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteObjectValue(UeAmbr);
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice);
-            if (RfspIndex.HasValue)
+            if (Optional.IsDefined(RfspIndex))
             {
                 writer.WritePropertyName("rfspIndex"u8);
                 writer.WriteNumberValue(RfspIndex.Value);
             }
-            if (RegistrationTimer.HasValue)
+            if (Optional.IsDefined(RegistrationTimer))
             {
                 writer.WritePropertyName("registrationTimer"u8);
                 writer.WriteNumberValue(RegistrationTimer.Value);

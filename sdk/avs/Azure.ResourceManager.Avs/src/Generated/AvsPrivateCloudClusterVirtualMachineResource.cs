@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -199,10 +197,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="restrictMovement"/> is null. </exception>
         public virtual async Task<ArmOperation> RestrictMovementAsync(WaitUntil waitUntil, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
         {
-            if (restrictMovement == null)
-            {
-                throw new ArgumentNullException(nameof(restrictMovement));
-            }
+            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineResource.RestrictMovement");
             scope.Start();
@@ -248,10 +243,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="restrictMovement"/> is null. </exception>
         public virtual ArmOperation RestrictMovement(WaitUntil waitUntil, AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement, CancellationToken cancellationToken = default)
         {
-            if (restrictMovement == null)
-            {
-                throw new ArgumentNullException(nameof(restrictMovement));
-            }
+            Argument.AssertNotNull(restrictMovement, nameof(restrictMovement));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineResource.RestrictMovement");
             scope.Start();

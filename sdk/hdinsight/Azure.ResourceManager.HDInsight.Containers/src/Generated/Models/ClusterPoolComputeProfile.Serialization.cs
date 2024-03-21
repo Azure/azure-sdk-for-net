@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);

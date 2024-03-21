@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataLakeStore.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataLakeStoreFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, DataLakeStoreFirewallRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataLakeStoreFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, DataLakeStoreFirewallRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<DataLakeStoreFirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<DataLakeStoreFirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataLakeStoreFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual NullableResponse<DataLakeStoreFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            if (firewallRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallRuleName));
-            }
-            if (firewallRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
             using var scope = _dataLakeStoreFirewallRuleFirewallRulesClientDiagnostics.CreateScope("DataLakeStoreFirewallRuleCollection.GetIfExists");
             scope.Start();

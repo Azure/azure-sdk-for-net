@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (IsRegionEndpointEnabled.HasValue)
+            if (Optional.IsDefined(IsRegionEndpointEnabled))
             {
                 writer.WritePropertyName("regionEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsRegionEndpointEnabled.Value);
             }
-            if (ZoneRedundancy.HasValue)
+            if (Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());

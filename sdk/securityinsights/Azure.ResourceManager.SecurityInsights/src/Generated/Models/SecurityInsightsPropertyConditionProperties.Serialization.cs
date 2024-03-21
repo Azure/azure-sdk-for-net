@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ConditionProperties != null)
+            if (Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
                 writer.WriteObjectValue(ConditionProperties);

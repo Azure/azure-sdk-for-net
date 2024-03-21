@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (WatermarkMode.HasValue)
+            if (Optional.IsDefined(WatermarkMode))
             {
                 writer.WritePropertyName("watermarkMode"u8);
                 writer.WriteStringValue(WatermarkMode.Value.ToString());

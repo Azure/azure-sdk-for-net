@@ -20,10 +20,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
-            if (allTables == null)
-            {
-                throw new ArgumentNullException(nameof(allTables));
-            }
+            Argument.AssertNotNull(allTables, nameof(allTables));
 
             AllTables = allTables.ToList();
         }

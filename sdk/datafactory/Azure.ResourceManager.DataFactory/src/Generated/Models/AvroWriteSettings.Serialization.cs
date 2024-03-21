@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (RecordName != null)
+            if (Optional.IsDefined(RecordName))
             {
                 writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
-            if (RecordNamespace != null)
+            if (Optional.IsDefined(RecordNamespace))
             {
                 writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
-            if (MaxRowsPerFile != null)
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (FileNamePrefix != null)
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);

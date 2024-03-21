@@ -31,27 +31,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
-            if (IsSelectedForFailover != null)
+            if (Optional.IsDefined(IsSelectedForFailover))
             {
                 writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TargetStaticIPAddress != null)
+            if (Optional.IsDefined(TargetStaticIPAddress))
             {
                 writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress.ToString());
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TestStaticIPAddress != null)
+            if (Optional.IsDefined(TestStaticIPAddress))
             {
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (RestoreMode.HasValue)
+            if (Optional.IsDefined(RestoreMode))
             {
                 writer.WritePropertyName("restoreMode"u8);
                 writer.WriteStringValue(RestoreMode.Value.ToString());
             }
-            if (!(DatabasesToRestore is ChangeTrackingList<DatabaseRestoreResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DatabasesToRestore))
             {
                 writer.WritePropertyName("databasesToRestore"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(GremlinDatabasesToRestore is ChangeTrackingList<GremlinDatabaseRestoreResourceInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(GremlinDatabasesToRestore))
             {
                 writer.WritePropertyName("gremlinDatabasesToRestore"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TablesToRestore is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TablesToRestore))
             {
                 writer.WritePropertyName("tablesToRestore"u8);
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SourceBackupLocation != null)
+            if (Optional.IsDefined(SourceBackupLocation))
             {
                 writer.WritePropertyName("sourceBackupLocation"u8);
                 writer.WriteStringValue(SourceBackupLocation);
             }
-            if (RestoreSource != null)
+            if (Optional.IsDefined(RestoreSource))
             {
                 writer.WritePropertyName("restoreSource"u8);
                 writer.WriteStringValue(RestoreSource);
             }
-            if (RestoreTimestampInUtc.HasValue)
+            if (Optional.IsDefined(RestoreTimestampInUtc))
             {
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");

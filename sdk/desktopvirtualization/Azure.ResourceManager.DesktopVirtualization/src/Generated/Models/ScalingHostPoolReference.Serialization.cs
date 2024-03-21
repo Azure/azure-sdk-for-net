@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (HostPoolId != null)
+            if (Optional.IsDefined(HostPoolId))
             {
                 writer.WritePropertyName("hostPoolArmPath"u8);
                 writer.WriteStringValue(HostPoolId);
             }
-            if (IsScalingPlanEnabled.HasValue)
+            if (Optional.IsDefined(IsScalingPlanEnabled))
             {
                 writer.WritePropertyName("scalingPlanEnabled"u8);
                 writer.WriteBooleanValue(IsScalingPlanEnabled.Value);

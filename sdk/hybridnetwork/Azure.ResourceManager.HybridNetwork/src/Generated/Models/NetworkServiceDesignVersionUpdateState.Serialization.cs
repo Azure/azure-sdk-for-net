@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (VersionState.HasValue)
+            if (Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());

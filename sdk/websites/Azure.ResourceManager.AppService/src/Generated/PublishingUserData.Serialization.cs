@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublishingUserName != null)
+            if (Optional.IsDefined(PublishingUserName))
             {
                 writer.WritePropertyName("publishingUserName"u8);
                 writer.WriteStringValue(PublishingUserName);
             }
-            if (PublishingPassword != null)
+            if (Optional.IsDefined(PublishingPassword))
             {
                 writer.WritePropertyName("publishingPassword"u8);
                 writer.WriteStringValue(PublishingPassword);
             }
-            if (PublishingPasswordHash != null)
+            if (Optional.IsDefined(PublishingPasswordHash))
             {
                 writer.WritePropertyName("publishingPasswordHash"u8);
                 writer.WriteStringValue(PublishingPasswordHash);
             }
-            if (PublishingPasswordHashSalt != null)
+            if (Optional.IsDefined(PublishingPasswordHashSalt))
             {
                 writer.WritePropertyName("publishingPasswordHashSalt"u8);
                 writer.WriteStringValue(PublishingPasswordHashSalt);
             }
-            if (ScmUri != null)
+            if (Optional.IsDefined(ScmUri))
             {
                 writer.WritePropertyName("scmUri"u8);
                 writer.WriteStringValue(ScmUri.AbsoluteUri);

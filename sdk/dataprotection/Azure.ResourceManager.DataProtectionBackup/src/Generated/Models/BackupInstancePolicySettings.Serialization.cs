@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(DataStoreParametersList is ChangeTrackingList<DataStoreSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataStoreParametersList))
             {
                 writer.WritePropertyName("dataStoreParametersList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackupDataSourceParametersList is ChangeTrackingList<BackupDataSourceSettings> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BackupDataSourceParametersList))
             {
                 writer.WritePropertyName("backupDatasourceParametersList"u8);
                 writer.WriteStartArray();

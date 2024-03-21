@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (!(VaultErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VaultErrors))
             {
                 writer.WritePropertyName("vaultErrors"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProtectedItemsHealth != null)
+            if (Optional.IsDefined(ProtectedItemsHealth))
             {
                 writer.WritePropertyName("protectedItemsHealth"u8);
                 writer.WriteObjectValue(ProtectedItemsHealth);
             }
-            if (FabricsHealth != null)
+            if (Optional.IsDefined(FabricsHealth))
             {
                 writer.WritePropertyName("fabricsHealth"u8);
                 writer.WriteObjectValue(FabricsHealth);
             }
-            if (ContainersHealth != null)
+            if (Optional.IsDefined(ContainersHealth))
             {
                 writer.WritePropertyName("containersHealth"u8);
                 writer.WriteObjectValue(ContainersHealth);

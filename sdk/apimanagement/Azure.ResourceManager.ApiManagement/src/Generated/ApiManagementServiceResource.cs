@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
 
@@ -2213,10 +2211,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementServiceResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementServicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
@@ -2262,10 +2257,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ApiManagementServiceResource> Update(WaitUntil waitUntil, ApiManagementServicePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Update");
             scope.Start();
@@ -2375,10 +2367,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ConnectivityCheckResult>> PerformConnectivityCheckAsyncAsync(WaitUntil waitUntil, ConnectivityCheckContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("ApiManagementServiceResource.PerformConnectivityCheckAsync");
             scope.Start();
@@ -2420,10 +2409,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ConnectivityCheckResult> PerformConnectivityCheckAsync(WaitUntil waitUntil, ConnectivityCheckContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("ApiManagementServiceResource.PerformConnectivityCheckAsync");
             scope.Start();
@@ -2517,14 +2503,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementContentType>> GetContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
             scope.Start();
@@ -2563,14 +2542,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         public virtual Response<ApiManagementContentType> GetContentType(string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentType");
             scope.Start();
@@ -2610,14 +2582,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
             scope.Start();
@@ -2657,14 +2622,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentType");
             scope.Start();
@@ -2704,14 +2662,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         public virtual async Task<Response> DeleteContentTypeAsync(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
             scope.Start();
@@ -2751,14 +2702,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> is null. </exception>
         public virtual Response DeleteContentType(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             using var scope = _contentTypeClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentType");
             scope.Start();
@@ -2798,14 +2742,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementContentItem> GetContentItemsAsync(string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
@@ -2836,14 +2773,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementContentItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementContentItem> GetContentItems(string contentTypeId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
@@ -2874,22 +2804,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual async Task<Response<bool>> GetContentItemEntityTagAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
             scope.Start();
@@ -2929,22 +2845,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual Response<bool> GetContentItemEntityTag(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItemEntityTag");
             scope.Start();
@@ -2984,22 +2886,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementContentItem>> GetContentItemAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
             scope.Start();
@@ -3039,22 +2927,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual Response<ApiManagementContentItem> GetContentItem(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.GetContentItem");
             scope.Start();
@@ -3095,22 +2969,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
             scope.Start();
@@ -3151,22 +3011,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.CreateOrUpdateContentItem");
             scope.Start();
@@ -3207,22 +3053,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual async Task<Response> DeleteContentItemAsync(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
             scope.Start();
@@ -3263,22 +3095,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="contentTypeId"/> or <paramref name="contentItemId"/> is null. </exception>
         public virtual Response DeleteContentItem(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            if (contentTypeId == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypeId));
-            }
-            if (contentTypeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentTypeId));
-            }
-            if (contentItemId == null)
-            {
-                throw new ArgumentNullException(nameof(contentItemId));
-            }
-            if (contentItemId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(contentItemId));
-            }
+            Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
+            Argument.AssertNotNullOrEmpty(contentItemId, nameof(contentItemId));
 
             using var scope = _contentItemClientDiagnostics.CreateScope("ApiManagementServiceResource.DeleteContentItem");
             scope.Start();
@@ -3373,10 +3191,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementServiceResource>> RestoreAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
             scope.Start();
@@ -3422,10 +3237,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementServiceResource> Restore(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Restore");
             scope.Start();
@@ -3471,10 +3283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementServiceResource>> BackupAsync(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Backup");
             scope.Start();
@@ -3520,10 +3329,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ApiManagementServiceResource> Backup(WaitUntil waitUntil, ApiManagementServiceBackupRestoreContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.Backup");
             scope.Start();
@@ -4076,14 +3882,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaCounterContract> GetQuotaByCounterKeysAsync(string quotaCounterKey, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => QuotaCounterContract.DeserializeQuotaCounterContract(e), _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
@@ -4113,14 +3912,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaCounterContract> GetQuotaByCounterKeys(string quotaCounterKey, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => QuotaCounterContract.DeserializeQuotaCounterContract(e), _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
@@ -4151,18 +3943,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<QuotaCounterContract> UpdateQuotaByCounterKeysAsync(string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => QuotaCounterContract.DeserializeQuotaCounterContract(e), _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
@@ -4193,18 +3975,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="QuotaCounterContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<QuotaCounterContract> UpdateQuotaByCounterKeys(string quotaCounterKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => QuotaCounterContract.DeserializeQuotaCounterContract(e), _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
@@ -4234,22 +4006,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is null. </exception>
         public virtual async Task<Response<QuotaCounterContract>> GetQuotaByPeriodKeyAsync(string quotaCounterKey, string quotaPeriodKey, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
 
             using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByPeriodKey");
             scope.Start();
@@ -4289,22 +4047,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is null. </exception>
         public virtual Response<QuotaCounterContract> GetQuotaByPeriodKey(string quotaCounterKey, string quotaPeriodKey, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
 
             using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.GetQuotaByPeriodKey");
             scope.Start();
@@ -4345,26 +4089,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/>, <paramref name="quotaPeriodKey"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<QuotaCounterContract>> UpdateQuotaByPeriodKeyAsync(string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByPeriodKey");
             scope.Start();
@@ -4405,26 +4132,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/>, <paramref name="quotaPeriodKey"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<QuotaCounterContract> UpdateQuotaByPeriodKey(string quotaCounterKey, string quotaPeriodKey, QuotaCounterValueUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (quotaCounterKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaCounterKey));
-            }
-            if (quotaCounterKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaCounterKey));
-            }
-            if (quotaPeriodKey == null)
-            {
-                throw new ArgumentNullException(nameof(quotaPeriodKey));
-            }
-            if (quotaPeriodKey.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaPeriodKey));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
+            Argument.AssertNotNullOrEmpty(quotaPeriodKey, nameof(quotaPeriodKey));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _quotaByPeriodKeysClientDiagnostics.CreateScope("ApiManagementServiceResource.UpdateQuotaByPeriodKey");
             scope.Start();
@@ -4518,10 +4228,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4554,10 +4261,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByApi(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4590,10 +4294,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4626,10 +4327,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByUser(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4662,10 +4360,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4698,10 +4393,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByOperation(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4734,10 +4426,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4770,10 +4459,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByProduct(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4805,10 +4491,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByGeoAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -4840,10 +4523,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByGeo(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -4876,10 +4556,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4912,10 +4589,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsBySubscription(string filter, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
@@ -4949,10 +4623,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByTimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByTimeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
@@ -4986,10 +4657,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReportRecordContract> GetReportsByTime(string filter, TimeSpan interval, int? top = null, int? skip = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByTimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByTimeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
@@ -5021,10 +4689,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RequestReportRecordContract> GetReportsByRequestAsync(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RequestReportRecordContract.DeserializeRequestReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
@@ -5055,10 +4720,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="RequestReportRecordContract"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RequestReportRecordContract> GetReportsByRequest(string filter, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RequestReportRecordContract.DeserializeRequestReportRecordContract(e), _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
@@ -5146,10 +4808,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GitOperationResultContractData>> DeployTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
             scope.Start();
@@ -5192,10 +4851,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GitOperationResultContractData> DeployTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.DeployTenantConfiguration");
             scope.Start();
@@ -5238,10 +4894,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GitOperationResultContractData>> SaveTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.SaveTenantConfiguration");
             scope.Start();
@@ -5284,10 +4937,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GitOperationResultContractData> SaveTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.SaveTenantConfiguration");
             scope.Start();
@@ -5330,10 +4980,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<GitOperationResultContractData>> ValidateTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
             scope.Start();
@@ -5376,10 +5023,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<GitOperationResultContractData> ValidateTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _tenantConfigurationClientDiagnostics.CreateScope("ApiManagementServiceResource.ValidateTenantConfiguration");
             scope.Start();
@@ -5495,14 +5139,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ApiManagementServiceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
             scope.Start();
@@ -5563,14 +5201,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ApiManagementServiceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.AddTag");
             scope.Start();
@@ -5630,10 +5262,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ApiManagementServiceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
             scope.Start();
@@ -5690,10 +5319,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ApiManagementServiceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.SetTags");
             scope.Start();
@@ -5750,10 +5376,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ApiManagementServiceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
             scope.Start();
@@ -5813,10 +5436,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ApiManagementServiceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _apiManagementServiceClientDiagnostics.CreateScope("ApiManagementServiceResource.RemoveTag");
             scope.Start();

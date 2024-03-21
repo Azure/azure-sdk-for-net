@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -27,7 +26,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("accessToken"u8);
+            writer.WritePropertyName("access_token"u8);
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -75,7 +74,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("accessToken"u8))
+                if (property.NameEquals("access_token"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

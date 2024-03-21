@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
-            if (!(IPRules is ChangeTrackingList<BatchIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (EffectiveAvailableMemoryInMBOnHost.HasValue)
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryMbOnHost"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
-            if (AvailableGpuCount.HasValue)
+            if (Optional.IsDefined(AvailableGpuCount))
             {
                 writer.WritePropertyName("availableGpuCount"u8);
                 writer.WriteNumberValue(AvailableGpuCount.Value);
             }
-            if (!(VmUsedMemory is ChangeTrackingDictionary<string, DataBoxEdgeVmMemory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmUsedMemory))
             {
                 writer.WritePropertyName("vmUsedMemory"u8);
                 writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndObject();
             }
-            if (GpuType != null)
+            if (Optional.IsDefined(GpuType))
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (!(NumaNodesData is ChangeTrackingList<NumaNodeInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NumaNodesData))
             {
                 writer.WritePropertyName("numaNodesData"u8);
                 writer.WriteStartArray();

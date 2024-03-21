@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteNumberValue(TaskId);
             writer.WritePropertyName("taskName"u8);
             writer.WriteStringValue(TaskName);
-            if (options.Format != "W" && TaskProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(TaskProgress))
             {
                 writer.WritePropertyName("taskProgress"u8);
                 writer.WriteStringValue(TaskProgress);

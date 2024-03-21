@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventGridNamespaceClientResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clientName, EventGridNamespaceClientData data, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventGridNamespaceClientResource> CreateOrUpdate(WaitUntil waitUntil, string clientName, EventGridNamespaceClientData data, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
         public virtual async Task<Response<EventGridNamespaceClientResource>> GetAsync(string clientName, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
         public virtual Response<EventGridNamespaceClientResource> Get(string clientName, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string clientName, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
         public virtual Response<bool> Exists(string clientName, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventGridNamespaceClientResource>> GetIfExistsAsync(string clientName, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
         public virtual NullableResponse<EventGridNamespaceClientResource> GetIfExists(string clientName, CancellationToken cancellationToken = default)
         {
-            if (clientName == null)
-            {
-                throw new ArgumentNullException(nameof(clientName));
-            }
-            if (clientName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clientName));
-            }
+            Argument.AssertNotNullOrEmpty(clientName, nameof(clientName));
 
             using var scope = _eventGridNamespaceClientClientsClientDiagnostics.CreateScope("EventGridNamespaceClientCollection.GetIfExists");
             scope.Start();

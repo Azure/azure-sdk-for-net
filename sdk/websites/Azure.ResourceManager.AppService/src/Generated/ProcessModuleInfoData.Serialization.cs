@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,64 +47,64 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaseAddress != null)
+            if (Optional.IsDefined(BaseAddress))
             {
                 writer.WritePropertyName("base_address"u8);
                 writer.WriteStringValue(BaseAddress);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("file_path"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (ModuleMemorySize.HasValue)
+            if (Optional.IsDefined(ModuleMemorySize))
             {
                 writer.WritePropertyName("module_memory_size"u8);
                 writer.WriteNumberValue(ModuleMemorySize.Value);
             }
-            if (FileVersion != null)
+            if (Optional.IsDefined(FileVersion))
             {
                 writer.WritePropertyName("file_version"u8);
                 writer.WriteStringValue(FileVersion);
             }
-            if (FileDescription != null)
+            if (Optional.IsDefined(FileDescription))
             {
                 writer.WritePropertyName("file_description"u8);
                 writer.WriteStringValue(FileDescription);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (ProductVersion != null)
+            if (Optional.IsDefined(ProductVersion))
             {
                 writer.WritePropertyName("product_version"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (IsDebug.HasValue)
+            if (Optional.IsDefined(IsDebug))
             {
                 writer.WritePropertyName("is_debug"u8);
                 writer.WriteBooleanValue(IsDebug.Value);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);

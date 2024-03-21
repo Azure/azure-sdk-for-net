@@ -22,40 +22,40 @@ namespace Azure.AI.DocumentIntelligence
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string QRCodeValue = "QRCode";
-        private const string PDF417Value = "PDF417";
-        private const string UPCAValue = "UPCA";
-        private const string UPCEValue = "UPCE";
+        private const string QrCodeValue = "QRCode";
+        private const string Pdf417Value = "PDF417";
+        private const string UpcaValue = "UPCA";
+        private const string UpceValue = "UPCE";
         private const string Code39Value = "Code39";
         private const string Code128Value = "Code128";
-        private const string EAN8Value = "EAN8";
-        private const string EAN13Value = "EAN13";
+        private const string Ean8Value = "EAN8";
+        private const string Ean13Value = "EAN13";
         private const string DataBarValue = "DataBar";
         private const string Code93Value = "Code93";
         private const string CodabarValue = "Codabar";
         private const string DataBarExpandedValue = "DataBarExpanded";
-        private const string ITFValue = "ITF";
-        private const string MicroQRCodeValue = "MicroQRCode";
+        private const string ItfValue = "ITF";
+        private const string MicroQrCodeValue = "MicroQRCode";
         private const string AztecValue = "Aztec";
         private const string DataMatrixValue = "DataMatrix";
         private const string MaxiCodeValue = "MaxiCode";
 
         /// <summary> QR code, as defined in ISO/IEC 18004:2015. </summary>
-        public static DocumentBarcodeKind QRCode { get; } = new DocumentBarcodeKind(QRCodeValue);
+        public static DocumentBarcodeKind QrCode { get; } = new DocumentBarcodeKind(QrCodeValue);
         /// <summary> PDF417, as defined in ISO 15438. </summary>
-        public static DocumentBarcodeKind PDF417 { get; } = new DocumentBarcodeKind(PDF417Value);
+        public static DocumentBarcodeKind Pdf417 { get; } = new DocumentBarcodeKind(Pdf417Value);
         /// <summary> GS1 12-digit Universal Product Code. </summary>
-        public static DocumentBarcodeKind UPCA { get; } = new DocumentBarcodeKind(UPCAValue);
+        public static DocumentBarcodeKind Upca { get; } = new DocumentBarcodeKind(UpcaValue);
         /// <summary> GS1 6-digit Universal Product Code. </summary>
-        public static DocumentBarcodeKind UPCE { get; } = new DocumentBarcodeKind(UPCEValue);
+        public static DocumentBarcodeKind Upce { get; } = new DocumentBarcodeKind(UpceValue);
         /// <summary> Code 39 barcode, as defined in ISO/IEC 16388:2007. </summary>
         public static DocumentBarcodeKind Code39 { get; } = new DocumentBarcodeKind(Code39Value);
         /// <summary> Code 128 barcode, as defined in ISO/IEC 15417:2007. </summary>
         public static DocumentBarcodeKind Code128 { get; } = new DocumentBarcodeKind(Code128Value);
         /// <summary> GS1 8-digit International Article Number (European Article Number). </summary>
-        public static DocumentBarcodeKind EAN8 { get; } = new DocumentBarcodeKind(EAN8Value);
+        public static DocumentBarcodeKind Ean8 { get; } = new DocumentBarcodeKind(Ean8Value);
         /// <summary> GS1 13-digit International Article Number (European Article Number). </summary>
-        public static DocumentBarcodeKind EAN13 { get; } = new DocumentBarcodeKind(EAN13Value);
+        public static DocumentBarcodeKind Ean13 { get; } = new DocumentBarcodeKind(Ean13Value);
         /// <summary> GS1 DataBar barcode. </summary>
         public static DocumentBarcodeKind DataBar { get; } = new DocumentBarcodeKind(DataBarValue);
         /// <summary> Code 93 barcode, as defined in ANSI/AIM BC5-1995. </summary>
@@ -65,9 +65,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> GS1 DataBar Expanded barcode. </summary>
         public static DocumentBarcodeKind DataBarExpanded { get; } = new DocumentBarcodeKind(DataBarExpandedValue);
         /// <summary> Interleaved 2 of 5 barcode, as defined in ANSI/AIM BC2-1995. </summary>
-        public static DocumentBarcodeKind ITF { get; } = new DocumentBarcodeKind(ITFValue);
+        public static DocumentBarcodeKind Itf { get; } = new DocumentBarcodeKind(ItfValue);
         /// <summary> Micro QR code, as defined in ISO/IEC 23941:2022. </summary>
-        public static DocumentBarcodeKind MicroQRCode { get; } = new DocumentBarcodeKind(MicroQRCodeValue);
+        public static DocumentBarcodeKind MicroQrCode { get; } = new DocumentBarcodeKind(MicroQrCodeValue);
         /// <summary> Aztec code, as defined in ISO/IEC 24778:2008. </summary>
         public static DocumentBarcodeKind Aztec { get; } = new DocumentBarcodeKind(AztecValue);
         /// <summary> Data matrix code, as defined in ISO/IEC 16022:2006. </summary>

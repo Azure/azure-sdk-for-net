@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (DynamicVNetAssignmentScope.HasValue)
+            if (Optional.IsDefined(DynamicVNetAssignmentScope))
             {
                 writer.WritePropertyName("dynamicVnetAssignmentScope"u8);
                 writer.WriteStringValue(DynamicVNetAssignmentScope.Value.ToSerialString());
             }
-            if (EndpointConfiguration != null)
+            if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
                 writer.WriteObjectValue(EndpointConfiguration);
             }
-            if (PublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
                 writer.WriteObjectValue(PublicIPAddressConfiguration);
             }
-            if (EnableAcceleratedNetworking.HasValue)
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);

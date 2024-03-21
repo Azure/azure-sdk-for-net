@@ -20,14 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="indexes"/> is null. </exception>
         public SearchAlias(string name, IEnumerable<string> indexes)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (indexes == null)
-            {
-                throw new ArgumentNullException(nameof(indexes));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(indexes, nameof(indexes));
 
             Name = name;
             Indexes = indexes.ToList();

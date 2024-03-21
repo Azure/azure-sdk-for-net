@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagedNetworkFabric.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricAccessControlListResource"/> object. </returns>
         public static NetworkFabricAccessControlListResource GetNetworkFabricAccessControlListResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricAccessControlListResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricInternetGatewayResource"/> object. </returns>
         public static NetworkFabricInternetGatewayResource GetNetworkFabricInternetGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricInternetGatewayResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricInternetGatewayRuleResource"/> object. </returns>
         public static NetworkFabricInternetGatewayRuleResource GetNetworkFabricInternetGatewayRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricInternetGatewayRuleResource(id);
         }
@@ -114,10 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricIPCommunityResource"/> object. </returns>
         public static NetworkFabricIPCommunityResource GetNetworkFabricIPCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricIPCommunityResource(id);
         }
@@ -136,10 +122,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricIPExtendedCommunityResource"/> object. </returns>
         public static NetworkFabricIPExtendedCommunityResource GetNetworkFabricIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricIPExtendedCommunityResource(id);
         }
@@ -158,10 +141,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricIPPrefixResource"/> object. </returns>
         public static NetworkFabricIPPrefixResource GetNetworkFabricIPPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricIPPrefixResource(id);
         }
@@ -180,10 +160,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricL2IsolationDomainResource"/> object. </returns>
         public static NetworkFabricL2IsolationDomainResource GetNetworkFabricL2IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricL2IsolationDomainResource(id);
         }
@@ -202,10 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricL3IsolationDomainResource"/> object. </returns>
         public static NetworkFabricL3IsolationDomainResource GetNetworkFabricL3IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricL3IsolationDomainResource(id);
         }
@@ -224,10 +198,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricInternalNetworkResource"/> object. </returns>
         public static NetworkFabricInternalNetworkResource GetNetworkFabricInternalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricInternalNetworkResource(id);
         }
@@ -246,10 +217,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricExternalNetworkResource"/> object. </returns>
         public static NetworkFabricExternalNetworkResource GetNetworkFabricExternalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricExternalNetworkResource(id);
         }
@@ -268,10 +236,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricNeighborGroupResource"/> object. </returns>
         public static NetworkFabricNeighborGroupResource GetNetworkFabricNeighborGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricNeighborGroupResource(id);
         }
@@ -290,10 +255,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkDeviceSkuResource"/> object. </returns>
         public static NetworkDeviceSkuResource GetNetworkDeviceSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkDeviceSkuResource(id);
         }
@@ -312,10 +274,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkDeviceResource"/> object. </returns>
         public static NetworkDeviceResource GetNetworkDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkDeviceResource(id);
         }
@@ -334,10 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkDeviceInterfaceResource"/> object. </returns>
         public static NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkDeviceInterfaceResource(id);
         }
@@ -356,10 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricControllerResource"/> object. </returns>
         public static NetworkFabricControllerResource GetNetworkFabricControllerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricControllerResource(id);
         }
@@ -378,10 +331,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricSkuResource"/> object. </returns>
         public static NetworkFabricSkuResource GetNetworkFabricSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricSkuResource(id);
         }
@@ -400,10 +350,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricResource"/> object. </returns>
         public static NetworkFabricResource GetNetworkFabricResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricResource(id);
         }
@@ -422,10 +369,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkToNetworkInterconnectResource"/> object. </returns>
         public static NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkToNetworkInterconnectResource(id);
         }
@@ -444,10 +388,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkPacketBrokerResource"/> object. </returns>
         public static NetworkPacketBrokerResource GetNetworkPacketBrokerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkPacketBrokerResource(id);
         }
@@ -466,10 +407,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkRackResource"/> object. </returns>
         public static NetworkRackResource GetNetworkRackResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkRackResource(id);
         }
@@ -488,10 +426,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkTapRuleResource"/> object. </returns>
         public static NetworkTapRuleResource GetNetworkTapRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkTapRuleResource(id);
         }
@@ -510,10 +445,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkTapResource"/> object. </returns>
         public static NetworkTapResource GetNetworkTapResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkTapResource(id);
         }
@@ -532,10 +464,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> Returns a <see cref="NetworkFabricRoutePolicyResource"/> object. </returns>
         public static NetworkFabricRoutePolicyResource GetNetworkFabricRoutePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableManagedNetworkFabricArmClient(client).GetNetworkFabricRoutePolicyResource(id);
         }
@@ -552,10 +481,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricAccessControlListResources and their operations over a NetworkFabricAccessControlListResource. </returns>
         public static NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAccessControlLists();
         }
@@ -593,10 +519,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricAccessControlListResource>> GetNetworkFabricAccessControlListAsync(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAccessControlListAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
         }
@@ -634,10 +557,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlList(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAccessControlList(accessControlListName, cancellationToken);
         }
@@ -654,10 +574,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricInternetGatewayResources and their operations over a NetworkFabricInternetGatewayResource. </returns>
         public static NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGateways();
         }
@@ -695,10 +612,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricInternetGatewayResource>> GetNetworkFabricInternetGatewayAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
         }
@@ -736,10 +650,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateway(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGateway(internetGatewayName, cancellationToken);
         }
@@ -756,10 +667,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricInternetGatewayRuleResources and their operations over a NetworkFabricInternetGatewayRuleResource. </returns>
         public static NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayRules();
         }
@@ -797,10 +705,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricInternetGatewayRuleResource>> GetNetworkFabricInternetGatewayRuleAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayRuleAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
         }
@@ -838,10 +743,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRule(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricInternetGatewayRule(internetGatewayRuleName, cancellationToken);
         }
@@ -858,10 +760,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricIPCommunityResources and their operations over a NetworkFabricIPCommunityResource. </returns>
         public static NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPCommunities();
         }
@@ -899,10 +798,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricIPCommunityResource>> GetNetworkFabricIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPCommunityAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
         }
@@ -940,10 +836,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPCommunity(ipCommunityName, cancellationToken);
         }
@@ -960,10 +853,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricIPExtendedCommunityResources and their operations over a NetworkFabricIPExtendedCommunityResource. </returns>
         public static NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPExtendedCommunities();
         }
@@ -1001,10 +891,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricIPExtendedCommunityResource>> GetNetworkFabricIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPExtendedCommunityAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
         }
@@ -1042,10 +929,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPExtendedCommunity(ipExtendedCommunityName, cancellationToken);
         }
@@ -1062,10 +946,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricIPPrefixResources and their operations over a NetworkFabricIPPrefixResource. </returns>
         public static NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPPrefixes();
         }
@@ -1103,10 +984,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricIPPrefixResource>> GetNetworkFabricIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPPrefixAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
         }
@@ -1144,10 +1022,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricIPPrefix(ipPrefixName, cancellationToken);
         }
@@ -1164,10 +1039,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricL2IsolationDomainResources and their operations over a NetworkFabricL2IsolationDomainResource. </returns>
         public static NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL2IsolationDomains();
         }
@@ -1205,10 +1077,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricL2IsolationDomainResource>> GetNetworkFabricL2IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL2IsolationDomainAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
@@ -1246,10 +1115,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomain(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL2IsolationDomain(l2IsolationDomainName, cancellationToken);
         }
@@ -1266,10 +1132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricL3IsolationDomainResources and their operations over a NetworkFabricL3IsolationDomainResource. </returns>
         public static NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL3IsolationDomains();
         }
@@ -1307,10 +1170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricL3IsolationDomainResource>> GetNetworkFabricL3IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL3IsolationDomainAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
@@ -1348,10 +1208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomain(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricL3IsolationDomain(l3IsolationDomainName, cancellationToken);
         }
@@ -1368,10 +1225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricNeighborGroupResources and their operations over a NetworkFabricNeighborGroupResource. </returns>
         public static NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricNeighborGroups();
         }
@@ -1409,10 +1263,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricNeighborGroupResource>> GetNetworkFabricNeighborGroupAsync(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricNeighborGroupAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
         }
@@ -1450,10 +1301,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroup(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricNeighborGroup(neighborGroupName, cancellationToken);
         }
@@ -1470,10 +1318,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkDeviceResources and their operations over a NetworkDeviceResource. </returns>
         public static NetworkDeviceCollection GetNetworkDevices(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkDevices();
         }
@@ -1511,10 +1356,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkDeviceResource>> GetNetworkDeviceAsync(this ResourceGroupResource resourceGroupResource, string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkDeviceAsync(networkDeviceName, cancellationToken).ConfigureAwait(false);
         }
@@ -1552,10 +1394,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkDeviceResource> GetNetworkDevice(this ResourceGroupResource resourceGroupResource, string networkDeviceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkDevice(networkDeviceName, cancellationToken);
         }
@@ -1572,10 +1411,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricControllerResources and their operations over a NetworkFabricControllerResource. </returns>
         public static NetworkFabricControllerCollection GetNetworkFabricControllers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricControllers();
         }
@@ -1613,10 +1449,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricControllerResource>> GetNetworkFabricControllerAsync(this ResourceGroupResource resourceGroupResource, string networkFabricControllerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricControllerAsync(networkFabricControllerName, cancellationToken).ConfigureAwait(false);
         }
@@ -1654,10 +1487,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricControllerResource> GetNetworkFabricController(this ResourceGroupResource resourceGroupResource, string networkFabricControllerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricController(networkFabricControllerName, cancellationToken);
         }
@@ -1674,10 +1504,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricResources and their operations over a NetworkFabricResource. </returns>
         public static NetworkFabricCollection GetNetworkFabrics(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabrics();
         }
@@ -1715,10 +1542,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricResource>> GetNetworkFabricAsync(this ResourceGroupResource resourceGroupResource, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricAsync(networkFabricName, cancellationToken).ConfigureAwait(false);
         }
@@ -1756,10 +1580,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricResource> GetNetworkFabric(this ResourceGroupResource resourceGroupResource, string networkFabricName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabric(networkFabricName, cancellationToken);
         }
@@ -1776,10 +1597,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkPacketBrokerResources and their operations over a NetworkPacketBrokerResource. </returns>
         public static NetworkPacketBrokerCollection GetNetworkPacketBrokers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkPacketBrokers();
         }
@@ -1817,10 +1635,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkPacketBrokerResource>> GetNetworkPacketBrokerAsync(this ResourceGroupResource resourceGroupResource, string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkPacketBrokerAsync(networkPacketBrokerName, cancellationToken).ConfigureAwait(false);
         }
@@ -1858,10 +1673,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkPacketBrokerResource> GetNetworkPacketBroker(this ResourceGroupResource resourceGroupResource, string networkPacketBrokerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkPacketBroker(networkPacketBrokerName, cancellationToken);
         }
@@ -1878,10 +1690,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkRackResources and their operations over a NetworkRackResource. </returns>
         public static NetworkRackCollection GetNetworkRacks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkRacks();
         }
@@ -1919,10 +1728,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkRackResource>> GetNetworkRackAsync(this ResourceGroupResource resourceGroupResource, string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkRackAsync(networkRackName, cancellationToken).ConfigureAwait(false);
         }
@@ -1960,10 +1766,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkRackResource> GetNetworkRack(this ResourceGroupResource resourceGroupResource, string networkRackName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkRack(networkRackName, cancellationToken);
         }
@@ -1980,10 +1783,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkTapRuleResources and their operations over a NetworkTapRuleResource. </returns>
         public static NetworkTapRuleCollection GetNetworkTapRules(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkTapRules();
         }
@@ -2021,10 +1821,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkTapRuleResource>> GetNetworkTapRuleAsync(this ResourceGroupResource resourceGroupResource, string networkTapRuleName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkTapRuleAsync(networkTapRuleName, cancellationToken).ConfigureAwait(false);
         }
@@ -2062,10 +1859,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkTapRuleResource> GetNetworkTapRule(this ResourceGroupResource resourceGroupResource, string networkTapRuleName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkTapRule(networkTapRuleName, cancellationToken);
         }
@@ -2082,10 +1876,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkTapResources and their operations over a NetworkTapResource. </returns>
         public static NetworkTapCollection GetNetworkTaps(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkTaps();
         }
@@ -2123,10 +1914,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkTapResource>> GetNetworkTapAsync(this ResourceGroupResource resourceGroupResource, string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkTapAsync(networkTapName, cancellationToken).ConfigureAwait(false);
         }
@@ -2164,10 +1952,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkTapResource> GetNetworkTap(this ResourceGroupResource resourceGroupResource, string networkTapName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkTap(networkTapName, cancellationToken);
         }
@@ -2184,10 +1969,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricRoutePolicyResources and their operations over a NetworkFabricRoutePolicyResource. </returns>
         public static NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricRoutePolicies();
         }
@@ -2225,10 +2007,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricRoutePolicyResource>> GetNetworkFabricRoutePolicyAsync(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricRoutePolicyAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -2266,10 +2045,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicy(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetNetworkFabricRoutePolicy(routePolicyName, cancellationToken);
         }
@@ -2286,10 +2062,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkDeviceSkuResources and their operations over a NetworkDeviceSkuResource. </returns>
         public static NetworkDeviceSkuCollection GetNetworkDeviceSkus(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkDeviceSkus();
         }
@@ -2327,10 +2100,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkDeviceSkuResource>> GetNetworkDeviceSkuAsync(this SubscriptionResource subscriptionResource, string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkDeviceSkuAsync(networkDeviceSkuName, cancellationToken).ConfigureAwait(false);
         }
@@ -2368,10 +2138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkDeviceSkuResource> GetNetworkDeviceSku(this SubscriptionResource subscriptionResource, string networkDeviceSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkDeviceSku(networkDeviceSkuName, cancellationToken);
         }
@@ -2388,10 +2155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricSkuResources and their operations over a NetworkFabricSkuResource. </returns>
         public static NetworkFabricSkuCollection GetNetworkFabricSkus(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricSkus();
         }
@@ -2429,10 +2193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static async Task<Response<NetworkFabricSkuResource>> GetNetworkFabricSkuAsync(this SubscriptionResource subscriptionResource, string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricSkuAsync(networkFabricSkuName, cancellationToken).ConfigureAwait(false);
         }
@@ -2470,10 +2231,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [ForwardsClientCalls]
         public static Response<NetworkFabricSkuResource> GetNetworkFabricSku(this SubscriptionResource subscriptionResource, string networkFabricSkuName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricSku(networkFabricSkuName, cancellationToken);
         }
@@ -2509,10 +2267,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricAccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricAccessControlListsAsync(cancellationToken);
         }
@@ -2548,10 +2303,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricAccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricAccessControlLists(cancellationToken);
         }
@@ -2587,10 +2339,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGatewaysAsync(cancellationToken);
         }
@@ -2626,10 +2375,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricInternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGateways(cancellationToken);
         }
@@ -2665,10 +2411,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGatewayRulesAsync(cancellationToken);
         }
@@ -2704,10 +2447,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricInternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricInternetGatewayRules(cancellationToken);
         }
@@ -2743,10 +2483,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPCommunitiesAsync(cancellationToken);
         }
@@ -2782,10 +2519,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPCommunities(cancellationToken);
         }
@@ -2821,10 +2555,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricIPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPExtendedCommunitiesAsync(cancellationToken);
         }
@@ -2860,10 +2591,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricIPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPExtendedCommunities(cancellationToken);
         }
@@ -2899,10 +2627,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPPrefixesAsync(cancellationToken);
         }
@@ -2938,10 +2663,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricIPPrefixes(cancellationToken);
         }
@@ -2977,10 +2699,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricL2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL2IsolationDomainsAsync(cancellationToken);
         }
@@ -3016,10 +2735,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricL2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL2IsolationDomains(cancellationToken);
         }
@@ -3055,10 +2771,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL3IsolationDomainsAsync(cancellationToken);
         }
@@ -3094,10 +2807,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricL3IsolationDomains(cancellationToken);
         }
@@ -3133,10 +2843,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricNeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricNeighborGroupsAsync(cancellationToken);
         }
@@ -3172,10 +2879,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricNeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricNeighborGroups(cancellationToken);
         }
@@ -3211,10 +2915,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkDeviceResource> GetNetworkDevicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkDevicesAsync(cancellationToken);
         }
@@ -3250,10 +2951,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkDeviceResource> GetNetworkDevices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkDevices(cancellationToken);
         }
@@ -3289,10 +2987,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricControllerResource> GetNetworkFabricControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricControllersAsync(cancellationToken);
         }
@@ -3328,10 +3023,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricControllerResource> GetNetworkFabricControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricControllers(cancellationToken);
         }
@@ -3367,10 +3059,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricResource> GetNetworkFabricsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricsAsync(cancellationToken);
         }
@@ -3406,10 +3095,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricResource> GetNetworkFabrics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabrics(cancellationToken);
         }
@@ -3445,10 +3131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkPacketBrokerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkPacketBrokerResource> GetNetworkPacketBrokersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkPacketBrokersAsync(cancellationToken);
         }
@@ -3484,10 +3167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkPacketBrokerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkPacketBrokerResource> GetNetworkPacketBrokers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkPacketBrokers(cancellationToken);
         }
@@ -3523,10 +3203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkRackResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkRackResource> GetNetworkRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkRacksAsync(cancellationToken);
         }
@@ -3562,10 +3239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkRackResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkRackResource> GetNetworkRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkRacks(cancellationToken);
         }
@@ -3601,10 +3275,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkTapRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkTapRuleResource> GetNetworkTapRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkTapRulesAsync(cancellationToken);
         }
@@ -3640,10 +3311,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkTapRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkTapRuleResource> GetNetworkTapRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkTapRules(cancellationToken);
         }
@@ -3679,10 +3347,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkTapResource> GetNetworkTapsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkTapsAsync(cancellationToken);
         }
@@ -3718,10 +3383,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkTapResource> GetNetworkTaps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkTaps(cancellationToken);
         }
@@ -3757,10 +3419,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An async collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricRoutePoliciesAsync(cancellationToken);
         }
@@ -3796,10 +3455,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkFabricRoutePolicies(cancellationToken);
         }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (NumberOfDisksIncludedInBackup.HasValue)
+            if (Optional.IsDefined(NumberOfDisksIncludedInBackup))
             {
                 writer.WritePropertyName("numberOfDisksIncludedInBackup"u8);
                 writer.WriteNumberValue(NumberOfDisksIncludedInBackup.Value);
             }
-            if (NumberOfDisksAttachedToVm.HasValue)
+            if (Optional.IsDefined(NumberOfDisksAttachedToVm))
             {
                 writer.WritePropertyName("numberOfDisksAttachedToVm"u8);
                 writer.WriteNumberValue(NumberOfDisksAttachedToVm.Value);
             }
-            if (!(IncludedDiskList is ChangeTrackingList<DiskInformation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedDiskList))
             {
                 writer.WritePropertyName("includedDiskList"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedDiskList is ChangeTrackingList<DiskInformation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedDiskList))
             {
                 writer.WritePropertyName("excludedDiskList"u8);
                 writer.WriteStartArray();

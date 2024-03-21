@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureDevOpsRepoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureDevOpsRepoName, AzureDevOpsRepoData data, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureDevOpsRepoResource> CreateOrUpdate(WaitUntil waitUntil, string azureDevOpsRepoName, AzureDevOpsRepoData data, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
         public virtual async Task<Response<AzureDevOpsRepoResource>> GetAsync(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
         public virtual Response<AzureDevOpsRepoResource> Get(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
         public virtual async Task<NullableResponse<AzureDevOpsRepoResource>> GetIfExistsAsync(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsRepoName"/> is null. </exception>
         public virtual NullableResponse<AzureDevOpsRepoResource> GetIfExists(string azureDevOpsRepoName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsRepoName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsRepoName));
-            }
-            if (azureDevOpsRepoName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsRepoName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsRepoName, nameof(azureDevOpsRepoName));
 
             using var scope = _azureDevOpsRepoClientDiagnostics.CreateScope("AzureDevOpsRepoCollection.GetIfExists");
             scope.Start();

@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> is null. </exception>
         internal RunStepCodeInterpreterImageOutput(RunStepCodeInterpreterImageReference image)
         {
-            if (image == null)
-            {
-                throw new ArgumentNullException(nameof(image));
-            }
+            Argument.AssertNotNull(image, nameof(image));
 
             Type = "image";
             Image = image;

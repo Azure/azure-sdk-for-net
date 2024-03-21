@@ -17,10 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal EntitiesTaskResult(EntitiesResult results)
         {
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(results, nameof(results));
 
             Results = results;
             Kind = AnalyzeTextTaskResultsKind.EntityRecognitionResults;

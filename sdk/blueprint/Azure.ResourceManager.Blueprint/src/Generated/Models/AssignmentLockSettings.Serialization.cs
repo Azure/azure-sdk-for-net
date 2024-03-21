@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(ExcludedPrincipals is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPrincipals))
             {
                 writer.WritePropertyName("excludedPrincipals"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedActions))
             {
                 writer.WritePropertyName("excludedActions"u8);
                 writer.WriteStartArray();

@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="backupType"/> is null. </exception>
         public DataProtectionBackupSettings(string backupType)
         {
-            if (backupType == null)
-            {
-                throw new ArgumentNullException(nameof(backupType));
-            }
+            Argument.AssertNotNull(backupType, nameof(backupType));
 
             BackupType = backupType;
             ObjectType = "AzureBackupParams";

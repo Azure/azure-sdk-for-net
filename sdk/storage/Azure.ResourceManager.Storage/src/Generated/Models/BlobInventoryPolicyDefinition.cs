@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schemaFields"/> is null. </exception>
         public BlobInventoryPolicyDefinition(BlobInventoryPolicyFormat format, BlobInventoryPolicySchedule schedule, BlobInventoryPolicyObjectType objectType, IEnumerable<string> schemaFields)
         {
-            if (schemaFields == null)
-            {
-                throw new ArgumentNullException(nameof(schemaFields));
-            }
+            Argument.AssertNotNull(schemaFields, nameof(schemaFields));
 
             Format = format;
             Schedule = schedule;

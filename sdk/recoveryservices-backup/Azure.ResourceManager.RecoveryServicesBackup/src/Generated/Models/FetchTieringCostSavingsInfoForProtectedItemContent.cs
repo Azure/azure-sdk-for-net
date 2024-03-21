@@ -21,14 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> or <paramref name="protectedItemName"/> is null. </exception>
         public FetchTieringCostSavingsInfoForProtectedItemContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string containerName, string protectedItemName) : base(sourceTierType, targetTierType)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(protectedItemName, nameof(protectedItemName));
 
             ContainerName = containerName;
             ProtectedItemName = protectedItemName;

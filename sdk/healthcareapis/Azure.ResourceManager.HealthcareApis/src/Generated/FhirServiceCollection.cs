@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FhirServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fhirServiceName, FhirServiceData data, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FhirServiceResource> CreateOrUpdate(WaitUntil waitUntil, string fhirServiceName, FhirServiceData data, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
         public virtual async Task<Response<FhirServiceResource>> GetAsync(string fhirServiceName, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
         public virtual Response<FhirServiceResource> Get(string fhirServiceName, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fhirServiceName, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string fhirServiceName, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<FhirServiceResource>> GetIfExistsAsync(string fhirServiceName, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceName"/> is null. </exception>
         public virtual NullableResponse<FhirServiceResource> GetIfExists(string fhirServiceName, CancellationToken cancellationToken = default)
         {
-            if (fhirServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(fhirServiceName));
-            }
-            if (fhirServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fhirServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(fhirServiceName, nameof(fhirServiceName));
 
             using var scope = _fhirServiceClientDiagnostics.CreateScope("FhirServiceCollection.GetIfExists");
             scope.Start();

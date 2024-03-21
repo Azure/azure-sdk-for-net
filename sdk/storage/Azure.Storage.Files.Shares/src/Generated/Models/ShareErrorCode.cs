@@ -81,6 +81,7 @@ namespace Azure.Storage.Files.Shares.Models
         private const string ShareSnapshotCountExceededValue = "ShareSnapshotCountExceeded";
         private const string ShareSnapshotOperationNotSupportedValue = "ShareSnapshotOperationNotSupported";
         private const string ShareHasSnapshotsValue = "ShareHasSnapshots";
+        private const string PreviousSnapshotNotFoundValue = "PreviousSnapshotNotFound";
         private const string ContainerQuotaDowngradeNotAllowedValue = "ContainerQuotaDowngradeNotAllowed";
         private const string AuthorizationSourceIPMismatchValue = "AuthorizationSourceIPMismatch";
         private const string AuthorizationProtocolMismatchValue = "AuthorizationProtocolMismatch";
@@ -207,6 +208,8 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareErrorCode ShareSnapshotOperationNotSupported { get; } = new ShareErrorCode(ShareSnapshotOperationNotSupportedValue);
         /// <summary> ShareHasSnapshots. </summary>
         public static ShareErrorCode ShareHasSnapshots { get; } = new ShareErrorCode(ShareHasSnapshotsValue);
+        /// <summary> PreviousSnapshotNotFound. </summary>
+        public static ShareErrorCode PreviousSnapshotNotFound { get; } = new ShareErrorCode(PreviousSnapshotNotFoundValue);
         /// <summary> ContainerQuotaDowngradeNotAllowed. </summary>
         public static ShareErrorCode ContainerQuotaDowngradeNotAllowed { get; } = new ShareErrorCode(ContainerQuotaDowngradeNotAllowedValue);
         /// <summary> AuthorizationSourceIPMismatch. </summary>

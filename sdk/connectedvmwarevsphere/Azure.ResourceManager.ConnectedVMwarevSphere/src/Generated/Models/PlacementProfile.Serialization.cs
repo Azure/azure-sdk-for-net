@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (ResourcePoolId != null)
+            if (Optional.IsDefined(ResourcePoolId))
             {
                 writer.WritePropertyName("resourcePoolId"u8);
                 writer.WriteStringValue(ResourcePoolId);
             }
-            if (ClusterId != null)
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (HostId != null)
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (DatastoreId != null)
+            if (Optional.IsDefined(DatastoreId))
             {
                 writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);

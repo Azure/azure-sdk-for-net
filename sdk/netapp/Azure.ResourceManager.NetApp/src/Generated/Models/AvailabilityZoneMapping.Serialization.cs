@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (AvailabilityZone != null)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (IsAvailable.HasValue)
+            if (Optional.IsDefined(IsAvailable))
             {
                 writer.WritePropertyName("isAvailable"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);

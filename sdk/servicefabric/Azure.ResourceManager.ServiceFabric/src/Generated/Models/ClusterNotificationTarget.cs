@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="receivers"/> is null. </exception>
         public ClusterNotificationTarget(ClusterNotificationChannel notificationChannel, IEnumerable<string> receivers)
         {
-            if (receivers == null)
-            {
-                throw new ArgumentNullException(nameof(receivers));
-            }
+            Argument.AssertNotNull(receivers, nameof(receivers));
 
             NotificationChannel = notificationChannel;
             Receivers = receivers.ToList();

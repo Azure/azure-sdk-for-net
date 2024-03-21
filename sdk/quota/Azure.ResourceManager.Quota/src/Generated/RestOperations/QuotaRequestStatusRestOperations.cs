@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Quota.Models;
@@ -63,18 +62,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaRequestDetailData>> GetAsync(string scope, string id, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var message = CreateGetRequest(scope, id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,18 +91,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaRequestDetailData> Get(string scope, string id, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (id.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(id));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             using var message = CreateGetRequest(scope, id);
             _pipeline.Send(message, cancellationToken);
@@ -179,10 +158,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<QuotaRequestDetailsList>> ListAsync(string scope, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, filter, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -217,10 +193,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<QuotaRequestDetailsList> List(string scope, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope, filter, top, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -270,14 +243,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<QuotaRequestDetailsList>> ListNextPageAsync(string nextLink, string scope, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -313,14 +280,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<QuotaRequestDetailsList> ListNextPage(string nextLink, string scope, string filter = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope, filter, top, skiptoken);
             _pipeline.Send(message, cancellationToken);

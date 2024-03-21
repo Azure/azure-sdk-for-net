@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -3112,6 +3113,7 @@ namespace Azure.Storage.Files.Shares
         #region GetPermission
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
         /// </summary>
         /// <param name="filePermissionKey">
         /// The file permission key.
@@ -3134,6 +3136,7 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary>
         /// Gets the file permission in Security Descriptor Definition Language (SDDL).
+        /// Note that this API is not applicable for Share Snapshots.
         /// </summary>
         /// <param name="filePermissionKey">
         /// The file permission key.

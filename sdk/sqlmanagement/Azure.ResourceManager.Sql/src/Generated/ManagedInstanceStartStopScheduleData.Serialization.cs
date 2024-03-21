@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (!(ScheduleList is ChangeTrackingList<SqlScheduleItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScheduleList))
             {
                 writer.WritePropertyName("scheduleList"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextRunAction != null)
+            if (options.Format != "W" && Optional.IsDefined(NextRunAction))
             {
                 writer.WritePropertyName("nextRunAction"u8);
                 writer.WriteStringValue(NextRunAction);
             }
-            if (options.Format != "W" && NextExecutionTime != null)
+            if (options.Format != "W" && Optional.IsDefined(NextExecutionTime))
             {
                 writer.WritePropertyName("nextExecutionTime"u8);
                 writer.WriteStringValue(NextExecutionTime);

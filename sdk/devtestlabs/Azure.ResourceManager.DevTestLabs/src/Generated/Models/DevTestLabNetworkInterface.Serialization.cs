@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (VirtualNetworkId != null)
+            if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (DnsName != null)
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (RdpAuthority != null)
+            if (Optional.IsDefined(RdpAuthority))
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (SshAuthority != null)
+            if (Optional.IsDefined(SshAuthority))
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (SharedPublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);

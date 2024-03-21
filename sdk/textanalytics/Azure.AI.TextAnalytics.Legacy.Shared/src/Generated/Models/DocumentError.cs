@@ -18,14 +18,8 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
         internal DocumentError(string id, TextAnalyticsError error)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(error, nameof(error));
 
             Id = id;
             Error = error;

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(BindingType);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
-            if (ExecuteEndpoint != null)
+            if (Optional.IsDefined(ExecuteEndpoint))
             {
                 writer.WritePropertyName("executeEndpoint"u8);
                 writer.WriteStringValue(ExecuteEndpoint);
             }
-            if (UdfType.HasValue)
+            if (Optional.IsDefined(UdfType))
             {
                 writer.WritePropertyName("udfType"u8);
                 writer.WriteStringValue(UdfType.Value.ToString());

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 if (ClientSecret != null)
                 {

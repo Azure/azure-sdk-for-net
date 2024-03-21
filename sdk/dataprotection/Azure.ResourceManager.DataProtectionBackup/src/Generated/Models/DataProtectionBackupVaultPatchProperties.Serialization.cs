@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (MonitoringSettings != null)
+            if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
-            if (SecuritySettings != null)
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (FeatureSettings != null)
+            if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings);

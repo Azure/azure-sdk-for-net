@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (VmSize.HasValue)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
-            if (VmSizeProperties != null)
+            if (Optional.IsDefined(VmSizeProperties))
             {
                 writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties);

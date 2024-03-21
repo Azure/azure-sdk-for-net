@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Result.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToString());
             }
-            if (options.Format != "W" && DefaultValue != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Policy != null)
+            if (options.Format != "W" && Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);

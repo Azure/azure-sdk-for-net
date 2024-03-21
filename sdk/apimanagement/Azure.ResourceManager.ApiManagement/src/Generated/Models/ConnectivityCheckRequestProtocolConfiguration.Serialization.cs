@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (HttpConfiguration != null)
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);

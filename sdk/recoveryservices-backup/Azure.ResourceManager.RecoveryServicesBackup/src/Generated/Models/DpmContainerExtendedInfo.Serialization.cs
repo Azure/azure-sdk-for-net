@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (LastRefreshedOn.HasValue)
+            if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");

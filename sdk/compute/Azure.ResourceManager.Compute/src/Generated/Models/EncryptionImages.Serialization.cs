@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (OSDiskImage != null)
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (!(DataDiskImages is ChangeTrackingList<DataDiskImageEncryption> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();

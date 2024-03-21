@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ScheduledOn.HasValue)
+            if (Optional.IsDefined(ScheduledOn))
             {
                 writer.WritePropertyName("scheduledDateTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");

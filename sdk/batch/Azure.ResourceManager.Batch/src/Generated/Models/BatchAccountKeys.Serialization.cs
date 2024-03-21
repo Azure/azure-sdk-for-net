@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && Primary != null)
+            if (options.Format != "W" && Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteStringValue(Primary);
             }
-            if (options.Format != "W" && Secondary != null)
+            if (options.Format != "W" && Optional.IsDefined(Secondary))
             {
                 writer.WritePropertyName("secondary"u8);
                 writer.WriteStringValue(Secondary);

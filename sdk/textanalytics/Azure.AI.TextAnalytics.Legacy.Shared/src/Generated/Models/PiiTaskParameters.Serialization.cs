@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -16,22 +15,22 @@ namespace Azure.AI.TextAnalytics.Legacy
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Domain.HasValue)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain.Value.ToString());
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("model-version"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (!(PiiCategories is ChangeTrackingList<PiiEntityLegacyCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PiiCategories))
             {
                 writer.WritePropertyName("piiCategories"u8);
                 writer.WriteStartArray();
@@ -41,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
                 writer.WriteEndArray();
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());

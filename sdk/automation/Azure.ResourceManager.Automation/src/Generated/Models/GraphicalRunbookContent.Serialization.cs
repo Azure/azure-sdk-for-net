@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (RawContent != null)
+            if (Optional.IsDefined(RawContent))
             {
                 if (RawContent != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent");
                 }
             }
-            if (GraphRunbookJson != null)
+            if (Optional.IsDefined(GraphRunbookJson))
             {
                 if (GraphRunbookJson != null)
                 {

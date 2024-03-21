@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (BackendHttpSettings != null)
+            if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
                 writer.WriteObjectValue(BackendHttpSettings);
             }
-            if (!(Servers is ChangeTrackingList<ApplicationGatewayBackendHealthServer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Servers))
             {
                 writer.WritePropertyName("servers"u8);
                 writer.WriteStartArray();

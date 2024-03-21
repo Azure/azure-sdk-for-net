@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (EndTime != null)
+            if (Optional.IsDefined(EndTime))
             {
                 if (EndTime != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);

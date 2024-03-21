@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBForPostgreSqlServerRoleGroupConfiguration(CosmosDBForPostgreSqlServerRole role, string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Role = role;
             Value = value;

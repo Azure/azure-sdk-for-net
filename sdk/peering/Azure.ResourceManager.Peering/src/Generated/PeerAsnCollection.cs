@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Peering
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PeerAsnResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peerAsnName, PeerAsnData data, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PeerAsnResource> CreateOrUpdate(WaitUntil waitUntil, string peerAsnName, PeerAsnData data, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
         public virtual async Task<Response<PeerAsnResource>> GetAsync(string peerAsnName, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
         public virtual Response<PeerAsnResource> Get(string peerAsnName, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string peerAsnName, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
         public virtual Response<bool> Exists(string peerAsnName, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
         public virtual async Task<NullableResponse<PeerAsnResource>> GetIfExistsAsync(string peerAsnName, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peerAsnName"/> is null. </exception>
         public virtual NullableResponse<PeerAsnResource> GetIfExists(string peerAsnName, CancellationToken cancellationToken = default)
         {
-            if (peerAsnName == null)
-            {
-                throw new ArgumentNullException(nameof(peerAsnName));
-            }
-            if (peerAsnName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peerAsnName));
-            }
+            Argument.AssertNotNullOrEmpty(peerAsnName, nameof(peerAsnName));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnCollection.GetIfExists");
             scope.Start();

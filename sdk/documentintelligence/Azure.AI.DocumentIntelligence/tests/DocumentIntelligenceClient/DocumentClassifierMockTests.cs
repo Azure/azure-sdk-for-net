@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var mockResponse = new MockResponse(202);
             var mockTransport = new MockTransport(new[] { mockResponse });
-            var options = new AzureAIDocumentIntelligenceClientOptions() { Transport = mockTransport };
+            var options = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
             var content = new ClassifyDocumentContent()
@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
         }
 
-        private DocumentIntelligenceClient CreateInstrumentedClient(AzureAIDocumentIntelligenceClientOptions options)
+        private DocumentIntelligenceClient CreateInstrumentedClient(DocumentIntelligenceClientOptions options)
         {
             var fakeEndpoint = new Uri("http://localhost");
             var fakeCredential = new AzureKeyCredential("fakeKey");

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodes"/> is null. </exception>
         public ComputeProfile(IEnumerable<ClusterComputeNodeProfile> nodes)
         {
-            if (nodes == null)
-            {
-                throw new ArgumentNullException(nameof(nodes));
-            }
+            Argument.AssertNotNull(nodes, nameof(nodes));
 
             Nodes = nodes.ToList();
         }

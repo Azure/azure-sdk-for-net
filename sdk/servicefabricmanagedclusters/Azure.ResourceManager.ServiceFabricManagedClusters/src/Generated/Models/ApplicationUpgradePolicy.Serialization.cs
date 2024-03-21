@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (ApplicationHealthPolicy != null)
+            if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
-            if (ForceRestart.HasValue)
+            if (Optional.IsDefined(ForceRestart))
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (RollingUpgradeMonitoringPolicy != null)
+            if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (InstanceCloseDelayDurationInSeconds.HasValue)
+            if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
             {
                 writer.WritePropertyName("instanceCloseDelayDuration"u8);
                 writer.WriteNumberValue(InstanceCloseDelayDurationInSeconds.Value);
             }
-            if (UpgradeMode.HasValue)
+            if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (UpgradeReplicaSetCheckTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteNumberValue(UpgradeReplicaSetCheckTimeout.Value);
             }
-            if (RecreateApplication.HasValue)
+            if (Optional.IsDefined(RecreateApplication))
             {
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);

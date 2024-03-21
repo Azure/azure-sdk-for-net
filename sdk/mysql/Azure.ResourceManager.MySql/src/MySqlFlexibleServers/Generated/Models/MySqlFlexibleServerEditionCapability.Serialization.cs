@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(SupportedStorageEditions is ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageEditions))
             {
                 writer.WritePropertyName("supportedStorageEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedServerVersions is ChangeTrackingList<MySqlFlexibleServerServerVersionCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
             {
                 writer.WritePropertyName("supportedServerVersions"u8);
                 writer.WriteStartArray();

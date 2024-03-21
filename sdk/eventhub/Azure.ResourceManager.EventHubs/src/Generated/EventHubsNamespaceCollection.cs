@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsNamespaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namespaceName, EventHubsNamespaceData data, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsNamespaceResource> CreateOrUpdate(WaitUntil waitUntil, string namespaceName, EventHubsNamespaceData data, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual async Task<Response<EventHubsNamespaceResource>> GetAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual Response<EventHubsNamespaceResource> Get(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual Response<bool> Exists(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubsNamespaceResource>> GetIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
         public virtual NullableResponse<EventHubsNamespaceResource> GetIfExists(string namespaceName, CancellationToken cancellationToken = default)
         {
-            if (namespaceName == null)
-            {
-                throw new ArgumentNullException(nameof(namespaceName));
-            }
-            if (namespaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(namespaceName));
-            }
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
 
             using var scope = _eventHubsNamespaceNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceCollection.GetIfExists");
             scope.Start();

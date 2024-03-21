@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
@@ -29,23 +28,23 @@ namespace Azure.ResourceManager.HealthcareApis
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,39 +72,39 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (AcrConfiguration != null)
+            if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
                 writer.WriteObjectValue(AcrConfiguration);
             }
-            if (AuthenticationConfiguration != null)
+            if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
                 writer.WriteObjectValue(AuthenticationConfiguration);
             }
-            if (CorsConfiguration != null)
+            if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
                 writer.WriteObjectValue(CorsConfiguration);
             }
-            if (ExportConfiguration != null)
+            if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
                 writer.WriteObjectValue(ExportConfiguration);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -115,32 +114,32 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && EventState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EventState))
             {
                 writer.WritePropertyName("eventState"u8);
                 writer.WriteStringValue(EventState.Value.ToString());
             }
-            if (ResourceVersionPolicyConfiguration != null)
+            if (Optional.IsDefined(ResourceVersionPolicyConfiguration))
             {
                 writer.WritePropertyName("resourceVersionPolicyConfiguration"u8);
                 writer.WriteObjectValue(ResourceVersionPolicyConfiguration);
             }
-            if (ImportConfiguration != null)
+            if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
                 writer.WriteObjectValue(ImportConfiguration);
             }
-            if (ImplementationGuidesConfiguration != null)
+            if (Optional.IsDefined(ImplementationGuidesConfiguration))
             {
                 writer.WritePropertyName("implementationGuidesConfiguration"u8);
                 writer.WriteObjectValue(ImplementationGuidesConfiguration);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);

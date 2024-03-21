@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HasRows.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasRows))
             {
                 writer.WritePropertyName("hasRows"u8);
                 writer.WriteBooleanValue(HasRows.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);

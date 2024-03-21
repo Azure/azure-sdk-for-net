@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Blueprint.Mocking;
 
 namespace Azure.ResourceManager.Blueprint
@@ -36,10 +34,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An object representing collection of BlueprintResources and their operations over a BlueprintResource. </returns>
         public static BlueprintCollection GetBlueprints(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetBlueprints(scope);
         }
@@ -78,10 +73,7 @@ namespace Azure.ResourceManager.Blueprint
         [ForwardsClientCalls]
         public static async Task<Response<BlueprintResource>> GetBlueprintAsync(this ArmClient client, ResourceIdentifier scope, string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableBlueprintArmClient(client).GetBlueprintAsync(scope, blueprintName, cancellationToken).ConfigureAwait(false);
         }
@@ -120,10 +112,7 @@ namespace Azure.ResourceManager.Blueprint
         [ForwardsClientCalls]
         public static Response<BlueprintResource> GetBlueprint(this ArmClient client, ResourceIdentifier scope, string blueprintName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetBlueprint(scope, blueprintName, cancellationToken);
         }
@@ -141,10 +130,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An object representing collection of AssignmentResources and their operations over a AssignmentResource. </returns>
         public static AssignmentCollection GetAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetAssignments(scope);
         }
@@ -183,10 +169,7 @@ namespace Azure.ResourceManager.Blueprint
         [ForwardsClientCalls]
         public static async Task<Response<AssignmentResource>> GetAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string assignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableBlueprintArmClient(client).GetAssignmentAsync(scope, assignmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -225,10 +208,7 @@ namespace Azure.ResourceManager.Blueprint
         [ForwardsClientCalls]
         public static Response<AssignmentResource> GetAssignment(this ArmClient client, ResourceIdentifier scope, string assignmentName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetAssignment(scope, assignmentName, cancellationToken);
         }
@@ -247,10 +227,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> Returns a <see cref="BlueprintResource"/> object. </returns>
         public static BlueprintResource GetBlueprintResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetBlueprintResource(id);
         }
@@ -269,10 +246,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> Returns a <see cref="BlueprintArtifactResource"/> object. </returns>
         public static BlueprintArtifactResource GetBlueprintArtifactResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetBlueprintArtifactResource(id);
         }
@@ -291,10 +265,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> Returns a <see cref="BlueprintVersionArtifactResource"/> object. </returns>
         public static BlueprintVersionArtifactResource GetBlueprintVersionArtifactResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetBlueprintVersionArtifactResource(id);
         }
@@ -313,10 +284,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> Returns a <see cref="PublishedBlueprintResource"/> object. </returns>
         public static PublishedBlueprintResource GetPublishedBlueprintResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetPublishedBlueprintResource(id);
         }
@@ -335,10 +303,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> Returns a <see cref="AssignmentResource"/> object. </returns>
         public static AssignmentResource GetAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetAssignmentResource(id);
         }
@@ -357,10 +322,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> Returns a <see cref="AssignmentOperationResource"/> object. </returns>
         public static AssignmentOperationResource GetAssignmentOperationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableBlueprintArmClient(client).GetAssignmentOperationResource(id);
         }

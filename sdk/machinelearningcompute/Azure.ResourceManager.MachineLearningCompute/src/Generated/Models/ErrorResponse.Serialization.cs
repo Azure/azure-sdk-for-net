@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             writer.WriteStringValue(Code);
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (!(Details is ChangeTrackingList<ErrorDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();

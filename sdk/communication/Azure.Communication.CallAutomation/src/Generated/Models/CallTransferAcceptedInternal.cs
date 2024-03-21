@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call transfer accepted event. </summary>

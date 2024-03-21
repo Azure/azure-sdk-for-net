@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageContainerName, StorageContainerData data, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageContainerResource> CreateOrUpdate(WaitUntil waitUntil, string storageContainerName, StorageContainerData data, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         public virtual async Task<Response<StorageContainerResource>> GetAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         public virtual Response<StorageContainerResource> Get(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageContainerResource>> GetIfExistsAsync(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerName"/> is null. </exception>
         public virtual NullableResponse<StorageContainerResource> GetIfExists(string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (storageContainerName == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerName));
-            }
-            if (storageContainerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageContainerName));
-            }
+            Argument.AssertNotNullOrEmpty(storageContainerName, nameof(storageContainerName));
 
             using var scope = _storageContainerClientDiagnostics.CreateScope("StorageContainerCollection.GetIfExists");
             scope.Start();

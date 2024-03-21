@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (!(Exclusions is ChangeTrackingList<OwaspCrsExclusionEntry> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();

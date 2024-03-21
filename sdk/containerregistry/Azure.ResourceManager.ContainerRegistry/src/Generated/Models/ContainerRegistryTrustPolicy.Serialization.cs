@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyType.HasValue)
+            if (Optional.IsDefined(PolicyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PolicyType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

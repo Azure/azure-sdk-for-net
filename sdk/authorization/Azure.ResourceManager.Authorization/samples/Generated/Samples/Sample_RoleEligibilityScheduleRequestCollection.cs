@@ -8,11 +8,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization.Samples

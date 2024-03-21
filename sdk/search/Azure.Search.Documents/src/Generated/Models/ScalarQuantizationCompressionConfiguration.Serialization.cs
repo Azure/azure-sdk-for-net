@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("scalarQuantizationParameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -24,12 +24,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (RerankWithOriginalVectors.HasValue)
+            if (Optional.IsDefined(RerankWithOriginalVectors))
             {
                 writer.WritePropertyName("rerankWithOriginalVectors"u8);
                 writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
             }
-            if (DefaultOversampling.HasValue)
+            if (Optional.IsDefined(DefaultOversampling))
             {
                 if (DefaultOversampling != null)
                 {

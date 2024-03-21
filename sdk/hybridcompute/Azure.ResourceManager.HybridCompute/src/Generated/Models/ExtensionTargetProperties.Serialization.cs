@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (TargetVersion != null)
+            if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
                 writer.WriteStringValue(TargetVersion);

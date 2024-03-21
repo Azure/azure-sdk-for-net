@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hyperVFabricArmId"/> or <paramref name="azStackHciFabricArmId"/> is null. </exception>
         public HyperVToAzStackHciReplicationExtensionModelCustomProperties(ResourceIdentifier hyperVFabricArmId, ResourceIdentifier azStackHciFabricArmId)
         {
-            if (hyperVFabricArmId == null)
-            {
-                throw new ArgumentNullException(nameof(hyperVFabricArmId));
-            }
-            if (azStackHciFabricArmId == null)
-            {
-                throw new ArgumentNullException(nameof(azStackHciFabricArmId));
-            }
+            Argument.AssertNotNull(hyperVFabricArmId, nameof(hyperVFabricArmId));
+            Argument.AssertNotNull(azStackHciFabricArmId, nameof(azStackHciFabricArmId));
 
             HyperVFabricArmId = hyperVFabricArmId;
             AzStackHciFabricArmId = azStackHciFabricArmId;

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CapacitySku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountContainerUri"/> is null. </exception>
         public DiagnosticsUploadConfiguration(Uri storageAccountContainerUri)
         {
-            if (storageAccountContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountContainerUri));
-            }
+            Argument.AssertNotNull(storageAccountContainerUri, nameof(storageAccountContainerUri));
 
             StorageAccountContainerUri = storageAccountContainerUri;
         }

@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="routeTargets"/> is null. </exception>
         public IPExtendedCommunityRule(CommunityActionType action, long sequenceNumber, IEnumerable<string> routeTargets)
         {
-            if (routeTargets == null)
-            {
-                throw new ArgumentNullException(nameof(routeTargets));
-            }
+            Argument.AssertNotNull(routeTargets, nameof(routeTargets));
 
             Action = action;
             SequenceNumber = sequenceNumber;

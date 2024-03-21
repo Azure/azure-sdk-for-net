@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Certificate != null)
+            if (options.Format != "W" && Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (options.Format != "W" && CreationTimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreationTimeStamp))
             {
                 writer.WritePropertyName("creationTimeStamp"u8);
                 writer.WriteNumberValue(CreationTimeStamp.Value);
             }
-            if (options.Format != "W" && ExpirationTimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
             {
                 writer.WritePropertyName("expirationTimeStamp"u8);
                 writer.WriteNumberValue(ExpirationTimeStamp.Value);
             }
-            if (options.Format != "W" && PrivateKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (options.Format != "W" && PublicKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);

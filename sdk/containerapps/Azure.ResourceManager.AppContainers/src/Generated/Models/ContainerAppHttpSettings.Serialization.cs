@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (RequireHttps.HasValue)
+            if (Optional.IsDefined(RequireHttps))
             {
                 writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(RequireHttps.Value);
             }
-            if (Routes != null)
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (ForwardProxy != null)
+            if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);

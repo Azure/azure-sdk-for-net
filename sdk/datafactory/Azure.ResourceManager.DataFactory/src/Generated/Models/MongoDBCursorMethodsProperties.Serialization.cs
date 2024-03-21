@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Project != null)
+            if (Optional.IsDefined(Project))
             {
                 writer.WritePropertyName("project"u8);
                 JsonSerializer.Serialize(writer, Project);
             }
-            if (Sort != null)
+            if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
                 JsonSerializer.Serialize(writer, Sort);
             }
-            if (Skip != null)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 JsonSerializer.Serialize(writer, Skip);
             }
-            if (Limit != null)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 JsonSerializer.Serialize(writer, Limit);

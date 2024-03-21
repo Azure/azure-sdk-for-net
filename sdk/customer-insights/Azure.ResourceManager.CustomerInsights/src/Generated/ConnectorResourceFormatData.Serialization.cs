@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ConnectorId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteNumberValue(ConnectorId.Value);
             }
-            if (ConnectorName != null)
+            if (Optional.IsDefined(ConnectorName))
             {
                 writer.WritePropertyName("connectorName"u8);
                 writer.WriteStringValue(ConnectorName);
             }
-            if (ConnectorType.HasValue)
+            if (Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(ConnectorProperties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectorProperties))
             {
                 writer.WritePropertyName("connectorProperties"u8);
                 writer.WriteStartObject();
@@ -98,27 +98,27 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (options.Format != "W" && LastModified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsInternal.HasValue)
+            if (Optional.IsDefined(IsInternal))
             {
                 writer.WritePropertyName("isInternal"u8);
                 writer.WriteBooleanValue(IsInternal.Value);

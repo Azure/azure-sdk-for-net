@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -53,14 +52,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyPropertyNames"/> or <paramref name="strongIdName"/> is null. </exception>
         public StrongId(IEnumerable<string> keyPropertyNames, string strongIdName)
         {
-            if (keyPropertyNames == null)
-            {
-                throw new ArgumentNullException(nameof(keyPropertyNames));
-            }
-            if (strongIdName == null)
-            {
-                throw new ArgumentNullException(nameof(strongIdName));
-            }
+            Argument.AssertNotNull(keyPropertyNames, nameof(keyPropertyNames));
+            Argument.AssertNotNull(strongIdName, nameof(strongIdName));
 
             KeyPropertyNames = keyPropertyNames.ToList();
             StrongIdName = strongIdName;

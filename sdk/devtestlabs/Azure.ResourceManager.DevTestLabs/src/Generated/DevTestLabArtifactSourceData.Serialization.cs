@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,64 +56,64 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (ArmTemplateFolderPath != null)
+            if (Optional.IsDefined(ArmTemplateFolderPath))
             {
                 writer.WritePropertyName("armTemplateFolderPath"u8);
                 writer.WriteStringValue(ArmTemplateFolderPath);
             }
-            if (BranchRef != null)
+            if (Optional.IsDefined(BranchRef))
             {
                 writer.WritePropertyName("branchRef"u8);
                 writer.WriteStringValue(BranchRef);
             }
-            if (SecurityToken != null)
+            if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
                 writer.WriteStringValue(SecurityToken);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);

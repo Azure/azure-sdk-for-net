@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (!(Aggregation is ChangeTrackingDictionary<string, QueryAggregation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Grouping is ChangeTrackingList<QueryGrouping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);

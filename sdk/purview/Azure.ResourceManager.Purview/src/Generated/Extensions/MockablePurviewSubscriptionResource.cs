@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview.Mocking
@@ -141,10 +138,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = PurviewAccountAccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
             scope.Start();
@@ -186,10 +180,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = PurviewAccountAccountsClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability");
             scope.Start();
@@ -229,18 +220,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            if (locations == null)
-            {
-                throw new ArgumentNullException(nameof(locations));
-            }
-            if (locations.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(locations));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
@@ -280,18 +261,8 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            if (locations == null)
-            {
-                throw new ArgumentNullException(nameof(locations));
-            }
-            if (locations.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(locations));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();

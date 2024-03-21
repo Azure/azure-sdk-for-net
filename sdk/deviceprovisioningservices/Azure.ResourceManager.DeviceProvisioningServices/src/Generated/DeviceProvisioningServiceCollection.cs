@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DeviceProvisioningServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string provisioningServiceName, DeviceProvisioningServiceData data, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DeviceProvisioningServiceResource> CreateOrUpdate(WaitUntil waitUntil, string provisioningServiceName, DeviceProvisioningServiceData data, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual async Task<Response<DeviceProvisioningServiceResource>> GetAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual Response<DeviceProvisioningServiceResource> Get(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DeviceProvisioningServiceResource>> GetIfExistsAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="provisioningServiceName"/> is null. </exception>
         public virtual NullableResponse<DeviceProvisioningServiceResource> GetIfExists(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (provisioningServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningServiceName));
-            }
-            if (provisioningServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(provisioningServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
 
             using var scope = _deviceProvisioningServiceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServiceCollection.GetIfExists");
             scope.Start();

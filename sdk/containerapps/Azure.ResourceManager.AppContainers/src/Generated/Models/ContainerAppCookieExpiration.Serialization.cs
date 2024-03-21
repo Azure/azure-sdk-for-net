@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Convention.HasValue)
+            if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (TimeToExpiration != null)
+            if (Optional.IsDefined(TimeToExpiration))
             {
                 writer.WritePropertyName("timeToExpiration"u8);
                 writer.WriteStringValue(TimeToExpiration);

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -64,14 +63,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VmSizesResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,14 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VmSizesResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
@@ -151,22 +136,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceFabricVmSizeResourceData>> GetAsync(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (vmSize == null)
-            {
-                throw new ArgumentNullException(nameof(vmSize));
-            }
-            if (vmSize.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
             using var message = CreateGetRequest(subscriptionId, location, vmSize);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,22 +166,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceFabricVmSizeResourceData> Get(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (vmSize == null)
-            {
-                throw new ArgumentNullException(nameof(vmSize));
-            }
-            if (vmSize.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmSize));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
             using var message = CreateGetRequest(subscriptionId, location, vmSize);
             _pipeline.Send(message, cancellationToken);
@@ -253,18 +210,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VmSizesResult>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -291,18 +238,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VmSizesResult> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, location);
             _pipeline.Send(message, cancellationToken);

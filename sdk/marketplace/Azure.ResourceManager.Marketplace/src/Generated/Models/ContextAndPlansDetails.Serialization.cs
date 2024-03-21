@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (!(PlanIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlanIds))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();

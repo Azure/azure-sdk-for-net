@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStartObject();
             writer.WritePropertyName("policyDefinitionId"u8);
             writer.WriteStringValue(PolicyDefinitionId);
-            if (!(Parameters is ChangeTrackingDictionary<string, ArmPolicyParameterValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndObject();
             }
-            if (PolicyDefinitionReferenceId != null)
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (!(GroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupNames))
             {
                 writer.WritePropertyName("groupNames"u8);
                 writer.WriteStartArray();

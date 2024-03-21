@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (NodeName != null)
+            if (Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (IntegrationRuntimeName != null)
+            if (Optional.IsDefined(IntegrationRuntimeName))
             {
                 writer.WritePropertyName("integrationRuntimeName"u8);
                 writer.WriteStringValue(IntegrationRuntimeName);

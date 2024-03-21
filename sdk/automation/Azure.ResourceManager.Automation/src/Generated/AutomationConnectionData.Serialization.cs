@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConnectionType != null)
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteObjectValue(ConnectionType);
             }
-            if (options.Format != "W" && !(FieldDefinitionValues is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FieldDefinitionValues))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);
                 writer.WriteStartObject();
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

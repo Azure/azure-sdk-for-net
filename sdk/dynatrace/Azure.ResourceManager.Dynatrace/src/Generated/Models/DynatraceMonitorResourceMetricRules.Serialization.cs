@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (!(FilteringTags is ChangeTrackingList<DynatraceMonitorResourceFilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();

@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Messages is ChangeTrackingList<MessageExample> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (!(Hive is ChangeTrackingList<HiveCatalogOption> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hive))
             {
                 writer.WritePropertyName("hive"u8);
                 writer.WriteStartArray();

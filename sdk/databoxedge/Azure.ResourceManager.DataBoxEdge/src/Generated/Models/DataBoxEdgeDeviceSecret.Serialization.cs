@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptedSecret != null)
+            if (Optional.IsDefined(EncryptedSecret))
             {
                 writer.WritePropertyName("encryptedSecret"u8);
                 writer.WriteObjectValue(EncryptedSecret);
             }
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);

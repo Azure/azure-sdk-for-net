@@ -24,14 +24,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
         protected ProcessorNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
             Name = name;
             Inputs = inputs.ToList();

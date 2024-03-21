@@ -19,20 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> The user name of data source access. Type: string. </param>
         /// <param name="password"> The password of data source access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
+        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password)
         {
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(targetName, nameof(targetName));
+            Argument.AssertNotNull(userName, nameof(userName));
+            Argument.AssertNotNull(password, nameof(password));
 
             TargetName = targetName;
             UserName = userName;
@@ -46,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="targetName"> The server name of data source access. Type: string. </param>
         /// <param name="userName"> The user name of data source access. Type: string. </param>
         /// <param name="password"> The password of data source access. </param>
-        internal CmdkeySetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password) : base(customSetupBaseType, serializedAdditionalRawData)
+        internal CmdkeySetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             TargetName = targetName;
             UserName = userName;
@@ -64,6 +55,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The user name of data source access. Type: string. </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of data source access. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
     }
 }

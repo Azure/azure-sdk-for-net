@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (AnomalyScore.HasValue)
+            if (Optional.IsDefined(AnomalyScore))
             {
                 writer.WritePropertyName("anomalyScore"u8);
                 writer.WriteNumberValue(AnomalyScore.Value);
             }
-            if (!(RuleGroupOverrides is ChangeTrackingList<ManagedRuleGroupOverrideSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroupOverrides))
             {
                 writer.WritePropertyName("ruleGroupOverrides"u8);
                 writer.WriteStartArray();

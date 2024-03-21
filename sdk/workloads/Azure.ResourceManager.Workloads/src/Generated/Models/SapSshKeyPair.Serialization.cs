@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (PrivateKey != null)
+            if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);

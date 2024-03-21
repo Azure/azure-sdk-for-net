@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (CaseSensitive.HasValue)
+            if (Optional.IsDefined(CaseSensitive))
             {
                 if (CaseSensitive != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (AccentSensitive.HasValue)
+            if (Optional.IsDefined(AccentSensitive))
             {
                 if (AccentSensitive != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (FuzzyEditDistance.HasValue)
+            if (Optional.IsDefined(FuzzyEditDistance))
             {
                 if (FuzzyEditDistance != null)
                 {

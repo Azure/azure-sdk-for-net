@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Service != null)
+            if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (IncidentType != null)
+            if (Optional.IsDefined(IncidentType))
             {
                 writer.WritePropertyName("incidentType"u8);
                 writer.WriteStringValue(IncidentType);

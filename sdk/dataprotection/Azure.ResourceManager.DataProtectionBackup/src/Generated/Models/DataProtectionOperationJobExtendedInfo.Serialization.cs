@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (JobIdentifier != null)
+            if (Optional.IsDefined(JobIdentifier))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobIdentifier);

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> or <paramref name="database"/> is null. </exception>
         public AmazonRedshiftLinkedService(DataFactoryElement<string> server, DataFactoryElement<string> database)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
+            Argument.AssertNotNull(server, nameof(server));
+            Argument.AssertNotNull(database, nameof(database));
 
             Server = server;
             Database = database;
@@ -47,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <param name="port"> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonRedshiftLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> database, DataFactoryElement<int> port, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonRedshiftLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<int> port, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Username = username;
@@ -68,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> The password of the Amazon Redshift source. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Database { get; set; }
         /// <summary> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </summary>

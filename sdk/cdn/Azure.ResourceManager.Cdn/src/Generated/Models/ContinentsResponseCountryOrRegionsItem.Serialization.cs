@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ContinentId != null)
+            if (Optional.IsDefined(ContinentId))
             {
                 writer.WritePropertyName("continentId"u8);
                 writer.WriteStringValue(ContinentId);

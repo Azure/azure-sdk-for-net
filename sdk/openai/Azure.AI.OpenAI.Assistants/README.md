@@ -1,6 +1,6 @@
 # Azure OpenAI: OpenAI Assistants client library for .NET
 
-> **NOTE**: This is a preview version of the Azure SDK library for OpenAI Assistants. The Azure OpenAI service does not yet include Assistants features and this project is thus currently for sole use with OpenAI's `api.openai.com` endpoints. [OpenAI's Assistants API](https://platform.openai.com/docs/api-reference/assistants) is tagged as beta and both the API surface as well as this library's representation are subject to change.
+> **NOTE**: This is a preview version of the Azure SDK library for OpenAI Assistants. [OpenAI's Assistants API](https://platform.openai.com/docs/api-reference/assistants) is tagged as beta and both the API surface as well as this library's representation are subject to change. For other OpenAI features like Chat Completions, please see the [Azure SDK for .NET Azure.AI.OpenAI library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI).
 
 The Azure OpenAI Assistants client library for .NET is an adaptation of OpenAI's REST APIs that provides an idiomatic interface
 and rich integration with the rest of the Azure SDK ecosystem. It will connect to Azure OpenAI resources *or* to the

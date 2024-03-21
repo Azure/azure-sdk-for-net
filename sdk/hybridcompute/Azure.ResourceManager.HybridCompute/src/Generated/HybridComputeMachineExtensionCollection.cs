@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridCompute
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridComputeMachineExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string extensionName, HybridComputeMachineExtensionData data, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridComputeMachineExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string extensionName, HybridComputeMachineExtensionData data, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<Response<HybridComputeMachineExtensionResource>> GetAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<HybridComputeMachineExtensionResource> Get(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual Response<bool> Exists(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridComputeMachineExtensionResource>> GetIfExistsAsync(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
         public virtual NullableResponse<HybridComputeMachineExtensionResource> GetIfExists(string extensionName, CancellationToken cancellationToken = default)
         {
-            if (extensionName == null)
-            {
-                throw new ArgumentNullException(nameof(extensionName));
-            }
-            if (extensionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
-            }
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionCollection.GetIfExists");
             scope.Start();

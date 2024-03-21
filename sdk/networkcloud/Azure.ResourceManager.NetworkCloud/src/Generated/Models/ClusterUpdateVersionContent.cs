@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetClusterVersion"/> is null. </exception>
         public ClusterUpdateVersionContent(string targetClusterVersion)
         {
-            if (targetClusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(targetClusterVersion));
-            }
+            Argument.AssertNotNull(targetClusterVersion, nameof(targetClusterVersion));
 
             TargetClusterVersion = targetClusterVersion;
         }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(ProductionData is ChangeTrackingList<MonitoringInputDataBase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProductionData))
             {
                 if (ProductionData != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("samplingRate"u8);
             writer.WriteNumberValue(SamplingRate);
-            if (WorkspaceConnectionId != null)
+            if (Optional.IsDefined(WorkspaceConnectionId))
             {
                 if (WorkspaceConnectionId != null)
                 {
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("workspaceConnectionId");
                 }
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {

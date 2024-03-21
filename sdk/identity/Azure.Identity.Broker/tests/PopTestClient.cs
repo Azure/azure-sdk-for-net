@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 
 public class PopTestClient
 {
-    private readonly HttpPipeline _pipeline;
+    internal readonly HttpPipeline _pipeline;
 
     protected PopTestClient() { }
     public PopTestClient(TokenCredential credential, ClientOptions options = null)

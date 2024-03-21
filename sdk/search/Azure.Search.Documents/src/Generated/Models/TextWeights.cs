@@ -18,10 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
         public TextWeights(IDictionary<string, double> weights)
         {
-            if (weights == null)
-            {
-                throw new ArgumentNullException(nameof(weights));
-            }
+            Argument.AssertNotNull(weights, nameof(weights));
 
             Weights = weights;
         }

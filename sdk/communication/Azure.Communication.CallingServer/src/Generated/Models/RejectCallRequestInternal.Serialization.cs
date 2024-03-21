@@ -17,7 +17,7 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
-            if (CallRejectReason.HasValue)
+            if (Optional.IsDefined(CallRejectReason))
             {
                 writer.WritePropertyName("callRejectReason"u8);
                 writer.WriteStringValue(CallRejectReason.Value.ToString());

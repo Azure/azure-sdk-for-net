@@ -54,18 +54,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="healthCheckRetryTimeout"/>, <paramref name="upgradeTimeout"/> or <paramref name="upgradeDomainTimeout"/> is null. </exception>
         public ManagedClusterMonitoringPolicy(TimeSpan healthCheckWaitDuration, TimeSpan healthCheckStableDuration, string healthCheckRetryTimeout, string upgradeTimeout, string upgradeDomainTimeout)
         {
-            if (healthCheckRetryTimeout == null)
-            {
-                throw new ArgumentNullException(nameof(healthCheckRetryTimeout));
-            }
-            if (upgradeTimeout == null)
-            {
-                throw new ArgumentNullException(nameof(upgradeTimeout));
-            }
-            if (upgradeDomainTimeout == null)
-            {
-                throw new ArgumentNullException(nameof(upgradeDomainTimeout));
-            }
+            Argument.AssertNotNull(healthCheckRetryTimeout, nameof(healthCheckRetryTimeout));
+            Argument.AssertNotNull(upgradeTimeout, nameof(upgradeTimeout));
+            Argument.AssertNotNull(upgradeDomainTimeout, nameof(upgradeDomainTimeout));
 
             HealthCheckWaitDuration = healthCheckWaitDuration;
             HealthCheckStableDuration = healthCheckStableDuration;

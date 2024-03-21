@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DiskUri != null)
+            if (Optional.IsDefined(DiskUri))
             {
                 writer.WritePropertyName("diskUri"u8);
                 writer.WriteStringValue(DiskUri.AbsoluteUri);
             }
-            if (ManagedDiskId != null)
+            if (Optional.IsDefined(ManagedDiskId))
             {
                 writer.WritePropertyName("managedDiskId"u8);
                 writer.WriteStringValue(ManagedDiskId);
             }
-            if (DiskSizeGiB.HasValue)
+            if (Optional.IsDefined(DiskSizeGiB))
             {
                 writer.WritePropertyName("diskSizeGiB"u8);
                 writer.WriteNumberValue(DiskSizeGiB.Value);

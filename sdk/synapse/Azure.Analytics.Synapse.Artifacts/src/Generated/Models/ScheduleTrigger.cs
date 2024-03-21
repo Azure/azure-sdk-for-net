@@ -18,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         public ScheduleTrigger(ScheduleTriggerRecurrence recurrence)
         {
-            if (recurrence == null)
-            {
-                throw new ArgumentNullException(nameof(recurrence));
-            }
+            Argument.AssertNotNull(recurrence, nameof(recurrence));
 
             Recurrence = recurrence;
             Type = "ScheduleTrigger";

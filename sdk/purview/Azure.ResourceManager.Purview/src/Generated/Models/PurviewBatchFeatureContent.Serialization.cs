@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (!(Features is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();

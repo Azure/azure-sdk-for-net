@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(InfrastructureExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
             {
                 writer.WritePropertyName("infrastructureExpressRouteConnections"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(WorkloadExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkloadExpressRouteConnections))
             {
                 writer.WritePropertyName("workloadExpressRouteConnections"u8);
                 writer.WriteStartArray();

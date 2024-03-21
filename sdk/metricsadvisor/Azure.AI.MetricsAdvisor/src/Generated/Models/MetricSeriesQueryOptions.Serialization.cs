@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("activeSince"u8);
             writer.WriteStringValue(ActiveSince, "O");
-            if (!(DimensionFilter is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartObject();

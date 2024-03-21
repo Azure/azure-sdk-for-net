@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.PolicyInsights.Mocking;
 using Azure.ResourceManager.PolicyInsights.Models;
@@ -59,10 +57,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An object representing collection of PolicyRemediationResources and their operations over a PolicyRemediationResource. </returns>
         public static PolicyRemediationCollection GetPolicyRemediations(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyRemediations(scope);
         }
@@ -101,10 +96,7 @@ namespace Azure.ResourceManager.PolicyInsights
         [ForwardsClientCalls]
         public static async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(this ArmClient client, ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockablePolicyInsightsArmClient(client).GetPolicyRemediationAsync(scope, remediationName, cancellationToken).ConfigureAwait(false);
         }
@@ -143,10 +135,7 @@ namespace Azure.ResourceManager.PolicyInsights
         [ForwardsClientCalls]
         public static Response<PolicyRemediationResource> GetPolicyRemediation(this ArmClient client, ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyRemediation(scope, remediationName, cancellationToken);
         }
@@ -164,10 +153,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An object representing collection of PolicyAttestationResources and their operations over a PolicyAttestationResource. </returns>
         public static PolicyAttestationCollection GetPolicyAttestations(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyAttestations(scope);
         }
@@ -206,10 +192,7 @@ namespace Azure.ResourceManager.PolicyInsights
         [ForwardsClientCalls]
         public static async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(this ArmClient client, ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockablePolicyInsightsArmClient(client).GetPolicyAttestationAsync(scope, attestationName, cancellationToken).ConfigureAwait(false);
         }
@@ -248,10 +231,7 @@ namespace Azure.ResourceManager.PolicyInsights
         [ForwardsClientCalls]
         public static Response<PolicyAttestationResource> GetPolicyAttestation(this ArmClient client, ResourceIdentifier scope, string attestationName, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyAttestation(scope, attestationName, cancellationToken);
         }
@@ -285,10 +265,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyTrackedResourceQueryResultsAsync(scope, policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -322,10 +299,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyTrackedResourceQueryResults(scope, policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -359,10 +333,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyEventQueryResultsAsync(scope, policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -396,10 +367,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyEventQueryResults(scope, policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -433,10 +401,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyStateQueryResultsAsync(scope, policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -470,10 +435,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this ArmClient client, ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyStateQueryResults(scope, policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -507,10 +469,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).SummarizePolicyStatesAsync(scope, policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -544,10 +503,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<PolicySummary> SummarizePolicyStates(this ArmClient client, ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).SummarizePolicyStates(scope, policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -566,10 +522,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
         public static PolicyRemediationResource GetPolicyRemediationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyRemediationResource(id);
         }
@@ -588,10 +541,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> Returns a <see cref="PolicyMetadataResource"/> object. </returns>
         public static PolicyMetadataResource GetPolicyMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyMetadataResource(id);
         }
@@ -610,10 +560,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
         public static PolicyAttestationResource GetPolicyAttestationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockablePolicyInsightsArmClient(client).GetPolicyAttestationResource(id);
         }
@@ -647,10 +594,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -684,10 +628,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ManagementGroupResource managementGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -721,10 +662,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -758,10 +696,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ManagementGroupResource managementGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -795,10 +730,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -832,10 +764,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this ManagementGroupResource managementGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -869,10 +798,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -906,10 +832,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -941,10 +864,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this ManagementGroupResource managementGroupResource, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return await GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -976,10 +896,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this ManagementGroupResource managementGroupResource, CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (managementGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(managementGroupResource));
-            }
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
             return GetMockablePolicyInsightsManagementGroupResource(managementGroupResource).CheckPolicyRestrictions(content, cancellationToken);
         }
@@ -1013,10 +930,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -1050,10 +964,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -1087,10 +998,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -1124,10 +1032,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ResourceGroupResource resourceGroupResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -1161,10 +1066,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -1198,10 +1100,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this ResourceGroupResource resourceGroupResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -1235,10 +1134,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -1272,10 +1168,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -1307,10 +1200,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         public static async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
@@ -1342,10 +1232,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         public static ArmOperation TriggerPolicyStateEvaluation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
         }
@@ -1377,10 +1264,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this ResourceGroupResource resourceGroupResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -1412,10 +1296,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this ResourceGroupResource resourceGroupResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).CheckPolicyRestrictions(content, cancellationToken);
         }
@@ -1449,10 +1330,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -1486,10 +1364,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this SubscriptionResource subscriptionResource, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourceType, policyQuerySettings, cancellationToken);
         }
@@ -1523,10 +1398,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -1560,10 +1432,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this SubscriptionResource subscriptionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
@@ -1597,10 +1466,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -1634,10 +1500,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this SubscriptionResource subscriptionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
@@ -1671,10 +1534,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -1708,10 +1568,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
@@ -1743,10 +1600,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
@@ -1778,10 +1632,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static ArmOperation TriggerPolicyStateEvaluation(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
         }
@@ -1813,10 +1664,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this SubscriptionResource subscriptionResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).CheckPolicyRestrictionsAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -1848,10 +1696,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this SubscriptionResource subscriptionResource, CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).CheckPolicyRestrictions(content, cancellationToken);
         }
@@ -1868,10 +1713,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An object representing collection of PolicyMetadataResources and their operations over a PolicyMetadataResource. </returns>
         public static PolicyMetadataCollection GetAllPolicyMetadata(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockablePolicyInsightsTenantResource(tenantResource).GetAllPolicyMetadata();
         }
@@ -1908,10 +1750,7 @@ namespace Azure.ResourceManager.PolicyInsights
         [ForwardsClientCalls]
         public static async Task<Response<PolicyMetadataResource>> GetPolicyMetadataAsync(this TenantResource tenantResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockablePolicyInsightsTenantResource(tenantResource).GetPolicyMetadataAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -1948,10 +1787,7 @@ namespace Azure.ResourceManager.PolicyInsights
         [ForwardsClientCalls]
         public static Response<PolicyMetadataResource> GetPolicyMetadata(this TenantResource tenantResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockablePolicyInsightsTenantResource(tenantResource).GetPolicyMetadata(resourceName, cancellationToken);
         }

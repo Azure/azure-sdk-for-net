@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 if (KeyVaultId != null)
                 {

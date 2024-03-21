@@ -58,10 +58,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public PeeringData(AzureLocation location, PeeringSku sku, PeeringKind kind) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             Kind = kind;

@@ -1,11 +1,11 @@
-namespace Azure.Storage.Blobs.Batch.Models
+namespace Azure.Storage.Blobs.Batch
 {
-    public partial class DeleteBlobOptions
+    public partial class BatchDeleteBlobOptions
     {
-        public DeleteBlobOptions() { }
+        public BatchDeleteBlobOptions() { }
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.DeleteSnapshotsOption SnapshotsOption { get { throw null; } set { } }
-        public string VersionID { get { throw null; } set { } }
+        public string VersionId { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.Blobs.Specialized
@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Specialized
         protected BlobBatch() { }
         public BlobBatch(Azure.Storage.Blobs.Specialized.BlobBatchClient client) { }
         public int RequestCount { get { throw null; } }
-        public virtual Azure.Response DeleteBlob(string blobContainerName, string blobName, Azure.Storage.Blobs.Batch.Models.DeleteBlobOptions options = null) { throw null; }
+        public virtual Azure.Response DeleteBlob(string blobContainerName, string blobName, Azure.Storage.Blobs.Batch.BatchDeleteBlobOptions options = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response DeleteBlob(string blobContainerName, string blobName, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption, Azure.Storage.Blobs.Models.BlobRequestConditions conditions) { throw null; }
         public virtual Azure.Response DeleteBlob(System.Uri blobUri, Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null) { throw null; }

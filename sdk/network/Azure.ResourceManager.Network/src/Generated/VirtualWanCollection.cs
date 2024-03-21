@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualWanResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualWanName, VirtualWanData data, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualWanResource> CreateOrUpdate(WaitUntil waitUntil, string virtualWanName, VirtualWanData data, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
         public virtual async Task<Response<VirtualWanResource>> GetAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
         public virtual Response<VirtualWanResource> Get(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualWanResource>> GetIfExistsAsync(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualWanName"/> is null. </exception>
         public virtual NullableResponse<VirtualWanResource> GetIfExists(string virtualWanName, CancellationToken cancellationToken = default)
         {
-            if (virtualWanName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualWanName));
-            }
-            if (virtualWanName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualWanName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualWanName, nameof(virtualWanName));
 
             using var scope = _virtualWanClientDiagnostics.CreateScope("VirtualWanCollection.GetIfExists");
             scope.Start();

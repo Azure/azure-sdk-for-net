@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -29,7 +28,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url.AbsoluteUri);
-            if (Detail.HasValue)
+            if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("detail"u8);
                 writer.WriteStringValue(Detail.Value.ToString());

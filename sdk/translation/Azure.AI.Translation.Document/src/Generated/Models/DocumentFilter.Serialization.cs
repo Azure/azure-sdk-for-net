@@ -15,12 +15,12 @@ namespace Azure.AI.Translation.Document.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (Suffix != null)
+            if (Optional.IsDefined(Suffix))
             {
                 writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -285,10 +283,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryPrivateEndpointResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Update");
             scope.Start();
@@ -335,10 +330,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryPrivateEndpointResource> Update(WaitUntil waitUntil, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryPrivateEndpointManagedPrivateEndpointsClientDiagnostics.CreateScope("DataFactoryPrivateEndpointResource.Update");
             scope.Start();

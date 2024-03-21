@@ -18,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public SapHanaLinkedService(object server)
         {
-            if (server == null)
-            {
-                throw new ArgumentNullException(nameof(server));
-            }
+            Argument.AssertNotNull(server, nameof(server));
 
             Server = server;
             Type = "SapHana";

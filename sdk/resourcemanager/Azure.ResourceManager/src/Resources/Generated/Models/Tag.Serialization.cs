@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (!(TagValues is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TagValues))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

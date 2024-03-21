@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ImageRepositoryUri.AbsoluteUri);
             writer.WritePropertyName("userName"u8);
             writer.WriteStringValue(UserName);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageSync;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync.Mocking
@@ -73,18 +70,8 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (locationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = StorageSyncServiceClientDiagnostics.CreateScope("MockableStorageSyncSubscriptionResource.CheckStorageSyncNameAvailability");
             scope.Start();
@@ -128,18 +115,8 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response<StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (locationName == null)
-            {
-                throw new ArgumentNullException(nameof(locationName));
-            }
-            if (locationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(locationName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = StorageSyncServiceClientDiagnostics.CreateScope("MockableStorageSyncSubscriptionResource.CheckStorageSyncNameAvailability");
             scope.Start();

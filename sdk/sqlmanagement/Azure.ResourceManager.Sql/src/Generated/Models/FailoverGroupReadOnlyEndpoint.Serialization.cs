@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (FailoverPolicy.HasValue)
+            if (Optional.IsDefined(FailoverPolicy))
             {
                 writer.WritePropertyName("failoverPolicy"u8);
                 writer.WriteStringValue(FailoverPolicy.Value.ToString());
             }
-            if (TargetServer != null)
+            if (Optional.IsDefined(TargetServer))
             {
                 writer.WritePropertyName("targetServer"u8);
                 writer.WriteStringValue(TargetServer);

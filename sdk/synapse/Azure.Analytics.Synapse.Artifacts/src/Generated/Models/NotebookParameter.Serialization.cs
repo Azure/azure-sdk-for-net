@@ -18,19 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
-                if (Value != null)
-                {
-                    writer.WritePropertyName("value"u8);
-                    writer.WriteObjectValue(Value);
-                }
-                else
-                {
-                    writer.WriteNull("value");
-                }
+                writer.WritePropertyName("value"u8);
+                writer.WriteObjectValue(Value);
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
@@ -52,7 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
                         continue;
                     }
                     value = property.Value.GetObject();

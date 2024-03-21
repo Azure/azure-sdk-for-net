@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.LabServices
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LabVirtualMachineImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LabVirtualMachineImageResource> CreateOrUpdate(WaitUntil waitUntil, string imageName, LabVirtualMachineImageData data, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<Response<LabVirtualMachineImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual Response<LabVirtualMachineImageResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual Response<bool> Exists(string imageName, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual async Task<NullableResponse<LabVirtualMachineImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
         public virtual NullableResponse<LabVirtualMachineImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
-            if (imageName == null)
-            {
-                throw new ArgumentNullException(nameof(imageName));
-            }
-            if (imageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(imageName));
-            }
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
             using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
             scope.Start();

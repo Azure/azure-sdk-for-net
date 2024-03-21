@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (!(PodSecrets is ChangeTrackingList<DataBoxSecret> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PodSecrets))
             {
                 writer.WritePropertyName("podSecrets"u8);
                 writer.WriteStartArray();
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
                 writer.WriteObjectValue(DataCenterAccessSecurityCode);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);

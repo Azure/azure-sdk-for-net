@@ -19,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ZendeskLinkedService(ZendeskAuthenticationType authenticationType, object url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
+            Argument.AssertNotNull(url, nameof(url));
 
             AuthenticationType = authenticationType;
             Url = url;

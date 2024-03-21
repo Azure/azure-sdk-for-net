@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ZoneDetails is ChangeTrackingList<ResourceTypeSkuZoneDetail> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExtendedLocations is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExtendedLocationType.HasValue)
+            if (Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExtendedLocationType.Value.ToSerialString());

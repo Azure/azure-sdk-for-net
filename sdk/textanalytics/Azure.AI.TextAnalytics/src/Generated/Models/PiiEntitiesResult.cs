@@ -22,18 +22,9 @@ namespace Azure.AI.TextAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
         public PiiEntitiesResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<PiiResultDocumentsItem> documents) : base(errors, modelVersion)
         {
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-            if (modelVersion == null)
-            {
-                throw new ArgumentNullException(nameof(modelVersion));
-            }
-            if (documents == null)
-            {
-                throw new ArgumentNullException(nameof(documents));
-            }
+            Argument.AssertNotNull(errors, nameof(errors));
+            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
+            Argument.AssertNotNull(documents, nameof(documents));
 
             Documents = documents.ToList();
         }

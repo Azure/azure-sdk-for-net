@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -71,8 +70,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "logs": return RunStepCodeInterpreterLogOutput.DeserializeRunStepCodeInterpreterLogOutput(element, options);
                     case "image": return RunStepCodeInterpreterImageOutput.DeserializeRunStepCodeInterpreterImageOutput(element, options);
+                    case "logs": return RunStepCodeInterpreterLogOutput.DeserializeRunStepCodeInterpreterLogOutput(element, options);
                 }
             }
             return UnknownRunStepCodeInterpreterToolCallOutput.DeserializeUnknownRunStepCodeInterpreterToolCallOutput(element, options);

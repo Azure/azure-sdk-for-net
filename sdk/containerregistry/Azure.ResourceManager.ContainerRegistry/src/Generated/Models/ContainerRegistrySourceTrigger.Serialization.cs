@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());

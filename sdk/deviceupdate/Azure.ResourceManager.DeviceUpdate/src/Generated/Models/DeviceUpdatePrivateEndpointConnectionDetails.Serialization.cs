@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && LinkIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
                 writer.WritePropertyName("linkIdentifier"u8);
                 writer.WriteStringValue(LinkIdentifier);
             }
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && MemberName != null)
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);

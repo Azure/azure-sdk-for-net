@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;

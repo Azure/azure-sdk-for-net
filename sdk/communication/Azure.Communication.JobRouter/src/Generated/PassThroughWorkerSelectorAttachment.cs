@@ -19,10 +19,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         internal PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Kind = WorkerSelectorAttachmentKind.PassThrough;
             Key = key;

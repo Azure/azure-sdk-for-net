@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (OSSku.HasValue)
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSku"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (options.Format != "W" && Ready.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Ready))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(Ready.Value);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);

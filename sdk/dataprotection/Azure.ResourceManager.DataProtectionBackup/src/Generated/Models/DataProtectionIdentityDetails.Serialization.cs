@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (UseSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (UserAssignedIdentityArmUri != null)
+            if (Optional.IsDefined(UserAssignedIdentityArmUri))
             {
                 writer.WritePropertyName("userAssignedIdentityArmUrl"u8);
                 writer.WriteStringValue(UserAssignedIdentityArmUri.AbsoluteUri);

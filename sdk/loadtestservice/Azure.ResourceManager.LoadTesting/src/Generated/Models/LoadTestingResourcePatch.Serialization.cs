@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 if (Encryption != null)
                 {

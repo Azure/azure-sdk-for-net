@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,82 +39,82 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorLoginPassword != null)
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (PostgresqlVersion != null)
+            if (Optional.IsDefined(PostgresqlVersion))
             {
                 writer.WritePropertyName("postgresqlVersion"u8);
                 writer.WriteStringValue(PostgresqlVersion);
             }
-            if (CitusVersion != null)
+            if (Optional.IsDefined(CitusVersion))
             {
                 writer.WritePropertyName("citusVersion"u8);
                 writer.WriteStringValue(CitusVersion);
             }
-            if (IsShardsOnCoordinatorEnabled.HasValue)
+            if (Optional.IsDefined(IsShardsOnCoordinatorEnabled))
             {
                 writer.WritePropertyName("enableShardsOnCoordinator"u8);
                 writer.WriteBooleanValue(IsShardsOnCoordinatorEnabled.Value);
             }
-            if (IsHAEnabled.HasValue)
+            if (Optional.IsDefined(IsHAEnabled))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(IsHAEnabled.Value);
             }
-            if (PreferredPrimaryZone != null)
+            if (Optional.IsDefined(PreferredPrimaryZone))
             {
                 writer.WritePropertyName("preferredPrimaryZone"u8);
                 writer.WriteStringValue(PreferredPrimaryZone);
             }
-            if (CoordinatorServerEdition != null)
+            if (Optional.IsDefined(CoordinatorServerEdition))
             {
                 writer.WritePropertyName("coordinatorServerEdition"u8);
                 writer.WriteStringValue(CoordinatorServerEdition);
             }
-            if (CoordinatorStorageQuotaInMb.HasValue)
+            if (Optional.IsDefined(CoordinatorStorageQuotaInMb))
             {
                 writer.WritePropertyName("coordinatorStorageQuotaInMb"u8);
                 writer.WriteNumberValue(CoordinatorStorageQuotaInMb.Value);
             }
-            if (CoordinatorVCores.HasValue)
+            if (Optional.IsDefined(CoordinatorVCores))
             {
                 writer.WritePropertyName("coordinatorVCores"u8);
                 writer.WriteNumberValue(CoordinatorVCores.Value);
             }
-            if (IsCoordinatorPublicIPAccessEnabled.HasValue)
+            if (Optional.IsDefined(IsCoordinatorPublicIPAccessEnabled))
             {
                 writer.WritePropertyName("coordinatorEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsCoordinatorPublicIPAccessEnabled.Value);
             }
-            if (NodeServerEdition != null)
+            if (Optional.IsDefined(NodeServerEdition))
             {
                 writer.WritePropertyName("nodeServerEdition"u8);
                 writer.WriteStringValue(NodeServerEdition);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (NodeStorageQuotaInMb.HasValue)
+            if (Optional.IsDefined(NodeStorageQuotaInMb))
             {
                 writer.WritePropertyName("nodeStorageQuotaInMb"u8);
                 writer.WriteNumberValue(NodeStorageQuotaInMb.Value);
             }
-            if (NodeVCores.HasValue)
+            if (Optional.IsDefined(NodeVCores))
             {
                 writer.WritePropertyName("nodeVCores"u8);
                 writer.WriteNumberValue(NodeVCores.Value);
             }
-            if (options.Format != "W" && IsNodePublicIPAccessEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsNodePublicIPAccessEnabled))
             {
                 writer.WritePropertyName("nodeEnablePublicIpAccess"u8);
                 writer.WriteBooleanValue(IsNodePublicIPAccessEnabled.Value);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);

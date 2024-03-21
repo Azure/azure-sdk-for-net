@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (!(Keys is ChangeTrackingList<IdentityAccessKeyPermission> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Secrets is ChangeTrackingList<IdentityAccessSecretPermission> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Certificates is ChangeTrackingList<IdentityAccessCertificatePermission> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Storage is ChangeTrackingList<IdentityAccessStoragePermission> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
                 writer.WriteStartArray();

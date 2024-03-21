@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceUpdate.Mocking;
 using Azure.ResourceManager.DeviceUpdate.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdateAccountResource"/> object. </returns>
         public static DeviceUpdateAccountResource GetDeviceUpdateAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceUpdateArmClient(client).GetDeviceUpdateAccountResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdateInstanceResource"/> object. </returns>
         public static DeviceUpdateInstanceResource GetDeviceUpdateInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceUpdateArmClient(client).GetDeviceUpdateInstanceResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdatePrivateEndpointConnectionResource"/> object. </returns>
         public static DeviceUpdatePrivateEndpointConnectionResource GetDeviceUpdatePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceUpdateArmClient(client).GetDeviceUpdatePrivateEndpointConnectionResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdatePrivateLinkResource"/> object. </returns>
         public static DeviceUpdatePrivateLinkResource GetDeviceUpdatePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceUpdateArmClient(client).GetDeviceUpdatePrivateLinkResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> Returns a <see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/> object. </returns>
         public static DeviceUpdatePrivateEndpointConnectionProxyResource GetDeviceUpdatePrivateEndpointConnectionProxyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceUpdateArmClient(client).GetDeviceUpdatePrivateEndpointConnectionProxyResource(id);
         }
@@ -157,10 +140,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An object representing collection of DeviceUpdateAccountResources and their operations over a DeviceUpdateAccountResource. </returns>
         public static DeviceUpdateAccountCollection GetDeviceUpdateAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDeviceUpdateResourceGroupResource(resourceGroupResource).GetDeviceUpdateAccounts();
         }
@@ -198,10 +178,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         [ForwardsClientCalls]
         public static async Task<Response<DeviceUpdateAccountResource>> GetDeviceUpdateAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDeviceUpdateResourceGroupResource(resourceGroupResource).GetDeviceUpdateAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -239,10 +216,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         [ForwardsClientCalls]
         public static Response<DeviceUpdateAccountResource> GetDeviceUpdateAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDeviceUpdateResourceGroupResource(resourceGroupResource).GetDeviceUpdateAccount(accountName, cancellationToken);
         }
@@ -274,10 +248,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DeviceUpdateNameAvailabilityResult>> CheckDeviceUpdateNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DeviceUpdateAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDeviceUpdateSubscriptionResource(subscriptionResource).CheckDeviceUpdateNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -309,10 +280,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DeviceUpdateNameAvailabilityResult> CheckDeviceUpdateNameAvailability(this SubscriptionResource subscriptionResource, DeviceUpdateAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceUpdateSubscriptionResource(subscriptionResource).CheckDeviceUpdateNameAvailability(content, cancellationToken);
         }
@@ -348,10 +316,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> An async collection of <see cref="DeviceUpdateAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceUpdateAccountResource> GetDeviceUpdateAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceUpdateSubscriptionResource(subscriptionResource).GetDeviceUpdateAccountsAsync(cancellationToken);
         }
@@ -387,10 +352,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <returns> A collection of <see cref="DeviceUpdateAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceUpdateAccountResource> GetDeviceUpdateAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceUpdateSubscriptionResource(subscriptionResource).GetDeviceUpdateAccounts(cancellationToken);
         }

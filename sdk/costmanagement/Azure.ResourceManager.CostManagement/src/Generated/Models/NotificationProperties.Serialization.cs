@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (RegionalFormat != null)
+            if (Optional.IsDefined(RegionalFormat))
             {
                 writer.WritePropertyName("regionalFormat"u8);
                 writer.WriteStringValue(RegionalFormat);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (ParameterType.HasValue)
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

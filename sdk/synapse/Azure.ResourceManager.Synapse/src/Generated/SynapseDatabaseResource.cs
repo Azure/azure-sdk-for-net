@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -431,10 +429,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDatabaseResource>> UpdateAsync(WaitUntil waitUntil, SynapseDatabaseData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDatabaseKustoPoolDatabasesClientDiagnostics.CreateScope("SynapseDatabaseResource.Update");
             scope.Start();
@@ -480,10 +475,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseDatabaseResource> Update(WaitUntil waitUntil, SynapseDatabaseData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDatabaseKustoPoolDatabasesClientDiagnostics.CreateScope("SynapseDatabaseResource.Update");
             scope.Start();
@@ -528,10 +520,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolDataConnectionNameAvailabilityAsync(KustoPoolDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDataConnectionNameAvailability");
             scope.Start();
@@ -573,10 +562,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolDataConnectionNameAvailability(KustoPoolDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDataConnectionNameAvailability");
             scope.Start();
@@ -619,10 +605,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseDataConnectionValidation"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDataConnectionValidationListResult>> ValidateDataConnectionAsync(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
         {
-            if (synapseDataConnectionValidation == null)
-            {
-                throw new ArgumentNullException(nameof(synapseDataConnectionValidation));
-            }
+            Argument.AssertNotNull(synapseDataConnectionValidation, nameof(synapseDataConnectionValidation));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.ValidateDataConnection");
             scope.Start();
@@ -668,10 +651,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="synapseDataConnectionValidation"/> is null. </exception>
         public virtual ArmOperation<SynapseDataConnectionValidationListResult> ValidateDataConnection(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
         {
-            if (synapseDataConnectionValidation == null)
-            {
-                throw new ArgumentNullException(nameof(synapseDataConnectionValidation));
-            }
+            Argument.AssertNotNull(synapseDataConnectionValidation, nameof(synapseDataConnectionValidation));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.ValidateDataConnection");
             scope.Start();
@@ -716,10 +696,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolDatabasePrincipalAssignmentNameAvailabilityAsync(KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDatabasePrincipalAssignmentNameAvailability");
             scope.Start();
@@ -761,10 +738,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolDatabasePrincipalAssignmentNameAvailability(KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDatabasePrincipalAssignmentNameAvailability");
             scope.Start();

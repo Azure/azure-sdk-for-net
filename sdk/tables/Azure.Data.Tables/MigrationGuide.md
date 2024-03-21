@@ -7,6 +7,19 @@ Familiarity with the `Microsoft.Azure.CosmosDB.Table` package is assumed. If you
 [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) and
 [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/tables/Azure.Data.Tables/samples) rather than this guide.
 
+## Special Note Regarding Session Consistency
+Azure.Data.Tables does not support session consistency.  If you use Azure.Data.Tables against a CosmosDB account configured for session consistency, you will
+effectively experience eventual consistency.
+
+To achieve session consistency, other CosmosDB SDKs (including Microsoft.Azure.CosmosDB.Table) kept a cache of session tokens.  The result was a default behavior
+that provided "read your own writes" guarantees for each SDK instance.  Azure.Data.Tables neither retrieves nor sends session tokens to the CosmosDB Table API
+account.  The result is that Azure.Data.Tables SDK instances will experience eventual consistency.
+
+Options available to you if your app depends on "read your own writes" guarantees include:
+1. Update the CosmosDB Tables API account to use strong consistency.
+2. Update the logic in your app to handle eventually consistency.
+3. Migrate your app and CosmosDB account to use the latest SQL API.
+
 ## Migration benefits
 
 A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and

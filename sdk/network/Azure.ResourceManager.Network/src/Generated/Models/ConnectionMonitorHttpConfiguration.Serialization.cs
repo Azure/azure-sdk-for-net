@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(RequestHeaders is ChangeTrackingList<NetworkWatcherHttpHeader> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidStatusCodeRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
                 writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PreferHttps.HasValue)
+            if (Optional.IsDefined(PreferHttps))
             {
                 writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);

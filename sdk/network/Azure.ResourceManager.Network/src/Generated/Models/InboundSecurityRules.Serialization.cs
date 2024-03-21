@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (SourceAddressPrefix != null)
+            if (Optional.IsDefined(SourceAddressPrefix))
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (DestinationPortRange.HasValue)
+            if (Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteNumberValue(DestinationPortRange.Value);

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Avs.Mocking;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudResource"/> object. </returns>
         public static AvsPrivateCloudResource GetAvsPrivateCloudResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetAvsPrivateCloudResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource"/> object. </returns>
         public static AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetAvsPrivateCloudClusterResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource"/> object. </returns>
         public static AvsPrivateCloudDatastoreResource GetAvsPrivateCloudDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetAvsPrivateCloudDatastoreResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="HcxEnterpriseSiteResource"/> object. </returns>
         public static HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetHcxEnterpriseSiteResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ExpressRouteAuthorizationResource"/> object. </returns>
         public static ExpressRouteAuthorizationResource GetExpressRouteAuthorizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetExpressRouteAuthorizationResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="GlobalReachConnectionResource"/> object. </returns>
         public static GlobalReachConnectionResource GetGlobalReachConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetGlobalReachConnectionResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
         public static WorkloadNetworkResource GetWorkloadNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
         public static WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkSegmentResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkDhcpResource"/> object. </returns>
         public static WorkloadNetworkDhcpResource GetWorkloadNetworkDhcpResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkDhcpResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkGatewayResource"/> object. </returns>
         public static WorkloadNetworkGatewayResource GetWorkloadNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkGatewayResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource"/> object. </returns>
         public static WorkloadNetworkPortMirroringProfileResource GetWorkloadNetworkPortMirroringProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkPortMirroringProfileResource(id);
         }
@@ -291,10 +256,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
         public static WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkVmGroupResource(id);
         }
@@ -313,10 +275,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachineResource"/> object. </returns>
         public static WorkloadNetworkVirtualMachineResource GetWorkloadNetworkVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkVirtualMachineResource(id);
         }
@@ -335,10 +294,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkDnsServiceResource"/> object. </returns>
         public static WorkloadNetworkDnsServiceResource GetWorkloadNetworkDnsServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkDnsServiceResource(id);
         }
@@ -357,10 +313,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkDnsZoneResource"/> object. </returns>
         public static WorkloadNetworkDnsZoneResource GetWorkloadNetworkDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkDnsZoneResource(id);
         }
@@ -379,10 +332,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkPublicIPResource"/> object. </returns>
         public static WorkloadNetworkPublicIPResource GetWorkloadNetworkPublicIPResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetWorkloadNetworkPublicIPResource(id);
         }
@@ -401,10 +351,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsCloudLinkResource"/> object. </returns>
         public static AvsCloudLinkResource GetAvsCloudLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetAvsCloudLinkResource(id);
         }
@@ -423,10 +370,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource"/> object. </returns>
         public static AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetAvsPrivateCloudAddonResource(id);
         }
@@ -445,10 +389,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> object. </returns>
         public static AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetAvsPrivateCloudClusterVirtualMachineResource(id);
         }
@@ -467,10 +408,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="PlacementPolicyResource"/> object. </returns>
         public static PlacementPolicyResource GetPlacementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetPlacementPolicyResource(id);
         }
@@ -489,10 +427,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ScriptPackageResource"/> object. </returns>
         public static ScriptPackageResource GetScriptPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetScriptPackageResource(id);
         }
@@ -511,10 +446,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ScriptCmdletResource"/> object. </returns>
         public static ScriptCmdletResource GetScriptCmdletResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetScriptCmdletResource(id);
         }
@@ -533,10 +465,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ScriptExecutionResource"/> object. </returns>
         public static ScriptExecutionResource GetScriptExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableAvsArmClient(client).GetScriptExecutionResource(id);
         }
@@ -553,10 +482,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
         public static AvsPrivateCloudCollection GetAvsPrivateClouds(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAvsResourceGroupResource(resourceGroupResource).GetAvsPrivateClouds();
         }
@@ -594,10 +520,7 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         public static async Task<Response<AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableAvsResourceGroupResource(resourceGroupResource).GetAvsPrivateCloudAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
         }
@@ -635,10 +558,7 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         public static Response<AvsPrivateCloudResource> GetAvsPrivateCloud(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAvsResourceGroupResource(resourceGroupResource).GetAvsPrivateCloud(privateCloudName, cancellationToken);
         }
@@ -671,10 +591,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
         }
@@ -707,10 +624,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
         }
@@ -742,10 +656,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -777,10 +688,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
         }
@@ -816,10 +724,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="AvsPrivateCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAvsSubscriptionResource(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
         }
@@ -855,10 +760,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="AvsPrivateCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAvsSubscriptionResource(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
         }

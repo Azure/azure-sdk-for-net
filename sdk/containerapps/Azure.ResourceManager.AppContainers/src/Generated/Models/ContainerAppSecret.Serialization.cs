@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Identity != null)
+            if (options.Format != "W" && Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (options.Format != "W" && KeyVaultUri != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);

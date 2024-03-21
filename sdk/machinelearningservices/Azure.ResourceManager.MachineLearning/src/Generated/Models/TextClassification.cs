@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -22,10 +21,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trainingData"/> is null. </exception>
         public TextClassification(MachineLearningTableJobInput trainingData) : base(trainingData)
         {
-            if (trainingData == null)
-            {
-                throw new ArgumentNullException(nameof(trainingData));
-            }
+            Argument.AssertNotNull(trainingData, nameof(trainingData));
 
             SearchSpace = new ChangeTrackingList<NlpParameterSubspace>();
             TaskType = TaskType.TextClassification;

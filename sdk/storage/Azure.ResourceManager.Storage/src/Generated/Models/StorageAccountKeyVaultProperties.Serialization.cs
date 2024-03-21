@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyname"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyversion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyvaulturi"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && CurrentVersionedKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
             {
                 writer.WritePropertyName("currentVersionedKeyIdentifier"u8);
                 writer.WriteStringValue(CurrentVersionedKeyIdentifier);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
             }
-            if (options.Format != "W" && CurrentVersionedKeyExpirationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyExpirationTimestamp))
             {
                 writer.WritePropertyName("currentVersionedKeyExpirationTimestamp"u8);
                 writer.WriteStringValue(CurrentVersionedKeyExpirationTimestamp.Value, "O");

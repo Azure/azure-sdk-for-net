@@ -10,7 +10,7 @@ using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The UnknownHookInfo. </summary>
+    /// <summary> Unknown version of HookInfo. </summary>
     internal partial class UnknownHookInfo : NotificationHook
     {
         /// <summary> Initializes a new instance of <see cref="UnknownHookInfo"/>. </summary>

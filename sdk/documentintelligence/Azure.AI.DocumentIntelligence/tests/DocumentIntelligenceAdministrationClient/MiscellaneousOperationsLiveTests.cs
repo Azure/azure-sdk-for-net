@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds, Is.Not.Null);
             Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.Used, Is.GreaterThanOrEqualTo(0));
             Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.Quota, Is.GreaterThanOrEqualTo(resourceDetails.CustomNeuralDocumentModelBuilds.Used));
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.QuotaResetDateTime, Is.GreaterThan(startTime));
+            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.QuotaResetsOn, Is.GreaterThan(startTime));
         }
 
         #endregion Resource Info
@@ -160,8 +160,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(operation.Status, Is.EqualTo(expected.Status));
                 Assert.That(operation.PercentCompleted, Is.EqualTo(expected.PercentCompleted));
                 Assert.That(operation.ResourceLocation.AbsoluteUri, Is.EqualTo(expected.ResourceLocation.AbsoluteUri));
-                Assert.That(operation.CreatedDateTime, Is.EqualTo(expected.CreatedDateTime));
-                Assert.That(operation.LastUpdatedDateTime, Is.EqualTo(expected.LastUpdatedDateTime));
+                Assert.That(operation.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                Assert.That(operation.LastUpdatedOn, Is.EqualTo(expected.LastUpdatedOn));
                 Assert.That(operation.Tags, Is.EquivalentTo(expected.Tags));
 
                 Assert.That(operation.Error, Is.Null);
@@ -181,8 +181,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(operationDetails.Error, Is.Null);
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(operationDetails.CreatedDateTime, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(operationDetails.LastUpdatedDateTime, Is.GreaterThan(operationDetails.CreatedDateTime));
+            Assert.That(operationDetails.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            Assert.That(operationDetails.LastUpdatedOn, Is.GreaterThan(operationDetails.CreatedOn));
             Assert.That(operationDetails.Tags, Is.EquivalentTo(tags));
         }
     }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("sourceType"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstancesValue"/> is null. </exception>
         public RoleInstances(IEnumerable<string> roleInstancesValue)
         {
-            if (roleInstancesValue == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstancesValue));
-            }
+            Argument.AssertNotNull(roleInstancesValue, nameof(roleInstancesValue));
 
             RoleInstancesValue = roleInstancesValue.ToList();
         }

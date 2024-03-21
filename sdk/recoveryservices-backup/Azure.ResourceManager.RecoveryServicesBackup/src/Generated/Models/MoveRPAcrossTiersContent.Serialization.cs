@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (SourceTierType.HasValue)
+            if (Optional.IsDefined(SourceTierType))
             {
                 writer.WritePropertyName("sourceTierType"u8);
                 writer.WriteStringValue(SourceTierType.Value.ToSerialString());
             }
-            if (TargetTierType.HasValue)
+            if (Optional.IsDefined(TargetTierType))
             {
                 writer.WritePropertyName("targetTierType"u8);
                 writer.WriteStringValue(TargetTierType.Value.ToSerialString());

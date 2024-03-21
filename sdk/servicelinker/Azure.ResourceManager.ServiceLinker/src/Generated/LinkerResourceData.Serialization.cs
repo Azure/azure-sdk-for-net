@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ServiceLinker
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetService != null)
+            if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
                 writer.WriteObjectValue(TargetService);
             }
-            if (AuthInfo != null)
+            if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
                 writer.WriteObjectValue(AuthInfo);
             }
-            if (ClientType.HasValue)
+            if (Optional.IsDefined(ClientType))
             {
                 writer.WritePropertyName("clientType"u8);
                 writer.WriteStringValue(ClientType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (VnetSolution != null)
+            if (Optional.IsDefined(VnetSolution))
             {
                 if (VnetSolution != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("vNetSolution");
                 }
             }
-            if (SecretStore != null)
+            if (Optional.IsDefined(SecretStore))
             {
                 if (SecretStore != null)
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceLinker
                     writer.WriteNull("secretStore");
                 }
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 if (Scope != null)
                 {

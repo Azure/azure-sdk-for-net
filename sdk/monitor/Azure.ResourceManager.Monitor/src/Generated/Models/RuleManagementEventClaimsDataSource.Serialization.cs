@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (EmailAddress != null)
+            if (Optional.IsDefined(EmailAddress))
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);

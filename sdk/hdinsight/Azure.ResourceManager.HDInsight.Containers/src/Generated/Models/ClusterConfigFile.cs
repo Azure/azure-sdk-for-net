@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
         public ClusterConfigFile(string fileName)
         {
-            if (fileName == null)
-            {
-                throw new ArgumentNullException(nameof(fileName));
-            }
+            Argument.AssertNotNull(fileName, nameof(fileName));
 
             FileName = fileName;
             Values = new ChangeTrackingDictionary<string, string>();

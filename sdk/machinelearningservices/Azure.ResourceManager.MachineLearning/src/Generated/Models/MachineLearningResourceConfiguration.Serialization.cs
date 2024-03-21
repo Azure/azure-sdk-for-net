@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (InstanceType != null)
+            if (Optional.IsDefined(InstanceType))
             {
                 if (InstanceType != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
-            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 if (Locations != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("locations");
                 }
             }
-            if (MaxInstanceCount.HasValue)
+            if (Optional.IsDefined(MaxInstanceCount))
             {
                 if (MaxInstanceCount != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("maxInstanceCount");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {

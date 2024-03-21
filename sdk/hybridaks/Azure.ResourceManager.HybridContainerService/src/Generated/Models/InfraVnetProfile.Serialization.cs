@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Hci != null)
+            if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
                 writer.WriteObjectValue(Hci);

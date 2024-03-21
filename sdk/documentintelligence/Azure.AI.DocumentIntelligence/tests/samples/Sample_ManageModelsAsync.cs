@@ -44,8 +44,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             DocumentModelDetails model = await client.GetModelAsync(modelId);
 
             Console.WriteLine($"Details about model with ID '{model.ModelId}':");
-            Console.WriteLine($"  Created on: {model.CreatedDateTime}");
-            Console.WriteLine($"  Expires on: {model.ExpirationDateTime}");
+            Console.WriteLine($"  Created on: {model.CreatedOn}");
+            Console.WriteLine($"  Expires on: {model.ExpiresOn}");
 
             // List up to 10 models currently stored in the resource.
             int count = 0;
@@ -55,8 +55,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 Console.WriteLine($"Model details:");
                 Console.WriteLine($"  Model ID: {modelItem.ModelId}");
                 Console.WriteLine($"  Description: {modelItem.Description}");
-                Console.WriteLine($"  Created on: {modelItem.CreatedDateTime}");
-                Console.WriteLine($"  Expires on: {model.ExpirationDateTime}");
+                Console.WriteLine($"  Created on: {modelItem.CreatedOn}");
+                Console.WriteLine($"  Expires on: {model.ExpiresOn}");
 
                 if (++count == 10)
                 {

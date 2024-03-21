@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (StartOn != null)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn);
             }
-            if (EndOn != null)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn);
             }
-            if (FabricId != null)
+            if (Optional.IsDefined(FabricId))
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (AffectedObjectTypes != null)
+            if (Optional.IsDefined(AffectedObjectTypes))
             {
                 writer.WritePropertyName("affectedObjectTypes"u8);
                 writer.WriteStringValue(AffectedObjectTypes);
             }
-            if (JobStatus != null)
+            if (Optional.IsDefined(JobStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
-            if (JobOutputType.HasValue)
+            if (Optional.IsDefined(JobOutputType))
             {
                 writer.WritePropertyName("jobOutputType"u8);
                 writer.WriteStringValue(JobOutputType.Value.ToString());
             }
-            if (JobName != null)
+            if (Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (TimezoneOffset.HasValue)
+            if (Optional.IsDefined(TimezoneOffset))
             {
                 writer.WritePropertyName("timezoneOffset"u8);
                 writer.WriteNumberValue(TimezoneOffset.Value);

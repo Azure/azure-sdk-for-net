@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,39 +47,39 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MeterId.HasValue)
+            if (Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (BillingLocation.HasValue)
+            if (Optional.IsDefined(BillingLocation))
             {
                 writer.WritePropertyName("billingLocation"u8);
                 writer.WriteStringValue(BillingLocation.Value);
             }
-            if (ShortName != null)
+            if (Optional.IsDefined(ShortName))
             {
                 writer.WritePropertyName("shortName"u8);
                 writer.WriteStringValue(ShortName);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Multiplier.HasValue)
+            if (Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);

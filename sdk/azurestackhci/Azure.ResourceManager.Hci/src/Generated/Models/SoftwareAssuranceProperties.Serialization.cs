@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (SoftwareAssuranceStatus.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceStatus))
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
             }
-            if (SoftwareAssuranceIntent.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
-            if (options.Format != "W" && LastUpdated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");

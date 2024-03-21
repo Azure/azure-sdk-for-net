@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         internal KpiParticipantProfilesMetadata(string typeName)
         {
-            if (typeName == null)
-            {
-                throw new ArgumentNullException(nameof(typeName));
-            }
+            Argument.AssertNotNull(typeName, nameof(typeName));
 
             TypeName = typeName;
         }

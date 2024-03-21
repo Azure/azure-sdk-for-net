@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -15,27 +16,27 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (MediaComposition.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (RawId != null)
+            if (MediaComposition.Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (CommunicationUser != null)
+            if (MediaComposition.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
                 writer.WriteObjectValue(CommunicationUser);
             }
-            if (PhoneNumber != null)
+            if (MediaComposition.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteObjectValue(PhoneNumber);
             }
-            if (MicrosoftTeamsUser != null)
+            if (MediaComposition.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LargeInstance
@@ -82,14 +80,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual async Task<Response<LargeStorageInstanceResource>> GetAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeStorageInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeStorageInstanceName));
-            }
-            if (azureLargeStorageInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeStorageInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
             using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Get");
             scope.Start();
@@ -135,14 +126,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual Response<LargeStorageInstanceResource> Get(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeStorageInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeStorageInstanceName));
-            }
-            if (azureLargeStorageInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeStorageInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
             using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Get");
             scope.Start();
@@ -251,14 +235,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeStorageInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeStorageInstanceName));
-            }
-            if (azureLargeStorageInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeStorageInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
             using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Exists");
             scope.Start();
@@ -301,14 +278,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeStorageInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeStorageInstanceName));
-            }
-            if (azureLargeStorageInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeStorageInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
             using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.Exists");
             scope.Start();
@@ -351,14 +321,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<LargeStorageInstanceResource>> GetIfExistsAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeStorageInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeStorageInstanceName));
-            }
-            if (azureLargeStorageInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeStorageInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
             using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.GetIfExists");
             scope.Start();
@@ -403,14 +366,7 @@ namespace Azure.ResourceManager.LargeInstance
         /// <exception cref="ArgumentNullException"> <paramref name="azureLargeStorageInstanceName"/> is null. </exception>
         public virtual NullableResponse<LargeStorageInstanceResource> GetIfExists(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            if (azureLargeStorageInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(azureLargeStorageInstanceName));
-            }
-            if (azureLargeStorageInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureLargeStorageInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
 
             using var scope = _largeStorageInstanceAzureLargeStorageInstanceClientDiagnostics.CreateScope("LargeStorageInstanceCollection.GetIfExists");
             scope.Start();

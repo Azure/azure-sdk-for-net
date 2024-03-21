@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BackupProperties != null)
+            if (Optional.IsDefined(BackupProperties))
             {
                 writer.WritePropertyName("backupProperties"u8);
                 writer.WriteObjectValue(BackupProperties);

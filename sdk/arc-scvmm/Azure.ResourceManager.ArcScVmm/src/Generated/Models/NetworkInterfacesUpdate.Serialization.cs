@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MacAddress != null)
+            if (Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (VirtualNetworkId != null)
+            if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (IPv4AddressType.HasValue)
+            if (Optional.IsDefined(IPv4AddressType))
             {
                 writer.WritePropertyName("ipv4AddressType"u8);
                 writer.WriteStringValue(IPv4AddressType.Value.ToString());
             }
-            if (IPv6AddressType.HasValue)
+            if (Optional.IsDefined(IPv6AddressType))
             {
                 writer.WritePropertyName("ipv6AddressType"u8);
                 writer.WriteStringValue(IPv6AddressType.Value.ToString());
             }
-            if (MacAddressType.HasValue)
+            if (Optional.IsDefined(MacAddressType))
             {
                 writer.WritePropertyName("macAddressType"u8);
                 writer.WriteStringValue(MacAddressType.Value.ToString());
             }
-            if (NicId != null)
+            if (Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);

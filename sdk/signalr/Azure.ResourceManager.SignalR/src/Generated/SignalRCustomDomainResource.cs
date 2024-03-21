@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRCustomDomainResource>> UpdateAsync(WaitUntil waitUntil, SignalRCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Update");
             scope.Start();
@@ -330,10 +325,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRCustomDomainResource> Update(WaitUntil waitUntil, SignalRCustomDomainData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Update");
             scope.Start();

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (IsSecret.HasValue)
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);

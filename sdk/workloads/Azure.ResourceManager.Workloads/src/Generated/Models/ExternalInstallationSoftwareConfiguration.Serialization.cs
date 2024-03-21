@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (CentralServerVmId != null)
+            if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);

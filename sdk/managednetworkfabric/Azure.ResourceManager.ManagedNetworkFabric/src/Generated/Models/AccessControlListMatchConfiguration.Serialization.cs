@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (MatchConfigurationName != null)
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
             }
-            if (SequenceNumber.HasValue)
+            if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (IPAddressType.HasValue)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (!(MatchConditions is ChangeTrackingList<AccessControlListMatchCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConditions))
             {
                 writer.WritePropertyName("matchConditions"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<AccessControlListAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();

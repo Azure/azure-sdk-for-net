@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (PrivateDnsZoneSuffix != null)
+            if (Optional.IsDefined(PrivateDnsZoneSuffix))
             {
                 writer.WritePropertyName("privateDnsZoneSuffix"u8);
                 writer.WriteStringValue(PrivateDnsZoneSuffix);

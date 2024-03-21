@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Dns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<string> provisioningState = default;
-            Optional<WritableSubResource> targetResource = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            string provisioningState = default;
+            WritableSubResource targetResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Dns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsBaseRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, serializedAdditionalRawData);
+            return new DnsBaseRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                provisioningState,
+                targetResource,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsBaseRecordData>.Write(ModelReaderWriterOptions options)

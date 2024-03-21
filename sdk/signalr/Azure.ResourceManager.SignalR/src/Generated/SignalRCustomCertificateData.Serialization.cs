@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.SignalR
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SignalR
             writer.WriteStringValue(KeyVaultBaseUri.AbsoluteUri);
             writer.WritePropertyName("keyVaultSecretName"u8);
             writer.WriteStringValue(KeyVaultSecretName);
-            if (KeyVaultSecretVersion != null)
+            if (Optional.IsDefined(KeyVaultSecretVersion))
             {
                 writer.WritePropertyName("keyVaultSecretVersion"u8);
                 writer.WriteStringValue(KeyVaultSecretVersion);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (!(EndpointDetails is ChangeTrackingList<OutboundEndpointDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();

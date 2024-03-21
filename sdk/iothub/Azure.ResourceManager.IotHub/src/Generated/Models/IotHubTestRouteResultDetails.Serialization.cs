@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(CompilationErrors is ChangeTrackingList<RouteCompilationError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CompilationErrors))
             {
                 writer.WritePropertyName("compilationErrors"u8);
                 writer.WriteStartArray();

@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="moverResources"/> is null. </exception>
         public MoverCommitContent(IEnumerable<ResourceIdentifier> moverResources)
         {
-            if (moverResources == null)
-            {
-                throw new ArgumentNullException(nameof(moverResources));
-            }
+            Argument.AssertNotNull(moverResources, nameof(moverResources));
 
             MoverResources = moverResources.ToList();
         }

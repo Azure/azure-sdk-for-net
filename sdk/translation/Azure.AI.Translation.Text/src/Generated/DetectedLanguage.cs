@@ -54,10 +54,7 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
         internal DetectedLanguage(string language, float score)
         {
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
+            Argument.AssertNotNull(language, nameof(language));
 
             Language = language;
             Score = score;

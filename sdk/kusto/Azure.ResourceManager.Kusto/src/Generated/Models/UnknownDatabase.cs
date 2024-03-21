@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    /// <summary> The UnknownDatabase. </summary>
+    /// <summary> Unknown version of Database. </summary>
     internal partial class UnknownDatabase : KustoDatabaseData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatabase"/>. </summary>

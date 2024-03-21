@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -288,10 +286,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BgpConnectionResource>> UpdateAsync(WaitUntil waitUntil, BgpConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnectionResource.Update");
             scope.Start();
@@ -337,10 +332,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BgpConnectionResource> Update(WaitUntil waitUntil, BgpConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _bgpConnectionVirtualHubBgpConnectionClientDiagnostics.CreateScope("BgpConnectionResource.Update");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Dynatrace.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetAccountCredentialsRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DynatraceAccountCredentialsInfo> GetAccountCredentials(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetAccountCredentialsRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -188,30 +145,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -238,30 +174,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitoredResourceListResponse> ListMonitoredResources(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -309,30 +224,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DynatraceVmExtensionPayload>> GetVmHostPayloadAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetVmHostPayloadRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -359,30 +253,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DynatraceVmExtensionPayload> GetVmHostPayload(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetVmHostPayloadRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -429,30 +302,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DynatraceMonitorData>> GetAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -481,30 +333,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DynatraceMonitorData> Get(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -558,34 +389,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, monitorName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -609,34 +416,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, monitorName, data);
             _pipeline.Send(message, cancellationToken);
@@ -684,34 +467,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DynatraceMonitorData>> UpdateAsync(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, monitorName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -739,34 +498,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DynatraceMonitorData> Update(string subscriptionId, string resourceGroupName, string monitorName, DynatraceMonitorPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, monitorName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -813,30 +548,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -860,30 +574,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -922,14 +615,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorResourceListResult>> ListBySubscriptionIdAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -954,14 +640,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorResourceListResult> ListBySubscriptionId(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1006,22 +685,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorResourceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1047,22 +712,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorResourceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1110,30 +761,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VmHostsListResponse>> ListHostsAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1160,30 +790,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VmHostsListResponse> ListHosts(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1231,30 +840,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceListResponse>> ListAppServicesAsync(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListAppServicesRequest(subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1281,30 +869,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceListResponse> ListAppServices(string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListAppServicesRequest(subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1360,30 +927,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DynatraceSsoDetailsResult>> GetSsoDetailsAsync(string subscriptionId, string resourceGroupName, string monitorName, DynatraceSsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetSsoDetailsRequest(subscriptionId, resourceGroupName, monitorName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1411,30 +957,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DynatraceSsoDetailsResult> GetSsoDetails(string subscriptionId, string resourceGroupName, string monitorName, DynatraceSsoDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateGetSsoDetailsRequest(subscriptionId, resourceGroupName, monitorName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1487,34 +1012,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LinkableEnvironmentListResponse>> ListLinkableEnvironmentsAsync(string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListLinkableEnvironmentsRequest(subscriptionId, resourceGroupName, monitorName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1542,34 +1043,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LinkableEnvironmentListResponse> ListLinkableEnvironments(string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListLinkableEnvironmentsRequest(subscriptionId, resourceGroupName, monitorName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1611,34 +1088,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitoredResourceListResponse>> ListMonitoredResourcesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1666,34 +1119,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitoredResourceListResponse> ListMonitoredResourcesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListMonitoredResourcesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -1733,18 +1162,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorResourceListResult>> ListBySubscriptionIdNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1770,18 +1189,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorResourceListResult> ListBySubscriptionIdNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListBySubscriptionIdNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -1822,26 +1231,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MonitorResourceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1868,26 +1260,9 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MonitorResourceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1929,34 +1304,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<VmHostsListResponse>> ListHostsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1984,34 +1335,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<VmHostsListResponse> ListHostsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListHostsNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -2053,34 +1380,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppServiceListResponse>> ListAppServicesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListAppServicesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2108,34 +1411,10 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppServiceListResponse> ListAppServicesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
 
             using var message = CreateListAppServicesNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName);
             _pipeline.Send(message, cancellationToken);
@@ -2178,38 +1457,11 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LinkableEnvironmentListResponse>> ListLinkableEnvironmentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListLinkableEnvironmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -2238,38 +1490,11 @@ namespace Azure.ResourceManager.Dynatrace
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LinkableEnvironmentListResponse> ListLinkableEnvironmentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, LinkableEnvironmentContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (monitorName == null)
-            {
-                throw new ArgumentNullException(nameof(monitorName));
-            }
-            if (monitorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(monitorName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListLinkableEnvironmentsNextPageRequest(nextLink, subscriptionId, resourceGroupName, monitorName, content);
             _pipeline.Send(message, cancellationToken);

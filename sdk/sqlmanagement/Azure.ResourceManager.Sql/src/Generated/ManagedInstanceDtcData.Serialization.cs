@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DtcEnabled.HasValue)
+            if (Optional.IsDefined(DtcEnabled))
             {
                 writer.WritePropertyName("dtcEnabled"u8);
                 writer.WriteBooleanValue(DtcEnabled.Value);
             }
-            if (SecuritySettings != null)
+            if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings);
             }
-            if (!(ExternalDnsSuffixSearchList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalDnsSuffixSearchList))
             {
                 writer.WritePropertyName("externalDnsSuffixSearchList"u8);
                 writer.WriteStartArray();
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DtcHostNameDnsSuffix != null)
+            if (options.Format != "W" && Optional.IsDefined(DtcHostNameDnsSuffix))
             {
                 writer.WritePropertyName("dtcHostNameDnsSuffix"u8);
                 writer.WriteStringValue(DtcHostNameDnsSuffix);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());

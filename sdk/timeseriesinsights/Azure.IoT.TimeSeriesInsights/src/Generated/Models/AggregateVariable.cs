@@ -17,10 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public AggregateVariable(TimeSeriesExpression aggregation)
         {
-            if (aggregation == null)
-            {
-                throw new ArgumentNullException(nameof(aggregation));
-            }
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
 
             Aggregation = aggregation;
             Kind = "aggregate";

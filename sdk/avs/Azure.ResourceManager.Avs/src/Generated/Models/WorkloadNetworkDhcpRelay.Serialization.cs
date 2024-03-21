@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (!(ServerAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerAddresses))
             {
                 writer.WritePropertyName("serverAddresses"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
             writer.WritePropertyName("dhcpType"u8);
             writer.WriteStringValue(DhcpType.ToString());
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && !(Segments is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
                 writer.WriteStartArray();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Revision.HasValue)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);

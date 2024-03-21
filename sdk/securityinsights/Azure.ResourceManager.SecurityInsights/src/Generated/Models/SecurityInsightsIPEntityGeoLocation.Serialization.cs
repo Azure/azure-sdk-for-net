@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Asn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && City != null)
+            if (options.Format != "W" && Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && CountryCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && CountryName != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryName))
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (options.Format != "W" && Latitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (options.Format != "W" && Longitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);

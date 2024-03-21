@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (StorageEndpoint != null)
+            if (Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (StorageAccountAccessKey != null)
+            if (Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (RetentionDays.HasValue)
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (!(AuditActionsAndGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
             {
                 writer.WritePropertyName("auditActionsAndGroups"u8);
                 writer.WriteStartArray();
@@ -85,17 +85,17 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (StorageAccountSubscriptionId.HasValue)
+            if (Optional.IsDefined(StorageAccountSubscriptionId))
             {
                 writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
             }
-            if (IsStorageSecondaryKeyInUse.HasValue)
+            if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
             {
                 writer.WritePropertyName("isStorageSecondaryKeyInUse"u8);
                 writer.WriteBooleanValue(IsStorageSecondaryKeyInUse.Value);
             }
-            if (IsAzureMonitorTargetEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
             {
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);

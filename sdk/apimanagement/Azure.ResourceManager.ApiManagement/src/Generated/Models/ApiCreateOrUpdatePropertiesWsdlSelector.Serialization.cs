@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (WsdlServiceName != null)
+            if (Optional.IsDefined(WsdlServiceName))
             {
                 writer.WritePropertyName("wsdlServiceName"u8);
                 writer.WriteStringValue(WsdlServiceName);
             }
-            if (WsdlEndpointName != null)
+            if (Optional.IsDefined(WsdlEndpointName))
             {
                 writer.WritePropertyName("wsdlEndpointName"u8);
                 writer.WriteStringValue(WsdlEndpointName);

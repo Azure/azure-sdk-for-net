@@ -26,14 +26,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreCriteria"/> or <paramref name="datasourceInfo"/> is null. </exception>
         public ItemLevelRestoreTargetInfo(RecoverySetting recoverySetting, IEnumerable<ItemLevelRestoreCriteria> restoreCriteria, DataSourceInfo datasourceInfo) : base(recoverySetting)
         {
-            if (restoreCriteria == null)
-            {
-                throw new ArgumentNullException(nameof(restoreCriteria));
-            }
-            if (datasourceInfo == null)
-            {
-                throw new ArgumentNullException(nameof(datasourceInfo));
-            }
+            Argument.AssertNotNull(restoreCriteria, nameof(restoreCriteria));
+            Argument.AssertNotNull(datasourceInfo, nameof(datasourceInfo));
 
             RestoreCriteria = restoreCriteria.ToList();
             DatasourceInfo = datasourceInfo;

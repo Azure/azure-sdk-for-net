@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (LocalizedValue != null)
+            if (Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

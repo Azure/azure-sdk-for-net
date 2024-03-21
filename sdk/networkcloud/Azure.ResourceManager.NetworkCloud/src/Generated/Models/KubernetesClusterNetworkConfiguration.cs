@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkId"/> or <paramref name="cniNetworkId"/> is null. </exception>
         public KubernetesClusterNetworkConfiguration(ResourceIdentifier cloudServicesNetworkId, ResourceIdentifier cniNetworkId)
         {
-            if (cloudServicesNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(cloudServicesNetworkId));
-            }
-            if (cniNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(cniNetworkId));
-            }
+            Argument.AssertNotNull(cloudServicesNetworkId, nameof(cloudServicesNetworkId));
+            Argument.AssertNotNull(cniNetworkId, nameof(cniNetworkId));
 
             CloudServicesNetworkId = cloudServicesNetworkId;
             CniNetworkId = cniNetworkId;

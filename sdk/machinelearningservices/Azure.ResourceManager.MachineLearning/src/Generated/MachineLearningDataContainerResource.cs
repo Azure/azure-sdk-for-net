@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -350,10 +348,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningDataContainerResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningDataContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningDataContainerDataContainersClientDiagnostics.CreateScope("MachineLearningDataContainerResource.Update");
             scope.Start();
@@ -399,10 +394,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningDataContainerResource> Update(WaitUntil waitUntil, MachineLearningDataContainerData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningDataContainerDataContainersClientDiagnostics.CreateScope("MachineLearningDataContainerResource.Update");
             scope.Start();

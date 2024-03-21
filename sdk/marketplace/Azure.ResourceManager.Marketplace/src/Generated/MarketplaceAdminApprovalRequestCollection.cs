@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Marketplace
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MarketplaceAdminApprovalRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MarketplaceAdminApprovalRequestResource> CreateOrUpdate(WaitUntil waitUntil, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
@@ -199,18 +177,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Get");
             scope.Start();
@@ -256,18 +224,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         public virtual Response<MarketplaceAdminApprovalRequestResource> Get(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Get");
             scope.Start();
@@ -371,18 +329,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Exists");
             scope.Start();
@@ -426,18 +374,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         public virtual Response<bool> Exists(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.Exists");
             scope.Start();
@@ -481,18 +419,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         public virtual async Task<NullableResponse<MarketplaceAdminApprovalRequestResource>> GetIfExistsAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.GetIfExists");
             scope.Start();
@@ -538,18 +466,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         public virtual NullableResponse<MarketplaceAdminApprovalRequestResource> GetIfExists(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var scope = _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceAdminApprovalRequestCollection.GetIfExists");
             scope.Start();

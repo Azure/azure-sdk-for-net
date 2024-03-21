@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (DurationType.HasValue)
+            if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());

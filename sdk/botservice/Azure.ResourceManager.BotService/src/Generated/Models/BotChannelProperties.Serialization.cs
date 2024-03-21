@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);

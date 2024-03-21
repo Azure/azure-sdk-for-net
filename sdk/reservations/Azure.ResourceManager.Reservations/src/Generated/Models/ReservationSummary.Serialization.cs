@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SucceededCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SucceededCount))
             {
                 writer.WritePropertyName("succeededCount"u8);
                 writer.WriteNumberValue(SucceededCount.Value);
             }
-            if (options.Format != "W" && FailedCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedCount))
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (options.Format != "W" && ExpiringCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiringCount))
             {
                 writer.WritePropertyName("expiringCount"u8);
                 writer.WriteNumberValue(ExpiringCount.Value);
             }
-            if (options.Format != "W" && ExpiredCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiredCount))
             {
                 writer.WritePropertyName("expiredCount"u8);
                 writer.WriteNumberValue(ExpiredCount.Value);
             }
-            if (options.Format != "W" && PendingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingCount))
             {
                 writer.WritePropertyName("pendingCount"u8);
                 writer.WriteNumberValue(PendingCount.Value);
             }
-            if (options.Format != "W" && CancelledCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CancelledCount))
             {
                 writer.WritePropertyName("cancelledCount"u8);
                 writer.WriteNumberValue(CancelledCount.Value);
             }
-            if (options.Format != "W" && ProcessingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessingCount))
             {
                 writer.WritePropertyName("processingCount"u8);
                 writer.WriteNumberValue(ProcessingCount.Value);
             }
-            if (options.Format != "W" && WarningCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WarningCount))
             {
                 writer.WritePropertyName("warningCount"u8);
                 writer.WriteNumberValue(WarningCount.Value);
             }
-            if (options.Format != "W" && NoBenefitCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NoBenefitCount))
             {
                 writer.WritePropertyName("noBenefitCount"u8);
                 writer.WriteNumberValue(NoBenefitCount.Value);

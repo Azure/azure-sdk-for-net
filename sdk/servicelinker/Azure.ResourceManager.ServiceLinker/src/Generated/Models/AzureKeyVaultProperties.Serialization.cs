@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (DoesConnectAsKubernetesCsiDriver.HasValue)
+            if (Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
             {
                 if (DoesConnectAsKubernetesCsiDriver != null)
                 {

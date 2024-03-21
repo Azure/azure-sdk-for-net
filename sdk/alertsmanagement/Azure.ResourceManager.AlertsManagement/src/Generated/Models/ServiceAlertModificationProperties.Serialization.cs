@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertId))
             {
                 writer.WritePropertyName("alertId"u8);
                 writer.WriteStringValue(AlertId.Value);
             }
-            if (!(Modifications is ChangeTrackingList<ServiceAlertModificationItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modifications))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();

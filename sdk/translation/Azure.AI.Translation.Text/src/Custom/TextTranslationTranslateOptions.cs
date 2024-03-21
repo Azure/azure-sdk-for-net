@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Client options for TextTranslationClient.Translate </summary>
+    [CodeGenSuppress("ClientTraceId", typeof(string))]
     public partial class TextTranslationTranslateOptions
     {
         /// <summary>
@@ -23,7 +25,7 @@ namespace Azure.AI.Translation.Text
         /// <summary>
         /// A client-generated GUID to uniquely identify the request.
         /// </summary>
-        public string ClientTraceId { get; set; }
+        public Guid ClientTraceId { get; set; }
         /// <summary>
         /// Specifies the language of the input text. Find which languages are available to translate from by
         /// looking up supported languages using the translation scope. If the from parameter isn&apos;t specified,
@@ -179,7 +181,7 @@ namespace Azure.AI.Translation.Text
         /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true
         /// specifies that the service is allowed to fall back to a general system when a custom system doesn&apos;t exist.
         /// </param>
-        public TextTranslationTranslateOptions(IEnumerable<string> targetLanguages, IEnumerable<string> content, string clientTraceId = null, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null): base()
+        public TextTranslationTranslateOptions(IEnumerable<string> targetLanguages, IEnumerable<string> content, Guid clientTraceId = default, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null): base()
         {
             TargetLanguages = targetLanguages;
             Content = content;

@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("base64Value"u8);
             writer.WriteStringValue(Base64Value);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (IsExportable.HasValue)
+            if (Optional.IsDefined(IsExportable))
             {
                 writer.WritePropertyName("isExportable"u8);
                 writer.WriteBooleanValue(IsExportable.Value);

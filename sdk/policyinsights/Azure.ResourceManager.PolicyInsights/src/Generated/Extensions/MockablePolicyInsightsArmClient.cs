@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
@@ -226,10 +223,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceRequest(scope, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyTrackedResourceType, policyQuerySettings);
@@ -261,10 +255,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceRequest(scope, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyTrackedResourceType, policyQuerySettings);
@@ -296,10 +287,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForResourceRequest(scope, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyEventType, policyQuerySettings);
@@ -331,10 +319,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForResourceRequest(scope, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyEventType, policyQuerySettings);
@@ -366,10 +351,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForResourceRequest(scope, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyStateType, policyQuerySettings);
@@ -401,10 +383,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyState> GetPolicyStateQueryResults(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForResourceRequest(scope, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyStateType, policyQuerySettings);
@@ -436,10 +415,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForResourceRequest(scope, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);
@@ -470,10 +446,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizePolicyStates(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForResourceRequest(scope, policyStateSummaryType, policyQuerySettings);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);

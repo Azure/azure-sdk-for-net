@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && RuntimeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
             {
                 writer.WritePropertyName("runtimeState"u8);
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();

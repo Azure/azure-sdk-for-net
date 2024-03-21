@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (CreateSource.HasValue)
+            if (Optional.IsDefined(CreateSource))
             {
                 writer.WritePropertyName("createSource"u8);
                 writer.WriteStringValue(CreateSource.Value.ToString());
             }
-            if (SourceId != null)
+            if (Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);

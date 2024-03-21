@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AppId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteNumberValue(AppId.Value);
             }
-            if (options.Format != "W" && AppName != null)
+            if (options.Format != "W" && Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (options.Format != "W" && InstanceName != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceName))
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);

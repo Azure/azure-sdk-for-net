@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IEnumerable<MachineLearningEstimatedVmPrice> values)
         {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(values, nameof(values));
 
             BillingCurrency = billingCurrency;
             UnitOfMeasure = unitOfMeasure;

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<MachineLearningWorkspaceConnectionResource>> UpdateAsync(MachineLearningWorkspaceConnectionPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();
@@ -326,10 +321,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<MachineLearningWorkspaceConnectionResource> Update(MachineLearningWorkspaceConnectionPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionResource.Update");
             scope.Start();

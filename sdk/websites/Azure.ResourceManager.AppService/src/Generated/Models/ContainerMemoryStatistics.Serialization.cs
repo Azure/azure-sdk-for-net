@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Usage.HasValue)
+            if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
             }
-            if (MaxUsage.HasValue)
+            if (Optional.IsDefined(MaxUsage))
             {
                 writer.WritePropertyName("maxUsage"u8);
                 writer.WriteNumberValue(MaxUsage.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);

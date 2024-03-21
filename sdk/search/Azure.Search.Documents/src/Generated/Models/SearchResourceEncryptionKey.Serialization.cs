@@ -21,12 +21,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(KeyVersion);
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
-            if (AccessCredentialsInternal != null)
+            if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue(AccessCredentialsInternal);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {

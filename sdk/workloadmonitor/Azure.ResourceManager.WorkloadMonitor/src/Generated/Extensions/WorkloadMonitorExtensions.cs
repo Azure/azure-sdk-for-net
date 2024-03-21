@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadMonitor.Mocking;
 
@@ -43,10 +41,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> Returns a <see cref="HealthMonitorResource"/> object. </returns>
         public static HealthMonitorResource GetHealthMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadMonitorArmClient(client).GetHealthMonitorResource(id);
         }
@@ -65,10 +60,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> Returns a <see cref="HealthMonitorStateChangeResource"/> object. </returns>
         public static HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableWorkloadMonitorArmClient(client).GetHealthMonitorStateChangeResource(id);
         }
@@ -89,10 +81,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> An object representing collection of HealthMonitorResources and their operations over a HealthMonitorResource. </returns>
         public static HealthMonitorCollection GetHealthMonitors(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadMonitorResourceGroupResource(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
         }
@@ -134,10 +123,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         [ForwardsClientCalls]
         public static async Task<Response<HealthMonitorResource>> GetHealthMonitorAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableWorkloadMonitorResourceGroupResource(resourceGroupResource).GetHealthMonitorAsync(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -179,10 +165,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         [ForwardsClientCalls]
         public static Response<HealthMonitorResource> GetHealthMonitor(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableWorkloadMonitorResourceGroupResource(resourceGroupResource).GetHealthMonitor(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken);
         }

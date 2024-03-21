@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -52,10 +51,7 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         internal RouterQueueStatistics(string queueId, int length)
         {
-            if (queueId == null)
-            {
-                throw new ArgumentNullException(nameof(queueId));
-            }
+            Argument.AssertNotNull(queueId, nameof(queueId));
 
             QueueId = queueId;
             Length = length;

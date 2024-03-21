@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (DataVolumeCap != null)
+            if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
                 writer.WriteObjectValue(DataVolumeCap);
             }
-            if (!(CurrentBillingFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {
                 writer.WritePropertyName("CurrentBillingFeatures"u8);
                 writer.WriteStartArray();

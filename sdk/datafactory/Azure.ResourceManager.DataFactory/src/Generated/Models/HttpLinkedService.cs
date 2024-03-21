@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HttpLinkedService(DataFactoryElement<string> uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
             LinkedServiceType = "HttpServer";
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="certThumbprint"> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, string encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal HttpLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, string encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </summary>
         public DataFactoryElement<IDictionary<string, string>> AuthHeaders { get; set; }
         /// <summary> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </summary>

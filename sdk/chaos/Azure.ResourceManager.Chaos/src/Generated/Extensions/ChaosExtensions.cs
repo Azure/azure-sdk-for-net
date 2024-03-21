@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Chaos.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ChaosCapabilityResource"/> object. </returns>
         public static ChaosCapabilityResource GetChaosCapabilityResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosCapabilityResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ChaosCapabilityTypeResource"/> object. </returns>
         public static ChaosCapabilityTypeResource GetChaosCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosCapabilityTypeResource(id);
         }
@@ -92,10 +84,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ChaosExperimentResource"/> object. </returns>
         public static ChaosExperimentResource GetChaosExperimentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosExperimentResource(id);
         }
@@ -114,10 +103,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ChaosExperimentExecutionResource"/> object. </returns>
         public static ChaosExperimentExecutionResource GetChaosExperimentExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosExperimentExecutionResource(id);
         }
@@ -136,10 +122,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ChaosTargetTypeResource"/> object. </returns>
         public static ChaosTargetTypeResource GetChaosTargetTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosTargetTypeResource(id);
         }
@@ -158,10 +141,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
         public static ChaosTargetResource GetChaosTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosTargetResource(id);
         }
@@ -178,10 +158,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of ChaosExperimentResources and their operations over a ChaosExperimentResource. </returns>
         public static ChaosExperimentCollection GetChaosExperiments(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperiments();
         }
@@ -219,10 +196,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static async Task<Response<ChaosExperimentResource>> GetChaosExperimentAsync(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperimentAsync(experimentName, cancellationToken).ConfigureAwait(false);
         }
@@ -260,10 +234,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static Response<ChaosExperimentResource> GetChaosExperiment(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosExperiment(experimentName, cancellationToken);
         }
@@ -284,10 +255,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of ChaosTargetResources and their operations over a ChaosTargetResource. </returns>
         public static ChaosTargetCollection GetChaosTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName);
         }
@@ -328,10 +296,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTargetAsync(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken).ConfigureAwait(false);
         }
@@ -372,10 +337,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static Response<ChaosTargetResource> GetChaosTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableChaosResourceGroupResource(resourceGroupResource).GetChaosTarget(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken);
         }
@@ -394,10 +356,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of ChaosTargetTypeResources and their operations over a ChaosTargetTypeResource. </returns>
         public static ChaosTargetTypeCollection GetChaosTargetTypes(this SubscriptionResource subscriptionResource, string locationName)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetTypes(locationName);
         }
@@ -436,10 +395,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetTypeAsync(locationName, targetTypeName, cancellationToken).ConfigureAwait(false);
         }
@@ -478,10 +434,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static Response<ChaosTargetTypeResource> GetChaosTargetType(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosTargetType(locationName, targetTypeName, cancellationToken);
         }
@@ -519,10 +472,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ChaosExperimentResource> GetChaosExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperimentsAsync(running, continuationToken, cancellationToken);
         }
@@ -560,10 +510,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosExperimentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ChaosExperimentResource> GetChaosExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableChaosSubscriptionResource(subscriptionResource).GetChaosExperiments(running, continuationToken, cancellationToken);
         }

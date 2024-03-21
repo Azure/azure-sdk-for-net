@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (IsCallingEnabled.HasValue)
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (CallingWebhook != null)
+            if (Optional.IsDefined(CallingWebhook))
             {
                 writer.WritePropertyName("callingWebhook"u8);
                 writer.WriteStringValue(CallingWebhook);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (IncomingCallRoute != null)
+            if (Optional.IsDefined(IncomingCallRoute))
             {
                 writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
             }
-            if (DeploymentEnvironment != null)
+            if (Optional.IsDefined(DeploymentEnvironment))
             {
                 writer.WritePropertyName("deploymentEnvironment"u8);
                 writer.WriteStringValue(DeploymentEnvironment);
             }
-            if (AcceptedTerms.HasValue)
+            if (Optional.IsDefined(AcceptedTerms))
             {
                 if (AcceptedTerms != null)
                 {

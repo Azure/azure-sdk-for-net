@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (!(AllowedCallerIPAddresses is ChangeTrackingList<FlowAccessControlIPAddressRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OpenAuthenticationPolicies != null)
+            if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
                 writer.WriteObjectValue(OpenAuthenticationPolicies);

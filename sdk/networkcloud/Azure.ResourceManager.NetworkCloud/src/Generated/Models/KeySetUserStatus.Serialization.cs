@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzureUserName != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureUserName))
             {
                 writer.WritePropertyName("azureUserName"u8);
                 writer.WriteStringValue(AzureUserName);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);

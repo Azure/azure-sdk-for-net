@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (EncryptionUserAssignedIdentity != null)
+            if (Optional.IsDefined(EncryptionUserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(EncryptionUserAssignedIdentity);
             }
-            if (EncryptionFederatedIdentityClientId != null)
+            if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
             {
                 writer.WritePropertyName("federatedIdentityClientId"u8);
                 writer.WriteStringValue(EncryptionFederatedIdentityClientId);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SelectorMatchOperator.ToString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
-            if (!(ExclusionManagedRuleSets is ChangeTrackingList<ExclusionManagedRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExclusionManagedRuleSets))
             {
                 writer.WritePropertyName("exclusionManagedRuleSets"u8);
                 writer.WriteStartArray();

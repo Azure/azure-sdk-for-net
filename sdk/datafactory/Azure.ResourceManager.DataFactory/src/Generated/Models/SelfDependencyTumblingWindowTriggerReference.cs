@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="offset"/> is null. </exception>
         public SelfDependencyTumblingWindowTriggerReference(string offset)
         {
-            if (offset == null)
-            {
-                throw new ArgumentNullException(nameof(offset));
-            }
+            Argument.AssertNotNull(offset, nameof(offset));
 
             Offset = offset;
             DependencyReferenceType = "SelfDependencyTumblingWindowTriggerReference";

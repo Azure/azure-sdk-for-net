@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Port != null)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);

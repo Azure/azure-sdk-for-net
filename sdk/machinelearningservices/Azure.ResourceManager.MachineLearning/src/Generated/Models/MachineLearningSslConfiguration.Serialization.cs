@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Cert != null)
+            if (Optional.IsDefined(Cert))
             {
                 if (Cert != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cert");
                 }
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 if (Key != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("key");
                 }
             }
-            if (Cname != null)
+            if (Optional.IsDefined(Cname))
             {
                 if (Cname != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cname");
                 }
             }
-            if (LeafDomainLabel != null)
+            if (Optional.IsDefined(LeafDomainLabel))
             {
                 if (LeafDomainLabel != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("leafDomainLabel");
                 }
             }
-            if (OverwriteExistingDomain.HasValue)
+            if (Optional.IsDefined(OverwriteExistingDomain))
             {
                 writer.WritePropertyName("overwriteExistingDomain"u8);
                 writer.WriteBooleanValue(OverwriteExistingDomain.Value);

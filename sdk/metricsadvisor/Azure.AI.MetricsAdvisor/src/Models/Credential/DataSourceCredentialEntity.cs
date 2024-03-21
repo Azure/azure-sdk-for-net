@@ -117,9 +117,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
             DataSourceCredentialKind dataSourceCredentialType = default;
-            Optional<string> dataSourceCredentialId = default;
+            string dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
-            Optional<string> dataSourceCredentialDescription = default;
+            string dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSourceCredentialType"))
@@ -143,7 +143,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new UnknownCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value);
+            return new UnknownCredentialEntity(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription);
         }
 
         private class UnknownCredentialEntity : DataSourceCredentialEntity

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlatformUpdateDomainCount.HasValue)
+            if (Optional.IsDefined(PlatformUpdateDomainCount))
             {
                 writer.WritePropertyName("platformUpdateDomainCount"u8);
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (PlatformFaultDomainCount.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (!(VirtualMachines is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<InstanceViewStatus> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();

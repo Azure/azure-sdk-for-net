@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateLinkServiceId != null)
+            if (Optional.IsDefined(PrivateLinkServiceId))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RequestMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState);

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Domains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Domains))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();

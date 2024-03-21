@@ -18,7 +18,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="name"> The name of the new assistant. </param>
         /// <param name="description"> The description of the new assistant. </param>
         /// <param name="instructions"> The system instructions for the new assistant to use. </param>
-        /// <param name="tools"> The collection of tools to enable for the new assistant. </param>
+        /// <param name="tools">
+        /// The collection of tools to enable for the new assistant.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> A list of previously uploaded file IDs to attach to the assistant. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Assistants.AssistantCreationOptions"/> instance for mocking. </returns>
@@ -64,7 +68,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
         /// on a per-run basis without overriding other instructions.
         /// </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
+        /// <param name="overrideTools">
+        /// The overridden list of enabled tools that the assistant should use to run the thread.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Assistants.CreateRunOptions"/> instance for mocking. </returns>
         public static CreateRunOptions CreateRunOptions(string assistantId = null, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null)
@@ -96,7 +104,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="thread"> The details used to create the new thread. </param>
         /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools the assistant should use to run the thread. </param>
+        /// <param name="overrideTools">
+        /// The overridden list of enabled tools the assistant should use to run the thread.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <returns> A new <see cref="Assistants.CreateAndRunThreadOptions"/> instance for mocking. </returns>
         public static CreateAndRunThreadOptions CreateAndRunThreadOptions(string assistantId = null, AssistantThreadCreationOptions thread = null, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null)
@@ -204,7 +216,11 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCallDetails"/>. </summary>
-        /// <param name="toolCalls"> A list of tool call details for this run step. </param>
+        /// <param name="toolCalls">
+        /// A list of tool call details for this run step.
+        /// Please note <see cref="Assistants.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Assistants.RunStepCodeInterpreterToolCall"/>, <see cref="Assistants.RunStepFunctionToolCall"/> and <see cref="Assistants.RunStepRetrievalToolCall"/>.
+        /// </param>
         /// <returns> A new <see cref="Assistants.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
         {

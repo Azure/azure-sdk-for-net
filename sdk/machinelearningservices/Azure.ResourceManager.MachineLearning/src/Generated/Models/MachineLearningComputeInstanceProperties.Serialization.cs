@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 if (Subnet != null)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subnet");
                 }
             }
-            if (ApplicationSharingPolicy.HasValue)
+            if (Optional.IsDefined(ApplicationSharingPolicy))
             {
                 writer.WritePropertyName("applicationSharingPolicy"u8);
                 writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
             }
-            if (AutologgerSettings != null)
+            if (Optional.IsDefined(AutologgerSettings))
             {
                 if (AutologgerSettings != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autologgerSettings");
                 }
             }
-            if (SshSettings != null)
+            if (Optional.IsDefined(SshSettings))
             {
                 if (SshSettings != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sshSettings");
                 }
             }
-            if (!(CustomServices is ChangeTrackingList<CustomService> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomServices))
             {
                 if (CustomServices != null)
                 {
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("customServices");
                 }
             }
-            if (options.Format != "W" && OSImageMetadata != null)
+            if (options.Format != "W" && Optional.IsDefined(OSImageMetadata))
             {
                 writer.WritePropertyName("osImageMetadata"u8);
                 writer.WriteObjectValue(OSImageMetadata);
             }
-            if (options.Format != "W" && ConnectivityEndpoints != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteObjectValue(ConnectivityEndpoints);
             }
-            if (options.Format != "W" && !(Applications is ChangeTrackingList<MachineLearningComputeInstanceApplication> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Applications))
             {
                 writer.WritePropertyName("applications"u8);
                 writer.WriteStartArray();
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<MachineLearningError> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ComputeInstanceAuthorizationType.HasValue)
+            if (Optional.IsDefined(ComputeInstanceAuthorizationType))
             {
                 if (ComputeInstanceAuthorizationType != null)
                 {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeInstanceAuthorizationType");
                 }
             }
-            if (PersonalComputeInstanceSettings != null)
+            if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
                 if (PersonalComputeInstanceSettings != null)
                 {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("personalComputeInstanceSettings");
                 }
             }
-            if (SetupScriptsSettings != null)
+            if (Optional.IsDefined(SetupScriptsSettings))
             {
                 if (SetupScriptsSettings != null)
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("setupScripts");
                 }
             }
-            if (options.Format != "W" && LastOperation != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 if (LastOperation != null)
                 {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("lastOperation");
                 }
             }
-            if (Schedules != null)
+            if (Optional.IsDefined(Schedules))
             {
                 if (Schedules != null)
                 {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedules");
                 }
             }
-            if (IdleTimeBeforeShutdown != null)
+            if (Optional.IsDefined(IdleTimeBeforeShutdown))
             {
                 writer.WritePropertyName("idleTimeBeforeShutdown"u8);
                 writer.WriteStringValue(IdleTimeBeforeShutdown);
             }
-            if (EnableNodePublicIP.HasValue)
+            if (Optional.IsDefined(EnableNodePublicIP))
             {
                 if (EnableNodePublicIP != null)
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("enableNodePublicIp");
                 }
             }
-            if (options.Format != "W" && !(Containers is ChangeTrackingList<MachineLearningComputeInstanceContainer> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Containers))
             {
                 if (Containers != null)
                 {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containers");
                 }
             }
-            if (options.Format != "W" && !(DataDisks is ChangeTrackingList<MachineLearningComputeInstanceDataDisk> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataDisks))
             {
                 if (DataDisks != null)
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataDisks");
                 }
             }
-            if (options.Format != "W" && !(DataMounts is ChangeTrackingList<MachineLearningComputeInstanceDataMount> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataMounts))
             {
                 if (DataMounts != null)
                 {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataMounts");
                 }
             }
-            if (options.Format != "W" && Versions != null)
+            if (options.Format != "W" && Optional.IsDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteObjectValue(Versions);

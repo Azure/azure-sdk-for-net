@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteObjectValue(Condition);
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

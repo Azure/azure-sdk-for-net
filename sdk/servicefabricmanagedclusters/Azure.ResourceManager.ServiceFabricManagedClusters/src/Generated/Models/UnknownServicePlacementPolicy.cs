@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The UnknownServicePlacementPolicy. </summary>
+    /// <summary> Unknown version of ServicePlacementPolicy. </summary>
     internal partial class UnknownServicePlacementPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicy"/>. </summary>

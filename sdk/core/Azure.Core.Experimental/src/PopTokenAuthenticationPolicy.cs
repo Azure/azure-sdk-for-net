@@ -151,7 +151,7 @@ namespace Azure.Core.Pipeline
             if (_popNonce != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new PopTokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce);
+                var context = new PopTokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, isProofOfPossessionEnabled: true, proofOfPossessionNonce: _popNonce, request: message.Request);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -172,7 +172,7 @@ namespace Azure.Core.Pipeline
             {
                 return false;
             }
-            var context = new PopTokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce, request: message.Request);
+            var context = new PopTokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, isProofOfPossessionEnabled: true, proofOfPossessionNonce: _popNonce, request: message.Request);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);

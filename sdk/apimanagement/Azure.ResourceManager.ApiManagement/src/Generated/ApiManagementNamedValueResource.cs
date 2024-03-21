@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -285,10 +283,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementNamedValueResource>> UpdateAsync(WaitUntil waitUntil, ETag ifMatch, ApiManagementNamedValuePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementNamedValueNamedValueClientDiagnostics.CreateScope("ApiManagementNamedValueResource.Update");
             scope.Start();
@@ -335,10 +330,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<ApiManagementNamedValueResource> Update(WaitUntil waitUntil, ETag ifMatch, ApiManagementNamedValuePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementNamedValueNamedValueClientDiagnostics.CreateScope("ApiManagementNamedValueResource.Update");
             scope.Start();

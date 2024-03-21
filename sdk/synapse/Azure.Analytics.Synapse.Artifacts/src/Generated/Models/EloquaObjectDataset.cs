@@ -18,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public EloquaObjectDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "EloquaObject";
         }

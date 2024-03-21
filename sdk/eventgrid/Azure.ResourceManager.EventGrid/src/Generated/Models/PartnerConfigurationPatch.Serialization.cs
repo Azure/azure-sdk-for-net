@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultMaximumExpirationTimeInDays.HasValue)
+            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);

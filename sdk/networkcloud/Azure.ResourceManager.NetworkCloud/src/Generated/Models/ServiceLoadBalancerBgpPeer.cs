@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="peerAddress"/> is null. </exception>
         public ServiceLoadBalancerBgpPeer(string name, string peerAddress, long peerAsn)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (peerAddress == null)
-            {
-                throw new ArgumentNullException(nameof(peerAddress));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(peerAddress, nameof(peerAddress));
 
             Name = name;
             PeerAddress = peerAddress;

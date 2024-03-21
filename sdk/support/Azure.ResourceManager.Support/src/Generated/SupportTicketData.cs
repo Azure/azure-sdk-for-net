@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
         public SupportSeverityLevel? Severity { get; set; }
         /// <summary> Enrollment Id associated with the support ticket. </summary>
-        public string EnrollmentId { get; }
+        public string EnrollmentId { get; set; }
         /// <summary> Indicates if this requires a 24x7 response from Azure. </summary>
         public bool? Require24X7Response { get; set; }
         /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>

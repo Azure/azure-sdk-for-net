@@ -18,32 +18,20 @@ namespace Azure.Core
         {
         }
 
-        public ChangeTrackingList(Optional<IList<T>> optionalList) : this(optionalList.Value)
+        public ChangeTrackingList(IList<T>? innerList)
         {
-        }
-
-        public ChangeTrackingList(Optional<IReadOnlyList<T>> optionalList) : this(optionalList.Value)
-        {
-        }
-
-        private ChangeTrackingList(IEnumerable<T> innerList)
-        {
-            if (innerList == null)
+            if (innerList != null)
             {
-                return;
+                _innerList = innerList;
             }
-
-            _innerList = innerList.ToList();
         }
 
-        private ChangeTrackingList(IList<T> innerList)
+        public ChangeTrackingList(IReadOnlyList<T>? innerList)
         {
-            if (innerList == null)
+            if (innerList != null)
             {
-                return;
+                _innerList = innerList.ToList();
             }
-
-            _innerList = innerList;
         }
 
         public bool IsUndefined => _innerList == null;

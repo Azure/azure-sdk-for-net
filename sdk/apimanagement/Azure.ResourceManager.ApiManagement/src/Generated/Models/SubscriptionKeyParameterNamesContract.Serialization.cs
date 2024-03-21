@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Header != null)
+            if (Optional.IsDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStringValue(Header);
             }
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);

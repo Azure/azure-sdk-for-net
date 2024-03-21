@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Innererror != null)
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);

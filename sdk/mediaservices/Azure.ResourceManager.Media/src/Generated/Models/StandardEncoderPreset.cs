@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -29,14 +28,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="codecs"/> or <paramref name="formats"/> is null. </exception>
         public StandardEncoderPreset(IEnumerable<MediaCodecBase> codecs, IEnumerable<MediaFormatBase> formats)
         {
-            if (codecs == null)
-            {
-                throw new ArgumentNullException(nameof(codecs));
-            }
-            if (formats == null)
-            {
-                throw new ArgumentNullException(nameof(formats));
-            }
+            Argument.AssertNotNull(codecs, nameof(codecs));
+            Argument.AssertNotNull(formats, nameof(formats));
 
             ExperimentalOptions = new ChangeTrackingDictionary<string, string>();
             Codecs = codecs.ToList();

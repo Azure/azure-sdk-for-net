@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <exception cref="ArgumentNullException"> <paramref name="privateIPAddress"/> or <paramref name="sqlVmInstance"/> is null. </exception>
         public MultiSubnetIPConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, string sqlVmInstance)
         {
-            if (privateIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(privateIPAddress));
-            }
-            if (sqlVmInstance == null)
-            {
-                throw new ArgumentNullException(nameof(sqlVmInstance));
-            }
+            Argument.AssertNotNull(privateIPAddress, nameof(privateIPAddress));
+            Argument.AssertNotNull(sqlVmInstance, nameof(sqlVmInstance));
 
             PrivateIPAddress = privateIPAddress;
             SqlVmInstance = sqlVmInstance;

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute
@@ -82,14 +80,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual async Task<Response<HybridComputeMachineResource>> GetAsync(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Get");
             scope.Start();
@@ -135,14 +126,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual Response<HybridComputeMachineResource> Get(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Get");
             scope.Start();
@@ -250,14 +234,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Exists");
             scope.Start();
@@ -301,14 +278,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual Response<bool> Exists(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Exists");
             scope.Start();
@@ -352,14 +322,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridComputeMachineResource>> GetIfExistsAsync(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.GetIfExists");
             scope.Start();
@@ -405,14 +368,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual NullableResponse<HybridComputeMachineResource> GetIfExists(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
             using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.GetIfExists");
             scope.Start();

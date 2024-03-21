@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -27,42 +26,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Canary != null)
+            if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteObjectValue(Canary);
             }
-            if (LowTraffic != null)
+            if (Optional.IsDefined(LowTraffic))
             {
                 writer.WritePropertyName("lowTraffic"u8);
                 writer.WriteObjectValue(LowTraffic);
             }
-            if (MediumTraffic != null)
+            if (Optional.IsDefined(MediumTraffic))
             {
                 writer.WritePropertyName("mediumTraffic"u8);
                 writer.WriteObjectValue(MediumTraffic);
             }
-            if (HighTraffic != null)
+            if (Optional.IsDefined(HighTraffic))
             {
                 writer.WritePropertyName("highTraffic"u8);
                 writer.WriteObjectValue(HighTraffic);
             }
-            if (RestOfTheWorldGroupOne != null)
+            if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupOne);
             }
-            if (RestOfTheWorldGroupTwo != null)
+            if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupTwo);
             }
-            if (ProviderRegistration != null)
+            if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (!(ResourceTypeRegistrations is ChangeTrackingList<ResourceTypeRegistrationData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();

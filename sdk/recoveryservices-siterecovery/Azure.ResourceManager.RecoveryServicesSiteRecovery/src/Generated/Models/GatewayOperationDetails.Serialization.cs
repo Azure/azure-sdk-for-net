@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && ProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (options.Format != "W" && TimeElapsed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeElapsed))
             {
                 writer.WritePropertyName("timeElapsed"u8);
                 writer.WriteNumberValue(TimeElapsed.Value);
             }
-            if (options.Format != "W" && TimeRemaining.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeRemaining))
             {
                 writer.WritePropertyName("timeRemaining"u8);
                 writer.WriteNumberValue(TimeRemaining.Value);
             }
-            if (options.Format != "W" && UploadSpeed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UploadSpeed))
             {
                 writer.WritePropertyName("uploadSpeed"u8);
                 writer.WriteNumberValue(UploadSpeed.Value);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && !(DataStores is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataStores))
             {
                 writer.WritePropertyName("dataStores"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VMwareReadThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VMwareReadThroughput))
             {
                 writer.WritePropertyName("vmwareReadThroughput"u8);
                 writer.WriteNumberValue(VMwareReadThroughput.Value);

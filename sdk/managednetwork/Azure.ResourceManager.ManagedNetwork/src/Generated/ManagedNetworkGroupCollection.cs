@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagedNetwork
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedNetworkGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedNetworkGroupName, ManagedNetworkGroupData data, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedNetworkGroupResource> CreateOrUpdate(WaitUntil waitUntil, string managedNetworkGroupName, ManagedNetworkGroupData data, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
         public virtual async Task<Response<ManagedNetworkGroupResource>> GetAsync(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
         public virtual Response<ManagedNetworkGroupResource> Get(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<ManagedNetworkGroupResource>> GetIfExistsAsync(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="managedNetworkGroupName"/> is null. </exception>
         public virtual NullableResponse<ManagedNetworkGroupResource> GetIfExists(string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var scope = _managedNetworkGroupClientDiagnostics.CreateScope("ManagedNetworkGroupCollection.GetIfExists");
             scope.Start();

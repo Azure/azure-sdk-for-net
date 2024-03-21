@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SignalR
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRCustomCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, SignalRCustomCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRCustomCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, SignalRCustomCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<SignalRCustomCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<SignalRCustomCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<SignalRCustomCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         public virtual NullableResponse<SignalRCustomCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
         {
-            if (certificateName == null)
-            {
-                throw new ArgumentNullException(nameof(certificateName));
-            }
-            if (certificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(certificateName));
-            }
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
             using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
             scope.Start();

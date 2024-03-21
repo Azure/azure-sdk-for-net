@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(SupportedOptimizationTypes is ChangeTrackingList<OptimizationType> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedOptimizationTypes))
             {
                 writer.WritePropertyName("supportedOptimizationTypes"u8);
                 writer.WriteStartArray();

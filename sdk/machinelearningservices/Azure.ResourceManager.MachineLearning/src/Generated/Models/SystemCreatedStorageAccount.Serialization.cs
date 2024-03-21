@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AllowBlobPublicAccess.HasValue)
+            if (Optional.IsDefined(AllowBlobPublicAccess))
             {
                 writer.WritePropertyName("allowBlobPublicAccess"u8);
                 writer.WriteBooleanValue(AllowBlobPublicAccess.Value);
             }
-            if (ArmResourceIdentifier != null)
+            if (Optional.IsDefined(ArmResourceIdentifier))
             {
                 if (ArmResourceIdentifier != null)
                 {
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("armResourceId");
                 }
             }
-            if (StorageAccountHnsEnabled.HasValue)
+            if (Optional.IsDefined(StorageAccountHnsEnabled))
             {
                 writer.WritePropertyName("storageAccountHnsEnabled"u8);
                 writer.WriteBooleanValue(StorageAccountHnsEnabled.Value);
             }
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 if (StorageAccountName != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storageAccountName");
                 }
             }
-            if (StorageAccountType != null)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 if (StorageAccountType != null)
                 {

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Tiers is ChangeTrackingList<ApplicationGatewayTierType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tiers))
             {
                 writer.WritePropertyName("tiers"u8);
                 writer.WriteStartArray();

@@ -17,10 +17,7 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal SendChatMessageResultInternal(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }

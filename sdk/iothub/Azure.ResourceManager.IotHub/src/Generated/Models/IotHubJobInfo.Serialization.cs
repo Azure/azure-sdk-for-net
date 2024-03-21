@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobId != null)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "R");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "R");
             }
-            if (options.Format != "W" && JobType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(JobType.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && FailureReason != null)
+            if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && ParentJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(ParentJobId))
             {
                 writer.WritePropertyName("parentJobId"u8);
                 writer.WriteStringValue(ParentJobId);

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(EnginePublicIPId);
             writer.WritePropertyName("dataManagementPublicIpId"u8);
             writer.WriteStringValue(DataManagementPublicIPId);
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());

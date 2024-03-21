@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
 
             writer.WriteStartObject();
-            if (!(Benefits is ChangeTrackingList<BillingBenefitsSavingsPlanPatchProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Benefits))
             {
                 writer.WritePropertyName("benefits"u8);
                 writer.WriteStartArray();

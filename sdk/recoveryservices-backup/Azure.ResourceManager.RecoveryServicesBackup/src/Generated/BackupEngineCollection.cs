@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -88,14 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         public virtual async Task<Response<BackupEngineResource>> GetAsync(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (backupEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(backupEngineName));
-            }
-            if (backupEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
             using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.Get");
             scope.Start();
@@ -142,14 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         public virtual Response<BackupEngineResource> Get(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (backupEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(backupEngineName));
-            }
-            if (backupEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
             using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.Get");
             scope.Start();
@@ -260,14 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (backupEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(backupEngineName));
-            }
-            if (backupEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
             using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.Exists");
             scope.Start();
@@ -312,14 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         public virtual Response<bool> Exists(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (backupEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(backupEngineName));
-            }
-            if (backupEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
             using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.Exists");
             scope.Start();
@@ -364,14 +334,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupEngineResource>> GetIfExistsAsync(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (backupEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(backupEngineName));
-            }
-            if (backupEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
             using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.GetIfExists");
             scope.Start();
@@ -418,14 +381,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="backupEngineName"/> is null. </exception>
         public virtual NullableResponse<BackupEngineResource> GetIfExists(string backupEngineName, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (backupEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(backupEngineName));
-            }
-            if (backupEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backupEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(backupEngineName, nameof(backupEngineName));
 
             using var scope = _backupEngineClientDiagnostics.CreateScope("BackupEngineCollection.GetIfExists");
             scope.Start();

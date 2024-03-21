@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DataCollectionRuleResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionRuleResourceId))
             {
                 writer.WritePropertyName("dataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DataCollectionRuleResourceId);
             }
-            if (options.Format != "W" && DataCollectionEndpointResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionEndpointResourceId))
             {
                 writer.WritePropertyName("dataCollectionEndpointResourceId"u8);
                 writer.WriteStringValue(DataCollectionEndpointResourceId);

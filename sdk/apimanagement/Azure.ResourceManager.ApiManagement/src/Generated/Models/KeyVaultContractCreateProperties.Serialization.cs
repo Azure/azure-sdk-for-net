@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (SecretIdentifier != null)
+            if (Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (IdentityClientId != null)
+            if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);

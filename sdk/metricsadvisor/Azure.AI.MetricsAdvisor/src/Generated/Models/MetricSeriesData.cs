@@ -21,10 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
         internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> metricValues)
         {
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(definition, nameof(definition));
 
             Definition = definition;
             Timestamps = timestamps.ToList();

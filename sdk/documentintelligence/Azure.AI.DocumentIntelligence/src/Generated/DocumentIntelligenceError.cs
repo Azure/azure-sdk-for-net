@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -52,14 +51,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal DocumentIntelligenceError(string code, string message)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;

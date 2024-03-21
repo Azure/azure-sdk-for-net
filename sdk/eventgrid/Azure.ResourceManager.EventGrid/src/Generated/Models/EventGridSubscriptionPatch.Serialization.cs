@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (DeliveryWithResourceIdentity != null)
+            if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (EventDeliverySchema.HasValue)
+            if (Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (RetryPolicy != null)
+            if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (DeadLetterDestination != null)
+            if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
                 writer.WriteObjectValue(DeadLetterDestination);
             }
-            if (DeadLetterWithResourceIdentity != null)
+            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterWithResourceIdentity);

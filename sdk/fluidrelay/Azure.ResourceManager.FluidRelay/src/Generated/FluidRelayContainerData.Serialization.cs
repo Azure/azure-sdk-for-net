@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.FluidRelay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && FrsTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FrsTenantId))
             {
                 writer.WritePropertyName("frsTenantId"u8);
                 writer.WriteStringValue(FrsTenantId.Value);
             }
-            if (options.Format != "W" && FrsContainerId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FrsContainerId))
             {
                 writer.WritePropertyName("frsContainerId"u8);
                 writer.WriteStringValue(FrsContainerId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastAccessOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAccessOn))
             {
                 writer.WritePropertyName("lastAccessTime"u8);
                 writer.WriteStringValue(LastAccessOn.Value, "O");

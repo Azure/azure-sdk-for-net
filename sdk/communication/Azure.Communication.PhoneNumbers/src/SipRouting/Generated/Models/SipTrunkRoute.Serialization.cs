@@ -40,10 +40,10 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
 
         internal static SipTrunkRoute DeserializeSipTrunkRoute(JsonElement element)
         {
-            Optional<string> description = default;
+            string description = default;
             string name = default;
             string numberPattern = default;
-            Optional<IReadOnlyList<string>> trunks = default;
+            IReadOnlyList<string> trunks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"))
@@ -77,7 +77,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting
                     continue;
                 }
             }
-            return new SipTrunkRoute(description.Value, name, numberPattern, Optional.ToList(trunks));
+            return new SipTrunkRoute(description, name, numberPattern, trunks ?? new ChangeTrackingList<string>());
         }
     }
 }

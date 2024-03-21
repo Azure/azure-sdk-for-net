@@ -21,14 +21,8 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="audienceIds"/> is null. </exception>
         public PresentationLayout(string presenterId, IEnumerable<string> audienceIds)
         {
-            if (presenterId == null)
-            {
-                throw new ArgumentNullException(nameof(presenterId));
-            }
-            if (audienceIds == null)
-            {
-                throw new ArgumentNullException(nameof(audienceIds));
-            }
+            Argument.AssertNotNull(presenterId, nameof(presenterId));
+            Argument.AssertNotNull(audienceIds, nameof(audienceIds));
 
             PresenterId = presenterId;
             AudienceIds = audienceIds.ToList();

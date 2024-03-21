@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The UnknownAuthenticationDetailsProperties. </summary>
+    /// <summary> Unknown version of AuthenticationDetailsProperties. </summary>
     internal partial class UnknownAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAuthenticationDetailsProperties"/>. </summary>

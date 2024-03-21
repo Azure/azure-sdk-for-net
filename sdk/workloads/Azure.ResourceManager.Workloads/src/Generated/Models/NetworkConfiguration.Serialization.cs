@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (IsSecondaryIPEnabled.HasValue)
+            if (Optional.IsDefined(IsSecondaryIPEnabled))
             {
                 writer.WritePropertyName("isSecondaryIpEnabled"u8);
                 writer.WriteBooleanValue(IsSecondaryIPEnabled.Value);

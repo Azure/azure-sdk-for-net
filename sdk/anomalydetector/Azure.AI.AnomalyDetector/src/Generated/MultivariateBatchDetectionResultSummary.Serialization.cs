@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -29,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (!(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -39,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(VariableStates is ChangeTrackingList<VariableState> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();

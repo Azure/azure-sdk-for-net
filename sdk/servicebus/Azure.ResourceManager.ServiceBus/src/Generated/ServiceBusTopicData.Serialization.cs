@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,94 +48,94 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && AccessedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccessedOn))
             {
                 writer.WritePropertyName("accessedAt"u8);
                 writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (options.Format != "W" && SubscriptionCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionCount))
             {
                 writer.WritePropertyName("subscriptionCount"u8);
                 writer.WriteNumberValue(SubscriptionCount.Value);
             }
-            if (options.Format != "W" && CountDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
                 writer.WriteObjectValue(CountDetails);
             }
-            if (DefaultMessageTimeToLive.HasValue)
+            if (Optional.IsDefined(DefaultMessageTimeToLive))
             {
                 writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
-            if (MaxSizeInMegabytes.HasValue)
+            if (Optional.IsDefined(MaxSizeInMegabytes))
             {
                 writer.WritePropertyName("maxSizeInMegabytes"u8);
                 writer.WriteNumberValue(MaxSizeInMegabytes.Value);
             }
-            if (MaxMessageSizeInKilobytes.HasValue)
+            if (Optional.IsDefined(MaxMessageSizeInKilobytes))
             {
                 writer.WritePropertyName("maxMessageSizeInKilobytes"u8);
                 writer.WriteNumberValue(MaxMessageSizeInKilobytes.Value);
             }
-            if (RequiresDuplicateDetection.HasValue)
+            if (Optional.IsDefined(RequiresDuplicateDetection))
             {
                 writer.WritePropertyName("requiresDuplicateDetection"u8);
                 writer.WriteBooleanValue(RequiresDuplicateDetection.Value);
             }
-            if (DuplicateDetectionHistoryTimeWindow.HasValue)
+            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
             {
                 writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
-            if (EnableBatchedOperations.HasValue)
+            if (Optional.IsDefined(EnableBatchedOperations))
             {
                 writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (SupportOrdering.HasValue)
+            if (Optional.IsDefined(SupportOrdering))
             {
                 writer.WritePropertyName("supportOrdering"u8);
                 writer.WriteBooleanValue(SupportOrdering.Value);
             }
-            if (AutoDeleteOnIdle.HasValue)
+            if (Optional.IsDefined(AutoDeleteOnIdle))
             {
                 writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
-            if (EnablePartitioning.HasValue)
+            if (Optional.IsDefined(EnablePartitioning))
             {
                 writer.WritePropertyName("enablePartitioning"u8);
                 writer.WriteBooleanValue(EnablePartitioning.Value);
             }
-            if (EnableExpress.HasValue)
+            if (Optional.IsDefined(EnableExpress))
             {
                 writer.WritePropertyName("enableExpress"u8);
                 writer.WriteBooleanValue(EnableExpress.Value);

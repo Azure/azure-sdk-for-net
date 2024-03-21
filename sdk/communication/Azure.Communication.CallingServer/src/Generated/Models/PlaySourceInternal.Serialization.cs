@@ -17,12 +17,12 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
-            if (PlaySourceId != null)
+            if (Optional.IsDefined(PlaySourceId))
             {
                 writer.WritePropertyName("playSourceId"u8);
                 writer.WriteStringValue(PlaySourceId);
             }
-            if (FileSource != null)
+            if (Optional.IsDefined(FileSource))
             {
                 writer.WritePropertyName("fileSource"u8);
                 writer.WriteObjectValue(FileSource);

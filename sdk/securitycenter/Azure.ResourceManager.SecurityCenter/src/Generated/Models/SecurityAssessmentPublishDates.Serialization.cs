@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (GA != null)
+            if (Optional.IsDefined(GA))
             {
                 writer.WritePropertyName("GA"u8);
                 writer.WriteStringValue(GA);

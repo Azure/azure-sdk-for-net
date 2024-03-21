@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,34 +49,34 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SoftDeletePeriod.HasValue)
+            if (Optional.IsDefined(SoftDeletePeriod))
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
-            if (HotCachePeriod.HasValue)
+            if (Optional.IsDefined(HotCachePeriod))
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
-            if (options.Format != "W" && Statistics != null)
+            if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
-            if (options.Format != "W" && IsFollowed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsFollowed))
             {
                 writer.WritePropertyName("isFollowed"u8);
                 writer.WriteBooleanValue(IsFollowed.Value);

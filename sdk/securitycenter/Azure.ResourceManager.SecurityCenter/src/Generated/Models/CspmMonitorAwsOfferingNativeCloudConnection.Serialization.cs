@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (CloudRoleArn != null)
+            if (Optional.IsDefined(CloudRoleArn))
             {
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);

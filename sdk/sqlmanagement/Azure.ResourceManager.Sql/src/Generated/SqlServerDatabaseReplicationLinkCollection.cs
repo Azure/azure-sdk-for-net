@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual async Task<Response<SqlServerDatabaseReplicationLinkResource>> GetAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-            if (linkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerDatabaseReplicationLinkCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<SqlServerDatabaseReplicationLinkResource> Get(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-            if (linkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerDatabaseReplicationLinkCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-            if (linkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerDatabaseReplicationLinkCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual Response<bool> Exists(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-            if (linkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerDatabaseReplicationLinkCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerDatabaseReplicationLinkResource>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-            if (linkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerDatabaseReplicationLinkCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
         public virtual NullableResponse<SqlServerDatabaseReplicationLinkResource> GetIfExists(string linkId, CancellationToken cancellationToken = default)
         {
-            if (linkId == null)
-            {
-                throw new ArgumentNullException(nameof(linkId));
-            }
-            if (linkId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(linkId));
-            }
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
 
             using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerDatabaseReplicationLinkCollection.GetIfExists");
             scope.Start();

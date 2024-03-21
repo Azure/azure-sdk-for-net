@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -26,14 +25,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="issuer"/> or <paramref name="audience"/> is null. </exception>
         public ContentKeyPolicyTokenRestriction(string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, ContentKeyPolicyRestrictionTokenType restrictionTokenType)
         {
-            if (issuer == null)
-            {
-                throw new ArgumentNullException(nameof(issuer));
-            }
-            if (audience == null)
-            {
-                throw new ArgumentNullException(nameof(audience));
-            }
+            Argument.AssertNotNull(issuer, nameof(issuer));
+            Argument.AssertNotNull(audience, nameof(audience));
 
             Issuer = issuer;
             Audience = audience;

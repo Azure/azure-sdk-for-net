@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowTriggerResource>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<LogicWorkflowTriggerResource> Get(string triggerName, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.Get");
             scope.Start();
@@ -248,14 +232,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.Exists");
             scope.Start();
@@ -298,14 +275,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<bool> Exists(string triggerName, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.Exists");
             scope.Start();
@@ -348,14 +318,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.GetIfExists");
             scope.Start();
@@ -400,14 +363,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _logicWorkflowTriggerWorkflowTriggersClientDiagnostics.CreateScope("LogicWorkflowTriggerCollection.GetIfExists");
             scope.Start();

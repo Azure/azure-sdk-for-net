@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Key1 != null)
+            if (Optional.IsDefined(Key1))
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1);
             }
-            if (Key2 != null)
+            if (Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2);

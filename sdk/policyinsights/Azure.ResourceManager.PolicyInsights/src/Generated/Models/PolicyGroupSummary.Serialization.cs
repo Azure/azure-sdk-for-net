@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (PolicyGroupName != null)
+            if (Optional.IsDefined(PolicyGroupName))
             {
                 writer.WritePropertyName("policyGroupName"u8);
                 writer.WriteStringValue(PolicyGroupName);
             }
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteObjectValue(Results);

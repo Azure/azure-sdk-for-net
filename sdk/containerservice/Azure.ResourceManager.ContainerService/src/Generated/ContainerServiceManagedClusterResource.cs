@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -564,10 +562,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="containerServiceTagsObject"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerServiceManagedClusterResource>> UpdateAsync(WaitUntil waitUntil, ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
-            if (containerServiceTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(containerServiceTagsObject));
-            }
+            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Update");
             scope.Start();
@@ -613,10 +608,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="containerServiceTagsObject"/> is null. </exception>
         public virtual ArmOperation<ContainerServiceManagedClusterResource> Update(WaitUntil waitUntil, ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
-            if (containerServiceTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(containerServiceTagsObject));
-            }
+            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.Update");
             scope.Start();
@@ -658,14 +650,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual async Task<Response<ManagedClusterAccessProfile>> GetAccessProfileAsync(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.GetAccessProfile");
             scope.Start();
@@ -704,14 +689,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
         public virtual Response<ManagedClusterAccessProfile> GetAccessProfile(string roleName, CancellationToken cancellationToken = default)
         {
-            if (roleName == null)
-            {
-                throw new ArgumentNullException(nameof(roleName));
-            }
-            if (roleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleName));
-            }
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.GetAccessProfile");
             scope.Start();
@@ -990,10 +968,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterServicePrincipalProfile"/> is null. </exception>
         public virtual async Task<ArmOperation> ResetServicePrincipalProfileAsync(WaitUntil waitUntil, ManagedClusterServicePrincipalProfile managedClusterServicePrincipalProfile, CancellationToken cancellationToken = default)
         {
-            if (managedClusterServicePrincipalProfile == null)
-            {
-                throw new ArgumentNullException(nameof(managedClusterServicePrincipalProfile));
-            }
+            Argument.AssertNotNull(managedClusterServicePrincipalProfile, nameof(managedClusterServicePrincipalProfile));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResetServicePrincipalProfile");
             scope.Start();
@@ -1039,10 +1014,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterServicePrincipalProfile"/> is null. </exception>
         public virtual ArmOperation ResetServicePrincipalProfile(WaitUntil waitUntil, ManagedClusterServicePrincipalProfile managedClusterServicePrincipalProfile, CancellationToken cancellationToken = default)
         {
-            if (managedClusterServicePrincipalProfile == null)
-            {
-                throw new ArgumentNullException(nameof(managedClusterServicePrincipalProfile));
-            }
+            Argument.AssertNotNull(managedClusterServicePrincipalProfile, nameof(managedClusterServicePrincipalProfile));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResetServicePrincipalProfile");
             scope.Start();
@@ -1088,10 +1060,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAadProfile"/> is null. </exception>
         public virtual async Task<ArmOperation> ResetAadProfileAsync(WaitUntil waitUntil, ManagedClusterAadProfile managedClusterAadProfile, CancellationToken cancellationToken = default)
         {
-            if (managedClusterAadProfile == null)
-            {
-                throw new ArgumentNullException(nameof(managedClusterAadProfile));
-            }
+            Argument.AssertNotNull(managedClusterAadProfile, nameof(managedClusterAadProfile));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResetAadProfile");
             scope.Start();
@@ -1137,10 +1106,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="managedClusterAadProfile"/> is null. </exception>
         public virtual ArmOperation ResetAadProfile(WaitUntil waitUntil, ManagedClusterAadProfile managedClusterAadProfile, CancellationToken cancellationToken = default)
         {
-            if (managedClusterAadProfile == null)
-            {
-                throw new ArgumentNullException(nameof(managedClusterAadProfile));
-            }
+            Argument.AssertNotNull(managedClusterAadProfile, nameof(managedClusterAadProfile));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResetAadProfile");
             scope.Start();
@@ -1606,10 +1572,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedClusterRunCommandResult>> RunCommandAsync(WaitUntil waitUntil, ManagedClusterRunCommandContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RunCommand");
             scope.Start();
@@ -1655,10 +1618,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ManagedClusterRunCommandResult> RunCommand(WaitUntil waitUntil, ManagedClusterRunCommandContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RunCommand");
             scope.Start();
@@ -1700,14 +1660,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public virtual async Task<Response<ManagedClusterRunCommandResult>> GetCommandResultAsync(string commandId, CancellationToken cancellationToken = default)
         {
-            if (commandId == null)
-            {
-                throw new ArgumentNullException(nameof(commandId));
-            }
-            if (commandId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commandId));
-            }
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.GetCommandResult");
             scope.Start();
@@ -1746,14 +1699,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public virtual Response<ManagedClusterRunCommandResult> GetCommandResult(string commandId, CancellationToken cancellationToken = default)
         {
-            if (commandId == null)
-            {
-                throw new ArgumentNullException(nameof(commandId));
-            }
-            if (commandId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(commandId));
-            }
+            Argument.AssertNotNullOrEmpty(commandId, nameof(commandId));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.GetCommandResult");
             scope.Start();
@@ -1969,10 +1915,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ContainerServicePrivateLinkResourceData>> ResolvePrivateLinkServiceIdAsync(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
@@ -2010,10 +1953,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ContainerServicePrivateLinkResourceData> ResolvePrivateLinkServiceId(ContainerServicePrivateLinkResourceData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _resolvePrivateLinkServiceIdClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.ResolvePrivateLinkServiceId");
             scope.Start();
@@ -2056,14 +1996,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceManagedClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.AddTag");
             scope.Start();
@@ -2124,14 +2058,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<ContainerServiceManagedClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.AddTag");
             scope.Start();
@@ -2191,10 +2119,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceManagedClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.SetTags");
             scope.Start();
@@ -2251,10 +2176,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ContainerServiceManagedClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.SetTags");
             scope.Start();
@@ -2311,10 +2233,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceManagedClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RemoveTag");
             scope.Start();
@@ -2374,10 +2293,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<ContainerServiceManagedClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterResource.RemoveTag");
             scope.Start();

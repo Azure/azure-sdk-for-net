@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<IntegrationAccountPartnerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerName, IntegrationAccountPartnerData data, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<IntegrationAccountPartnerResource> CreateOrUpdate(WaitUntil waitUntil, string partnerName, IntegrationAccountPartnerData data, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> is null. </exception>
         public virtual async Task<Response<IntegrationAccountPartnerResource>> GetAsync(string partnerName, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> is null. </exception>
         public virtual Response<IntegrationAccountPartnerResource> Get(string partnerName, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerName, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> is null. </exception>
         public virtual Response<bool> Exists(string partnerName, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> is null. </exception>
         public virtual async Task<NullableResponse<IntegrationAccountPartnerResource>> GetIfExistsAsync(string partnerName, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> is null. </exception>
         public virtual NullableResponse<IntegrationAccountPartnerResource> GetIfExists(string partnerName, CancellationToken cancellationToken = default)
         {
-            if (partnerName == null)
-            {
-                throw new ArgumentNullException(nameof(partnerName));
-            }
-            if (partnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(partnerName));
-            }
+            Argument.AssertNotNullOrEmpty(partnerName, nameof(partnerName));
 
             using var scope = _integrationAccountPartnerClientDiagnostics.CreateScope("IntegrationAccountPartnerCollection.GetIfExists");
             scope.Start();

@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);

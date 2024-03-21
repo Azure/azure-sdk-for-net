@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StreamAnalytics;
 using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics.Mocking
@@ -191,10 +188,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamAnalyticsQueryTestingResult>> TestQuerySubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            if (testQuery == null)
-            {
-                throw new ArgumentNullException(nameof(testQuery));
-            }
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.TestQuerySubscription");
             scope.Start();
@@ -237,10 +231,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
         public virtual ArmOperation<StreamAnalyticsQueryTestingResult> TestQuerySubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            if (testQuery == null)
-            {
-                throw new ArgumentNullException(nameof(testQuery));
-            }
+            Argument.AssertNotNull(testQuery, nameof(testQuery));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.TestQuerySubscription");
             scope.Start();
@@ -282,10 +273,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
         public virtual async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQuerySubscriptionAsync(AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            if (compileQuery == null)
-            {
-                throw new ArgumentNullException(nameof(compileQuery));
-            }
+            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.CompileQuerySubscription");
             scope.Start();
@@ -324,10 +312,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
         public virtual Response<StreamAnalyticsQueryCompilationResult> CompileQuerySubscription(AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            if (compileQuery == null)
-            {
-                throw new ArgumentNullException(nameof(compileQuery));
-            }
+            Argument.AssertNotNull(compileQuery, nameof(compileQuery));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.CompileQuerySubscription");
             scope.Start();
@@ -367,10 +352,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamAnalyticsSampleInputResult>> SampleInputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.SampleInputSubscription");
             scope.Start();
@@ -413,10 +395,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StreamAnalyticsSampleInputResult> SampleInputSubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.SampleInputSubscription");
             scope.Start();
@@ -459,10 +438,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestInputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.TestInputSubscription");
             scope.Start();
@@ -505,10 +481,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StreamAnalyticsTestDatasourceResult> TestInputSubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.TestInputSubscription");
             scope.Start();
@@ -551,10 +524,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestOutputSubscriptionAsync(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            if (testOutput == null)
-            {
-                throw new ArgumentNullException(nameof(testOutput));
-            }
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.TestOutputSubscription");
             scope.Start();
@@ -597,10 +567,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
         public virtual ArmOperation<StreamAnalyticsTestDatasourceResult> TestOutputSubscription(WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            if (testOutput == null)
-            {
-                throw new ArgumentNullException(nameof(testOutput));
-            }
+            Argument.AssertNotNull(testOutput, nameof(testOutput));
 
             using var scope = SubscriptionsClientDiagnostics.CreateScope("MockableStreamAnalyticsSubscriptionResource.TestOutputSubscription");
             scope.Start();

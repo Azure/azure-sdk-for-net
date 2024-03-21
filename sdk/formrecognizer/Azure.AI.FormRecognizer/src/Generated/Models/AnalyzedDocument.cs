@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -22,14 +21,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="documentType"/> or <paramref name="spans"/> is null. </exception>
         internal AnalyzedDocument(string documentType, IEnumerable<DocumentSpan> spans, float confidence)
         {
-            if (documentType == null)
-            {
-                throw new ArgumentNullException(nameof(documentType));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(documentType, nameof(documentType));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             DocumentType = documentType;
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();

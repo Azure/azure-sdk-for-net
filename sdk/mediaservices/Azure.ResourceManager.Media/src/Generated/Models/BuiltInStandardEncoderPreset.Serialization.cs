@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Configurations != null)
+            if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteObjectValue(Configurations);

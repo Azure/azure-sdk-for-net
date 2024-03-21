@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -780,10 +778,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicatorsAsync(ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
-            if (threatIntelligenceFilteringCriteria == null)
-            {
-                throw new ArgumentNullException(nameof(threatIntelligenceFilteringCriteria));
-            }
+            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
@@ -813,10 +808,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> QueryThreatIntelligenceIndicators(ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
         {
-            if (threatIntelligenceFilteringCriteria == null)
-            {
-                throw new ArgumentNullException(nameof(threatIntelligenceFilteringCriteria));
-            }
+            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _threatIntelligenceIndicatorRestClient.CreateQueryIndicatorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatIntelligenceFilteringCriteria);

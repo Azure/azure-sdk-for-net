@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(ValueInternal);
-            if (DetectionConfigurationId != null)
+            if (Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("anomalyDetectionConfigurationId");
                 }
             }
-            if (DetectionConfigurationSnapshot != null)
+            if (Optional.IsDefined(DetectionConfigurationSnapshot))
             {
                 if (DetectionConfigurationSnapshot != null)
                 {

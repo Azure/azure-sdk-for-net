@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (ProtectionMode.HasValue)
+            if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
                 writer.WriteStringValue(ProtectionMode.Value.ToString());
             }
-            if (DdosProtectionPlan != null)
+            if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);

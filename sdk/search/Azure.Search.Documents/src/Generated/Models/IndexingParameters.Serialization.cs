@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 if (BatchSize != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize");
                 }
             }
-            if (MaxFailedItems.HasValue)
+            if (Optional.IsDefined(MaxFailedItems))
             {
                 if (MaxFailedItems != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItems");
                 }
             }
-            if (MaxFailedItemsPerBatch.HasValue)
+            if (Optional.IsDefined(MaxFailedItemsPerBatch))
             {
                 if (MaxFailedItemsPerBatch != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItemsPerBatch");
                 }
             }
-            if (IndexingParametersConfiguration != null)
+            if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(IndexingParametersConfiguration);

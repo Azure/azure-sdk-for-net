@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudBmcKeySetResource>> GetAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
         public virtual Response<NetworkCloudBmcKeySetResource> Get(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
         public virtual Response<bool> Exists(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudBmcKeySetResource>> GetIfExistsAsync(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudBmcKeySetResource> GetIfExists(string bmcKeySetName, CancellationToken cancellationToken = default)
         {
-            if (bmcKeySetName == null)
-            {
-                throw new ArgumentNullException(nameof(bmcKeySetName));
-            }
-            if (bmcKeySetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bmcKeySetName));
-            }
+            Argument.AssertNotNullOrEmpty(bmcKeySetName, nameof(bmcKeySetName));
 
             using var scope = _networkCloudBmcKeySetBmcKeySetsClientDiagnostics.CreateScope("NetworkCloudBmcKeySetCollection.GetIfExists");
             scope.Start();

@@ -18,14 +18,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="prioritizedFields"/> is null. </exception>
         public SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (prioritizedFields == null)
-            {
-                throw new ArgumentNullException(nameof(prioritizedFields));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(prioritizedFields, nameof(prioritizedFields));
 
             Name = name;
             PrioritizedFields = prioritizedFields;

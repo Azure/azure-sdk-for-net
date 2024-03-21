@@ -24,24 +24,24 @@ namespace Azure.Communication.MediaComposition
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (HighlightDominantSpeaker.HasValue)
+            if (Optional.IsDefined(HighlightDominantSpeaker))
             {
                 writer.WritePropertyName("highlightDominantSpeaker"u8);
                 writer.WriteBooleanValue(HighlightDominantSpeaker.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());

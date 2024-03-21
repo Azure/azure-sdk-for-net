@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();
@@ -65,32 +65,32 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (CaptureDescription != null)
+            if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
                 writer.WriteObjectValue(CaptureDescription);
             }
-            if (RetentionDescription != null)
+            if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
                 writer.WriteObjectValue(RetentionDescription);

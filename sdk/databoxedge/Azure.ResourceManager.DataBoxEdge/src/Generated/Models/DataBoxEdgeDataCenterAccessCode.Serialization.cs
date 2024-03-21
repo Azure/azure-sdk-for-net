@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AuthCode != null)
+            if (Optional.IsDefined(AuthCode))
             {
                 writer.WritePropertyName("authCode"u8);
                 writer.WriteStringValue(AuthCode);

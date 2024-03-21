@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DurationInSeconds.HasValue)
+            if (Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (NumberOfPacketsToCapture.HasValue)
+            if (Optional.IsDefined(NumberOfPacketsToCapture))
             {
                 writer.WritePropertyName("numberOfPacketsToCapture"u8);
                 writer.WriteNumberValue(NumberOfPacketsToCapture.Value);
             }
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(Flags is ChangeTrackingList<AzureFirewallPacketCaptureFlags> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Filters is ChangeTrackingList<AzureFirewallPacketCaptureRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();

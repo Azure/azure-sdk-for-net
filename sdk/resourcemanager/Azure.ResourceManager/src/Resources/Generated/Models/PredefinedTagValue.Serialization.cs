@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (TagValue != null)
+            if (Optional.IsDefined(TagValue))
             {
                 writer.WritePropertyName("tagValue"u8);
                 writer.WriteStringValue(TagValue);
             }
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);

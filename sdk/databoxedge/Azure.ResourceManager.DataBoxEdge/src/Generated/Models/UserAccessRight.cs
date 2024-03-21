@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public UserAccessRight(ResourceIdentifier userId, ShareAccessType accessType)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             UserId = userId;
             AccessType = accessType;

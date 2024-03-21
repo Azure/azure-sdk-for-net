@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsSecret.HasValue)
+            if (Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (KeyVault != null)
+            if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVault);

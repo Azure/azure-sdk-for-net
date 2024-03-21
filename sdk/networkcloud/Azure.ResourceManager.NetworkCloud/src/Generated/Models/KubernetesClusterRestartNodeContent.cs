@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public KubernetesClusterRestartNodeContent(string nodeName)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
+            Argument.AssertNotNull(nodeName, nameof(nodeName));
 
             NodeName = nodeName;
         }

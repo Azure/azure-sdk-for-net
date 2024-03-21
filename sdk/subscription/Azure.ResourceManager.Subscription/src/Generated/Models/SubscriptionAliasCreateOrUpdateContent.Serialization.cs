@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.Subscription.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Workload.HasValue)
+            if (Optional.IsDefined(Workload))
             {
                 writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
-            if (BillingScope != null)
+            if (Optional.IsDefined(BillingScope))
             {
                 writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResellerId != null)
+            if (Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (AdditionalProperties != null)
+            if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteObjectValue(AdditionalProperties);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (TotalUsage.HasValue)
+            if (Optional.IsDefined(TotalUsage))
             {
                 writer.WritePropertyName("totalUsage"u8);
                 writer.WriteNumberValue(TotalUsage.Value);
             }
-            if (!(PerCpuUsage is ChangeTrackingList<long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PerCpuUsage))
             {
                 writer.WritePropertyName("perCpuUsage"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (KernelModeUsage.HasValue)
+            if (Optional.IsDefined(KernelModeUsage))
             {
                 writer.WritePropertyName("kernelModeUsage"u8);
                 writer.WriteNumberValue(KernelModeUsage.Value);
             }
-            if (UserModeUsage.HasValue)
+            if (Optional.IsDefined(UserModeUsage))
             {
                 writer.WritePropertyName("userModeUsage"u8);
                 writer.WriteNumberValue(UserModeUsage.Value);

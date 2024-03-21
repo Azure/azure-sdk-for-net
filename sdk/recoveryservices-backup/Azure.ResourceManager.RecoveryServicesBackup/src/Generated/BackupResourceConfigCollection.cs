@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -80,18 +78,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupResourceConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceConfigData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.CreateOrUpdate");
             scope.Start();
@@ -139,18 +127,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupResourceConfigResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, BackupResourceConfigData data, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.CreateOrUpdate");
             scope.Start();
@@ -196,14 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<BackupResourceConfigResource>> GetAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.Get");
             scope.Start();
@@ -248,14 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<BackupResourceConfigResource> Get(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.Get");
             scope.Start();
@@ -300,14 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.Exists");
             scope.Start();
@@ -350,14 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual Response<bool> Exists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.Exists");
             scope.Start();
@@ -400,14 +350,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupResourceConfigResource>> GetIfExistsAsync(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.GetIfExists");
             scope.Start();
@@ -452,14 +395,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> is null. </exception>
         public virtual NullableResponse<BackupResourceConfigResource> GetIfExists(string vaultName, CancellationToken cancellationToken = default)
         {
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var scope = _backupResourceConfigBackupResourceStorageConfigsNonCRRClientDiagnostics.CreateScope("BackupResourceConfigCollection.GetIfExists");
             scope.Start();

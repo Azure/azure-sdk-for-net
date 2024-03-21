@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (RecommendedConfiguration != null)
+            if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
                 writer.WriteObjectValue(RecommendedConfiguration);
             }
-            if (!(SupportedConfigurations is ChangeTrackingList<SupportedConfigurationsDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
                 writer.WritePropertyName("supportedConfigurations"u8);
                 writer.WriteStartArray();

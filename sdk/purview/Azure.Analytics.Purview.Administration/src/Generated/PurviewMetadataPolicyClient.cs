@@ -8,7 +8,6 @@
 using System;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -55,14 +54,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicyAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateMetadataPolicyAsync(string policyId, RequestContent content, RequestContext context = null)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
-            if (policyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyId));
-            }
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
@@ -98,14 +90,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='UpdateMetadataPolicy(string,RequestContent,RequestContext)']/*" />
         public virtual Response UpdateMetadataPolicy(string policyId, RequestContent content, RequestContext context = null)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
-            if (policyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyId));
-            }
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.UpdateMetadataPolicy");
             scope.Start();
@@ -140,14 +125,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetMetadataPolicyAsync(string policyId, RequestContext context)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
-            if (policyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyId));
-            }
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();
@@ -182,14 +160,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewMetadataPolicyClient.xml" path="doc/members/member[@name='GetMetadataPolicy(string,RequestContext)']/*" />
         public virtual Response GetMetadataPolicy(string policyId, RequestContext context)
         {
-            if (policyId == null)
-            {
-                throw new ArgumentNullException(nameof(policyId));
-            }
-            if (policyId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyId));
-            }
+            Argument.AssertNotNullOrEmpty(policyId, nameof(policyId));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewMetadataPolicyClient.GetMetadataPolicy");
             scope.Start();

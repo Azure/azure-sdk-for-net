@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverride(string ruleId)
         {
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
+            Argument.AssertNotNull(ruleId, nameof(ruleId));
 
             RuleId = ruleId;
             Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();

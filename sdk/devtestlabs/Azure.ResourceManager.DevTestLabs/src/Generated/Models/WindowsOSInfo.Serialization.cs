@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (WindowsOSState.HasValue)
+            if (Optional.IsDefined(WindowsOSState))
             {
                 writer.WritePropertyName("windowsOsState"u8);
                 writer.WriteStringValue(WindowsOSState.Value.ToString());

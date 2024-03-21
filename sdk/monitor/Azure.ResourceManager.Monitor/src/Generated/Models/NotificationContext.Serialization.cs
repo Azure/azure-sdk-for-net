@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (NotificationSource != null)
+            if (Optional.IsDefined(NotificationSource))
             {
                 writer.WritePropertyName("notificationSource"u8);
                 writer.WriteStringValue(NotificationSource);
             }
-            if (ContextType != null)
+            if (Optional.IsDefined(ContextType))
             {
                 writer.WritePropertyName("contextType"u8);
                 writer.WriteStringValue(ContextType);

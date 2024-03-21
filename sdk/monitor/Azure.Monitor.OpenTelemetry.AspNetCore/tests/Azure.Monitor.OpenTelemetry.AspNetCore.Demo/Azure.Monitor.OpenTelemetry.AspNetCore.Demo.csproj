@@ -8,9 +8,4 @@
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- Workaround to fix CI build failure in macOS. This package is being used indirectly by Azure analyzers. -->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0" />
-  </ItemGroup>  
-
 </Project>

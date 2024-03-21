@@ -113,14 +113,6 @@ namespace Azure.Communication.Identity.Samples
             Console.WriteLine($"Token: {token}");
             Console.WriteLine($"Expires On: {expiresOn}");
             #endregion Snippet:CreateCommunicationTokenWithCustomExpiration
-
-            #region Snippet:RevokeCommunicationUserToken
-            Response revokeResponse = client.RevokeTokens(user);
-            #endregion Snippet:RevokeCommunicationUserToken
-
-            #region Snippet:DeleteACommunicationUser
-            Response deleteResponse = client.DeleteUser(user);
-            #endregion Snippet:DeleteACommunicationUser
         }
 
         [Test]

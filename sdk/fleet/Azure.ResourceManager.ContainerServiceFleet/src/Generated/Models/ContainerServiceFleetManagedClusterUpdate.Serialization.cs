@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
             writer.WriteObjectValue(Upgrade);
-            if (NodeImageSelection != null)
+            if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
                 writer.WriteObjectValue(NodeImageSelection);

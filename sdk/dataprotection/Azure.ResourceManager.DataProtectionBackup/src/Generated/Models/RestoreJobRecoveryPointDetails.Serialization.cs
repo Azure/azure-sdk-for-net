@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointID"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoverOn.HasValue)
+            if (Optional.IsDefined(RecoverOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoverOn.Value, "O");

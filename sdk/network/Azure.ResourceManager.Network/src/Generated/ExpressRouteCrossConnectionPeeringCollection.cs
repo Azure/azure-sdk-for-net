@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteCrossConnectionPeeringResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peeringName, ExpressRouteCrossConnectionPeeringData data, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteCrossConnectionPeeringResource> CreateOrUpdate(WaitUntil waitUntil, string peeringName, ExpressRouteCrossConnectionPeeringData data, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteCrossConnectionPeeringResource>> GetAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<ExpressRouteCrossConnectionPeeringResource> Get(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual Response<bool> Exists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteCrossConnectionPeeringResource>> GetIfExistsAsync(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteCrossConnectionPeeringResource> GetIfExists(string peeringName, CancellationToken cancellationToken = default)
         {
-            if (peeringName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringName));
-            }
-            if (peeringName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringName, nameof(peeringName));
 
             using var scope = _expressRouteCrossConnectionPeeringClientDiagnostics.CreateScope("ExpressRouteCrossConnectionPeeringCollection.GetIfExists");
             scope.Start();

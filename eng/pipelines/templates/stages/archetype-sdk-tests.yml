@@ -1,156 +1,196 @@
-parameters:
-- name: AdditionalPlatforms
-  type: object
-  default: {}
-- name: Clouds
-  type: string
-  default: 'Public'
-- name: SupportedClouds
-  type: string
-  default: 'Public'
-- name: UnsupportedClouds
-  type: string
-  default: ''
-- name: PreSteps
-  type: object
-  default: []
-- name: PostSteps
-  type: object
-  default: []
-- name: EnvVars
-  type: object
-  default: {}
-- name: MaxParallel
-  type: number
-  default: 0
-- name: BuildInParallel
-  type: boolean
-  default: true
-- name: TimeoutInMinutes
-  type: number
-  default: 60
-- name: Location
-  type: string
-  default: ''
-- name: SDKType
-  type: string
-  default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: TestResourceDirectories
-  type: object
-  default:
-- name: Project
-  type: string
-  default: '**'
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: DeployTestResources
-  type: boolean
-  default: true
-- name: CloudConfig
-  type: object
-  default:
-    Public:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-    Preview:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-    Canary:
-      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-      Location: 'eastus2euap'
-    UsGov:
-      SubscriptionConfiguration: $(sub-config-gov-test-resources)
-    China:
-      SubscriptionConfiguration: $(sub-config-cn-test-resources)
-- name: MatrixConfigs
-  type: object
-  default:
-    - Name: NET_live_test_base
-      Path: eng/pipelines/templates/stages/platform-matrix.json
-      Selection: sparse
-      GenerateVMJobs: true
-- name: AdditionalMatrixConfigs
-  type: object
-  default: []
-- name: MatrixFilters
-  type: object
-  default: []
-- name: MatrixReplace
-  type: object
-  default: []
-- name: PlatformPreSteps
-  type: object
-  default: []
-- name: PlatformPostSteps
-  type: object
-  default:
-    - task: CopyFiles@2
-      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
-      displayName: "Copy Test Recordings"
-      inputs:
-        sourceFolder: '$(Build.SourcesDirectory)'
-        # NOTE: ServiceDirectory cannot be passed as a compile time value, because it cannot be rendered
-        # in the context of a parameter definition.
-        contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
-        targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-    - task: PublishBuildArtifacts@1
-      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
-      displayName: "Publish Test Recordings"
-      inputs:
-        pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-        artifactName: SessionRecords
+resources:
+  repositories:
+    - repository: 1ESPipelineTemplates
+      type: git
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
+      ref: refs/tags/release
 
-stages:
-- ${{ each cloud in parameters.CloudConfig }}:
-  - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
-    - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
-      - stage: ${{ cloud.key }}
-        dependsOn: []
-        variables:
-        - template: ../variables/globals.yml
-        jobs:
-        - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
-          parameters:
-            SparseCheckoutPaths:
-              - "sdk/${{ parameters.ServiceDirectory }}/**/*.json"
-              - '!sdk/**/SessionRecords/*'
-            JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
-            AdditionalParameters:
-              PreSteps:
-                - ${{ parameters.PlatformPreSteps }}
-                - ${{ parameters.PreSteps }}
-              PostSteps:
-                - ${{ parameters.PlatformPostSteps }}
-                - ${{ parameters.PostSteps }}
-              EnvVars: ${{ parameters.EnvVars }}
-              MaxParallel: ${{ parameters.MaxParallel }}
-              BuildInParallel: ${{ parameters.BuildInParallel }}
-              TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
-              Location: ${{ parameters.Location }}
-              SDKType: ${{ parameters.SDKType }}
-              ServiceDirectory: ${{ parameters.ServiceDirectory }}
-              TestResourceDirectories: ${{ parameters.TestResourceDirectories }}
-              Project: ${{ parameters.Project }}
-              TestSetupSteps: ${{ parameters.TestSetupSteps }}
-              DeployTestResources: ${{ parameters.DeployTestResources }}
-            MatrixConfigs:
-              # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
-              - ${{ each config in parameters.MatrixConfigs }}:
-                -  ${{ config }}
-              - ${{ each config in parameters.AdditionalMatrixConfigs }}:
-                -  ${{ config }}
-            MatrixFilters:
-              - ${{ each cloudFilter in cloud.value.MatrixFilters }}:
-                - ${{ cloudFilter }}
-              - ${{ parameters.MatrixFilters }}
-            MatrixReplace:
-              - ${{ each cloudReplace in cloud.value.MatrixReplace }}:
-                - ${{ cloudReplace }}
-              - ${{ parameters.MatrixReplace }}
-            CloudConfig:
-              SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
-              SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
-              Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
-              Cloud: ${{ cloud.key }}
+parameters:
+  - name: AdditionalPlatforms
+    type: object
+    default: {}
+  - name: Clouds
+    type: string
+    default: 'Public'
+  - name: SupportedClouds
+    type: string
+    default: 'Public'
+  - name: UnsupportedClouds
+    type: string
+    default: ''
+  - name: PreSteps
+    type: object
+    default: []
+  - name: PostSteps
+    type: object
+    default: []
+  - name: EnvVars
+    type: object
+    default: {}
+  - name: MaxParallel
+    type: number
+    default: 0
+  - name: BuildInParallel
+    type: boolean
+    default: true
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
+  - name: Location
+    type: string
+    default: ''
+  - name: SDKType
+    type: string
+    default: all
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: TestResourceDirectories
+    type: object
+    default:
+  - name: Project
+    type: string
+    default: '**'
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: DeployTestResources
+    type: boolean
+    default: true
+  - name: CloudConfig
+    type: object
+    default:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Preview:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'eastus2euap'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
+      China:
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+  - name: MatrixConfigs
+    type: object
+    default:
+      - Name: NET_live_test_base
+        Path: eng/pipelines/templates/stages/platform-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
+  - name: AdditionalMatrixConfigs
+    type: object
+    default: []
+  - name: MatrixFilters
+    type: object
+    default: []
+  - name: MatrixReplace
+    type: object
+    default: []
+  - name: PlatformPreSteps
+    type: object
+    default: []
+  - name: PlatformPostSteps
+    type: object
+    default:
+      - task: CopyFiles@2
+        condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+        displayName: "Copy Test Recordings"
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)'
+          # NOTE: ServiceDirectory cannot be passed as a compile time value, because it cannot be rendered
+          # in the context of a parameter definition.
+          contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
+          targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          CustomCondition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+          DisplayName: "Publish Test Recordings"
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+          ArtifactName: 'packages'
+          SbomEnabled: false
+
+extends:
+  ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+    template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  ${{ else }}:
+    template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    settings:
+      skipBuildTagsForGitHubPullRequests: true
+    sdl:
+      sourceAnalysisPool:
+        name: azsdk-pool-mms-win-2022-general
+        image: azsdk-pool-mms-win-2022-1espt
+        os: windows
+      eslint:
+        enabled: false
+        justificationForDisabling: 'ESLint injected task has failures because it uses an old version of mkdirp. We should not fail for tools not controlled by the repo. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746'
+      codeql:
+        compiled:
+          enabled: false
+          justificationForDisabling: CodeQL times our pipelines out by running for 2+ hours before being force canceled.
+      psscriptanalyzer:
+        compiled: true
+        break: true
+      policy: M365
+      credscan:
+        suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
+        scanFolder: $(Build.SourcesDirectory)/credscan.tsv
+        toolVersion: 2.3.12.23
+        baselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
+
+    stages:
+      - ${{ each cloud in parameters.CloudConfig }}:
+        - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
+          - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
+            - stage: ${{ cloud.key }}
+              dependsOn: []
+              variables:
+                - template: /eng/pipelines/templates/variables/globals.yml@self
+                - template: /eng/pipelines/templates/variables/image.yml@self
+              jobs:
+                - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml@self
+                  parameters:
+                    SparseCheckoutPaths:
+                      - sdk/${{ parameters.ServiceDirectory }}/**/*.json
+                      - '!sdk/**/SessionRecords/*'
+                    JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
+                    AdditionalParameters:
+                      PreSteps:
+                        - ${{ parameters.PlatformPreSteps }}
+                        - ${{ parameters.PreSteps }}
+                      PostSteps:
+                        - ${{ parameters.PlatformPostSteps }}
+                        - ${{ parameters.PostSteps }}
+                      EnvVars: ${{ parameters.EnvVars }}
+                      MaxParallel: ${{ parameters.MaxParallel }}
+                      BuildInParallel: ${{ parameters.BuildInParallel }}
+                      TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+                      Location: ${{ parameters.Location }}
+                      SDKType: ${{ parameters.SDKType }}
+                      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+                      TestResourceDirectories: ${{ parameters.TestResourceDirectories }}
+                      Project: ${{ parameters.Project }}
+                      TestSetupSteps: ${{ parameters.TestSetupSteps }}
+                      DeployTestResources: ${{ parameters.DeployTestResources }}
+                    MatrixConfigs:
+                      # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
+                      - ${{ each config in parameters.MatrixConfigs }}:
+                          - ${{ config }}
+                      - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+                          - ${{ config }}
+                    MatrixFilters:
+                      - ${{ each cloudFilter in cloud.value.MatrixFilters }}:
+                          - ${{ cloudFilter }}
+                      - ${{ parameters.MatrixFilters }}
+                    MatrixReplace:
+                      - ${{ each cloudReplace in cloud.value.MatrixReplace }}:
+                          - ${{ cloudReplace }}
+                      - ${{ parameters.MatrixReplace }}
+                    CloudConfig:
+                      SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+                      SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
+                      Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
+                      Cloud: ${{ cloud.key }}
+

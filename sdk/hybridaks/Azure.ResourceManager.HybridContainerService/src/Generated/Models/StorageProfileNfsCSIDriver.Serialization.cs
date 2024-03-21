@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (IsNfsCsiDriverEnabled.HasValue)
+            if (Optional.IsDefined(IsNfsCsiDriverEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsNfsCsiDriverEnabled.Value);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (ForceState.HasValue)
+            if (Optional.IsDefined(ForceState))
             {
                 writer.WritePropertyName("forceState"u8);
                 writer.WriteStringValue(ForceState.Value.ToString());

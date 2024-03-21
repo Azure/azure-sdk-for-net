@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (UnHealthyVmCount.HasValue)
+            if (Optional.IsDefined(UnHealthyVmCount))
             {
                 writer.WritePropertyName("unHealthyVmCount"u8);
                 writer.WriteNumberValue(UnHealthyVmCount.Value);
             }
-            if (UnHealthyProviderCount.HasValue)
+            if (Optional.IsDefined(UnHealthyProviderCount))
             {
                 writer.WritePropertyName("unHealthyProviderCount"u8);
                 writer.WriteNumberValue(UnHealthyProviderCount.Value);
             }
-            if (EventsCount.HasValue)
+            if (Optional.IsDefined(EventsCount))
             {
                 writer.WritePropertyName("eventsCount"u8);
                 writer.WriteNumberValue(EventsCount.Value);
             }
-            if (DeprecatedProviderCount.HasValue)
+            if (Optional.IsDefined(DeprecatedProviderCount))
             {
                 writer.WritePropertyName("deprecatedProviderCount"u8);
                 writer.WriteNumberValue(DeprecatedProviderCount.Value);
             }
-            if (SupportedProviderCount.HasValue)
+            if (Optional.IsDefined(SupportedProviderCount))
             {
                 writer.WritePropertyName("supportedProviderCount"u8);
                 writer.WriteNumberValue(SupportedProviderCount.Value);
             }
-            if (UnsupportedProviderCount.HasValue)
+            if (Optional.IsDefined(UnsupportedProviderCount))
             {
                 writer.WritePropertyName("unsupportedProviderCount"u8);
                 writer.WriteNumberValue(UnsupportedProviderCount.Value);

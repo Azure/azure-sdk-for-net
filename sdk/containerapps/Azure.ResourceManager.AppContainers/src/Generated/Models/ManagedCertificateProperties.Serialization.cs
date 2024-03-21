@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SubjectName != null)
+            if (Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (DomainControlValidation.HasValue)
+            if (Optional.IsDefined(DomainControlValidation))
             {
                 writer.WritePropertyName("domainControlValidation"u8);
                 writer.WriteStringValue(DomainControlValidation.Value.ToString());
             }
-            if (options.Format != "W" && ValidationToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ValidationToken))
             {
                 writer.WritePropertyName("validationToken"u8);
                 writer.WriteStringValue(ValidationToken);

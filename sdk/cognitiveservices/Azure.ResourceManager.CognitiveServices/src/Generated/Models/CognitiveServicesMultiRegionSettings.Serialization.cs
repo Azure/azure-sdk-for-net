@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (RoutingMethod.HasValue)
+            if (Optional.IsDefined(RoutingMethod))
             {
                 writer.WritePropertyName("routingMethod"u8);
                 writer.WriteStringValue(RoutingMethod.Value.ToString());
             }
-            if (!(Regions is ChangeTrackingList<CognitiveServicesRegionSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();

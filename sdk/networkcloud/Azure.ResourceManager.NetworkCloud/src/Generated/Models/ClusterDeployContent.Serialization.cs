@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(SkipValidationsForMachines is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SkipValidationsForMachines))
             {
                 writer.WritePropertyName("skipValidationsForMachines"u8);
                 writer.WriteStartArray();

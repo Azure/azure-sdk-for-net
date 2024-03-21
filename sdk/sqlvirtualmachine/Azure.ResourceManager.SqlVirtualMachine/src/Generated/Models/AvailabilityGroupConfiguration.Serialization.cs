@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (!(Replicas is ChangeTrackingList<AvailabilityGroupReplica> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Replicas))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();

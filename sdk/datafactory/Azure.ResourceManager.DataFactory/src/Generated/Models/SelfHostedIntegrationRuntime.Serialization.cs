@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (LinkedInfo != null)
+            if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
                 writer.WriteObjectValue(LinkedInfo);
             }
-            if (IsSelfContainedInteractiveAuthoringEnabled.HasValue)
+            if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
             {
                 writer.WritePropertyName("selfContainedInteractiveAuthoringEnabled"u8);
                 writer.WriteBooleanValue(IsSelfContainedInteractiveAuthoringEnabled.Value);

@@ -1,29 +1,31 @@
 parameters:
-- name: SDKType
-  type: string
-  default: all
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: TestTimeoutInMinutes
-  type: number
-- name: Matrix
-  type: string
-- name: DependsOn
-  type: string
-  default: ''
-- name: UsePlatformContainer
-  type: boolean
-  default: false
-- name: CloudConfig
-  type: object
-  default: {}
-- name: ProjectListOverrideFilePropertyName
-  type: string
-  default: ''
-- name: ServiceDirectory
-  type: string
-  default: ''
+  - name: SDKType
+    type: string
+    default: all
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: TestTimeoutInMinutes
+    type: number
+  - name: Matrix
+    type: string
+  - name: DependsOn
+    type: string
+    default: ''
+  - name: UsePlatformContainer
+    type: boolean
+    default: false
+  - name: CloudConfig
+    type: object
+    default: {}
+  - name: ProjectListOverrideFilePropertyName
+    type: string
+    default: ''
+  - name: ServiceDirectory
+    type: string
+    default: ''
+  - name: OSName
+    type: string
 
 jobs:
   - job:
@@ -33,12 +35,39 @@ jobs:
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true), ne(${{ parameters.Matrix }}, '{}'))
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]
+
     pool:
-      vmImage: $(OSVmImage)
+      # 1es pipeline templates converts `image` to demands: ImageOverride under the hood
+      # which is incompatible with image selection in the default non-1es hosted pools
+      ${{ if eq(parameters.OSName, 'macOS') }}:
+        vmImage: $(OSVmImage)
+      ${{ else }}:
+        image: $(OSVmImage)
       name: $(Pool)
+      os: ${{ parameters.OSName }}
     ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
       # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
+
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: $(Build.ArtifactStagingDirectory)/test.binlog
+          artifactName: binlog_$(Agent.JobName)
+          condition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
+          sbomEnabled: false
+        - output: pipelineArtifact
+          targetPath: $(Build.SourcesDirectory)/artifacts
+          artifactName: artifacts_$(Agent.JobName)
+          condition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
+          sbomEnabled: false
+        # See eng/pipelines/templates/steps/upload-dumps.yml for corresponding file copy step
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)/dumps.zip'
+          artifactName: "Crash Dump - $(System.JobName) - $(System.JobAttempt)"
+          condition: eq(variables['uploadDump'], 'true')
+          sbomEnabled: false
+
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -59,7 +88,6 @@ jobs:
             artifact: DependencyTestProjectReferences
             patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
             path: $(Build.SourcesDirectory)
-
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
@@ -69,7 +97,7 @@ jobs:
         displayName: 'Configure Kestrel Environment Variables'
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
-          AgentImage: $(OSVmImage)
+          AgentImage: ${{ parameters.OSName }}
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
@@ -112,19 +140,9 @@ jobs:
         displayName: "Publish Results ($(TestTargetFramework))"
         inputs:
           testResultsFiles: "**/$(TestTargetFramework)*.trx"
-          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testRunTitle: "${{ parameters.OSName }} $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: $(Build.ArtifactStagingDirectory)/test.binlog
-          ArtifactName: binlog_$(Agent.JobName)
-          CustomCondition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: $(Build.SourcesDirectory)/artifacts
-          ArtifactName: artifacts_$(Agent.JobName)
-          CustomCondition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
@@ -141,3 +159,4 @@ jobs:
         inputs:
           codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
+

@@ -18,14 +18,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folder"/> is null. </exception>
         public SelectiveKeyRestoreOperationParameters(SASTokenParameter sasTokenParameters, string folder)
         {
-            if (sasTokenParameters == null)
-            {
-                throw new ArgumentNullException(nameof(sasTokenParameters));
-            }
-            if (folder == null)
-            {
-                throw new ArgumentNullException(nameof(folder));
-            }
+            Argument.AssertNotNull(sasTokenParameters, nameof(sasTokenParameters));
+            Argument.AssertNotNull(folder, nameof(folder));
 
             SasTokenParameters = sasTokenParameters;
             Folder = folder;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ExactVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ExactVersion))
             {
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);

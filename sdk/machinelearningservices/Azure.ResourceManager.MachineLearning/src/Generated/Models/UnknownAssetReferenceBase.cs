@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownAssetReferenceBase. </summary>
+    /// <summary> Unknown version of AssetReferenceBase. </summary>
     internal partial class UnknownAssetReferenceBase : MachineLearningAssetReferenceBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAssetReferenceBase"/>. </summary>

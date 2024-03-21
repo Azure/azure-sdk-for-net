@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownFabricSpecificDetails. </summary>
+    /// <summary> Unknown version of FabricSpecificDetails. </summary>
     internal partial class UnknownFabricSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFabricSpecificDetails"/>. </summary>

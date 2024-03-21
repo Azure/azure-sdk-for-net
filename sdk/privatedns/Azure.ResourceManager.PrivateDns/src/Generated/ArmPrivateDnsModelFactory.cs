@@ -7,10 +7,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {

@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metricTrigger"/> or <paramref name="scaleAction"/> is null. </exception>
         public AutoscaleRule(MetricTrigger metricTrigger, MonitorScaleAction scaleAction)
         {
-            if (metricTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(metricTrigger));
-            }
-            if (scaleAction == null)
-            {
-                throw new ArgumentNullException(nameof(scaleAction));
-            }
+            Argument.AssertNotNull(metricTrigger, nameof(metricTrigger));
+            Argument.AssertNotNull(scaleAction, nameof(scaleAction));
 
             MetricTrigger = metricTrigger;
             ScaleAction = scaleAction;

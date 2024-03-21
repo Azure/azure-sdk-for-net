@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (ServiceBusRuleId != null)
+            if (Optional.IsDefined(ServiceBusRuleId))
             {
                 writer.WritePropertyName("serviceBusRuleId"u8);
                 writer.WriteStringValue(ServiceBusRuleId);
             }
-            if (EventHubAuthorizationRuleId != null)
+            if (Optional.IsDefined(EventHubAuthorizationRuleId))
             {
                 writer.WritePropertyName("eventHubAuthorizationRuleId"u8);
                 writer.WriteStringValue(EventHubAuthorizationRuleId);
             }
-            if (EventHubName != null)
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (!(Metrics is ChangeTrackingList<MetricSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(Logs is ChangeTrackingList<LogSettings> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStartArray();
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (MarketplacePartnerId != null)
+            if (Optional.IsDefined(MarketplacePartnerId))
             {
                 writer.WritePropertyName("marketplacePartnerId"u8);
                 writer.WriteStringValue(MarketplacePartnerId);
             }
-            if (LogAnalyticsDestinationType != null)
+            if (Optional.IsDefined(LogAnalyticsDestinationType))
             {
                 writer.WritePropertyName("logAnalyticsDestinationType"u8);
                 writer.WriteStringValue(LogAnalyticsDestinationType);

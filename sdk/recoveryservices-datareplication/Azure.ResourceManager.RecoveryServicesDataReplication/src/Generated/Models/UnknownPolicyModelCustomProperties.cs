@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> The UnknownPolicyModelCustomProperties. </summary>
+    /// <summary> Unknown version of PolicyModelCustomProperties. </summary>
     internal partial class UnknownPolicyModelCustomProperties : PolicyModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPolicyModelCustomProperties"/>. </summary>

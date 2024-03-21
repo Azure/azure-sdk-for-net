@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (UpdateType != null)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);

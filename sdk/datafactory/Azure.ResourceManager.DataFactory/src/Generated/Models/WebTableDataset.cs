@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="index"/> is null. </exception>
         public WebTableDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<int> index) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (index == null)
-            {
-                throw new ArgumentNullException(nameof(index));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(index, nameof(index));
 
             Index = index;
             DatasetType = "WebTable";

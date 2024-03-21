@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -27,12 +26,12 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (UrlSource != null)
+            if (Optional.IsDefined(UrlSource))
             {
                 writer.WritePropertyName("urlSource"u8);
                 writer.WriteStringValue(UrlSource.AbsoluteUri);
             }
-            if (Base64Source != null)
+            if (Optional.IsDefined(Base64Source))
             {
                 writer.WritePropertyName("base64Source"u8);
                 writer.WriteBase64StringValue(Base64Source.ToArray(), "D");

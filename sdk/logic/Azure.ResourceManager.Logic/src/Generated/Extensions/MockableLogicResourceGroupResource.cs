@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Mocking
 {
@@ -279,18 +276,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<Response> ValidateByLocationWorkflowAsync(AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("MockableLogicResourceGroupResource.ValidateByLocationWorkflow");
             scope.Start();
@@ -335,18 +322,8 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="workflowName"/> or <paramref name="data"/> is null. </exception>
         public virtual Response ValidateByLocationWorkflow(AzureLocation location, string workflowName, LogicWorkflowData data, CancellationToken cancellationToken = default)
         {
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = LogicWorkflowWorkflowsClientDiagnostics.CreateScope("MockableLogicResourceGroupResource.ValidateByLocationWorkflow");
             scope.Start();

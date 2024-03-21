@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (ObjectKey != null)
+            if (Optional.IsDefined(ObjectKey))
             {
                 writer.WritePropertyName("objectKey"u8);
                 writer.WriteStringValue(ObjectKey);

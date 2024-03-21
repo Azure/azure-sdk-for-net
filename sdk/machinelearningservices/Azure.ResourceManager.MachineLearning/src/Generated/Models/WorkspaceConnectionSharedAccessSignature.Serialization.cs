@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Sas != null)
+            if (Optional.IsDefined(Sas))
             {
                 writer.WritePropertyName("sas"u8);
                 writer.WriteStringValue(Sas);

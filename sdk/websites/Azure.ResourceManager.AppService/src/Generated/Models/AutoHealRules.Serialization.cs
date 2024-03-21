@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Triggers != null)
+            if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);

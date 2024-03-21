@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownCompressionReadSettings. </summary>
+    /// <summary> Unknown version of CompressionReadSettings. </summary>
     internal partial class UnknownCompressionReadSettings : CompressionReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCompressionReadSettings"/>. </summary>

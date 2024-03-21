@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Sql
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,104 +53,104 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RecommendationReason != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationReason))
             {
                 writer.WritePropertyName("recommendationReason"u8);
                 writer.WriteStringValue(RecommendationReason);
             }
-            if (options.Format != "W" && ValidSince.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValidSince))
             {
                 writer.WritePropertyName("validSince"u8);
                 writer.WriteStringValue(ValidSince.Value, "O");
             }
-            if (options.Format != "W" && LastRefresh.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRefresh))
             {
                 writer.WritePropertyName("lastRefresh"u8);
                 writer.WriteStringValue(LastRefresh.Value, "O");
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteObjectValue(State);
             }
-            if (options.Format != "W" && IsExecutableAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsExecutableAction))
             {
                 writer.WritePropertyName("isExecutableAction"u8);
                 writer.WriteBooleanValue(IsExecutableAction.Value);
             }
-            if (options.Format != "W" && IsRevertableAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRevertableAction))
             {
                 writer.WritePropertyName("isRevertableAction"u8);
                 writer.WriteBooleanValue(IsRevertableAction.Value);
             }
-            if (options.Format != "W" && IsArchivedAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsArchivedAction))
             {
                 writer.WritePropertyName("isArchivedAction"u8);
                 writer.WriteBooleanValue(IsArchivedAction.Value);
             }
-            if (options.Format != "W" && ExecuteActionStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecuteActionStartOn))
             {
                 writer.WritePropertyName("executeActionStartTime"u8);
                 writer.WriteStringValue(ExecuteActionStartOn.Value, "O");
             }
-            if (options.Format != "W" && ExecuteActionDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecuteActionDuration))
             {
                 writer.WritePropertyName("executeActionDuration"u8);
                 writer.WriteStringValue(ExecuteActionDuration.Value, "P");
             }
-            if (options.Format != "W" && RevertActionStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RevertActionStartOn))
             {
                 writer.WritePropertyName("revertActionStartTime"u8);
                 writer.WriteStringValue(RevertActionStartOn.Value, "O");
             }
-            if (options.Format != "W" && RevertActionDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RevertActionDuration))
             {
                 writer.WritePropertyName("revertActionDuration"u8);
                 writer.WriteStringValue(RevertActionDuration.Value, "P");
             }
-            if (options.Format != "W" && ExecuteActionInitiatedBy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecuteActionInitiatedBy))
             {
                 writer.WritePropertyName("executeActionInitiatedBy"u8);
                 writer.WriteStringValue(ExecuteActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && ExecuteActionInitiatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecuteActionInitiatedOn))
             {
                 writer.WritePropertyName("executeActionInitiatedTime"u8);
                 writer.WriteStringValue(ExecuteActionInitiatedOn.Value, "O");
             }
-            if (options.Format != "W" && RevertActionInitiatedBy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RevertActionInitiatedBy))
             {
                 writer.WritePropertyName("revertActionInitiatedBy"u8);
                 writer.WriteStringValue(RevertActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && RevertActionInitiatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RevertActionInitiatedOn))
             {
                 writer.WritePropertyName("revertActionInitiatedTime"u8);
                 writer.WriteStringValue(RevertActionInitiatedOn.Value, "O");
             }
-            if (options.Format != "W" && Score.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
             }
-            if (options.Format != "W" && ImplementationDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ImplementationDetails))
             {
                 writer.WritePropertyName("implementationDetails"u8);
                 writer.WriteObjectValue(ImplementationDetails);
             }
-            if (options.Format != "W" && ErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteObjectValue(ErrorDetails);
             }
-            if (options.Format != "W" && !(EstimatedImpact is ChangeTrackingList<RecommendedActionImpactRecord> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
             {
                 writer.WritePropertyName("estimatedImpact"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ObservedImpact is ChangeTrackingList<RecommendedActionImpactRecord> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ObservedImpact))
             {
                 writer.WritePropertyName("observedImpact"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(TimeSeries is ChangeTrackingList<RecommendedActionMetricInfo> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TimeSeries))
             {
                 writer.WritePropertyName("timeSeries"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LinkedObjects is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedObjects))
             {
                 writer.WritePropertyName("linkedObjects"u8);
                 writer.WriteStartArray();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();

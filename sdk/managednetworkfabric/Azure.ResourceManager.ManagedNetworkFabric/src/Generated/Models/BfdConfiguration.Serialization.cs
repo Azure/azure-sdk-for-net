@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
-            if (IntervalInMilliSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInMilliSeconds))
             {
                 writer.WritePropertyName("intervalInMilliSeconds"u8);
                 writer.WriteNumberValue(IntervalInMilliSeconds.Value);
             }
-            if (Multiplier.HasValue)
+            if (Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);

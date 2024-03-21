@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BuildId != null)
+            if (options.Format != "W" && Optional.IsDefined(BuildId))
             {
                 writer.WritePropertyName("buildId"u8);
                 writer.WriteStringValue(BuildId);
             }
-            if (options.Format != "W" && SourceBranch != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceBranch))
             {
                 writer.WritePropertyName("sourceBranch"u8);
                 writer.WriteStringValue(SourceBranch);
             }
-            if (options.Format != "W" && PullRequestTitle != null)
+            if (options.Format != "W" && Optional.IsDefined(PullRequestTitle))
             {
                 writer.WritePropertyName("pullRequestTitle"u8);
                 writer.WriteStringValue(PullRequestTitle);
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedOn"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && !(UserProvidedFunctionApps is ChangeTrackingList<StaticSiteUserProvidedFunctionAppData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UserProvidedFunctionApps))
             {
                 writer.WritePropertyName("userProvidedFunctionApps"u8);
                 writer.WriteStartArray();

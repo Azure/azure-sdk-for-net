@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
 
             writer.WriteStartObject();
-            if (VmResourceId != null)
+            if (Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);

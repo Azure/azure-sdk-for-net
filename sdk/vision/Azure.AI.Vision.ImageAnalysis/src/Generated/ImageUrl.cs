@@ -50,10 +50,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public ImageUrl(Uri url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
+            Argument.AssertNotNull(url, nameof(url));
 
             Url = url;
         }

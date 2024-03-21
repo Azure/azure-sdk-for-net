@@ -29,24 +29,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -79,39 +79,39 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (RelativeUri != null)
+            if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 JsonSerializer.Serialize(writer, RelativeUri);
             }
-            if (RequestMethod != null)
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (RequestBody != null)
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (AdditionalHeaders != null)
+            if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
-            if (Compression != null)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);

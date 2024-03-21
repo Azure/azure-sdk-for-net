@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (CountryName != null)
+            if (Optional.IsDefined(CountryName))
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(States is ChangeTrackingList<AvailableProvidersListState> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(States))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();

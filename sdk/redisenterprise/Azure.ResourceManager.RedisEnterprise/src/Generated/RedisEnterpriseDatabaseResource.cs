@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisEnterpriseDatabaseResource>> UpdateAsync(WaitUntil waitUntil, RedisEnterpriseDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<RedisEnterpriseDatabaseResource> Update(WaitUntil waitUntil, RedisEnterpriseDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Update");
             scope.Start();
@@ -456,10 +448,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<RedisEnterpriseDataAccessKeys>> RegenerateKeyAsync(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
             scope.Start();
@@ -505,10 +494,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<RedisEnterpriseDataAccessKeys> RegenerateKey(WaitUntil waitUntil, RedisEnterpriseRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.RegenerateKey");
             scope.Start();
@@ -554,10 +540,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ImportAsync(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
             scope.Start();
@@ -603,10 +586,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Import(WaitUntil waitUntil, ImportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Import");
             scope.Start();
@@ -652,10 +632,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ExportAsync(WaitUntil waitUntil, ExportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Export");
             scope.Start();
@@ -701,10 +678,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Export(WaitUntil waitUntil, ExportRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Export");
             scope.Start();
@@ -750,10 +724,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> ForceUnlinkAsync(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
             scope.Start();
@@ -799,10 +770,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation ForceUnlink(WaitUntil waitUntil, ForceUnlinkRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.ForceUnlink");
             scope.Start();
@@ -848,10 +816,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> FlushAsync(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
             scope.Start();
@@ -897,10 +862,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation Flush(WaitUntil waitUntil, FlushRedisEnterpriseDatabaseContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _redisEnterpriseDatabaseDatabasesClientDiagnostics.CreateScope("RedisEnterpriseDatabaseResource.Flush");
             scope.Start();

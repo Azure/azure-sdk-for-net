@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> The app ID of the service principal used to authenticate. </param>
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate. </param>
         /// <param name="tenant"> The ID of the tenant to which the service principal belongs. </param>
-        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> servicePrincipalId, DataFactoryKeyVaultSecretReference servicePrincipalKey, DataFactoryElement<string> tenant) : base(credentialType, description, annotations, additionalProperties)
+        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> servicePrincipalId, DataFactoryKeyVaultSecret servicePrincipalKey, DataFactoryElement<string> tenant) : base(credentialType, description, annotations, additionalProperties)
         {
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The app ID of the service principal used to authenticate. </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate. </summary>
-        public DataFactoryKeyVaultSecretReference ServicePrincipalKey { get; set; }
+        public DataFactoryKeyVaultSecret ServicePrincipalKey { get; set; }
         /// <summary> The ID of the tenant to which the service principal belongs. </summary>
         public DataFactoryElement<string> Tenant { get; set; }
     }

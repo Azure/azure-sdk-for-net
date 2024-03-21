@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (!(PlanIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlanIds))
             {
                 writer.WritePropertyName("planIds"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);

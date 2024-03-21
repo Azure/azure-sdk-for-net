@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDatabasePrincipalAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string principalAssignmentName, SynapseDatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseDatabasePrincipalAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string principalAssignmentName, SynapseDatabasePrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual async Task<Response<SynapseDatabasePrincipalAssignmentResource>> GetAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual Response<SynapseDatabasePrincipalAssignmentResource> Get(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseDatabasePrincipalAssignmentResource>> GetIfExistsAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
         public virtual NullableResponse<SynapseDatabasePrincipalAssignmentResource> GetIfExists(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabasePrincipalAssignmentCollection.GetIfExists");
             scope.Start();

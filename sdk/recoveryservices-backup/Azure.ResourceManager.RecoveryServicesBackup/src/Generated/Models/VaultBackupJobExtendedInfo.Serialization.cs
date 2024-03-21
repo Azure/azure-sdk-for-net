@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();

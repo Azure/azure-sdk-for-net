@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (IsExpirationRequired.HasValue)
+            if (Optional.IsDefined(IsExpirationRequired))
             {
                 writer.WritePropertyName("isExpirationRequired"u8);
                 writer.WriteBooleanValue(IsExpirationRequired.Value);
             }
-            if (MaximumDuration.HasValue)
+            if (Optional.IsDefined(MaximumDuration))
             {
                 writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);

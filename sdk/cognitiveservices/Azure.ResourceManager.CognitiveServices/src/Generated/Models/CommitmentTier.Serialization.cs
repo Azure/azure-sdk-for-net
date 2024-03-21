@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (SkuName != null)
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (HostingModel.HasValue)
+            if (Optional.IsDefined(HostingModel))
             {
                 writer.WritePropertyName("hostingModel"u8);
                 writer.WriteStringValue(HostingModel.Value.ToString());
             }
-            if (PlanType != null)
+            if (Optional.IsDefined(PlanType))
             {
                 writer.WritePropertyName("planType"u8);
                 writer.WriteStringValue(PlanType);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (MaxCount.HasValue)
+            if (Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (Quota != null)
+            if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);
             }
-            if (Cost != null)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteObjectValue(Cost);

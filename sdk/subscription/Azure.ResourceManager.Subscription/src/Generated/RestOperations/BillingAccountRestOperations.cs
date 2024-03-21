@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -60,14 +59,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<BillingAccountPolicyData>> GetPolicyAsync(string billingAccountId, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateGetPolicyRequest(billingAccountId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,14 +86,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<BillingAccountPolicyData> GetPolicy(string billingAccountId, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateGetPolicyRequest(billingAccountId);
             _pipeline.Send(message, cancellationToken);

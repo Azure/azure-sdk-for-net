@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (CustomerManagedKeyEncryption != null)
+            if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);

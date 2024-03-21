@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (TargetSchemaVersion != null)
+            if (Optional.IsDefined(TargetSchemaVersion))
             {
                 writer.WritePropertyName("targetSchemaVersion"u8);
                 writer.WriteStringValue(TargetSchemaVersion);

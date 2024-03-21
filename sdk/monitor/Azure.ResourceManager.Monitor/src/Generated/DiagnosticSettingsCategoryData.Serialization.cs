@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CategoryType.HasValue)
+            if (Optional.IsDefined(CategoryType))
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (!(CategoryGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CategoryGroups))
             {
                 writer.WritePropertyName("categoryGroups"u8);
                 writer.WriteStartArray();

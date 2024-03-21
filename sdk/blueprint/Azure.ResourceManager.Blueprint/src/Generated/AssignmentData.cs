@@ -59,18 +59,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentNullException"> <paramref name="identity"/>, <paramref name="parameters"/> or <paramref name="resourceGroups"/> is null. </exception>
         public AssignmentData(Models.ManagedServiceIdentity identity, IDictionary<string, ParameterValue> parameters, IDictionary<string, ResourceGroupValue> resourceGroups, AzureLocation location)
         {
-            if (identity == null)
-            {
-                throw new ArgumentNullException(nameof(identity));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-            if (resourceGroups == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroups));
-            }
+            Argument.AssertNotNull(identity, nameof(identity));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(resourceGroups, nameof(resourceGroups));
 
             Identity = identity;
             Parameters = parameters;

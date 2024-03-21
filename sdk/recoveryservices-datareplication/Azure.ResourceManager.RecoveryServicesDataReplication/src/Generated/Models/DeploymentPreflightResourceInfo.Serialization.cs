@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DeploymentPreflightResourceType.HasValue)
+            if (Optional.IsDefined(DeploymentPreflightResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentPreflightResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

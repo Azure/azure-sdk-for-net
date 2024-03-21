@@ -111,7 +111,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             Console.WriteLine($"Model ID: {purchaseOrderModel.ModelId}");
             Console.WriteLine($"Model description: {purchaseOrderModel.Description}");
-            Console.WriteLine($"Created on: {purchaseOrderModel.CreatedDateTime}");
+            Console.WriteLine($"Created on: {purchaseOrderModel.CreatedOn}");
             #endregion
 
             // Delete the models on completion to clean environment.

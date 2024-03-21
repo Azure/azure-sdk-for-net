@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceProvisioningServices.Mocking;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource"/> object. </returns>
         public static DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesCertificateResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServiceResource"/> object. </returns>
         public static DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServiceResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource"/> object. </returns>
         public static DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesPrivateLinkResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> object. </returns>
         public static DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesPrivateEndpointConnectionResource(id);
         }
@@ -135,10 +121,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
         public static DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningServices();
         }
@@ -176,10 +159,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         [ForwardsClientCalls]
         public static async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningServiceAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
@@ -217,10 +197,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         [ForwardsClientCalls]
         public static Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningService(provisioningServiceName, cancellationToken);
         }
@@ -256,10 +233,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
         }
@@ -295,10 +269,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
         }
@@ -334,10 +305,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -373,10 +341,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
         }

@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -59,62 +59,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
                 writer.WriteObjectValue(ConnectionProperties);
             }
-            if (ClientCustomerID != null)
+            if (Optional.IsDefined(ClientCustomerID))
             {
                 writer.WritePropertyName("clientCustomerID"u8);
                 writer.WriteObjectValue(ClientCustomerID);
             }
-            if (DeveloperToken != null)
+            if (Optional.IsDefined(DeveloperToken))
             {
                 writer.WritePropertyName("developerToken"u8);
                 writer.WriteObjectValue(DeveloperToken);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteObjectValue(RefreshToken);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteObjectValue(Email);
             }
-            if (KeyFilePath != null)
+            if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
                 writer.WriteObjectValue(KeyFilePath);
             }
-            if (TrustedCertPath != null)
+            if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 writer.WriteObjectValue(TrustedCertPath);
             }
-            if (UseSystemTrustStore != null)
+            if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue(UseSystemTrustStore);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);

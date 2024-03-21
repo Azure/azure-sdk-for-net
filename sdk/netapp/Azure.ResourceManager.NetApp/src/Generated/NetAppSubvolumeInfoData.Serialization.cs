@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("size");
                 }
             }
-            if (ParentPath != null)
+            if (Optional.IsDefined(ParentPath))
             {
                 if (ParentPath != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("parentPath");
                 }
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

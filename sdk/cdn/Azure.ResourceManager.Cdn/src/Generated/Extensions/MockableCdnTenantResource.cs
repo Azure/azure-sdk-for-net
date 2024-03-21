@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn.Mocking
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
             scope.Start();
@@ -112,10 +106,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DefaultClientDiagnostics.CreateScope("MockableCdnTenantResource.CheckCdnNameAvailability");
             scope.Start();

@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Samples
 {
@@ -21,7 +19,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetChatTranscriptDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetchatTranscriptDetailsForSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2023-06-01-preview/examples/GetchatTranscriptDetailsForSupportTicket.json
             // this example is just showing the usage of "ChatTranscriptsNoSubscription_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

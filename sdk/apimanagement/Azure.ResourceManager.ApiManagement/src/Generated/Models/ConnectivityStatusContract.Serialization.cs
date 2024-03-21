@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);

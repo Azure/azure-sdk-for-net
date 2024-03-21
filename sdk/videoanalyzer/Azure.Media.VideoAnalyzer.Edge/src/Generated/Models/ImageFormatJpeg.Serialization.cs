@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Quality != null)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteStringValue(Quality);

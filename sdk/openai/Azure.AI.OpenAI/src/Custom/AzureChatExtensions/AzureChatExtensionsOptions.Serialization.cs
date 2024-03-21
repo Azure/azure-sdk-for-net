@@ -16,8 +16,8 @@ public partial class AzureChatExtensionsOptions : IUtf8JsonSerializable
 
     void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
     {
-        // CUSTOM CODE NOTE: dataSources deserialize directly into the parent options payload.
-        writer.WritePropertyName("dataSources");
+        // CUSTOM CODE NOTE: data_sources deserialize directly into the parent options payload.
+        writer.WritePropertyName("data_sources");
         writer.WriteStartArray();
         foreach (AzureChatExtensionConfiguration dataSource in Extensions)
         {

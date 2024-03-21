@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (AdminUsername != null)
+            if (Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (GuestId != null)
+            if (Optional.IsDefined(GuestId))
             {
                 writer.WritePropertyName("guestId"u8);
                 writer.WriteStringValue(GuestId);
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && OSSku != null)
+            if (options.Format != "W" && Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSku"u8);
                 writer.WriteStringValue(OSSku);
             }
-            if (options.Format != "W" && ToolsRunningStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ToolsRunningStatus))
             {
                 writer.WritePropertyName("toolsRunningStatus"u8);
                 writer.WriteStringValue(ToolsRunningStatus);
             }
-            if (options.Format != "W" && ToolsVersionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ToolsVersionStatus))
             {
                 writer.WritePropertyName("toolsVersionStatus"u8);
                 writer.WriteStringValue(ToolsVersionStatus);
             }
-            if (options.Format != "W" && ToolsVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ToolsVersion))
             {
                 writer.WritePropertyName("toolsVersion"u8);
                 writer.WriteStringValue(ToolsVersion);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (!(Secrets is ChangeTrackingList<CloudServiceVaultSecretGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();

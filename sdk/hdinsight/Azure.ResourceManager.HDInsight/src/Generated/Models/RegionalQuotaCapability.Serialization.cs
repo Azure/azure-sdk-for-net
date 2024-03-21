@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("regionName"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (CoresUsed.HasValue)
+            if (Optional.IsDefined(CoresUsed))
             {
                 writer.WritePropertyName("coresUsed"u8);
                 writer.WriteNumberValue(CoresUsed.Value);
             }
-            if (CoresAvailable.HasValue)
+            if (Optional.IsDefined(CoresAvailable))
             {
                 writer.WritePropertyName("coresAvailable"u8);
                 writer.WriteNumberValue(CoresAvailable.Value);

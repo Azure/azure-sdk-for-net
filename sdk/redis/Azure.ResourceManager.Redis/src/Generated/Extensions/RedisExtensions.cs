@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Mocking;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisResource"/> object. </returns>
         public static RedisResource GetRedisResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisFirewallRuleResource"/> object. </returns>
         public static RedisFirewallRuleResource GetRedisFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisFirewallRuleResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisPatchScheduleResource"/> object. </returns>
         public static RedisPatchScheduleResource GetRedisPatchScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisPatchScheduleResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisLinkedServerWithPropertyResource"/> object. </returns>
         public static RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisLinkedServerWithPropertyResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisPrivateEndpointConnectionResource"/> object. </returns>
         public static RedisPrivateEndpointConnectionResource GetRedisPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisPrivateEndpointConnectionResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisCacheAccessPolicyResource"/> object. </returns>
         public static RedisCacheAccessPolicyResource GetRedisCacheAccessPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisCacheAccessPolicyResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisCacheAccessPolicyAssignmentResource"/> object. </returns>
         public static RedisCacheAccessPolicyAssignmentResource GetRedisCacheAccessPolicyAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableRedisArmClient(client).GetRedisCacheAccessPolicyAssignmentResource(id);
         }
@@ -201,10 +178,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
         public static RedisCollection GetAllRedis(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRedisResourceGroupResource(resourceGroupResource).GetAllRedis();
         }
@@ -242,10 +216,7 @@ namespace Azure.ResourceManager.Redis
         [ForwardsClientCalls]
         public static async Task<Response<RedisResource>> GetRedisAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableRedisResourceGroupResource(resourceGroupResource).GetRedisAsync(name, cancellationToken).ConfigureAwait(false);
         }
@@ -283,10 +254,7 @@ namespace Azure.ResourceManager.Redis
         [ForwardsClientCalls]
         public static Response<RedisResource> GetRedis(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableRedisResourceGroupResource(resourceGroupResource).GetRedis(name, cancellationToken);
         }
@@ -322,10 +290,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response> CheckRedisNameAvailabilityAsync(this SubscriptionResource subscriptionResource, RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRedisSubscriptionResource(subscriptionResource).CheckRedisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -361,10 +326,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response CheckRedisNameAvailability(this SubscriptionResource subscriptionResource, RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisSubscriptionResource(subscriptionResource).CheckRedisNameAvailability(content, cancellationToken);
         }
@@ -400,10 +362,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisResource> GetAllRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisSubscriptionResource(subscriptionResource).GetAllRedisAsync(cancellationToken);
         }
@@ -439,10 +398,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisResource> GetAllRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisSubscriptionResource(subscriptionResource).GetAllRedis(cancellationToken);
         }
@@ -476,10 +432,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<RedisOperationStatus>> GetAsyncOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableRedisSubscriptionResource(subscriptionResource).GetAsyncOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
@@ -513,10 +466,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static Response<RedisOperationStatus> GetAsyncOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRedisSubscriptionResource(subscriptionResource).GetAsyncOperationStatus(location, operationId, cancellationToken);
         }

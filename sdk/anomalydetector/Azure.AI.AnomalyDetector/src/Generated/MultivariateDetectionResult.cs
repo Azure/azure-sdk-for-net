@@ -53,14 +53,8 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
         internal MultivariateDetectionResult(Guid resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
-            if (summary == null)
-            {
-                throw new ArgumentNullException(nameof(summary));
-            }
-            if (results == null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+            Argument.AssertNotNull(summary, nameof(summary));
+            Argument.AssertNotNull(results, nameof(results));
 
             ResultId = resultId;
             Summary = summary;

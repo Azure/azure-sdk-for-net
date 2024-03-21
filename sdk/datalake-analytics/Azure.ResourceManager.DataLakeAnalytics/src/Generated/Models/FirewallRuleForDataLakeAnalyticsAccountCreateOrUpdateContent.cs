@@ -65,18 +65,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (startIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(startIPAddress));
-            }
-            if (endIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(endIPAddress));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
             Name = name;
             StartIPAddress = startIPAddress;

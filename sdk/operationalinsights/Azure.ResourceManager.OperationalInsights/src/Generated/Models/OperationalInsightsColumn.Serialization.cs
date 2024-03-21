@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ColumnType.HasValue)
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (DataTypeHint.HasValue)
+            if (Optional.IsDefined(DataTypeHint))
             {
                 writer.WritePropertyName("dataTypeHint"u8);
                 writer.WriteStringValue(DataTypeHint.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsDefaultDisplay.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultDisplay))
             {
                 writer.WritePropertyName("isDefaultDisplay"u8);
                 writer.WriteBooleanValue(IsDefaultDisplay.Value);
             }
-            if (options.Format != "W" && IsHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);

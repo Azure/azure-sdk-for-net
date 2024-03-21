@@ -21,10 +21,7 @@ namespace Azure.Communication.Rooms
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal CommunicationRoom(string id, DateTimeOffset createdAt, DateTimeOffset validFrom, DateTimeOffset validUntil, bool pstnDialOutEnabled)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             CreatedAt = createdAt;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ActivePlacementGroupId != null)
+            if (Optional.IsDefined(ActivePlacementGroupId))
             {
                 writer.WritePropertyName("activePlacementGroupId"u8);
                 writer.WriteStringValue(ActivePlacementGroupId);

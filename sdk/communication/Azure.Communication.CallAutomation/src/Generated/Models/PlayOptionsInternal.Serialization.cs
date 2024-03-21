@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("loop"u8);
             writer.WriteBooleanValue(Loop);
-            if (InterruptCallMediaOperation.HasValue)
+            if (Optional.IsDefined(InterruptCallMediaOperation))
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);

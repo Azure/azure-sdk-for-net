@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Offline.HasValue)
+            if (Optional.IsDefined(Offline))
             {
                 writer.WritePropertyName("offline"u8);
                 writer.WriteBooleanValue(Offline.Value);
             }
-            if (LastBackupName != null)
+            if (Optional.IsDefined(LastBackupName))
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);

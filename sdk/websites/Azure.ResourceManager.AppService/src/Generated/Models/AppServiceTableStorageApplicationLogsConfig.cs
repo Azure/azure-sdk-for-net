@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriString"/> is null. </exception>
         public AppServiceTableStorageApplicationLogsConfig(string sasUriString)
         {
-            if (sasUriString == null)
-            {
-                throw new ArgumentNullException(nameof(sasUriString));
-            }
+            Argument.AssertNotNull(sasUriString, nameof(sasUriString));
 
             SasUriString = sasUriString;
         }

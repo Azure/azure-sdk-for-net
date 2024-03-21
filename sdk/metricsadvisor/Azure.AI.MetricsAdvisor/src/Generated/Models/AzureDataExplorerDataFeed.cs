@@ -22,18 +22,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/> or <paramref name="dataSourceParameter"/> is null. </exception>
         public AzureDataExplorerDataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, SqlSourceParameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
-            if (dataFeedName == null)
-            {
-                throw new ArgumentNullException(nameof(dataFeedName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (dataSourceParameter == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceParameter));
-            }
+            Argument.AssertNotNull(dataFeedName, nameof(dataFeedName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(dataSourceParameter, nameof(dataSourceParameter));
 
             DataSourceParameter = dataSourceParameter;
             DataSourceType = DataFeedSourceKind.AzureDataExplorer;

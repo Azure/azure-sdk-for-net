@@ -4,6 +4,7 @@
 using System;
 using System.Runtime.Serialization;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {

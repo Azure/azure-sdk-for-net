@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(Container);
             writer.WritePropertyName("loggingContainer"u8);
             writer.WriteStringValue(LoggingContainer);
-            if (ImportPrefix != null)
+            if (Optional.IsDefined(ImportPrefix))
             {
                 writer.WritePropertyName("importPrefix"u8);
                 writer.WriteStringValue(ImportPrefix);

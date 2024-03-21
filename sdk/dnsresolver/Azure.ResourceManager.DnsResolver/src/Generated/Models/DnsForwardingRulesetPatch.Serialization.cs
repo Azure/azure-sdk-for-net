@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WriteStartObject();
-            if (!(DnsResolverOutboundEndpoints is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResolverOutboundEndpoints))
             {
                 writer.WritePropertyName("dnsResolverOutboundEndpoints"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ProjectFileResource>> UpdateAsync(ProjectFileData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileResource.Update");
             scope.Start();
@@ -327,10 +322,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ProjectFileResource> Update(ProjectFileData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _projectFileFilesClientDiagnostics.CreateScope("ProjectFileResource.Update");
             scope.Start();

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (CpuCount.HasValue)
+            if (Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (MemoryMB.HasValue)
+            if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (VmCount.HasValue)
+            if (Optional.IsDefined(VmCount))
             {
                 writer.WritePropertyName("vmCount"u8);
                 writer.WriteNumberValue(VmCount.Value);

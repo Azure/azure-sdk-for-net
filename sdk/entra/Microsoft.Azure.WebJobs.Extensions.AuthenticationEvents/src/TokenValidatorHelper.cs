@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -24,8 +25,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             else
             {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Token_Version, version, String.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
+                throw new ArgumentException(
+                    string.Format(
+                        provider: CultureInfo.CurrentCulture,
+                        format: AuthenticationEventResource.Ex_Token_Version,
+                        arg0: version,
+                        arg1: string.Join(",", Enum.GetNames(typeof(SupportedTokenSchemaVersions)))));
             }
+        }
+
+        /// <summary>
+        /// Checks wheather the header has the correct values for ezauth.
+        /// </summary>
+        /// <param name="headers"><see cref="HttpRequestHeaders"/> headers to check in.</param>
+        /// <returns>True if ezauth is valid</returns>
+        internal static bool IsEzAuthValid(HttpRequestHeaders headers)
+        {
+            return ConfigurationManager.EZAuthEnabled && headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY);
+        }
+
+        /// <summary>
+        /// Validate the authorization party is accurate to the one in configuration.
+        /// </summary>
+        /// <param name="configurationManager"></param>
+        /// <param name="authoizedPartyValueFromTokenOrHeader">The value from either the token or the header.</param>
+        internal static void ValidateAuthorizationParty(ConfigurationManager configurationManager, string authoizedPartyValueFromTokenOrHeader)
+        {
+            if (configurationManager.AuthorizedPartyAppId.EqualsOic(authoizedPartyValueFromTokenOrHeader))
+            {
+                return;
+            }
+
+            throw new UnauthorizedAccessException(
+                string.Format(
+                    provider: CultureInfo.CurrentCulture,
+                    format: AuthenticationEventResource.Ex_Invalid_AuthorizedPartyApplicationId,
+                    arg0: authoizedPartyValueFromTokenOrHeader,
+                    arg1: configurationManager.AuthorizedPartyAppId));
         }
     }
 }

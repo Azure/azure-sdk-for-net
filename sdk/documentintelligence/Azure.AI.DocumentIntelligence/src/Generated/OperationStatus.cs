@@ -26,6 +26,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string RunningValue = "running";
         private const string FailedValue = "failed";
         private const string SucceededValue = "succeeded";
+        private const string CompletedValue = "completed";
         private const string CanceledValue = "canceled";
 
         /// <summary> The operation has not started yet. </summary>
@@ -36,6 +37,8 @@ namespace Azure.AI.DocumentIntelligence
         public static OperationStatus Failed { get; } = new OperationStatus(FailedValue);
         /// <summary> The operation has succeeded. </summary>
         public static OperationStatus Succeeded { get; } = new OperationStatus(SucceededValue);
+        /// <summary> The operation has completed. </summary>
+        public static OperationStatus Completed { get; } = new OperationStatus(CompletedValue);
         /// <summary> The operation has been canceled. </summary>
         public static OperationStatus Canceled { get; } = new OperationStatus(CanceledValue);
         /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>

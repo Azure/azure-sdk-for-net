@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="trackSelections"/> is null. </exception>
         public FilterTrackSelection(IEnumerable<FilterTrackPropertyCondition> trackSelections)
         {
-            if (trackSelections == null)
-            {
-                throw new ArgumentNullException(nameof(trackSelections));
-            }
+            Argument.AssertNotNull(trackSelections, nameof(trackSelections));
 
             TrackSelections = trackSelections.ToList();
         }

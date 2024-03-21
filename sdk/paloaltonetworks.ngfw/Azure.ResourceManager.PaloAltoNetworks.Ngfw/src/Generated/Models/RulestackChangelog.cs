@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="changes"/> is null. </exception>
         internal RulestackChangelog(IEnumerable<string> changes)
         {
-            if (changes == null)
-            {
-                throw new ArgumentNullException(nameof(changes));
-            }
+            Argument.AssertNotNull(changes, nameof(changes));
 
             Changes = changes.ToList();
         }

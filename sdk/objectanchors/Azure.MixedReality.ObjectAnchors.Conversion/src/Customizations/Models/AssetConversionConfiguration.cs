@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.MixedReality.Common;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion

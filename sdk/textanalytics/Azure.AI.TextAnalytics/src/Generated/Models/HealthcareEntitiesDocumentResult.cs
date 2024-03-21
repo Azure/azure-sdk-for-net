@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -23,22 +22,10 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="warnings"/>, <paramref name="entities"/> or <paramref name="relations"/> is null. </exception>
         public HealthcareEntitiesDocumentResult(string id, IEnumerable<DocumentWarning> warnings, IEnumerable<HealthcareEntityInternal> entities, IEnumerable<HealthcareRelationInternal> relations) : base(id, warnings)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
-            if (relations == null)
-            {
-                throw new ArgumentNullException(nameof(relations));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(warnings, nameof(warnings));
+            Argument.AssertNotNull(entities, nameof(entities));
+            Argument.AssertNotNull(relations, nameof(relations));
 
             Entities = entities.ToList();
             Relations = relations.ToList();

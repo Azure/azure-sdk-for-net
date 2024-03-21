@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Orbital.Models;
@@ -63,14 +62,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvailableGroundStationListResult>> ListByCapabilityAsync(string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByCapabilityRequest(subscriptionId, capability);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,14 +88,7 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvailableGroundStationListResult> ListByCapability(string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByCapabilityRequest(subscriptionId, capability);
             _pipeline.Send(message, cancellationToken);
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvailableGroundStationData>> GetAsync(string subscriptionId, string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var message = CreateGetRequest(subscriptionId, groundStationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -190,22 +161,8 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="groundStationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvailableGroundStationData> Get(string subscriptionId, string groundStationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (groundStationName == null)
-            {
-                throw new ArgumentNullException(nameof(groundStationName));
-            }
-            if (groundStationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(groundStationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(groundStationName, nameof(groundStationName));
 
             using var message = CreateGetRequest(subscriptionId, groundStationName);
             _pipeline.Send(message, cancellationToken);
@@ -248,18 +205,8 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvailableGroundStationListResult>> ListByCapabilityNextPageAsync(string nextLink, string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByCapabilityNextPageRequest(nextLink, subscriptionId, capability);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -286,18 +233,8 @@ namespace Azure.ResourceManager.Orbital
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvailableGroundStationListResult> ListByCapabilityNextPage(string nextLink, string subscriptionId, GroundStationCapability capability, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByCapabilityNextPageRequest(nextLink, subscriptionId, capability);
             _pipeline.Send(message, cancellationToken);

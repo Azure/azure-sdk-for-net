@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Channel.HasValue)
+            if (Optional.IsDefined(Channel))
             {
                 writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);

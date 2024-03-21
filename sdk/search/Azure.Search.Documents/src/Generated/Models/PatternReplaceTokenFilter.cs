@@ -19,18 +19,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="pattern"/> or <paramref name="replacement"/> is null. </exception>
         public PatternReplaceTokenFilter(string name, string pattern, string replacement) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (pattern == null)
-            {
-                throw new ArgumentNullException(nameof(pattern));
-            }
-            if (replacement == null)
-            {
-                throw new ArgumentNullException(nameof(replacement));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(pattern, nameof(pattern));
+            Argument.AssertNotNull(replacement, nameof(replacement));
 
             Pattern = pattern;
             Replacement = replacement;

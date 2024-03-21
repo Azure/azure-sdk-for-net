@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (DataType.HasValue)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (Precision.HasValue)
+            if (Optional.IsDefined(Precision))
             {
                 writer.WritePropertyName("precision"u8);
                 writer.WriteNumberValue(Precision.Value);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());

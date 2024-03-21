@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (NetworkIsolation != null)
+            if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);

@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (FixedDate != null)
+            if (Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
                 writer.WriteObjectValue(FixedDate);
             }
-            if (Recurrence != null)
+            if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(Recurrence);

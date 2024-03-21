@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
                 // INITIALIZE INTERNALS
                 var manager = new Manager(exporterOptions, new DefaultPlatform());
-                return new LiveMetricsExtractionProcessor(manager);
+                return new LiveMetricsActivityProcessor(manager);
             });
         }
     }

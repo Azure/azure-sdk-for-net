@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="database"/> is null. </exception>
         public AzureDataExplorerLinkedService(object endpoint, object database)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(database, nameof(database));
 
             Endpoint = endpoint;
             Database = database;

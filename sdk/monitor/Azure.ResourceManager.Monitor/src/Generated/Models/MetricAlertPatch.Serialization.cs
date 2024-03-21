@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -64,37 +64,37 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EvaluationFrequency.HasValue)
+            if (Optional.IsDefined(EvaluationFrequency))
             {
                 writer.WritePropertyName("evaluationFrequency"u8);
                 writer.WriteStringValue(EvaluationFrequency.Value, "P");
             }
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
-            if (TargetResourceType.HasValue)
+            if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType.Value);
             }
-            if (TargetResourceRegion.HasValue)
+            if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion"u8);
                 writer.WriteStringValue(TargetResourceRegion.Value);
             }
-            if (Criteria != null)
+            if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
                 writer.WriteObjectValue(Criteria);
             }
-            if (IsAutoMitigateEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
-            if (!(Actions is ChangeTrackingList<MetricAlertAction> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && IsMigrated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsMigrated))
             {
                 writer.WritePropertyName("isMigrated"u8);
                 writer.WriteBooleanValue(IsMigrated.Value);

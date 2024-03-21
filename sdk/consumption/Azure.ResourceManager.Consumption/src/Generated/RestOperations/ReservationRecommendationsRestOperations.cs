@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -65,10 +64,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<ReservationRecommendationsListResult>> ListAsync(string resourceScope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListRequest(resourceScope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -95,10 +91,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> is null. </exception>
         public Response<ReservationRecommendationsListResult> List(string resourceScope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListRequest(resourceScope, filter);
             _pipeline.Send(message, cancellationToken);
@@ -140,14 +133,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public async Task<Response<ReservationRecommendationsListResult>> ListNextPageAsync(string nextLink, string resourceScope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -175,14 +162,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceScope"/> is null. </exception>
         public Response<ReservationRecommendationsListResult> ListNextPage(string nextLink, string resourceScope, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, filter);
             _pipeline.Send(message, cancellationToken);

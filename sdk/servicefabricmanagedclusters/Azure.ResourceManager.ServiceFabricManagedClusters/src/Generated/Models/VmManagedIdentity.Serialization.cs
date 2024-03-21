@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (!(UserAssignedIdentities is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();

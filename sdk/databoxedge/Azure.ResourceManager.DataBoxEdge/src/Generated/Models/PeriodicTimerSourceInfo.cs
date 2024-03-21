@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         public PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
+            Argument.AssertNotNull(schedule, nameof(schedule));
 
             StartOn = startOn;
             Schedule = schedule;

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Maps.Routing.Models
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonLineStringData(IEnumerable<IList<double>> coordinates)
         {
-            if (coordinates == null)
-            {
-                throw new ArgumentNullException(nameof(coordinates));
-            }
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
         }

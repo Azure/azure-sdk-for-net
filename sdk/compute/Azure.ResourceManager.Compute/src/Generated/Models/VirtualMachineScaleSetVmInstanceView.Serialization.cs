@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (PlatformUpdateDomain.HasValue)
+            if (Optional.IsDefined(PlatformUpdateDomain))
             {
                 writer.WritePropertyName("platformUpdateDomain"u8);
                 writer.WriteNumberValue(PlatformUpdateDomain.Value);
             }
-            if (PlatformFaultDomain.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (RdpThumbPrint != null)
+            if (Optional.IsDefined(RdpThumbPrint))
             {
                 writer.WritePropertyName("rdpThumbPrint"u8);
                 writer.WriteStringValue(RdpThumbPrint);
             }
-            if (VmAgent != null)
+            if (Optional.IsDefined(VmAgent))
             {
                 writer.WritePropertyName("vmAgent"u8);
                 writer.WriteObjectValue(VmAgent);
             }
-            if (MaintenanceRedeployStatus != null)
+            if (Optional.IsDefined(MaintenanceRedeployStatus))
             {
                 writer.WritePropertyName("maintenanceRedeployStatus"u8);
                 writer.WriteObjectValue(MaintenanceRedeployStatus);
             }
-            if (!(Disks is ChangeTrackingList<DiskInstanceView> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extensions is ChangeTrackingList<VirtualMachineExtensionInstanceView> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VmHealth != null)
+            if (options.Format != "W" && Optional.IsDefined(VmHealth))
             {
                 writer.WritePropertyName("vmHealth"u8);
                 writer.WriteObjectValue(VmHealth);
             }
-            if (BootDiagnostics != null)
+            if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
                 writer.WriteObjectValue(BootDiagnostics);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -91,32 +91,32 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AssignedHost != null)
+            if (options.Format != "W" && Optional.IsDefined(AssignedHost))
             {
                 writer.WritePropertyName("assignedHost"u8);
                 writer.WriteStringValue(AssignedHost);
             }
-            if (PlacementGroupId != null)
+            if (Optional.IsDefined(PlacementGroupId))
             {
                 writer.WritePropertyName("placementGroupId"u8);
                 writer.WriteStringValue(PlacementGroupId);
             }
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (OSName != null)
+            if (Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());

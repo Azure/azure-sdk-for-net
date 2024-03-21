@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (ClientCertificateId != null)
+            if (Optional.IsDefined(ClientCertificateId))
             {
                 writer.WritePropertyName("clientCertificateId"u8);
                 writer.WriteStringValue(ClientCertificateId);
             }
-            if (ClientCertificatethumbprint != null)
+            if (Optional.IsDefined(ClientCertificatethumbprint))
             {
                 writer.WritePropertyName("clientCertificatethumbprint"u8);
                 writer.WriteStringValue(ClientCertificatethumbprint);
             }
-            if (MaxPartitionResolutionRetries.HasValue)
+            if (Optional.IsDefined(MaxPartitionResolutionRetries))
             {
                 writer.WritePropertyName("maxPartitionResolutionRetries"u8);
                 writer.WriteNumberValue(MaxPartitionResolutionRetries.Value);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(ServerCertificateThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
             {
                 writer.WritePropertyName("serverCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServerX509Names is ChangeTrackingList<X509CertificateName> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerX509Names))
             {
                 writer.WritePropertyName("serverX509Names"u8);
                 writer.WriteStartArray();

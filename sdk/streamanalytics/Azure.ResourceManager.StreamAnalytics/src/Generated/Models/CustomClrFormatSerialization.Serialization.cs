@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SerializationDllPath != null)
+            if (Optional.IsDefined(SerializationDllPath))
             {
                 writer.WritePropertyName("serializationDllPath"u8);
                 writer.WriteStringValue(SerializationDllPath);
             }
-            if (SerializationClassName != null)
+            if (Optional.IsDefined(SerializationClassName))
             {
                 writer.WritePropertyName("serializationClassName"u8);
                 writer.WriteStringValue(SerializationClassName);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -38,7 +37,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("content");
             }
-            if (!(ToolCalls is ChangeTrackingList<ChatCompletionsToolCall> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ToolCalls))
             {
                 writer.WritePropertyName("tool_calls"u8);
                 writer.WriteStartArray();
@@ -48,12 +47,12 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionCall != null)
+            if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
-            if (AzureExtensionsContext != null)
+            if (Optional.IsDefined(AzureExtensionsContext))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteObjectValue(AzureExtensionsContext);

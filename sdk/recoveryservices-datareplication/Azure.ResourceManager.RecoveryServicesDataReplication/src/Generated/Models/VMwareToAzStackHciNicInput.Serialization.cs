@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);

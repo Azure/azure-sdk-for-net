@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Server != null)
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (ContainerImage != null)
+            if (Optional.IsDefined(ContainerImage))
             {
                 writer.WritePropertyName("containerImage"u8);
                 writer.WriteStringValue(ContainerImage);
             }
-            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Args is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ImageRegistryCredential != null)
+            if (Optional.IsDefined(ImageRegistryCredential))
             {
                 writer.WritePropertyName("imageRegistryCredential"u8);
                 writer.WriteObjectValue(ImageRegistryCredential);
             }
-            if (LanguageFramework != null)
+            if (Optional.IsDefined(LanguageFramework))
             {
                 writer.WritePropertyName("languageFramework"u8);
                 writer.WriteStringValue(LanguageFramework);

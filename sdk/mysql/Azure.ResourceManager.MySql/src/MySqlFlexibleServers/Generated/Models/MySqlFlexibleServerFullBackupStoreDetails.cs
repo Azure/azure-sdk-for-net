@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriList"/> is null. </exception>
         public MySqlFlexibleServerFullBackupStoreDetails(IEnumerable<string> sasUriList)
         {
-            if (sasUriList == null)
-            {
-                throw new ArgumentNullException(nameof(sasUriList));
-            }
+            Argument.AssertNotNull(sasUriList, nameof(sasUriList));
 
             SasUriList = sasUriList.ToList();
             ObjectType = "FullBackupStoreDetails";

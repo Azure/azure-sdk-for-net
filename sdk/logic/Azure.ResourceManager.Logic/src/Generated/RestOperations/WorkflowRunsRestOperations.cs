@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Logic.Models;
@@ -77,30 +76,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogicWorkflowRunListResult>> ListAsync(string subscriptionId, string resourceGroupName, string workflowName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workflowName, top, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,30 +107,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogicWorkflowRunListResult> List(string subscriptionId, string resourceGroupName, string workflowName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workflowName, top, filter);
             _pipeline.Send(message, cancellationToken);
@@ -202,38 +159,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogicWorkflowRunData>> GetAsync(string subscriptionId, string resourceGroupName, string workflowName, string runName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (runName == null)
-            {
-                throw new ArgumentNullException(nameof(runName));
-            }
-            if (runName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workflowName, runName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -263,38 +192,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogicWorkflowRunData> Get(string subscriptionId, string resourceGroupName, string workflowName, string runName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (runName == null)
-            {
-                throw new ArgumentNullException(nameof(runName));
-            }
-            if (runName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workflowName, runName);
             _pipeline.Send(message, cancellationToken);
@@ -347,38 +248,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string workflowName, string runName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (runName == null)
-            {
-                throw new ArgumentNullException(nameof(runName));
-            }
-            if (runName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, workflowName, runName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -401,38 +274,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workflowName"/> or <paramref name="runName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Cancel(string subscriptionId, string resourceGroupName, string workflowName, string runName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
-            if (runName == null)
-            {
-                throw new ArgumentNullException(nameof(runName));
-            }
-            if (runName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(runName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
+            Argument.AssertNotNullOrEmpty(runName, nameof(runName));
 
             using var message = CreateCancelRequest(subscriptionId, resourceGroupName, workflowName, runName);
             _pipeline.Send(message, cancellationToken);
@@ -471,34 +316,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LogicWorkflowRunListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workflowName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workflowName, top, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -528,34 +349,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workflowName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LogicWorkflowRunListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workflowName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workflowName == null)
-            {
-                throw new ArgumentNullException(nameof(workflowName));
-            }
-            if (workflowName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workflowName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workflowName, nameof(workflowName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workflowName, top, filter);
             _pipeline.Send(message, cancellationToken);

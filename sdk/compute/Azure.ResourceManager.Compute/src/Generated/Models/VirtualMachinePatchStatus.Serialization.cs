@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (AvailablePatchSummary != null)
+            if (Optional.IsDefined(AvailablePatchSummary))
             {
                 writer.WritePropertyName("availablePatchSummary"u8);
                 writer.WriteObjectValue(AvailablePatchSummary);
             }
-            if (LastPatchInstallationSummary != null)
+            if (Optional.IsDefined(LastPatchInstallationSummary))
             {
                 writer.WritePropertyName("lastPatchInstallationSummary"u8);
                 writer.WriteObjectValue(LastPatchInstallationSummary);
             }
-            if (options.Format != "W" && !(ConfigurationStatuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationStatuses))
             {
                 writer.WritePropertyName("configurationStatuses"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);

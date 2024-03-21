@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual async Task<Response<AvsPrivateCloudClusterVirtualMachineResource>> GetAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineId));
-            }
-            if (virtualMachineId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual Response<AvsPrivateCloudClusterVirtualMachineResource> Get(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineId));
-            }
-            if (virtualMachineId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineId));
-            }
-            if (virtualMachineId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineId));
-            }
-            if (virtualMachineId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual async Task<NullableResponse<AvsPrivateCloudClusterVirtualMachineResource>> GetIfExistsAsync(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineId));
-            }
-            if (virtualMachineId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
         public virtual NullableResponse<AvsPrivateCloudClusterVirtualMachineResource> GetIfExists(string virtualMachineId, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineId));
-            }
-            if (virtualMachineId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineId));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
 
             using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.GetIfExists");
             scope.Start();

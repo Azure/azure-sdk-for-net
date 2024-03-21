@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetworkAnalytics.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataTypeListResult>> ListByDataProductAsync(string subscriptionId, string resourceGroupName, string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var message = CreateListByDataProductRequest(subscriptionId, resourceGroupName, dataProductName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataTypeListResult> ListByDataProduct(string subscriptionId, string resourceGroupName, string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var message = CreateListByDataProductRequest(subscriptionId, resourceGroupName, dataProductName);
             _pipeline.Send(message, cancellationToken);
@@ -182,34 +139,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataTypeListResult>> ListByDataProductNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var message = CreateListByDataProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataProductName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -237,34 +170,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataTypeListResult> ListByDataProductNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dataProductName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (dataProductName == null)
-            {
-                throw new ArgumentNullException(nameof(dataProductName));
-            }
-            if (dataProductName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataProductName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(dataProductName, nameof(dataProductName));
 
             using var message = CreateListByDataProductNextPageRequest(nextLink, subscriptionId, resourceGroupName, dataProductName);
             _pipeline.Send(message, cancellationToken);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (BillingCurrencyTotalPaidAmount != null)
+            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
             }
-            if (BillingCurrencyProratedAmount != null)
+            if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyProratedAmount);
             }
-            if (BillingCurrencyRemainingCommitmentAmount != null)
+            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);

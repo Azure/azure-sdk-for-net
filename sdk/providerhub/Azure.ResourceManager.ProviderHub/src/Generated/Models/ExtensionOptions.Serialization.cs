@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (!(Request is ChangeTrackingList<ExtensionOptionType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Response is ChangeTrackingList<ExtensionOptionType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStartArray();

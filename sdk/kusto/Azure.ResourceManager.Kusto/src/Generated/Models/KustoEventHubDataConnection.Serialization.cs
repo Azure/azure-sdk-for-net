@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,39 +49,39 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (ConsumerGroup != null)
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (MappingRuleName != null)
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (DataFormat.HasValue)
+            if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (!(EventSystemProperties is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EventSystemProperties))
             {
                 writer.WritePropertyName("eventSystemProperties"u8);
                 writer.WriteStartArray();
@@ -91,32 +91,32 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Compression.HasValue)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(Compression.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ManagedIdentityResourceId != null)
+            if (Optional.IsDefined(ManagedIdentityResourceId))
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
             }
-            if (options.Format != "W" && ManagedIdentityObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityObjectId))
             {
                 writer.WritePropertyName("managedIdentityObjectId"u8);
                 writer.WriteStringValue(ManagedIdentityObjectId.Value);
             }
-            if (DatabaseRouting.HasValue)
+            if (Optional.IsDefined(DatabaseRouting))
             {
                 writer.WritePropertyName("databaseRouting"u8);
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
-            if (RetrievalStartOn.HasValue)
+            if (Optional.IsDefined(RetrievalStartOn))
             {
                 writer.WritePropertyName("retrievalStartDate"u8);
                 writer.WriteStringValue(RetrievalStartOn.Value, "O");

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
-            if (!(OutboundIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EventStreamEndpoint != null)
+            if (Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);

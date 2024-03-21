@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (ArcAutoProvisioning != null)
+            if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
                 writer.WriteObjectValue(ArcAutoProvisioning);
             }
-            if (Rds != null)
+            if (Optional.IsDefined(Rds))
             {
                 writer.WritePropertyName("rds"u8);
                 writer.WriteObjectValue(Rds);
             }
-            if (DatabasesDspm != null)
+            if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
                 writer.WriteObjectValue(DatabasesDspm);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DiagnosticsOutput != null)
+            if (Optional.IsDefined(DiagnosticsOutput))
             {
                 writer.WritePropertyName("diagnosticsOutput"u8);
                 writer.WriteStringValue(DiagnosticsOutput);

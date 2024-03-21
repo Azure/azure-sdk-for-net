@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
         public RedshiftUnloadSettings(DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName)
         {
-            if (s3LinkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(s3LinkedServiceName));
-            }
-            if (bucketName == null)
-            {
-                throw new ArgumentNullException(nameof(bucketName));
-            }
+            Argument.AssertNotNull(s3LinkedServiceName, nameof(s3LinkedServiceName));
+            Argument.AssertNotNull(bucketName, nameof(bucketName));
 
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;

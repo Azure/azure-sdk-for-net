@@ -54,22 +54,10 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="nativeName"/>, <paramref name="dir"/> or <paramref name="translations"/> is null. </exception>
         internal SourceDictionaryLanguage(string name, string nativeName, string dir, IEnumerable<TargetDictionaryLanguage> translations)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (nativeName == null)
-            {
-                throw new ArgumentNullException(nameof(nativeName));
-            }
-            if (dir == null)
-            {
-                throw new ArgumentNullException(nameof(dir));
-            }
-            if (translations == null)
-            {
-                throw new ArgumentNullException(nameof(translations));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(nativeName, nameof(nativeName));
+            Argument.AssertNotNull(dir, nameof(dir));
+            Argument.AssertNotNull(translations, nameof(translations));
 
             Name = name;
             NativeName = nativeName;

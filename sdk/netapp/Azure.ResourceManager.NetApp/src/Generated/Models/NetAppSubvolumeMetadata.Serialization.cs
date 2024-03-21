@@ -42,59 +42,59 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (ParentPath != null)
+            if (Optional.IsDefined(ParentPath))
             {
                 writer.WritePropertyName("parentPath"u8);
                 writer.WriteStringValue(ParentPath);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (BytesUsed.HasValue)
+            if (Optional.IsDefined(BytesUsed))
             {
                 writer.WritePropertyName("bytesUsed"u8);
                 writer.WriteNumberValue(BytesUsed.Value);
             }
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeStamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (AccessedOn.HasValue)
+            if (Optional.IsDefined(AccessedOn))
             {
                 writer.WritePropertyName("accessedTimeStamp"u8);
                 writer.WriteStringValue(AccessedOn.Value, "O");
             }
-            if (ModifiedOn.HasValue)
+            if (Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTimeStamp"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (ChangedOn.HasValue)
+            if (Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTimeStamp"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);

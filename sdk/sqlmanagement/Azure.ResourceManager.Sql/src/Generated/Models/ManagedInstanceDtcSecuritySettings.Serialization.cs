@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (TransactionManagerCommunicationSettings != null)
+            if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
                 writer.WriteObjectValue(TransactionManagerCommunicationSettings);
             }
-            if (IsXATransactionsEnabled.HasValue)
+            if (Optional.IsDefined(IsXATransactionsEnabled))
             {
                 writer.WritePropertyName("xaTransactionsEnabled"u8);
                 writer.WriteBooleanValue(IsXATransactionsEnabled.Value);
             }
-            if (SnaLu6Point2TransactionsEnabled.HasValue)
+            if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
             {
                 writer.WritePropertyName("snaLu6point2TransactionsEnabled"u8);
                 writer.WriteBooleanValue(SnaLu6Point2TransactionsEnabled.Value);
             }
-            if (XATransactionsDefaultTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
             {
                 writer.WritePropertyName("xaTransactionsDefaultTimeout"u8);
                 writer.WriteNumberValue(XATransactionsDefaultTimeoutInSeconds.Value);
             }
-            if (XATransactionsMaximumTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
             {
                 writer.WritePropertyName("xaTransactionsMaximumTimeout"u8);
                 writer.WriteNumberValue(XATransactionsMaximumTimeoutInSeconds.Value);

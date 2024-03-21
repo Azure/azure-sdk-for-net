@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-[CodeGenSuppress("PineconeChatExtensionParameters", typeof(string), typeof(string), typeof(PineconeFieldMappingOptions))]
+[CodeGenSuppress("PineconeChatExtensionParameters", typeof(string), typeof(string), typeof(PineconeFieldMappingOptions), typeof(OnYourDataVectorizationSource))]
 internal partial class PineconeChatExtensionParameters
 {
     // CUSTOM CODE NOTE:
@@ -25,4 +25,6 @@ internal partial class PineconeChatExtensionParameters
     public string IndexName { get; set; }
     /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
     public PineconeFieldMappingOptions FieldMappingOptions { get; set; }
+    /// <summary> The embedding dependency for vector search. </summary>
+    public OnYourDataVectorizationSource EmbeddingDependency { get; set; }
 }

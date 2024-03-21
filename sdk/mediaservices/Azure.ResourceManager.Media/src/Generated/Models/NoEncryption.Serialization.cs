@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (EnabledProtocols != null)
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
                 writer.WriteObjectValue(EnabledProtocols);

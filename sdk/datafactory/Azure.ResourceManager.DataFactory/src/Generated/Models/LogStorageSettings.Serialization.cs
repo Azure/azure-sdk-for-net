@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 JsonSerializer.Serialize(writer, Path);
             }
-            if (LogLevel != null)
+            if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
                 JsonSerializer.Serialize(writer, LogLevel);
             }
-            if (EnableReliableLogging != null)
+            if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableReliableLogging);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Field != null)
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (EqualsValue != null)
+            if (Optional.IsDefined(EqualsValue))
             {
                 writer.WritePropertyName("equals"u8);
                 writer.WriteStringValue(EqualsValue);
             }
-            if (!(ContainsAny is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainsAny))
             {
                 writer.WritePropertyName("containsAny"u8);
                 writer.WriteStartArray();

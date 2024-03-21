@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SharedSearchServicePrivateLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -144,18 +132,8 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SharedSearchServicePrivateLinkResource> CreateOrUpdate(WaitUntil waitUntil, string sharedPrivateLinkResourceName, SharedSearchServicePrivateLinkResourceData data, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +180,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<SharedSearchServicePrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -255,14 +226,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual Response<SharedSearchServicePrivateLinkResource> Get(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -370,14 +334,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -421,14 +378,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -472,14 +422,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SharedSearchServicePrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -525,14 +468,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<SharedSearchServicePrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (sharedPrivateLinkResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(sharedPrivateLinkResourceName));
-            }
-            if (sharedPrivateLinkResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sharedPrivateLinkResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
 
             using var scope = _sharedSearchServicePrivateLinkResourceSharedPrivateLinkResourcesClientDiagnostics.CreateScope("SharedSearchServicePrivateLinkResourceCollection.GetIfExists");
             scope.Start();

@@ -18,10 +18,7 @@ namespace Azure.Communication.Identity
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal CommunicationIdentityAccessToken(string token, DateTimeOffset expiresOn)
         {
-            if (token == null)
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
+            Argument.AssertNotNull(token, nameof(token));
 
             Token = token;
             ExpiresOn = expiresOn;

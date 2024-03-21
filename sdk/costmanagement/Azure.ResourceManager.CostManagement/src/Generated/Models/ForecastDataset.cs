@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public ForecastDataset(IDictionary<string, ForecastAggregation> aggregation)
         {
-            if (aggregation == null)
-            {
-                throw new ArgumentNullException(nameof(aggregation));
-            }
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
 
             Aggregation = aggregation;
         }

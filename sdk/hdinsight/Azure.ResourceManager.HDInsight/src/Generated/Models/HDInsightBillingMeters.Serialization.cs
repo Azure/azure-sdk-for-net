@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (MeterParameter != null)
+            if (Optional.IsDefined(MeterParameter))
             {
                 writer.WritePropertyName("meterParameter"u8);
                 writer.WriteStringValue(MeterParameter);
             }
-            if (Meter != null)
+            if (Optional.IsDefined(Meter))
             {
                 writer.WritePropertyName("meter"u8);
                 writer.WriteStringValue(Meter);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);

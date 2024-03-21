@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Entity != null)
+            if (Optional.IsDefined(Entity))
             {
                 writer.WritePropertyName("entity"u8);
                 writer.WriteStringValue(Entity);
             }
-            if (EntityConnectionReference != null)
+            if (Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
                 writer.WriteObjectValue(EntityConnectionReference);

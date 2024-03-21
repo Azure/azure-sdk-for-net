@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
@@ -89,18 +87,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryFabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricName, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -148,18 +136,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryFabricResource> CreateOrUpdate(WaitUntil waitUntil, string fabricName, SiteRecoveryFabricCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -206,14 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryFabricResource>> GetAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Get");
             scope.Start();
@@ -259,14 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual Response<SiteRecoveryFabricResource> Get(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Get");
             scope.Start();
@@ -372,14 +336,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Exists");
             scope.Start();
@@ -423,14 +380,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual Response<bool> Exists(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.Exists");
             scope.Start();
@@ -474,14 +424,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryFabricResource>> GetIfExistsAsync(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.GetIfExists");
             scope.Start();
@@ -527,14 +470,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryFabricResource> GetIfExists(string fabricName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (fabricName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricName));
-            }
-            if (fabricName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
 
             using var scope = _siteRecoveryFabricReplicationFabricsClientDiagnostics.CreateScope("SiteRecoveryFabricCollection.GetIfExists");
             scope.Start();

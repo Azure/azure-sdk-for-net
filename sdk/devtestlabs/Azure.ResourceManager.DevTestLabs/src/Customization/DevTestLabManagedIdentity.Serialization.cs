@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ManagedServiceIdentityType> type = default;
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<Uri> clientSecretUrl = default;
+            ManagedServiceIdentityType type = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            Uri clientSecretUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabManagedIdentity(type, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), clientSecretUrl.Value, serializedAdditionalRawData);
+            return new DevTestLabManagedIdentity(type, principalId, tenantId, clientSecretUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabManagedIdentity>.Write(ModelReaderWriterOptions options)

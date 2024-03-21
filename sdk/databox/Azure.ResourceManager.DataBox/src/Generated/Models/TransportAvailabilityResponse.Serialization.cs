@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(TransportAvailabilityDetails is ChangeTrackingList<TransportAvailabilityDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TransportAvailabilityDetails))
             {
                 writer.WritePropertyName("transportAvailabilityDetails"u8);
                 writer.WriteStartArray();

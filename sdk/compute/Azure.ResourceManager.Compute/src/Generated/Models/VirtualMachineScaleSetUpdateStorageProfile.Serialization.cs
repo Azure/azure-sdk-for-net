@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 writer.WriteObjectValue(ImageReference);
             }
-            if (OSDisk != null)
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
-            if (!(DataDisks is ChangeTrackingList<VirtualMachineScaleSetDataDisk> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DiskControllerType != null)
+            if (Optional.IsDefined(DiskControllerType))
             {
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType);

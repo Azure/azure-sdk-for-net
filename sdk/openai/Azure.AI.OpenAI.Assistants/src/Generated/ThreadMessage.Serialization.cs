@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -44,12 +43,12 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (AssistantId != null)
+            if (Optional.IsDefined(AssistantId))
             {
                 writer.WritePropertyName("assistant_id"u8);
                 writer.WriteStringValue(AssistantId);
             }
-            if (RunId != null)
+            if (Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("run_id"u8);
                 writer.WriteStringValue(RunId);
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();

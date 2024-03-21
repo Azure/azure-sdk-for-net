@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collectionName"/> is null. </exception>
         public DocumentDbCollectionDataset(LinkedServiceReference linkedServiceName, object collectionName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (collectionName == null)
-            {
-                throw new ArgumentNullException(nameof(collectionName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(collectionName, nameof(collectionName));
 
             CollectionName = collectionName;
             Type = "DocumentDbCollection";

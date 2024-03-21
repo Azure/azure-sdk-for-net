@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (PrimaryUserAssignedIdentityId != null)
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (PrimaryKeyUri != null)
+            if (Optional.IsDefined(PrimaryKeyUri))
             {
                 writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
-            if (GeoBackupUserAssignedIdentityId != null)
+            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
             {
                 writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
-            if (GeoBackupKeyUri != null)
+            if (Optional.IsDefined(GeoBackupKeyUri))
             {
                 writer.WritePropertyName("geoBackupKeyURI"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
-            if (EncryptionType.HasValue)
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToSerialString());

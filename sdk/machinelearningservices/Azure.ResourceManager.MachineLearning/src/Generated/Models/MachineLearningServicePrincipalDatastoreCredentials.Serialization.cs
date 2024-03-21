@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (AuthorityUri != null)
+            if (Optional.IsDefined(AuthorityUri))
             {
                 if (AuthorityUri != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 if (ResourceUri != null)
                 {

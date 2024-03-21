@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 JsonSerializer.Serialize(writer, DateFormat);
             }
-            if (TimestampFormat != null)
+            if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
                 JsonSerializer.Serialize(writer, TimestampFormat);

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (HttpProxy != null)
+            if (Optional.IsDefined(HttpProxy))
             {
                 writer.WritePropertyName("httpProxy"u8);
                 writer.WriteStringValue(HttpProxy);
             }
-            if (HttpsProxy != null)
+            if (Optional.IsDefined(HttpsProxy))
             {
                 writer.WritePropertyName("httpsProxy"u8);
                 writer.WriteStringValue(HttpsProxy);
             }
-            if (!(NoProxy is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NoProxy))
             {
                 writer.WritePropertyName("noProxy"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TrustedCa != null)
+            if (Optional.IsDefined(TrustedCa))
             {
                 writer.WritePropertyName("trustedCa"u8);
                 writer.WriteStringValue(TrustedCa);

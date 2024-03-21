@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (TargetTier != null)
+            if (Optional.IsDefined(TargetTier))
             {
                 writer.WritePropertyName("targetTier"u8);
                 writer.WriteStringValue(TargetTier);

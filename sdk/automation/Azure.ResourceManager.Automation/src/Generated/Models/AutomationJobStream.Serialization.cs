@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (JobStreamId != null)
+            if (Optional.IsDefined(JobStreamId))
             {
                 writer.WritePropertyName("jobStreamId"u8);
                 writer.WriteStringValue(JobStreamId);
             }
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (StreamType.HasValue)
+            if (Optional.IsDefined(StreamType))
             {
                 writer.WritePropertyName("streamType"u8);
                 writer.WriteStringValue(StreamType.Value.ToString());
             }
-            if (StreamText != null)
+            if (Optional.IsDefined(StreamText))
             {
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (!(Value is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartObject();

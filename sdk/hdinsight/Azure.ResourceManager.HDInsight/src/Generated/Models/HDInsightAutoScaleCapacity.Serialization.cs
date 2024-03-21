@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (MaxInstanceCount.HasValue)
+            if (Optional.IsDefined(MaxInstanceCount))
             {
                 writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStringValue(Aggregation);
-            if (!(Dimensions is ChangeTrackingList<MonitorMetricSingleDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(MetadataValues is ChangeTrackingList<MonitorBaselineMetadata> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MetadataValues))
             {
                 writer.WritePropertyName("metadataValues"u8);
                 writer.WriteStartArray();

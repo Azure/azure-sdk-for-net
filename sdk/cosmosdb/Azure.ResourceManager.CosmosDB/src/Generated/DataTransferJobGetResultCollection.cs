@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataTransferJobGetResultResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, DataTransferJobGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataTransferJobGetResultResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, DataTransferJobGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<Response<DataTransferJobGetResultResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<DataTransferJobGetResultResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual Response<bool> Exists(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataTransferJobGetResultResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         public virtual NullableResponse<DataTransferJobGetResultResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
-            if (jobName == null)
-            {
-                throw new ArgumentNullException(nameof(jobName));
-            }
-            if (jobName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobName));
-            }
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultCollection.GetIfExists");
             scope.Start();

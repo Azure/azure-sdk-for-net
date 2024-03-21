@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (HostIP != null)
+            if (Optional.IsDefined(HostIP))
             {
                 writer.WritePropertyName("hostIP"u8);
                 writer.WriteStringValue(HostIP);

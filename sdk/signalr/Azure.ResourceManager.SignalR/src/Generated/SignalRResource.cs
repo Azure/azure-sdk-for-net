@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SignalR.Models;
 
@@ -564,10 +562,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRResource>> UpdateAsync(WaitUntil waitUntil, SignalRData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.Update");
             scope.Start();
@@ -613,10 +608,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SignalRResource> Update(WaitUntil waitUntil, SignalRData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.Update");
             scope.Start();
@@ -738,10 +730,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SignalRKeys>> RegenerateKeyAsync(WaitUntil waitUntil, SignalRRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.RegenerateKey");
             scope.Start();
@@ -787,10 +776,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SignalRKeys> RegenerateKey(WaitUntil waitUntil, SignalRRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.RegenerateKey");
             scope.Start();
@@ -1030,14 +1016,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<SignalRResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.AddTag");
             scope.Start();
@@ -1098,14 +1078,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<SignalRResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.AddTag");
             scope.Start();
@@ -1165,10 +1139,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<SignalRResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.SetTags");
             scope.Start();
@@ -1225,10 +1196,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<SignalRResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.SetTags");
             scope.Start();
@@ -1285,10 +1253,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<SignalRResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.RemoveTag");
             scope.Start();
@@ -1348,10 +1313,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<SignalRResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _signalRClientDiagnostics.CreateScope("SignalRResource.RemoveTag");
             scope.Start();

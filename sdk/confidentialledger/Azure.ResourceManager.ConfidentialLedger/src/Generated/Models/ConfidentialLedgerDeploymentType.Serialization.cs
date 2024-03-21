@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (LanguageRuntime.HasValue)
+            if (Optional.IsDefined(LanguageRuntime))
             {
                 writer.WritePropertyName("languageRuntime"u8);
                 writer.WriteStringValue(LanguageRuntime.Value.ToString());
             }
-            if (AppSourceUri != null)
+            if (Optional.IsDefined(AppSourceUri))
             {
                 writer.WritePropertyName("appSourceUri"u8);
                 writer.WriteStringValue(AppSourceUri.AbsoluteUri);

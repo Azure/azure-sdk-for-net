@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Resources;
 
@@ -68,7 +66,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<BatchAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -127,7 +115,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<BatchAccountResource> CreateOrUpdate(WaitUntil waitUntil, string accountName, BatchAccountCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -186,7 +164,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<BatchAccountResource>> GetAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Get");
             scope.Start();
@@ -238,7 +209,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<BatchAccountResource> Get(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Get");
             scope.Start();
@@ -290,7 +254,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +284,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +314,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Exists");
             scope.Start();
@@ -400,7 +357,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual Response<bool> Exists(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.Exists");
             scope.Start();
@@ -450,7 +400,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual async Task<NullableResponse<BatchAccountResource>> GetIfExistsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetIfExists");
             scope.Start();
@@ -502,7 +445,7 @@ namespace Azure.ResourceManager.Batch
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public virtual NullableResponse<BatchAccountResource> GetIfExists(string accountName, CancellationToken cancellationToken = default)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
             using var scope = _batchAccountClientDiagnostics.CreateScope("BatchAccountCollection.GetIfExists");
             scope.Start();

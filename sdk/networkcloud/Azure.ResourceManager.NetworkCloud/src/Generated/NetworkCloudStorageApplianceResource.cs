@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 
@@ -199,10 +197,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudStorageApplianceResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudStorageAppliancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.Update");
             scope.Start();
@@ -248,10 +243,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudStorageApplianceResource> Update(WaitUntil waitUntil, NetworkCloudStorageAppliancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.Update");
             scope.Start();
@@ -467,14 +459,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudStorageApplianceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.AddTag");
             scope.Start();
@@ -535,14 +521,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<NetworkCloudStorageApplianceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.AddTag");
             scope.Start();
@@ -602,10 +582,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudStorageApplianceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.SetTags");
             scope.Start();
@@ -662,10 +639,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<NetworkCloudStorageApplianceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.SetTags");
             scope.Start();
@@ -722,10 +696,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudStorageApplianceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.RemoveTag");
             scope.Start();
@@ -785,10 +756,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<NetworkCloudStorageApplianceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _networkCloudStorageApplianceStorageAppliancesClientDiagnostics.CreateScope("NetworkCloudStorageApplianceResource.RemoveTag");
             scope.Start();

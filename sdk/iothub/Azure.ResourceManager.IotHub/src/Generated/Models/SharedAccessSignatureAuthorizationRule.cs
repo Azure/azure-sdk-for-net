@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public SharedAccessSignatureAuthorizationRule(string keyName, IotHubSharedAccessRight rights)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
             Rights = rights;

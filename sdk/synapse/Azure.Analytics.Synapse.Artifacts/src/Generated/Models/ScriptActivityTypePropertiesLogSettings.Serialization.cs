@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (LogLocationSettings != null)
+            if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="alexaSkillId"/> is null. </exception>
         public AlexaChannelProperties(string alexaSkillId, bool isEnabled)
         {
-            if (alexaSkillId == null)
-            {
-                throw new ArgumentNullException(nameof(alexaSkillId));
-            }
+            Argument.AssertNotNull(alexaSkillId, nameof(alexaSkillId));
 
             AlexaSkillId = alexaSkillId;
             IsEnabled = isEnabled;

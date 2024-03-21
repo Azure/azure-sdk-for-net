@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (VhdImageMappingRuleProfile != null)
+            if (Optional.IsDefined(VhdImageMappingRuleProfile))
             {
                 writer.WritePropertyName("vhdImageMappingRuleProfile"u8);
                 writer.WriteObjectValue(VhdImageMappingRuleProfile);
             }
-            if (ApplicationEnablement.HasValue)
+            if (Optional.IsDefined(ApplicationEnablement))
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());

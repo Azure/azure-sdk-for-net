@@ -124,9 +124,9 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
             MetricFeedbackKind feedbackType = default;
-            Optional<string> feedbackId = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<string> userPrincipal = default;
+            string feedbackId = default;
+            DateTimeOffset? createdTime = default;
+            string userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new UnknownMetricFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter);
+            return new UnknownMetricFeedback(feedbackType, feedbackId, createdTime, userPrincipal, metricId, dimensionFilter);
         }
 
         private class UnknownMetricFeedback : MetricFeedback

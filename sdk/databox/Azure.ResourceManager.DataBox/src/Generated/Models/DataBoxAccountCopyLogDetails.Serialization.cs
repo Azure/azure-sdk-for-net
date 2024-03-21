@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && CopyLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(CopyLogLink))
             {
                 writer.WritePropertyName("copyLogLink"u8);
                 writer.WriteStringValue(CopyLogLink);
             }
-            if (options.Format != "W" && CopyVerboseLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(CopyVerboseLogLink))
             {
                 writer.WritePropertyName("copyVerboseLogLink"u8);
                 writer.WriteStringValue(CopyVerboseLogLink);

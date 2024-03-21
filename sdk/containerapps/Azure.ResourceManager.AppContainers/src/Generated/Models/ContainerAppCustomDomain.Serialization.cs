@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (BindingType.HasValue)
+            if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
-            if (CertificateId != null)
+            if (Optional.IsDefined(CertificateId))
             {
                 writer.WritePropertyName("certificateId"u8);
                 writer.WriteStringValue(CertificateId);

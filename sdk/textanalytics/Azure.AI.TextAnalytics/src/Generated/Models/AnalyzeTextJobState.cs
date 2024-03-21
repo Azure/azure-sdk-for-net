@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -23,14 +22,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasks"/> is null. </exception>
         internal AnalyzeTextJobState(DateTimeOffset createdDateTime, string jobId, DateTimeOffset lastUpdatedDateTime, TextAnalyticsOperationStatus status, AnalyzeTasks tasks) : base(createdDateTime, jobId, lastUpdatedDateTime, status)
         {
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
-            if (tasks == null)
-            {
-                throw new ArgumentNullException(nameof(tasks));
-            }
+            Argument.AssertNotNull(jobId, nameof(jobId));
+            Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
         }

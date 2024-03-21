@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (ChannelMapping.HasValue)
+            if (Optional.IsDefined(ChannelMapping))
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());

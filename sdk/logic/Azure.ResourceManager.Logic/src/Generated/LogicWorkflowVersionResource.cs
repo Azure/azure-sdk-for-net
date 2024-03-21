@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Logic.Models;
 
 namespace Azure.ResourceManager.Logic
@@ -199,14 +197,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowTriggerCallbackUri>> GetCallbackUrlWorkflowVersionTriggerAsync(string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _workflowVersionTriggersClientDiagnostics.CreateScope("LogicWorkflowVersionResource.GetCallbackUrlWorkflowVersionTrigger");
             scope.Start();
@@ -246,14 +237,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<LogicWorkflowTriggerCallbackUri> GetCallbackUrlWorkflowVersionTrigger(string triggerName, ListOperationCallbackUrlParameterInfo info = null, CancellationToken cancellationToken = default)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (triggerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(triggerName));
-            }
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
             using var scope = _workflowVersionTriggersClientDiagnostics.CreateScope("LogicWorkflowVersionResource.GetCallbackUrlWorkflowVersionTrigger");
             scope.Start();

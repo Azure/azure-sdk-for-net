@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Avs.Models;
@@ -70,38 +69,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScriptCmdletsList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateCloudName == null)
-            {
-                throw new ArgumentNullException(nameof(privateCloudName));
-            }
-            if (privateCloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
-            }
-            if (scriptPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPackageName));
-            }
-            if (scriptPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName, scriptPackageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +100,10 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScriptCmdletsList> List(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateCloudName == null)
-            {
-                throw new ArgumentNullException(nameof(privateCloudName));
-            }
-            if (privateCloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
-            }
-            if (scriptPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPackageName));
-            }
-            if (scriptPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, privateCloudName, scriptPackageName);
             _pipeline.Send(message, cancellationToken);
@@ -213,46 +156,11 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptPackageName"/> or <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScriptCmdletData>> GetAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateCloudName == null)
-            {
-                throw new ArgumentNullException(nameof(privateCloudName));
-            }
-            if (privateCloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
-            }
-            if (scriptPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPackageName));
-            }
-            if (scriptPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
-            }
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, scriptPackageName, scriptCmdletName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -283,46 +191,11 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptPackageName"/> or <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScriptCmdletData> Get(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, string scriptCmdletName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateCloudName == null)
-            {
-                throw new ArgumentNullException(nameof(privateCloudName));
-            }
-            if (privateCloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
-            }
-            if (scriptPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPackageName));
-            }
-            if (scriptPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
-            }
-            if (scriptCmdletName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptCmdletName));
-            }
-            if (scriptCmdletName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptCmdletName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
+            Argument.AssertNotNullOrEmpty(scriptCmdletName, nameof(scriptCmdletName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, privateCloudName, scriptPackageName, scriptCmdletName);
             _pipeline.Send(message, cancellationToken);
@@ -367,42 +240,11 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ScriptCmdletsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateCloudName == null)
-            {
-                throw new ArgumentNullException(nameof(privateCloudName));
-            }
-            if (privateCloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
-            }
-            if (scriptPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPackageName));
-            }
-            if (scriptPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName, scriptPackageName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -431,42 +273,11 @@ namespace Azure.ResourceManager.Avs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ScriptCmdletsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (privateCloudName == null)
-            {
-                throw new ArgumentNullException(nameof(privateCloudName));
-            }
-            if (privateCloudName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateCloudName));
-            }
-            if (scriptPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(scriptPackageName));
-            }
-            if (scriptPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scriptPackageName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+            Argument.AssertNotNullOrEmpty(scriptPackageName, nameof(scriptPackageName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, privateCloudName, scriptPackageName);
             _pipeline.Send(message, cancellationToken);

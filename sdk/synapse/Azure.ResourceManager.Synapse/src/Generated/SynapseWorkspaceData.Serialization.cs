@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Synapse
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,44 +62,44 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultDataLakeStorage != null)
+            if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
                 writer.WriteObjectValue(DefaultDataLakeStorage);
             }
-            if (SqlAdministratorLoginPassword != null)
+            if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
                 writer.WritePropertyName("sqlAdministratorLoginPassword"u8);
                 writer.WriteStringValue(SqlAdministratorLoginPassword);
             }
-            if (ManagedResourceGroupName != null)
+            if (Optional.IsDefined(ManagedResourceGroupName))
             {
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (SqlAdministratorLogin != null)
+            if (Optional.IsDefined(SqlAdministratorLogin))
             {
                 writer.WritePropertyName("sqlAdministratorLogin"u8);
                 writer.WriteStringValue(SqlAdministratorLogin);
             }
-            if (VirtualNetworkProfile != null)
+            if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (!(ConnectivityEndpoints is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteStartObject();
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndObject();
             }
-            if (ManagedVirtualNetwork != null)
+            if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteStringValue(ManagedVirtualNetwork);
             }
-            if (!(PrivateEndpointConnections is ChangeTrackingList<SynapsePrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -125,17 +125,17 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (options.Format != "W" && WorkspaceUid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceUid))
             {
                 writer.WritePropertyName("workspaceUID"u8);
                 writer.WriteStringValue(WorkspaceUid.Value);
             }
-            if (options.Format != "W" && !(ExtraProperties is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExtraProperties))
             {
                 writer.WritePropertyName("extraProperties"u8);
                 writer.WriteStartObject();
@@ -158,37 +158,37 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndObject();
             }
-            if (ManagedVirtualNetworkSettings != null)
+            if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
             }
-            if (WorkspaceRepositoryConfiguration != null)
+            if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
                 writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
             }
-            if (PurviewConfiguration != null)
+            if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
             }
-            if (options.Format != "W" && AdlaResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(AdlaResourceId))
             {
                 writer.WritePropertyName("adlaResourceId"u8);
                 writer.WriteStringValue(AdlaResourceId);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (CspWorkspaceAdminProperties != null)
+            if (Optional.IsDefined(CspWorkspaceAdminProperties))
             {
                 writer.WritePropertyName("cspWorkspaceAdminProperties"u8);
                 writer.WriteObjectValue(CspWorkspaceAdminProperties);
             }
-            if (options.Format != "W" && !(Settings is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndObject();
             }
-            if (IsAadOnlyAuthenticationEnabled.HasValue)
+            if (Optional.IsDefined(IsAadOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAadOnlyAuthenticationEnabled.Value);
             }
-            if (IsTrustedServiceBypassEnabled.HasValue)
+            if (Optional.IsDefined(IsTrustedServiceBypassEnabled))
             {
                 writer.WritePropertyName("trustedServiceBypassEnabled"u8);
                 writer.WriteBooleanValue(IsTrustedServiceBypassEnabled.Value);

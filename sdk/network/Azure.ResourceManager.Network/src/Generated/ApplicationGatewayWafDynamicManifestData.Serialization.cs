@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AvailableRuleSets is ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableRuleSets))
             {
                 writer.WritePropertyName("availableRuleSets"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("defaultRuleSet"u8);
             writer.WriteStartObject();
-            if (RuleSetType != null)
+            if (Optional.IsDefined(RuleSetType))
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (RuleSetVersion != null)
+            if (Optional.IsDefined(RuleSetVersion))
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);

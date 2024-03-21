@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && !(IndividualResponseDetails is ChangeTrackingList<DataBoxValidationInputResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IndividualResponseDetails))
             {
                 writer.WritePropertyName("individualResponseDetails"u8);
                 writer.WriteStartArray();

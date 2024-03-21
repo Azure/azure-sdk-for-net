@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && OfferDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferDisplayName))
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (!(PlansDetails is ChangeTrackingList<PrivateStorePlanDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlansDetails))
             {
                 writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsClosed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsClosed))
             {
                 writer.WritePropertyName("isClosed"u8);
                 writer.WriteBooleanValue(IsClosed.Value);
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);

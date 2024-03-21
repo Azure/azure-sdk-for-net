@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="values"/> is null. </exception>
         public BudgetComparisonExpression(string name, BudgetOperatorType @operator, IEnumerable<string> values)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(values, nameof(values));
 
             Name = name;
             Operator = @operator;

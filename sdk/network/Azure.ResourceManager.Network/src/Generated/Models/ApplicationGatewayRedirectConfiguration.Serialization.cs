@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -28,54 +27,54 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RedirectType.HasValue)
+            if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (TargetListener != null)
+            if (Optional.IsDefined(TargetListener))
             {
                 writer.WritePropertyName("targetListener"u8);
                 JsonSerializer.Serialize(writer, TargetListener);
             }
-            if (TargetUri != null)
+            if (Optional.IsDefined(TargetUri))
             {
                 writer.WritePropertyName("targetUrl"u8);
                 writer.WriteStringValue(TargetUri.AbsoluteUri);
             }
-            if (IncludePath.HasValue)
+            if (Optional.IsDefined(IncludePath))
             {
                 writer.WritePropertyName("includePath"u8);
                 writer.WriteBooleanValue(IncludePath.Value);
             }
-            if (IncludeQueryString.HasValue)
+            if (Optional.IsDefined(IncludeQueryString))
             {
                 writer.WritePropertyName("includeQueryString"u8);
                 writer.WriteBooleanValue(IncludeQueryString.Value);
             }
-            if (!(RequestRoutingRules is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestRoutingRules))
             {
                 writer.WritePropertyName("requestRoutingRules"u8);
                 writer.WriteStartArray();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UrlPathMaps is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UrlPathMaps))
             {
                 writer.WritePropertyName("urlPathMaps"u8);
                 writer.WriteStartArray();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PathRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PathRules))
             {
                 writer.WritePropertyName("pathRules"u8);
                 writer.WriteStartArray();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ClientTrackingId != null)
+            if (Optional.IsDefined(ClientTrackingId))
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);

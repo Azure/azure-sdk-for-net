@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -61,14 +60,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumptionBalanceResult>> GetByBillingAccountAsync(string billingAccountId, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateGetByBillingAccountRequest(billingAccountId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +85,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumptionBalanceResult> GetByBillingAccount(string billingAccountId, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
 
             using var message = CreateGetByBillingAccountRequest(billingAccountId);
             _pipeline.Send(message, cancellationToken);
@@ -145,22 +130,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumptionBalanceResult>> GetForBillingPeriodByBillingAccountAsync(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingPeriodName == null)
-            {
-                throw new ArgumentNullException(nameof(billingPeriodName));
-            }
-            if (billingPeriodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingPeriodName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
             using var message = CreateGetForBillingPeriodByBillingAccountRequest(billingAccountId, billingPeriodName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -186,22 +157,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingPeriodName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumptionBalanceResult> GetForBillingPeriodByBillingAccount(string billingAccountId, string billingPeriodName, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingPeriodName == null)
-            {
-                throw new ArgumentNullException(nameof(billingPeriodName));
-            }
-            if (billingPeriodName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingPeriodName));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingPeriodName, nameof(billingPeriodName));
 
             using var message = CreateGetForBillingPeriodByBillingAccountRequest(billingAccountId, billingPeriodName);
             _pipeline.Send(message, cancellationToken);

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(Source);
             }
-            if (DeploymentSettings != null)
+            if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
                 writer.WriteObjectValue(DeploymentSettings);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (IsActive.HasValue)
+            if (Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && !(Instances is ChangeTrackingList<AppPlatformDeploymentInstance> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
                 writer.WriteStartArray();

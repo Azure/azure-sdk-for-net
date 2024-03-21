@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && AssessmentActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentActivityId))
             {
                 writer.WritePropertyName("assessmentActivityId"u8);
                 writer.WriteStringValue(AssessmentActivityId);
             }
-            if (options.Format != "W" && RebootPending.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
                 writer.WriteBooleanValue(RebootPending.Value);
             }
-            if (options.Format != "W" && CriticalAndSecurityPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CriticalAndSecurityPatchCount))
             {
                 writer.WritePropertyName("criticalAndSecurityPatchCount"u8);
                 writer.WriteNumberValue(CriticalAndSecurityPatchCount.Value);
             }
-            if (options.Format != "W" && OtherPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OtherPatchCount))
             {
                 writer.WritePropertyName("otherPatchCount"u8);
                 writer.WriteNumberValue(OtherPatchCount.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);

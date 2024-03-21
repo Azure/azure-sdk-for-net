@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (BackupId != null)
+            if (Optional.IsDefined(BackupId))
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (BackupState.HasValue)
+            if (Optional.IsDefined(BackupState))
             {
                 writer.WritePropertyName("backupState"u8);
                 writer.WriteStringValue(BackupState.Value.ToString());
             }
-            if (BackupStartTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStartTimestamp))
             {
                 writer.WritePropertyName("backupStartTimestamp"u8);
                 writer.WriteStringValue(BackupStartTimestamp.Value, "O");
             }
-            if (BackupStopTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStopTimestamp))
             {
                 writer.WritePropertyName("backupStopTimestamp"u8);
                 writer.WriteStringValue(BackupStopTimestamp.Value, "O");
             }
-            if (BackupExpiryTimestamp.HasValue)
+            if (Optional.IsDefined(BackupExpiryTimestamp))
             {
                 writer.WritePropertyName("backupExpiryTimestamp"u8);
                 writer.WriteStringValue(BackupExpiryTimestamp.Value, "O");

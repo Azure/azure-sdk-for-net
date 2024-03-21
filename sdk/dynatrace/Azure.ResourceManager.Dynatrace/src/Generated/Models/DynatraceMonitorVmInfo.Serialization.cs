@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (MonitoringType.HasValue)
+            if (Optional.IsDefined(MonitoringType))
             {
                 writer.WritePropertyName("monitoringType"u8);
                 writer.WriteStringValue(MonitoringType.Value.ToString());
             }
-            if (AutoUpdateSetting.HasValue)
+            if (Optional.IsDefined(AutoUpdateSetting))
             {
                 writer.WritePropertyName("autoUpdateSetting"u8);
                 writer.WriteStringValue(AutoUpdateSetting.Value.ToString());
             }
-            if (UpdateStatus.HasValue)
+            if (Optional.IsDefined(UpdateStatus))
             {
                 writer.WritePropertyName("updateStatus"u8);
                 writer.WriteStringValue(UpdateStatus.Value.ToString());
             }
-            if (AvailabilityState.HasValue)
+            if (Optional.IsDefined(AvailabilityState))
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToString());
             }
-            if (LogModule.HasValue)
+            if (Optional.IsDefined(LogModule))
             {
                 writer.WritePropertyName("logModule"u8);
                 writer.WriteStringValue(LogModule.Value.ToString());
             }
-            if (HostGroup != null)
+            if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
                 writer.WriteStringValue(HostGroup);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);

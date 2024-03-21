@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -20,7 +19,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStringValue(Uri);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);

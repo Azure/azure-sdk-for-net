@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (IsSoftDeleteEnabled.HasValue)
+            if (Optional.IsDefined(IsSoftDeleteEnabled))
             {
                 writer.WritePropertyName("isSoftDeleteEnabled"u8);
                 writer.WriteBooleanValue(IsSoftDeleteEnabled.Value);

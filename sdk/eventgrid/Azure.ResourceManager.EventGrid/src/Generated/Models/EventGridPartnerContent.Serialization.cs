@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (PartnerRegistrationImmutableId.HasValue)
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (PartnerName != null)
+            if (Optional.IsDefined(PartnerName))
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (AuthorizationExpireOn.HasValue)
+            if (Optional.IsDefined(AuthorizationExpireOn))
             {
                 writer.WritePropertyName("authorizationExpirationTimeInUtc"u8);
                 writer.WriteStringValue(AuthorizationExpireOn.Value, "O");

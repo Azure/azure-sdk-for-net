@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Extensions.Configuration;
@@ -93,5 +94,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             return (jobHost, host);
         }
+
+        protected int GetRemainingTimeoutMilliseconds(TimeSpan elapsedTime) =>
+            (int)(Timeout - elapsedTime.TotalMilliseconds);
     }
 }

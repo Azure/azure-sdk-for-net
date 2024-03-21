@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (ReverseDataCenterAccessCode != null)
+            if (Optional.IsDefined(ReverseDataCenterAccessCode))
             {
                 writer.WritePropertyName("reverseDCAccessCode"u8);
                 writer.WriteStringValue(ReverseDataCenterAccessCode);
             }
-            if (ForwardDataCenterAccessCode != null)
+            if (Optional.IsDefined(ForwardDataCenterAccessCode))
             {
                 writer.WritePropertyName("forwardDCAccessCode"u8);
                 writer.WriteStringValue(ForwardDataCenterAccessCode);

@@ -26,16 +26,17 @@ namespace Azure.AI.DocumentIntelligence
         private const string DateValue = "date";
         private const string TimeValue = "time";
         private const string PhoneNumberValue = "phoneNumber";
-        private const string NumberValue = "number";
-        private const string IntegerValue = "integer";
+        private const string DoubleValue = "number";
+        private const string LongValue = "integer";
         private const string SelectionMarkValue = "selectionMark";
         private const string CountryRegionValue = "countryRegion";
         private const string SignatureValue = "signature";
-        private const string ArrayValue = "array";
-        private const string ObjectValue = "object";
+        private const string ListValue = "array";
+        private const string DictionaryValue = "object";
         private const string CurrencyValue = "currency";
         private const string AddressValue = "address";
         private const string BooleanValue = "boolean";
+        private const string SelectionGroupValue = "selectionGroup";
 
         /// <summary> Plain text. </summary>
         public static DocumentFieldType String { get; } = new DocumentFieldType(StringValue);
@@ -46,9 +47,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Phone number, normalized to E.164 (+{CountryCode}{SubscriberNumber}) format. </summary>
         public static DocumentFieldType PhoneNumber { get; } = new DocumentFieldType(PhoneNumberValue);
         /// <summary> Floating point number, normalized to double precision floating point. </summary>
-        public static DocumentFieldType Number { get; } = new DocumentFieldType(NumberValue);
+        public static DocumentFieldType Double { get; } = new DocumentFieldType(DoubleValue);
         /// <summary> Integer number, normalized to 64-bit signed integer. </summary>
-        public static DocumentFieldType Integer { get; } = new DocumentFieldType(IntegerValue);
+        public static DocumentFieldType Long { get; } = new DocumentFieldType(LongValue);
         /// <summary> Is field selected?. </summary>
         public static DocumentFieldType SelectionMark { get; } = new DocumentFieldType(SelectionMarkValue);
         /// <summary> Country/region, normalized to ISO 3166-1 alpha-3 format (ex. USA). </summary>
@@ -56,15 +57,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Is signature present?. </summary>
         public static DocumentFieldType Signature { get; } = new DocumentFieldType(SignatureValue);
         /// <summary> List of subfields of the same type. </summary>
-        public static DocumentFieldType Array { get; } = new DocumentFieldType(ArrayValue);
+        public static DocumentFieldType List { get; } = new DocumentFieldType(ListValue);
         /// <summary> Named list of subfields of potentially different types. </summary>
-        public static DocumentFieldType Object { get; } = new DocumentFieldType(ObjectValue);
+        public static DocumentFieldType Dictionary { get; } = new DocumentFieldType(DictionaryValue);
         /// <summary> Currency amount with optional currency symbol and unit. </summary>
         public static DocumentFieldType Currency { get; } = new DocumentFieldType(CurrencyValue);
         /// <summary> Parsed address. </summary>
         public static DocumentFieldType Address { get; } = new DocumentFieldType(AddressValue);
         /// <summary> Boolean value, normalized to true or false. </summary>
         public static DocumentFieldType Boolean { get; } = new DocumentFieldType(BooleanValue);
+        /// <summary> Array of selected string values. </summary>
+        public static DocumentFieldType SelectionGroup { get; } = new DocumentFieldType(SelectionGroupValue);
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are the same. </summary>
         public static bool operator ==(DocumentFieldType left, DocumentFieldType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFieldType"/> values are not the same. </summary>

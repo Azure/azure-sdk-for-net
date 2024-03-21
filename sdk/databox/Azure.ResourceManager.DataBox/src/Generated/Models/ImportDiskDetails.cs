@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="manifestFile"/>, <paramref name="manifestHash"/> or <paramref name="bitLockerKey"/> is null. </exception>
         public ImportDiskDetails(string manifestFile, string manifestHash, string bitLockerKey)
         {
-            if (manifestFile == null)
-            {
-                throw new ArgumentNullException(nameof(manifestFile));
-            }
-            if (manifestHash == null)
-            {
-                throw new ArgumentNullException(nameof(manifestHash));
-            }
-            if (bitLockerKey == null)
-            {
-                throw new ArgumentNullException(nameof(bitLockerKey));
-            }
+            Argument.AssertNotNull(manifestFile, nameof(manifestFile));
+            Argument.AssertNotNull(manifestHash, nameof(manifestHash));
+            Argument.AssertNotNull(bitLockerKey, nameof(bitLockerKey));
 
             ManifestFile = manifestFile;
             ManifestHash = manifestHash;

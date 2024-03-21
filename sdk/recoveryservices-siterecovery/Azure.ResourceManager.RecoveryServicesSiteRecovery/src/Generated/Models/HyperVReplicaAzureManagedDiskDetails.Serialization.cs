@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (SeedManagedDiskId != null)
+            if (Optional.IsDefined(SeedManagedDiskId))
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (ReplicaDiskType != null)
+            if (Optional.IsDefined(ReplicaDiskType))
             {
                 writer.WritePropertyName("replicaDiskType"u8);
                 writer.WriteStringValue(ReplicaDiskType);
             }
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);

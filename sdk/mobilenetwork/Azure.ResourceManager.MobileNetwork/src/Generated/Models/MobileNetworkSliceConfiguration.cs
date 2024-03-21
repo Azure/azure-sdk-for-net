@@ -55,18 +55,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="slice"/>, <paramref name="defaultDataNetwork"/> or <paramref name="dataNetworkConfigurations"/> is null. </exception>
         public MobileNetworkSliceConfiguration(WritableSubResource slice, WritableSubResource defaultDataNetwork, IEnumerable<DataNetworkConfiguration> dataNetworkConfigurations)
         {
-            if (slice == null)
-            {
-                throw new ArgumentNullException(nameof(slice));
-            }
-            if (defaultDataNetwork == null)
-            {
-                throw new ArgumentNullException(nameof(defaultDataNetwork));
-            }
-            if (dataNetworkConfigurations == null)
-            {
-                throw new ArgumentNullException(nameof(dataNetworkConfigurations));
-            }
+            Argument.AssertNotNull(slice, nameof(slice));
+            Argument.AssertNotNull(defaultDataNetwork, nameof(defaultDataNetwork));
+            Argument.AssertNotNull(dataNetworkConfigurations, nameof(dataNetworkConfigurations));
 
             Slice = slice;
             DefaultDataNetwork = defaultDataNetwork;

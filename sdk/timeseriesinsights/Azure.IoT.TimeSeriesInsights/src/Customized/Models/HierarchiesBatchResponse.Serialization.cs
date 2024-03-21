@@ -20,9 +20,9 @@ namespace Azure.IoT.TimeSeriesInsights
         // Insights team on take a closer look on the thrown exception.
         internal static HierarchiesBatchResponse DeserializeHierarchiesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> @get = default;
-            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> put = default;
-            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
+            IReadOnlyList<TimeSeriesHierarchyOperationResult> @get = default;
+            IReadOnlyList<TimeSeriesHierarchyOperationResult> put = default;
+            IReadOnlyList<TimeSeriesOperationError> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -71,7 +71,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new HierarchiesBatchResponse(Optional.ToList(@get), Optional.ToList(put), Optional.ToList(delete));
+            return new HierarchiesBatchResponse(@get ?? new ChangeTrackingList<TimeSeriesHierarchyOperationResult>(), put ?? new ChangeTrackingList<TimeSeriesHierarchyOperationResult>(), delete ?? new ChangeTrackingList<TimeSeriesOperationError>());
         }
     }
 }

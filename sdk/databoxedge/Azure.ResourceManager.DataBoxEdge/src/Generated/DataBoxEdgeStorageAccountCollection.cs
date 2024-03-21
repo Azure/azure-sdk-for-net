@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxEdgeStorageAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageAccountName, DataBoxEdgeStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataBoxEdgeStorageAccountResource> CreateOrUpdate(WaitUntil waitUntil, string storageAccountName, DataBoxEdgeStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
         public virtual async Task<Response<DataBoxEdgeStorageAccountResource>> GetAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
         public virtual Response<DataBoxEdgeStorageAccountResource> Get(string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
         public virtual Response<bool> Exists(string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataBoxEdgeStorageAccountResource>> GetIfExistsAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
         public virtual NullableResponse<DataBoxEdgeStorageAccountResource> GetIfExists(string storageAccountName, CancellationToken cancellationToken = default)
         {
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
-            if (storageAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageAccountName));
-            }
+            Argument.AssertNotNullOrEmpty(storageAccountName, nameof(storageAccountName));
 
             using var scope = _dataBoxEdgeStorageAccountStorageAccountsClientDiagnostics.CreateScope("DataBoxEdgeStorageAccountCollection.GetIfExists");
             scope.Start();

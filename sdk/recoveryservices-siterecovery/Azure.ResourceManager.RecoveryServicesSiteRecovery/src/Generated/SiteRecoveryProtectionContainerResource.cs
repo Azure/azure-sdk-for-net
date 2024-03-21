@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
@@ -475,10 +473,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryProtectionContainerResource>> UpdateAsync(WaitUntil waitUntil, SiteRecoveryProtectionContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerResource.Update");
             scope.Start();
@@ -524,10 +519,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryProtectionContainerResource> Update(WaitUntil waitUntil, SiteRecoveryProtectionContainerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerResource.Update");
             scope.Start();
@@ -573,10 +565,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryProtectionContainerResource>> DiscoverProtectableItemAsync(WaitUntil waitUntil, DiscoverProtectableItemContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerResource.DiscoverProtectableItem");
             scope.Start();
@@ -622,10 +611,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryProtectionContainerResource> DiscoverProtectableItem(WaitUntil waitUntil, DiscoverProtectableItemContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerResource.DiscoverProtectableItem");
             scope.Start();
@@ -755,10 +741,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryProtectionContainerResource>> SwitchProtectionAsync(WaitUntil waitUntil, SwitchProtectionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerResource.SwitchProtection");
             scope.Start();
@@ -804,10 +787,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryProtectionContainerResource> SwitchProtection(WaitUntil waitUntil, SwitchProtectionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _siteRecoveryProtectionContainerReplicationProtectionContainersClientDiagnostics.CreateScope("SiteRecoveryProtectionContainerResource.SwitchProtection");
             scope.Start();

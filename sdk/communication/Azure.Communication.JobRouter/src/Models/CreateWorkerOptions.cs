@@ -39,6 +39,9 @@ namespace Azure.Communication.JobRouter
         /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
         public bool AvailableForOffers { get; set; }
 
+        /// <summary> If this is set, the worker will only receive up to this many new offers at a time. </summary>
+        public int? MaxConcurrentOffers { get; set; }
+
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>

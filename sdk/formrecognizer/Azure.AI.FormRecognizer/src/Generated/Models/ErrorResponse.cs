@@ -17,10 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal ErrorResponse(FormRecognizerError error)
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }

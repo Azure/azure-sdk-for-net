@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (WorkloadIdentityProviderId != null)
+            if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (ServiceAccountEmailAddress != null)
+            if (Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (AzureActiveDirectoryAppName != null)
+            if (Optional.IsDefined(AzureActiveDirectoryAppName))
             {
                 writer.WritePropertyName("azureActiveDirectoryAppName"u8);
                 writer.WriteStringValue(AzureActiveDirectoryAppName);

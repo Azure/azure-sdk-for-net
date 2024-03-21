@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,10 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
         public ChannelAffinityInternal(CommunicationIdentifierModel participant)
         {
-            if (participant == null)
-            {
-                throw new ArgumentNullException(nameof(participant));
-            }
+            Argument.AssertNotNull(participant, nameof(participant));
 
             Participant = participant;
         }

@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="aggregationWindow"/> is null. </exception>
         public MySqlWaitStatisticsInput(DateTimeOffset observationStartOn, DateTimeOffset observationEndOn, string aggregationWindow)
         {
-            if (aggregationWindow == null)
-            {
-                throw new ArgumentNullException(nameof(aggregationWindow));
-            }
+            Argument.AssertNotNull(aggregationWindow, nameof(aggregationWindow));
 
             ObservationStartOn = observationStartOn;
             ObservationEndOn = observationEndOn;

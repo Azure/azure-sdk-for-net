@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
@@ -372,10 +370,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupProtectedItemResource>> UpdateAsync(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.Update");
             scope.Start();
@@ -422,10 +417,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupProtectedItemResource> Update(WaitUntil waitUntil, BackupProtectedItemData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.Update");
             scope.Start();
@@ -467,10 +459,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> TriggerBackupAsync(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsClientDiagnostics.CreateScope("BackupProtectedItemResource.TriggerBackup");
             scope.Start();
@@ -509,10 +498,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response TriggerBackup(TriggerBackupContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _backupsClientDiagnostics.CreateScope("BackupProtectedItemResource.TriggerBackup");
             scope.Start();
@@ -551,10 +537,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An async collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMoveAsync(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
@@ -584,10 +567,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> A collection of <see cref="BackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BackupRecoveryPointResource> GetRecoveryPointsRecommendedForMove(RecoveryPointsRecommendedForMoveContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
@@ -621,14 +601,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<BackupProtectedItemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.AddTag");
             scope.Start();
@@ -684,14 +658,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<BackupProtectedItemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.AddTag");
             scope.Start();
@@ -746,10 +714,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BackupProtectedItemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.SetTags");
             scope.Start();
@@ -805,10 +770,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BackupProtectedItemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.SetTags");
             scope.Start();
@@ -864,10 +826,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<BackupProtectedItemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.RemoveTag");
             scope.Start();
@@ -922,10 +881,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<BackupProtectedItemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemResource.RemoveTag");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DscNodeCount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TotalCount.HasValue)
+            if (Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);

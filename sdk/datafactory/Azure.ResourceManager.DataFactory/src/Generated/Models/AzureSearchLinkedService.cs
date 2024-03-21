@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AzureSearchLinkedService(DataFactoryElement<string> uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
             LinkedServiceType = "AzureSearch";
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
         /// <param name="key"> Admin Key for Azure Search service. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AzureSearchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactorySecretBaseDefinition key, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureSearchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> uri, DataFactorySecret key, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Uri = uri;
             Key = key;
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Admin Key for Azure Search service. </summary>
-        public DataFactorySecretBaseDefinition Key { get; set; }
+        public DataFactorySecret Key { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<ResourceManager.Models.SystemData> systemData = default;
-            Optional<DynatraceMonitoringStatus> monitoringStatus = default;
-            Optional<DynatraceMonitorMarketplaceSubscriptionStatus> marketplaceSubscriptionStatus = default;
-            Optional<DynatraceEnvironmentProperties> dynatraceEnvironmentProperties = default;
-            Optional<DynatraceMonitorUserInfo> userInfo = default;
-            Optional<DynatraceBillingPlanInfo> planData = default;
-            Optional<LiftrResourceCategory> liftrResourceCategory = default;
-            Optional<int> liftrResourcePreference = default;
-            Optional<DynatraceProvisioningState> provisioningState = default;
+            ResourceManager.Models.SystemData systemData = default;
+            DynatraceMonitoringStatus? monitoringStatus = default;
+            DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
+            DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default;
+            DynatraceMonitorUserInfo userInfo = default;
+            DynatraceBillingPlanInfo planData = default;
+            LiftrResourceCategory? liftrResourceCategory = default;
+            int? liftrResourcePreference = default;
+            DynatraceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,7 +278,22 @@ namespace Azure.ResourceManager.Dynatrace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), dynatraceEnvironmentProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), Optional.ToNullable(provisioningState),serializedAdditionalRawData);
+            return new DynatraceMonitorData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location, identity,
+                monitoringStatus,
+                marketplaceSubscriptionStatus,
+                dynatraceEnvironmentProperties,
+                userInfo,
+                planData,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                provisioningState,
+                serializedAdditionalRawData);
         }
         BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options)
         {

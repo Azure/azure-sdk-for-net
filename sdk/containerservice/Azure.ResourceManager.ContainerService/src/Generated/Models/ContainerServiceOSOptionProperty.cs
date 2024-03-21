@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> is null. </exception>
         internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage)
         {
-            if (osType == null)
-            {
-                throw new ArgumentNullException(nameof(osType));
-            }
+            Argument.AssertNotNull(osType, nameof(osType));
 
             OSType = osType;
             EnableFipsImage = enableFipsImage;

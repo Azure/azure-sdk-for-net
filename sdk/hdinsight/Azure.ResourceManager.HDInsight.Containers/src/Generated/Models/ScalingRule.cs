@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scalingMetric"/> or <paramref name="comparisonRule"/> is null. </exception>
         public ScalingRule(ScaleActionType actionType, int evaluationCount, string scalingMetric, HDInsightComparisonRule comparisonRule)
         {
-            if (scalingMetric == null)
-            {
-                throw new ArgumentNullException(nameof(scalingMetric));
-            }
-            if (comparisonRule == null)
-            {
-                throw new ArgumentNullException(nameof(comparisonRule));
-            }
+            Argument.AssertNotNull(scalingMetric, nameof(scalingMetric));
+            Argument.AssertNotNull(comparisonRule, nameof(comparisonRule));
 
             ActionType = actionType;
             EvaluationCount = evaluationCount;

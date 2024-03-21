@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (HttpsServerCertificate != null)
+            if (Optional.IsDefined(HttpsServerCertificate))
             {
                 writer.WritePropertyName("httpsServerCertificate"u8);
                 writer.WriteObjectValue(HttpsServerCertificate);

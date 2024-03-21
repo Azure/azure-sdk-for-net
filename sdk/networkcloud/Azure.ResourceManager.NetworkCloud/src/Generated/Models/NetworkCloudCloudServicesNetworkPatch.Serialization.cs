@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AdditionalEgressEndpoints is ChangeTrackingList<EgressEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEgressEndpoints))
             {
                 writer.WritePropertyName("additionalEgressEndpoints"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EnableDefaultEgressEndpoints.HasValue)
+            if (Optional.IsDefined(EnableDefaultEgressEndpoints))
             {
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());

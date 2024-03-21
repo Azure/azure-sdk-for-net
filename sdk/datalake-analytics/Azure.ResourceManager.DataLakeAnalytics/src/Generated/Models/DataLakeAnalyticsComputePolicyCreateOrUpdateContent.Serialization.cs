@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(ObjectId);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType.ToString());
-            if (MaxDegreeOfParallelismPerJob.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (MinPriorityPerJob.HasValue)
+            if (Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);

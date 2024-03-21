@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (DoubleEncryptionStatus.HasValue)
+            if (Optional.IsDefined(DoubleEncryptionStatus))
             {
                 writer.WritePropertyName("doubleEncryptionStatus"u8);
                 writer.WriteStringValue(DoubleEncryptionStatus.Value.ToString());

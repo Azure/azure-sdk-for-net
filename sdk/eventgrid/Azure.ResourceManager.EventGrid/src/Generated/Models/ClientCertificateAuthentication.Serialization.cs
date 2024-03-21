@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (ValidationScheme.HasValue)
+            if (Optional.IsDefined(ValidationScheme))
             {
                 writer.WritePropertyName("validationScheme"u8);
                 writer.WriteStringValue(ValidationScheme.Value.ToString());
             }
-            if (!(AllowedThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedThumbprints))
             {
                 writer.WritePropertyName("allowedThumbprints"u8);
                 writer.WriteStartArray();

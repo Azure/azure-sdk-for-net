@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (CrossSubscriptionRestoreSettings != null)
+            if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
                 writer.WriteObjectValue(CrossSubscriptionRestoreSettings);

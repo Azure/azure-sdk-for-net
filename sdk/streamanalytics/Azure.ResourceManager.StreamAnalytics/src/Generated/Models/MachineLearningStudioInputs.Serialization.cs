@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(ColumnNames is ChangeTrackingList<MachineLearningStudioInputColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ColumnNames))
             {
                 writer.WritePropertyName("columnNames"u8);
                 writer.WriteStartArray();

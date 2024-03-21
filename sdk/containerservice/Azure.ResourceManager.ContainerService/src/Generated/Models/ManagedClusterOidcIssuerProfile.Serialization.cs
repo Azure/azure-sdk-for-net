@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IssuerUriInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(IssuerUriInfo))
             {
                 writer.WritePropertyName("issuerURL"u8);
                 writer.WriteStringValue(IssuerUriInfo);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

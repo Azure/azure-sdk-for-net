@@ -81,8 +81,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(model.CreatedDateTime, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpirationDateTime, Is.GreaterThan(model.CreatedDateTime));
+            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
@@ -123,7 +123,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             DocumentFieldSchema quantitySchema = docType.FieldSchema["Quantity"];
 
             Assert.That(merchantSchema.Type, Is.EqualTo(DocumentFieldType.String));
-            Assert.That(quantitySchema.Type, Is.EqualTo(DocumentFieldType.Number));
+            Assert.That(quantitySchema.Type, Is.EqualTo(DocumentFieldType.Double));
         }
 
         [RecordedTest]
@@ -190,8 +190,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(model.CreatedDateTime, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpirationDateTime, Is.GreaterThan(model.CreatedDateTime));
+            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
@@ -255,8 +255,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(model.ApiVersion, Is.EqualTo(ServiceVersionString));
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
-            Assert.That(model.CreatedDateTime, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
-            Assert.That(model.ExpirationDateTime, Is.GreaterThan(model.CreatedDateTime));
+            Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
+            Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
 
             Assert.That(model.AzureBlobSource, Is.Null);
@@ -369,8 +369,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(model.ModelId, Is.EqualTo(expected.ModelId));
                 Assert.That(model.Description, Is.EqualTo(expected.Description));
                 Assert.That(model.ApiVersion, Is.EqualTo(expected.ApiVersion));
-                Assert.That(model.CreatedDateTime, Is.EqualTo(expected.CreatedDateTime));
-                Assert.That(model.ExpirationDateTime, Is.EqualTo(expected.ExpirationDateTime));
+                Assert.That(model.CreatedOn, Is.EqualTo(expected.CreatedOn));
+                Assert.That(model.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
                 Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
 
                 Assert.That(model.AzureBlobSource, Is.Null);

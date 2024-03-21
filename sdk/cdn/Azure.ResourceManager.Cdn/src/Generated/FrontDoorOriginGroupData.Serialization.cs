@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProfileName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (LoadBalancingSettings != null)
+            if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteObjectValue(LoadBalancingSettings);
             }
-            if (HealthProbeSettings != null)
+            if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteObjectValue(HealthProbeSettings);
             }
-            if (TrafficRestorationTimeInMinutes.HasValue)
+            if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
                 if (TrafficRestorationTimeInMinutes != null)
                 {
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("trafficRestorationTimeToHealedOrNewEndpointsInMinutes");
                 }
             }
-            if (SessionAffinityState.HasValue)
+            if (Optional.IsDefined(SessionAffinityState))
             {
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus.Value.ToString());

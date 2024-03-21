@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="location"> The location. </param>
         public QuantumWorkspaceData(AzureLocation location) : base(location)
         {
-            Providers = new ChangeTrackingList<Provider>();
+            Providers = new ChangeTrackingList<QuantumProvider>();
         }
 
         /// <summary> Initializes a new instance of <see cref="QuantumWorkspaceData"/>. </summary>
@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
         /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
+        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<Provider> providers, UsableStatus? usable, ProvisioningStatus? provisioningState, string storageAccount, Uri endpointUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal QuantumWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IList<QuantumProvider> providers, WorkspaceUsableStatus? usable, QuantumProvisioningStatus? provisioningState, string storageAccount, Uri endpointUri, bool? isApiKeyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Providers = providers;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Quantum
             ProvisioningState = provisioningState;
             StorageAccount = storageAccount;
             EndpointUri = endpointUri;
+            IsApiKeyEnabled = isApiKeyEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,14 +93,16 @@ namespace Azure.ResourceManager.Quantum
         /// <summary> Managed Identity information. Current supported identity types: SystemAssigned, None. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> List of Providers selected for this Workspace. </summary>
-        public IList<Provider> Providers { get; }
+        public IList<QuantumProvider> Providers { get; }
         /// <summary> Whether the current workspace is ready to accept Jobs. </summary>
-        public UsableStatus? Usable { get; }
+        public WorkspaceUsableStatus? Usable { get; }
         /// <summary> Provisioning status field. </summary>
-        public ProvisioningStatus? ProvisioningState { get; }
+        public QuantumProvisioningStatus? ProvisioningState { get; }
         /// <summary> ARM Resource Id of the storage account associated with this workspace. </summary>
         public string StorageAccount { get; set; }
         /// <summary> The URI of the workspace endpoint. </summary>
         public Uri EndpointUri { get; }
+        /// <summary> Indicator of enablement of the Quantum workspace Api keys. </summary>
+        public bool? IsApiKeyEnabled { get; set; }
     }
 }

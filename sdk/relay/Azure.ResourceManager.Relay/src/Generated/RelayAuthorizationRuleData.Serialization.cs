@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Relay
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Rights is ChangeTrackingList<RelayAccessRight> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();

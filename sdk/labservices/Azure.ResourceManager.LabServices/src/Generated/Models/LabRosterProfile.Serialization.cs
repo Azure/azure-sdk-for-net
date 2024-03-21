@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (ActiveDirectoryGroupId != null)
+            if (Optional.IsDefined(ActiveDirectoryGroupId))
             {
                 writer.WritePropertyName("activeDirectoryGroupId"u8);
                 writer.WriteStringValue(ActiveDirectoryGroupId);
             }
-            if (LtiContextId != null)
+            if (Optional.IsDefined(LtiContextId))
             {
                 writer.WritePropertyName("ltiContextId"u8);
                 writer.WriteStringValue(LtiContextId);
             }
-            if (LmsInstance != null)
+            if (Optional.IsDefined(LmsInstance))
             {
                 writer.WritePropertyName("lmsInstance"u8);
                 writer.WriteStringValue(LmsInstance.AbsoluteUri);
             }
-            if (LtiClientId != null)
+            if (Optional.IsDefined(LtiClientId))
             {
                 writer.WritePropertyName("ltiClientId"u8);
                 writer.WriteStringValue(LtiClientId);
             }
-            if (LtiRosterEndpoint != null)
+            if (Optional.IsDefined(LtiRosterEndpoint))
             {
                 writer.WritePropertyName("ltiRosterEndpoint"u8);
                 writer.WriteStringValue(LtiRosterEndpoint.AbsoluteUri);

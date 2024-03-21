@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (MaxPrice.HasValue)
+            if (Optional.IsDefined(MaxPrice))
             {
                 writer.WritePropertyName("maxPrice"u8);
                 writer.WriteNumberValue(MaxPrice.Value);

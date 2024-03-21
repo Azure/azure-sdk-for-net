@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();

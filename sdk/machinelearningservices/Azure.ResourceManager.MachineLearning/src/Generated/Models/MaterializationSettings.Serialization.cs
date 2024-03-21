@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Notification != null)
+            if (Optional.IsDefined(Notification))
             {
                 if (Notification != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notification");
                 }
             }
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 if (Resource != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resource");
                 }
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 if (Schedule != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfiguration))
             {
                 if (SparkConfiguration != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sparkConfiguration");
                 }
             }
-            if (StoreType.HasValue)
+            if (Optional.IsDefined(StoreType))
             {
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());

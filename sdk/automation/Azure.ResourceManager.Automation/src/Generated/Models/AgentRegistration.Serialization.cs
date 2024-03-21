@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (DscMetaConfiguration != null)
+            if (Optional.IsDefined(DscMetaConfiguration))
             {
                 writer.WritePropertyName("dscMetaConfiguration"u8);
                 writer.WriteStringValue(DscMetaConfiguration);
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Keys != null)
+            if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteObjectValue(Keys);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);

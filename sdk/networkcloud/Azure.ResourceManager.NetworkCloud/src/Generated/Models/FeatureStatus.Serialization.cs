@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (ArrayValueSeparator != null)
+            if (Optional.IsDefined(ArrayValueSeparator))
             {
                 writer.WritePropertyName("arrayValueSeparator"u8);
                 writer.WriteStringValue(ArrayValueSeparator);
             }
-            if (!(EnumValidValues is ChangeTrackingList<ProfileEnumValidValuesFormat> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnumValidValues))
             {
                 writer.WritePropertyName("enumValidValues"u8);
                 writer.WriteStartArray();
@@ -45,62 +45,62 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("fieldType"u8);
             writer.WriteStringValue(FieldType);
-            if (IsArray.HasValue)
+            if (Optional.IsDefined(IsArray))
             {
                 writer.WritePropertyName("isArray"u8);
                 writer.WriteBooleanValue(IsArray.Value);
             }
-            if (IsEnum.HasValue)
+            if (Optional.IsDefined(IsEnum))
             {
                 writer.WritePropertyName("isEnum"u8);
                 writer.WriteBooleanValue(IsEnum.Value);
             }
-            if (IsFlagEnum.HasValue)
+            if (Optional.IsDefined(IsFlagEnum))
             {
                 writer.WritePropertyName("isFlagEnum"u8);
                 writer.WriteBooleanValue(IsFlagEnum.Value);
             }
-            if (IsImage.HasValue)
+            if (Optional.IsDefined(IsImage))
             {
                 writer.WritePropertyName("isImage"u8);
                 writer.WriteBooleanValue(IsImage.Value);
             }
-            if (IsLocalizedString.HasValue)
+            if (Optional.IsDefined(IsLocalizedString))
             {
                 writer.WritePropertyName("isLocalizedString"u8);
                 writer.WriteBooleanValue(IsLocalizedString.Value);
             }
-            if (IsName.HasValue)
+            if (Optional.IsDefined(IsName))
             {
                 writer.WritePropertyName("isName"u8);
                 writer.WriteBooleanValue(IsName.Value);
             }
-            if (IsRequired.HasValue)
+            if (Optional.IsDefined(IsRequired))
             {
                 writer.WritePropertyName("isRequired"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (PropertyId != null)
+            if (Optional.IsDefined(PropertyId))
             {
                 writer.WritePropertyName("propertyId"u8);
                 writer.WriteStringValue(PropertyId);
             }
-            if (SchemaItemPropLink != null)
+            if (Optional.IsDefined(SchemaItemPropLink))
             {
                 writer.WritePropertyName("schemaItemPropLink"u8);
                 writer.WriteStringValue(SchemaItemPropLink);
             }
-            if (MaxLength.HasValue)
+            if (Optional.IsDefined(MaxLength))
             {
                 writer.WritePropertyName("maxLength"u8);
                 writer.WriteNumberValue(MaxLength.Value);
             }
-            if (IsAvailableInGraph.HasValue)
+            if (Optional.IsDefined(IsAvailableInGraph))
             {
                 writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
             }
-            if (options.Format != "W" && !(DataSourcePrecedenceRules is ChangeTrackingList<DataSourcePrecedence> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
             {
                 writer.WritePropertyName("dataSourcePrecedenceRules"u8);
                 writer.WriteStartArray();

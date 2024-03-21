@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -124,10 +123,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRuleAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateResourceSetRuleAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();
@@ -161,10 +157,7 @@ namespace Azure.Analytics.Purview.Administration
         /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='CreateOrUpdateResourceSetRule(RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateResourceSetRule(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.CreateOrUpdateResourceSetRule");
             scope.Start();

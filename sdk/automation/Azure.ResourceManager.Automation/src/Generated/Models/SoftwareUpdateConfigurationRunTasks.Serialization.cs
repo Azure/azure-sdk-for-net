@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (PreTask != null)
+            if (Optional.IsDefined(PreTask))
             {
                 writer.WritePropertyName("preTask"u8);
                 writer.WriteObjectValue(PreTask);
             }
-            if (PostTask != null)
+            if (Optional.IsDefined(PostTask))
             {
                 writer.WritePropertyName("postTask"u8);
                 writer.WriteObjectValue(PostTask);

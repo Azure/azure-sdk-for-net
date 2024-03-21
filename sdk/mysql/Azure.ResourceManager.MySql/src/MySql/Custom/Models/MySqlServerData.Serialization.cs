@@ -23,29 +23,29 @@ namespace Azure.ResourceManager.MySql
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            ManagedServiceIdentity identity = default;
+            MySqlSku sku = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> administratorLogin = default;
-            Optional<MySqlServerVersion> version = default;
-            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
-            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
-            Optional<string> byokEnforcement = default;
-            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
-            Optional<MySqlServerState> userVisibleState = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<DateTimeOffset> earliestRestoreDate = default;
-            Optional<MySqlStorageProfile> storageProfile = default;
-            Optional<string> replicationRole = default;
-            Optional<ResourceIdentifier> masterServerId = default;
-            Optional<int> replicaCapacity = default;
-            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
-            Optional<IReadOnlyList<MySqlServerPrivateEndpointConnection>> privateEndpointConnections = default;
+            SystemData systemData = default;
+            string administratorLogin = default;
+            MySqlServerVersion? version = default;
+            MySqlSslEnforcementEnum? sslEnforcement = default;
+            MySqlMinimalTlsVersionEnum? minimalTlsVersion = default;
+            string byokEnforcement = default;
+            MySqlInfrastructureEncryption? infrastructureEncryption = default;
+            MySqlServerState? userVisibleState = default;
+            string fullyQualifiedDomainName = default;
+            DateTimeOffset? earliestRestoreDate = default;
+            MySqlStorageProfile storageProfile = default;
+            string replicationRole = default;
+            ResourceIdentifier masterServerId = default;
+            int? replicaCapacity = default;
+            MySqlPublicNetworkAccessEnum? publicNetworkAccess = default;
+            IReadOnlyList<MySqlServerPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,31 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, administratorLogin.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), byokEnforcement.Value, Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(userVisibleState), fullyQualifiedDomainName.Value, Optional.ToNullable(earliestRestoreDate), storageProfile.Value, replicationRole.Value, masterServerId.Value, Optional.ToNullable(replicaCapacity), Optional.ToNullable(publicNetworkAccess), Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new MySqlServerData(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                administratorLogin,
+                version,
+                sslEnforcement,
+                minimalTlsVersion,
+                byokEnforcement,
+                infrastructureEncryption,
+                userVisibleState,
+                fullyQualifiedDomainName,
+                earliestRestoreDate,
+                storageProfile,
+                replicationRole,
+                masterServerId,
+                replicaCapacity,
+                publicNetworkAccess,
+                privateEndpointConnections ?? new ChangeTrackingList<MySqlServerPrivateEndpointConnection>(),
+                serializedAdditionalRawData);
         }
     }
 }

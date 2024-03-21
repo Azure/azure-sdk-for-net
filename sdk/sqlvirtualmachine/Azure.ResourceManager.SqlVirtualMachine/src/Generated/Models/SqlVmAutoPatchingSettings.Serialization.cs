@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (MaintenanceWindowStartingHour.HasValue)
+            if (Optional.IsDefined(MaintenanceWindowStartingHour))
             {
                 writer.WritePropertyName("maintenanceWindowStartingHour"u8);
                 writer.WriteNumberValue(MaintenanceWindowStartingHour.Value);
             }
-            if (MaintenanceWindowDurationInMinutes.HasValue)
+            if (Optional.IsDefined(MaintenanceWindowDurationInMinutes))
             {
                 writer.WritePropertyName("maintenanceWindowDuration"u8);
                 writer.WriteNumberValue(MaintenanceWindowDurationInMinutes.Value);

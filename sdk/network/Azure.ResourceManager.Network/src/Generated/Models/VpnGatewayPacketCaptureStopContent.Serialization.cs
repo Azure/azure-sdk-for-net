@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);

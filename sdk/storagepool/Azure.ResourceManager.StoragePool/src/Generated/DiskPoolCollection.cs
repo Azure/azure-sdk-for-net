@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StoragePool.Models;
 
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DiskPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diskPoolName, DiskPoolCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DiskPoolResource> CreateOrUpdate(WaitUntil waitUntil, string diskPoolName, DiskPoolCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual async Task<Response<DiskPoolResource>> GetAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual Response<DiskPoolResource> Get(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<DiskPoolResource>> GetIfExistsAsync(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="diskPoolName"/> is null. </exception>
         public virtual NullableResponse<DiskPoolResource> GetIfExists(string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var scope = _diskPoolClientDiagnostics.CreateScope("DiskPoolCollection.GetIfExists");
             scope.Start();

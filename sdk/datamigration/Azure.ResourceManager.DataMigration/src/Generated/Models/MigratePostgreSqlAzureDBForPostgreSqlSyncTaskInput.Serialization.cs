@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");

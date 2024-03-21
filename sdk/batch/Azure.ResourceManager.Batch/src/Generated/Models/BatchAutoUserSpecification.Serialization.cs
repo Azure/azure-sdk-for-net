@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToSerialString());
             }
-            if (ElevationLevel.HasValue)
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (IsApprovalRequired.HasValue)
+            if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("isApprovalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (IsApprovalRequiredForExtension.HasValue)
+            if (Optional.IsDefined(IsApprovalRequiredForExtension))
             {
                 writer.WritePropertyName("isApprovalRequiredForExtension"u8);
                 writer.WriteBooleanValue(IsApprovalRequiredForExtension.Value);
             }
-            if (IsRequestorJustificationRequired.HasValue)
+            if (Optional.IsDefined(IsRequestorJustificationRequired))
             {
                 writer.WritePropertyName("isRequestorJustificationRequired"u8);
                 writer.WriteBooleanValue(IsRequestorJustificationRequired.Value);
             }
-            if (ApprovalMode.HasValue)
+            if (Optional.IsDefined(ApprovalMode))
             {
                 writer.WritePropertyName("approvalMode"u8);
                 writer.WriteStringValue(ApprovalMode.Value.ToString());
             }
-            if (!(ApprovalStages is ChangeTrackingList<RoleManagementApprovalStage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApprovalStages))
             {
                 writer.WritePropertyName("approvalStages"u8);
                 writer.WriteStartArray();

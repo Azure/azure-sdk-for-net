@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (ResponseBasedDetectedErrorType.HasValue)
+            if (Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
                 writer.WritePropertyName("responseBasedDetectedErrorTypes"u8);
                 writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
-            if (ResponseBasedFailoverThresholdPercentage.HasValue)
+            if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
             {
                 writer.WritePropertyName("responseBasedFailoverThresholdPercentage"u8);
                 writer.WriteNumberValue(ResponseBasedFailoverThresholdPercentage.Value);
             }
-            if (!(HttpErrorRanges is ChangeTrackingList<HttpErrorRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpErrorRanges))
             {
                 writer.WritePropertyName("httpErrorRanges"u8);
                 writer.WriteStartArray();

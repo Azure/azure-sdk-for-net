@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ExpressRouteGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string expressRouteGatewayName, ExpressRouteGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ExpressRouteGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string expressRouteGatewayName, ExpressRouteGatewayData data, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
         public virtual async Task<Response<ExpressRouteGatewayResource>> GetAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
         public virtual Response<ExpressRouteGatewayResource> Get(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
         public virtual async Task<NullableResponse<ExpressRouteGatewayResource>> GetIfExistsAsync(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="expressRouteGatewayName"/> is null. </exception>
         public virtual NullableResponse<ExpressRouteGatewayResource> GetIfExists(string expressRouteGatewayName, CancellationToken cancellationToken = default)
         {
-            if (expressRouteGatewayName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRouteGatewayName));
-            }
-            if (expressRouteGatewayName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRouteGatewayName));
-            }
+            Argument.AssertNotNullOrEmpty(expressRouteGatewayName, nameof(expressRouteGatewayName));
 
             using var scope = _expressRouteGatewayClientDiagnostics.CreateScope("ExpressRouteGatewayCollection.GetIfExists");
             scope.Start();

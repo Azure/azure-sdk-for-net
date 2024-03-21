@@ -18,14 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="tenantId"/> is null. </exception>
         public ServicePrincipalParam(string clientId, string tenantId)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (tenantId == null)
-            {
-                throw new ArgumentNullException(nameof(tenantId));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(tenantId, nameof(tenantId));
 
             ClientId = clientId;
             TenantId = tenantId;

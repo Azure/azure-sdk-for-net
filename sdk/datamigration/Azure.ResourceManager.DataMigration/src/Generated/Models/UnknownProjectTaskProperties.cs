@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownProjectTaskProperties. </summary>
+    /// <summary> Unknown version of ProjectTaskProperties. </summary>
     internal partial class UnknownProjectTaskProperties : ProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/>. </summary>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="commands">
         /// Array of command properties.
         /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// The available derived classes include <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>

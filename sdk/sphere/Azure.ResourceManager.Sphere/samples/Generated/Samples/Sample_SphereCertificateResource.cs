@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Sphere;
 using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere.Samples
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.Sphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CertificatesGet()
         {
-            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/preview/2022-09-01-preview/examples/GetCertificate.json
+            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/stable/2024-04-01/examples/GetCertificate.json
             // this example is just showing the usage of "Certificates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Sphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RetrieveCertChain_CertificatesRetrieveCertChain()
         {
-            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/preview/2022-09-01-preview/examples/PostRetrieveCatalogCertChain.json
+            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/stable/2024-04-01/examples/PostRetrieveCatalogCertChain.json
             // this example is just showing the usage of "Certificates_RetrieveCertChain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +80,7 @@ namespace Azure.ResourceManager.Sphere.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RetrieveProofOfPossessionNonce_CertificatesRetrieveProofOfPossessionNonce()
         {
-            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/preview/2022-09-01-preview/examples/PostRetrieveProofOfPossessionNonce.json
+            // Generated from example definition: specification/sphere/resource-manager/Microsoft.AzureSphere/stable/2024-04-01/examples/PostRetrieveProofOfPossessionNonce.json
             // this example is just showing the usage of "Certificates_RetrieveProofOfPossessionNonce" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

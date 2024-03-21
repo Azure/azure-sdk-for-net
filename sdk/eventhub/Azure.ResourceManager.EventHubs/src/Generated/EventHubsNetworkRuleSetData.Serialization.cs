@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventHubs
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TrustedServiceAccessEnabled.HasValue)
+            if (Optional.IsDefined(TrustedServiceAccessEnabled))
             {
                 writer.WritePropertyName("trustedServiceAccessEnabled"u8);
                 writer.WriteBooleanValue(TrustedServiceAccessEnabled.Value);
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPRules is ChangeTrackingList<EventHubsNetworkRuleSetIPRules> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());

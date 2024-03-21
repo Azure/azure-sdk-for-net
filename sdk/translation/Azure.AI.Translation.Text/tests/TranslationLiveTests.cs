@@ -555,5 +555,19 @@ namespace Azure.AI.Translation.Text.Tests
             Assert.AreEqual(200, translate.GetRawResponse().Status);
             Assert.AreEqual(1, translate.Value.Count);
         }
+
+        [RecordedTest]
+        public async Task TranslateWithAADAuth()
+        {
+            TextTranslationClient client = GetClient(useAADAuth: true);
+            TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+                targetLanguage: "cs",
+                content: "This is a test."
+            );
+            var translate = await client.TranslateAsync(options).ConfigureAwait(false);
+
+            Assert.AreEqual(200, translate.GetRawResponse().Status);
+            Assert.AreEqual(1, translate.Value.Count);
+        }
     }
 }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, DevCenterPoolData data, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevCenterPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, DevCenterPoolData data, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<Response<DevCenterPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual Response<DevCenterPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual Response<bool> Exists(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<NullableResponse<DevCenterPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual NullableResponse<DevCenterPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
         {
-            if (poolName == null)
-            {
-                throw new ArgumentNullException(nameof(poolName));
-            }
-            if (poolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
-            }
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = _devCenterPoolPoolsClientDiagnostics.CreateScope("DevCenterPoolCollection.GetIfExists");
             scope.Start();

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (ScopeName != null)
+            if (Optional.IsDefined(ScopeName))
             {
                 writer.WritePropertyName("scopeName"u8);
                 writer.WriteStringValue(ScopeName);

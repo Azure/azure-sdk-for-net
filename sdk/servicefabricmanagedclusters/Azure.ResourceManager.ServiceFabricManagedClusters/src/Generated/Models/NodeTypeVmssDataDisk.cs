@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskLetter"/> is null. </exception>
         public NodeTypeVmssDataDisk(int lun, int diskSizeInGB, ServiceFabricManagedDataDiskType diskType, string diskLetter)
         {
-            if (diskLetter == null)
-            {
-                throw new ArgumentNullException(nameof(diskLetter));
-            }
+            Argument.AssertNotNull(diskLetter, nameof(diskLetter));
 
             Lun = lun;
             DiskSizeInGB = diskSizeInGB;

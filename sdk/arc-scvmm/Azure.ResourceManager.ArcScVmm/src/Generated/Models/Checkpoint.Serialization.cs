@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (ParentCheckpointId != null)
+            if (Optional.IsDefined(ParentCheckpointId))
             {
                 writer.WritePropertyName("parentCheckpointID"u8);
                 writer.WriteStringValue(ParentCheckpointId);
             }
-            if (CheckpointId != null)
+            if (Optional.IsDefined(CheckpointId))
             {
                 writer.WritePropertyName("checkpointID"u8);
                 writer.WriteStringValue(CheckpointId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);

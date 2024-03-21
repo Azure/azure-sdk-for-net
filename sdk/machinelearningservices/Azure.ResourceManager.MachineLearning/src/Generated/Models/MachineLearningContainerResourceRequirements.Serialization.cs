@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ContainerResourceLimits != null)
+            if (Optional.IsDefined(ContainerResourceLimits))
             {
                 if (ContainerResourceLimits != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerResourceLimits");
                 }
             }
-            if (ContainerResourceRequests != null)
+            if (Optional.IsDefined(ContainerResourceRequests))
             {
                 if (ContainerResourceRequests != null)
                 {

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {

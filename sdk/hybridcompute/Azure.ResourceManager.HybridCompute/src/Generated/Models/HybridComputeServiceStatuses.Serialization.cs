@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (ExtensionService != null)
+            if (Optional.IsDefined(ExtensionService))
             {
                 writer.WritePropertyName("extensionService"u8);
                 writer.WriteObjectValue(ExtensionService);
             }
-            if (GuestConfigurationService != null)
+            if (Optional.IsDefined(GuestConfigurationService))
             {
                 writer.WritePropertyName("guestConfigurationService"u8);
                 writer.WriteObjectValue(GuestConfigurationService);

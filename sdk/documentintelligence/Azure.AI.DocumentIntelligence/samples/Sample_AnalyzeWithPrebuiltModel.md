@@ -58,15 +58,15 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.Array)
+        && itemsField.Type == DocumentFieldType.List)
     {
-        foreach (DocumentField itemField in itemsField.ValueArray)
+        foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Object)
+            if (itemField.Type == DocumentFieldType.Dictionary)
             {
-                IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueObject;
+                IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
                     && itemDescriptionField.Type == DocumentFieldType.String)

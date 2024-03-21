@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> The UnknownChannel. </summary>
+    /// <summary> Unknown version of Channel. </summary>
     internal partial class UnknownChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChannel"/>. </summary>

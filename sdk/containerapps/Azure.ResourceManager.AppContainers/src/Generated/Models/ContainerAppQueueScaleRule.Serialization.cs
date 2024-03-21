@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (QueueName != null)
+            if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
                 writer.WriteStringValue(QueueName);
             }
-            if (QueueLength.HasValue)
+            if (Optional.IsDefined(QueueLength))
             {
                 writer.WritePropertyName("queueLength"u8);
                 writer.WriteNumberValue(QueueLength.Value);
             }
-            if (!(Auth is ChangeTrackingList<ContainerAppScaleRuleAuth> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteStartArray();

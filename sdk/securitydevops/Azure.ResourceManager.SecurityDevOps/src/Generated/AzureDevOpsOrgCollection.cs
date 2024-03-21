@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AzureDevOpsOrgResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string azureDevOpsOrgName, AzureDevOpsOrgData data, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AzureDevOpsOrgResource> CreateOrUpdate(WaitUntil waitUntil, string azureDevOpsOrgName, AzureDevOpsOrgData data, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
         public virtual async Task<Response<AzureDevOpsOrgResource>> GetAsync(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
         public virtual Response<AzureDevOpsOrgResource> Get(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
         public virtual Response<bool> Exists(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
         public virtual async Task<NullableResponse<AzureDevOpsOrgResource>> GetIfExistsAsync(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="azureDevOpsOrgName"/> is null. </exception>
         public virtual NullableResponse<AzureDevOpsOrgResource> GetIfExists(string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var scope = _azureDevOpsOrgClientDiagnostics.CreateScope("AzureDevOpsOrgCollection.GetIfExists");
             scope.Start();

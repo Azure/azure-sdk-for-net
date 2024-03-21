@@ -5,27 +5,44 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.Query.Models
 {
-    /// <summary> Contains details when the response code indicates an error. </summary>
+    /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     internal partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
-        /// <param name="error"> The error details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal ErrorResponse(ErrorInfo error)
+        internal ErrorResponse()
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
-
-            Error = error;
+            Details = new ChangeTrackingList<ErrorResponse>();
+            AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> The error details. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        internal ErrorResponse(string code, string message, string target, IReadOnlyList<ErrorResponse> details, IReadOnlyList<ErrorAdditionalInfo> additionalInfo)
+        {
+            Code = code;
+            Message = message;
+            Target = target;
+            Details = details;
+            AdditionalInfo = additionalInfo;
+        }
+
+        /// <summary> The error code. </summary>
+        public string Code { get; }
+        /// <summary> The error message. </summary>
+        public string Message { get; }
+        /// <summary> The error target. </summary>
+        public string Target { get; }
         /// <summary> The error details. </summary>
-        public ErrorInfo Error { get; }
+        public IReadOnlyList<ErrorResponse> Details { get; }
+        /// <summary> The error additional info. </summary>
+        public IReadOnlyList<ErrorAdditionalInfo> AdditionalInfo { get; }
     }
 }

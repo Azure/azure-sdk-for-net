@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The UnknownMigrateSqlServerSqlMISyncTaskOutput. </summary>
+    /// <summary> Unknown version of MigrateSqlServerSqlMISyncTaskOutput. </summary>
     internal partial class UnknownMigrateSqlServerSqlMISyncTaskOutput : MigrateSqlServerSqlMISyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlMISyncTaskOutput"/>. </summary>

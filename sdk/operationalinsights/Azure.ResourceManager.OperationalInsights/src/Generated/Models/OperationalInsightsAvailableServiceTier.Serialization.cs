@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceTier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceTier))
             {
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToString());
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && MinimumRetention.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinimumRetention))
             {
                 writer.WritePropertyName("minimumRetention"u8);
                 writer.WriteNumberValue(MinimumRetention.Value);
             }
-            if (options.Format != "W" && MaximumRetention.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaximumRetention))
             {
                 writer.WritePropertyName("maximumRetention"u8);
                 writer.WriteNumberValue(MaximumRetention.Value);
             }
-            if (options.Format != "W" && DefaultRetention.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultRetention))
             {
                 writer.WritePropertyName("defaultRetention"u8);
                 writer.WriteNumberValue(DefaultRetention.Value);
             }
-            if (options.Format != "W" && CapacityReservationLevel.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityReservationLevel))
             {
                 writer.WritePropertyName("capacityReservationLevel"u8);
                 writer.WriteNumberValue(CapacityReservationLevel.Value);
             }
-            if (options.Format != "W" && LastSkuUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
             {
                 writer.WritePropertyName("lastSkuUpdate"u8);
                 writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");

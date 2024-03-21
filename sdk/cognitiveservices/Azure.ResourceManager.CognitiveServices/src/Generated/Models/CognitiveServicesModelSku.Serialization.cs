@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (UsageName != null)
+            if (Optional.IsDefined(UsageName))
             {
                 writer.WritePropertyName("usageName"u8);
                 writer.WriteStringValue(UsageName);
             }
-            if (DeprecationOn.HasValue)
+            if (Optional.IsDefined(DeprecationOn))
             {
                 writer.WritePropertyName("deprecationDate"u8);
                 writer.WriteStringValue(DeprecationOn.Value, "O");
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && !(RateLimits is ChangeTrackingList<ServiceAccountCallRateLimit> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();

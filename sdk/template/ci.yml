@@ -33,12 +33,6 @@ pr:
     - eng/common/
 #endif
 
-parameters:
-- name: AllowFailingLiveTests
-  displayName: Allow release with failing live tests
-  type: boolean
-  default: false
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -47,8 +41,3 @@ extends:
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
-    ReleaseDependsOnLiveTests: ${{ not(parameters.AllowFailingLiveTests) }}
-    LiveTestStages:
-      - template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
-        parameters:
-          ServiceDirectory: template

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrivateLinkServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (options.Format != "W" && PrivateEndpointConnectionName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);

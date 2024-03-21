@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkSiblingSetId"/> or <paramref name="subnetId"/> is null. </exception>
         public QueryNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId)
         {
-            if (networkSiblingSetId == null)
-            {
-                throw new ArgumentNullException(nameof(networkSiblingSetId));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(networkSiblingSetId, nameof(networkSiblingSetId));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             NetworkSiblingSetId = networkSiblingSetId;
             SubnetId = subnetId;

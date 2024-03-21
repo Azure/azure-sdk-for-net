@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (OrganizationId != null)
+            if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);

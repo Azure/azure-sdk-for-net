@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="adminGroupObjectIds"/> is null. </exception>
         public NetworkCloudAadConfiguration(IEnumerable<string> adminGroupObjectIds)
         {
-            if (adminGroupObjectIds == null)
-            {
-                throw new ArgumentNullException(nameof(adminGroupObjectIds));
-            }
+            Argument.AssertNotNull(adminGroupObjectIds, nameof(adminGroupObjectIds));
 
             AdminGroupObjectIds = adminGroupObjectIds.ToList();
         }

@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {

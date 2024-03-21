@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (ArmResourceIdentifier != null)
+            if (Optional.IsDefined(ArmResourceIdentifier))
             {
                 if (ArmResourceIdentifier != null)
                 {

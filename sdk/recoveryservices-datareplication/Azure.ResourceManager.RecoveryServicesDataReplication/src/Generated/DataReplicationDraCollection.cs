@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationDraResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricAgentName, DataReplicationDraData data, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationDraResource> CreateOrUpdate(WaitUntil waitUntil, string fabricAgentName, DataReplicationDraData data, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationDraResource>> GetAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         public virtual Response<DataReplicationDraResource> Get(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         public virtual Response<bool> Exists(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationDraResource>> GetIfExistsAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationDraResource> GetIfExists(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            if (fabricAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(fabricAgentName));
-            }
-            if (fabricAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(fabricAgentName, nameof(fabricAgentName));
 
             using var scope = _dataReplicationDraDraClientDiagnostics.CreateScope("DataReplicationDraCollection.GetIfExists");
             scope.Start();

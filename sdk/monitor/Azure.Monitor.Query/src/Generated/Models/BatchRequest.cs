@@ -19,10 +19,7 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public BatchRequest(IEnumerable<BatchQueryRequest> requests)
         {
-            if (requests == null)
-            {
-                throw new ArgumentNullException(nameof(requests));
-            }
+            Argument.AssertNotNull(requests, nameof(requests));
 
             Requests = requests.ToList();
         }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -24,22 +23,10 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="folderPath"/>, <paramref name="resourceGroup"/> or <paramref name="subscriptionId"/> is null. </exception>
         public AdlsGen1FolderDataSet(string accountName, string folderPath, string resourceGroup, string subscriptionId)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (folderPath == null)
-            {
-                throw new ArgumentNullException(nameof(folderPath));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             AccountName = accountName;
             FolderPath = folderPath;
