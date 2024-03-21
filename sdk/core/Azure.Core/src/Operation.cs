@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -16,6 +18,26 @@ namespace Azure
     public abstract class Operation
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="pipeline">The Http pipeline.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
+            => new RehydrationOperation<T>(pipeline, rehydrationToken, options);
+
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="pipeline">The Http pipeline.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static Operation Rehydrate(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null)
+            => new RehydrationOperation(pipeline, rehydrationToken, options);
+
         /// <summary>
         /// Get a token that can be used to rehydrate the operation.
         /// </summary>

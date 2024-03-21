@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using Azure.Core.TestFramework;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
