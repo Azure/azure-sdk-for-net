@@ -30,6 +30,8 @@ namespace Azure.AI.OpenAI
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
+        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         /// <param name="functionCall">
         /// The function call that must be resolved and have its output appended to subsequent input messages for the chat

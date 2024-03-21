@@ -52,6 +52,8 @@ namespace Azure.AI.OpenAI
         /// the data source for supported mechanisms.
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
         /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
@@ -60,7 +62,11 @@ namespace Azure.AI.OpenAI
         /// <param name="environmentName"> The environment name of Pinecone. </param>
         /// <param name="indexName"> The name of the Pinecone database index. </param>
         /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
-        /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OnYourDataEndpointVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PineconeChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, string environmentName, string indexName, PineconeFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

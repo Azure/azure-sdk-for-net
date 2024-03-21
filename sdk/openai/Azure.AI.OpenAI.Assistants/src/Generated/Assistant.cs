@@ -53,7 +53,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="description"> The description of the assistant. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="instructions"> The system instructions for the assistant to use. </param>
-        /// <param name="tools"> The collection of tools enabled for the assistant. </param>
+        /// <param name="tools">
+        /// The collection of tools enabled for the assistant.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="model"/>, <paramref name="tools"/> or <paramref name="fileIds"/> is null. </exception>
@@ -83,7 +87,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="description"> The description of the assistant. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="instructions"> The system instructions for the assistant to use. </param>
-        /// <param name="tools"> The collection of tools enabled for the assistant. </param>
+        /// <param name="tools">
+        /// The collection of tools enabled for the assistant.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> A list of attached file IDs, ordered by creation date in ascending order. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>

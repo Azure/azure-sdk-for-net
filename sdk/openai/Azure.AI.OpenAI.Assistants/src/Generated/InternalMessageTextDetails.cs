@@ -48,7 +48,11 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="InternalMessageTextDetails"/>. </summary>
         /// <param name="text"> The text data. </param>
-        /// <param name="annotations"> A list of annotations associated with this text. </param>
+        /// <param name="annotations">
+        /// A list of annotations associated with this text.
+        /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/> and <see cref="MessageTextFilePathAnnotation"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="annotations"/> is null. </exception>
         internal InternalMessageTextDetails(string text, IEnumerable<MessageTextAnnotation> annotations)
         {
@@ -61,7 +65,11 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="InternalMessageTextDetails"/>. </summary>
         /// <param name="text"> The text data. </param>
-        /// <param name="annotations"> A list of annotations associated with this text. </param>
+        /// <param name="annotations">
+        /// A list of annotations associated with this text.
+        /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/> and <see cref="MessageTextFilePathAnnotation"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InternalMessageTextDetails(string text, IReadOnlyList<MessageTextAnnotation> annotations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {

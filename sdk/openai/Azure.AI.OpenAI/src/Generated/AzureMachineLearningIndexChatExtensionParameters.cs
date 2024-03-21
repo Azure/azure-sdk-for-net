@@ -52,6 +52,8 @@ namespace Azure.AI.OpenAI
         /// the data source for supported mechanisms.
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </param>
         /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
         /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>

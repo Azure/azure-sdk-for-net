@@ -62,7 +62,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="thread"> The details used to create the new thread. </param>
         /// <param name="overrideModelName"> The overridden model that the assistant should use to run the thread. </param>
         /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools the assistant should use to run the thread. </param>
+        /// <param name="overrideTools">
+        /// The overridden list of enabled tools the assistant should use to run the thread.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CreateAndRunThreadOptions(string assistantId, AssistantThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IList<ToolDefinition> overrideTools, IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
