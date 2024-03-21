@@ -4,10 +4,10 @@
 #nullable disable
 
 using System;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
@@ -67,8 +67,35 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 }
 
                 // INITIALIZE INTERNALS
-                var manager = new Manager(exporterOptions, new DefaultPlatform());
+                var manager = ManagerFactory.Instance.Get(exporterOptions);
                 return new LiveMetricsActivityProcessor(manager);
+            });
+        }
+
+        /// <summary>
+        /// TODO: Add documentation.
+        /// </summary>
+        /// <param name="loggerOptions"></param>
+        /// <param name="configure"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static OpenTelemetryLoggerOptions AddLiveMetrics(
+            this OpenTelemetryLoggerOptions loggerOptions,
+            Action<LiveMetricsExporterOptions> configure = null)
+        {
+            if (loggerOptions == null)
+            {
+                throw new ArgumentNullException(nameof(loggerOptions));
+            }
+
+            return loggerOptions.AddProcessor(sp =>
+            {
+                var options = new LiveMetricsExporterOptions();
+                configure?.Invoke(options);
+
+                // INITIALIZE INTERNALS
+                var manager = ManagerFactory.Instance.Get(options);
+                return new LiveMetricsLogProcessor(manager);
             });
         }
     }

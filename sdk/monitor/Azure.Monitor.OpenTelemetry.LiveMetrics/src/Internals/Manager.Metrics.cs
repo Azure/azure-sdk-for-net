@@ -87,6 +87,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
                 }
+                else if (item is Models.Trace trace)
+                {
+                    // TODO: APPLY FILTERS
+                }
                 else
                 {
                     Debug.WriteLine($"Unknown DocumentType: {item.DocumentType}");
