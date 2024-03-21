@@ -4,9 +4,17 @@
 
 ### Features Added
 
+- `EmbeddingsOptions` now includes the `Dimensions` property, new to Azure OpenAI's `2024-03-01-preview` service API.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Several issues with the `ImageGenerations` response object being treated as writeable are fixed:
+  - `ImageGenerations` no longer has an erroneous public constructor
+  - `ImageGenerations.Created` no longer has a public setter
+  - `ImageGenerations.Data` is now an `IReadOnlyList` instead of an `IList`
+  - A corresponding replacement factory method for mocks is added to `AzureOpenAIModelFactory`
 
 ### Other Changes
 
