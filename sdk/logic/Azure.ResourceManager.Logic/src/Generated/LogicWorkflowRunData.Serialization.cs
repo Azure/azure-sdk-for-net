@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeLogicWorkflowRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunData)} does not support reading '{options.Format}' format.");
             }
         }
 
