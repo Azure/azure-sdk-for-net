@@ -86,59 +86,28 @@ public class ClientUriBuilderTests
         Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
     }
 
-    //    [TestCase("", "http://localhost/")]
-    //    [TestCase("?", "http://localhost/?")]
-    //    [TestCase("a", "http://localhost/?a")]
-    //    [TestCase("?a", "http://localhost/?a")]
-    //    public void AddsLeadingQuestionMarkToQuery(string query, string expected)
-    //    {
-    //        var uriBuilder = new RequestUriBuilder
-    //        {
-    //            Scheme = "http",
-    //            Host = "localhost",
-    //            Port = 80,
-    //            Query = query
-    //        };
+    [TestCase("a", "b", "http://localhost/?a=b")]
+    public void AddsLeadingQuestionMarkToQuery(string name, string value, string expected)
+    {
+        ClientUriBuilder uriBuilder = new();
+        uriBuilder.Reset(new Uri("http://localhost:80"));
+        uriBuilder.AppendQuery(name, value, false);
 
-    //        Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
-    //    }
+        Assert.AreEqual(expected, uriBuilder.ToUri().ToString());
+    }
 
-    //    [TestCase(null)]
-    //    [TestCase("")]
-    //    public void SettingQueryToEmptyRemovesQuestionMark(string query)
-    //    {
-    //        var uriBuilder = new RequestUriBuilder
-    //        {
-    //            Scheme = "http",
-    //            Host = "localhost",
-    //            Port = 80,
-    //            Query = "a"
-    //        };
+    [TestCase("\u1234\u2345")]
+    [TestCase("\u1234")]
+    [TestCase("\u1234\u2345")]
+    [TestCase("%#?&")]
+    public void PathIsNotEscaped(string path)
+    {
+        ClientUriBuilder uriBuilder = new();
+        uriBuilder.Reset(new Uri("http://localhost:80"));
+        uriBuilder.AppendPath(path, false);
 
-    //        Assert.AreEqual("http://localhost/?a", uriBuilder.ToUri().ToString());
-
-    //        uriBuilder.Query = query;
-
-    //        Assert.AreEqual("http://localhost/", uriBuilder.ToUri().ToString());
-    //    }
-
-    //    [TestCase("\u1234\u2345")]
-    //    [TestCase("\u1234")]
-    //    [TestCase("\u1234\u2345")]
-    //    [TestCase(" ")]
-    //    [TestCase("%#?&")]
-    //    public void PathIsNotEscaped(string path)
-    //    {
-    //        var uriBuilder = new RequestUriBuilder
-    //        {
-    //            Scheme = "http",
-    //            Host = "localhost",
-    //            Port = 80,
-    //            Path = path
-    //        };
-
-    //        Assert.AreEqual("http://localhost/" + path, uriBuilder.ToUri().OriginalString);
-    //    }
+        Assert.AreEqual("http://localhost:80/" + path, uriBuilder.ToUri().OriginalString);
+    }
 
     //    [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
     //    [TestCase("\u1234", "%E1%88%B4")]
