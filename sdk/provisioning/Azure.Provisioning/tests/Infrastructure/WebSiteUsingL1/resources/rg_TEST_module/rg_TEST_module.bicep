@@ -71,8 +71,8 @@ resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-resource keyVault_nM2Vqwgtg 'Microsoft.KeyVault/vaults@2022-07-01' = {
-  name: toLower(take(concat('kv', uniqueString(resourceGroup().id)), 24))
+resource keyVault_qo1DED50V 'Microsoft.KeyVault/vaults@2022-07-01' = {
+  name: toLower(take('kv${uniqueString(resourceGroup().id)}', 24))
   location: 'westus'
   properties: {
     tenantId: tenant().tenantId
@@ -84,8 +84,8 @@ resource keyVault_nM2Vqwgtg 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_7ChrYtGGE 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_nM2Vqwgtg
+resource keyVaultAddAccessPolicy_QYuNvUKSY 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_qo1DED50V
   name: 'add'
   properties: {
     accessPolicies: [
@@ -103,9 +103,9 @@ resource keyVaultAddAccessPolicy_7ChrYtGGE 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource roleAssignment_vMr1hl6oa 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  scope: keyVault_nM2Vqwgtg
-  name: guid(keyVault_nM2Vqwgtg.id, '00000000-0000-0000-0000-000000000000', subscriptionResourceId('00000000-0000-0000-0000-000000000000', 'Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
+resource roleAssignment_SfDQl1Elt 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: keyVault_qo1DED50V
+  name: guid(keyVault_qo1DED50V.id, '00000000-0000-0000-0000-000000000000', subscriptionResourceId('00000000-0000-0000-0000-000000000000', 'Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
   properties: {
     roleDefinitionId: subscriptionResourceId('00000000-0000-0000-0000-000000000000', 'Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
     principalId: '00000000-0000-0000-0000-000000000000'
@@ -113,32 +113,32 @@ resource roleAssignment_vMr1hl6oa 'Microsoft.Authorization/roleAssignments@2022-
   }
 }
 
-resource keyVaultSecret_EG4xNeA1a 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_nM2Vqwgtg
+resource keyVaultSecret_Cv86ZMNJH 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_qo1DED50V
   name: 'sqlAdminPassword'
   properties: {
     value: sqlAdminPassword
   }
 }
 
-resource keyVaultSecret_ynz4glpCA 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_nM2Vqwgtg
+resource keyVaultSecret_3hklpmSpi 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_qo1DED50V
   name: 'appUserPassword'
   properties: {
     value: appUserPassword
   }
 }
 
-resource keyVaultSecret_YQnCy7jra 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-  parent: keyVault_nM2Vqwgtg
+resource keyVaultSecret_VSwNDRv3g 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+  parent: keyVault_qo1DED50V
   name: 'connectionString'
   properties: {
-    value: 'Server=${sqlServer_dQT7Agxxb.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_xPxoW7iwr.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_IUrwXj0qc.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_znwZqtuG7.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
-resource sqlServer_dQT7Agxxb 'Microsoft.Sql/servers@2020-11-01-preview' = {
-  name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
+resource sqlServer_IUrwXj0qc 'Microsoft.Sql/servers@2020-11-01-preview' = {
+  name: toLower(take('sqlserver${uniqueString(resourceGroup().id)}', 24))
   location: 'westus'
   properties: {
     administratorLogin: 'sqladmin'
@@ -149,16 +149,16 @@ resource sqlServer_dQT7Agxxb 'Microsoft.Sql/servers@2020-11-01-preview' = {
   }
 }
 
-resource sqlDatabase_xPxoW7iwr 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
-  parent: sqlServer_dQT7Agxxb
+resource sqlDatabase_znwZqtuG7 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
+  parent: sqlServer_IUrwXj0qc
   name: 'db'
   location: 'westus'
   properties: {
   }
 }
 
-resource sqlFirewallRule_EQzceacoC 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_dQT7Agxxb
+resource sqlFirewallRule_c0A2hKlAH 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_IUrwXj0qc
   name: 'firewallRule'
   properties: {
     startIpAddress: '0.0.0.1'
@@ -195,7 +195,7 @@ SCRIPT_END
       }
       {
         name: 'DBSERVER'
-        value: sqlServer_dQT7Agxxb.properties.fullyQualifiedDomainName
+        value: sqlServer_IUrwXj0qc.properties.fullyQualifiedDomainName
       }
       {
         name: 'DBNAME'
@@ -249,5 +249,5 @@ resource applicationSettingsResource_Pfdqa0OdT 'Microsoft.Web/sites/config@2021-
 }
 
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId
-output vaultUri string = keyVault_nM2Vqwgtg.properties.vaultUri
-output sqlServerName string = sqlServer_dQT7Agxxb.properties.fullyQualifiedDomainName
+output vaultUri string = keyVault_qo1DED50V.properties.vaultUri
+output sqlServerName string = sqlServer_IUrwXj0qc.properties.fullyQualifiedDomainName

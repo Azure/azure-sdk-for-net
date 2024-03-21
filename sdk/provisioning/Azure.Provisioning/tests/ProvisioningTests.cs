@@ -442,10 +442,11 @@ namespace Azure.Provisioning.Tests
         public async Task AppInsights()
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
-            _ = new OperationalInsightsWorkspace(infrastructure);
+            var workspace = new OperationalInsightsWorkspace(infrastructure);
+            var output = workspace.AddOutput("workspaceId", data => data.Id);
 
             var appInsights = new ApplicationInsightsComponent(infrastructure);
-            appInsights.Properties.WorkspaceResourceId = "workspaceId";
+            appInsights.AssignProperty(data => data.WorkspaceResourceId, new Parameter(output));
 
             infrastructure.Build(GetOutputPath());
 
