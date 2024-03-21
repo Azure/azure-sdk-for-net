@@ -55,7 +55,7 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private Response? _rawResponse;
+        private Response _rawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
@@ -98,7 +98,7 @@ namespace Azure.Core
         /// <param name="requetMethod">The Http request method.</param>
         public OperationInternal(IOperation<T> operation,
             ClientDiagnostics clientDiagnostics,
-            Response? rawResponse,
+            Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null,
@@ -120,7 +120,7 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
 
-        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse ?? throw new InvalidOperationException("The operation has not completed yet.");
+        public override Response RawResponse => _stateLock.TryGetValue(out var state) ? state.RawResponse : _rawResponse;
 
         public override bool HasCompleted => _stateLock.HasValue;
 

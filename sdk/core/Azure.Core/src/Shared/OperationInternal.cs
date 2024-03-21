@@ -86,7 +86,7 @@ namespace Azure.Core
         /// <param name="requestMethod">The Http request method</param>
         public OperationInternal(IOperation operation,
             ClientDiagnostics clientDiagnostics,
-            Response? rawResponse,
+            Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null,
