@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -142,6 +144,79 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTriggerProperties(timerTriggers ?? new ChangeTrackingList<ContainerRegistryTimerTrigger>(), sourceTriggers ?? new ChangeTrackingList<ContainerRegistrySourceTrigger>(), baseImageTrigger, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimerTriggers), out propertyOverride);
+            if (Optional.IsCollectionDefined(TimerTriggers) || hasPropertyOverride)
+            {
+                if (TimerTriggers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  timerTriggers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in TimerTriggers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  timerTriggers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceTriggers), out propertyOverride);
+            if (Optional.IsCollectionDefined(SourceTriggers) || hasPropertyOverride)
+            {
+                if (SourceTriggers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  sourceTriggers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SourceTriggers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sourceTriggers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseImageTrigger), out propertyOverride);
+            if (Optional.IsDefined(BaseImageTrigger) || hasPropertyOverride)
+            {
+                builder.Append("  baseImageTrigger: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, BaseImageTrigger, options, 2, false, "  baseImageTrigger: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerRegistryTriggerProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTriggerProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +225,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support '{options.Format}' format.");
             }
@@ -166,6 +243,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryTriggerProperties(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTriggerProperties)} does not support '{options.Format}' format.");
             }
