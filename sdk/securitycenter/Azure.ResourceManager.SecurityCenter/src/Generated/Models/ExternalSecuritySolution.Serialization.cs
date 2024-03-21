@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeExternalSecuritySolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support reading '{options.Format}' format.");
             }
         }
 
