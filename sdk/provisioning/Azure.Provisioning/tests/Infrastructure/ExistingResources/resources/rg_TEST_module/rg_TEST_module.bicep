@@ -117,6 +117,10 @@ resource operationalInsightsWorkspace_8Dwma7cn9 'Microsoft.OperationalInsights/w
   name: 'existingOpInsights'
 }
 
+resource userAssignedIdentity_AHWXCnFeG 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' existing = {
+  name: 'existingUserAssignedIdentity'
+}
+
 resource applicationSettingsResource_6DtpuGITF 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_C2Aq73IJb
   name: 'appsettings'

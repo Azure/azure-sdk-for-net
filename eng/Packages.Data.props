@@ -131,13 +131,16 @@
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.9" />
     <PackageReference Update="Azure.ResourceManager" Version="1.11.0-alpha.20240310.2" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.0-alpha.20240309.1" />
+    <PackageReference Update="Azure.ResourceManager.AppContainers" Version="1.2.0-alpha.20240315.2" />
     <PackageReference Update="Azure.ResourceManager.ApplicationInsights" Version="1.0.0-alpha.20240314.2" />
     <PackageReference Update="Azure.ResourceManager.AppService" Version="1.1.0-alpha.20240310.1" />
     <PackageReference Update="Azure.ResourceManager.Authorization" Version="1.2.0-alpha.20240309.1" />
+    <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0-alpha.20240315.2" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.4.0-alpha.20240309.1" />
     <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-alpha.20240309.1" />
     <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.1.0-alpha.20240311.3" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.0-alpha.20240310.2" />
+    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.3.0-alpha.20240315.2" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0-alpha.20240315.1" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0-alpha.20240309.1" />
     <PackageReference Update="Azure.ResourceManager.Redis" Version="1.4.0-alpha.20240309.1" />
