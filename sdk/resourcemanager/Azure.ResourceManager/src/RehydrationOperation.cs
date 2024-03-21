@@ -22,7 +22,7 @@ namespace Azure.ResourceManager
             var operationState = _nextLinkOperation.UpdateStateAsync(false, default).EnsureCompleted();
             _operation = operationState.HasCompleted
                 ? _operation = new OperationInternal(operationState)
-                : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse, requestMethod: _nextLinkOperation.RequestMethod);
+                : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
         public override string Id => _nextLinkOperation?.OperationId ?? null;

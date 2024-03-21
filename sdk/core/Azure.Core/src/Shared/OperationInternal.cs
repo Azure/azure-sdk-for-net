@@ -83,17 +83,15 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
-        /// <param name="requestMethod">The Http request method</param>
         public OperationInternal(IOperation operation,
             ClientDiagnostics clientDiagnostics,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null,
-            RequestMethod? requestMethod = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requestMethod)
+            DelayStrategy? fallbackStrategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
-            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requestMethod);
+            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
         internal OperationInternal(OperationState finalState)

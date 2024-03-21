@@ -6,7 +6,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -385,7 +387,68 @@ namespace Azure.Core
             {
                 _pipeline.Send(message, cancellationToken);
             }
+
+            // If we get 404 from final get for a delete LRO, just return empty response with 204
+            if (message.Response.Status == 404 && RequestMethod == RequestMethod.Delete)
+            {
+                return new EmptyResponse(HttpStatusCode.NoContent);
+            }
             return message.Response;
+        }
+
+        /// <summary>
+        /// This is only used for final get of the delete LRO, we just want to return an empty response with 204 to the user for this case.
+        /// </summary>
+        private sealed class EmptyResponse : Response
+        {
+            public EmptyResponse(HttpStatusCode status)
+            {
+                Status = (int)status;
+                ReasonPhrase = status.ToString();
+            }
+
+            public override int Status { get; }
+
+            public override string ReasonPhrase { get; }
+
+            public override Stream? ContentStream { get => null; set => throw new System.NotImplementedException(); }
+            public override string ClientRequestId { get => string.Empty; set => throw new System.NotImplementedException(); }
+
+            public override void Dispose()
+            {
+            }
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override bool ContainsHeader(string name) => false;
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override IEnumerable<HttpHeader> EnumerateHeaders() => Array.Empty<HttpHeader>();
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                value = string.Empty;
+                return false;
+            }
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                values = Array.Empty<string>();
+                return false;
+            }
         }
 
         private HttpMessage CreateRequest(string uri)

@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Tests
             await rehydratedOperation.WaitForCompletionResponseAsync();
             Assert.AreEqual(rehydratedOperation.HasValue, true);
             var rehydratedResult = rehydratedOperation.Value;
+            await originalOperation.UpdateStatusAsync();
             var originalResult = originalOperation.Value;
             Assert.AreEqual(JsonSerializer.Serialize(originalResult.Template), JsonSerializer.Serialize(rehydratedResult.Template));
             Assert.AreEqual(originalResult.Error, rehydratedResult.Error);
