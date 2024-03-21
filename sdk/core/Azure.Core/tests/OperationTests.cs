@@ -143,15 +143,12 @@ namespace Azure.Core.Tests
             var operation = new RehydrationOperation(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
-            Assert.False(operation.HasCompleted);
-
-            operation.UpdateStatus();
+            Assert.True(operation.HasCompleted);
             Assert.AreEqual(200, operation.GetRawResponse().Status);
         }
 
         [Test]
-        public async Task RehydrateOperationOfT()
+        public void RehydrateOperationOfT()
         {
             var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
             var operationId = Guid.NewGuid().ToString();
@@ -159,12 +156,8 @@ namespace Azure.Core.Tests
             var operation = new RehydrationOperation<MockJsonModel>(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
-            Assert.Throws<InvalidOperationException>(() => operation.GetRawResponse());
-            Assert.False(operation.HasCompleted);
-            Assert.Throws<InvalidOperationException>(() => { var value = operation.Value; });
-            Assert.False(operation.HasValue);
-
-            await operation.UpdateStatusAsync();
+            Assert.True(operation.HasCompleted);
+            Assert.True(operation.HasValue);
             Assert.AreEqual(200, operation.GetRawResponse().Status);
             Assert.AreEqual(ModelReaderWriter.Write(mockJsonModel).ToString(), ModelReaderWriter.Write(operation.Value).ToString());
         }
