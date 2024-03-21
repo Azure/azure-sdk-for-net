@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0 (2024-04-15)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+General Availability version of the Azure Communication Services Rooms to PSTN dial-out capability
 
 ## 1.1.0-beta.1 (2023-09-19)
 

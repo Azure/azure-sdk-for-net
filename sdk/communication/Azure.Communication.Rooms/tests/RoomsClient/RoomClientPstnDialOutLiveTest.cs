@@ -24,8 +24,8 @@ namespace Azure.Communication.Rooms.Test
         {
         }
 
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2023_10_30_Preview, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString_V2023_10_30_Preview")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2023_10_30_Preview, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential_V2023_10_30_Preview")]
+        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, TestName = "AcsRoomRequestLiveWithoutParticipantsUsingKeyCredential")]
         public async Task AcsRoomRequestLiveWithoutParticipantsTest(AuthMethod authMethod, ServiceVersion apiVersion)
         {
             // Arrange
@@ -95,12 +95,12 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2023_10_30_Preview, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2023_10_30_Preview, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2023_10_30_Preview, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveWithoutParticipantsUsingConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2023_10_30_Preview, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveWithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2023_10_30_Preview, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveWithoutParticipantsUsingKeyCredential")]
-        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2023_10_30_Preview, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveWithoutParticipantsUsingKeyCredential")]
+        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveWithoutParticipantsUsingConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveWithoutParticipantsUsingConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, ServiceVersion.V2024_04_15, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveWithoutParticipantsUsingConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, false, TestName = "AcsRoomRequestWithPstnDialOutEnabledFalseLiveWithoutParticipantsUsingKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, true, TestName = "AcsRoomRequestWithPstnDialOutEnabledTrueLiveWithoutParticipantsUsingKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, ServiceVersion.V2024_04_15, null, TestName = "AcsRoomRequestWithPstnDialOutEnabledNullLiveWithoutParticipantsUsingKeyCredential")]
         public async Task AcsRoomRequestWithPstnLiveWithoutParticipantsTest(AuthMethod authMethod, ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -172,7 +172,7 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task AcsRoomLifeCycleLiveTest(ServiceVersion apiVersion)
         {
             // Arrange
@@ -261,9 +261,9 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task AcsRoomWithPstnLifeCycleLiveTest(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -354,7 +354,7 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task CreateRoom_WithNullRoomCreateOptionsAttributes_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -368,7 +368,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task CreateRoom_WithEmptyRoomCreateOptionsAttributes_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -381,9 +381,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
             ValidateRoom(createdRoom.Value);
         }
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task CreateRoomWithPstn_WithOnlyPstnDialOutEnabledAttribute(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -408,7 +408,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task CreateRoom_WithOnlyParticipants_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -433,9 +433,9 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task CreateRoomWithPstn_WithOnlyParticipants_Succeed(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -461,7 +461,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task CreateRoom_WithAllOptionalParameters_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -490,9 +490,9 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task CreateRoomWithPstn_WithAllOptionalParameters_Succeed(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -522,7 +522,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(createdRoom.Value, roomCreateOptions);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public void CreateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -542,9 +542,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public void CreateRoomWithPstn_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -565,7 +565,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public void CreateRoom_WithPastValidUntil_Fail(ServiceVersion apiVersion)
         {
             // Arrange;
@@ -584,9 +584,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public void CreateRoomWithPstn_WithPastValidUntil_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange;
@@ -607,7 +607,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public void CreateRoom_WithInvalidParticipantMri_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -627,9 +627,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public void CreateRoomWithPstn_WithInvalidParticipantMri_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -651,7 +651,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public void GetRoom_WithInvalidFormatRoomId_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -663,9 +663,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task UpdateRoomWithPstn_WithPstnDailOutEnabledAttributeOnly_Succeed(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -694,7 +694,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task UpdateRoom_WithValidTimeRange_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -726,7 +726,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task UpdateRoom_WithEmptyUpdateRoomOptions_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -754,7 +754,7 @@ namespace Azure.Communication.Rooms.Test
             ValidateRoom(updateCommunicationRoom, roomUpdateOptions);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -781,9 +781,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task UpdateRoom_WithTimeRangeExceedMax_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -812,7 +812,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task UpdateRoom_WithPastValidUntil_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -840,9 +840,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task UpdateRoom_WithPastValidUntil_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -871,7 +871,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public void UpdateRoom_WithInvalidFormatRoomId_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -891,9 +891,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public void UpdateRoomWithPstn_WithInvalidFormatRoomId_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -914,7 +914,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task UpdateRoom_WithDeletedRoom_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -941,9 +941,9 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(404, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview, false)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, true)]
-        [TestCase(ServiceVersion.V2023_10_30_Preview, null)]
+        [TestCase(ServiceVersion.V2024_04_15, false)]
+        [TestCase(ServiceVersion.V2024_04_15, true)]
+        [TestCase(ServiceVersion.V2024_04_15, null)]
         public async Task UpdateRoomWithPstn_WithDeletedRoom_Fail(ServiceVersion apiVersion, bool? pstnDialOutEnabled)
         {
             // Arrange
@@ -974,7 +974,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(404, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task AddOrUpdateParticipants_IncorrectlyFormattedMri_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -990,7 +990,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task GetRoomsLiveTest_FirstTwoPagesOfRoomIsNotNull_Succeed(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1019,7 +1019,7 @@ namespace Azure.Communication.Rooms.Test
             await roomsClient.DeleteRoomAsync(createdRoom.Id);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task RoomParticipantsAddUpdateAndRemoveLiveTest(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1116,7 +1116,7 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task RoomParticipantsAddUpdateAndRemoveWithNullRolesLiveTest(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1256,7 +1256,7 @@ namespace Azure.Communication.Rooms.Test
             }
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task RemoveParticipants_NonExistentParticipants_Success(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1279,7 +1279,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(removeRoomParticipantsResult.Count, 0);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task RemoveParticipants_IncorrectlyFormattedMri_Fail(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1296,7 +1296,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(400, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public async Task DeleteRoom_Success(ServiceVersion apiVersion)
         {
             // Arrange
@@ -1314,7 +1314,7 @@ namespace Azure.Communication.Rooms.Test
             Assert.AreEqual(404, ex?.Status);
         }
 
-        [TestCase(ServiceVersion.V2023_10_30_Preview)]
+        [TestCase(ServiceVersion.V2024_04_15)]
         public void DeleteInvalidRoomId_Fail(ServiceVersion apiVersion)
         {
             // Arrange
