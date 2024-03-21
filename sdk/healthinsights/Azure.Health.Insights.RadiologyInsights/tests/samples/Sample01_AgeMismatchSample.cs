@@ -13,7 +13,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
     internal class Sample01_AgeMismatchSample : SamplesBase<HealthInsightsTestEnvironment>
     {
-        private const string DOC_CONTENT = "CLINICAL HISTORY:   "
+private const string DOC_CONTENT = "CLINICAL HISTORY:   "
             + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
             + "\r\n "
             + "\r\nCOMPARISON:   "
@@ -71,13 +71,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 IReadOnlyList<FhirR4Extension> subExtensions = extension.Extension;
                 if (subExtensions != null)
                 {
-                    evidence += extractEvidenceToken(subExtensions) + " ";
+                    evidence += ExtractEvidenceToken(subExtensions) + " ";
                 }
             }
             return evidence;
         }
 
-        private static String extractEvidenceToken(IReadOnlyList<FhirR4Extension> subExtensions)
+        private static String ExtractEvidenceToken(IReadOnlyList<FhirR4Extension> subExtensions)
         {
             String evidence = "";
             int offset = -1;
@@ -95,7 +95,6 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
             if (offset > 0 && length > 0)
             {
-                Console.Write(Math.Min(offset + length, DOC_CONTENT.Length));
                 //System.out.println("Offset: " + offset + ", length: " + length);
                 evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
             }

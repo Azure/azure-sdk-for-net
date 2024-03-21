@@ -159,8 +159,6 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             }
             if (offset > 0 && length > 0)
             {
-                Console.Write(Math.Min(offset + length, DOC_CONTENT.Length));
-                //System.out.println("Offset: " + offset + ", length: " + length);
                 evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
             }
             return evidence;
