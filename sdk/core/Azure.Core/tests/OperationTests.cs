@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
             var pipeline = CreateMockHttpPipeline(out _);
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = new RehydrationOperation(pipeline, rehydrationToken);
+            var operation = Operation.Rehydrate(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
             Assert.True(operation.HasCompleted);
@@ -153,7 +153,7 @@ namespace Azure.Core.Tests
             var pipeline = CreateMockHttpPipeline(out var mockJsonModel);
             var operationId = Guid.NewGuid().ToString();
             var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = new RehydrationOperation<MockJsonModel>(pipeline, rehydrationToken);
+            var operation = Operation.Rehydrate<MockJsonModel>(pipeline, rehydrationToken);
             Assert.NotNull(operation);
             Assert.AreEqual(operationId, operation.Id);
             Assert.True(operation.HasCompleted);
