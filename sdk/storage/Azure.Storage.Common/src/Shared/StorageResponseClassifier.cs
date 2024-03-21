@@ -42,8 +42,9 @@ namespace Azure.Storage
                 }
             }
 
-            // Retry select Copy Source Error Codes
-            if (message.Response.Headers.TryGetValue(Constants.HeaderNames.CopySourceErrorCode, out string copySourceError))
+            // Retry select Copy Source Error Codes.
+            if (message.Response.Status >= 400 &&
+                message.Response.Headers.TryGetValue(Constants.HeaderNames.CopySourceErrorCode, out string copySourceError))
             {
                 switch (copySourceError)
                 {
