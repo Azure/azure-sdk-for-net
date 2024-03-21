@@ -35,6 +35,11 @@ internal class ClientUriBuilder
     {
         Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
 
+        if (PathBuilder[PathBuilder.Length - 1] == '/' && value[0] == '/')
+        {
+            PathBuilder.Remove(PathBuilder.Length - 1, 1);
+        }
+
         if (escape)
         {
             value = Uri.EscapeDataString(value);
