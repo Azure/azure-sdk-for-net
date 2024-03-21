@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
@@ -1860,6 +1859,11 @@ namespace Azure.ResourceManager.AppService
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -2324,7 +2328,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in AppSettings)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    appSettings: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    appSettings: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -2346,7 +2350,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in ConnectionStrings)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    connectionStrings: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    connectionStrings: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -2363,7 +2367,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, MachineKey, options, 4, false, "    machineKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MachineKey, options, 4, false, "    machineKey: ");
                 }
             }
 
@@ -2382,7 +2386,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in HandlerMappings)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    handlerMappings: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    handlerMappings: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -2587,7 +2591,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in VirtualApplications)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    virtualApplications: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    virtualApplications: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -2618,7 +2622,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, Experiments, options, 4, false, "    experiments: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Experiments, options, 4, false, "    experiments: ");
                 }
             }
 
@@ -2632,7 +2636,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, Limits, options, 4, false, "    limits: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Limits, options, 4, false, "    limits: ");
                 }
             }
 
@@ -2661,7 +2665,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, AutoHealRules, options, 4, false, "    autoHealRules: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoHealRules, options, 4, false, "    autoHealRules: ");
                 }
             }
 
@@ -2748,7 +2752,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
                 }
             }
 
@@ -2762,7 +2766,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, Push, options, 4, false, "    push: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Push, options, 4, false, "    push: ");
                 }
             }
 
@@ -2776,7 +2780,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ApiDefinition, options, 4, false, "    apiDefinition: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ApiDefinition, options, 4, false, "    apiDefinition: ");
                 }
             }
 
@@ -2790,7 +2794,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ApiManagementConfig, options, 4, false, "    apiManagementConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ApiManagementConfig, options, 4, false, "    apiManagementConfig: ");
                 }
             }
 
@@ -2896,7 +2900,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in IPSecurityRestrictions)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    ipSecurityRestrictions: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipSecurityRestrictions: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -2918,7 +2922,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in ScmIPSecurityRestrictions)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    scmIpSecurityRestrictions: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    scmIpSecurityRestrictions: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -3114,7 +3118,7 @@ namespace Azure.ResourceManager.AppService
                         foreach (var item in AzureStorageAccounts)
                         {
                             builder.Append($"        '{item.Key}': ");
-                            AppendChildObject(builder, item.Value, options, 6, false, "    azureStorageAccounts: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    azureStorageAccounts: ");
                         }
                         builder.AppendLine("    }");
                     }
@@ -3148,45 +3152,30 @@ namespace Azure.ResourceManager.AppService
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
         {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var item in propertyOverrides.ToList())
             {
-                string line = lines[i];
-                if (inMultilineString)
+                switch (item.Key)
                 {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
+                    case "ExperimentsRampUpRules":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("RampUpRules", item.Value);
+                        bicepOptions.ParameterOverrides.Add(Experiments, propertyDictionary);
+                        break;
+                    case "ApiDefinitionUri":
+                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
+                        propertyDictionary0.Add("Uri", item.Value);
+                        bicepOptions.ParameterOverrides.Add(ApiDefinition, propertyDictionary0);
+                        break;
+                    case "ApiManagementConfigId":
+                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
+                        propertyDictionary1.Add("Id", item.Value);
+                        bicepOptions.ParameterOverrides.Add(ApiManagementConfig, propertyDictionary1);
+                        break;
+                    default:
+                        continue;
                 }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

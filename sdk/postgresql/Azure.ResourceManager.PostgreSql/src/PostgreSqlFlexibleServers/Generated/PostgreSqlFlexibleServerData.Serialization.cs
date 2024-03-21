@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
@@ -592,7 +591,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -606,7 +605,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -766,7 +765,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, Storage, options, 4, false, "    storage: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Storage, options, 4, false, "    storage: ");
                 }
             }
 
@@ -780,7 +779,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, AuthConfig, options, 4, false, "    authConfig: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AuthConfig, options, 4, false, "    authConfig: ");
                 }
             }
 
@@ -794,7 +793,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, DataEncryption, options, 4, false, "    dataEncryption: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DataEncryption, options, 4, false, "    dataEncryption: ");
                 }
             }
 
@@ -808,7 +807,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, Backup, options, 4, false, "    backup: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Backup, options, 4, false, "    backup: ");
                 }
             }
 
@@ -822,7 +821,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, Network, options, 4, false, "    network: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Network, options, 4, false, "    network: ");
                 }
             }
 
@@ -836,7 +835,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, HighAvailability, options, 4, false, "    highAvailability: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HighAvailability, options, 4, false, "    highAvailability: ");
                 }
             }
 
@@ -850,7 +849,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 else
                 {
-                    AppendChildObject(builder, MaintenanceWindow, options, 4, false, "    maintenanceWindow: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, MaintenanceWindow, options, 4, false, "    maintenanceWindow: ");
                 }
             }
 
@@ -950,48 +949,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerData>.Write(ModelReaderWriterOptions options)

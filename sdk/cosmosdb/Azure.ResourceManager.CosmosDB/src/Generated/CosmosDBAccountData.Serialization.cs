@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
@@ -1017,6 +1016,11 @@ namespace Azure.ResourceManager.CosmosDB
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -1112,7 +1116,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -1219,7 +1223,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in IPRules)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    ipRules: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipRules: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1266,7 +1270,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, ConsistencyPolicy, options, 4, false, "    consistencyPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConsistencyPolicy, options, 4, false, "    consistencyPolicy: ");
                 }
             }
 
@@ -1285,7 +1289,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in Capabilities)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    capabilities: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    capabilities: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1307,7 +1311,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in WriteLocations)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    writeLocations: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    writeLocations: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1329,7 +1333,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in ReadLocations)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    readLocations: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    readLocations: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1351,7 +1355,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    locations: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    locations: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1373,7 +1377,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in FailoverPolicies)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    failoverPolicies: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    failoverPolicies: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1395,7 +1399,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in VirtualNetworkRules)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    virtualNetworkRules: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    virtualNetworkRules: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1417,7 +1421,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpointConnections)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1558,7 +1562,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, ApiProperties, options, 4, false, "    apiProperties: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ApiProperties, options, 4, false, "    apiProperties: ");
                 }
             }
 
@@ -1587,7 +1591,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, AnalyticalStorageConfiguration, options, 4, false, "    analyticalStorageConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AnalyticalStorageConfiguration, options, 4, false, "    analyticalStorageConfiguration: ");
                 }
             }
 
@@ -1629,7 +1633,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, RestoreParameters, options, 4, false, "    restoreParameters: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RestoreParameters, options, 4, false, "    restoreParameters: ");
                 }
             }
 
@@ -1643,7 +1647,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, BackupPolicy, options, 4, false, "    backupPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BackupPolicy, options, 4, false, "    backupPolicy: ");
                 }
             }
 
@@ -1662,7 +1666,7 @@ namespace Azure.ResourceManager.CosmosDB
                         builder.AppendLine("[");
                         foreach (var item in Cors)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    cors: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    cors: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1720,7 +1724,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, DiagnosticLogSettings, options, 4, false, "    diagnosticLogSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DiagnosticLogSettings, options, 4, false, "    diagnosticLogSettings: ");
                 }
             }
 
@@ -1749,7 +1753,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, Capacity, options, 4, false, "    capacity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Capacity, options, 4, false, "    capacity: ");
                 }
             }
 
@@ -1778,7 +1782,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 else
                 {
-                    AppendChildObject(builder, KeysMetadata, options, 4, false, "    keysMetadata: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeysMetadata, options, 4, false, "    keysMetadata: ");
                 }
             }
 
@@ -1874,45 +1878,35 @@ namespace Azure.ResourceManager.CosmosDB
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
         {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var item in propertyOverrides.ToList())
             {
-                string line = lines[i];
-                if (inMultilineString)
+                switch (item.Key)
                 {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
+                    case "ApiServerVersion":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("ServerVersion", item.Value);
+                        bicepOptions.ParameterOverrides.Add(ApiProperties, propertyDictionary);
+                        break;
+                    case "AnalyticalStorageSchemaType":
+                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
+                        propertyDictionary0.Add("SchemaType", item.Value);
+                        bicepOptions.ParameterOverrides.Add(AnalyticalStorageConfiguration, propertyDictionary0);
+                        break;
+                    case "DiagnosticLogEnableFullTextQuery":
+                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
+                        propertyDictionary1.Add("EnableFullTextQuery", item.Value);
+                        bicepOptions.ParameterOverrides.Add(DiagnosticLogSettings, propertyDictionary1);
+                        break;
+                    case "CapacityTotalThroughputLimit":
+                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
+                        propertyDictionary2.Add("TotalThroughputLimit", item.Value);
+                        bicepOptions.ParameterOverrides.Add(Capacity, propertyDictionary2);
+                        break;
+                    default:
+                        continue;
                 }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

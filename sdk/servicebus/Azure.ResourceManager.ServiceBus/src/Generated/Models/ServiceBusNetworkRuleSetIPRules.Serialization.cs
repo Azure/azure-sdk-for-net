@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -103,6 +104,57 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNetworkRuleSetIPRules(ipMask, action, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPMask), out propertyOverride);
+            if (Optional.IsDefined(IPMask) || hasPropertyOverride)
+            {
+                builder.Append("  ipMask: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (IPMask.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPMask}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPMask}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (Optional.IsDefined(Action) || hasPropertyOverride)
+            {
+                builder.Append("  action: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Action.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetIPRules>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetIPRules>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +163,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support '{options.Format}' format.");
             }
@@ -127,6 +181,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceBusNetworkRuleSetIPRules(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support '{options.Format}' format.");
             }

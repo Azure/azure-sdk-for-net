@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -880,6 +879,11 @@ namespace Azure.ResourceManager.Storage
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -961,7 +965,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -989,7 +993,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -1003,7 +1007,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
                 }
             }
 
@@ -1061,7 +1065,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, PrimaryEndpoints, options, 4, false, "    primaryEndpoints: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrimaryEndpoints, options, 4, false, "    primaryEndpoints: ");
                 }
             }
 
@@ -1161,7 +1165,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, CustomDomain, options, 4, false, "    customDomain: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CustomDomain, options, 4, false, "    customDomain: ");
                 }
             }
 
@@ -1175,7 +1179,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, SasPolicy, options, 4, false, "    sasPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SasPolicy, options, 4, false, "    sasPolicy: ");
                 }
             }
 
@@ -1189,7 +1193,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, KeyPolicy, options, 4, false, "    keyPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyPolicy, options, 4, false, "    keyPolicy: ");
                 }
             }
 
@@ -1203,7 +1207,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, KeyCreationTime, options, 4, false, "    keyCreationTime: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyCreationTime, options, 4, false, "    keyCreationTime: ");
                 }
             }
 
@@ -1217,7 +1221,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, SecondaryEndpoints, options, 4, false, "    secondaryEndpoints: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SecondaryEndpoints, options, 4, false, "    secondaryEndpoints: ");
                 }
             }
 
@@ -1231,7 +1235,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, Encryption, options, 4, false, "    encryption: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Encryption, options, 4, false, "    encryption: ");
                 }
             }
 
@@ -1259,7 +1263,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, AzureFilesIdentityBasedAuthentication, options, 4, false, "    azureFilesIdentityBasedAuthentication: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureFilesIdentityBasedAuthentication, options, 4, false, "    azureFilesIdentityBasedAuthentication: ");
                 }
             }
 
@@ -1288,7 +1292,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, NetworkRuleSet, options, 4, false, "    networkAcls: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkRuleSet, options, 4, false, "    networkAcls: ");
                 }
             }
 
@@ -1347,7 +1351,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, GeoReplicationStats, options, 4, false, "    geoReplicationStats: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, GeoReplicationStats, options, 4, false, "    geoReplicationStats: ");
                 }
             }
 
@@ -1395,7 +1399,7 @@ namespace Azure.ResourceManager.Storage
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpointConnections)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1412,7 +1416,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, RoutingPreference, options, 4, false, "    routingPreference: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingPreference, options, 4, false, "    routingPreference: ");
                 }
             }
 
@@ -1426,7 +1430,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, BlobRestoreStatus, options, 4, false, "    blobRestoreStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, BlobRestoreStatus, options, 4, false, "    blobRestoreStatus: ");
                 }
             }
 
@@ -1543,7 +1547,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, ImmutableStorageWithVersioning, options, 4, false, "    immutableStorageWithVersioning: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ImmutableStorageWithVersioning, options, 4, false, "    immutableStorageWithVersioning: ");
                 }
             }
 
@@ -1571,7 +1575,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, StorageAccountSkuConversionStatus, options, 4, false, "    storageAccountSkuConversionStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, StorageAccountSkuConversionStatus, options, 4, false, "    storageAccountSkuConversionStatus: ");
                 }
             }
 
@@ -1594,45 +1598,20 @@ namespace Azure.ResourceManager.Storage
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
         {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var item in propertyOverrides.ToList())
             {
-                string line = lines[i];
-                if (inMultilineString)
+                switch (item.Key)
                 {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
+                    case "KeyExpirationPeriodInDays":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("KeyExpirationPeriodInDays", item.Value);
+                        bicepOptions.ParameterOverrides.Add(KeyPolicy, propertyDictionary);
+                        break;
+                    default:
+                        continue;
                 }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

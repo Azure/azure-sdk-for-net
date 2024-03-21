@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -121,6 +122,109 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKey), out propertyOverride);
+            if (Optional.IsDefined(PrimaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  primaryKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryKey), out propertyOverride);
+            if (Optional.IsDefined(SecondaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryConnectionString), out propertyOverride);
+            if (Optional.IsDefined(PrimaryConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  primaryConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryConnectionString), out propertyOverride);
+            if (Optional.IsDefined(SecondaryConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondaryConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryConnectionString}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SignalRKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +233,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SignalRKeys)} does not support '{options.Format}' format.");
             }
@@ -145,6 +251,8 @@ namespace Azure.ResourceManager.SignalR.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSignalRKeys(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SignalRKeys)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -117,6 +119,70 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataVolumeCap), out propertyOverride);
+            if (Optional.IsDefined(DataVolumeCap) || hasPropertyOverride)
+            {
+                builder.Append("  DataVolumeCap: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DataVolumeCap, options, 2, false, "  DataVolumeCap: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBillingFeatures), out propertyOverride);
+            if (Optional.IsCollectionDefined(CurrentBillingFeatures) || hasPropertyOverride)
+            {
+                if (CurrentBillingFeatures.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  CurrentBillingFeatures: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in CurrentBillingFeatures)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationInsightsComponentBillingFeatures>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentBillingFeatures>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +191,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationInsightsComponentBillingFeatures)} does not support '{options.Format}' format.");
             }
@@ -141,6 +209,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationInsightsComponentBillingFeatures(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationInsightsComponentBillingFeatures)} does not support '{options.Format}' format.");
             }

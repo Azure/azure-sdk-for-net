@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
@@ -682,7 +681,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactAdmin, options, 4, false, "    contactAdmin: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContactAdmin, options, 4, false, "    contactAdmin: ");
                 }
             }
 
@@ -696,7 +695,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactBilling, options, 4, false, "    contactBilling: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContactBilling, options, 4, false, "    contactBilling: ");
                 }
             }
 
@@ -710,7 +709,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactRegistrant, options, 4, false, "    contactRegistrant: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContactRegistrant, options, 4, false, "    contactRegistrant: ");
                 }
             }
 
@@ -724,7 +723,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ContactTech, options, 4, false, "    contactTech: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContactTech, options, 4, false, "    contactTech: ");
                 }
             }
 
@@ -896,7 +895,7 @@ namespace Azure.ResourceManager.AppService
                         builder.AppendLine("[");
                         foreach (var item in ManagedHostNames)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    managedHostNames: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    managedHostNames: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -913,7 +912,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, Consent, options, 4, false, "    consent: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Consent, options, 4, false, "    consent: ");
                 }
             }
 
@@ -1014,48 +1013,6 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<AppServiceDomainData>.Write(ModelReaderWriterOptions options)

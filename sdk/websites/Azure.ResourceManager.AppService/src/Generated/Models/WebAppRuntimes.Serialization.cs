@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +138,77 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
+            {
+                builder.Append("  linuxRuntimeSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false, "  linuxRuntimeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
+            {
+                builder.Append("  windowsRuntimeSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false, "  windowsRuntimeSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxContainerSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxContainerSettings) || hasPropertyOverride)
+            {
+                builder.Append("  linuxContainerSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LinuxContainerSettings, options, 2, false, "  linuxContainerSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsContainerSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsContainerSettings) || hasPropertyOverride)
+            {
+                builder.Append("  windowsContainerSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, WindowsContainerSettings, options, 2, false, "  windowsContainerSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebAppRuntimes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +217,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{options.Format}' format.");
             }
@@ -161,6 +235,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebAppRuntimes(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{options.Format}' format.");
             }

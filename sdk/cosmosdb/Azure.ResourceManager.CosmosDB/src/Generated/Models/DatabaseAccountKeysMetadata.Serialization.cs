@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -137,6 +139,114 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new DatabaseAccountKeysMetadata(primaryMasterKey, secondaryMasterKey, primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMasterKey), out propertyOverride);
+            if (Optional.IsDefined(PrimaryMasterKey) || hasPropertyOverride)
+            {
+                builder.Append("  primaryMasterKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, PrimaryMasterKey, options, 2, false, "  primaryMasterKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryMasterKey), out propertyOverride);
+            if (Optional.IsDefined(SecondaryMasterKey) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryMasterKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SecondaryMasterKey, options, 2, false, "  secondaryMasterKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryReadonlyMasterKey), out propertyOverride);
+            if (Optional.IsDefined(PrimaryReadonlyMasterKey) || hasPropertyOverride)
+            {
+                builder.Append("  primaryReadonlyMasterKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, PrimaryReadonlyMasterKey, options, 2, false, "  primaryReadonlyMasterKey: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryReadonlyMasterKey), out propertyOverride);
+            if (Optional.IsDefined(SecondaryReadonlyMasterKey) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryReadonlyMasterKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SecondaryReadonlyMasterKey, options, 2, false, "  secondaryReadonlyMasterKey: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "PrimaryMasterKeyGeneratedOn":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("GeneratedOn", item.Value);
+                        bicepOptions.ParameterOverrides.Add(PrimaryMasterKey, propertyDictionary);
+                        break;
+                    case "SecondaryMasterKeyGeneratedOn":
+                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
+                        propertyDictionary0.Add("GeneratedOn", item.Value);
+                        bicepOptions.ParameterOverrides.Add(SecondaryMasterKey, propertyDictionary0);
+                        break;
+                    case "PrimaryReadonlyMasterKeyGeneratedOn":
+                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
+                        propertyDictionary1.Add("GeneratedOn", item.Value);
+                        bicepOptions.ParameterOverrides.Add(PrimaryReadonlyMasterKey, propertyDictionary1);
+                        break;
+                    case "SecondaryReadonlyMasterKeyGeneratedOn":
+                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
+                        propertyDictionary2.Add("GeneratedOn", item.Value);
+                        bicepOptions.ParameterOverrides.Add(SecondaryReadonlyMasterKey, propertyDictionary2);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<DatabaseAccountKeysMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +255,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
             }
@@ -161,6 +273,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
             }

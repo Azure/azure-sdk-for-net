@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -752,7 +751,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 else
                 {
-                    AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -766,7 +765,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 else
                 {
-                    AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -1153,7 +1152,7 @@ namespace Azure.ResourceManager.Sql
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpointConnections)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -1263,7 +1262,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 else
                 {
-                    AppendChildObject(builder, Administrators, options, 4, false, "    administrators: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Administrators, options, 4, false, "    administrators: ");
                 }
             }
 
@@ -1277,55 +1276,13 @@ namespace Azure.ResourceManager.Sql
                 }
                 else
                 {
-                    AppendChildObject(builder, ServicePrincipal, options, 4, false, "    servicePrincipal: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ServicePrincipal, options, 4, false, "    servicePrincipal: ");
                 }
             }
 
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<ManagedInstanceData>.Write(ModelReaderWriterOptions options)

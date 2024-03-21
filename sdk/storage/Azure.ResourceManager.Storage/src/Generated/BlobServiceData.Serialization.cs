@@ -8,10 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
 
@@ -314,6 +314,11 @@ namespace Azure.ResourceManager.Storage
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -348,7 +353,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -392,7 +397,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
                 }
             }
 
@@ -428,7 +433,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, DeleteRetentionPolicy, options, 4, false, "    deleteRetentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DeleteRetentionPolicy, options, 4, false, "    deleteRetentionPolicy: ");
                 }
             }
 
@@ -472,7 +477,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, ChangeFeed, options, 4, false, "    changeFeed: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ChangeFeed, options, 4, false, "    changeFeed: ");
                 }
             }
 
@@ -486,7 +491,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, RestorePolicy, options, 4, false, "    restorePolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RestorePolicy, options, 4, false, "    restorePolicy: ");
                 }
             }
 
@@ -500,7 +505,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, ContainerDeleteRetentionPolicy, options, 4, false, "    containerDeleteRetentionPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ContainerDeleteRetentionPolicy, options, 4, false, "    containerDeleteRetentionPolicy: ");
                 }
             }
 
@@ -514,7 +519,7 @@ namespace Azure.ResourceManager.Storage
                 }
                 else
                 {
-                    AppendChildObject(builder, LastAccessTimeTrackingPolicy, options, 4, false, "    lastAccessTimeTrackingPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LastAccessTimeTrackingPolicy, options, 4, false, "    lastAccessTimeTrackingPolicy: ");
                 }
             }
 
@@ -523,45 +528,20 @@ namespace Azure.ResourceManager.Storage
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
         {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var item in propertyOverrides.ToList())
             {
-                string line = lines[i];
-                if (inMultilineString)
+                switch (item.Key)
                 {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
+                    case "CorsRules":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("CorsRules", item.Value);
+                        bicepOptions.ParameterOverrides.Add(Cors, propertyDictionary);
+                        break;
+                    default:
+                        continue;
                 }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 

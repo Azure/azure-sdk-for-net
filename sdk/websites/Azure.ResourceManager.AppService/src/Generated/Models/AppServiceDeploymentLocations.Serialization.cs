@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +154,87 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDeploymentLocations(locations ?? new ChangeTrackingList<AppServiceGeoRegion>(), hostingEnvironments ?? new ChangeTrackingList<AppServiceEnvironmentProperties>(), hostingEnvironmentDeploymentInfos ?? new ChangeTrackingList<HostingEnvironmentDeploymentInfo>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            {
+                if (Locations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  locations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironments), out propertyOverride);
+            if (Optional.IsCollectionDefined(HostingEnvironments) || hasPropertyOverride)
+            {
+                if (HostingEnvironments.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  hostingEnvironments: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in HostingEnvironments)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  hostingEnvironments: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentDeploymentInfos), out propertyOverride);
+            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos) || hasPropertyOverride)
+            {
+                if (HostingEnvironmentDeploymentInfos.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  hostingEnvironmentDeploymentInfos: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in HostingEnvironmentDeploymentInfos)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  hostingEnvironmentDeploymentInfos: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceDeploymentLocations>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDeploymentLocations>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +243,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
             }
@@ -176,6 +261,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceDeploymentLocations(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
             }

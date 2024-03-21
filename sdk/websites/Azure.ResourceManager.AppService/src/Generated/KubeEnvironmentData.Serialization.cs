@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -421,7 +420,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
                 }
             }
 
@@ -582,7 +581,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, ArcConfiguration, options, 4, false, "    arcConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ArcConfiguration, options, 4, false, "    arcConfiguration: ");
                 }
             }
 
@@ -596,7 +595,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 else
                 {
-                    AppendChildObject(builder, AppLogsConfiguration, options, 4, false, "    appLogsConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AppLogsConfiguration, options, 4, false, "    appLogsConfiguration: ");
                 }
             }
 
@@ -617,48 +616,6 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
-        {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-                if (inMultilineString)
-                {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
-                }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
-            }
         }
 
         BinaryData IPersistableModel<KubeEnvironmentData>.Write(ModelReaderWriterOptions options)

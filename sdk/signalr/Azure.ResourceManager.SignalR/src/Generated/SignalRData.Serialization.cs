@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SignalR.Models;
 
@@ -557,6 +556,11 @@ namespace Azure.ResourceManager.SignalR
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -638,7 +642,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -666,7 +670,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
                 }
             }
 
@@ -823,7 +827,7 @@ namespace Azure.ResourceManager.SignalR
                         builder.AppendLine("[");
                         foreach (var item in PrivateEndpointConnections)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateEndpointConnections: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -845,7 +849,7 @@ namespace Azure.ResourceManager.SignalR
                         builder.AppendLine("[");
                         foreach (var item in SharedPrivateLinkResources)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    sharedPrivateLinkResources: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sharedPrivateLinkResources: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -862,7 +866,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, Tls, options, 4, false, "    tls: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Tls, options, 4, false, "    tls: ");
                 }
             }
 
@@ -903,7 +907,7 @@ namespace Azure.ResourceManager.SignalR
                         builder.AppendLine("[");
                         foreach (var item in Features)
                         {
-                            AppendChildObject(builder, item, options, 6, true, "    features: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    features: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -920,7 +924,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, LiveTraceConfiguration, options, 4, false, "    liveTraceConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LiveTraceConfiguration, options, 4, false, "    liveTraceConfiguration: ");
                 }
             }
 
@@ -934,7 +938,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, ResourceLogConfiguration, options, 4, false, "    resourceLogConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ResourceLogConfiguration, options, 4, false, "    resourceLogConfiguration: ");
                 }
             }
 
@@ -948,7 +952,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cors, options, 4, false, "    cors: ");
                 }
             }
 
@@ -962,7 +966,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, Upstream, options, 4, false, "    upstream: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Upstream, options, 4, false, "    upstream: ");
                 }
             }
 
@@ -976,7 +980,7 @@ namespace Azure.ResourceManager.SignalR
                 }
                 else
                 {
-                    AppendChildObject(builder, NetworkACLs, options, 4, false, "    networkACLs: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkACLs, options, 4, false, "    networkACLs: ");
                 }
             }
 
@@ -1037,45 +1041,35 @@ namespace Azure.ResourceManager.SignalR
             return BinaryData.FromString(builder.ToString());
         }
 
-        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine, string formattedPropertyName)
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
         {
-            string indent = new string(' ', spaces);
-            int emptyObjectLength = 2 + spaces + Environment.NewLine.Length + Environment.NewLine.Length;
-            int length = stringBuilder.Length;
-            bool inMultilineString = false;
-
-            BinaryData data = ModelReaderWriter.Write(childObject, options);
-            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var item in propertyOverrides.ToList())
             {
-                string line = lines[i];
-                if (inMultilineString)
+                switch (item.Key)
                 {
-                    if (line.Contains("'''"))
-                    {
-                        inMultilineString = false;
-                    }
-                    stringBuilder.AppendLine(line);
-                    continue;
+                    case "IsClientCertEnabled":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("IsClientCertEnabled", item.Value);
+                        bicepOptions.ParameterOverrides.Add(Tls, propertyDictionary);
+                        break;
+                    case "ResourceLogCategories":
+                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
+                        propertyDictionary0.Add("Categories", item.Value);
+                        bicepOptions.ParameterOverrides.Add(ResourceLogConfiguration, propertyDictionary0);
+                        break;
+                    case "CorsAllowedOrigins":
+                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
+                        propertyDictionary1.Add("AllowedOrigins", item.Value);
+                        bicepOptions.ParameterOverrides.Add(Cors, propertyDictionary1);
+                        break;
+                    case "UpstreamTemplates":
+                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
+                        propertyDictionary2.Add("Templates", item.Value);
+                        bicepOptions.ParameterOverrides.Add(Upstream, propertyDictionary2);
+                        break;
+                    default:
+                        continue;
                 }
-                if (line.Contains("'''"))
-                {
-                    inMultilineString = true;
-                    stringBuilder.AppendLine($"{indent}{line}");
-                    continue;
-                }
-                if (i == 0 && !indentFirstLine)
-                {
-                    stringBuilder.AppendLine($"{line}");
-                }
-                else
-                {
-                    stringBuilder.AppendLine($"{indent}{line}");
-                }
-            }
-            if (stringBuilder.Length == length + emptyObjectLength)
-            {
-                stringBuilder.Length = stringBuilder.Length - emptyObjectLength - formattedPropertyName.Length;
             }
         }
 
