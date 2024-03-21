@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsConsumerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventHubs
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsConsumerGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventHubs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EventHubs
                         return DeserializeEventHubsConsumerGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsConsumerGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 
