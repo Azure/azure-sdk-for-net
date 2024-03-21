@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Azure VM workload-specific protected item.
     /// Please note <see cref="VmWorkloadProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/> and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
+    /// The available derived classes include <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/> and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
     /// </summary>
     public partial class VmWorkloadProtectedItem : BackupGenericProtectedItem
     {

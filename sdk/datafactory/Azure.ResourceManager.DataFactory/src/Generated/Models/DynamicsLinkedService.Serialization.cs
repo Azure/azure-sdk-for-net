@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -182,10 +181,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> organizationName = default;
             DataFactoryElement<string> authenticationType = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
-            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
+            DataFactorySecret servicePrincipalCredential = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))

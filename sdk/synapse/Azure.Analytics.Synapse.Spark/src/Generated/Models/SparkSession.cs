@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Analytics.Synapse.Spark;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {

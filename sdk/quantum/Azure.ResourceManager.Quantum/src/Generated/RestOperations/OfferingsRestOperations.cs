@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Quantum.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Quantum
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-01-10-preview";
+            _apiVersion = apiVersion ?? "2023-11-13-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Returns the list of all provider offerings available for the given location. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary> Returns the list of all provider offerings available for the given location. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary> Returns the list of all provider offerings available for the given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Quantum
 
         /// <summary> Returns the list of all provider offerings available for the given location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> Location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="locationName"/> is null. </exception>

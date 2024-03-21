@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EnergyServices;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {

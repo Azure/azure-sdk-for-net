@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -358,14 +357,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> hostSubscriptionId = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> clusterResourceGroup = default;
             DataFactoryElement<string> clusterNamePrefix = default;
             DataFactoryElement<string> clusterUserName = default;
-            DataFactorySecretBaseDefinition clusterPassword = default;
+            DataFactorySecret clusterPassword = default;
             DataFactoryElement<string> clusterSshUserName = default;
-            DataFactorySecretBaseDefinition clusterSshPassword = default;
+            DataFactorySecret clusterSshPassword = default;
             IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames = default;
             DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
             DataFactoryElement<string> clusterType = default;
@@ -493,7 +492,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -530,7 +529,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterPassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clusterPassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clusterSshUserName"u8))
@@ -548,7 +547,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clusterSshPassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clusterSshPassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("additionalLinkedServiceNames"u8))

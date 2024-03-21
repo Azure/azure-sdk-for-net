@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {

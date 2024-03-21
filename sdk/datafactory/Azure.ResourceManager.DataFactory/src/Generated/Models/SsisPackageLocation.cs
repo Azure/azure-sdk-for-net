@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
         /// <param name="childPackages"> The embedded child package list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SsisPackageLocation(DataFactoryElement<string> packagePath, SsisPackageLocationType? locationType, DataFactorySecretBaseDefinition packagePassword, SsisAccessCredential accessCredential, DataFactoryElement<string> configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SsisPackageLocation(DataFactoryElement<string> packagePath, SsisPackageLocationType? locationType, DataFactorySecret packagePassword, SsisAccessCredential accessCredential, DataFactoryElement<string> configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackagePath = packagePath;
             LocationType = locationType;
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The type of SSIS package location. </summary>
         public SsisPackageLocationType? LocationType { get; set; }
         /// <summary> Password of the package. </summary>
-        public DataFactorySecretBaseDefinition PackagePassword { get; set; }
+        public DataFactorySecret PackagePassword { get; set; }
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }
         /// <summary> The configuration file of the package execution. Type: string (or Expression with resultType string). </summary>

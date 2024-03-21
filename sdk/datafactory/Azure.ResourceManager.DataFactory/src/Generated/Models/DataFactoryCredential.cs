@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The Azure Data Factory nested object which contains the information and credential which can be used to connect with related store or compute resource.
     /// Please note <see cref="DataFactoryCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ServicePrincipalCredential"/> and <see cref="DataFactoryManagedIdentityCredentialProperties"/>.
+    /// The available derived classes include <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
     /// </summary>
     public abstract partial class DataFactoryCredential
     {

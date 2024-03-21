@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -179,10 +178,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> accountEndpoint = default;
             DataFactoryElement<string> database = default;
-            DataFactorySecretBaseDefinition accountKey = default;
+            DataFactorySecret accountKey = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
-            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
+            DataFactorySecret servicePrincipalCredential = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> azureCloudType = default;
             CosmosDBConnectionMode? connectionMode = default;
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accountKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Models;
 
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ProfilePatch : IUtf8JsonSerializable, IJsonModel<ProfilePatch>

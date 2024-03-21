@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Several issues with direct equality comparisons of function tool definitions have been fixed
+
 ### Other Changes
 
 ## 1.0.0-beta.3 (2024-03-06)
