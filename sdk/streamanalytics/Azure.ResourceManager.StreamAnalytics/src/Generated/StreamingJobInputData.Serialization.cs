@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         return DeserializeStreamingJobInputData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobInputData)} does not support reading '{options.Format}' format.");
             }
         }
 
