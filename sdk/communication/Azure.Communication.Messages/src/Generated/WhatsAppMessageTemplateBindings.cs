@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.Messages;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
