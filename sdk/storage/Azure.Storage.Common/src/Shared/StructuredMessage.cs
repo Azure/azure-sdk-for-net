@@ -5,7 +5,7 @@ using System;
 using System.Buffers;
 using System.Buffers.Binary;
 using System.IO;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Shared;
 
