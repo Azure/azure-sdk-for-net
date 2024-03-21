@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> packagePath = default;
             SsisPackageLocationType? type = default;
-            DataFactorySecretBaseDefinition packagePassword = default;
+            DataFactorySecret packagePassword = default;
             SsisAccessCredential accessCredential = default;
             DataFactoryElement<string> configurationPath = default;
             SsisAccessCredential configurationAccessCredential = default;
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            packagePassword = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            packagePassword = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessCredential"u8))

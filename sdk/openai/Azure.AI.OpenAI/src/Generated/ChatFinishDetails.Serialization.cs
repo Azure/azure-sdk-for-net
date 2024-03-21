@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -71,8 +70,8 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "stop": return StopFinishDetails.DeserializeStopFinishDetails(element, options);
                     case "max_tokens": return MaxTokensFinishDetails.DeserializeMaxTokensFinishDetails(element, options);
+                    case "stop": return StopFinishDetails.DeserializeStopFinishDetails(element, options);
                 }
             }
             return UnknownChatFinishDetails.DeserializeUnknownChatFinishDetails(element, options);

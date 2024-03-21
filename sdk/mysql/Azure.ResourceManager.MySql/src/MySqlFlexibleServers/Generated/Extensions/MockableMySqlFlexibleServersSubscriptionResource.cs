@@ -9,12 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql;
-using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
@@ -87,7 +83,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -119,7 +115,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,7 +147,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +177,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +207,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,7 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +261,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +300,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +339,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +378,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -421,7 +417,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +455,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -497,7 +493,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,7 +533,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

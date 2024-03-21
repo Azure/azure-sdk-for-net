@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {

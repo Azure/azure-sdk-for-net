@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
-        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri)
+        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecret pfx, DataFactorySecret password) : base(uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(pfx, nameof(pfx));
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
-        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactorySecretBaseDefinition pfx, DataFactorySecretBaseDefinition password) : base(uri, authenticationType, serializedAdditionalRawData)
+        internal WebClientCertificateAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactorySecret pfx, DataFactorySecret password) : base(uri, authenticationType, serializedAdditionalRawData)
         {
             Pfx = pfx;
             Password = password;
@@ -50,8 +49,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Base64-encoded contents of a PFX file. </summary>
-        public DataFactorySecretBaseDefinition Pfx { get; set; }
+        public DataFactorySecret Pfx { get; set; }
         /// <summary> Password for the PFX file. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
     }
 }

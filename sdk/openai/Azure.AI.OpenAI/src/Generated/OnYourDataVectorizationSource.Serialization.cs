@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -71,8 +70,8 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "endpoint": return OnYourDataEndpointVectorizationSource.DeserializeOnYourDataEndpointVectorizationSource(element, options);
                     case "deployment_name": return OnYourDataDeploymentNameVectorizationSource.DeserializeOnYourDataDeploymentNameVectorizationSource(element, options);
+                    case "endpoint": return OnYourDataEndpointVectorizationSource.DeserializeOnYourDataEndpointVectorizationSource(element, options);
                     case "model_id": return OnYourDataModelIdVectorizationSource.DeserializeOnYourDataModelIdVectorizationSource(element, options);
                 }
             }

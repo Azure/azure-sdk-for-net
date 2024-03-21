@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -407,18 +406,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("originatingResourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
-            {
-                if (InheritedSizeInBytes != null)
-                {
-                    writer.WritePropertyName("inheritedSizeInBytes"u8);
-                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("inheritedSizeInBytes");
-                }
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -517,7 +504,6 @@ namespace Azure.ResourceManager.NetApp.Models
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
-            long? inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1067,16 +1053,6 @@ namespace Azure.ResourceManager.NetApp.Models
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("inheritedSizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                inheritedSizeInBytes = null;
-                                continue;
-                            }
-                            inheritedSizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -1146,7 +1122,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 provisionedAvailabilityZone,
                 isLargeVolume,
                 originatingResourceId,
-                inheritedSizeInBytes,
                 serializedAdditionalRawData);
         }
 

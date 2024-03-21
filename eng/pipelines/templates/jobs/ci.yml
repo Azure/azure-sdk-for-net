@@ -1,63 +1,72 @@
 parameters:
-- name: Artifacts
-  type: object
-  default: []
-- name: TestPipeline
-  type: boolean
-  default: false
-- name: ArtifactName
-  type: string
-  default: packages
-- name: SDKType
-  type: string
-  default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: BuildSnippets
-  type: boolean
-  default: true
-- name: CheckAOTCompat
-  type: boolean
-  default: false
-- name: AOTTestInputs
-  type: object
-  default: []
-- name: TestSetupSteps
-  type: stepList
-  default: []
-- name: TestTimeoutInMinutes
-  type: number
-- name: MatrixConfigs
-  type: object
-- name: AdditionalMatrixConfigs
-  type: object
-  default: []
-- name: MatrixFilters
-  type: object
-  default: []
-- name: MatrixReplace
-  type: object
-  default: []
-- name: TestDependsOnDependency
-  type: string
-  default: not-specified
-- name: LimitForPullRequest
-  type: boolean
-  default: false
+  - name: Artifacts
+    type: object
+    default: []
+  - name: TestPipeline
+    type: boolean
+    default: false
+  - name: ArtifactName
+    type: string
+    default: packages
+  - name: SDKType
+    type: string
+    default: all
+  - name: ServiceDirectory
+    type: string
+    default: not-specified
+  - name: BuildSnippets
+    type: boolean
+    default: true
+  - name: CheckAOTCompat
+    type: boolean
+    default: false
+  - name: AOTTestInputs
+    type: object
+    default: []
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: TestTimeoutInMinutes
+    type: number
+  - name: MatrixConfigs
+    type: object
+  - name: AdditionalMatrixConfigs
+    type: object
+    default: []
+  - name: MatrixFilters
+    type: object
+    default: []
+  - name: MatrixReplace
+    type: object
+    default: []
+  - name: TestDependsOnDependency
+    type: string
+    default: not-specified
+  - name: LimitForPullRequest
+    type: boolean
+    default: false
 
 jobs:
   - job: Build
     pool:
-      name: azsdk-pool-mms-win-2022-general
-      vmImage: windows-2022
+      name: $(WINDOWSPOOL)
+      image: $(WINDOWSVMIMAGE)
+      os: windows
 
     variables:
       Codeql.Enabled: true
       Codeql.BuildIdentifier: ${{ parameters.ServiceDirectory }}
       Codeql.SkipTaskAutoInjection: false
 
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'packages'
+
     steps:
+      - checkout: self
+        fetchDepth: 0
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
         parameters:
@@ -126,23 +135,6 @@ jobs:
           DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
           LibType: 'client'
 
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'packages'
-
-      - ${{if eq(variables['System.TeamProject'], 'internal') }}:
-        - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
-          displayName: 'Upload Package SBOM'
-          condition: succeededOrFailed()
-          inputs:
-            BuildDropPath: $(Build.ArtifactStagingDirectory)
-
-        - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-          parameters:
-            ArtifactPath: '$(Build.ArtifactStagingDirectory)/_manifest'
-            ArtifactName: 'manifest'
-
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
@@ -164,9 +156,16 @@ jobs:
   - job: "Analyze"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'verify'
+
     pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: MMSUbuntu20.04
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -207,9 +206,9 @@ jobs:
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
-           -ServiceDirectory ${{ parameters.ServiceDirectory }}
-           -SDKType ${{ parameters.SDKType }}
-           -SpellCheckPublicApiSurface
+            -ServiceDirectory ${{ parameters.ServiceDirectory }}
+            -SDKType ${{ parameters.SDKType }}
+            -SpellCheckPublicApiSurface
           pwsh: true
           failOnStderr: false
 
@@ -233,18 +232,14 @@ jobs:
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
 
-      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
-        parameters:
-          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'verify'
-
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
     - job: Compliance
       pool:
-        name: azsdk-pool-mms-win-2022-general
-        vmImage: windows-2022
+        name: $(WINDOWSPOOL)
+        image: $(WINDOWSVMIMAGE)
+        os: windows
       steps:
         - task: UsePythonVersion@0
           displayName: "Use Python 3.9"
@@ -275,7 +270,7 @@ jobs:
             BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-    - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
@@ -291,7 +286,7 @@ jobs:
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
     - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
-      - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+      - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
         parameters:
           GenerateJobName: generate_target_dependencies_test_matrix
           JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
@@ -301,23 +296,23 @@ jobs:
             # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
             - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
             - ${{ each matrixReplace in parameters.MatrixReplace }}:
-              - ${{ matrixReplace }}
+                - ${{ matrixReplace }}
           CloudConfig:
             Cloud: public
           SparseCheckoutPaths:
-            - "/*"
-            - "!/sdk/*/**/SessionRecords/*"
+            - /*
+            - '!/sdk/*/**/SessionRecords/*'
           PreGenerationSteps:
-          - ${{ each config in parameters.MatrixConfigs }}:
-            - template: /eng/pipelines/templates/steps/dependency.tests.yml
-              parameters:
-                TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-                # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-                ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-                ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-                ExcludeTargetTestProjects: true
-                ServiceDirectory: ${{ parameters.ServiceDirectory }}
-                MatrixConfigsFile: ${{ config.Path }}
+            - ${{ each config in parameters.MatrixConfigs }}:
+                - template: /eng/pipelines/templates/steps/dependency.tests.yml
+                  parameters:
+                    TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+                    # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+                    ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+                    ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+                    ExcludeTargetTestProjects: true
+                    ServiceDirectory: ${{ parameters.ServiceDirectory }}
+                    MatrixConfigsFile: ${{ config.Path }}
           AdditionalParameters:
             SDKType: ${{ parameters.SDKType }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -325,3 +320,4 @@ jobs:
             TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
             # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
             ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+

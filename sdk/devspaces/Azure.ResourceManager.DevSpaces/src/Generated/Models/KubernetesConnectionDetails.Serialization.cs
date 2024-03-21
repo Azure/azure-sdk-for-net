@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DevSpaces;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -32,11 +31,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
-            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> httpPath = default;
             PhoenixAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("enableSsl"u8))

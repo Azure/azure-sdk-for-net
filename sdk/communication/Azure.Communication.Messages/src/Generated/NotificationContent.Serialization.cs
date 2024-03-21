@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -80,9 +79,9 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return TextNotificationContent.DeserializeTextNotificationContent(element, options);
                     case "image": return MediaNotificationContent.DeserializeMediaNotificationContent(element, options);
                     case "template": return TemplateNotificationContent.DeserializeTemplateNotificationContent(element, options);
+                    case "text": return TextNotificationContent.DeserializeTextNotificationContent(element, options);
                 }
             }
             return UnknownNotificationContent.DeserializeUnknownNotificationContent(element, options);

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(BackendResponseCode))
             {
                 writer.WritePropertyName("backendResponseCode"u8);
-                writer.WriteStringValue(BackendResponseCode);
+                SerializeBackendResponseCodeValue(writer);
             }
             if (Optional.IsDefined(ResponseCode))
             {
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("backendResponseCode"u8))
                 {
-                    backendResponseCode = property.Value.GetString();
+                    DeserializeBackendResponseCodeValue(property, ref backendResponseCode);
                     continue;
                 }
                 if (property.NameEquals("responseCode"u8))

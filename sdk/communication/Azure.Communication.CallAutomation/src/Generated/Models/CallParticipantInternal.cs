@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> A call participant. </summary>
@@ -20,15 +18,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="CallParticipantInternal"/>. </summary>
         /// <param name="identifier"> Communication identifier of the participant. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted)
+        /// <param name="isOnHold"> Is participant on hold. </param>
+        internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted, bool? isOnHold)
         {
             Identifier = identifier;
             IsMuted = isMuted;
+            IsOnHold = isOnHold;
         }
 
         /// <summary> Communication identifier of the participant. </summary>
         public CommunicationIdentifierModel Identifier { get; }
         /// <summary> Is participant muted. </summary>
         public bool? IsMuted { get; }
+        /// <summary> Is participant on hold. </summary>
+        public bool? IsOnHold { get; }
     }
 }

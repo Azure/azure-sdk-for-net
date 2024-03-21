@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
@@ -82,15 +81,15 @@ namespace Azure.Health.Insights.RadiologyInsights
                 switch (discriminator.GetString())
                 {
                     case "ageMismatch": return AgeMismatchInference.DeserializeAgeMismatchInference(element, options);
-                    case "sexMismatch": return SexMismatchInference.DeserializeSexMismatchInference(element, options);
-                    case "lateralityDiscrepancy": return LateralityDiscrepancyInference.DeserializeLateralityDiscrepancyInference(element, options);
                     case "completeOrderDiscrepancy": return CompleteOrderDiscrepancyInference.DeserializeCompleteOrderDiscrepancyInference(element, options);
-                    case "limitedOrderDiscrepancy": return LimitedOrderDiscrepancyInference.DeserializeLimitedOrderDiscrepancyInference(element, options);
-                    case "finding": return FindingInference.DeserializeFindingInference(element, options);
                     case "criticalResult": return CriticalResultInference.DeserializeCriticalResultInference(element, options);
-                    case "radiologyProcedure": return RadiologyProcedureInference.DeserializeRadiologyProcedureInference(element, options);
-                    case "followupRecommendation": return FollowupRecommendationInference.DeserializeFollowupRecommendationInference(element, options);
+                    case "finding": return FindingInference.DeserializeFindingInference(element, options);
                     case "followupCommunication": return FollowupCommunicationInference.DeserializeFollowupCommunicationInference(element, options);
+                    case "followupRecommendation": return FollowupRecommendationInference.DeserializeFollowupRecommendationInference(element, options);
+                    case "lateralityDiscrepancy": return LateralityDiscrepancyInference.DeserializeLateralityDiscrepancyInference(element, options);
+                    case "limitedOrderDiscrepancy": return LimitedOrderDiscrepancyInference.DeserializeLimitedOrderDiscrepancyInference(element, options);
+                    case "radiologyProcedure": return RadiologyProcedureInference.DeserializeRadiologyProcedureInference(element, options);
+                    case "sexMismatch": return SexMismatchInference.DeserializeSexMismatchInference(element, options);
                 }
             }
             return UnknownRadiologyInsightsInference.DeserializeUnknownRadiologyInsightsInference(element, options);
