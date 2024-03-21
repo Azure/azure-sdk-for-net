@@ -59,6 +59,26 @@ namespace Azure.AI.ContentSafety
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeImageResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AnalyzeTextJailbreakOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>
+    {
+        public AnalyzeTextJailbreakOptions(string text) { }
+        public string Text { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AnalyzeTextJailbreakResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>
+    {
+        internal AnalyzeTextJailbreakResult() { }
+        public Azure.AI.ContentSafety.JailbreakAnalysisResult JailbreakAnalysis { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeTextJailbreakResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeTextJailbreakResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AnalyzeTextOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextOptions>
     {
         public AnalyzeTextOptions(string text) { }
@@ -90,6 +110,26 @@ namespace Azure.AI.ContentSafety
         public static implicit operator Azure.AI.ContentSafety.AnalyzeTextOutputType (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.AnalyzeTextOutputType left, Azure.AI.ContentSafety.AnalyzeTextOutputType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class AnalyzeTextProtectedMaterialOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>
+    {
+        public AnalyzeTextProtectedMaterialOptions(string text) { }
+        public string Text { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AnalyzeTextProtectedMaterialResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>
+    {
+        internal AnalyzeTextProtectedMaterialResult() { }
+        public Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult ProtectedMaterialAnalysis { get { throw null; } }
+        Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AnalyzeTextResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.AnalyzeTextResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.AnalyzeTextResult>
     {
@@ -161,13 +201,22 @@ namespace Azure.AI.ContentSafety
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextResult>> AnalyzeTextAsync(Azure.AI.ContentSafety.AnalyzeTextOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeTextAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextResult>> AnalyzeTextAsync(string text, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult> DetectTextJailbreak(Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DetectTextJailbreak(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextJailbreakResult>> DetectTextJailbreakAsync(Azure.AI.ContentSafety.AnalyzeTextJailbreakOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DetectTextJailbreakAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult> DetectTextProtectedMaterial(Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DetectTextProtectedMaterial(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult>> DetectTextProtectedMaterialAsync(Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DetectTextProtectedMaterialAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class ContentSafetyClientOptions : Azure.Core.ClientOptions
     {
-        public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2023_10_01) { }
+        public ContentSafetyClientOptions(Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion version = Azure.AI.ContentSafety.ContentSafetyClientOptions.ServiceVersion.V2023_10_15_Preview) { }
         public enum ServiceVersion
         {
             V2023_10_01 = 1,
+            V2023_10_15_Preview = 2,
         }
     }
     public partial class ContentSafetyImageData : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ContentSafetyImageData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ContentSafetyImageData>
@@ -186,9 +235,13 @@ namespace Azure.AI.ContentSafety
         public static Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsResult AddOrUpdateTextBlocklistItemsResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems = null) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeImageOptions AnalyzeImageOptions(Azure.AI.ContentSafety.ContentSafetyImageData image = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.ImageCategory> categories = null, Azure.AI.ContentSafety.AnalyzeImageOutputType? outputType = default(Azure.AI.ContentSafety.AnalyzeImageOutputType?)) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeImageResult AnalyzeImageResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.ImageCategoriesAnalysis> categoriesAnalysis = null) { throw null; }
+        public static Azure.AI.ContentSafety.AnalyzeTextJailbreakResult AnalyzeTextJailbreakResult(Azure.AI.ContentSafety.JailbreakAnalysisResult jailbreakAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeTextOptions AnalyzeTextOptions(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategory> categories = null, System.Collections.Generic.IEnumerable<string> blocklistNames = null, bool? haltOnBlocklistHit = default(bool?), Azure.AI.ContentSafety.AnalyzeTextOutputType? outputType = default(Azure.AI.ContentSafety.AnalyzeTextOutputType?)) { throw null; }
+        public static Azure.AI.ContentSafety.AnalyzeTextProtectedMaterialResult AnalyzeTextProtectedMaterialResult(Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult protectedMaterialAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.AnalyzeTextResult AnalyzeTextResult(System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextBlocklistMatch> blocklistsMatch = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentSafety.TextCategoriesAnalysis> categoriesAnalysis = null) { throw null; }
         public static Azure.AI.ContentSafety.ImageCategoriesAnalysis ImageCategoriesAnalysis(Azure.AI.ContentSafety.ImageCategory category = default(Azure.AI.ContentSafety.ImageCategory), int? severity = default(int?)) { throw null; }
+        public static Azure.AI.ContentSafety.JailbreakAnalysisResult JailbreakAnalysisResult(bool detected = false) { throw null; }
+        public static Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult ProtectedMaterialAnalysisResult(bool detected = false) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklist TextBlocklist(string name = null, string description = null) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null) { throw null; }
         public static Azure.AI.ContentSafety.TextBlocklistMatch TextBlocklistMatch(string blocklistName = null, string blocklistItemId = null, string blocklistItemText = null) { throw null; }
@@ -224,6 +277,26 @@ namespace Azure.AI.ContentSafety
         public static implicit operator Azure.AI.ContentSafety.ImageCategory (string value) { throw null; }
         public static bool operator !=(Azure.AI.ContentSafety.ImageCategory left, Azure.AI.ContentSafety.ImageCategory right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class JailbreakAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>
+    {
+        internal JailbreakAnalysisResult() { }
+        public bool Detected { get { throw null; } }
+        Azure.AI.ContentSafety.JailbreakAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.JailbreakAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.JailbreakAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProtectedMaterialAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>
+    {
+        internal ProtectedMaterialAnalysisResult() { }
+        public bool Detected { get { throw null; } }
+        Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.ProtectedMaterialAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RemoveTextBlocklistItemsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentSafety.RemoveTextBlocklistItemsOptions>
     {

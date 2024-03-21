@@ -321,6 +321,226 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <summary> Analyze Text Jailbreak. </summary>
+        /// <param name="options"> The text jailbreak analysis request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for the analysis of text jailbreak. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextJailbreakAsync(AnalyzeTextJailbreakOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<AnalyzeTextJailbreakResult>> DetectTextJailbreakAsync(AnalyzeTextJailbreakOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = options.ToRequestContent();
+            Response response = await DetectTextJailbreakAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(AnalyzeTextJailbreakResult.FromResponse(response), response);
+        }
+
+        /// <summary> Analyze Text Jailbreak. </summary>
+        /// <param name="options"> The text jailbreak analysis request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for the analysis of text jailbreak. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextJailbreak(AnalyzeTextJailbreakOptions,CancellationToken)']/*" />
+        public virtual Response<AnalyzeTextJailbreakResult> DetectTextJailbreak(AnalyzeTextJailbreakOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = options.ToRequestContent();
+            Response response = DetectTextJailbreak(content, context);
+            return Response.FromValue(AnalyzeTextJailbreakResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Analyze Text Jailbreak
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectTextJailbreakAsync(AnalyzeTextJailbreakOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextJailbreakAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> DetectTextJailbreakAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextJailbreak");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectTextJailbreakRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Analyze Text Jailbreak
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectTextJailbreak(AnalyzeTextJailbreakOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextJailbreak(RequestContent,RequestContext)']/*" />
+        public virtual Response DetectTextJailbreak(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextJailbreak");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectTextJailbreakRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Analyze Protected Material. </summary>
+        /// <param name="options"> The text protected material analysis request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for the analysis of protected material. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterialAsync(AnalyzeTextProtectedMaterialOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<AnalyzeTextProtectedMaterialResult>> DetectTextProtectedMaterialAsync(AnalyzeTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = options.ToRequestContent();
+            Response response = await DetectTextProtectedMaterialAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(AnalyzeTextProtectedMaterialResult.FromResponse(response), response);
+        }
+
+        /// <summary> Analyze Protected Material. </summary>
+        /// <param name="options"> The text protected material analysis request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <remarks> A synchronous API for the analysis of protected material. </remarks>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterial(AnalyzeTextProtectedMaterialOptions,CancellationToken)']/*" />
+        public virtual Response<AnalyzeTextProtectedMaterialResult> DetectTextProtectedMaterial(AnalyzeTextProtectedMaterialOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = options.ToRequestContent();
+            Response response = DetectTextProtectedMaterial(content, context);
+            return Response.FromValue(AnalyzeTextProtectedMaterialResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Analyze Protected Material
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectTextProtectedMaterialAsync(AnalyzeTextProtectedMaterialOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterialAsync(RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> DetectTextProtectedMaterialAsync(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextProtectedMaterial");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectTextProtectedMaterialRequest(content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Analyze Protected Material
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectTextProtectedMaterial(AnalyzeTextProtectedMaterialOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/ContentSafetyClient.xml" path="doc/members/member[@name='DetectTextProtectedMaterial(RequestContent,RequestContext)']/*" />
+        public virtual Response DetectTextProtectedMaterial(RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("ContentSafetyClient.DetectTextProtectedMaterial");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectTextProtectedMaterialRequest(content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         internal HttpMessage CreateAnalyzeTextRequest(RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -347,6 +567,40 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendRaw("/contentsafety", false);
             uri.AppendPath("/image:analyze", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDetectTextJailbreakRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text:detectJailbreak", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDetectTextProtectedMaterialRequest(RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/contentsafety", false);
+            uri.AppendPath("/text:detectProtectedMaterial", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

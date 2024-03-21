@@ -285,5 +285,221 @@ Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("categ
 Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
 ]]></code></example>
     </member>
+    <member name="DetectTextJailbreakAsync(AnalyzeTextJailbreakOptions,CancellationToken)">
+      <example>
+This sample shows how to call DetectTextJailbreakAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextJailbreakOptions options = new AnalyzeTextJailbreakOptions("<text>");
+Response<AnalyzeTextJailbreakResult> response = await client.DetectTextJailbreakAsync(options);
+]]></code>
+This sample shows how to call DetectTextJailbreakAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextJailbreakOptions options = new AnalyzeTextJailbreakOptions("<text>");
+Response<AnalyzeTextJailbreakResult> response = await client.DetectTextJailbreakAsync(options);
+]]></code></example>
+    </member>
+    <member name="DetectTextJailbreak(AnalyzeTextJailbreakOptions,CancellationToken)">
+      <example>
+This sample shows how to call DetectTextJailbreak.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextJailbreakOptions options = new AnalyzeTextJailbreakOptions("<text>");
+Response<AnalyzeTextJailbreakResult> response = client.DetectTextJailbreak(options);
+]]></code>
+This sample shows how to call DetectTextJailbreak with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextJailbreakOptions options = new AnalyzeTextJailbreakOptions("<text>");
+Response<AnalyzeTextJailbreakResult> response = client.DetectTextJailbreak(options);
+]]></code></example>
+    </member>
+    <member name="DetectTextJailbreakAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DetectTextJailbreakAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = await client.DetectTextJailbreakAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jailbreakAnalysis").GetProperty("detected").ToString());
+]]></code>
+This sample shows how to call DetectTextJailbreakAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = await client.DetectTextJailbreakAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jailbreakAnalysis").GetProperty("detected").ToString());
+]]></code></example>
+    </member>
+    <member name="DetectTextJailbreak(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DetectTextJailbreak and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = client.DetectTextJailbreak(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jailbreakAnalysis").GetProperty("detected").ToString());
+]]></code>
+This sample shows how to call DetectTextJailbreak with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = client.DetectTextJailbreak(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jailbreakAnalysis").GetProperty("detected").ToString());
+]]></code></example>
+    </member>
+    <member name="DetectTextProtectedMaterialAsync(AnalyzeTextProtectedMaterialOptions,CancellationToken)">
+      <example>
+This sample shows how to call DetectTextProtectedMaterialAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextProtectedMaterialOptions options = new AnalyzeTextProtectedMaterialOptions("<text>");
+Response<AnalyzeTextProtectedMaterialResult> response = await client.DetectTextProtectedMaterialAsync(options);
+]]></code>
+This sample shows how to call DetectTextProtectedMaterialAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextProtectedMaterialOptions options = new AnalyzeTextProtectedMaterialOptions("<text>");
+Response<AnalyzeTextProtectedMaterialResult> response = await client.DetectTextProtectedMaterialAsync(options);
+]]></code></example>
+    </member>
+    <member name="DetectTextProtectedMaterial(AnalyzeTextProtectedMaterialOptions,CancellationToken)">
+      <example>
+This sample shows how to call DetectTextProtectedMaterial.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextProtectedMaterialOptions options = new AnalyzeTextProtectedMaterialOptions("<text>");
+Response<AnalyzeTextProtectedMaterialResult> response = client.DetectTextProtectedMaterial(options);
+]]></code>
+This sample shows how to call DetectTextProtectedMaterial with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextProtectedMaterialOptions options = new AnalyzeTextProtectedMaterialOptions("<text>");
+Response<AnalyzeTextProtectedMaterialResult> response = client.DetectTextProtectedMaterial(options);
+]]></code></example>
+    </member>
+    <member name="DetectTextProtectedMaterialAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DetectTextProtectedMaterialAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = await client.DetectTextProtectedMaterialAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("protectedMaterialAnalysis").GetProperty("detected").ToString());
+]]></code>
+This sample shows how to call DetectTextProtectedMaterialAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = await client.DetectTextProtectedMaterialAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("protectedMaterialAnalysis").GetProperty("detected").ToString());
+]]></code></example>
+    </member>
+    <member name="DetectTextProtectedMaterial(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call DetectTextProtectedMaterial and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = client.DetectTextProtectedMaterial(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("protectedMaterialAnalysis").GetProperty("detected").ToString());
+]]></code>
+This sample shows how to call DetectTextProtectedMaterial with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    text = "<text>",
+});
+Response response = client.DetectTextProtectedMaterial(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("protectedMaterialAnalysis").GetProperty("detected").ToString());
+]]></code></example>
+    </member>
   </members>
 </doc>

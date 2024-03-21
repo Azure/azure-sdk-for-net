@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.AI.ContentSafety
 {
-    /// <summary> Represents the capacity a job in this channel will consume from a worker. </summary>
-    public partial class RouterChannel
+    /// <summary> The text jailbreak analysis request. </summary>
+    public partial class AnalyzeTextJailbreakOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,31 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RouterChannel"/>. </summary>
-        /// <param name="channelId"> Id of a channel. </param>
-        /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
-        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJailbreakOptions"/>. </summary>
+        /// <param name="text"> The text needs to be analyzed if it attempt to jailbreak. We support a maximum of 1k Unicode characters (Unicode code points) in the text of one request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public AnalyzeTextJailbreakOptions(string text)
         {
-            ChannelId = channelId;
-            CapacityCostPerJob = capacityCostPerJob;
-            MaxNumberOfJobs = maxNumberOfJobs;
+            Argument.AssertNotNull(text, nameof(text));
+
+            Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJailbreakOptions"/>. </summary>
+        /// <param name="text"> The text needs to be analyzed if it attempt to jailbreak. We support a maximum of 1k Unicode characters (Unicode code points) in the text of one request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextJailbreakOptions(string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterChannel"/> for deserialization. </summary>
-        internal RouterChannel()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJailbreakOptions"/> for deserialization. </summary>
+        internal AnalyzeTextJailbreakOptions()
         {
         }
 
-        /// <summary> Id of a channel. </summary>
-        public string ChannelId { get; }
-        /// <summary> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </summary>
-        public int CapacityCostPerJob { get; }
+        /// <summary> The text needs to be analyzed if it attempt to jailbreak. We support a maximum of 1k Unicode characters (Unicode code points) in the text of one request. </summary>
+        public string Text { get; }
     }
 }
