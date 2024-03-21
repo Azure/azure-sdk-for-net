@@ -22,9 +22,8 @@ namespace Azure.Core
         private readonly string _waitForCompletionResponseScopeName;
         protected readonly string _updateStatusScopeName;
         protected readonly string _waitForCompletionScopeName;
-        protected readonly RequestMethod? _requestMethod;
 
-        protected OperationInternalBase(Response rawResponse, RequestMethod? requestMethod = null)
+        protected OperationInternalBase(Response rawResponse)
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
             _updateStatusScopeName = string.Empty;
@@ -33,10 +32,9 @@ namespace Azure.Core
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
-            _requestMethod = requestMethod;
         }
 
-        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null, RequestMethod? requestMethod = null)
+        protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)
         {
             _diagnostics = clientDiagnostics;
             _updateStatusScopeName = $"{operationTypeName}.{nameof(UpdateStatus)}";
@@ -45,7 +43,6 @@ namespace Azure.Core
             _scopeAttributes = scopeAttributes?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             _fallbackStrategy = fallbackStrategy;
             _responseLock = new AsyncLockWithValue<Response>();
-            _requestMethod = requestMethod;
         }
 
         /// <summary>

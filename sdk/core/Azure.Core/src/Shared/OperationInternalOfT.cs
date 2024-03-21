@@ -95,15 +95,13 @@ namespace Azure.Core
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy">The delay strategy when Retry-After header is not present.  When it is present, the longer of the two delays will be used.
         ///     Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
-        /// <param name="requetMethod">The Http request method.</param>
         public OperationInternal(IOperation<T> operation,
             ClientDiagnostics clientDiagnostics,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null,
-            RequestMethod? requetMethod = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy, requetMethod)
+            DelayStrategy? fallbackStrategy = null)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _operation = operation;
             _rawResponse = rawResponse;
@@ -269,7 +267,7 @@ namespace Azure.Core
                 }
 
                 asyncLock.SetValue(state);
-                return GetResponseFromState(state, _requestMethod);
+                return GetResponseFromState(state);
             }
             catch (Exception e)
             {
@@ -278,77 +276,14 @@ namespace Azure.Core
             }
         }
 
-        private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)
+        private static Response GetResponseFromState(OperationState<T> state)
         {
             if (state.HasSucceeded)
             {
                 return state.RawResponse;
             }
 
-            // if this is a fake delete LRO with 404, just return empty response with 204
-            // A fake delete LRO is a delete LRO completed with the initial call
-            if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
-            {
-                return new EmptyResponse(HttpStatusCode.NoContent);
-            }
-
             throw state.OperationFailedException!;
-        }
-
-        /// <summary>
-        /// This is only used for fake delete LRO, we just want to return an empty response with 204 to the user for this case.
-        /// A fake delete LRO is a delete LRO completed with the initial call.
-        /// </summary>
-        private sealed class EmptyResponse : Response
-        {
-            public EmptyResponse(HttpStatusCode status)
-            {
-                Status = (int)status;
-                ReasonPhrase = status.ToString();
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase { get; }
-
-            public override Stream? ContentStream { get => null; set => throw new System.NotImplementedException(); }
-            public override string ClientRequestId { get => string.Empty; set => throw new System.NotImplementedException(); }
-
-            public override void Dispose()
-            {
-            }
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override bool ContainsHeader(string name) => false;
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override IEnumerable<HttpHeader> EnumerateHeaders() => Array.Empty<HttpHeader>();
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                value = string.Empty;
-                return false;
-            }
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                values = Array.Empty<string>();
-                return false;
-            }
         }
 
         private class FinalOperation : IOperation<T>
