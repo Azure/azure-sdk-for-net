@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabPlanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabPlanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabPlanData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.LabServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.LabServices
                         return DeserializeLabPlanData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabPlanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabPlanData)} does not support reading '{options.Format}' format.");
             }
         }
 

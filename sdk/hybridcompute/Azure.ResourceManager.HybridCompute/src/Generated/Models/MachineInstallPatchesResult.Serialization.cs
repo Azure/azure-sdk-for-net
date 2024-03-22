@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -126,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -325,7 +323,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +339,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineInstallPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

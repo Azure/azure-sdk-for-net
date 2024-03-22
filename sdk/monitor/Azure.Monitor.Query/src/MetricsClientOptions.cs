@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query
         /// <summary>
         /// The latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2024_02_01;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricsClientOptions"/> class.
@@ -40,9 +40,9 @@ namespace Azure.Monitor.Query
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
             /// <summary>
-            /// Version  V2023_10_01 of the service.
+            /// Version  V2024_02_01 of the service.
             /// </summary>
-            V2023_10_01 = 1,
+            V2024_02_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

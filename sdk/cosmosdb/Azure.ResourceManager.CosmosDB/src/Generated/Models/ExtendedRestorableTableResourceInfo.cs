@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableTableResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this table event. </param>
+        /// <param name="canUndelete"> A state of this table to identify if this table is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this table can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this table event happened. </param>
         /// <param name="tableName"> The name of this Table. </param>
         /// <param name="tableId"> The resource ID of this Table. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableTableResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string tableName, string tableId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableTableResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string tableName, string tableId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
+            CanUndelete = canUndelete;
+            CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
             TableName = tableName;
             TableId = tableId;
@@ -71,6 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get; }
         /// <summary> The operation type of this table event. </summary>
         public CosmosDBOperationType? OperationType { get; }
+        /// <summary> A state of this table to identify if this table is restorable in same account. </summary>
+        public string CanUndelete { get; }
+        /// <summary> The reason why this table can not be restored in same account. </summary>
+        public string CanUndeleteReason { get; }
         /// <summary> The time when this table event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this Table. </summary>

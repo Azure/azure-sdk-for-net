@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.HybridNetwork
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.HybridNetwork
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.HybridNetwork
                         return DeserializeNetworkFunctionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFunctionData)} does not support reading '{options.Format}' format.");
             }
         }
 

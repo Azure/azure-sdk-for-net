@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -421,18 +420,6 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("originatingResourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
-            {
-                if (InheritedSizeInBytes != null)
-                {
-                    writer.WritePropertyName("inheritedSizeInBytes"u8);
-                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("inheritedSizeInBytes");
-                }
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -457,7 +444,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -534,7 +521,6 @@ namespace Azure.ResourceManager.NetApp
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
-            long? inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1099,16 +1085,6 @@ namespace Azure.ResourceManager.NetApp
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("inheritedSizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                inheritedSizeInBytes = null;
-                                continue;
-                            }
-                            inheritedSizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -1181,7 +1157,6 @@ namespace Azure.ResourceManager.NetApp
                 provisionedAvailabilityZone,
                 isLargeVolume,
                 originatingResourceId,
-                inheritedSizeInBytes,
                 serializedAdditionalRawData);
         }
 
@@ -1194,7 +1169,7 @@ namespace Azure.ResourceManager.NetApp
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -1210,7 +1185,7 @@ namespace Azure.ResourceManager.NetApp
                         return DeserializeNetAppVolumeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxJobStage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support reading '{options.Format}' format.");
             }
         }
 

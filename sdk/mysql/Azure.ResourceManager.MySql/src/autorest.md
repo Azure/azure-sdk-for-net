@@ -14,12 +14,12 @@ use-model-reader-writer: true
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2023-06-01-preview
+  - tag: package-flexibleserver-2023-12-01-preview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
 namespace: Azure.ResourceManager.MySql
-require: https://github.com/Azure/azure-rest-api-specs/blob/b7b77b11ba1f6defc86d309d4ca0d51b2a2646a7/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -185,11 +185,11 @@ directive:
 
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2023-06-01-preview'
+``` yaml $(tag) == 'package-flexibleserver-2023-12-01-preview'
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/b7b77b11ba1f6defc86d309d4ca0d51b2a2646a7/specification/common-types/resource-management/v5/privatelinks.json
+- https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/common-types/resource-management/v5/privatelinks.json
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/b7b77b11ba1f6defc86d309d4ca0d51b2a2646a7/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
@@ -243,6 +243,7 @@ rename-mapping:
   Database: MySqlFlexibleServerDatabase
   FirewallRule: MySqlFlexibleServerFirewallRule
   ServerBackup: MySqlFlexibleServerBackup
+  ServerBackupV2: MySqlFlexibleServerBackupV2
   Server: MySqlFlexibleServer
   ServerVersion: MySqlFlexibleServerVersion
   EnableStatusEnum: MySqlFlexibleServerEnableStatusEnum
@@ -306,6 +307,12 @@ rename-mapping:
   ResetAllToDefault: MySqlFlexibleServerConfigurationResetAllToDefault
   ServerGtidSetParameter: MySqlFlexibleServerGtidSetContent
   ValidateBackupResponse: MySqlFlexibleServerValidateBackupResult
+  Maintenance: MySqlFlexibleServerMaintenance
+  MaintenanceType: MySqlFlexibleServerMaintenanceType
+  MaintenanceState: MySqlFlexibleServerMaintenanceState
+  MaintenanceProvisioningState: MySqlFlexibleServerMaintenanceProvisioningState
+  BackupType: MySqlFlexibleServerBackupType
+  ProvisioningState: MySqlFlexibleServerBackupProvisioningState
 
 override-operation-name:
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
@@ -314,6 +321,7 @@ override-operation-name:
   BackupAndExport_ValidateBackup: ValidateBackup
 
 directive:
+  - remove-operation: OperationProgress_Get
   - from: FlexibleServers.json
     where: $.definitions
     transform: >

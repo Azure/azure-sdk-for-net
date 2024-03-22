@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {

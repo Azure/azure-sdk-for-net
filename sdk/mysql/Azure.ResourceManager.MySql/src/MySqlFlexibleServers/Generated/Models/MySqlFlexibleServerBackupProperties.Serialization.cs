@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,6 +30,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
+            }
+            if (Optional.IsDefined(BackupIntervalHours))
+            {
+                writer.WritePropertyName("backupIntervalHours"u8);
+                writer.WriteNumberValue(BackupIntervalHours.Value);
             }
             if (Optional.IsDefined(GeoRedundantBackup))
             {
@@ -65,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,6 +85,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             int? backupRetentionDays = default;
+            int? backupIntervalHours = default;
             MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = default;
             DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -94,6 +99,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         continue;
                     }
                     backupRetentionDays = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("backupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupIntervalHours = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("geoRedundantBackup"u8))
@@ -120,7 +134,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreDate, serializedAdditionalRawData);
+            return new MySqlFlexibleServerBackupProperties(backupRetentionDays, backupIntervalHours, geoRedundantBackup, earliestRestoreDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerBackupProperties>.Write(ModelReaderWriterOptions options)
@@ -132,7 +146,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +162,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeMySqlFlexibleServerBackupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

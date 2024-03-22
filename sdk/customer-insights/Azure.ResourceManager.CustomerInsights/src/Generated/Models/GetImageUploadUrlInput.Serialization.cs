@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetImageUploadUrlInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetImageUploadUrlInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeGetImageUploadUrlInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support reading '{options.Format}' format.");
             }
         }
 

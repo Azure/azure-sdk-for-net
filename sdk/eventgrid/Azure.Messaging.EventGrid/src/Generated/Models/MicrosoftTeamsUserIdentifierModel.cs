@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {

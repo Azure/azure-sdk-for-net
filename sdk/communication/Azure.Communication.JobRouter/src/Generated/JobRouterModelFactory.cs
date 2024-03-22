@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.Communication.JobRouter
 {
@@ -20,7 +19,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of a distribution policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="offerExpiresAfter"> Number of seconds after which any offers created under this policy will be expired. </param>
-        /// <param name="mode"> Mode governing the specific distribution method. </param>
+        /// <param name="mode">
+        /// Mode governing the specific distribution method.
+        /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
+        /// </param>
         /// <returns> A new <see cref="JobRouter.DistributionPolicy"/> instance for mocking. </returns>
         public static DistributionPolicy DistributionPolicy(ETag eTag = default, string id = null, string name = null, TimeSpan? offerExpiresAfter = null, DistributionMode mode = null)
         {
@@ -38,9 +41,21 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Id of a classification policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> Id of a fallback queue to select if queue selector attachments doesn't find a match. </param>
-        /// <param name="queueSelectorAttachments"> Queue selector attachments used to resolve a queue for a job. </param>
-        /// <param name="prioritizationRule"> A rule to determine a priority score for a job. </param>
-        /// <param name="workerSelectorAttachments"> Worker selector attachments used to attach worker selectors to a job. </param>
+        /// <param name="queueSelectorAttachments">
+        /// Queue selector attachments used to resolve a queue for a job.
+        /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.ConditionalQueueSelectorAttachment"/>, <see cref="JobRouter.PassThroughQueueSelectorAttachment"/>, <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>, <see cref="JobRouter.StaticQueueSelectorAttachment"/> and <see cref="JobRouter.WeightedAllocationQueueSelectorAttachment"/>.
+        /// </param>
+        /// <param name="prioritizationRule">
+        /// A rule to determine a priority score for a job.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
+        /// <param name="workerSelectorAttachments">
+        /// Worker selector attachments used to attach worker selectors to a job.
+        /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/>, <see cref="JobRouter.PassThroughWorkerSelectorAttachment"/>, <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/>, <see cref="JobRouter.StaticWorkerSelectorAttachment"/> and <see cref="JobRouter.WeightedAllocationWorkerSelectorAttachment"/>.
+        /// </param>
         /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
         public static ClassificationPolicy ClassificationPolicy(ETag eTag = default, string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectorAttachments = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectorAttachments = null)
         {
@@ -73,8 +88,16 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
         /// <param name="id"> Id of an exception rule. </param>
-        /// <param name="trigger"> The trigger for this exception rule. </param>
-        /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
+        /// <param name="trigger">
+        /// The trigger for this exception rule.
+        /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
+        /// </param>
+        /// <param name="actions">
+        /// A collection of actions to perform once the exception is triggered.
+        /// Please note <see cref="JobRouter.ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.CancelExceptionAction"/>, <see cref="JobRouter.ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
+        /// </param>
         /// <returns> A new <see cref="JobRouter.ExceptionRule"/> instance for mocking. </returns>
         public static ExceptionRule ExceptionRule(string id = null, ExceptionTrigger trigger = null, IEnumerable<ExceptionAction> actions = null)
         {
@@ -172,7 +195,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
         /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
-        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
+        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
         /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
         public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int? maxNumberOfJobs = null)
         {
@@ -227,7 +250,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ConditionalQueueSelectorAttachment"/>. </summary>
-        /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
+        /// <param name="condition">
+        /// The condition that must be true for the queue selectors to be attached.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.ConditionalQueueSelectorAttachment"/> instance for mocking. </returns>
         public static ConditionalQueueSelectorAttachment ConditionalQueueSelectorAttachment(RouterRule condition = null, IEnumerable<RouterQueueSelector> queueSelectors = null)
@@ -238,7 +265,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/>. </summary>
-        /// <param name="condition"> The condition that must be true for the worker selectors to be attached. </param>
+        /// <param name="condition">
+        /// The condition that must be true for the worker selectors to be attached.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
         /// <param name="workerSelectors"> The worker selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.ConditionalWorkerSelectorAttachment"/> instance for mocking. </returns>
         public static ConditionalWorkerSelectorAttachment ConditionalWorkerSelectorAttachment(RouterRule condition = null, IEnumerable<RouterWorkerSelector> workerSelectors = null)
@@ -315,7 +346,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>. </summary>
-        /// <param name="rule"> A RouterRule that resolves a collection of queue selectors to attach. </param>
+        /// <param name="rule">
+        /// A RouterRule that resolves a collection of queue selectors to attach.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
         /// <returns> A new <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/> instance for mocking. </returns>
         public static RuleEngineQueueSelectorAttachment RuleEngineQueueSelectorAttachment(RouterRule rule = null)
         {
@@ -323,7 +358,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/>. </summary>
-        /// <param name="rule"> A RouterRule that resolves a collection of worker selectors to attach. </param>
+        /// <param name="rule">
+        /// A RouterRule that resolves a collection of worker selectors to attach.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="JobRouter.FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="JobRouter.WebhookRouterRule"/>.
+        /// </param>
         /// <returns> A new <see cref="JobRouter.RuleEngineWorkerSelectorAttachment"/> instance for mocking. </returns>
         public static RuleEngineWorkerSelectorAttachment RuleEngineWorkerSelectorAttachment(RouterRule rule = null)
         {

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeDscNodeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeData)} does not support reading '{options.Format}' format.");
             }
         }
 

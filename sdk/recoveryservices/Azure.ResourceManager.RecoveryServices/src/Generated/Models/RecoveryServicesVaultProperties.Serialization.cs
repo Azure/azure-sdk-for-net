@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeRecoveryServicesVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSystemServicesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSystemServicesResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeUpdateSystemServicesResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSystemServicesResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

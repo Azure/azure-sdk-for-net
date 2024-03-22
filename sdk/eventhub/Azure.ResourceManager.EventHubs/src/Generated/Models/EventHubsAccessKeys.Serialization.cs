@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsAccessKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsAccessKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

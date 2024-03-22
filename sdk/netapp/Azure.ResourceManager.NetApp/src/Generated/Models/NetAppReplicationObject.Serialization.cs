@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,11 +43,6 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
             writer.WriteStringValue(RemoteVolumeResourceId);
-            if (Optional.IsDefined(RemotePath))
-            {
-                writer.WritePropertyName("remotePath"u8);
-                writer.WriteObjectValue(RemotePath);
-            }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);
@@ -77,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppReplicationObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +90,6 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppEndpointType? endpointType = default;
             NetAppReplicationSchedule? replicationSchedule = default;
             ResourceIdentifier remoteVolumeResourceId = default;
-            RemotePath remotePath = default;
             string remoteVolumeRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,15 +123,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("remotePath"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    remotePath = RemotePath.DeserializeRemotePath(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("remoteVolumeRegion"u8))
                 {
                     remoteVolumeRegion = property.Value.GetString();
@@ -155,7 +139,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 endpointType,
                 replicationSchedule,
                 remoteVolumeResourceId,
-                remotePath,
                 remoteVolumeRegion,
                 serializedAdditionalRawData);
         }
@@ -169,7 +152,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +168,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppReplicationObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support reading '{options.Format}' format.");
             }
         }
 

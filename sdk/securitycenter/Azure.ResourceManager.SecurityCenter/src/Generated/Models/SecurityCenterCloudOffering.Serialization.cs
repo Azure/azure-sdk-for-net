@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterCloudOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +78,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "CspmMonitorAws": return CspmMonitorAwsOffering.DeserializeCspmMonitorAwsOffering(element, options);
                     case "CspmMonitorAzureDevOps": return CspmMonitorAzureDevOpsOffering.DeserializeCspmMonitorAzureDevOpsOffering(element, options);
                     case "CspmMonitorGcp": return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element, options);
-                    case "CspmMonitorGitLab": return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element, options);
                     case "CspmMonitorGithub": return CspmMonitorGithubOffering.DeserializeCspmMonitorGithubOffering(element, options);
+                    case "CspmMonitorGitLab": return CspmMonitorGitLabOffering.DeserializeCspmMonitorGitLabOffering(element, options);
                     case "DefenderCspmAws": return DefenderCspmAwsOffering.DeserializeDefenderCspmAwsOffering(element, options);
                     case "DefenderCspmGcp": return DefenderCspmGcpOffering.DeserializeDefenderCspmGcpOffering(element, options);
                     case "DefenderForContainersAws": return DefenderForContainersAwsOffering.DeserializeDefenderForContainersAwsOffering(element, options);
@@ -88,8 +87,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "DefenderForDatabasesAws": return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element, options);
                     case "DefenderForDatabasesGcp": return DefenderForDatabasesGcpOffering.DeserializeDefenderForDatabasesGcpOffering(element, options);
                     case "DefenderForDevOpsAzureDevOps": return DefenderForDevOpsAzureDevOpsOffering.DeserializeDefenderForDevOpsAzureDevOpsOffering(element, options);
-                    case "DefenderForDevOpsGitLab": return DefenderForDevOpsGitLabOffering.DeserializeDefenderForDevOpsGitLabOffering(element, options);
                     case "DefenderForDevOpsGithub": return DefenderForDevOpsGithubOffering.DeserializeDefenderForDevOpsGithubOffering(element, options);
+                    case "DefenderForDevOpsGitLab": return DefenderForDevOpsGitLabOffering.DeserializeDefenderForDevOpsGitLabOffering(element, options);
                     case "DefenderForServersAws": return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element, options);
                     case "DefenderForServersGcp": return DefenderForServersGcpOffering.DeserializeDefenderForServersGcpOffering(element, options);
                     case "InformationProtectionAws": return InformationProtectionAwsOffering.DeserializeInformationProtectionAwsOffering(element, options);
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterCloudOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

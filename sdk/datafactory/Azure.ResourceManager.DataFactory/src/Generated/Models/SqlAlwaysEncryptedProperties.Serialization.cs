@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlAlwaysEncryptedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlAlwaysEncryptedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             SqlAlwaysEncryptedAkvAuthType alwaysEncryptedAkvAuthType = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("credential"u8))
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSqlAlwaysEncryptedProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAlwaysEncryptedProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

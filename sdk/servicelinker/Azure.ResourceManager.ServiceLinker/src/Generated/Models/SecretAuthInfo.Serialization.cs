@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeSecretAuthInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

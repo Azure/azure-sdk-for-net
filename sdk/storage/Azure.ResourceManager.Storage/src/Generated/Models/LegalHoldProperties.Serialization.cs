@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LegalHoldProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LegalHoldProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLegalHoldProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LegalHoldProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
