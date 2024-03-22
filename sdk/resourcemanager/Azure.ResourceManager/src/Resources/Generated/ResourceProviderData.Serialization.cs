@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderResourceType>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPolicyManifestData>(item, options);
                 }
                 writer.WriteEndArray();
             }

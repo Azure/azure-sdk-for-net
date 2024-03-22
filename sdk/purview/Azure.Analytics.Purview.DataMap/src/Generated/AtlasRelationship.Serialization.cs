@@ -72,12 +72,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(End1))
             {
                 writer.WritePropertyName("end1"u8);
-                writer.WriteObjectValue(End1);
+                writer.WriteObjectValue<AtlasObjectId>(End1, options);
             }
             if (Optional.IsDefined(End2))
             {
                 writer.WritePropertyName("end2"u8);
-                writer.WriteObjectValue(End2);
+                writer.WriteObjectValue<AtlasObjectId>(End2, options);
             }
             if (Optional.IsDefined(Guid))
             {
@@ -363,7 +363,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasRelationship>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

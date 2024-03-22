@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToInclude)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageAzureV2DiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

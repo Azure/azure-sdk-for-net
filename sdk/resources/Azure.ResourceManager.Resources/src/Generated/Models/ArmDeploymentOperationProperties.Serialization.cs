@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
                 if (StatusMessage != null)
                 {
                     writer.WritePropertyName("statusMessage"u8);
-                    writer.WriteObjectValue(StatusMessage);
+                    writer.WriteObjectValue<StatusMessage>(StatusMessage, options);
                 }
                 else
                 {
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
-                writer.WriteObjectValue(TargetResource);
+                writer.WriteObjectValue<TargetResource>(TargetResource, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue<HttpMessage>(Request, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                writer.WriteObjectValue<HttpMessage>(Response, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

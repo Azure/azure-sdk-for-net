@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PredefinedTag>(item, options);
                 }
                 writer.WriteEndArray();
             }

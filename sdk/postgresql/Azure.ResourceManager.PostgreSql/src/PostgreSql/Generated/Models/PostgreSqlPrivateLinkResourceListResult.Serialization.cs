@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

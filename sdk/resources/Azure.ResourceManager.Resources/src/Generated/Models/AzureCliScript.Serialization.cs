@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ArmDeploymentScriptManagedIdentity>(Identity, options);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                writer.WriteObjectValue<ContainerConfiguration>(ContainerSettings, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings);
+                writer.WriteObjectValue<ScriptStorageConfiguration>(StorageAccountSettings, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ScriptStatus>(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptEnvironmentVariable>(item, options);
                 }
                 writer.WriteEndArray();
             }

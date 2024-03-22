@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ArmPolicyParameterValue>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in NonComplianceMessages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NonComplianceMessage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ResourceSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Overrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PolicyOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }

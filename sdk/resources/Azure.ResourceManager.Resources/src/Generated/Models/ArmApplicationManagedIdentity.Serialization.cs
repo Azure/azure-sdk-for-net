@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ArmApplicationUserAssignedIdentity>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

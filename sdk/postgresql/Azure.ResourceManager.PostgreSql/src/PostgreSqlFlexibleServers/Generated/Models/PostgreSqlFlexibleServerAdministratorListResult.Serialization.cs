@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeAliases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeAliases>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Effects)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPolicyManifestEffect>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in CustomDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataManifestCustomResourceFunctionDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }

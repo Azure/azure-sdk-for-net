@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(RedisPrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RedisPrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<RedisPrivateLinkServiceConnectionState>(RedisPrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RedisProvisioningState))
             {
