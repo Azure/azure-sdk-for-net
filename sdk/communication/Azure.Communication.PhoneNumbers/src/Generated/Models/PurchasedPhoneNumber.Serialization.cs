@@ -28,7 +28,7 @@ namespace Azure.Communication.PhoneNumbers
             PhoneNumberCost cost = default;
             string operatorId = default;
             string operatorName = default;
-            PhoneNumberSource phoneNumberSource = default;
+            PhoneNumberSource? phoneNumberSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -91,7 +91,18 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId, operatorName, phoneNumberSource);
+            return new PurchasedPhoneNumber(
+                id,
+                phoneNumber,
+                countryCode,
+                phoneNumberType,
+                capabilities,
+                assignmentType,
+                purchaseDate,
+                cost,
+                operatorId,
+                operatorName,
+                phoneNumberSource);
         }
     }
 }

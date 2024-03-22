@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -19,14 +18,31 @@ namespace Azure.Communication.PhoneNumbers
                 return null;
             }
             string phoneNumber = default;
-            OperatorNumberType numberType = default;
+            string nationalFormat = default;
+            string internationalFormat = default;
             string isoCountryCode = default;
+            OperatorNumberType? numberType = default;
             OperatorDetails operatorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phoneNumber"u8))
                 {
                     phoneNumber = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("nationalFormat"u8))
+                {
+                    nationalFormat = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("internationalFormat"u8))
+                {
+                    internationalFormat = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isoCountryCode"u8))
+                {
+                    isoCountryCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("numberType"u8))
@@ -36,11 +52,6 @@ namespace Azure.Communication.PhoneNumbers
                         continue;
                     }
                     numberType = new OperatorNumberType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isoCountryCode"u8))
-                {
-                    isoCountryCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operatorDetails"u8))
@@ -53,7 +64,13 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformation(phoneNumber, numberType, isoCountryCode, operatorDetails);
+            return new OperatorInformation(
+                phoneNumber,
+                nationalFormat,
+                internationalFormat,
+                isoCountryCode,
+                numberType,
+                operatorDetails);
         }
     }
 }

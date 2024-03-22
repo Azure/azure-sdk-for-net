@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -37,7 +36,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformationResult(values);
+            return new OperatorInformationResult(values ?? new ChangeTrackingList<OperatorInformation>());
         }
     }
 }

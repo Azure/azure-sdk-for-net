@@ -10,22 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    internal partial class OperatorInformationRequest : IUtf8JsonSerializable
+    public partial class PhoneNumberBrowseCapabilitiesRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("phoneNumbers"u8);
-            writer.WriteStartArray();
-            foreach (var item in PhoneNumbers)
+            if (Optional.IsDefined(Calling))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("calling"u8);
+                writer.WriteStringValue(Calling.Value.ToString());
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(Options))
+            if (Optional.IsDefined(Sms))
             {
-                writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                writer.WritePropertyName("sms"u8);
+                writer.WriteStringValue(Sms.Value.ToString());
             }
             writer.WriteEndObject();
         }
