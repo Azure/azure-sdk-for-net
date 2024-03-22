@@ -10,12 +10,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql.Mocking

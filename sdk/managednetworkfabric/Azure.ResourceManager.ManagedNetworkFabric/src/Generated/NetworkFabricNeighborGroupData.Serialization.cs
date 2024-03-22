@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricNeighborGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricNeighborGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricNeighborGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

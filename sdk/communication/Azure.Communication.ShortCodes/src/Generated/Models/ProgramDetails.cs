@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.ShortCodes;
 
 namespace Azure.Communication.ShortCodes.Models
 {

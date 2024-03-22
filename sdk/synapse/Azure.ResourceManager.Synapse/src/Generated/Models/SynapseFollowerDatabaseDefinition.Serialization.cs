@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseFollowerDatabaseDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseFollowerDatabaseDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

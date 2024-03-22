@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         return DeserializeCloudHsmClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

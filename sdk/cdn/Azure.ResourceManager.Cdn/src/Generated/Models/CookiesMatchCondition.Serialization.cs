@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CookiesMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CookiesMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCookiesMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CookiesMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

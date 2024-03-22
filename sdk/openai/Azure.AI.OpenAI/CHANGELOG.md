@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-beta.16 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-beta.15 (2024-03-20)
 
 This release targets the latest `2024-03-01-preview` service API label and brings support for the `Dimensions` property when using new embedding models.

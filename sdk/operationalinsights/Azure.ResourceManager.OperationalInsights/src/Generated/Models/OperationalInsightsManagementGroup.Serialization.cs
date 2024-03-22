@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsManagementGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsManagementGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsManagementGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

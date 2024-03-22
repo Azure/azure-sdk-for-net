@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -23,7 +22,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransliterableScript)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransliterableScript)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransliterableScript)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransliterableScript)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeTransliterableScript(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support reading '{options.Format}' format.");
             }
         }
 

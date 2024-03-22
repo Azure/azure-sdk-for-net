@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocalRulestackPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeLocalRulestackPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalRulestackPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

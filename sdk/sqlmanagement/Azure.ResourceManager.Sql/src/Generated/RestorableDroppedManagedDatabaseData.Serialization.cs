@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<RestorableDroppedManagedDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<RestorableDroppedManagedDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeRestorableDroppedManagedDatabaseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorableDroppedManagedDatabaseData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxStorageAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxStorageAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

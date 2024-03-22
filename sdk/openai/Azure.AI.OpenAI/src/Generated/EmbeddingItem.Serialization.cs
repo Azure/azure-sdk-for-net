@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +58,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +118,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +134,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeEmbeddingItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support reading '{options.Format}' format.");
             }
         }
 

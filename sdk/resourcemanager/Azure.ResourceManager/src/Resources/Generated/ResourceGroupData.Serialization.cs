@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Resources
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeResourceGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

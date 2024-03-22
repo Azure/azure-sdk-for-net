@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -642,7 +641,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -658,7 +657,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootAppProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

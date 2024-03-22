@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementEventRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementEventRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeManagementEventRuleCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementEventRuleCondition)} does not support reading '{options.Format}' format.");
             }
         }
 
