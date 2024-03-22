@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            writer.WriteObjectValue<HDInsightPrivateLinkServiceConnectionState>(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
                 writer.WritePropertyName("linkIdentifier"u8);

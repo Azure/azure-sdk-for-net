@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<HDInsightAutoScaleConfiguration>(AutoScale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

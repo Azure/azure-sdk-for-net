@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridNetwork
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ArtifactManifestPropertiesFormat>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

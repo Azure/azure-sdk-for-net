@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightClusterRole>(item, options);
                 }
                 writer.WriteEndArray();
             }

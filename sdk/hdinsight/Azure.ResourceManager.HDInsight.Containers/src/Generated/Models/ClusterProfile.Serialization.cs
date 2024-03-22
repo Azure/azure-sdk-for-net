@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterComponentItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("identityProfile"u8);
-            writer.WriteObjectValue(IdentityProfile);
+            writer.WriteObjectValue<HDInsightIdentityProfile>(IdentityProfile, options);
             writer.WritePropertyName("authorizationProfile"u8);
-            writer.WriteObjectValue(AuthorizationProfile);
+            writer.WriteObjectValue<AuthorizationProfile>(AuthorizationProfile, options);
             if (Optional.IsDefined(SecretsProfile))
             {
                 writer.WritePropertyName("secretsProfile"u8);
-                writer.WriteObjectValue(SecretsProfile);
+                writer.WriteObjectValue<ClusterSecretsProfile>(SecretsProfile, options);
             }
             if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
@@ -55,34 +55,34 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServiceConfigsProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityProfile))
             {
                 writer.WritePropertyName("connectivityProfile"u8);
-                writer.WriteObjectValue(ConnectivityProfile);
+                writer.WriteObjectValue<ClusterConnectivityProfile>(ConnectivityProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WriteObjectValue<ClusterLogAnalyticsProfile>(LogAnalyticsProfile, options);
             }
             if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue(PrometheusProfile);
+                writer.WriteObjectValue<ClusterPrometheusProfile>(PrometheusProfile, options);
             }
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                writer.WriteObjectValue<ClusterSshProfile>(SshProfile, options);
             }
             if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue(AutoscaleProfile);
+                writer.WriteObjectValue<ClusterAutoscaleProfile>(AutoscaleProfile, options);
             }
             if (Optional.IsCollectionDefined(KafkaProfile))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(TrinoProfile))
             {
                 writer.WritePropertyName("trinoProfile"u8);
-                writer.WriteObjectValue(TrinoProfile);
+                writer.WriteObjectValue<TrinoProfile>(TrinoProfile, options);
             }
             if (Optional.IsCollectionDefined(LlapProfile))
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(FlinkProfile))
             {
                 writer.WritePropertyName("flinkProfile"u8);
-                writer.WriteObjectValue(FlinkProfile);
+                writer.WriteObjectValue<FlinkProfile>(FlinkProfile, options);
             }
             if (Optional.IsDefined(SparkProfile))
             {
                 writer.WritePropertyName("sparkProfile"u8);
-                writer.WriteObjectValue(SparkProfile);
+                writer.WriteObjectValue<SparkProfile>(SparkProfile, options);
             }
             if (Optional.IsCollectionDefined(StubProfile))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActionProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }

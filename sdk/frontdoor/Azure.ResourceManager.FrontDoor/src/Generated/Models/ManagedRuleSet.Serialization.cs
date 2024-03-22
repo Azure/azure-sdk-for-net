@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedRuleExclusion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroupOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedRuleGroupOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }

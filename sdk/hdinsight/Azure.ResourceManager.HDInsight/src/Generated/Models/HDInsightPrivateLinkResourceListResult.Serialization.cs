@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

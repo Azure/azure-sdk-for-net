@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterComponentItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
