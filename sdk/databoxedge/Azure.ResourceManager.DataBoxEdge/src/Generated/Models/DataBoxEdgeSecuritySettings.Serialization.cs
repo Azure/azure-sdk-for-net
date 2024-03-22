@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("deviceAdminPassword"u8);
-            writer.WriteObjectValue(DeviceAdminPassword);
+            writer.WriteObjectValue<AsymmetricEncryptedSecret>(DeviceAdminPassword, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

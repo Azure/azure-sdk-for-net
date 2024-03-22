@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<InstanceSku>(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<RoleInstanceNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<RoleInstanceView>(InstanceView, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

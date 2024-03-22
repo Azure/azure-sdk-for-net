@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServiceEndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }

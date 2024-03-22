@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PropertyDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Participant>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in DataSourcePrecedenceRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataSourcePrecedence>(item, options);
                 }
                 writer.WriteEndArray();
             }

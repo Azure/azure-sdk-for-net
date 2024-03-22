@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommunicationDomainResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

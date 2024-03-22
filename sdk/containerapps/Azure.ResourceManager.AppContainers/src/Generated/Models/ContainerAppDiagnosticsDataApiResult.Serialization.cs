@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table);
+                writer.WriteObjectValue<ContainerAppDiagnosticDataTableResult>(Table, options);
             }
             if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
-                writer.WriteObjectValue(RenderingProperties);
+                writer.WriteObjectValue<ContainerAppDiagnosticRendering>(RenderingProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

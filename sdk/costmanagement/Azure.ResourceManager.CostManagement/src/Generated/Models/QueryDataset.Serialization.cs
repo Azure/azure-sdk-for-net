@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<QueryDatasetConfiguration>(Configuration, options);
             }
             if (Optional.IsCollectionDefined(Aggregation))
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Aggregation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<QueryAggregation>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Grouping)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryGrouping>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<QueryFilter>(Filter, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

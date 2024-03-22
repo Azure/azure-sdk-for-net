@@ -22,7 +22,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MessageExample>(item);
                 }
                 writer.WriteEndArray();
             }

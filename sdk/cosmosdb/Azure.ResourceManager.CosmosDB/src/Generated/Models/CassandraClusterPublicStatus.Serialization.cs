@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ReaperStatus))
             {
                 writer.WritePropertyName("reaperStatus"u8);
-                writer.WriteObjectValue(ReaperStatus);
+                writer.WriteObjectValue<CassandraReaperStatus>(ReaperStatus, options);
             }
             if (Optional.IsCollectionDefined(ConnectionErrors))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CassandraConnectionError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CassandraError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in DataCenters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CassandraClusterPublicStatusDataCentersItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

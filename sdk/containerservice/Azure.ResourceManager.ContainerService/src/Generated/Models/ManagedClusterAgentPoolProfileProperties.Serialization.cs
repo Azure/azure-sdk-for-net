@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                writer.WriteObjectValue<AgentPoolUpgradeSettings>(UpgradeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState);
+                writer.WriteObjectValue<ContainerServicePowerState>(PowerState, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeletConfig))
             {
                 writer.WritePropertyName("kubeletConfig"u8);
-                writer.WriteObjectValue(KubeletConfig);
+                writer.WriteObjectValue<KubeletConfig>(KubeletConfig, options);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
-                writer.WriteObjectValue(LinuxOSConfig);
+                writer.WriteObjectValue<LinuxOSConfig>(LinuxOSConfig, options);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue<ContainerServiceCreationData>(CreationData, options);
             }
             if (Optional.IsDefined(CapacityReservationGroupId))
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<AgentPoolNetworkProfile>(NetworkProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

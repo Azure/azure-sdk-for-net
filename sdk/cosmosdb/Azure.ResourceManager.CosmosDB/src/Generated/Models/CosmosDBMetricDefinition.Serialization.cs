@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBMetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<CosmosDBMetricName>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

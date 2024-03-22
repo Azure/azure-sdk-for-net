@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharingProfileGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }

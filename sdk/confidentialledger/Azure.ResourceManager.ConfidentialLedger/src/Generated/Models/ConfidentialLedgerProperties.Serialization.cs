@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in AadBasedSecurityPrincipals)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AadBasedSecurityPrincipal>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in CertBasedSecurityPrincipals)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CertBasedSecurityPrincipal>(item, options);
                 }
                 writer.WriteEndArray();
             }

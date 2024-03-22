@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartArray();
             foreach (var item in CounterSets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataBoxEdgeMetricCounterSet>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
