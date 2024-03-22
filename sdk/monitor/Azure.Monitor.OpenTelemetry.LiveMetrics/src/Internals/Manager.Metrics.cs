@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is Models.Trace trace)
                 {
-                    // TODO: APPLY FILTERS
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
                 {

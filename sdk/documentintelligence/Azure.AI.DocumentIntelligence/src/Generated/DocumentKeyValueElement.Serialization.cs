@@ -22,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentKeyValueElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentKeyValueElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentKeyValueElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentKeyValueElement)} does not support reading '{options.Format}' format.");
             }
         }
 

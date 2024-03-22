@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthAvailabilityStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
