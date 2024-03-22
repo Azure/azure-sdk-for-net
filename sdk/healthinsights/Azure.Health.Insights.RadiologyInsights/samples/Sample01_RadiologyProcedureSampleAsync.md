@@ -1,13 +1,16 @@
-﻿# How to extract the description of a Critical Result Inference using a synchronous call
+﻿# How to extract the description of a radiology procedure inference using a asynchronous call
 
-In this sample it is shown how you can construct a request, add a configuration, create a client, send an asynchronous request and use the result returned to extract the description of a critical result.
+In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the procedure codes, imaging procedures and ordered procedure from the radiology procedure inference and print their code details.
 
 ## Create a PatientRecord
 
 ```C#
-PatientRecord patientRecord = new(id, patientInfo, encounterList, patientDocuments);
+PatientRecord patientRecord = new(id);
+patientRecord.Info = patientInfo;
+patientRecord.Encounters.Add(encounter);
+patientRecord.PatientDocuments.Add(patientDocument);
 string id = "patient_id2";
-PatientInfo patientInfo = new()
+PatientDetails patientInfo = new()
 {
     BirthDate = new System.DateTime(1959, 11, 11),
     Sex = PatientInfoSex.Female,
@@ -21,9 +24,8 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
-List<Encounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
-string documentContent = "CLINICAL HISTORY:   "
+private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
     + "\r\n "
     + "\r\nCOMPARISON:   "
@@ -50,17 +52,17 @@ PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent
     CreatedDateTime = new System.DateTime(2021, 08, 28),
     DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
-    Coding coding = new()
+    FhirR4Coding coding = new()
     {
         Display = "US PELVIS COMPLETE",
         Code = "USPELVIS",
         System = "Http://hl7.org/fhir/ValueSet/cpt-all"
     };
 
-    CodeableConcept codeableConcept = new();
+    FhirR4CodeableConcept codeableConcept = new();
     codeableConcept.Coding.Add(coding);
 
-    OrderedProcedure orderedProcedure = new()
+    FhirR4Extendible orderedProcedure = new()
     {
         Description = "US PELVIS COMPLETE",
         Code = codeableConcept
@@ -68,23 +70,21 @@ PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent
 
     documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
 };
-List<PatientDocument> patientDocuments = new() { patientDocument };
 List<PatientRecord> patientRecords = new() { patientRecord };
 ```
 
 ## Create a ModelConfiguration
 
 ```C#
-FindingOptions findingOptions = new();
-findingOptions.ProvideFocusedSentenceEvidence = true;
+RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
 FollowupRecommendationOptions followupRecommendationOptions = new();
+FindingOptions findingOptions = new();
 followupRecommendationOptions.IncludeRecommendationsWithNoSpecifiedModality = true;
 followupRecommendationOptions.IncludeRecommendationsInReferences = true;
 followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
-
-RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
-radiologyInsightsInferenceOptions.FollowupRecommendation = followupRecommendationOptions;
-radiologyInsightsInferenceOptions.Finding = findingOptions;
+findingOptions.ProvideFocusedSentenceEvidence = true;
+radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
+radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
 
 RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
 {
@@ -92,13 +92,15 @@ RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
     IncludeEvidence = true,
     InferenceOptions = radiologyInsightsInferenceOptions
 };
-radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CriticalResult);
+radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
 ```
 
 ## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData
 
 ```C#
-RadiologyInsightsData radiologyInsightsData = new(patientRecords, radiologyInsightsModelConfiguration);
+List<PatientRecord> patientRecords = new() { patientRecord };
+RadiologyInsightsData radiologyInsightsData = new(patientRecords);
+radiologyInsightsData.Configuration = CreateConfiguration();
 ```
 
 ## Create a RadiologyInsights client
@@ -112,19 +114,37 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credentia
 ## Send an asynchronous request to the RadiologyInsights client
 
 ```C#
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
 ```
 
-## From the result loop over the inferences and print the description of each critical result found
+## From the result loop over the inferences, extract the procedure codes, imaging procedures and ordered procedure from the laterality discrepancy and print their code details.
 
 ```C#
-RadiologyInsightsInferenceResult responseData = operation.Value;
-IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
-foreach (RadiologyInsightsInference inference in inferences)
+Console.Write("Radiology Procedure Inference found");
+Console.Write("   Procedure codes:");
+IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
+foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
 {
-    if (inference is CriticalResultInference criticalResultInference)
-    {
-        Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
-    }
+    DisplayCodes(procedureCode, 2);
 }
+Console.Write("   Imaging procedures:");
+IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
+
+foreach (ImagingProcedure imagingProcedure in imagingProcedures)
+{
+    Console.Write("      Modality: ");
+    FhirR4CodeableConcept modality = imagingProcedure.Modality;
+    DisplayCodes(modality, 3);
+    Console.Write("      Anatomy: ");
+    FhirR4CodeableConcept anatomy = imagingProcedure.Anatomy;
+    DisplayCodes(anatomy, 3);
+    Console.Write("      Laterality: ");
+    FhirR4CodeableConcept laterality = imagingProcedure.Laterality;
+    DisplayCodes(laterality, 3);
+}
+Console.Write("   Ordered procedures:");
+FhirR4Extendible orderedProcedure = radiologyProcedureInference.OrderedProcedure;
+FhirR4CodeableConcept code = orderedProcedure.Code;
+DisplayCodes(code, 2);
+Console.Write("   Description: " + orderedProcedure.Description);
 ```

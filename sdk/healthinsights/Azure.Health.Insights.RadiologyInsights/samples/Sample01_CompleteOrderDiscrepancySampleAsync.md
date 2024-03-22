@@ -1,13 +1,16 @@
-﻿# How to extract the description of a Critical Result Inference using a synchronous call
+﻿# How to extract the description of a Age Mismatch Inference using a asynchronous call
 
-In this sample it is shown how you can construct a request, add a configuration, create a client, send an asynchronous request and use the result returned to extract the description of a critical result.
+In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the order type, missing body parts and missing body part measurements of the complete order discrepancy inference.
 
 ## Create a PatientRecord
 
 ```C#
-PatientRecord patientRecord = new(id, patientInfo, encounterList, patientDocuments);
+PatientRecord patientRecord = new(id);
+patientRecord.Info = patientInfo;
+patientRecord.Encounters.Add(encounter);
+patientRecord.PatientDocuments.Add(patientDocument);
 string id = "patient_id2";
-PatientInfo patientInfo = new()
+PatientDetails patientInfo = new()
 {
     BirthDate = new System.DateTime(1959, 11, 11),
     Sex = PatientInfoSex.Female,
@@ -21,9 +24,8 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
-List<Encounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
-string documentContent = "CLINICAL HISTORY:   "
+private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
     + "\r\n "
     + "\r\nCOMPARISON:   "
@@ -50,17 +52,17 @@ PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent
     CreatedDateTime = new System.DateTime(2021, 08, 28),
     DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
-    Coding coding = new()
+    FhirR4Coding coding = new()
     {
         Display = "US PELVIS COMPLETE",
         Code = "USPELVIS",
         System = "Http://hl7.org/fhir/ValueSet/cpt-all"
     };
 
-    CodeableConcept codeableConcept = new();
+    FhirR4CodeableConcept codeableConcept = new();
     codeableConcept.Coding.Add(coding);
 
-    OrderedProcedure orderedProcedure = new()
+    FhirR4Extendible orderedProcedure = new()
     {
         Description = "US PELVIS COMPLETE",
         Code = codeableConcept
@@ -68,23 +70,21 @@ PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent
 
     documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
 };
-List<PatientDocument> patientDocuments = new() { patientDocument };
 List<PatientRecord> patientRecords = new() { patientRecord };
 ```
 
 ## Create a ModelConfiguration
 
 ```C#
-FindingOptions findingOptions = new();
-findingOptions.ProvideFocusedSentenceEvidence = true;
+RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
 FollowupRecommendationOptions followupRecommendationOptions = new();
+FindingOptions findingOptions = new();
 followupRecommendationOptions.IncludeRecommendationsWithNoSpecifiedModality = true;
 followupRecommendationOptions.IncludeRecommendationsInReferences = true;
 followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
-
-RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
-radiologyInsightsInferenceOptions.FollowupRecommendation = followupRecommendationOptions;
-radiologyInsightsInferenceOptions.Finding = findingOptions;
+findingOptions.ProvideFocusedSentenceEvidence = true;
+radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
+radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
 
 RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
 {
@@ -92,13 +92,15 @@ RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
     IncludeEvidence = true,
     InferenceOptions = radiologyInsightsInferenceOptions
 };
-radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CriticalResult);
+radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
 ```
 
 ## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData
 
 ```C#
-RadiologyInsightsData radiologyInsightsData = new(patientRecords, radiologyInsightsModelConfiguration);
+List<PatientRecord> patientRecords = new() { patientRecord };
+RadiologyInsightsData radiologyInsightsData = new(patientRecords);
+radiologyInsightsData.Configuration = CreateConfiguration();
 ```
 
 ## Create a RadiologyInsights client
@@ -115,16 +117,42 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credentia
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
 ```
 
-## From the result loop over the inferences and print the description of each critical result found
+## From the result loop over the inferences and display the order type, missing body parts and missing body part measurements of the complete order discrepancy inferences using the DisplayCodes method.
 
 ```C#
-RadiologyInsightsInferenceResult responseData = operation.Value;
-IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
-foreach (RadiologyInsightsInference inference in inferences)
+Console.Write("Complete Order Discrepancy Inference found: ");
+FhirR4CodeableConcept orderType = completeOrderDiscrepancyInference.OrderType;
+DisplayCodes(orderType, 1);
+IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
+Console.Write("   Missing body parts:");
+foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
 {
-    if (inference is CriticalResultInference criticalResultInference)
+    DisplayCodes(missingBodyPart, 2);
+}
+IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
+Console.Write("   Missing body part measurements:");
+foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
+{
+    DisplayCodes(missingBodyPartMeasurement, 2);
+}
+```
+
+## Print the code, display and system properties of the order type, missing body parts and missing body part measurements.
+
+```C#
+for (int i = 0; i < indentation; i++)
+{
+    initialBlank += "   ";
+}
+if (codeableConcept != null)
+{
+    IList<FhirR4Coding> codingList = codeableConcept.Coding;
+    if (codingList != null)
     {
-        Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+        foreach (FhirR4Coding fhirR4Coding in codingList)
+        {
+            Console.Write(initialBlank + "Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+        }
     }
 }
 ```

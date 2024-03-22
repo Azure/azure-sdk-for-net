@@ -1,13 +1,16 @@
-﻿# How to extract the description of a Critical Result Inference using a synchronous call
+﻿# How to extract the description of a limited order Inference using a asynchronous call
 
-In this sample it is shown how you can construct a request, add a configuration, create a client, send an asynchronous request and use the result returned to extract the description of a critical result.
+In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the order type, missing body parts and missing body part measurements of the limited order inference.
 
 ## Create a PatientRecord
 
 ```C#
-PatientRecord patientRecord = new(id, patientInfo, encounterList, patientDocuments);
+PatientRecord patientRecord = new(id);
+patientRecord.Info = patientInfo;
+patientRecord.Encounters.Add(encounter);
+patientRecord.PatientDocuments.Add(patientDocument);
 string id = "patient_id2";
-PatientInfo patientInfo = new()
+PatientDetails patientInfo = new()
 {
     BirthDate = new System.DateTime(1959, 11, 11),
     Sex = PatientInfoSex.Female,
@@ -21,9 +24,8 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
-List<Encounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
-string documentContent = "CLINICAL HISTORY:   "
+private const string DOC_CONTENT = "CLINICAL HISTORY:   "
     + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
     + "\r\n "
     + "\r\nCOMPARISON:   "
@@ -50,17 +52,17 @@ PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent
     CreatedDateTime = new System.DateTime(2021, 08, 28),
     DocumentAdministrativeMetadata documentAdministrativeMetadata = new DocumentAdministrativeMetadata();
 
-    Coding coding = new()
+    FhirR4Coding coding = new()
     {
         Display = "US PELVIS COMPLETE",
         Code = "USPELVIS",
         System = "Http://hl7.org/fhir/ValueSet/cpt-all"
     };
 
-    CodeableConcept codeableConcept = new();
+    FhirR4CodeableConcept codeableConcept = new();
     codeableConcept.Coding.Add(coding);
 
-    OrderedProcedure orderedProcedure = new()
+    FhirR4Extendible orderedProcedure = new()
     {
         Description = "US PELVIS COMPLETE",
         Code = codeableConcept
@@ -68,23 +70,21 @@ PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent
 
     documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
 };
-List<PatientDocument> patientDocuments = new() { patientDocument };
 List<PatientRecord> patientRecords = new() { patientRecord };
 ```
 
 ## Create a ModelConfiguration
 
 ```C#
-FindingOptions findingOptions = new();
-findingOptions.ProvideFocusedSentenceEvidence = true;
+RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
 FollowupRecommendationOptions followupRecommendationOptions = new();
+FindingOptions findingOptions = new();
 followupRecommendationOptions.IncludeRecommendationsWithNoSpecifiedModality = true;
 followupRecommendationOptions.IncludeRecommendationsInReferences = true;
 followupRecommendationOptions.ProvideFocusedSentenceEvidence = true;
-
-RadiologyInsightsInferenceOptions radiologyInsightsInferenceOptions = new();
-radiologyInsightsInferenceOptions.FollowupRecommendation = followupRecommendationOptions;
-radiologyInsightsInferenceOptions.Finding = findingOptions;
+findingOptions.ProvideFocusedSentenceEvidence = true;
+radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecommendationOptions;
+radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
 
 RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
 {
@@ -92,13 +92,15 @@ RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
     IncludeEvidence = true,
     InferenceOptions = radiologyInsightsInferenceOptions
 };
-radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.CriticalResult);
+radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.LimitedOrderDiscrepancy);
 ```
 
 ## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData
 
 ```C#
-RadiologyInsightsData radiologyInsightsData = new(patientRecords, radiologyInsightsModelConfiguration);
+List<PatientRecord> patientRecords = new() { patientRecord };
+RadiologyInsightsData radiologyInsightsData = new(patientRecords);
+radiologyInsightsData.Configuration = CreateConfiguration();
 ```
 
 ## Create a RadiologyInsights client
@@ -115,16 +117,22 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credentia
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
 ```
 
-## From the result loop over the inferences and print the description of each critical result found
+## From the result loop over the inferences, extract the order type, missing body parts and missing body part measurements of the limited order inference.
 
 ```C#
-RadiologyInsightsInferenceResult responseData = operation.Value;
-IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
-foreach (RadiologyInsightsInference inference in inferences)
+Console.Write("Limited Order Discrepancy Inference found: ");
+FhirR4CodeableConcept orderType = limitedOrderDiscrepancyInference.OrderType;
+DisplayCodes(orderType, 1);
+IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = limitedOrderDiscrepancyInference.PresentBodyParts;
+Console.Write("   Present body parts:");
+foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
 {
-    if (inference is CriticalResultInference criticalResultInference)
-    {
-        Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
-    }
+    DisplayCodes(missingBodyPart, 2);
+}
+IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = limitedOrderDiscrepancyInference.PresentBodyPartMeasurements;
+Console.Write("   Present body part measurements:");
+foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
+{
+    DisplayCodes(missingBodyPartMeasurement, 2);
 }
 ```
