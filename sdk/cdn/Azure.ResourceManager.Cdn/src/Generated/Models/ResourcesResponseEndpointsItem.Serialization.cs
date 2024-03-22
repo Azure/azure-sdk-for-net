@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourcesResponseEndpointsPropertiesItemsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

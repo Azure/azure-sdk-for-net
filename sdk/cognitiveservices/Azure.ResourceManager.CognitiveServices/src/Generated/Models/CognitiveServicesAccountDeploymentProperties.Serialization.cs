@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model);
+                writer.WriteObjectValue<CognitiveServicesAccountDeploymentModel>(Model, options);
             }
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                writer.WriteObjectValue<CognitiveServicesAccountDeploymentScaleSettings>(ScaleSettings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                writer.WriteObjectValue<ServiceAccountCallRateLimit>(CallRateLimit, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in RateLimits)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceAccountThrottlingRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

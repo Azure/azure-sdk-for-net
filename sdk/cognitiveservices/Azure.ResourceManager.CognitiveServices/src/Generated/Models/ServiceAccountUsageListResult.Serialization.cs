@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceAccountUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }

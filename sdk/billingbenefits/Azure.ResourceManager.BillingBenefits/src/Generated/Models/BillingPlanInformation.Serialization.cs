@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WriteObjectValue<BillingBenefitsPrice>(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SavingsPlanOrderPaymentDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

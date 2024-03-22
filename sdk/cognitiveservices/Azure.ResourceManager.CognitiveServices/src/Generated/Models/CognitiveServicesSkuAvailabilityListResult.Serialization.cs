@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CognitiveServicesSkuAvailabilityList>(item, options);
                 }
                 writer.WriteEndArray();
             }

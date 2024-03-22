@@ -27,12 +27,12 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            writer.WriteObjectValue<RouterRule>(Condition, options);
             writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
             foreach (var item in QueueSelectors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<RouterQueueSelector>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
@@ -154,7 +154,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ConditionalQueueSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
