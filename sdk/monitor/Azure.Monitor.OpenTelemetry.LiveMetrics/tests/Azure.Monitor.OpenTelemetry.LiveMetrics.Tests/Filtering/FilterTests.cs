@@ -1511,7 +1511,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         //TODO: Removed TelemetryContext related tests. Confirm they are not needed.
 
         #region Custom dimensions
-        [Fact(Skip = "CustomDimensions not working yet.")]
+        [Fact]
         public void FilterCustomDimensions()
         {
             // ARRANGE

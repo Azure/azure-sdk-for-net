@@ -55,7 +55,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             "TryParse",
             new[] { typeof(string), typeof(NumberStyles), typeof(IFormatProvider), typeof(double).MakeByRefType() });
 
-        private static readonly MethodInfo DictionaryStringStringTryGetValueMethodInfo = typeof(IDictionary<string, string>).GetMethod("TryGetValue");
+        private static readonly MethodInfo ListStringTryGetValueMethodInfo =
+            GetMethodInfo<IList<KeyValuePairString>, string, string>((list, key) => Filter<int>.TryGetString(list, key));
 
         private static readonly MethodInfo DictionaryStringDoubleTryGetValueMethodInfo = typeof(IDictionary<string, double>).GetMethod("TryGetValue");
 
@@ -199,10 +200,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         FieldNameCustomDimensionsPrefix.Length,
                         fieldName.Length - FieldNameCustomDimensionsPrefix.Length);
 
-                    return CreateDictionaryAccessExpression(
+                    return CreateListAccessExpression(
                         documentExpression,
                         CustomDimensionsPropertyName,
-                        DictionaryStringStringTryGetValueMethodInfo,
+                        ListStringTryGetValueMethodInfo,
                         typeof(string),
                         customDimensionName);
                 default:
@@ -233,6 +234,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             // no special case in filterInfo.FieldName, treat it as the name of a property in TTelemetry type
             fieldNameType = FieldNameType.FieldName;
             return GetPropertyTypeFromFieldName(fieldName);
+        }
+
+        private static Expression CreateListAccessExpression(ParameterExpression documentExpression, string listName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
+        {
+            // return Filter<int>.TryGetString(document.listName, keyValue)
+            MemberExpression properties = Expression.Property(documentExpression, listName);
+            return Expression.Call(ListStringTryGetValueMethodInfo, properties, Expression.Constant(keyValue));
         }
 
         private static Expression CreateDictionaryAccessExpression(ParameterExpression documentExpression, string dictionaryName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
@@ -316,6 +324,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 throw new ArgumentNullException(nameof(filterInfo.Comparand), string.Format(CultureInfo.InvariantCulture, "Parameter cannot be null."));
             }
+        }
+
+        private static string TryGetString(IList<KeyValuePairString> list, string keyValue)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (string.Equals(list[i].Key, keyValue, StringComparison.OrdinalIgnoreCase))
+                {
+                    return list[i].Value;
+                }
+            }
+            return null;
         }
 
         private static bool ScanDictionary(IDictionary<string, string> dict, string searchValue)
