@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PaymentMethodLogo>(item, options);
                 }
                 writer.WriteEndArray();
             }

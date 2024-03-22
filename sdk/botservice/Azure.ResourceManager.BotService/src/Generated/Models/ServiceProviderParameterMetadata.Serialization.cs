@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue(Constraints);
+                writer.WriteObjectValue<ServiceProviderParameterMetadataConstraints>(Constraints, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

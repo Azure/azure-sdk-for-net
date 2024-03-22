@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChaosTargetData>(item, options);
                 }
                 writer.WriteEndArray();
             }

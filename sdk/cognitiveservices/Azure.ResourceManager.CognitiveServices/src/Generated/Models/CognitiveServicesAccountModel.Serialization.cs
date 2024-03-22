@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
-                writer.WriteObjectValue(BaseModel);
+                writer.WriteObjectValue<CognitiveServicesAccountDeploymentModel>(BaseModel, options);
             }
             if (Optional.IsDefined(IsDefaultVersion))
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CognitiveServicesModelSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
-                writer.WriteObjectValue(Deprecation);
+                writer.WriteObjectValue<ServiceAccountModelDeprecationInfo>(Deprecation, options);
             }
             if (Optional.IsDefined(LifecycleStatus))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                writer.WriteObjectValue<ServiceAccountCallRateLimit>(CallRateLimit, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
