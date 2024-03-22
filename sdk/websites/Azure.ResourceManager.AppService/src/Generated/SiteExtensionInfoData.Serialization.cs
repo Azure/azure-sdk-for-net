@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<SiteExtensionInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,69 +48,69 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExtensionId != null)
+            if (Optional.IsDefined(ExtensionId))
             {
                 writer.WritePropertyName("extension_id"u8);
                 writer.WriteStringValue(ExtensionId);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (ExtensionType.HasValue)
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extension_type"u8);
                 writer.WriteStringValue(ExtensionType.Value.ToSerialString());
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ExtensionUri != null)
+            if (Optional.IsDefined(ExtensionUri))
             {
                 writer.WritePropertyName("extension_url"u8);
                 writer.WriteStringValue(ExtensionUri.AbsoluteUri);
             }
-            if (ProjectUri != null)
+            if (Optional.IsDefined(ProjectUri))
             {
                 writer.WritePropertyName("project_url"u8);
                 writer.WriteStringValue(ProjectUri.AbsoluteUri);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon_url"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (LicenseUri != null)
+            if (Optional.IsDefined(LicenseUri))
             {
                 writer.WritePropertyName("license_url"u8);
                 writer.WriteStringValue(LicenseUri.AbsoluteUri);
             }
-            if (FeedUri != null)
+            if (Optional.IsDefined(FeedUri))
             {
                 writer.WritePropertyName("feed_url"u8);
                 writer.WriteStringValue(FeedUri.AbsoluteUri);
             }
-            if (!(Authors is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Authors))
             {
                 writer.WritePropertyName("authors"u8);
                 writer.WriteStartArray();
@@ -120,42 +120,42 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (InstallerCommandLineParams != null)
+            if (Optional.IsDefined(InstallerCommandLineParams))
             {
                 writer.WritePropertyName("installer_command_line_params"u8);
                 writer.WriteStringValue(InstallerCommandLineParams);
             }
-            if (PublishedOn.HasValue)
+            if (Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("published_date_time"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (DownloadCount.HasValue)
+            if (Optional.IsDefined(DownloadCount))
             {
                 writer.WritePropertyName("download_count"u8);
                 writer.WriteNumberValue(DownloadCount.Value);
             }
-            if (LocalIsLatestVersion.HasValue)
+            if (Optional.IsDefined(LocalIsLatestVersion))
             {
                 writer.WritePropertyName("local_is_latest_version"u8);
                 writer.WriteBooleanValue(LocalIsLatestVersion.Value);
             }
-            if (LocalPath != null)
+            if (Optional.IsDefined(LocalPath))
             {
                 writer.WritePropertyName("local_path"u8);
                 writer.WriteStringValue(LocalPath);
             }
-            if (InstalledOn.HasValue)
+            if (Optional.IsDefined(InstalledOn))
             {
                 writer.WritePropertyName("installed_date_time"u8);
                 writer.WriteStringValue(InstalledOn.Value, "O");
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Comment != null)
+            if (Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<SiteExtensionInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeSiteExtensionInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteExtensionInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

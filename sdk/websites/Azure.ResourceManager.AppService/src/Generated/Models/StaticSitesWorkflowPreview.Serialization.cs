@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Path != null)
+            if (options.Format != "W" && Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (options.Format != "W" && Contents != null)
+            if (options.Format != "W" && Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteStringValue(Contents);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitesWorkflowPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSitesWorkflowPreview(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSitesWorkflowPreview)} does not support reading '{options.Format}' format.");
             }
         }
 

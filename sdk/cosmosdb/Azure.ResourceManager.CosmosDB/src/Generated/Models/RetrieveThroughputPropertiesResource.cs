@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="physicalPartitionIds"/> is null. </exception>
         public RetrieveThroughputPropertiesResource(IEnumerable<WritableSubResource> physicalPartitionIds)
         {
-            if (physicalPartitionIds == null)
-            {
-                throw new ArgumentNullException(nameof(physicalPartitionIds));
-            }
+            Argument.AssertNotNull(physicalPartitionIds, nameof(physicalPartitionIds));
 
             PhysicalPartitionIds = physicalPartitionIds.ToList();
         }

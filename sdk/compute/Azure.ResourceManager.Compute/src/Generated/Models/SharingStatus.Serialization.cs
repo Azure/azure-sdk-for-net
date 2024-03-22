@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AggregatedState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (!(Summary is ChangeTrackingList<RegionalSharingStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharingStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharingStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharingStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArmTemplateInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
 #endif
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArmTemplateInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabArmTemplateInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

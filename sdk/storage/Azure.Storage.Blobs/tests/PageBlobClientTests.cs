@@ -4122,6 +4122,44 @@ namespace Azure.Storage.Blobs.Test
             mock = new Mock<PageBlobClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new BlobClientOptions()).Object;
         }
 
+        [RecordedTest]
+        public async Task DownloadAsync_UnevenPageRanges()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Create Page Blob with different page ranges
+            int pageBlobSize = 10 * Constants.KB;
+            StorageTransferOptions transferOptions = new()
+            {
+                InitialTransferLength = 4 * Constants.KB,
+                MaximumTransferSize = 4 * Constants.KB,
+            };
+            PageBlobClient pageBlobClient = test.Container.GetPageBlobClient(GetNewBlobName());
+            await pageBlobClient.CreateIfNotExistsAsync(pageBlobSize);
+            int offset = 2 * Constants.KB + 512;
+            int length = Constants.KB;
+            var data = GetRandomBuffer(length);
+
+            using (var stream = new MemoryStream(data))
+            {
+                await pageBlobClient.UploadPagesAsync(
+                    content: stream,
+                    offset: offset);
+            }
+            // Act
+            Response<BlobDownloadStreamingResult> result = await pageBlobClient.DownloadStreamingAsync();
+
+            // Assert
+            var actual = new MemoryStream();
+            await result.Value.Content.CopyToAsync(actual);
+            actual.Seek(offset, SeekOrigin.Begin);
+            byte[] resultArray = new byte[length];
+            await actual.ReadAsync(resultArray, 0, length, CancellationToken.None);
+            Assert.AreEqual(pageBlobSize, actual.Length);
+            Assert.That(data, Is.EqualTo(resultArray));
+        }
+
         public static PageBlobRequestConditions BuildAccessConditions(
             AccessConditionParameters parameters,
             bool lease = false,

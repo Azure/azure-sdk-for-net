@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBPathIndexes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataType.HasValue)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (Precision.HasValue)
+            if (Optional.IsDefined(Precision))
             {
                 writer.WritePropertyName("precision"u8);
                 writer.WriteNumberValue(Precision.Value);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBPathIndexes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBPathIndexes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBPathIndexes)} does not support reading '{options.Format}' format.");
             }
         }
 

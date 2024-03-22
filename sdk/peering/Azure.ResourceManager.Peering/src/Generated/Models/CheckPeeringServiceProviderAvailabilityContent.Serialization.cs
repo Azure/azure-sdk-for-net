@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckPeeringServiceProviderAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PeeringServiceLocation != null)
+            if (Optional.IsDefined(PeeringServiceLocation))
             {
                 writer.WritePropertyName("peeringServiceLocation"u8);
                 writer.WriteStringValue(PeeringServiceLocation);
             }
-            if (PeeringServiceProvider != null)
+            if (Optional.IsDefined(PeeringServiceProvider))
             {
                 writer.WritePropertyName("peeringServiceProvider"u8);
                 writer.WriteStringValue(PeeringServiceProvider);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckPeeringServiceProviderAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializeCheckPeeringServiceProviderAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckPeeringServiceProviderAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

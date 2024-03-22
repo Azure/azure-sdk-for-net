@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AddressLine1 != null)
+            if (Optional.IsDefined(AddressLine1))
             {
                 writer.WritePropertyName("addressLine1"u8);
                 writer.WriteStringValue(AddressLine1);
             }
-            if (AddressLine2 != null)
+            if (Optional.IsDefined(AddressLine2))
             {
                 writer.WritePropertyName("addressLine2"u8);
                 writer.WriteStringValue(AddressLine2);
             }
-            if (AddressLine3 != null)
+            if (Optional.IsDefined(AddressLine3))
             {
                 writer.WritePropertyName("addressLine3"u8);
                 writer.WriteStringValue(AddressLine3);
             }
-            if (PostalCode != null)
+            if (Optional.IsDefined(PostalCode))
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeShippingAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShippingAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

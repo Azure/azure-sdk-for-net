@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageBaseConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToSerialString());
             }
-            if (NodeIdentity != null)
+            if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
                 writer.WriteObjectValue(NodeIdentity);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageBaseConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountAutoStorageBaseConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountAutoStorageBaseConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

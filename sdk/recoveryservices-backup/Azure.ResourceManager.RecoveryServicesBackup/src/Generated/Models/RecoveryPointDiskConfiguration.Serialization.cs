@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NumberOfDisksIncludedInBackup.HasValue)
+            if (Optional.IsDefined(NumberOfDisksIncludedInBackup))
             {
                 writer.WritePropertyName("numberOfDisksIncludedInBackup"u8);
                 writer.WriteNumberValue(NumberOfDisksIncludedInBackup.Value);
             }
-            if (NumberOfDisksAttachedToVm.HasValue)
+            if (Optional.IsDefined(NumberOfDisksAttachedToVm))
             {
                 writer.WritePropertyName("numberOfDisksAttachedToVm"u8);
                 writer.WriteNumberValue(NumberOfDisksAttachedToVm.Value);
             }
-            if (!(IncludedDiskList is ChangeTrackingList<DiskInformation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedDiskList))
             {
                 writer.WritePropertyName("includedDiskList"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedDiskList is ChangeTrackingList<DiskInformation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedDiskList))
             {
                 writer.WritePropertyName("excludedDiskList"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeRecoveryPointDiskConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

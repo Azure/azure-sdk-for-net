@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<TypePropertiesMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(SourcePropertyName);
             writer.WritePropertyName("targetPropertyName"u8);
             writer.WriteStringValue(TargetPropertyName);
-            if (LinkType.HasValue)
+            if (Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType.Value.ToSerialString());
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<TypePropertiesMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeTypePropertiesMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TypePropertiesMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

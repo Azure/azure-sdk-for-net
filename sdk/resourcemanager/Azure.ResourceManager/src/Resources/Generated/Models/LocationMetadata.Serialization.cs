@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RegionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegionType))
             {
                 writer.WritePropertyName("regionType"u8);
                 writer.WriteStringValue(RegionType.Value.ToString());
             }
-            if (options.Format != "W" && RegionCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegionCategory))
             {
                 writer.WritePropertyName("regionCategory"u8);
                 writer.WriteStringValue(RegionCategory.Value.ToString());
             }
-            if (options.Format != "W" && Geography != null)
+            if (options.Format != "W" && Optional.IsDefined(Geography))
             {
                 writer.WritePropertyName("geography"u8);
                 writer.WriteStringValue(Geography);
             }
-            if (options.Format != "W" && GeographyGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(GeographyGroup))
             {
                 writer.WritePropertyName("geographyGroup"u8);
                 writer.WriteStringValue(GeographyGroup);
             }
-            if (options.Format != "W" && Longitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 WriteLongitude(writer);
             }
-            if (options.Format != "W" && Latitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 WriteLatitude(writer);
             }
-            if (options.Format != "W" && PhysicalLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(PhysicalLocation))
             {
                 writer.WritePropertyName("physicalLocation"u8);
                 writer.WriteStringValue(PhysicalLocation);
             }
-            if (!(PairedRegions is ChangeTrackingList<PairedRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PairedRegions))
             {
                 writer.WritePropertyName("pairedRegion"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HomeLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(HomeLocation))
             {
                 writer.WritePropertyName("homeLocation"u8);
                 writer.WriteStringValue(HomeLocation);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocationMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeLocationMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocationMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

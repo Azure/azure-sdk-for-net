@@ -6,6 +6,8 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -24,8 +26,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _connectionVars = InitializeConnectionVars(options, platform);
             _quickPulseSDKClientAPIsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
+            CollectionConfigurationError[] errors;
+            _collectionConfigurationInfo = new CollectionConfigurationInfo();
+            _collectionConfiguration = new CollectionConfiguration(
+                _collectionConfigurationInfo,
+                out errors);
             if (options.EnableLiveMetrics)
             {
+                _isAzureWebApp = InitializeIsWebAppRunningInAzure(platform);
+
                 InitializeState();
             }
         }
@@ -74,6 +83,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             return new QuickPulseSDKClientAPIsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.LiveEndpoint);
+        }
+
+        /// <summary>
+        /// Searches for the environment variable specific to Azure App Service.
+        /// </summary>
+        internal static bool InitializeIsWebAppRunningInAzure(IPlatform platform)
+        {
+            return !string.IsNullOrEmpty(platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME));
         }
 
         public void Dispose()

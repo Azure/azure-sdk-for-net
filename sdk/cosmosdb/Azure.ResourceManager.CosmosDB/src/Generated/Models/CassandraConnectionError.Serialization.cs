@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraConnectionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectionState.HasValue)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (IPFrom != null)
+            if (Optional.IsDefined(IPFrom))
             {
                 writer.WritePropertyName("iPFrom"u8);
                 writer.WriteStringValue(IPFrom);
             }
-            if (IPTo != null)
+            if (Optional.IsDefined(IPTo))
             {
                 writer.WritePropertyName("iPTo"u8);
                 writer.WriteStringValue(IPTo);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Exception != null)
+            if (Optional.IsDefined(Exception))
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraConnectionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraConnectionError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraConnectionError)} does not support reading '{options.Format}' format.");
             }
         }
 

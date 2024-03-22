@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnableDiagnosticsSupport.HasValue)
+            if (Optional.IsDefined(EnableDiagnosticsSupport))
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Logging != null)
+            if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
-            if (ScalingProperties != null)
+            if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties);
             }
-            if (UserProfile != null)
+            if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxDeploymentUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

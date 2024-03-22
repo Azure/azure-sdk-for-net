@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingTwinProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Desired != null)
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
 #endif
             }
-            if (Reported != null)
+            if (Optional.IsDefined(Reported))
             {
                 writer.WritePropertyName("reported"u8);
 #if NET6_0_OR_GREATER
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingTwinProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingTwinProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingTwinProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

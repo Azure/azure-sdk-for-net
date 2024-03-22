@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<CencDrmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PlayReady != null)
+            if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
                 writer.WriteObjectValue(PlayReady);
             }
-            if (Widevine != null)
+            if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
                 writer.WriteObjectValue(Widevine);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<CencDrmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeCencDrmConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CencDrmConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

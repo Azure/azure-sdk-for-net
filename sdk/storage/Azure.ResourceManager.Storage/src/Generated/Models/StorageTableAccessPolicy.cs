@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public StorageTableAccessPolicy(string permission)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
+            Argument.AssertNotNull(permission, nameof(permission));
 
             Permission = permission;
         }

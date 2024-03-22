@@ -17,10 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public UnsecuredEndpoint(string url) : base(url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
+            Argument.AssertNotNull(url, nameof(url));
 
             Type = "#Microsoft.VideoAnalyzer.UnsecuredEndpoint";
         }

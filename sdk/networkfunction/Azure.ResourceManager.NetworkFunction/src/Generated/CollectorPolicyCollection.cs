@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CollectorPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectorPolicyName, CollectorPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CollectorPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string collectorPolicyName, CollectorPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         public virtual async Task<Response<CollectorPolicyResource>> GetAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         public virtual Response<CollectorPolicyResource> Get(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         public virtual Response<bool> Exists(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         public virtual async Task<NullableResponse<CollectorPolicyResource>> GetIfExistsAsync(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <exception cref="ArgumentNullException"> <paramref name="collectorPolicyName"/> is null. </exception>
         public virtual NullableResponse<CollectorPolicyResource> GetIfExists(string collectorPolicyName, CancellationToken cancellationToken = default)
         {
-            if (collectorPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(collectorPolicyName));
-            }
-            if (collectorPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(collectorPolicyName));
-            }
+            Argument.AssertNotNullOrEmpty(collectorPolicyName, nameof(collectorPolicyName));
 
             using var scope = _collectorPolicyClientDiagnostics.CreateScope("CollectorPolicyCollection.GetIfExists");
             scope.Start();

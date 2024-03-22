@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabelUpdateList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Operations is ChangeTrackingList<SensitivityLabelUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabelUpdateList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSensitivityLabelUpdateList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SensitivityLabelUpdateList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -18,27 +18,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Notebook != null)
+            if (Optional.IsDefined(Notebook))
             {
                 writer.WritePropertyName("notebook"u8);
                 writer.WriteStringValue(Notebook);
             }
-            if (SparkPool != null)
+            if (Optional.IsDefined(SparkPool))
             {
                 writer.WritePropertyName("sparkPool"u8);
                 writer.WriteStringValue(SparkPool);
             }
-            if (SessionOptions != null)
+            if (Optional.IsDefined(SessionOptions))
             {
                 writer.WritePropertyName("sessionOptions"u8);
                 writer.WriteObjectValue(SessionOptions);
             }
-            if (HonorSessionTimeToLive.HasValue)
+            if (Optional.IsDefined(HonorSessionTimeToLive))
             {
                 writer.WritePropertyName("honorSessionTimeToLive"u8);
                 writer.WriteBooleanValue(HonorSessionTimeToLive.Value);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, RunNotebookParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();

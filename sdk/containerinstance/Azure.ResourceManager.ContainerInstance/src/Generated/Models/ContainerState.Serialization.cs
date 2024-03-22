@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && ExitCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExitCode))
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (options.Format != "W" && FinishOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FinishOn))
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishOn.Value, "O");
             }
-            if (options.Format != "W" && DetailStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailStatus))
             {
                 writer.WritePropertyName("detailStatus"u8);
                 writer.WriteStringValue(DetailStatus);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerState)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrincipalId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Models
                         return DeserializeSystemAssignedServiceIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

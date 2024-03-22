@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(IncludePrefix is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludePrefix))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludePrefix is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludePrefix))
             {
                 writer.WritePropertyName("excludePrefix"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BlobTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobTypes))
             {
                 writer.WritePropertyName("blobTypes"u8);
                 writer.WriteStartArray();
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IncludeBlobVersions.HasValue)
+            if (Optional.IsDefined(IncludeBlobVersions))
             {
                 writer.WritePropertyName("includeBlobVersions"u8);
                 writer.WriteBooleanValue(IncludeBlobVersions.Value);
             }
-            if (IncludeSnapshots.HasValue)
+            if (Optional.IsDefined(IncludeSnapshots))
             {
                 writer.WritePropertyName("includeSnapshots"u8);
                 writer.WriteBooleanValue(IncludeSnapshots.Value);
             }
-            if (IncludeDeleted.HasValue)
+            if (Optional.IsDefined(IncludeDeleted))
             {
                 writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeBlobInventoryPolicyFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

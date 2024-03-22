@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Item != null)
+            if (Optional.IsDefined(Item))
             {
                 writer.WritePropertyName("item"u8);
                 writer.WriteStringValue(Item);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverSummaryItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverSummaryItemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverSummaryItemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

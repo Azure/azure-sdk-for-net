@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationAssociationProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConfigurationName != null)
+            if (Optional.IsDefined(ConfigurationName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(ConfigurationName);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationAssociationProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscConfigurationAssociationProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationAssociationProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

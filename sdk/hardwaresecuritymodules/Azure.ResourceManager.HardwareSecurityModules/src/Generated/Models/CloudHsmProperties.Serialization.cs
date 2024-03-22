@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (StateMessage != null)
+            if (Optional.IsDefined(StateMessage))
             {
                 writer.WritePropertyName("stateMessage"u8);
                 writer.WriteStringValue(StateMessage);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeCloudHsmProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlotSwapStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TimestampUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimestampUtc))
             {
                 writer.WritePropertyName("timestampUtc"u8);
                 writer.WriteStringValue(TimestampUtc.Value, "O");
             }
-            if (options.Format != "W" && SourceSlotName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceSlotName))
             {
                 writer.WritePropertyName("sourceSlotName"u8);
                 writer.WriteStringValue(SourceSlotName);
             }
-            if (options.Format != "W" && DestinationSlotName != null)
+            if (options.Format != "W" && Optional.IsDefined(DestinationSlotName))
             {
                 writer.WritePropertyName("destinationSlotName"u8);
                 writer.WriteStringValue(DestinationSlotName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlotSwapStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSlotSwapStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

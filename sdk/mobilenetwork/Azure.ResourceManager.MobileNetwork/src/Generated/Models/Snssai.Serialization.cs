@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<Snssai>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Snssai)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Snssai)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sst"u8);
             writer.WriteNumberValue(Sst);
-            if (Sd != null)
+            if (Optional.IsDefined(Sd))
             {
                 writer.WritePropertyName("sd"u8);
                 writer.WriteStringValue(Sd);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<Snssai>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Snssai)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Snssai)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Snssai)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Snssai)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeSnssai(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Snssai)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Snssai)} does not support reading '{options.Format}' format.");
             }
         }
 

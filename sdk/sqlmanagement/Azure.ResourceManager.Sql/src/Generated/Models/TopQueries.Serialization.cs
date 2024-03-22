@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopQueries)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopQueries)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NumberOfQueries.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfQueries))
             {
                 writer.WritePropertyName("numberOfQueries"u8);
                 writer.WriteNumberValue(NumberOfQueries.Value);
             }
-            if (options.Format != "W" && AggregationFunction != null)
+            if (options.Format != "W" && Optional.IsDefined(AggregationFunction))
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (options.Format != "W" && ObservationMetric != null)
+            if (options.Format != "W" && Optional.IsDefined(ObservationMetric))
             {
                 writer.WritePropertyName("observationMetric"u8);
                 writer.WriteStringValue(ObservationMetric);
             }
-            if (options.Format != "W" && IntervalType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IntervalType))
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && StartTime != null)
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && EndTime != null)
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (!(Queries is ChangeTrackingList<QueryStatisticsProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopQueries>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopQueries)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopQueries)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopQueries)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopQueries)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeTopQueries(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopQueries)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopQueries)} does not support reading '{options.Format}' format.");
             }
         }
 

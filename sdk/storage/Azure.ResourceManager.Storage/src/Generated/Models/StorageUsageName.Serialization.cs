@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageUsageName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && LocalizedValue != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 

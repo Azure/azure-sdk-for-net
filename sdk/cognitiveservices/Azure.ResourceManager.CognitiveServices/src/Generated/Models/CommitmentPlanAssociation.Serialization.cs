@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CommitmentPlanId != null)
+            if (Optional.IsDefined(CommitmentPlanId))
             {
                 writer.WritePropertyName("commitmentPlanId"u8);
                 writer.WriteStringValue(CommitmentPlanId);
             }
-            if (CommitmentPlanLocation != null)
+            if (Optional.IsDefined(CommitmentPlanLocation))
             {
                 writer.WritePropertyName("commitmentPlanLocation"u8);
                 writer.WriteStringValue(CommitmentPlanLocation);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCommitmentPlanAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredefinedTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredefinedTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredefinedTag)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (TagName != null)
+            if (Optional.IsDefined(TagName))
             {
                 writer.WritePropertyName("tagName"u8);
                 writer.WriteStringValue(TagName);
             }
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteObjectValue(Count);
             }
-            if (!(Values is ChangeTrackingList<PredefinedTagValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredefinedTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredefinedTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredefinedTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredefinedTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredefinedTag)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializePredefinedTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredefinedTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredefinedTag)} does not support reading '{options.Format}' format.");
             }
         }
 

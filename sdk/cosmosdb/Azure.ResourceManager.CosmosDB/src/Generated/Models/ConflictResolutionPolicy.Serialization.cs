@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (ConflictResolutionPath != null)
+            if (Optional.IsDefined(ConflictResolutionPath))
             {
                 writer.WritePropertyName("conflictResolutionPath"u8);
                 writer.WriteStringValue(ConflictResolutionPath);
             }
-            if (ConflictResolutionProcedure != null)
+            if (Optional.IsDefined(ConflictResolutionProcedure))
             {
                 writer.WritePropertyName("conflictResolutionProcedure"u8);
                 writer.WriteStringValue(ConflictResolutionProcedure);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConflictResolutionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeConflictResolutionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConflictResolutionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

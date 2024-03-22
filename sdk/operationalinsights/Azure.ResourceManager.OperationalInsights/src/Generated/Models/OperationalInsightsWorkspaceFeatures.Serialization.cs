@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsDataExportEnabled.HasValue)
+            if (Optional.IsDefined(IsDataExportEnabled))
             {
                 if (IsDataExportEnabled != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableDataExport");
                 }
             }
-            if (ImmediatePurgeDataOn30Days.HasValue)
+            if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
             {
                 if (ImmediatePurgeDataOn30Days != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("immediatePurgeDataOn30Days");
                 }
             }
-            if (IsLogAccessUsingOnlyResourcePermissionsEnabled.HasValue)
+            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
             {
                 if (IsLogAccessUsingOnlyResourcePermissionsEnabled != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("enableLogAccessUsingOnlyResourcePermissions");
                 }
             }
-            if (ClusterResourceId != null)
+            if (Optional.IsDefined(ClusterResourceId))
             {
                 if (ClusterResourceId != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("clusterResourceId");
                 }
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 if (IsLocalAuthDisabled != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{options.Format}' format.");
             }
         }
 

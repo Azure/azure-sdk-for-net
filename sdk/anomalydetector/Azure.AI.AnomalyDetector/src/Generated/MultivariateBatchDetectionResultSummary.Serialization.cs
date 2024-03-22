@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,13 +22,13 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (!(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -39,7 +38,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(VariableStates is ChangeTrackingList<VariableState> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
@@ -74,7 +73,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateBatchDetectionResultSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +152,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeMultivariateBatchDetectionResultSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultivariateBatchDetectionResultSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

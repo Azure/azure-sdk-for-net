@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredWebJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,59 +48,59 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LatestRun != null)
+            if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latest_run"u8);
                 writer.WriteObjectValue(LatestRun);
             }
-            if (HistoryUri != null)
+            if (Optional.IsDefined(HistoryUri))
             {
                 writer.WritePropertyName("history_url"u8);
                 writer.WriteStringValue(HistoryUri.AbsoluteUri);
             }
-            if (SchedulerLogsUri != null)
+            if (Optional.IsDefined(SchedulerLogsUri))
             {
                 writer.WritePropertyName("scheduler_logs_url"u8);
                 writer.WriteStringValue(SchedulerLogsUri.AbsoluteUri);
             }
-            if (RunCommand != null)
+            if (Optional.IsDefined(RunCommand))
             {
                 writer.WritePropertyName("run_command"u8);
                 writer.WriteStringValue(RunCommand);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (ExtraInfoUri != null)
+            if (Optional.IsDefined(ExtraInfoUri))
             {
                 writer.WritePropertyName("extra_info_url"u8);
                 writer.WriteStringValue(ExtraInfoUri.AbsoluteUri);
             }
-            if (WebJobType.HasValue)
+            if (Optional.IsDefined(WebJobType))
             {
                 writer.WritePropertyName("web_job_type"u8);
                 writer.WriteStringValue(WebJobType.Value.ToSerialString());
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (IsUsingSdk.HasValue)
+            if (Optional.IsDefined(IsUsingSdk))
             {
                 writer.WritePropertyName("using_sdk"u8);
                 writer.WriteBooleanValue(IsUsingSdk.Value);
             }
-            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredWebJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeTriggeredWebJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredWebJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

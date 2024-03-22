@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Min.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (options.Format != "W" && Max.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterResourceRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support reading '{options.Format}' format.");
             }
         }
 

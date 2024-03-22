@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfPropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(Path);
             writer.WritePropertyName("propertyChangeType"u8);
             writer.WriteStringValue(PropertyChangeType.ToSerialString());
-            if (Before != null)
+            if (Optional.IsDefined(Before))
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (After != null)
+            if (Optional.IsDefined(After))
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (!(Children is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfPropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeWhatIfPropertyChange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatIfPropertyChange)} does not support reading '{options.Format}' format.");
             }
         }
 

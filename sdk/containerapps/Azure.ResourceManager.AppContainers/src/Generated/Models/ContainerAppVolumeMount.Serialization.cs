@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VolumeName != null)
+            if (Optional.IsDefined(VolumeName))
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (MountPath != null)
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (SubPath != null)
+            if (Optional.IsDefined(SubPath))
             {
                 writer.WritePropertyName("subPath"u8);
                 writer.WriteStringValue(SubPath);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppVolumeMount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolumeMount)} does not support reading '{options.Format}' format.");
             }
         }
 

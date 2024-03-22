@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(NetworkFunctionApplications is ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkFunctionApplications))
             {
                 writer.WritePropertyName("networkFunctionApplications"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesNetworkFunctionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureArcKubernetesNetworkFunctionTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesNetworkFunctionTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

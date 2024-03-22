@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetDnsServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetDnsServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetDnsServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
             writer.WriteStringValue(IPAddress.ToString());
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetDnsServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetDnsServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetDnsServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetDnsServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetDnsServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeTargetDnsServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetDnsServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetDnsServer)} does not support reading '{options.Format}' format.");
             }
         }
 

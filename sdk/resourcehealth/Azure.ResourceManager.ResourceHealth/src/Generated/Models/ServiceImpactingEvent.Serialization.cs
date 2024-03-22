@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceImpactingEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EventStartOn.HasValue)
+            if (Optional.IsDefined(EventStartOn))
             {
                 writer.WritePropertyName("eventStartTime"u8);
                 writer.WriteStringValue(EventStartOn.Value, "O");
             }
-            if (EventStatusLastModifiedOn.HasValue)
+            if (Optional.IsDefined(EventStatusLastModifiedOn))
             {
                 writer.WritePropertyName("eventStatusLastModifiedTime"u8);
                 writer.WriteStringValue(EventStatusLastModifiedOn.Value, "O");
             }
-            if (CorrelationId != null)
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (IncidentProperties != null)
+            if (Optional.IsDefined(IncidentProperties))
             {
                 writer.WritePropertyName("incidentProperties"u8);
                 writer.WriteObjectValue(IncidentProperties);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceImpactingEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeServiceImpactingEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

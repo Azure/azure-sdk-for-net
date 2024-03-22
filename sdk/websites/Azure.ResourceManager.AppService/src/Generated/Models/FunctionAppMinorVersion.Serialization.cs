@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayText != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayText))
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && StackSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(StackSettings))
             {
                 writer.WritePropertyName("stackSettings"u8);
                 writer.WriteObjectValue(StackSettings);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeFunctionAppMinorVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

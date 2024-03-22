@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MasterSiteId != null)
+            if (Optional.IsDefined(MasterSiteId))
             {
                 writer.WritePropertyName("masterSiteId"u8);
                 writer.WriteStringValue(MasterSiteId);
             }
-            if (MigrateProjectId != null)
+            if (Optional.IsDefined(MigrateProjectId))
             {
                 writer.WritePropertyName("migrateProjectId"u8);
                 writer.WriteStringValue(MigrateProjectId);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

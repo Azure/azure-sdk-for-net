@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoAvailableSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoAvailableSkuDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoAvailableSkuDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoAvailableSkuDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

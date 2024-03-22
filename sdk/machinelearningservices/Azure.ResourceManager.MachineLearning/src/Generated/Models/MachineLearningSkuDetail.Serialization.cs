@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSkuDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 if (Capacity != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("capacity");
                 }
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 if (ResourceType != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 if (Sku != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSkuDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningSkuDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

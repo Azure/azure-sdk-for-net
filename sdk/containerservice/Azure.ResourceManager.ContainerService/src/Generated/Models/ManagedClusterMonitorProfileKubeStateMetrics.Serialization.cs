@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MetricLabelsAllowlist != null)
+            if (Optional.IsDefined(MetricLabelsAllowlist))
             {
                 writer.WritePropertyName("metricLabelsAllowlist"u8);
                 writer.WriteStringValue(MetricLabelsAllowlist);
             }
-            if (MetricAnnotationsAllowList != null)
+            if (Optional.IsDefined(MetricAnnotationsAllowList))
             {
                 writer.WritePropertyName("metricAnnotationsAllowList"u8);
                 writer.WriteStringValue(MetricAnnotationsAllowList);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterMonitorProfileKubeStateMetrics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support reading '{options.Format}' format.");
             }
         }
 

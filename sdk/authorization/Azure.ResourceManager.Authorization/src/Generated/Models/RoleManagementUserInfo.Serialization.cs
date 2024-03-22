@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementUserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserType.HasValue)
+            if (Optional.IsDefined(UserType))
             {
                 writer.WritePropertyName("userType"u8);
                 writer.WriteStringValue(UserType.Value.ToString());
             }
-            if (IsBackup.HasValue)
+            if (Optional.IsDefined(IsBackup))
             {
                 writer.WritePropertyName("isBackup"u8);
                 writer.WriteBooleanValue(IsBackup.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementUserInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleManagementUserInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementUserInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

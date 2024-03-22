@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinMatchingValue != null)
+            if (Optional.IsDefined(MinMatchingValue))
             {
                 writer.WritePropertyName("minMatchingValue"u8);
                 writer.WriteStringValue(MinMatchingValue);
             }
-            if (MaxMatchingValue != null)
+            if (Optional.IsDefined(MaxMatchingValue))
             {
                 writer.WritePropertyName("maxMatchingValue"u8);
                 writer.WriteStringValue(MaxMatchingValue);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RangeBasedItemLevelRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeRangeBasedItemLevelRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RangeBasedItemLevelRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

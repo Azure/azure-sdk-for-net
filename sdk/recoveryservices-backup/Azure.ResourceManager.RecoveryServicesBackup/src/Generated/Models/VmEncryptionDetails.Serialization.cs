@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmEncryptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEncryptionEnabled.HasValue)
+            if (Optional.IsDefined(IsEncryptionEnabled))
             {
                 writer.WritePropertyName("encryptionEnabled"u8);
                 writer.WriteBooleanValue(IsEncryptionEnabled.Value);
             }
-            if (KekUri != null)
+            if (Optional.IsDefined(KekUri))
             {
                 writer.WritePropertyName("kekUrl"u8);
                 writer.WriteStringValue(KekUri.AbsoluteUri);
             }
-            if (SecretKeyUri != null)
+            if (Optional.IsDefined(SecretKeyUri))
             {
                 writer.WritePropertyName("secretKeyUrl"u8);
                 writer.WriteStringValue(SecretKeyUri.AbsoluteUri);
             }
-            if (KekVaultId != null)
+            if (Optional.IsDefined(KekVaultId))
             {
                 writer.WritePropertyName("kekVaultId"u8);
                 writer.WriteStringValue(KekVaultId);
             }
-            if (SecretKeyVaultId != null)
+            if (Optional.IsDefined(SecretKeyVaultId))
             {
                 writer.WritePropertyName("secretKeyVaultId"u8);
                 writer.WriteStringValue(SecretKeyVaultId);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmEncryptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmEncryptionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmEncryptionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

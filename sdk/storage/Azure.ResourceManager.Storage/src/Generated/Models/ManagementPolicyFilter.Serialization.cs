@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(PrefixMatch is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrefixMatch))
             {
                 writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(BlobIndexMatch is ChangeTrackingList<ManagementPolicyTagFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobIndexMatch))
             {
                 writer.WritePropertyName("blobIndexMatch"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeManagementPolicyFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

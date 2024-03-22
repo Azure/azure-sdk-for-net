@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusClientAffineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (IsDurable.HasValue)
+            if (Optional.IsDefined(IsDurable))
             {
                 writer.WritePropertyName("isDurable"u8);
                 writer.WriteBooleanValue(IsDurable.Value);
             }
-            if (IsShared.HasValue)
+            if (Optional.IsDefined(IsShared))
             {
                 writer.WritePropertyName("isShared"u8);
                 writer.WriteBooleanValue(IsShared.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusClientAffineProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusClientAffineProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusClientAffineProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

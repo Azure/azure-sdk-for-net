@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerResourceLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MemoryInGB.HasValue)
+            if (Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (Cpu.HasValue)
+            if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerResourceLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerResourceLimits(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerResourceLimits)} does not support reading '{options.Format}' format.");
             }
         }
 

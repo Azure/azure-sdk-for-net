@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (options.Format != "W" && SecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (options.Format != "W" && AliasPrimaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AliasPrimaryConnectionString))
             {
                 writer.WritePropertyName("aliasPrimaryConnectionString"u8);
                 writer.WriteStringValue(AliasPrimaryConnectionString);
             }
-            if (options.Format != "W" && AliasSecondaryConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(AliasSecondaryConnectionString))
             {
                 writer.WritePropertyName("aliasSecondaryConnectionString"u8);
                 writer.WriteStringValue(AliasSecondaryConnectionString);
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && KeyName != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusAccessKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

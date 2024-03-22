@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Cardinality.HasValue)
+            if (Optional.IsDefined(Cardinality))
             {
                 writer.WritePropertyName("cardinality"u8);
                 writer.WriteStringValue(Cardinality.Value.ToSerialString());
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (ExpiryDateTimeUtc.HasValue)
+            if (Optional.IsDefined(ExpiryDateTimeUtc))
             {
                 writer.WritePropertyName("expiryDateTimeUtc"u8);
                 writer.WriteStringValue(ExpiryDateTimeUtc.Value, "O");
             }
-            if (!(Fields is ChangeTrackingList<PropertyDefinition> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(LookupMappings is ChangeTrackingList<RelationshipTypeMapping> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LookupMappings))
             {
                 writer.WritePropertyName("lookupMappings"u8);
                 writer.WriteStartArray();
@@ -102,32 +102,32 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (ProfileType != null)
+            if (Optional.IsDefined(ProfileType))
             {
                 writer.WritePropertyName("profileType"u8);
                 writer.WriteStringValue(ProfileType);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RelationshipName != null)
+            if (options.Format != "W" && Optional.IsDefined(RelationshipName))
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
             }
-            if (RelatedProfileType != null)
+            if (Optional.IsDefined(RelatedProfileType))
             {
                 writer.WritePropertyName("relatedProfileType"u8);
                 writer.WriteStringValue(RelatedProfileType);
             }
-            if (options.Format != "W" && RelationshipGuidId != null)
+            if (options.Format != "W" && Optional.IsDefined(RelationshipGuidId))
             {
                 writer.WritePropertyName("relationshipGuidId"u8);
                 writer.WriteStringValue(RelationshipGuidId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeRelationshipResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (DBScaleMethod.HasValue)
+            if (Optional.IsDefined(DBScaleMethod))
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (HighAvailabilityType.HasValue)
+            if (Optional.IsDefined(HighAvailabilityType))
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSizingRecommendationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapSizingRecommendationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSizingRecommendationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

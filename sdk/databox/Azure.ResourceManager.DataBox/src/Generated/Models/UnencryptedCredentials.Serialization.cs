@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnencryptedCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobName != null)
+            if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (options.Format != "W" && JobSecrets != null)
+            if (options.Format != "W" && Optional.IsDefined(JobSecrets))
             {
                 writer.WritePropertyName("jobSecrets"u8);
                 writer.WriteObjectValue(JobSecrets);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnencryptedCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeUnencryptedCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnencryptedCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

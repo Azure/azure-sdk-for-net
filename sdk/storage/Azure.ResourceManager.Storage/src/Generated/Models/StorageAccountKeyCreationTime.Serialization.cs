@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountKeyCreationTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Key1.HasValue)
+            if (Optional.IsDefined(Key1))
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1.Value, "O");
             }
-            if (Key2.HasValue)
+            if (Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountKeyCreationTime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageAccountKeyCreationTime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountKeyCreationTime)} does not support reading '{options.Format}' format.");
             }
         }
 

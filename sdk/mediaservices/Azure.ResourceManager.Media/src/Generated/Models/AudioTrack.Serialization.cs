@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTrack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTrack)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (LanguageCode != null)
+            if (Optional.IsDefined(LanguageCode))
             {
                 writer.WritePropertyName("languageCode"u8);
                 writer.WriteStringValue(LanguageCode);
             }
-            if (HlsSettings != null)
+            if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
                 writer.WriteObjectValue(HlsSettings);
             }
-            if (DashSettings != null)
+            if (Optional.IsDefined(DashSettings))
             {
                 writer.WritePropertyName("dashSettings"u8);
                 writer.WriteObjectValue(DashSettings);
             }
-            if (Mpeg4TrackId.HasValue)
+            if (Optional.IsDefined(Mpeg4TrackId))
             {
                 if (Mpeg4TrackId != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("mpeg4TrackId");
                 }
             }
-            if (options.Format != "W" && BitRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BitRate))
             {
                 writer.WritePropertyName("bitRate"u8);
                 writer.WriteNumberValue(BitRate.Value);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioTrack)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AudioTrack)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AudioTrack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTrack)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeAudioTrack(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioTrack)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AudioTrack)} does not support reading '{options.Format}' format.");
             }
         }
 

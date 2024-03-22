@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerResourceRequestsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteNumberValue(MemoryInGB);
             writer.WritePropertyName("cpu"u8);
             writer.WriteNumberValue(Cpu);
-            if (Gpu != null)
+            if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
                 writer.WriteObjectValue(Gpu);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerResourceRequestsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerResourceRequestsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerResourceRequestsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

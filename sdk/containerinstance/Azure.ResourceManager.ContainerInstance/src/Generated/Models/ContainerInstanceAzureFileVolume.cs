@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="storageAccountName"/> is null. </exception>
         public ContainerInstanceAzureFileVolume(string shareName, string storageAccountName)
         {
-            if (shareName == null)
-            {
-                throw new ArgumentNullException(nameof(shareName));
-            }
-            if (storageAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountName));
-            }
+            Argument.AssertNotNull(shareName, nameof(shareName));
+            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
 
             ShareName = shareName;
             StorageAccountName = storageAccountName;

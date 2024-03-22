@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderPermission)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (RoleDefinition != null)
+            if (Optional.IsDefined(RoleDefinition))
             {
                 writer.WritePropertyName("roleDefinition"u8);
                 writer.WriteObjectValue(RoleDefinition);
             }
-            if (ManagedByRoleDefinition != null)
+            if (Optional.IsDefined(ManagedByRoleDefinition))
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
                 writer.WriteObjectValue(ManagedByRoleDefinition);
             }
-            if (ProviderAuthorizationConsentState.HasValue)
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderPermission)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeProviderPermission(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderPermission)} does not support reading '{options.Format}' format.");
             }
         }
 

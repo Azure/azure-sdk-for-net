@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMapperMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMapperMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TargetEntityName != null)
+            if (Optional.IsDefined(TargetEntityName))
             {
                 writer.WritePropertyName("targetEntityName"u8);
                 writer.WriteStringValue(TargetEntityName);
             }
-            if (SourceEntityName != null)
+            if (Optional.IsDefined(SourceEntityName))
             {
                 writer.WritePropertyName("sourceEntityName"u8);
                 writer.WriteStringValue(SourceEntityName);
             }
-            if (SourceConnectionReference != null)
+            if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
                 writer.WriteObjectValue(SourceConnectionReference);
             }
-            if (AttributeMappingInfo != null)
+            if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
                 writer.WriteObjectValue(AttributeMappingInfo);
             }
-            if (SourceDenormalizeInfo != null)
+            if (Optional.IsDefined(SourceDenormalizeInfo))
             {
                 writer.WritePropertyName("sourceDenormalizeInfo"u8);
 #if NET6_0_OR_GREATER
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMapperMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMapperMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataMapperMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMapperMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataMapperMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataMapperMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMapperMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

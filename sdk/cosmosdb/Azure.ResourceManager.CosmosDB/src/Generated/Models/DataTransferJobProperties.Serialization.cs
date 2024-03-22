@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobName != null)
+            if (options.Format != "W" && Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
@@ -35,35 +35,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ProcessedCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedCount))
             {
                 writer.WritePropertyName("processedCount"u8);
                 writer.WriteNumberValue(ProcessedCount.Value);
             }
-            if (options.Format != "W" && TotalCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (options.Format != "W" && LastUpdatedUtcOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedUtcOn))
             {
                 writer.WritePropertyName("lastUpdatedUtcTime"u8);
                 writer.WriteStringValue(LastUpdatedUtcOn.Value, "O");
             }
-            if (WorkerCount.HasValue)
+            if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Duration))
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteStringValue(Duration.Value, "c");
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,6 +122,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DateTimeOffset? lastUpdatedUtcTime = default;
             int? workerCount = default;
             ErrorResponse error = default;
+            TimeSpan? duration = default;
+            DataTransferJobMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,6 +193,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("duration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    duration = property.Value.GetTimeSpan("c");
+                    continue;
+                }
+                if (property.NameEquals("mode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new DataTransferJobMode(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -197,6 +227,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 lastUpdatedUtcTime,
                 workerCount,
                 error,
+                duration,
+                mode,
                 serializedAdditionalRawData);
         }
 
@@ -209,7 +241,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +257,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeDataTransferJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

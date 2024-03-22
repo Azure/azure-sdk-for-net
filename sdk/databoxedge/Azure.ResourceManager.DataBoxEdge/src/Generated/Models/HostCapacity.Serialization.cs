@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (EffectiveAvailableMemoryInMBOnHost.HasValue)
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMBOnHost))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryMbOnHost"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMBOnHost.Value);
             }
-            if (AvailableGpuCount.HasValue)
+            if (Optional.IsDefined(AvailableGpuCount))
             {
                 writer.WritePropertyName("availableGpuCount"u8);
                 writer.WriteNumberValue(AvailableGpuCount.Value);
             }
-            if (!(VmUsedMemory is ChangeTrackingDictionary<string, DataBoxEdgeVmMemory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmUsedMemory))
             {
                 writer.WritePropertyName("vmUsedMemory"u8);
                 writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndObject();
             }
-            if (GpuType != null)
+            if (Optional.IsDefined(GpuType))
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (!(NumaNodesData is ChangeTrackingList<NumaNodeInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NumaNodesData))
             {
                 writer.WritePropertyName("numaNodesData"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeHostCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

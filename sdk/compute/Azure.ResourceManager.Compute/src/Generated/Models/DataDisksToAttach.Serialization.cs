@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataDisksToAttach>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (Lun.HasValue)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataDisksToAttach>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDataDisksToAttach(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDisksToAttach)} does not support reading '{options.Format}' format.");
             }
         }
 

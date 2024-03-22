@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 RestoreMode = "PointInTime",
                 RestoreTimestampInUtc = ts.AddSeconds(230),
                 RestoreSource = restorableAccount.Id.ToString(),
+                RestoreWithTtlDisabled = true,
             };
 
             _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.PitrSql, restorableAccount, restoreParameters, AzureLocation.WestUS, AzureLocation.WestUS);
@@ -212,6 +213,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.NotNull(restoredDatabaseAccount);
             Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
             Assert.AreEqual(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower(), restorableAccount.Id.ToString().ToLower());
+            Assert.True(restoredDatabaseAccount.Data.RestoreParameters.RestoreWithTtlDisabled);
             Assert.True(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy);
 
             ContinuousModeBackupPolicy policy = restoredDatabaseAccount.Data.BackupPolicy as ContinuousModeBackupPolicy;

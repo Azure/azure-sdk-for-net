@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LastUpdatedOn != null)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn);
             }
-            if (!(ThreatTypeMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatTypeMetrics))
             {
                 writer.WritePropertyName("threatTypeMetrics"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatternTypeMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternTypeMetrics))
             {
                 writer.WritePropertyName("patternTypeMetrics"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceMetrics is ChangeTrackingList<ThreatIntelligenceMetricEntity> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceMetrics))
             {
                 writer.WritePropertyName("sourceMetrics"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support reading '{options.Format}' format.");
             }
         }
 

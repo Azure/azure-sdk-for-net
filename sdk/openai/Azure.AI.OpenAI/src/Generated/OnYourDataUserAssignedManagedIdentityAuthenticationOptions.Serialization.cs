@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,11 +22,11 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("managedIdentityResourceId"u8);
+            writer.WritePropertyName("managed_identity_resource_id"u8);
             writer.WriteStringValue(ManagedIdentityResourceId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -54,7 +53,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedIdentityResourceId"u8))
+                if (property.NameEquals("managed_identity_resource_id"u8))
                 {
                     managedIdentityResourceId = property.Value.GetString();
                     continue;
@@ -103,7 +102,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

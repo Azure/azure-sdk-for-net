@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(TasksList is ChangeTrackingList<IaasVmBackupJobTaskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TasksList))
             {
                 writer.WritePropertyName("tasksList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(InternalPropertyBag is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(InternalPropertyBag))
             {
                 writer.WritePropertyName("internalPropertyBag"u8);
                 writer.WriteStartObject();
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ProgressPercentage.HasValue)
+            if (Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (EstimatedRemainingDurationValue != null)
+            if (Optional.IsDefined(EstimatedRemainingDurationValue))
             {
                 writer.WritePropertyName("estimatedRemainingDuration"u8);
                 writer.WriteStringValue(EstimatedRemainingDurationValue);
             }
-            if (DynamicErrorMessage != null)
+            if (Optional.IsDefined(DynamicErrorMessage))
             {
                 writer.WritePropertyName("dynamicErrorMessage"u8);
                 writer.WriteStringValue(DynamicErrorMessage);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmBackupJobExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmBackupJobExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

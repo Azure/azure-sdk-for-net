@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisChildPackage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisChildPackage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisChildPackage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             JsonSerializer.Serialize(writer, PackagePath);
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             JsonSerializer.Serialize(writer, PackageContent);
-            if (PackageLastModifiedDate != null)
+            if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisChildPackage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisChildPackage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisChildPackage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SsisChildPackage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisChildPackage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSsisChildPackage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SsisChildPackage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisChildPackage)} does not support reading '{options.Format}' format.");
             }
         }
 

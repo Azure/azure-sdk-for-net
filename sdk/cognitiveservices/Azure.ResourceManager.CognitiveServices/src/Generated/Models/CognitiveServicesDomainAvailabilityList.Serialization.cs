@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesDomainAvailabilityList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsSubdomainAvailable.HasValue)
+            if (Optional.IsDefined(IsSubdomainAvailable))
             {
                 writer.WritePropertyName("isSubdomainAvailable"u8);
                 writer.WriteBooleanValue(IsSubdomainAvailable.Value);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (SubdomainName != null)
+            if (Optional.IsDefined(SubdomainName))
             {
                 writer.WritePropertyName("subdomainName"u8);
                 writer.WriteStringValue(SubdomainName);
             }
-            if (DomainAvailabilityType != null)
+            if (Optional.IsDefined(DomainAvailabilityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DomainAvailabilityType);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesDomainAvailabilityList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesDomainAvailabilityList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<HanaDBProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (DBName != null)
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("dbName"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (SqlPort != null)
+            if (Optional.IsDefined(SqlPort))
             {
                 writer.WritePropertyName("sqlPort"u8);
                 writer.WriteStringValue(SqlPort);
             }
-            if (InstanceNumber != null)
+            if (Optional.IsDefined(InstanceNumber))
             {
                 writer.WritePropertyName("instanceNumber"u8);
                 writer.WriteStringValue(InstanceNumber);
             }
-            if (DBUsername != null)
+            if (Optional.IsDefined(DBUsername))
             {
                 writer.WritePropertyName("dbUsername"u8);
                 writer.WriteStringValue(DBUsername);
             }
-            if (DBPassword != null)
+            if (Optional.IsDefined(DBPassword))
             {
                 writer.WritePropertyName("dbPassword"u8);
                 writer.WriteStringValue(DBPassword);
             }
-            if (DBPasswordUri != null)
+            if (Optional.IsDefined(DBPasswordUri))
             {
                 writer.WritePropertyName("dbPasswordUri"u8);
                 writer.WriteStringValue(DBPasswordUri.AbsoluteUri);
             }
-            if (SslCertificateUri != null)
+            if (Optional.IsDefined(SslCertificateUri))
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (SslHostNameInCertificate != null)
+            if (Optional.IsDefined(SslHostNameInCertificate))
             {
                 writer.WritePropertyName("sslHostNameInCertificate"u8);
                 writer.WriteStringValue(SslHostNameInCertificate);
             }
-            if (SslPreference.HasValue)
+            if (Optional.IsDefined(SslPreference))
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (SapSid != null)
+            if (Optional.IsDefined(SapSid))
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<HanaDBProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeHanaDBProviderInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

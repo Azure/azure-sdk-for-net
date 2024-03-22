@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectorType != null)
+            if (Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType);
             }
-            if (MaxSpeedInMbps.HasValue)
+            if (Optional.IsDefined(MaxSpeedInMbps))
             {
                 writer.WritePropertyName("maxSpeedInMbps"u8);
                 writer.WriteNumberValue(MaxSpeedInMbps.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeSupportedConnectorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedConnectorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

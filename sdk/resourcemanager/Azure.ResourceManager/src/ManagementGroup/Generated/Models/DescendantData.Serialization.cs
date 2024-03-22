@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<DescendantData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DescendantData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DescendantData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 if (Parent != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<DescendantData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DescendantData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DescendantData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DescendantData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DescendantData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeDescendantData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DescendantData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DescendantData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedSecurityObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AdvSecurityObjectModelType != null)
+            if (Optional.IsDefined(AdvSecurityObjectModelType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AdvSecurityObjectModelType);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdvancedSecurityObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeAdvancedSecurityObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdvancedSecurityObject)} does not support reading '{options.Format}' format.");
             }
         }
 

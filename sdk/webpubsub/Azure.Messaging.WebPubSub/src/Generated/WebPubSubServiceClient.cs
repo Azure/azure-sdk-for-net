@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -185,10 +184,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAllAsync(RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
@@ -225,10 +221,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToAll(RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToAll");
             scope.Start();
@@ -264,14 +257,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseConnectionAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
@@ -307,14 +293,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseConnection(string,string,RequestContext)']/*" />
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseConnection");
             scope.Start();
@@ -348,14 +327,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
@@ -389,14 +361,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.ConnectionExistsImpl");
             scope.Start();
@@ -433,18 +398,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnectionAsync(string,RequestContent,ContentType,RequestContext)']/*" />
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
@@ -481,18 +436,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToConnection(string,RequestContent,ContentType,RequestContext)']/*" />
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToConnection");
             scope.Start();
@@ -527,14 +472,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroupsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> RemoveConnectionFromAllGroupsAsync(string connectionId, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromAllGroups");
             scope.Start();
@@ -569,14 +507,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromAllGroups(string,RequestContext)']/*" />
         public virtual Response RemoveConnectionFromAllGroups(string connectionId, RequestContext context = null)
         {
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromAllGroups");
             scope.Start();
@@ -610,14 +541,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
@@ -651,14 +575,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GroupExistsImpl");
             scope.Start();
@@ -695,14 +612,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseGroupConnectionsAsync(string,IEnumerable{string},string,RequestContext)']/*" />
         public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
             scope.Start();
@@ -739,14 +649,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseGroupConnections(string,IEnumerable{string},string,RequestContext)']/*" />
         public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseGroupConnections");
             scope.Start();
@@ -785,18 +688,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroupAsync(string,RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
@@ -835,18 +728,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToGroup(string,RequestContent,ContentType,IEnumerable{string},string,RequestContext)']/*" />
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, string filter = null, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToGroup");
             scope.Start();
@@ -882,22 +765,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromGroupAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
@@ -933,22 +802,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveConnectionFromGroup(string,string,RequestContext)']/*" />
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveConnectionFromGroup");
             scope.Start();
@@ -984,22 +839,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='AddConnectionToGroupAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
@@ -1035,22 +876,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='AddConnectionToGroup(string,string,RequestContext)']/*" />
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
         {
-            if (group == null)
-            {
-                throw new ArgumentNullException(nameof(group));
-            }
-            if (group.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(group));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(group, nameof(group));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddConnectionToGroup");
             scope.Start();
@@ -1086,22 +913,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
-            if (permission.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permission));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
@@ -1137,22 +950,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
-            if (permission.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permission));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RevokePermission");
             scope.Start();
@@ -1188,22 +987,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
-            if (permission.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permission));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
@@ -1239,22 +1024,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
-            if (permission.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permission));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CheckPermission");
             scope.Start();
@@ -1290,22 +1061,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
-            if (permission.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permission));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
@@ -1341,22 +1098,8 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
-            if (permission.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(permission));
-            }
-            if (connectionId == null)
-            {
-                throw new ArgumentNullException(nameof(connectionId));
-            }
-            if (connectionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(connectionId));
-            }
+            Argument.AssertNotNullOrEmpty(permission, nameof(permission));
+            Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.GrantPermission");
             scope.Start();
@@ -1390,14 +1133,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
@@ -1431,14 +1167,7 @@ namespace Azure.Messaging.WebPubSub
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.UserExistsImpl");
             scope.Start();
@@ -1475,14 +1204,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseUserConnectionsAsync(string,IEnumerable{string},string,RequestContext)']/*" />
         public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
             scope.Start();
@@ -1519,14 +1241,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='CloseUserConnections(string,IEnumerable{string},string,RequestContext)']/*" />
         public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseUserConnections");
             scope.Start();
@@ -1564,18 +1279,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUserAsync(string,RequestContent,ContentType,string,RequestContext)']/*" />
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, string filter = null, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
@@ -1613,18 +1318,8 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='SendToUser(string,RequestContent,ContentType,string,RequestContext)']/*" />
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, string filter = null, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.SendToUser");
             scope.Start();
@@ -1659,14 +1354,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveUserFromAllGroupsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();
@@ -1701,14 +1389,7 @@ namespace Azure.Messaging.WebPubSub
         /// <include file="Docs/WebPubSubServiceClient.xml" path="doc/members/member[@name='RemoveUserFromAllGroups(string,RequestContext)']/*" />
         public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-            if (userId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userId));
-            }
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromAllGroups");
             scope.Start();

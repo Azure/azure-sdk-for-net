@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LegalHoldTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Tag != null)
+            if (options.Format != "W" && Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && ObjectIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectIdentifier))
             {
                 writer.WritePropertyName("objectIdentifier"u8);
                 writer.WriteStringValue(ObjectIdentifier);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Upn != null)
+            if (options.Format != "W" && Optional.IsDefined(Upn))
             {
                 writer.WritePropertyName("upn"u8);
                 writer.WriteStringValue(Upn);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LegalHoldTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LegalHoldTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LegalHoldTag)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLegalHoldTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LegalHoldTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LegalHoldTag)} does not support reading '{options.Format}' format.");
             }
         }
 

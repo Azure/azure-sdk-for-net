@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoggingHiddenPropertyPaths>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(HiddenPathsOnRequest is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HiddenPathsOnRequest))
             {
                 writer.WritePropertyName("hiddenPathsOnRequest"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HiddenPathsOnResponse is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HiddenPathsOnResponse))
             {
                 writer.WritePropertyName("hiddenPathsOnResponse"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoggingHiddenPropertyPaths>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeLoggingHiddenPropertyPaths(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoggingHiddenPropertyPaths)} does not support reading '{options.Format}' format.");
             }
         }
 

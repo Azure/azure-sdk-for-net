@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentParametersLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (ContentVersion != null)
+            if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentParametersLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentParametersLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentParametersLink)} does not support reading '{options.Format}' format.");
             }
         }
 

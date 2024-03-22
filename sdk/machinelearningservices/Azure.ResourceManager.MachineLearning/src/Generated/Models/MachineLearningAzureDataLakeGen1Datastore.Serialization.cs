@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureDataLakeGen1Datastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceDataAccessAuthIdentity.HasValue)
+            if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
             {
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName);
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 if (ResourceGroup != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceGroup");
                 }
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 if (SubscriptionId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (IntellectualProperty != null)
+            if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("intellectualProperty");
                 }
             }
-            if (options.Format != "W" && IsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureDataLakeGen1Datastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningAzureDataLakeGen1Datastore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen1Datastore)} does not support reading '{options.Format}' format.");
             }
         }
 

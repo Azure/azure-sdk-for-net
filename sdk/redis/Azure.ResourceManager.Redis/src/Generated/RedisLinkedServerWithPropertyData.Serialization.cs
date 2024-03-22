@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Redis
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LinkedRedisCacheId != null)
+            if (Optional.IsDefined(LinkedRedisCacheId))
             {
                 writer.WritePropertyName("linkedRedisCacheId"u8);
                 writer.WriteStringValue(LinkedRedisCacheId);
             }
-            if (LinkedRedisCacheLocation.HasValue)
+            if (Optional.IsDefined(LinkedRedisCacheLocation))
             {
                 writer.WritePropertyName("linkedRedisCacheLocation"u8);
                 writer.WriteStringValue(LinkedRedisCacheLocation.Value);
             }
-            if (ServerRole.HasValue)
+            if (Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole.Value.ToSerialString());
             }
-            if (options.Format != "W" && GeoReplicatedPrimaryHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
             {
                 writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
                 writer.WriteStringValue(GeoReplicatedPrimaryHostName);
             }
-            if (options.Format != "W" && PrimaryHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
             {
                 writer.WritePropertyName("primaryHostName"u8);
                 writer.WriteStringValue(PrimaryHostName);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Redis
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Redis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Redis
                         return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{options.Format}' format.");
             }
         }
 

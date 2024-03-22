@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppPlatform
 {
@@ -196,10 +194,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformMonitoringSettingResource>> UpdateAsync(WaitUntil waitUntil, AppPlatformMonitoringSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics.CreateScope("AppPlatformMonitoringSettingResource.Update");
             scope.Start();
@@ -245,10 +240,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformMonitoringSettingResource> Update(WaitUntil waitUntil, AppPlatformMonitoringSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics.CreateScope("AppPlatformMonitoringSettingResource.Update");
             scope.Start();
@@ -294,10 +286,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformMonitoringSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AppPlatformMonitoringSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics.CreateScope("AppPlatformMonitoringSettingResource.CreateOrUpdate");
             scope.Start();
@@ -343,10 +332,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformMonitoringSettingResource> CreateOrUpdate(WaitUntil waitUntil, AppPlatformMonitoringSettingData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appPlatformMonitoringSettingMonitoringSettingsClientDiagnostics.CreateScope("AppPlatformMonitoringSettingResource.CreateOrUpdate");
             scope.Start();

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourcePoolId != null)
+            if (Optional.IsDefined(ResourcePoolId))
             {
                 writer.WritePropertyName("resourcePoolId"u8);
                 writer.WriteStringValue(ResourcePoolId);
             }
-            if (ClusterId != null)
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (HostId != null)
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (DatastoreId != null)
+            if (Optional.IsDefined(DatastoreId))
             {
                 writer.WritePropertyName("datastoreId"u8);
                 writer.WriteStringValue(DatastoreId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializePlacementProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

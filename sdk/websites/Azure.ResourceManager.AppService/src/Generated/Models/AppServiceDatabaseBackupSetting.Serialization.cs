@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDatabaseBackupSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ConnectionStringName != null)
+            if (Optional.IsDefined(ConnectionStringName))
             {
                 writer.WritePropertyName("connectionStringName"u8);
                 writer.WriteStringValue(ConnectionStringName);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDatabaseBackupSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceDatabaseBackupSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CurrentTimeStamp.HasValue)
+            if (Optional.IsDefined(CurrentTimeStamp))
             {
                 writer.WritePropertyName("currentTimeStamp"u8);
                 writer.WriteStringValue(CurrentTimeStamp.Value, "O");
             }
-            if (PreviousTimeStamp.HasValue)
+            if (Optional.IsDefined(PreviousTimeStamp))
             {
                 writer.WritePropertyName("previousTimeStamp"u8);
                 writer.WriteStringValue(PreviousTimeStamp.Value, "O");
             }
-            if (CurrentCpuStats != null)
+            if (Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
                 writer.WriteObjectValue(CurrentCpuStats);
             }
-            if (PreviousCpuStats != null)
+            if (Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
                 writer.WriteObjectValue(PreviousCpuStats);
             }
-            if (MemoryStats != null)
+            if (Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
                 writer.WriteObjectValue(MemoryStats);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Eth0 != null)
+            if (Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

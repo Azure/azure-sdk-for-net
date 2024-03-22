@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OpenIdIssuer != null)
+            if (Optional.IsDefined(OpenIdIssuer))
             {
                 writer.WritePropertyName("openIdIssuer"u8);
                 writer.WriteStringValue(OpenIdIssuer);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecretSettingName != null)
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (ClientSecretCertificateThumbprintString != null)
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
                 writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
-            if (ClientSecretCertificateSubjectAlternativeName != null)
+            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
             {
                 writer.WritePropertyName("clientSecretCertificateSubjectAlternativeName"u8);
                 writer.WriteStringValue(ClientSecretCertificateSubjectAlternativeName);
             }
-            if (ClientSecretCertificateIssuer != null)
+            if (Optional.IsDefined(ClientSecretCertificateIssuer))
             {
                 writer.WritePropertyName("clientSecretCertificateIssuer"u8);
                 writer.WriteStringValue(ClientSecretCertificateIssuer);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceAadRegistration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadRegistration)} does not support reading '{options.Format}' format.");
             }
         }
 

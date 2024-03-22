@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEdgeManagementRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LocalManagementStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LocalManagementStatus))
             {
                 writer.WritePropertyName("localManagementStatus"u8);
                 writer.WriteStringValue(LocalManagementStatus.Value.ToString());
             }
-            if (options.Format != "W" && EdgeProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
                 writer.WriteObjectValue(EdgeProfile);
             }
-            if (RoleStatus.HasValue)
+            if (Optional.IsDefined(RoleStatus))
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEdgeManagementRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeCloudEdgeManagementRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEdgeManagementRole)} does not support reading '{options.Format}' format.");
             }
         }
 

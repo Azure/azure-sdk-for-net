@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuggestRelationshipLinksResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && InteractionName != null)
+            if (options.Format != "W" && Optional.IsDefined(InteractionName))
             {
                 writer.WritePropertyName("interactionName"u8);
                 writer.WriteStringValue(InteractionName);
             }
-            if (options.Format != "W" && !(SuggestedRelationships is ChangeTrackingList<RelationshipsLookup> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SuggestedRelationships))
             {
                 writer.WritePropertyName("suggestedRelationships"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuggestRelationshipLinksResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeSuggestRelationshipLinksResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuggestRelationshipLinksResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

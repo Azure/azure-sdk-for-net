@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (CodemirrorMode != null)
+            if (Optional.IsDefined(CodemirrorMode))
             {
                 writer.WritePropertyName("codemirror_mode"u8);
                 writer.WriteStringValue(CodemirrorMode);

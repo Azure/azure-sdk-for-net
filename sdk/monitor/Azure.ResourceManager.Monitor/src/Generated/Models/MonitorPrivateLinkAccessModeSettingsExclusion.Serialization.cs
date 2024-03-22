@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkAccessModeSettingsExclusion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrivateEndpointConnectionName != null)
+            if (Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (QueryAccessMode.HasValue)
+            if (Optional.IsDefined(QueryAccessMode))
             {
                 writer.WritePropertyName("queryAccessMode"u8);
                 writer.WriteStringValue(QueryAccessMode.Value.ToString());
             }
-            if (IngestionAccessMode.HasValue)
+            if (Optional.IsDefined(IngestionAccessMode))
             {
                 writer.WritePropertyName("ingestionAccessMode"u8);
                 writer.WriteStringValue(IngestionAccessMode.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkAccessModeSettingsExclusion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorPrivateLinkAccessModeSettingsExclusion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettingsExclusion)} does not support reading '{options.Format}' format.");
             }
         }
 

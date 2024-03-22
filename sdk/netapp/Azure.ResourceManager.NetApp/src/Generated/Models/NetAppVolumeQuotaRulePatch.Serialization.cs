@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (QuotaSizeInKiBs.HasValue)
+            if (Optional.IsDefined(QuotaSizeInKiBs))
             {
                 writer.WritePropertyName("quotaSizeInKiBs"u8);
                 writer.WriteNumberValue(QuotaSizeInKiBs.Value);
             }
-            if (QuotaType.HasValue)
+            if (Optional.IsDefined(QuotaType))
             {
                 writer.WritePropertyName("quotaType"u8);
                 writer.WriteStringValue(QuotaType.Value.ToString());
             }
-            if (QuotaTarget != null)
+            if (Optional.IsDefined(QuotaTarget))
             {
                 writer.WritePropertyName("quotaTarget"u8);
                 writer.WriteStringValue(QuotaTarget);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeQuotaRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

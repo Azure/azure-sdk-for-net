@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpectedStatusCodeRangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Min.HasValue)
+            if (Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Max.HasValue)
+            if (Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpectedStatusCodeRangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         return DeserializeExpectedStatusCodeRangeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpectedStatusCodeRangeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

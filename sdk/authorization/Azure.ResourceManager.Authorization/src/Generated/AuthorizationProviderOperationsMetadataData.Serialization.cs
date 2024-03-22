@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<AuthorizationProviderResourceType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (!(Operations is ChangeTrackingList<AuthorizationProviderOperationInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Authorization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Authorization
                         return DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationProviderOperationsMetadataData)} does not support reading '{options.Format}' format.");
             }
         }
 

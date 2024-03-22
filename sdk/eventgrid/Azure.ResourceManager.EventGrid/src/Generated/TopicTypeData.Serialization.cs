@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<TopicTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopicTypeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ResourceRegionType.HasValue)
+            if (Optional.IsDefined(ResourceRegionType))
             {
                 writer.WritePropertyName("resourceRegionType"u8);
                 writer.WriteStringValue(ResourceRegionType.Value.ToString());
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(SupportedLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedLocations))
             {
                 writer.WritePropertyName("supportedLocations"u8);
                 writer.WriteStartArray();
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (SourceResourceFormat != null)
+            if (Optional.IsDefined(SourceResourceFormat))
             {
                 writer.WritePropertyName("sourceResourceFormat"u8);
                 writer.WriteStringValue(SourceResourceFormat);
             }
-            if (!(SupportedScopesForSource is ChangeTrackingList<TopicTypeSourceScope> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedScopesForSource))
             {
                 writer.WritePropertyName("supportedScopesForSource"u8);
                 writer.WriteStartArray();
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (AreRegionalAndGlobalSourcesSupported.HasValue)
+            if (Optional.IsDefined(AreRegionalAndGlobalSourcesSupported))
             {
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
-            if (!(AdditionalEnforcedPermissions is ChangeTrackingList<TopicTypeAdditionalEnforcedPermission> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEnforcedPermissions))
             {
                 writer.WritePropertyName("additionalEnforcedPermissions"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<TopicTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopicTypeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopicTypeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeTopicTypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopicTypeData)} does not support reading '{options.Format}' format.");
             }
         }
 

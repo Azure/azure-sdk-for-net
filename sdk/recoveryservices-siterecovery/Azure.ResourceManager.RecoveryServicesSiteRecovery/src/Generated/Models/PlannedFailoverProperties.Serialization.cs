@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FailoverDirection != null)
+            if (Optional.IsDefined(FailoverDirection))
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlannedFailoverProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializePlannedFailoverProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlannedFailoverProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

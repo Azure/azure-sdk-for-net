@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.Consumption
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,44 +48,44 @@ namespace Azure.ResourceManager.Consumption
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Amount.HasValue)
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (TimeGrain.HasValue)
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value.ToString());
             }
-            if (TimePeriod != null)
+            if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
-            if (options.Format != "W" && CurrentSpend != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteObjectValue(CurrentSpend);
             }
-            if (!(Notifications is ChangeTrackingDictionary<string, BudgetAssociatedNotification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Notifications))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartObject();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Consumption
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && ForecastSpend != null)
+            if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
             {
                 writer.WritePropertyName("forecastSpend"u8);
                 writer.WriteObjectValue(ForecastSpend);
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Consumption
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.Consumption
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +327,7 @@ namespace Azure.ResourceManager.Consumption
                         return DeserializeConsumptionBudgetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support reading '{options.Format}' format.");
             }
         }
 

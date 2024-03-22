@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageEncryptionService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && LastEnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastEnabledOn))
             {
                 writer.WritePropertyName("lastEnabledTime"u8);
                 writer.WriteStringValue(LastEnabledOn.Value, "O");
             }
-            if (KeyType.HasValue)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageEncryptionService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageEncryptionService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageEncryptionService)} does not support reading '{options.Format}' format.");
             }
         }
 

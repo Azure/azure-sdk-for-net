@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<UpdateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<UpdateResource> CreateOrUpdate(WaitUntil waitUntil, string updateName, UpdateData data, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         public virtual async Task<Response<UpdateResource>> GetAsync(string updateName, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         public virtual Response<UpdateResource> Get(string updateName, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string updateName, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         public virtual Response<bool> Exists(string updateName, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         public virtual async Task<NullableResponse<UpdateResource>> GetIfExistsAsync(string updateName, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="updateName"/> is null. </exception>
         public virtual NullableResponse<UpdateResource> GetIfExists(string updateName, CancellationToken cancellationToken = default)
         {
-            if (updateName == null)
-            {
-                throw new ArgumentNullException(nameof(updateName));
-            }
-            if (updateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(updateName));
-            }
+            Argument.AssertNotNullOrEmpty(updateName, nameof(updateName));
 
             using var scope = _updateClientDiagnostics.CreateScope("UpdateCollection.GetIfExists");
             scope.Start();

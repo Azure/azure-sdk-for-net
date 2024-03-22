@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,41 +24,41 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,12 +71,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoScaleConfiguration != null)
+            if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (!(IPConfigurations is ChangeTrackingList<VirtualNetworkGatewayIPConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -87,57 +86,57 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (GatewayType.HasValue)
+            if (Optional.IsDefined(GatewayType))
             {
                 writer.WritePropertyName("gatewayType"u8);
                 writer.WriteStringValue(GatewayType.Value.ToString());
             }
-            if (VpnType.HasValue)
+            if (Optional.IsDefined(VpnType))
             {
                 writer.WritePropertyName("vpnType"u8);
                 writer.WriteStringValue(VpnType.Value.ToString());
             }
-            if (VpnGatewayGeneration.HasValue)
+            if (Optional.IsDefined(VpnGatewayGeneration))
             {
                 writer.WritePropertyName("vpnGatewayGeneration"u8);
                 writer.WriteStringValue(VpnGatewayGeneration.Value.ToString());
             }
-            if (EnableBgp.HasValue)
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (EnablePrivateIPAddress.HasValue)
+            if (Optional.IsDefined(EnablePrivateIPAddress))
             {
                 writer.WritePropertyName("enablePrivateIpAddress"u8);
                 writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
             }
-            if (Active.HasValue)
+            if (Optional.IsDefined(Active))
             {
                 writer.WritePropertyName("activeActive"u8);
                 writer.WriteBooleanValue(Active.Value);
             }
-            if (DisableIPSecReplayProtection.HasValue)
+            if (Optional.IsDefined(DisableIPSecReplayProtection))
             {
                 writer.WritePropertyName("disableIPSecReplayProtection"u8);
                 writer.WriteBooleanValue(DisableIPSecReplayProtection.Value);
             }
-            if (GatewayDefaultSite != null)
+            if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite"u8);
                 JsonSerializer.Serialize(writer, GatewayDefaultSite);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (VpnClientConfiguration != null)
+            if (Optional.IsDefined(VpnClientConfiguration))
             {
                 writer.WritePropertyName("vpnClientConfiguration"u8);
                 writer.WriteObjectValue(VpnClientConfiguration);
             }
-            if (!(VirtualNetworkGatewayPolicyGroups is ChangeTrackingList<VirtualNetworkGatewayPolicyGroup> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
             {
                 writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
                 writer.WriteStartArray();
@@ -147,42 +146,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (BgpSettings != null)
+            if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
                 writer.WriteObjectValue(BgpSettings);
             }
-            if (CustomRoutes != null)
+            if (Optional.IsDefined(CustomRoutes))
             {
                 writer.WritePropertyName("customRoutes"u8);
                 writer.WriteObjectValue(CustomRoutes);
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (EnableDnsForwarding.HasValue)
+            if (Optional.IsDefined(EnableDnsForwarding))
             {
                 writer.WritePropertyName("enableDnsForwarding"u8);
                 writer.WriteBooleanValue(EnableDnsForwarding.Value);
             }
-            if (options.Format != "W" && InboundDnsForwardingEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(InboundDnsForwardingEndpoint))
             {
                 writer.WritePropertyName("inboundDnsForwardingEndpoint"u8);
                 writer.WriteStringValue(InboundDnsForwardingEndpoint);
             }
-            if (VNetExtendedLocationResourceId != null)
+            if (Optional.IsDefined(VNetExtendedLocationResourceId))
             {
                 writer.WritePropertyName("vNetExtendedLocationResourceId"u8);
                 writer.WriteStringValue(VNetExtendedLocationResourceId);
             }
-            if (!(NatRules is ChangeTrackingList<VirtualNetworkGatewayNatRuleData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NatRules))
             {
                 writer.WritePropertyName("natRules"u8);
                 writer.WriteStartArray();
@@ -192,22 +191,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (EnableBgpRouteTranslationForNat.HasValue)
+            if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
             {
                 writer.WritePropertyName("enableBgpRouteTranslationForNat"u8);
                 writer.WriteBooleanValue(EnableBgpRouteTranslationForNat.Value);
             }
-            if (AllowVirtualWanTraffic.HasValue)
+            if (Optional.IsDefined(AllowVirtualWanTraffic))
             {
                 writer.WritePropertyName("allowVirtualWanTraffic"u8);
                 writer.WriteBooleanValue(AllowVirtualWanTraffic.Value);
             }
-            if (AllowRemoteVnetTraffic.HasValue)
+            if (Optional.IsDefined(AllowRemoteVnetTraffic))
             {
                 writer.WritePropertyName("allowRemoteVnetTraffic"u8);
                 writer.WriteBooleanValue(AllowRemoteVnetTraffic.Value);
             }
-            if (AdminState.HasValue)
+            if (Optional.IsDefined(AdminState))
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -650,7 +649,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -666,7 +665,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 

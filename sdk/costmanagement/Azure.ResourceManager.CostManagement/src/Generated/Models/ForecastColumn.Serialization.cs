@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastColumn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastColumn)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ForecastColumnType != null)
+            if (Optional.IsDefined(ForecastColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ForecastColumnType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastColumn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastColumn)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastColumn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastColumn)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeForecastColumn(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastColumn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastColumn)} does not support reading '{options.Format}' format.");
             }
         }
 

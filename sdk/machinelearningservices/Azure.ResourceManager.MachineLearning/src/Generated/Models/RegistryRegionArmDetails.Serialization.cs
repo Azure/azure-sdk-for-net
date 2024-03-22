@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AcrDetails is ChangeTrackingList<RegistryAcrDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AcrDetails))
             {
                 if (AcrDetails != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrDetails");
                 }
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 if (Location != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("location");
                 }
             }
-            if (!(StorageAccountDetails is ChangeTrackingList<StorageAccountDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccountDetails))
             {
                 if (StorageAccountDetails != null)
                 {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistryRegionArmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRegistryRegionArmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistryRegionArmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

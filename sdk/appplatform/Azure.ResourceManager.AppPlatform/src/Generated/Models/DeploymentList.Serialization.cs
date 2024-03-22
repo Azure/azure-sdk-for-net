@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Deployments is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Deployments))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeDeploymentList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentList)} does not support reading '{options.Format}' format.");
             }
         }
 

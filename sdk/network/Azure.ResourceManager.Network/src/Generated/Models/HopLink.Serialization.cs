@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HopLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HopLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NextHopId != null)
+            if (options.Format != "W" && Optional.IsDefined(NextHopId))
             {
                 writer.WritePropertyName("nextHopId"u8);
                 writer.WriteStringValue(NextHopId);
             }
-            if (options.Format != "W" && LinkType != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkType))
             {
                 writer.WritePropertyName("linkType"u8);
                 writer.WriteStringValue(LinkType);
             }
-            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssueInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Context is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartObject();
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RoundTripTimeMin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeMin))
             {
                 writer.WritePropertyName("roundTripTimeMin"u8);
                 writer.WriteNumberValue(RoundTripTimeMin.Value);
             }
-            if (options.Format != "W" && RoundTripTimeAvg.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeAvg))
             {
                 writer.WritePropertyName("roundTripTimeAvg"u8);
                 writer.WriteNumberValue(RoundTripTimeAvg.Value);
             }
-            if (options.Format != "W" && RoundTripTimeMax.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoundTripTimeMax))
             {
                 writer.WritePropertyName("roundTripTimeMax"u8);
                 writer.WriteNumberValue(RoundTripTimeMax.Value);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HopLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HopLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HopLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HopLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HopLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeHopLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HopLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HopLink)} does not support reading '{options.Format}' format.");
             }
         }
 

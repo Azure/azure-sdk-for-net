@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Use32BitWorkerProcess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Use32BitWorkerProcess))
             {
                 writer.WritePropertyName("use32BitWorkerProcess"u8);
                 writer.WriteBooleanValue(Use32BitWorkerProcess.Value);
             }
-            if (options.Format != "W" && LinuxFxVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LinuxFxVersion))
             {
                 writer.WritePropertyName("linuxFxVersion"u8);
                 writer.WriteStringValue(LinuxFxVersion);
             }
-            if (options.Format != "W" && JavaVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(JavaVersion))
             {
                 writer.WritePropertyName("javaVersion"u8);
                 writer.WriteStringValue(JavaVersion);
             }
-            if (options.Format != "W" && PowerShellVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(PowerShellVersion))
             {
                 writer.WritePropertyName("powerShellVersion"u8);
                 writer.WriteStringValue(PowerShellVersion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteConfigPropertiesDictionary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSiteConfigPropertiesDictionary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteConfigPropertiesDictionary)} does not support reading '{options.Format}' format.");
             }
         }
 

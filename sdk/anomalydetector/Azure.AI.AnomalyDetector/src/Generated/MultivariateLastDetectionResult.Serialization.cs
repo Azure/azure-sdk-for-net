@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,11 +22,11 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VariableStates is ChangeTrackingList<VariableState> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(Results is ChangeTrackingList<AnomalyState> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartArray();
@@ -70,7 +69,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateLastDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +136,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +152,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeMultivariateLastDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultivariateLastDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 

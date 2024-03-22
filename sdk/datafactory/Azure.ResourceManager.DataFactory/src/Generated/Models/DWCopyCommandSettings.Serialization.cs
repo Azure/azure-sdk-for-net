@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DWCopyCommandSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DefaultValues is ChangeTrackingList<DWCopyCommandDefaultValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultValues))
             {
                 writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalOptions is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalOptions))
             {
                 writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DWCopyCommandSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDWCopyCommandSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DWCopyCommandSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

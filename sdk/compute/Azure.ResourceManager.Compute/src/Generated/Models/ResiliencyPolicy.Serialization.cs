@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResilientVmCreationPolicy != null)
+            if (Optional.IsDefined(ResilientVmCreationPolicy))
             {
                 writer.WritePropertyName("resilientVMCreationPolicy"u8);
                 writer.WriteObjectValue(ResilientVmCreationPolicy);
             }
-            if (ResilientVmDeletionPolicy != null)
+            if (Optional.IsDefined(ResilientVmDeletionPolicy))
             {
                 writer.WritePropertyName("resilientVMDeletionPolicy"u8);
                 writer.WriteObjectValue(ResilientVmDeletionPolicy);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeResiliencyPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

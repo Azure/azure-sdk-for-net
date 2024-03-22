@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAvailability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAvailability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeGrain != null)
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (BlobDuration.HasValue)
+            if (Optional.IsDefined(BlobDuration))
             {
                 writer.WritePropertyName("blobDuration"u8);
                 writer.WriteStringValue(BlobDuration.Value, "P");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAvailability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAvailability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricAvailability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAvailability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeMetricAvailability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricAvailability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAvailability)} does not support reading '{options.Format}' format.");
             }
         }
 

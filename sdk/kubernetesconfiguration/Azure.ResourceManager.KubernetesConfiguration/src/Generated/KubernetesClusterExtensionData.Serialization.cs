@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
@@ -54,29 +53,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ExtensionType != null)
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (AutoUpgradeMinorVersion.HasValue)
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (ReleaseTrain != null)
+            if (Optional.IsDefined(ReleaseTrain))
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -88,12 +87,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("version");
                 }
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue(Scope);
             }
-            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("configurationProtectedSettings");
                 }
             }
-            if (options.Format != "W" && CurrentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersion))
             {
                 if (CurrentVersion != null)
                 {
@@ -141,12 +140,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("currentVersion");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Statuses is ChangeTrackingList<KubernetesClusterExtensionStatus> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 if (Statuses != null)
                 {
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("statuses");
                 }
             }
-            if (options.Format != "W" && ErrorInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorInfo))
             {
                 if (ErrorInfo != null)
                 {
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("errorInfo");
                 }
             }
-            if (options.Format != "W" && !(CustomLocationSettings is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CustomLocationSettings))
             {
                 if (CustomLocationSettings != null)
                 {
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("customLocationSettings");
                 }
             }
-            if (options.Format != "W" && PackageUri != null)
+            if (options.Format != "W" && Optional.IsDefined(PackageUri))
             {
                 if (PackageUri != null)
                 {
@@ -205,12 +204,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteNull("packageUri");
                 }
             }
-            if (AksAssignedIdentity != null)
+            if (Optional.IsDefined(AksAssignedIdentity))
             {
                 writer.WritePropertyName("aksAssignedIdentity"u8);
                 JsonSerializer.Serialize(writer, AksAssignedIdentity);
             }
-            if (options.Format != "W" && IsSystemExtension.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSystemExtension))
             {
                 writer.WritePropertyName("isSystemExtension"u8);
                 writer.WriteBooleanValue(IsSystemExtension.Value);
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -544,7 +543,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         return DeserializeKubernetesClusterExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 

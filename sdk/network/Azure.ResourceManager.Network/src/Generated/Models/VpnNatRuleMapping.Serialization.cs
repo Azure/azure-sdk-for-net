@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnNatRuleMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AddressSpace != null)
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
-            if (PortRange != null)
+            if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteStringValue(PortRange);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnNatRuleMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnNatRuleMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnNatRuleMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

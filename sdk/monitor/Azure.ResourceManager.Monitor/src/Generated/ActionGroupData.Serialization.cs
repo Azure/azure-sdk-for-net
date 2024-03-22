@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActionGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GroupShortName != null)
+            if (Optional.IsDefined(GroupShortName))
             {
                 writer.WritePropertyName("groupShortName"u8);
                 writer.WriteStringValue(GroupShortName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(EmailReceivers is ChangeTrackingList<MonitorEmailReceiver> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EmailReceivers))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(SmsReceivers is ChangeTrackingList<MonitorSmsReceiver> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SmsReceivers))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(WebhookReceivers is ChangeTrackingList<MonitorWebhookReceiver> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(WebhookReceivers))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(ItsmReceivers is ChangeTrackingList<MonitorItsmReceiver> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ItsmReceivers))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(AzureAppPushReceivers is ChangeTrackingList<MonitorAzureAppPushReceiver> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(AutomationRunbookReceivers is ChangeTrackingList<MonitorAutomationRunbookReceiver> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(VoiceReceivers is ChangeTrackingList<MonitorVoiceReceiver> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(VoiceReceivers))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(LogicAppReceivers is ChangeTrackingList<MonitorLogicAppReceiver> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(LogicAppReceivers))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(AzureFunctionReceivers is ChangeTrackingList<MonitorAzureFunctionReceiver> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(ArmRoleReceivers is ChangeTrackingList<MonitorArmRoleReceiver> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(ArmRoleReceivers))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventHubReceivers is ChangeTrackingList<MonitorEventHubReceiver> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubReceivers))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActionGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeActionGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

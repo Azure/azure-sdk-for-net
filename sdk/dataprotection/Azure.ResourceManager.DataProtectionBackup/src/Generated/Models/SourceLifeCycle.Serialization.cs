@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceLifeCycle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteObjectValue(DeleteAfter);
             writer.WritePropertyName("sourceDataStore"u8);
             writer.WriteObjectValue(SourceDataStore);
-            if (!(TargetDataStoreCopySettings is ChangeTrackingList<TargetCopySetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceLifeCycle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeSourceLifeCycle(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceLifeCycle)} does not support reading '{options.Format}' format.");
             }
         }
 

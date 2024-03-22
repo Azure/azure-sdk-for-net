@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInformationTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (RecommendedLabelId.HasValue)
+            if (Optional.IsDefined(RecommendedLabelId))
             {
                 writer.WritePropertyName("recommendedLabelId"u8);
                 writer.WriteStringValue(RecommendedLabelId.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Custom.HasValue)
+            if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteBooleanValue(Custom.Value);
             }
-            if (!(Keywords is ChangeTrackingList<InformationProtectionKeyword> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInformationTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityInformationTypeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

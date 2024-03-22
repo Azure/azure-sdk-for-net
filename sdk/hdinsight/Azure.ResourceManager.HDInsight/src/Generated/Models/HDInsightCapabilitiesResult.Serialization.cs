@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Versions is ChangeTrackingDictionary<string, HDInsightVersionsCapability> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Regions is ChangeTrackingDictionary<string, RegionsCapability> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Features is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Quota != null)
+            if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
                 writer.WriteObjectValue(Quota);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightCapabilitiesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -23,16 +22,16 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatusMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatusMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatusMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatusMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatusMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatusMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StatusMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatusMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeStatusMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StatusMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatusMessage)} does not support reading '{options.Format}' format.");
             }
         }
 

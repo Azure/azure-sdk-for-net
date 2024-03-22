@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("metric"u8);
             writer.WriteStringValue(Metric.ToString());
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 if (Threshold != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsMetricThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeGenerationTokenStatisticsMetricThreshold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsMetricThreshold)} does not support reading '{options.Format}' format.");
             }
         }
 

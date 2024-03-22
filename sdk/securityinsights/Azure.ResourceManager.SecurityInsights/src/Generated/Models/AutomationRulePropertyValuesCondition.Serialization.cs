@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PropertyName.HasValue)
+            if (Optional.IsDefined(PropertyName))
             {
                 writer.WritePropertyName("propertyName"u8);
                 writer.WriteStringValue(PropertyName.Value.ToString());
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (!(PropertyValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyValues))
             {
                 writer.WritePropertyName("propertyValues"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAutomationRulePropertyValuesCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

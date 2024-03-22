@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileSystemApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileSystemApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeFileSystemApplicationLogsConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemApplicationLogsConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

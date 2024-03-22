@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeScheduledEventsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TerminateNotificationProfile != null)
+            if (Optional.IsDefined(TerminateNotificationProfile))
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
-            if (OSImageNotificationProfile != null)
+            if (Optional.IsDefined(OSImageNotificationProfile))
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
                 writer.WriteObjectValue(OSImageNotificationProfile);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeScheduledEventsProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputeScheduledEventsProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeScheduledEventsProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

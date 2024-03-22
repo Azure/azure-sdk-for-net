@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (QuantizedDataType.HasValue)
+            if (Optional.IsDefined(QuantizedDataType))
             {
                 if (QuantizedDataType != null)
                 {

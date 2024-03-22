@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RestoreMode.HasValue)
+            if (Optional.IsDefined(RestoreMode))
             {
                 writer.WritePropertyName("restoreMode"u8);
                 writer.WriteStringValue(RestoreMode.Value.ToString());
             }
-            if (!(DatabasesToRestore is ChangeTrackingList<DatabaseRestoreResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DatabasesToRestore))
             {
                 writer.WritePropertyName("databasesToRestore"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(GremlinDatabasesToRestore is ChangeTrackingList<GremlinDatabaseRestoreResourceInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(GremlinDatabasesToRestore))
             {
                 writer.WritePropertyName("gremlinDatabasesToRestore"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TablesToRestore is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TablesToRestore))
             {
                 writer.WritePropertyName("tablesToRestore"u8);
                 writer.WriteStartArray();
@@ -61,20 +61,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SourceBackupLocation != null)
+            if (Optional.IsDefined(SourceBackupLocation))
             {
                 writer.WritePropertyName("sourceBackupLocation"u8);
                 writer.WriteStringValue(SourceBackupLocation);
             }
-            if (RestoreSource != null)
+            if (Optional.IsDefined(RestoreSource))
             {
                 writer.WritePropertyName("restoreSource"u8);
                 writer.WriteStringValue(RestoreSource);
             }
-            if (RestoreTimestampInUtc.HasValue)
+            if (Optional.IsDefined(RestoreTimestampInUtc))
             {
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
+            }
+            if (Optional.IsDefined(RestoreWithTtlDisabled))
+            {
+                writer.WritePropertyName("restoreWithTtlDisabled"u8);
+                writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,6 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string sourceBackupLocation = default;
             string restoreSource = default;
             DateTimeOffset? restoreTimestampInUtc = default;
+            bool? restoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,6 +201,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("restoreWithTtlDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreWithTtlDisabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -204,6 +219,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBAccountRestoreParameters(
                 restoreSource,
                 restoreTimestampInUtc,
+                restoreWithTtlDisabled,
                 serializedAdditionalRawData,
                 restoreMode,
                 databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(),
@@ -221,7 +237,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBAccountRestoreParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

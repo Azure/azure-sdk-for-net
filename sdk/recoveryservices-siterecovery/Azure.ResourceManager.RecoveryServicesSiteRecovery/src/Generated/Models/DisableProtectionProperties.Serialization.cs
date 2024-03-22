@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<DisableProtectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisableProtectionReason.HasValue)
+            if (Optional.IsDefined(DisableProtectionReason))
             {
                 writer.WritePropertyName("disableProtectionReason"u8);
                 writer.WriteStringValue(DisableProtectionReason.Value.ToString());
             }
-            if (ReplicationProviderContent != null)
+            if (Optional.IsDefined(ReplicationProviderContent))
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
                 writer.WriteObjectValue(ReplicationProviderContent);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<DisableProtectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeDisableProtectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DisableProtectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

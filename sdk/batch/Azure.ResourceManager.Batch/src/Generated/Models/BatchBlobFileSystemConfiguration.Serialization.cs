@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,24 +30,24 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStringValue(AccountName);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (SasKey != null)
+            if (Optional.IsDefined(SasKey))
             {
                 writer.WritePropertyName("sasKey"u8);
                 writer.WriteStringValue(SasKey);
             }
-            if (BlobfuseOptions != null)
+            if (Optional.IsDefined(BlobfuseOptions))
             {
                 writer.WritePropertyName("blobfuseOptions"u8);
                 writer.WriteStringValue(BlobfuseOptions);
             }
             writer.WritePropertyName("relativeMountPath"u8);
             writer.WriteStringValue(RelativeMountPath);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchBlobFileSystemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchBlobFileSystemConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchBlobFileSystemConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

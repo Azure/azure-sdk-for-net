@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="value"/> is null. </exception>
         public ManagementPolicyTagFilter(string name, string @operator, string value)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (@operator == null)
-            {
-                throw new ArgumentNullException(nameof(@operator));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(@operator, nameof(@operator));
+            Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
             Operator = @operator;

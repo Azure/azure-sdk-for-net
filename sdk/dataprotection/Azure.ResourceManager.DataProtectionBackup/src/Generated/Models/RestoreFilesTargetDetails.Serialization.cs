@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(RestoreTargetLocationType.ToString());
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (TargetResourceArmId != null)
+            if (Optional.IsDefined(TargetResourceArmId))
             {
                 writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreFilesTargetDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

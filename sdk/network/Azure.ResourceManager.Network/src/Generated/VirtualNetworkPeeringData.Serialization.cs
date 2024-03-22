@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,98 +24,98 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AllowVirtualNetworkAccess.HasValue)
+            if (Optional.IsDefined(AllowVirtualNetworkAccess))
             {
                 writer.WritePropertyName("allowVirtualNetworkAccess"u8);
                 writer.WriteBooleanValue(AllowVirtualNetworkAccess.Value);
             }
-            if (AllowForwardedTraffic.HasValue)
+            if (Optional.IsDefined(AllowForwardedTraffic))
             {
                 writer.WritePropertyName("allowForwardedTraffic"u8);
                 writer.WriteBooleanValue(AllowForwardedTraffic.Value);
             }
-            if (AllowGatewayTransit.HasValue)
+            if (Optional.IsDefined(AllowGatewayTransit))
             {
                 writer.WritePropertyName("allowGatewayTransit"u8);
                 writer.WriteBooleanValue(AllowGatewayTransit.Value);
             }
-            if (UseRemoteGateways.HasValue)
+            if (Optional.IsDefined(UseRemoteGateways))
             {
                 writer.WritePropertyName("useRemoteGateways"u8);
                 writer.WriteBooleanValue(UseRemoteGateways.Value);
             }
-            if (RemoteVirtualNetwork != null)
+            if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
                 JsonSerializer.Serialize(writer, RemoteVirtualNetwork);
             }
-            if (RemoteAddressSpace != null)
+            if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
                 writer.WriteObjectValue(RemoteAddressSpace);
             }
-            if (RemoteVirtualNetworkAddressSpace != null)
+            if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
                 writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace);
             }
-            if (RemoteBgpCommunities != null)
+            if (Optional.IsDefined(RemoteBgpCommunities))
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
                 writer.WriteObjectValue(RemoteBgpCommunities);
             }
-            if (options.Format != "W" && RemoteVirtualNetworkEncryption != null)
+            if (options.Format != "W" && Optional.IsDefined(RemoteVirtualNetworkEncryption))
             {
                 writer.WritePropertyName("remoteVirtualNetworkEncryption"u8);
                 writer.WriteObjectValue(RemoteVirtualNetworkEncryption);
             }
-            if (PeeringState.HasValue)
+            if (Optional.IsDefined(PeeringState))
             {
                 writer.WritePropertyName("peeringState"u8);
                 writer.WriteStringValue(PeeringState.Value.ToString());
             }
-            if (PeeringSyncLevel.HasValue)
+            if (Optional.IsDefined(PeeringSyncLevel))
             {
                 writer.WritePropertyName("peeringSyncLevel"u8);
                 writer.WriteStringValue(PeeringSyncLevel.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DoNotVerifyRemoteGateways.HasValue)
+            if (Optional.IsDefined(DoNotVerifyRemoteGateways))
             {
                 writer.WritePropertyName("doNotVerifyRemoteGateways"u8);
                 writer.WriteBooleanValue(DoNotVerifyRemoteGateways.Value);
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -405,7 +404,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkPeeringData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkPeeringData)} does not support reading '{options.Format}' format.");
             }
         }
 

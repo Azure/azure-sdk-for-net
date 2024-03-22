@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateDeploymentOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsPreflightSupported.HasValue)
+            if (Optional.IsDefined(IsPreflightSupported))
             {
                 writer.WritePropertyName("preflightSupported"u8);
                 writer.WriteBooleanValue(IsPreflightSupported.Value);
             }
-            if (!(PreflightOptions is ChangeTrackingList<PreflightOption> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PreflightOptions))
             {
                 writer.WritePropertyName("preflightOptions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateDeploymentOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeTemplateDeploymentOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateDeploymentOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

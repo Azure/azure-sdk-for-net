@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DBName != null)
+            if (Optional.IsDefined(DBName))
             {
                 writer.WritePropertyName("db"u8);
                 writer.WriteStringValue(DBName);
             }
-            if (Role != null)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoDBRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBRole)} does not support reading '{options.Format}' format.");
             }
         }
 

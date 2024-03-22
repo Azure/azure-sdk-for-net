@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             var format = options.Format == "W" ? ((IPersistableModel<FederatedIdentityCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IssuerUri != null)
+            if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (!(Audiences is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Audiences))
             {
                 writer.WritePropertyName("audiences"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             var format = options.Format == "W" ? ((IPersistableModel<FederatedIdentityCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                         return DeserializeFederatedIdentityCredentialData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FederatedIdentityCredentialData)} does not support reading '{options.Format}' format.");
             }
         }
 

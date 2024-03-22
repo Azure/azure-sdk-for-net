@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Assessment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Assessment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Assessment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Remediation != null)
+            if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (options.Format != "W" && IsPass.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPass))
             {
                 writer.WritePropertyName("isPass"u8);
                 writer.WriteStringValue(IsPass.Value.ToString());
             }
-            if (options.Format != "W" && PolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<AssessmentResourceContent> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Assessment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Assessment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Assessment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Assessment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Assessment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeAssessment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Assessment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Assessment)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeExportDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

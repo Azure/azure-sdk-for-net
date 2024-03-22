@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkInterfaceAssociation != null)
+            if (Optional.IsDefined(NetworkInterfaceAssociation))
             {
                 writer.WritePropertyName("networkInterfaceAssociation"u8);
                 writer.WriteObjectValue(NetworkInterfaceAssociation);
             }
-            if (SubnetAssociation != null)
+            if (Optional.IsDefined(SubnetAssociation))
             {
                 writer.WritePropertyName("subnetAssociation"u8);
                 writer.WriteObjectValue(SubnetAssociation);
             }
-            if (!(DefaultSecurityRules is ChangeTrackingList<SecurityRuleData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultSecurityRules))
             {
                 writer.WritePropertyName("defaultSecurityRules"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EffectiveSecurityRules is ChangeTrackingList<EffectiveNetworkSecurityRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
                 writer.WritePropertyName("effectiveSecurityRules"u8);
                 writer.WriteStartArray();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeSecurityRuleAssociations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support reading '{options.Format}' format.");
             }
         }
 

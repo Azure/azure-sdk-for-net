@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForStorageSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,31 +43,31 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (IsOverrideSubscriptionLevelSettingsEnabled.HasValue)
+            if (Optional.IsDefined(IsOverrideSubscriptionLevelSettingsEnabled))
             {
                 writer.WritePropertyName("overrideSubscriptionLevelSettings"u8);
                 writer.WriteBooleanValue(IsOverrideSubscriptionLevelSettingsEnabled.Value);
             }
             writer.WritePropertyName("sensitiveDataDiscovery"u8);
             writer.WriteStartObject();
-            if (IsSensitiveDataDiscoveryEnabled.HasValue)
+            if (Optional.IsDefined(IsSensitiveDataDiscoveryEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsSensitiveDataDiscoveryEnabled.Value);
             }
-            if (options.Format != "W" && SensitiveDataDiscoveryOperationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SensitiveDataDiscoveryOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(SensitiveDataDiscoveryOperationStatus);
@@ -75,24 +75,24 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteEndObject();
             writer.WritePropertyName("malwareScanning"u8);
             writer.WriteStartObject();
-            if (ScanResultsEventGridTopicResourceId != null)
+            if (Optional.IsDefined(ScanResultsEventGridTopicResourceId))
             {
                 writer.WritePropertyName("scanResultsEventGridTopicResourceId"u8);
                 writer.WriteStringValue(ScanResultsEventGridTopicResourceId);
             }
-            if (options.Format != "W" && MalwareScanningOperationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MalwareScanningOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteObjectValue(MalwareScanningOperationStatus);
             }
             writer.WritePropertyName("onUpload"u8);
             writer.WriteStartObject();
-            if (IsMalwareScanningOnUploadEnabled.HasValue)
+            if (Optional.IsDefined(IsMalwareScanningOnUploadEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsMalwareScanningOnUploadEnabled.Value);
             }
-            if (CapGBPerMonth.HasValue)
+            if (Optional.IsDefined(CapGBPerMonth))
             {
                 writer.WritePropertyName("capGBPerMonth"u8);
                 writer.WriteNumberValue(CapGBPerMonth.Value);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForStorageSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeDefenderForStorageSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForStorageSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

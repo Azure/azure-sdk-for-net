@@ -54,10 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountDetails"/> is null. </exception>
         public DataImportDetails(DataAccountDetails accountDetails)
         {
-            if (accountDetails == null)
-            {
-                throw new ArgumentNullException(nameof(accountDetails));
-            }
+            Argument.AssertNotNull(accountDetails, nameof(accountDetails));
 
             AccountDetails = accountDetails;
         }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && EventOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (options.Format != "W" && SecurityEventType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SecurityEventType))
             {
                 writer.WritePropertyName("securityEventType"u8);
                 writer.WriteStringValue(SecurityEventType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Subscription != null)
+            if (options.Format != "W" && Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteStringValue(Subscription);
             }
-            if (options.Format != "W" && Server != null)
+            if (options.Format != "W" && Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (options.Format != "W" && Database != null)
+            if (options.Format != "W" && Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (options.Format != "W" && ClientIP != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientIP))
             {
                 writer.WritePropertyName("clientIp"u8);
                 writer.WriteStringValue(ClientIP.ToString());
             }
-            if (options.Format != "W" && ApplicationName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
-            if (options.Format != "W" && PrincipalName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (options.Format != "W" && SecurityEventSqlInjectionAdditionalProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
             {
                 writer.WritePropertyName("securityEventSqlInjectionAdditionalProperties"u8);
                 writer.WriteObjectValue(SecurityEventSqlInjectionAdditionalProperties);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSecurityEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

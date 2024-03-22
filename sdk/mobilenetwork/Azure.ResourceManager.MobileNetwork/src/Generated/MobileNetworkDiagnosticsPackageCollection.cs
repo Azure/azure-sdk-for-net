@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkDiagnosticsPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.CreateOrUpdate");
             scope.Start();
@@ -135,14 +126,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkDiagnosticsPackageResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +172,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkDiagnosticsPackageResource>> GetAsync(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.Get");
             scope.Start();
@@ -240,14 +217,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual Response<MobileNetworkDiagnosticsPackageResource> Get(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.Get");
             scope.Start();
@@ -352,14 +322,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.Exists");
             scope.Start();
@@ -402,14 +365,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual Response<bool> Exists(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.Exists");
             scope.Start();
@@ -452,14 +408,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkDiagnosticsPackageResource>> GetIfExistsAsync(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.GetIfExists");
             scope.Start();
@@ -504,14 +453,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkDiagnosticsPackageResource> GetIfExists(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            if (diagnosticsPackageName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsPackageName));
-            }
-            if (diagnosticsPackageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsPackageName));
-            }
+            Argument.AssertNotNullOrEmpty(diagnosticsPackageName, nameof(diagnosticsPackageName));
 
             using var scope = _mobileNetworkDiagnosticsPackageDiagnosticsPackagesClientDiagnostics.CreateScope("MobileNetworkDiagnosticsPackageCollection.GetIfExists");
             scope.Start();

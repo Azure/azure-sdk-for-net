@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Periods.HasValue)
+            if (Optional.IsDefined(Periods))
             {
                 writer.WritePropertyName("periods"u8);
                 writer.WriteNumberValue(Periods.Value);
             }
-            if (ThrottledPeriods.HasValue)
+            if (Optional.IsDefined(ThrottledPeriods))
             {
                 writer.WritePropertyName("throttledPeriods"u8);
                 writer.WriteNumberValue(ThrottledPeriods.Value);
             }
-            if (ThrottledTime.HasValue)
+            if (Optional.IsDefined(ThrottledTime))
             {
                 writer.WritePropertyName("throttledTime"u8);
                 writer.WriteNumberValue(ThrottledTime.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerThrottlingInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

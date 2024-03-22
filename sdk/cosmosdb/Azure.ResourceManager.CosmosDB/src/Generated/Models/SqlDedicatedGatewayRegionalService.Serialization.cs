@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayRegionalService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SqlDedicatedGatewayEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(SqlDedicatedGatewayEndpoint))
             {
                 writer.WritePropertyName("sqlDedicatedGatewayEndpoint"u8);
                 writer.WriteStringValue(SqlDedicatedGatewayEndpoint);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayRegionalService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeSqlDedicatedGatewayRegionalService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayRegionalService)} does not support reading '{options.Format}' format.");
             }
         }
 

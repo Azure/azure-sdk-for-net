@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
             writer.WriteStringValue(OssVersion);
-            if (options.Format != "W" && !(Components is ChangeTrackingList<ClusterComponentItem> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
@@ -40,16 +40,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("identityProfile"u8);
-            writer.WriteObjectValue(IdentityProfile);
+            if (Optional.IsDefined(IdentityProfile))
+            {
+                writer.WritePropertyName("identityProfile"u8);
+                writer.WriteObjectValue(IdentityProfile);
+            }
             writer.WritePropertyName("authorizationProfile"u8);
             writer.WriteObjectValue(AuthorizationProfile);
-            if (SecretsProfile != null)
+            if (Optional.IsDefined(SecretsProfile))
             {
                 writer.WritePropertyName("secretsProfile"u8);
                 writer.WriteObjectValue(SecretsProfile);
             }
-            if (!(ServiceConfigsProfiles is ChangeTrackingList<ClusterServiceConfigsProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
                 writer.WritePropertyName("serviceConfigsProfiles"u8);
                 writer.WriteStartArray();
@@ -59,60 +62,52 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConnectivityProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityProfile))
             {
                 writer.WritePropertyName("connectivityProfile"u8);
                 writer.WriteObjectValue(ConnectivityProfile);
             }
-            if (LogAnalyticsProfile != null)
+            if (Optional.IsDefined(ClusterAccessProfile))
+            {
+                writer.WritePropertyName("clusterAccessProfile"u8);
+                writer.WriteObjectValue(ClusterAccessProfile);
+            }
+            if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
                 writer.WriteObjectValue(LogAnalyticsProfile);
             }
-            if (PrometheusProfile != null)
+            if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
                 writer.WriteObjectValue(PrometheusProfile);
             }
-            if (SshProfile != null)
+            if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
                 writer.WriteObjectValue(SshProfile);
             }
-            if (AutoscaleProfile != null)
+            if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (!(KafkaProfile is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsDefined(RangerPluginProfile))
+            {
+                writer.WritePropertyName("rangerPluginProfile"u8);
+                writer.WriteObjectValue(RangerPluginProfile);
+            }
+            if (Optional.IsDefined(KafkaProfile))
             {
                 writer.WritePropertyName("kafkaProfile"u8);
-                writer.WriteStartObject();
-                foreach (var item in KafkaProfile)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(KafkaProfile);
             }
-            if (TrinoProfile != null)
+            if (Optional.IsDefined(TrinoProfile))
             {
                 writer.WritePropertyName("trinoProfile"u8);
                 writer.WriteObjectValue(TrinoProfile);
             }
-            if (!(LlapProfile is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LlapProfile))
             {
                 writer.WritePropertyName("llapProfile"u8);
                 writer.WriteStartObject();
@@ -135,17 +130,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FlinkProfile != null)
+            if (Optional.IsDefined(FlinkProfile))
             {
                 writer.WritePropertyName("flinkProfile"u8);
                 writer.WriteObjectValue(FlinkProfile);
             }
-            if (SparkProfile != null)
+            if (Optional.IsDefined(SparkProfile))
             {
                 writer.WritePropertyName("sparkProfile"u8);
                 writer.WriteObjectValue(SparkProfile);
             }
-            if (!(StubProfile is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsDefined(RangerProfile))
+            {
+                writer.WritePropertyName("rangerProfile"u8);
+                writer.WriteObjectValue(RangerProfile);
+            }
+            if (Optional.IsCollectionDefined(StubProfile))
             {
                 writer.WritePropertyName("stubProfile"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ScriptActionProfiles is ChangeTrackingList<ScriptActionProfile> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
                 writer.WritePropertyName("scriptActionProfiles"u8);
                 writer.WriteStartArray();
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,15 +224,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             ClusterSecretsProfile secretsProfile = default;
             IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
             ClusterConnectivityProfile connectivityProfile = default;
+            ClusterAccessProfile clusterAccessProfile = default;
             ClusterLogAnalyticsProfile logAnalyticsProfile = default;
             ClusterPrometheusProfile prometheusProfile = default;
             ClusterSshProfile sshProfile = default;
             ClusterAutoscaleProfile autoscaleProfile = default;
-            IDictionary<string, BinaryData> kafkaProfile = default;
+            ClusterRangerPluginProfile rangerPluginProfile = default;
+            KafkaProfile kafkaProfile = default;
             TrinoProfile trinoProfile = default;
             IDictionary<string, BinaryData> llapProfile = default;
             FlinkProfile flinkProfile = default;
             SparkProfile sparkProfile = default;
+            RangerProfile rangerProfile = default;
             IDictionary<string, BinaryData> stubProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -265,6 +268,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("identityProfile"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
                     continue;
                 }
@@ -305,6 +312,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("clusterAccessProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterAccessProfile = ClusterAccessProfile.DeserializeClusterAccessProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("logAnalyticsProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -341,25 +357,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("rangerPluginProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("kafkaProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    kafkaProfile = dictionary;
+                    kafkaProfile = KafkaProfile.DeserializeKafkaProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trinoProfile"u8))
@@ -408,6 +421,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         continue;
                     }
                     sparkProfile = SparkProfile.DeserializeSparkProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("rangerProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stubProfile"u8))
@@ -460,15 +482,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 secretsProfile,
                 serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
                 connectivityProfile,
+                clusterAccessProfile,
                 logAnalyticsProfile,
                 prometheusProfile,
                 sshProfile,
                 autoscaleProfile,
-                kafkaProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                rangerPluginProfile,
+                kafkaProfile,
                 trinoProfile,
                 llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 flinkProfile,
                 sparkProfile,
+                rangerProfile,
                 stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
                 serializedAdditionalRawData);
@@ -483,7 +508,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -499,7 +524,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

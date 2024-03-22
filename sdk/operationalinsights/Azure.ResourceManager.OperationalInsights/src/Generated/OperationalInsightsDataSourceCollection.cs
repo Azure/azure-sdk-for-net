@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
@@ -80,18 +78,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsDataSourceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataSourceName, OperationalInsightsDataSourceData data, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.CreateOrUpdate");
             scope.Start();
@@ -139,18 +127,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsDataSourceResource> CreateOrUpdate(WaitUntil waitUntil, string dataSourceName, OperationalInsightsDataSourceData data, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.CreateOrUpdate");
             scope.Start();
@@ -196,14 +174,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public virtual async Task<Response<OperationalInsightsDataSourceResource>> GetAsync(string dataSourceName, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.Get");
             scope.Start();
@@ -248,14 +219,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public virtual Response<OperationalInsightsDataSourceResource> Get(string dataSourceName, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.Get");
             scope.Start();
@@ -301,10 +265,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsDataSourceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsDataSourceResource> GetAllAsync(string filter, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
@@ -339,10 +300,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsDataSourceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsDataSourceResource> GetAll(string filter, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
@@ -376,14 +334,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataSourceName, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.Exists");
             scope.Start();
@@ -426,14 +377,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataSourceName, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.Exists");
             scope.Start();
@@ -476,14 +420,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<OperationalInsightsDataSourceResource>> GetIfExistsAsync(string dataSourceName, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.GetIfExists");
             scope.Start();
@@ -528,14 +465,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceName"/> is null. </exception>
         public virtual NullableResponse<OperationalInsightsDataSourceResource> GetIfExists(string dataSourceName, CancellationToken cancellationToken = default)
         {
-            if (dataSourceName == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceName));
-            }
-            if (dataSourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataSourceName));
-            }
+            Argument.AssertNotNullOrEmpty(dataSourceName, nameof(dataSourceName));
 
             using var scope = _operationalInsightsDataSourceDataSourcesClientDiagnostics.CreateScope("OperationalInsightsDataSourceCollection.GetIfExists");
             scope.Start();

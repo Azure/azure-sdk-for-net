@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UpdateTitle != null)
+            if (Optional.IsDefined(UpdateTitle))
             {
                 writer.WritePropertyName("updateTitle"u8);
                 writer.WriteStringValue(UpdateTitle);
             }
-            if (UpdateSizeInBytes.HasValue)
+            if (Optional.IsDefined(UpdateSizeInBytes))
             {
                 writer.WritePropertyName("updateSize"u8);
                 writer.WriteNumberValue(UpdateSizeInBytes.Value);
             }
-            if (UpdateType.HasValue)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType.Value.ToString());
             }
-            if (TargetVersion != null)
+            if (Optional.IsDefined(TargetVersion))
             {
                 writer.WritePropertyName("targetVersion"u8);
                 writer.WriteStringValue(TargetVersion);
             }
-            if (FriendlyVersionNumber != null)
+            if (Optional.IsDefined(FriendlyVersionNumber))
             {
                 writer.WritePropertyName("friendlyVersionNumber"u8);
                 writer.WriteStringValue(FriendlyVersionNumber);
             }
-            if (EstimatedInstallTimeInMins.HasValue)
+            if (Optional.IsDefined(EstimatedInstallTimeInMins))
             {
                 writer.WritePropertyName("estimatedInstallTimeInMins"u8);
                 writer.WriteNumberValue(EstimatedInstallTimeInMins.Value);
             }
-            if (RebootBehavior.HasValue)
+            if (Optional.IsDefined(RebootBehavior))
             {
                 writer.WritePropertyName("rebootBehavior"u8);
                 writer.WriteStringValue(RebootBehavior.Value.ToString());
             }
-            if (InstallationImpact.HasValue)
+            if (Optional.IsDefined(InstallationImpact))
             {
                 writer.WritePropertyName("installationImpact"u8);
                 writer.WriteStringValue(InstallationImpact.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeUpdateDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

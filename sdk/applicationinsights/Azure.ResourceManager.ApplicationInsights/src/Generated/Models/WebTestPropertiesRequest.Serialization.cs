@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebTestPropertiesRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RequestUri != null)
+            if (Optional.IsDefined(RequestUri))
             {
                 writer.WritePropertyName("RequestUrl"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
-            if (!(Headers is ChangeTrackingList<HeaderField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("Headers"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (HttpVerb != null)
+            if (Optional.IsDefined(HttpVerb))
             {
                 writer.WritePropertyName("HttpVerb"u8);
                 writer.WriteStringValue(HttpVerb);
             }
-            if (RequestBody != null)
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("RequestBody"u8);
                 writer.WriteStringValue(RequestBody);
             }
-            if (ParseDependentRequests.HasValue)
+            if (Optional.IsDefined(ParseDependentRequests))
             {
                 writer.WritePropertyName("ParseDependentRequests"u8);
                 writer.WriteBooleanValue(ParseDependentRequests.Value);
             }
-            if (FollowRedirects.HasValue)
+            if (Optional.IsDefined(FollowRedirects))
             {
                 writer.WritePropertyName("FollowRedirects"u8);
                 writer.WriteBooleanValue(FollowRedirects.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebTestPropertiesRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWebTestPropertiesRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

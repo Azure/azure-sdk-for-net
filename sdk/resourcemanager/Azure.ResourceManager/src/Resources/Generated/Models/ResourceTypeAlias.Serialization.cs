@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Paths is ChangeTrackingList<ResourceTypeAliasPath> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AliasType.HasValue)
+            if (Optional.IsDefined(AliasType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AliasType.Value.ToSerialString());
             }
-            if (DefaultPath != null)
+            if (Optional.IsDefined(DefaultPath))
             {
                 writer.WritePropertyName("defaultPath"u8);
                 writer.WriteStringValue(DefaultPath);
             }
-            if (DefaultPattern != null)
+            if (Optional.IsDefined(DefaultPattern))
             {
                 writer.WritePropertyName("defaultPattern"u8);
                 writer.WriteObjectValue(DefaultPattern);
             }
-            if (options.Format != "W" && DefaultMetadata != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultMetadata))
             {
                 writer.WritePropertyName("defaultMetadata"u8);
                 writer.WriteObjectValue(DefaultMetadata);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeResourceTypeAlias(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support reading '{options.Format}' format.");
             }
         }
 

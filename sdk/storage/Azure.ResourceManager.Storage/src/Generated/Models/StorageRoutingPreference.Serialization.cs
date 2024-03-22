@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageRoutingPreference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RoutingChoice.HasValue)
+            if (Optional.IsDefined(RoutingChoice))
             {
                 writer.WritePropertyName("routingChoice"u8);
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (IsMicrosoftEndpointsPublished.HasValue)
+            if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints"u8);
                 writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
             }
-            if (IsInternetEndpointsPublished.HasValue)
+            if (Optional.IsDefined(IsInternetEndpointsPublished))
             {
                 writer.WritePropertyName("publishInternetEndpoints"u8);
                 writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageRoutingPreference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageRoutingPreference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support reading '{options.Format}' format.");
             }
         }
 

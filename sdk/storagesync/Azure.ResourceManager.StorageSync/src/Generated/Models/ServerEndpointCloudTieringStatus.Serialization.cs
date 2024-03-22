@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && HealthLastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthLastUpdatedOn))
             {
                 writer.WritePropertyName("healthLastUpdatedTimestamp"u8);
                 writer.WriteStringValue(HealthLastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastCloudTieringResult.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCloudTieringResult))
             {
                 writer.WritePropertyName("lastCloudTieringResult"u8);
                 writer.WriteNumberValue(LastCloudTieringResult.Value);
             }
-            if (options.Format != "W" && LastSuccessTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessTimestamp))
             {
                 writer.WritePropertyName("lastSuccessTimestamp"u8);
                 writer.WriteStringValue(LastSuccessTimestamp.Value, "O");
             }
-            if (options.Format != "W" && SpaceSavings != null)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavings))
             {
                 writer.WritePropertyName("spaceSavings"u8);
                 writer.WriteObjectValue(SpaceSavings);
             }
-            if (options.Format != "W" && CachePerformance != null)
+            if (options.Format != "W" && Optional.IsDefined(CachePerformance))
             {
                 writer.WritePropertyName("cachePerformance"u8);
                 writer.WriteObjectValue(CachePerformance);
             }
-            if (options.Format != "W" && FilesNotTiering != null)
+            if (options.Format != "W" && Optional.IsDefined(FilesNotTiering))
             {
                 writer.WritePropertyName("filesNotTiering"u8);
                 writer.WriteObjectValue(FilesNotTiering);
             }
-            if (options.Format != "W" && VolumeFreeSpacePolicyStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(VolumeFreeSpacePolicyStatus))
             {
                 writer.WritePropertyName("volumeFreeSpacePolicyStatus"u8);
                 writer.WriteObjectValue(VolumeFreeSpacePolicyStatus);
             }
-            if (options.Format != "W" && DatePolicyStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(DatePolicyStatus))
             {
                 writer.WritePropertyName("datePolicyStatus"u8);
                 writer.WriteObjectValue(DatePolicyStatus);
             }
-            if (options.Format != "W" && LowDiskMode != null)
+            if (options.Format != "W" && Optional.IsDefined(LowDiskMode))
             {
                 writer.WritePropertyName("lowDiskMode"u8);
                 writer.WriteObjectValue(LowDiskMode);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointCloudTieringStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

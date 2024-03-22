@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StampCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StampCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AvailableCapacity.HasValue)
+            if (Optional.IsDefined(AvailableCapacity))
             {
                 writer.WritePropertyName("availableCapacity"u8);
                 writer.WriteNumberValue(AvailableCapacity.Value);
             }
-            if (TotalCapacity.HasValue)
+            if (Optional.IsDefined(TotalCapacity))
             {
                 writer.WritePropertyName("totalCapacity"u8);
                 writer.WriteNumberValue(TotalCapacity.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (ComputeMode.HasValue)
+            if (Optional.IsDefined(ComputeMode))
             {
                 writer.WritePropertyName("computeMode"u8);
                 writer.WriteStringValue(ComputeMode.Value.ToSerialString());
             }
-            if (WorkerSize.HasValue)
+            if (Optional.IsDefined(WorkerSize))
             {
                 writer.WritePropertyName("workerSize"u8);
                 writer.WriteStringValue(WorkerSize.Value.ToSerialString());
             }
-            if (WorkerSizeId.HasValue)
+            if (Optional.IsDefined(WorkerSizeId))
             {
                 writer.WritePropertyName("workerSizeId"u8);
                 writer.WriteNumberValue(WorkerSizeId.Value);
             }
-            if (ExcludeFromCapacityAllocation.HasValue)
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation))
             {
                 writer.WritePropertyName("excludeFromCapacityAllocation"u8);
                 writer.WriteBooleanValue(ExcludeFromCapacityAllocation.Value);
             }
-            if (IsApplicableForAllComputeModes.HasValue)
+            if (Optional.IsDefined(IsApplicableForAllComputeModes))
             {
                 writer.WritePropertyName("isApplicableForAllComputeModes"u8);
                 writer.WriteBooleanValue(IsApplicableForAllComputeModes.Value);
             }
-            if (SiteMode != null)
+            if (Optional.IsDefined(SiteMode))
             {
                 writer.WritePropertyName("siteMode"u8);
                 writer.WriteStringValue(SiteMode);
             }
-            if (IsLinux.HasValue)
+            if (Optional.IsDefined(IsLinux))
             {
                 writer.WritePropertyName("isLinux"u8);
                 writer.WriteBooleanValue(IsLinux.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StampCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StampCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StampCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStampCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StampCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

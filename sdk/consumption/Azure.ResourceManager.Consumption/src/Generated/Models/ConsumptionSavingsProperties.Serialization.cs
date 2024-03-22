@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(CalculatedSavings is ChangeTrackingList<ConsumptionCalculatedSavingsProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CalculatedSavings))
             {
                 writer.WritePropertyName("calculatedSavings"u8);
                 writer.WriteStartArray();
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LookBackPeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LookBackPeriod))
             {
                 writer.WritePropertyName("lookBackPeriod"u8);
                 writer.WriteNumberValue(LookBackPeriod.Value);
             }
-            if (options.Format != "W" && RecommendedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
             {
                 writer.WritePropertyName("recommendedQuantity"u8);
                 writer.WriteNumberValue(RecommendedQuantity.Value);
             }
-            if (options.Format != "W" && ReservationOrderTerm != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderTerm))
             {
                 writer.WritePropertyName("reservationOrderTerm"u8);
                 writer.WriteStringValue(ReservationOrderTerm);
             }
-            if (options.Format != "W" && SavingsType != null)
+            if (options.Format != "W" && Optional.IsDefined(SavingsType))
             {
                 writer.WritePropertyName("savingsType"u8);
                 writer.WriteStringValue(SavingsType);
             }
-            if (options.Format != "W" && UnitOfMeasure != null)
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionSavingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

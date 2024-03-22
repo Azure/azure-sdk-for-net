@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -52,14 +51,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="runbook"/> is null. </exception>
         public AutomationJobScheduleCreateOrUpdateContent(ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook)
         {
-            if (schedule == null)
-            {
-                throw new ArgumentNullException(nameof(schedule));
-            }
-            if (runbook == null)
-            {
-                throw new ArgumentNullException(nameof(runbook));
-            }
+            Argument.AssertNotNull(schedule, nameof(schedule));
+            Argument.AssertNotNull(runbook, nameof(runbook));
 
             Schedule = schedule;
             Runbook = runbook;

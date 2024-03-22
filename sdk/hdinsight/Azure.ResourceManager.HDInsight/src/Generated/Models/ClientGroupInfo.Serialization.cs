@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GroupName != null)
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeClientGroupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

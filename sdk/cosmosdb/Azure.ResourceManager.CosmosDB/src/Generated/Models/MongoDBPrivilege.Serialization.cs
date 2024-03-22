@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBPrivilege>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteObjectValue(Resource);
             }
-            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBPrivilege>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoDBPrivilege(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBPrivilege)} does not support reading '{options.Format}' format.");
             }
         }
 

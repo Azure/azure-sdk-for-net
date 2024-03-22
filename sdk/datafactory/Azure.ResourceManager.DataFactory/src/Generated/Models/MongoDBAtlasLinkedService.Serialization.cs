@@ -23,23 +23,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ConnectionString);
             writer.WritePropertyName("database"u8);
             JsonSerializer.Serialize(writer, Database);
-            if (DriverVersion != null)
+            if (Optional.IsDefined(DriverVersion))
             {
                 writer.WritePropertyName("driverVersion"u8);
                 JsonSerializer.Serialize(writer, DriverVersion);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMongoDBAtlasLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

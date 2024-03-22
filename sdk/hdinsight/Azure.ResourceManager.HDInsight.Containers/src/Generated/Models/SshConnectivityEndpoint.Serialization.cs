@@ -22,12 +22,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint);
+            if (Optional.IsDefined(PrivateSshEndpoint))
+            {
+                writer.WritePropertyName("privateSshEndpoint"u8);
+                writer.WriteStringValue(PrivateSshEndpoint);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string endpoint = default;
+            string privateSshEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -76,13 +82,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     endpoint = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("privateSshEndpoint"u8))
+                {
+                    privateSshEndpoint = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SshConnectivityEndpoint(endpoint, serializedAdditionalRawData);
+            return new SshConnectivityEndpoint(endpoint, privateSshEndpoint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshConnectivityEndpoint>.Write(ModelReaderWriterOptions options)
@@ -94,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeSshConnectivityEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshConnectivityEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NativeCloudConnection != null)
+            if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
                 writer.WriteObjectValue(NativeCloudConnection);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCspmMonitorAwsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CspmMonitorAwsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

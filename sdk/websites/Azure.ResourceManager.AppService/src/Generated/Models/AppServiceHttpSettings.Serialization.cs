@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsHttpsRequired.HasValue)
+            if (Optional.IsDefined(IsHttpsRequired))
             {
                 writer.WritePropertyName("requireHttps"u8);
                 writer.WriteBooleanValue(IsHttpsRequired.Value);
             }
-            if (Routes != null)
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (ForwardProxy != null)
+            if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
                 writer.WriteObjectValue(ForwardProxy);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceHttpSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceHttpSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

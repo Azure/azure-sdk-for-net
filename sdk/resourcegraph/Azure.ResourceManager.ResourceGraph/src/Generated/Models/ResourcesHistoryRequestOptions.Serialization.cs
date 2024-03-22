@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesHistoryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Interval != null)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteObjectValue(Interval);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (ResultFormat.HasValue)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesHistoryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeResourcesHistoryRequestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesHistoryRequestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

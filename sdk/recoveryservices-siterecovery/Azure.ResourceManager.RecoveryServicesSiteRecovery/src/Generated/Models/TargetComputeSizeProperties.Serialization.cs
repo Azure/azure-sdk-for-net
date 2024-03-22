@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (CpuCoresCount.HasValue)
+            if (Optional.IsDefined(CpuCoresCount))
             {
                 writer.WritePropertyName("cpuCoresCount"u8);
                 writer.WriteNumberValue(CpuCoresCount.Value);
             }
-            if (options.Format != "W" && VCpusAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCpusAvailable))
             {
                 writer.WritePropertyName("vCPUsAvailable"u8);
                 writer.WriteNumberValue(VCpusAvailable.Value);
             }
-            if (MemoryInGB.HasValue)
+            if (Optional.IsDefined(MemoryInGB))
             {
                 writer.WritePropertyName("memoryInGB"u8);
                 writer.WriteNumberValue(MemoryInGB.Value);
             }
-            if (MaxDataDiskCount.HasValue)
+            if (Optional.IsDefined(MaxDataDiskCount))
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (MaxNicsCount.HasValue)
+            if (Optional.IsDefined(MaxNicsCount))
             {
                 writer.WritePropertyName("maxNicsCount"u8);
                 writer.WriteNumberValue(MaxNicsCount.Value);
             }
-            if (!(Errors is ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (HighIopsSupported != null)
+            if (Optional.IsDefined(HighIopsSupported))
             {
                 writer.WritePropertyName("highIopsSupported"u8);
                 writer.WriteStringValue(HighIopsSupported);
             }
-            if (!(HyperVGenerations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HyperVGenerations))
             {
                 writer.WritePropertyName("hyperVGenerations"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetComputeSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeTargetComputeSizeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetComputeSizeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

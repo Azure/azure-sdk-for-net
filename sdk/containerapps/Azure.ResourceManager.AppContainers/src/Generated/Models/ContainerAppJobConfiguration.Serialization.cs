@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -40,27 +40,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(TriggerType.ToString());
             writer.WritePropertyName("replicaTimeout"u8);
             writer.WriteNumberValue(ReplicaTimeout);
-            if (ReplicaRetryLimit.HasValue)
+            if (Optional.IsDefined(ReplicaRetryLimit))
             {
                 writer.WritePropertyName("replicaRetryLimit"u8);
                 writer.WriteNumberValue(ReplicaRetryLimit.Value);
             }
-            if (ManualTriggerConfig != null)
+            if (Optional.IsDefined(ManualTriggerConfig))
             {
                 writer.WritePropertyName("manualTriggerConfig"u8);
                 writer.WriteObjectValue(ManualTriggerConfig);
             }
-            if (ScheduleTriggerConfig != null)
+            if (Optional.IsDefined(ScheduleTriggerConfig))
             {
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
                 writer.WriteObjectValue(ScheduleTriggerConfig);
             }
-            if (EventTriggerConfig != null)
+            if (Optional.IsDefined(EventTriggerConfig))
             {
                 writer.WritePropertyName("eventTriggerConfig"u8);
                 writer.WriteObjectValue(EventTriggerConfig);
             }
-            if (!(Registries is ChangeTrackingList<ContainerAppRegistryCredentials> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Registries))
             {
                 writer.WritePropertyName("registries"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppJobConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

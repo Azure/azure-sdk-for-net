@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (!(RoutingRules is ChangeTrackingList<RoutingRuleData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RoutingRules))
             {
                 writer.WritePropertyName("routingRules"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancingSettings is ChangeTrackingList<FrontDoorLoadBalancingSettingsData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (!(HealthProbeSettings is ChangeTrackingList<FrontDoorHealthProbeSettingsData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackendPools is ChangeTrackingList<FrontDoorBackendPool> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendPools))
             {
                 writer.WritePropertyName("backendPools"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (!(FrontendEndpoints is ChangeTrackingList<FrontendEndpointData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendEndpoints))
             {
                 writer.WritePropertyName("frontendEndpoints"u8);
                 writer.WriteStartArray();
@@ -118,37 +118,37 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (BackendPoolsSettings != null)
+            if (Optional.IsDefined(BackendPoolsSettings))
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
                 writer.WriteObjectValue(BackendPoolsSettings);
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Cname != null)
+            if (options.Format != "W" && Optional.IsDefined(Cname))
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
             }
-            if (options.Format != "W" && FrontdoorId != null)
+            if (options.Format != "W" && Optional.IsDefined(FrontdoorId))
             {
                 writer.WritePropertyName("frontdoorId"u8);
                 writer.WriteStringValue(FrontdoorId);
             }
-            if (options.Format != "W" && !(RulesEngines is ChangeTrackingList<FrontDoorRulesEngineData> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RulesEngines))
             {
                 writer.WritePropertyName("rulesEngines"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ExtendedProperties is ChangeTrackingDictionary<string, string> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.FrontDoor
                         return DeserializeFrontDoorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support reading '{options.Format}' format.");
             }
         }
 

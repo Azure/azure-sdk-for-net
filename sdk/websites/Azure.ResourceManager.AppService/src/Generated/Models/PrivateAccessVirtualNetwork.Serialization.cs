@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateAccessVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Key.HasValue)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteNumberValue(Key.Value);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (!(Subnets is ChangeTrackingList<PrivateAccessSubnet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateAccessVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializePrivateAccessVirtualNetwork(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support reading '{options.Format}' format.");
             }
         }
 

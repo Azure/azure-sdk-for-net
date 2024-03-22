@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetQuerySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosTargetQuerySelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
-            if (Secret != null)
+            if (Optional.IsDefined(Secret))
             {
                 if (Secret != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorCustomDomainHttpsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

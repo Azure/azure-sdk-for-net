@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Phrase != null)
+            if (Optional.IsDefined(Phrase))
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (Variable != null)
+            if (Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (PatternType.HasValue)
+            if (Optional.IsDefined(PatternType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PatternType.Value.ToSerialString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeResourceTypeAliasPattern(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support reading '{options.Format}' format.");
             }
         }
 

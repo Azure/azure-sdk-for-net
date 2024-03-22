@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<RetentionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CleanupPolicy.HasValue)
+            if (Optional.IsDefined(CleanupPolicy))
             {
                 writer.WritePropertyName("cleanupPolicy"u8);
                 writer.WriteStringValue(CleanupPolicy.Value.ToString());
             }
-            if (RetentionTimeInHours.HasValue)
+            if (Optional.IsDefined(RetentionTimeInHours))
             {
                 writer.WritePropertyName("retentionTimeInHours"u8);
                 writer.WriteNumberValue(RetentionTimeInHours.Value);
             }
-            if (TombstoneRetentionTimeInHours.HasValue)
+            if (Optional.IsDefined(TombstoneRetentionTimeInHours))
             {
                 writer.WritePropertyName("tombstoneRetentionTimeInHours"u8);
                 writer.WriteNumberValue(TombstoneRetentionTimeInHours.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<RetentionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeRetentionDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

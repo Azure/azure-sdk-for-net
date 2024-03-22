@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequiredForResourcesList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SourceIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIds))
             {
                 writer.WritePropertyName("sourceIds"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequiredForResourcesList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeRequiredForResourcesList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequiredForResourcesList)} does not support reading '{options.Format}' format.");
             }
         }
 

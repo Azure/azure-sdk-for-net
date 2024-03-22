@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetFilterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PresentationTimeRange != null)
+            if (Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
                 writer.WriteObjectValue(PresentationTimeRange);
             }
-            if (FirstQuality != null)
+            if (Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
                 writer.WriteObjectValue(FirstQuality);
             }
-            if (!(Tracks is ChangeTrackingList<FilterTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tracks))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetFilterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeMediaAssetFilterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetFilterData)} does not support reading '{options.Format}' format.");
             }
         }
 

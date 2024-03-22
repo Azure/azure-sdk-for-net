@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (AutoAssign.HasValue)
+            if (Optional.IsDefined(AutoAssign))
             {
                 writer.WritePropertyName("autoAssign"u8);
                 writer.WriteStringValue(AutoAssign.Value.ToString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (OnlyUseHostIPs.HasValue)
+            if (Optional.IsDefined(OnlyUseHostIPs))
             {
                 writer.WritePropertyName("onlyUseHostIps"u8);
                 writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeIPAddressPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support reading '{options.Format}' format.");
             }
         }
 

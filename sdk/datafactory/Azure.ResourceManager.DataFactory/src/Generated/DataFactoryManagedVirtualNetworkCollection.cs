@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataFactoryManagedVirtualNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataFactoryManagedVirtualNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string managedVirtualNetworkName, DataFactoryManagedVirtualNetworkData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +179,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual async Task<Response<DataFactoryManagedVirtualNetworkResource>> GetAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual Response<DataFactoryManagedVirtualNetworkResource> Get(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Exists");
             scope.Start();
@@ -418,14 +375,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual Response<bool> Exists(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.Exists");
             scope.Start();
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataFactoryManagedVirtualNetworkResource>> GetIfExistsAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.GetIfExists");
             scope.Start();
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
         public virtual NullableResponse<DataFactoryManagedVirtualNetworkResource> GetIfExists(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (managedVirtualNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedVirtualNetworkName));
-            }
-            if (managedVirtualNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedVirtualNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
             using var scope = _dataFactoryManagedVirtualNetworkManagedVirtualNetworksClientDiagnostics.CreateScope("DataFactoryManagedVirtualNetworkCollection.GetIfExists");
             scope.Start();

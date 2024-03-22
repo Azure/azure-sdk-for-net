@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ARemoveDisksContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VmDisksUris is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisksUris))
             {
                 writer.WritePropertyName("vmDisksUris"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmManagedDisksIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmManagedDisksIds))
             {
                 writer.WritePropertyName("vmManagedDisksIds"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ARemoveDisksContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ARemoveDisksContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support reading '{options.Format}' format.");
             }
         }
 

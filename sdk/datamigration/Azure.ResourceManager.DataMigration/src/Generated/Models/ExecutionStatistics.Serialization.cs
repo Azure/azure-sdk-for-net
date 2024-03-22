@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExecutionCount.HasValue)
+            if (Optional.IsDefined(ExecutionCount))
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (CpuTimeMs.HasValue)
+            if (Optional.IsDefined(CpuTimeMs))
             {
                 writer.WritePropertyName("cpuTimeMs"u8);
                 writer.WriteNumberValue(CpuTimeMs.Value);
             }
-            if (ElapsedTimeMs.HasValue)
+            if (Optional.IsDefined(ElapsedTimeMs))
             {
                 writer.WritePropertyName("elapsedTimeMs"u8);
                 writer.WriteNumberValue(ElapsedTimeMs.Value);
             }
-            if (!(WaitStats is ChangeTrackingDictionary<string, WaitStatistics> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WaitStats))
             {
                 writer.WritePropertyName("waitStats"u8);
                 writer.WriteStartObject();
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (HasErrors.HasValue)
+            if (Optional.IsDefined(HasErrors))
             {
                 writer.WritePropertyName("hasErrors"u8);
                 writer.WriteBooleanValue(HasErrors.Value);
             }
-            if (!(SqlErrors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SqlErrors))
             {
                 writer.WritePropertyName("sqlErrors"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecutionStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeExecutionStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecutionStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageSshPublicKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSshPublicKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentQuota)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommitmentQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommitmentQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommitmentQuota)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentQuota)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCommitmentQuota(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommitmentQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommitmentQuota)} does not support reading '{options.Format}' format.");
             }
         }
 

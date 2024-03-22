@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnlineInferenceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Configurations is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Configurations))
             {
                 if (Configurations != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("configurations");
                 }
             }
-            if (EntryScript != null)
+            if (Optional.IsDefined(EntryScript))
             {
                 if (EntryScript != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("entryScript");
                 }
             }
-            if (LivenessRoute != null)
+            if (Optional.IsDefined(LivenessRoute))
             {
                 if (LivenessRoute != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("livenessRoute");
                 }
             }
-            if (ReadinessRoute != null)
+            if (Optional.IsDefined(ReadinessRoute))
             {
                 if (ReadinessRoute != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readinessRoute");
                 }
             }
-            if (ScoringRoute != null)
+            if (Optional.IsDefined(ScoringRoute))
             {
                 if (ScoringRoute != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnlineInferenceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeOnlineInferenceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

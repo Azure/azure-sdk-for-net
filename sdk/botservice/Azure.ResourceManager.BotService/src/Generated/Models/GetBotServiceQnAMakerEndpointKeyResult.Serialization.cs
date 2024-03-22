@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryEndpointKey != null)
+            if (Optional.IsDefined(PrimaryEndpointKey))
             {
                 writer.WritePropertyName("primaryEndpointKey"u8);
                 writer.WriteStringValue(PrimaryEndpointKey);
             }
-            if (SecondaryEndpointKey != null)
+            if (Optional.IsDefined(SecondaryEndpointKey))
             {
                 writer.WritePropertyName("secondaryEndpointKey"u8);
                 writer.WriteStringValue(SecondaryEndpointKey);
             }
-            if (InstalledVersion != null)
+            if (Optional.IsDefined(InstalledVersion))
             {
                 writer.WritePropertyName("installedVersion"u8);
                 writer.WriteStringValue(InstalledVersion);
             }
-            if (LastStableVersion != null)
+            if (Optional.IsDefined(LastStableVersion))
             {
                 writer.WritePropertyName("lastStableVersion"u8);
                 writer.WriteStringValue(LastStableVersion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{options.Format}' format.");
             }
         }
 

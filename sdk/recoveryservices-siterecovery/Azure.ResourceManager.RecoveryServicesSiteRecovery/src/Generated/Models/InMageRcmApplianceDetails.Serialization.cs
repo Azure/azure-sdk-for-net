@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmApplianceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && FabricArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricArmId))
             {
                 writer.WritePropertyName("fabricArmId"u8);
                 writer.WriteStringValue(FabricArmId);
             }
-            if (options.Format != "W" && ProcessServer != null)
+            if (options.Format != "W" && Optional.IsDefined(ProcessServer))
             {
                 writer.WritePropertyName("processServer"u8);
                 writer.WriteObjectValue(ProcessServer);
             }
-            if (options.Format != "W" && RcmProxy != null)
+            if (options.Format != "W" && Optional.IsDefined(RcmProxy))
             {
                 writer.WritePropertyName("rcmProxy"u8);
                 writer.WriteObjectValue(RcmProxy);
             }
-            if (options.Format != "W" && PushInstaller != null)
+            if (options.Format != "W" && Optional.IsDefined(PushInstaller))
             {
                 writer.WritePropertyName("pushInstaller"u8);
                 writer.WriteObjectValue(PushInstaller);
             }
-            if (options.Format != "W" && ReplicationAgent != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationAgent))
             {
                 writer.WritePropertyName("replicationAgent"u8);
                 writer.WriteObjectValue(ReplicationAgent);
             }
-            if (options.Format != "W" && ReprotectAgent != null)
+            if (options.Format != "W" && Optional.IsDefined(ReprotectAgent))
             {
                 writer.WritePropertyName("reprotectAgent"u8);
                 writer.WriteObjectValue(ReprotectAgent);
             }
-            if (options.Format != "W" && MarsAgent != null)
+            if (options.Format != "W" && Optional.IsDefined(MarsAgent))
             {
                 writer.WritePropertyName("marsAgent"u8);
                 writer.WriteObjectValue(MarsAgent);
             }
-            if (options.Format != "W" && Dra != null)
+            if (options.Format != "W" && Optional.IsDefined(Dra))
             {
                 writer.WritePropertyName("dra"u8);
                 writer.WriteObjectValue(Dra);
             }
-            if (options.Format != "W" && !(SwitchProviderBlockingErrorDetails is ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
                 writer.WritePropertyName("switchProviderBlockingErrorDetails"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmApplianceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmApplianceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmApplianceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

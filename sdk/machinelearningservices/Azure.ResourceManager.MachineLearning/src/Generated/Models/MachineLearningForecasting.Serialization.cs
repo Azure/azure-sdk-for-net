@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningForecasting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ForecastingSettings != null)
+            if (Optional.IsDefined(ForecastingSettings))
             {
                 if (ForecastingSettings != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("forecastingSettings");
                 }
             }
-            if (PrimaryMetric.HasValue)
+            if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (TrainingSettings != null)
+            if (Optional.IsDefined(TrainingSettings))
             {
                 if (TrainingSettings != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingSettings");
                 }
             }
-            if (!(CvSplitColumnNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CvSplitColumnNames))
             {
                 if (CvSplitColumnNames != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("cvSplitColumnNames");
                 }
             }
-            if (FeaturizationSettings != null)
+            if (Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (FixedParameters != null)
+            if (Optional.IsDefined(FixedParameters))
             {
                 if (FixedParameters != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fixedParameters");
                 }
             }
-            if (LimitSettings != null)
+            if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (NCrossValidations != null)
+            if (Optional.IsDefined(NCrossValidations))
             {
                 if (NCrossValidations != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nCrossValidations");
                 }
             }
-            if (!(SearchSpace is ChangeTrackingList<TableParameterSubspace> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchSpace))
             {
                 if (SearchSpace != null)
                 {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            if (SweepSettings != null)
+            if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (TestData != null)
+            if (Optional.IsDefined(TestData))
             {
                 if (TestData != null)
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testData");
                 }
             }
-            if (TestDataSize.HasValue)
+            if (Optional.IsDefined(TestDataSize))
             {
                 if (TestDataSize != null)
                 {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("testDataSize");
                 }
             }
-            if (ValidationData != null)
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (ValidationDataSize.HasValue)
+            if (Optional.IsDefined(ValidationDataSize))
             {
                 if (ValidationDataSize != null)
                 {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (WeightColumnName != null)
+            if (Optional.IsDefined(WeightColumnName))
             {
                 if (WeightColumnName != null)
                 {
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightColumnName");
                 }
             }
-            if (LogVerbosity.HasValue)
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (TargetColumnName != null)
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningForecasting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningForecasting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningForecasting)} does not support reading '{options.Format}' format.");
             }
         }
 

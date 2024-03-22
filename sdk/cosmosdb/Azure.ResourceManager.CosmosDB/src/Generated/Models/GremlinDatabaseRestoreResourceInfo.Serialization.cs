@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<GremlinDatabaseRestoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (!(GraphNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GraphNames))
             {
                 writer.WritePropertyName("graphNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<GremlinDatabaseRestoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeGremlinDatabaseRestoreResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

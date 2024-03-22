@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CpuCount.HasValue)
+            if (Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (MemoryMB.HasValue)
+            if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (VmCount.HasValue)
+            if (Optional.IsDefined(VmCount))
             {
                 writer.WritePropertyName("vmCount"u8);
                 writer.WriteNumberValue(VmCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeCloudCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

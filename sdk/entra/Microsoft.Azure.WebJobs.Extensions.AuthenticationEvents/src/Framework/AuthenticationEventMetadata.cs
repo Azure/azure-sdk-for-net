@@ -101,7 +101,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
             }
 
-            throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Missing_Def, type));
+            throw new InvalidOperationException(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    AuthenticationEventResource.Ex_Missing_Def,
+                    type));
         }
     }
 }

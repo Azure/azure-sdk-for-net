@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Qumulo.Models
             var format = options.Format == "W" ? ((IPersistableModel<QumuloUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             var format = options.Format == "W" ? ((IPersistableModel<QumuloUserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                         return DeserializeQumuloUserDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

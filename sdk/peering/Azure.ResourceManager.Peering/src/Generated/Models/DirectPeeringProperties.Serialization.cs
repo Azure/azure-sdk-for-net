@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Connections is ChangeTrackingList<PeeringDirectConnection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && UseForPeeringService.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UseForPeeringService))
             {
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (PeerAsn != null)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
             }
-            if (DirectPeeringType.HasValue)
+            if (Optional.IsDefined(DirectPeeringType))
             {
                 writer.WritePropertyName("directPeeringType"u8);
                 writer.WriteStringValue(DirectPeeringType.Value.ToString());
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializeDirectPeeringProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectPeeringProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

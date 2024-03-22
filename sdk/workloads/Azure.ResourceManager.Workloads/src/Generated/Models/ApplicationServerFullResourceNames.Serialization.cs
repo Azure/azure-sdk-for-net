@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VirtualMachines is ChangeTrackingList<VirtualMachineResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeApplicationServerFullResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationServerFullResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

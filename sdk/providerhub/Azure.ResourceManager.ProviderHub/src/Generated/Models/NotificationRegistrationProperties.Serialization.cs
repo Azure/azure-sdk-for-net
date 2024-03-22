@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NotificationMode.HasValue)
+            if (Optional.IsDefined(NotificationMode))
             {
                 writer.WritePropertyName("notificationMode"u8);
                 writer.WriteStringValue(NotificationMode.Value.ToString());
             }
-            if (MessageScope.HasValue)
+            if (Optional.IsDefined(MessageScope))
             {
                 writer.WritePropertyName("messageScope"u8);
                 writer.WriteStringValue(MessageScope.Value.ToString());
             }
-            if (!(IncludedEvents is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedEvents))
             {
                 writer.WritePropertyName("includedEvents"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotificationEndpoints is ChangeTrackingList<NotificationEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NotificationEndpoints))
             {
                 writer.WritePropertyName("notificationEndpoints"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeNotificationRegistrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationRegistrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

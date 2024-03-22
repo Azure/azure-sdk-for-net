@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FeatureName != null)
+            if (options.Format != "W" && Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("FeatureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (options.Format != "W" && MeterId != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("MeterId"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && MeterRateFrequency != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterRateFrequency))
             {
                 writer.WritePropertyName("MeterRateFrequency"u8);
                 writer.WriteStringValue(MeterRateFrequency);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("ResouceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && IsHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ApplicationInsightsComponentFeatureCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("Capabilities"u8);
                 writer.WriteStartArray();
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("Title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && IsMainFeature.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsMainFeature))
             {
                 writer.WritePropertyName("IsMainFeature"u8);
                 writer.WriteBooleanValue(IsMainFeature.Value);
             }
-            if (options.Format != "W" && SupportedAddonFeatures != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedAddonFeatures))
             {
                 writer.WritePropertyName("SupportedAddonFeatures"u8);
                 writer.WriteStringValue(SupportedAddonFeatures);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentFeature(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeature)} does not support reading '{options.Format}' format.");
             }
         }
 

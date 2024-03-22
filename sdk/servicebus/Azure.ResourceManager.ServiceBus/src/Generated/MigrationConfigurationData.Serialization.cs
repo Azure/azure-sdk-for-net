@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<MigrationConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && PendingReplicationOperationsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingReplicationOperationsCount))
             {
                 writer.WritePropertyName("pendingReplicationOperationsCount"u8);
                 writer.WriteNumberValue(PendingReplicationOperationsCount.Value);
             }
-            if (TargetServiceBusNamespace != null)
+            if (Optional.IsDefined(TargetServiceBusNamespace))
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetServiceBusNamespace);
             }
-            if (PostMigrationName != null)
+            if (Optional.IsDefined(PostMigrationName))
             {
                 writer.WritePropertyName("postMigrationName"u8);
                 writer.WriteStringValue(PostMigrationName);
             }
-            if (options.Format != "W" && MigrationState != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<MigrationConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ServiceBus
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ServiceBus
                         return DeserializeMigrationConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

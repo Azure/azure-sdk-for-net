@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GradeName != null)
+            if (Optional.IsDefined(GradeName))
             {
                 writer.WritePropertyName("gradeName"u8);
                 writer.WriteStringValue(GradeName);
             }
-            if (MinScoreThreshold.HasValue)
+            if (Optional.IsDefined(MinScoreThreshold))
             {
                 writer.WritePropertyName("minScoreThreshold"u8);
                 writer.WriteNumberValue(MinScoreThreshold.Value);
             }
-            if (MaxScoreThreshold.HasValue)
+            if (Optional.IsDefined(MaxScoreThreshold))
             {
                 writer.WritePropertyName("maxScoreThreshold"u8);
                 writer.WriteNumberValue(MaxScoreThreshold.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionGradesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

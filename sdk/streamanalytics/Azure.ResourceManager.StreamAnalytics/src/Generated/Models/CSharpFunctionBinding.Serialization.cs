@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DllPath != null)
+            if (Optional.IsDefined(DllPath))
             {
                 writer.WritePropertyName("dllPath"u8);
                 writer.WriteStringValue(DllPath);
             }
-            if (Class != null)
+            if (Optional.IsDefined(Class))
             {
                 writer.WritePropertyName("class"u8);
                 writer.WriteStringValue(Class);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (UpdateMode.HasValue)
+            if (Optional.IsDefined(UpdateMode))
             {
                 writer.WritePropertyName("updateMode"u8);
                 writer.WriteStringValue(UpdateMode.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeCSharpFunctionBinding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support reading '{options.Format}' format.");
             }
         }
 

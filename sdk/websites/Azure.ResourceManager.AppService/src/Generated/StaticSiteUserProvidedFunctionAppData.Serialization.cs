@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteUserProvidedFunctionAppData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FunctionAppResourceId != null)
+            if (Optional.IsDefined(FunctionAppResourceId))
             {
                 writer.WritePropertyName("functionAppResourceId"u8);
                 writer.WriteStringValue(FunctionAppResourceId);
             }
-            if (FunctionAppRegion != null)
+            if (Optional.IsDefined(FunctionAppRegion))
             {
                 writer.WritePropertyName("functionAppRegion"u8);
                 writer.WriteStringValue(FunctionAppRegion);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteUserProvidedFunctionAppData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support reading '{options.Format}' format.");
             }
         }
 

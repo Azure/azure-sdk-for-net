@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.GraphServices
             var format = options.Format == "W" ? ((IPersistableModel<GraphServicesAccountResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.GraphServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.GraphServices
             var format = options.Format == "W" ? ((IPersistableModel<GraphServicesAccountResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.GraphServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.GraphServices
                         return DeserializeGraphServicesAccountResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphServicesAccountResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

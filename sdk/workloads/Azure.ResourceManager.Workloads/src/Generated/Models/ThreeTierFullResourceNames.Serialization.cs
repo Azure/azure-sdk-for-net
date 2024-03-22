@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CentralServer != null)
+            if (Optional.IsDefined(CentralServer))
             {
                 writer.WritePropertyName("centralServer"u8);
                 writer.WriteObjectValue(CentralServer);
             }
-            if (ApplicationServer != null)
+            if (Optional.IsDefined(ApplicationServer))
             {
                 writer.WritePropertyName("applicationServer"u8);
                 writer.WriteObjectValue(ApplicationServer);
             }
-            if (DatabaseServer != null)
+            if (Optional.IsDefined(DatabaseServer))
             {
                 writer.WritePropertyName("databaseServer"u8);
                 writer.WriteObjectValue(DatabaseServer);
             }
-            if (SharedStorage != null)
+            if (Optional.IsDefined(SharedStorage))
             {
                 writer.WritePropertyName("sharedStorage"u8);
                 writer.WriteObjectValue(SharedStorage);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeThreeTierFullResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

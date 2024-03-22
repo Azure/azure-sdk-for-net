@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmPlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmPlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmPlan)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Models
             writer.WriteStringValue(Publisher);
             writer.WritePropertyName("product"u8);
             writer.WriteStringValue(Product);
-            if (PromotionCode != null)
+            if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmPlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmPlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmPlan)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmPlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmPlan)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Models
                         return DeserializeArmPlan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmPlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmPlan)} does not support reading '{options.Format}' format.");
             }
         }
 

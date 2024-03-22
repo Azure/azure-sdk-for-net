@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TypedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TypedErrorInfoType);
-            if (options.Format != "W" && Info != null)
+            if (options.Format != "W" && Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
 #if NET6_0_OR_GREATER
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<TypedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeTypedErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TypedErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

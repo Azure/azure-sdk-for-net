@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,69 +47,69 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Identifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Process != null)
+            if (Optional.IsDefined(Process))
             {
                 writer.WritePropertyName("process"u8);
                 writer.WriteStringValue(Process);
             }
-            if (StartAddress != null)
+            if (Optional.IsDefined(StartAddress))
             {
                 writer.WritePropertyName("start_address"u8);
                 writer.WriteStringValue(StartAddress);
             }
-            if (CurrentPriority.HasValue)
+            if (Optional.IsDefined(CurrentPriority))
             {
                 writer.WritePropertyName("current_priority"u8);
                 writer.WriteNumberValue(CurrentPriority.Value);
             }
-            if (PriorityLevel != null)
+            if (Optional.IsDefined(PriorityLevel))
             {
                 writer.WritePropertyName("priority_level"u8);
                 writer.WriteStringValue(PriorityLevel);
             }
-            if (BasePriority.HasValue)
+            if (Optional.IsDefined(BasePriority))
             {
                 writer.WritePropertyName("base_priority"u8);
                 writer.WriteNumberValue(BasePriority.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (TotalProcessorTime != null)
+            if (Optional.IsDefined(TotalProcessorTime))
             {
                 writer.WritePropertyName("total_processor_time"u8);
                 writer.WriteStringValue(TotalProcessorTime);
             }
-            if (UserProcessorTime != null)
+            if (Optional.IsDefined(UserProcessorTime))
             {
                 writer.WritePropertyName("user_processor_time"u8);
                 writer.WriteStringValue(UserProcessorTime);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (WaitReason != null)
+            if (Optional.IsDefined(WaitReason))
             {
                 writer.WritePropertyName("wait_reason"u8);
                 writer.WriteStringValue(WaitReason);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProcessThreadInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeProcessThreadInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProcessThreadInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

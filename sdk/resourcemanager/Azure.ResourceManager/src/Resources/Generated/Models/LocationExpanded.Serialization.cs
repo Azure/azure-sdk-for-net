@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocationExpanded>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationExpanded)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocationExpanded)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && LocationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LocationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LocationType.Value.ToSerialString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && RegionalDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(RegionalDisplayName))
             {
                 writer.WritePropertyName("regionalDisplayName"u8);
                 writer.WriteStringValue(RegionalDisplayName);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(AvailabilityZoneMappings is ChangeTrackingList<AvailabilityZoneMappings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
             {
                 writer.WritePropertyName("availabilityZoneMappings"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocationExpanded>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationExpanded)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocationExpanded)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocationExpanded)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocationExpanded)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeLocationExpanded(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocationExpanded)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocationExpanded)} does not support reading '{options.Format}' format.");
             }
         }
 

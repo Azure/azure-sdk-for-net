@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ArcInstanceResourceGroup != null)
+            if (Optional.IsDefined(ArcInstanceResourceGroup))
             {
                 writer.WritePropertyName("arcInstanceResourceGroup"u8);
                 writer.WriteStringValue(ArcInstanceResourceGroup);
             }
-            if (ArcApplicationClientId.HasValue)
+            if (Optional.IsDefined(ArcApplicationClientId))
             {
                 writer.WritePropertyName("arcApplicationClientId"u8);
                 writer.WriteStringValue(ArcApplicationClientId.Value);
             }
-            if (ArcApplicationTenantId.HasValue)
+            if (Optional.IsDefined(ArcApplicationTenantId))
             {
                 writer.WritePropertyName("arcApplicationTenantId"u8);
                 writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
-            if (ArcServicePrincipalObjectId.HasValue)
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId"u8);
                 writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
-            if (ArcApplicationObjectId.HasValue)
+            if (Optional.IsDefined(ArcApplicationObjectId))
             {
                 writer.WritePropertyName("arcApplicationObjectId"u8);
                 writer.WriteStringValue(ArcApplicationObjectId.Value);
             }
-            if (options.Format != "W" && AggregateState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AggregateState))
             {
                 writer.WritePropertyName("aggregateState"u8);
                 writer.WriteStringValue(AggregateState.Value.ToString());
             }
-            if (options.Format != "W" && !(PerNodeDetails is ChangeTrackingList<PerNodeArcState> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PerNodeDetails))
             {
                 writer.WritePropertyName("perNodeDetails"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (ConnectivityProperties != null)
+            if (Optional.IsDefined(ConnectivityProperties))
             {
                 writer.WritePropertyName("connectivityProperties"u8);
 #if NET6_0_OR_GREATER
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArcSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeArcSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArcSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,52 +22,52 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ElasticsearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (DocumentCount.HasValue)
+            if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (ShouldRestrictResultScope.HasValue)
+            if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Strictness.HasValue)
+            if (Optional.IsDefined(Strictness))
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (RoleInformation != null)
+            if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint.AbsoluteUri);
-            writer.WritePropertyName("indexName"u8);
+            writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
-            if (FieldMappingOptions != null)
+            if (Optional.IsDefined(FieldMappingOptions))
             {
-                writer.WritePropertyName("fieldsMapping"u8);
+                writer.WritePropertyName("fields_mapping"u8);
                 writer.WriteObjectValue(FieldMappingOptions);
             }
-            if (QueryType.HasValue)
+            if (Optional.IsDefined(QueryType))
             {
-                writer.WritePropertyName("queryType"u8);
+                writer.WritePropertyName("query_type"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
-            if (EmbeddingDependency != null)
+            if (Optional.IsDefined(EmbeddingDependency))
             {
-                writer.WritePropertyName("embeddingDependency"u8);
+                writer.WritePropertyName("embedding_dependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,7 +93,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ElasticsearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.AI.OpenAI
                     authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -141,7 +140,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -159,7 +158,7 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
@@ -169,12 +168,12 @@ namespace Azure.AI.OpenAI
                     endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("indexName"u8))
+                if (property.NameEquals("index_name"u8))
                 {
                     indexName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fieldsMapping"u8))
+                if (property.NameEquals("fields_mapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -183,7 +182,7 @@ namespace Azure.AI.OpenAI
                     fieldsMapping = ElasticsearchIndexFieldMappingOptions.DeserializeElasticsearchIndexFieldMappingOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("queryType"u8))
+                if (property.NameEquals("query_type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -192,7 +191,7 @@ namespace Azure.AI.OpenAI
                     queryType = new ElasticsearchQueryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("embeddingDependency"u8))
+                if (property.NameEquals("embedding_dependency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -230,7 +229,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +245,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeElasticsearchChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

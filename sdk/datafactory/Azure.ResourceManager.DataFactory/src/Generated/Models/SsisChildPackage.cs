@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
         public SsisChildPackage(DataFactoryElement<string> packagePath, DataFactoryElement<string> packageContent)
         {
-            if (packagePath == null)
-            {
-                throw new ArgumentNullException(nameof(packagePath));
-            }
-            if (packageContent == null)
-            {
-                throw new ArgumentNullException(nameof(packageContent));
-            }
+            Argument.AssertNotNull(packagePath, nameof(packagePath));
+            Argument.AssertNotNull(packageContent, nameof(packageContent));
 
             PackagePath = packagePath;
             PackageContent = packageContent;

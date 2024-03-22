@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataIntegrityValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(FailedObjects is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedObjects))
             {
                 writer.WritePropertyName("failedObjects"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ValidationErrors != null)
+            if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteObjectValue(ValidationErrors);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataIntegrityValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDataIntegrityValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataIntegrityValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnStringInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnStringInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnStringInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (ConnectionStringType.HasValue)
+            if (Optional.IsDefined(ConnectionStringType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionStringType.Value.ToSerialString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnStringInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnStringInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnStringInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnStringInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnStringInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeConnStringInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnStringInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnStringInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

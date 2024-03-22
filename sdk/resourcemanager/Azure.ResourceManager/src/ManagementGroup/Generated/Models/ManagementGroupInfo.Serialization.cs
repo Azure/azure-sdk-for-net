@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteStringValue(UpdatedBy);
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
             }
-            if (!(Path is ChangeTrackingList<ManagementGroupPathElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Path))
             {
                 if (Path != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("path");
                 }
             }
-            if (!(ManagementGroupAncestors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagementGroupAncestors))
             {
                 if (ManagementGroupAncestors != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("managementGroupAncestors");
                 }
             }
-            if (!(ManagementGroupAncestorChain is ChangeTrackingList<ManagementGroupPathElement> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
             {
                 if (ManagementGroupAncestorChain != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         return DeserializeManagementGroupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

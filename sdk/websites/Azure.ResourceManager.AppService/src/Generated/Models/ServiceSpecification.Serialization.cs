@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(MetricSpecifications is ChangeTrackingList<MetricSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MetricSpecifications))
             {
                 writer.WritePropertyName("metricSpecifications"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LogSpecifications is ChangeTrackingList<LogSpecification> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LogSpecifications))
             {
                 writer.WritePropertyName("logSpecifications"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeServiceSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Requests != null)
+            if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
                 writer.WriteObjectValue(Requests);
             }
-            if (PrivateBytesInKB.HasValue)
+            if (Optional.IsDefined(PrivateBytesInKB))
             {
                 writer.WritePropertyName("privateBytesInKB"u8);
                 writer.WriteNumberValue(PrivateBytesInKB.Value);
             }
-            if (!(StatusCodes is ChangeTrackingList<StatusCodesBasedTrigger> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusCodes))
             {
                 writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SlowRequests != null)
+            if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
                 writer.WriteObjectValue(SlowRequests);
             }
-            if (!(SlowRequestsWithPath is ChangeTrackingList<SlowRequestsBasedTrigger> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
                 writer.WritePropertyName("slowRequestsWithPath"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StatusCodesRange is ChangeTrackingList<StatusCodesRangeBasedTrigger> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusCodesRange))
             {
                 writer.WritePropertyName("statusCodesRange"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAutoHealTriggers(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{options.Format}' format.");
             }
         }
 

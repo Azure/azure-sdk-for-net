@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CloudServiceName != null)
+            if (Optional.IsDefined(CloudServiceName))
             {
                 writer.WritePropertyName("cloudServiceName"u8);
                 writer.WriteStringValue(CloudServiceName);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (RunbookId != null)
+            if (Optional.IsDefined(RunbookId))
             {
                 writer.WritePropertyName("runbookId"u8);
                 writer.WriteStringValue(RunbookId);
             }
-            if (RunbookName != null)
+            if (Optional.IsDefined(RunbookName))
             {
                 writer.WritePropertyName("runbookName"u8);
                 writer.WriteStringValue(RunbookName);
             }
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (JobOutput != null)
+            if (Optional.IsDefined(JobOutput))
             {
                 writer.WritePropertyName("jobOutput"u8);
                 writer.WriteStringValue(JobOutput);
             }
-            if (IsPrimarySideScript.HasValue)
+            if (Optional.IsDefined(IsPrimarySideScript))
             {
                 writer.WritePropertyName("isPrimarySideScript"u8);
                 writer.WriteBooleanValue(IsPrimarySideScript.Value);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeAutomationRunbookTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

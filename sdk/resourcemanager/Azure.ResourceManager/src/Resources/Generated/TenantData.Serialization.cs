@@ -23,41 +23,41 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && TenantCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantCategory))
             {
                 writer.WritePropertyName("tenantCategory"u8);
                 writer.WriteStringValue(TenantCategory.Value.ToSerialString());
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (options.Format != "W" && CountryCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && !(Domains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Domains))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && TenantType != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantType))
             {
                 writer.WritePropertyName("tenantType"u8);
                 writer.WriteStringValue(TenantType);
             }
-            if (options.Format != "W" && TenantBrandingLogoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantBrandingLogoUri))
             {
                 writer.WritePropertyName("tenantBrandingLogoUrl"u8);
                 writer.WriteStringValue(TenantBrandingLogoUri.AbsoluteUri);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Resources
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeTenantData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantData)} does not support reading '{options.Format}' format.");
             }
         }
 

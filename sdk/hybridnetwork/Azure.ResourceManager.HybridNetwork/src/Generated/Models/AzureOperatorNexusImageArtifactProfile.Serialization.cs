@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ImageArtifactProfile != null)
+            if (Optional.IsDefined(ImageArtifactProfile))
             {
                 writer.WritePropertyName("imageArtifactProfile"u8);
                 writer.WriteObjectValue(ImageArtifactProfile);
             }
-            if (ArtifactStore != null)
+            if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureOperatorNexusImageArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

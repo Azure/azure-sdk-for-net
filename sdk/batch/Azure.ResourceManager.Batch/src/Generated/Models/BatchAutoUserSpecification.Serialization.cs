@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAutoUserSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToSerialString());
             }
-            if (ElevationLevel.HasValue)
+            if (Optional.IsDefined(ElevationLevel))
             {
                 writer.WritePropertyName("elevationLevel"u8);
                 writer.WriteStringValue(ElevationLevel.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAutoUserSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAutoUserSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAutoUserSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocationPlacementId != null)
+            if (options.Format != "W" && Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
             }
-            if (options.Format != "W" && QuotaId != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaId))
             {
                 writer.WritePropertyName("quotaId"u8);
                 writer.WriteStringValue(QuotaId);
             }
-            if (options.Format != "W" && SpendingLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpendingLimit))
             {
                 writer.WritePropertyName("spendingLimit"u8);
                 writer.WriteStringValue(SpendingLimit.Value.ToSerialString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeSubscriptionPolicies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (!(In is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(In))
             {
                 writer.WritePropertyName("in"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotIn is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NotIn))
             {
                 writer.WritePropertyName("notIn"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSelectorExpression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeResourceSelectorExpression(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSelectorExpression)} does not support reading '{options.Format}' format.");
             }
         }
 

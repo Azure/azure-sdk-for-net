@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggerSupportPackageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MinimumTimeStamp.HasValue)
+            if (Optional.IsDefined(MinimumTimeStamp))
             {
                 writer.WritePropertyName("minimumTimeStamp"u8);
                 writer.WriteStringValue(MinimumTimeStamp.Value, "O");
             }
-            if (MaximumTimeStamp.HasValue)
+            if (Optional.IsDefined(MaximumTimeStamp))
             {
                 writer.WritePropertyName("maximumTimeStamp"u8);
                 writer.WriteStringValue(MaximumTimeStamp.Value, "O");
             }
-            if (Include != null)
+            if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteStringValue(Include);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggerSupportPackageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeTriggerSupportPackageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggerSupportPackageContent)} does not support reading '{options.Format}' format.");
             }
         }
 

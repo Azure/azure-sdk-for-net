@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
-            if (JitApprovalMode.HasValue)
+            if (Optional.IsDefined(JitApprovalMode))
             {
                 writer.WritePropertyName("jitApprovalMode"u8);
                 writer.WriteStringValue(JitApprovalMode.Value.ToString());
             }
-            if (!(JitApprovers is ChangeTrackingList<JitApprover> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(JitApprovers))
             {
                 writer.WritePropertyName("jitApprovers"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaximumJitAccessDuration.HasValue)
+            if (Optional.IsDefined(MaximumJitAccessDuration))
             {
                 writer.WritePropertyName("maximumJitAccessDuration"u8);
                 writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmApplicationJitAccessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

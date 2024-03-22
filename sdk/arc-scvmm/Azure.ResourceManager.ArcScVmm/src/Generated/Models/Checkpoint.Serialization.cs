@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<Checkpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Checkpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Checkpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ParentCheckpointId != null)
+            if (Optional.IsDefined(ParentCheckpointId))
             {
                 writer.WritePropertyName("parentCheckpointID"u8);
                 writer.WriteStringValue(ParentCheckpointId);
             }
-            if (CheckpointId != null)
+            if (Optional.IsDefined(CheckpointId))
             {
                 writer.WritePropertyName("checkpointID"u8);
                 writer.WriteStringValue(CheckpointId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<Checkpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Checkpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Checkpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Checkpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Checkpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeCheckpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Checkpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Checkpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

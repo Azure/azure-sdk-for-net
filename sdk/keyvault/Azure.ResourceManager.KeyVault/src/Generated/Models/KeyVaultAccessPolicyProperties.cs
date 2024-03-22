@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
         public KeyVaultAccessPolicyProperties(IEnumerable<KeyVaultAccessPolicy> accessPolicies)
         {
-            if (accessPolicies == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicies));
-            }
+            Argument.AssertNotNull(accessPolicies, nameof(accessPolicies));
 
             AccessPolicies = accessPolicies.ToList();
         }

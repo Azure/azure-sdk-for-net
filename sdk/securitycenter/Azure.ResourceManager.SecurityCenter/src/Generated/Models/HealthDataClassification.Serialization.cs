@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthDataClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthDataClassification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthDataClassification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Component != null)
+            if (Optional.IsDefined(Component))
             {
                 writer.WritePropertyName("component"u8);
                 writer.WriteStringValue(Component);
             }
-            if (Scenario != null)
+            if (Optional.IsDefined(Scenario))
             {
                 writer.WritePropertyName("scenario"u8);
                 writer.WriteStringValue(Scenario);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthDataClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthDataClassification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthDataClassification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthDataClassification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthDataClassification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeHealthDataClassification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthDataClassification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthDataClassification)} does not support reading '{options.Format}' format.");
             }
         }
 

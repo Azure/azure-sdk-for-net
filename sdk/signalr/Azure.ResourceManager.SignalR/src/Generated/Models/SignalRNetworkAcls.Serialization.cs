@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (PublicNetwork != null)
+            if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
                 writer.WriteObjectValue(PublicNetwork);
             }
-            if (!(PrivateEndpoints is ChangeTrackingList<SignalRPrivateEndpointAcl> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRNetworkAcls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRNetworkAcls)} does not support reading '{options.Format}' format.");
             }
         }
 

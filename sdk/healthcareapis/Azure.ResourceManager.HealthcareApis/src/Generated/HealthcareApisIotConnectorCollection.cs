@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HealthcareApisIotConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string iotConnectorName, HealthcareApisIotConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HealthcareApisIotConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string iotConnectorName, HealthcareApisIotConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         public virtual async Task<Response<HealthcareApisIotConnectorResource>> GetAsync(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         public virtual Response<HealthcareApisIotConnectorResource> Get(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<HealthcareApisIotConnectorResource>> GetIfExistsAsync(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="iotConnectorName"/> is null. </exception>
         public virtual NullableResponse<HealthcareApisIotConnectorResource> GetIfExists(string iotConnectorName, CancellationToken cancellationToken = default)
         {
-            if (iotConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(iotConnectorName));
-            }
-            if (iotConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iotConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(iotConnectorName, nameof(iotConnectorName));
 
             using var scope = _healthcareApisIotConnectorIotConnectorsClientDiagnostics.CreateScope("HealthcareApisIotConnectorCollection.GetIfExists");
             scope.Start();

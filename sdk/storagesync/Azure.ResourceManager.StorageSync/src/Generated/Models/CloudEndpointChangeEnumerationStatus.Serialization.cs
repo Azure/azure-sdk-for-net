@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastEnumerationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LastEnumerationStatus))
             {
                 writer.WritePropertyName("lastEnumerationStatus"u8);
                 writer.WriteObjectValue(LastEnumerationStatus);
             }
-            if (options.Format != "W" && Activity != null)
+            if (options.Format != "W" && Optional.IsDefined(Activity))
             {
                 writer.WritePropertyName("activity"u8);
                 writer.WriteObjectValue(Activity);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudEndpointChangeEnumerationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

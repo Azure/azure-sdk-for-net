@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,54 +59,54 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteStringValue(CopyMode.ToString());
             writer.WritePropertyName("sourceName"u8);
             writer.WriteStringValue(SourceName);
-            if (options.Format != "W" && SourceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (SourceSubpath != null)
+            if (Optional.IsDefined(SourceSubpath))
             {
                 writer.WritePropertyName("sourceSubpath"u8);
                 writer.WriteStringValue(SourceSubpath);
             }
             writer.WritePropertyName("targetName"u8);
             writer.WriteStringValue(TargetName);
-            if (options.Format != "W" && TargetResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
-            if (TargetSubpath != null)
+            if (Optional.IsDefined(TargetSubpath))
             {
                 writer.WritePropertyName("targetSubpath"u8);
                 writer.WriteStringValue(TargetSubpath);
             }
-            if (options.Format != "W" && LatestJobRunName != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestJobRunName))
             {
                 writer.WritePropertyName("latestJobRunName"u8);
                 writer.WriteStringValue(LatestJobRunName);
             }
-            if (options.Format != "W" && LatestJobRunResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestJobRunResourceId))
             {
                 writer.WritePropertyName("latestJobRunResourceId"u8);
                 writer.WriteStringValue(LatestJobRunResourceId);
             }
-            if (options.Format != "W" && LatestJobRunStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LatestJobRunStatus))
             {
                 writer.WritePropertyName("latestJobRunStatus"u8);
                 writer.WriteStringValue(LatestJobRunStatus.Value.ToString());
             }
-            if (AgentName != null)
+            if (Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
             }
-            if (options.Format != "W" && AgentResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
             {
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.StorageMover
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.StorageMover
                         return DeserializeJobDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 

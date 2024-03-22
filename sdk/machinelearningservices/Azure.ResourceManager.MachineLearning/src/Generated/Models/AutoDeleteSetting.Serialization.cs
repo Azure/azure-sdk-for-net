@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoDeleteSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Condition.HasValue)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 if (Value != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoDeleteSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAutoDeleteSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoDeleteSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

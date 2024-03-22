@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataset"/> is null. </exception>
         public ForecastDefinition(ForecastType forecastType, ForecastTimeframe timeframe, ForecastDataset dataset)
         {
-            if (dataset == null)
-            {
-                throw new ArgumentNullException(nameof(dataset));
-            }
+            Argument.AssertNotNull(dataset, nameof(dataset));
 
             ForecastType = forecastType;
             Timeframe = timeframe;

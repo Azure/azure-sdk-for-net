@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputeRuntime != null)
+            if (Optional.IsDefined(ComputeRuntime))
             {
                 writer.WritePropertyName("computeRuntime"u8);
                 writer.WriteObjectValue(ComputeRuntime);
             }
-            if (OfflineStoreConnectionName != null)
+            if (Optional.IsDefined(OfflineStoreConnectionName))
             {
                 writer.WritePropertyName("offlineStoreConnectionName"u8);
                 writer.WriteStringValue(OfflineStoreConnectionName);
             }
-            if (OnlineStoreConnectionName != null)
+            if (Optional.IsDefined(OnlineStoreConnectionName))
             {
                 writer.WritePropertyName("onlineStoreConnectionName"u8);
                 writer.WriteStringValue(OnlineStoreConnectionName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeFeatureStoreSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

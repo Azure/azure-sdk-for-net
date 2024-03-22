@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="exportSettings"/> is null. </exception>
         public SnowflakeSource(SnowflakeExportCopyCommand exportSettings)
         {
-            if (exportSettings == null)
-            {
-                throw new ArgumentNullException(nameof(exportSettings));
-            }
+            Argument.AssertNotNull(exportSettings, nameof(exportSettings));
 
             ExportSettings = exportSettings;
             CopySourceType = "SnowflakeSource";

@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClusterFreeMemoryInMB.HasValue)
+            if (Optional.IsDefined(ClusterFreeMemoryInMB))
             {
                 writer.WritePropertyName("clusterFreeMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFreeMemoryInMB.Value);
             }
-            if (ClusterUsedMemoryInMB.HasValue)
+            if (Optional.IsDefined(ClusterUsedMemoryInMB))
             {
                 writer.WritePropertyName("clusterUsedMemoryMb"u8);
                 writer.WriteNumberValue(ClusterUsedMemoryInMB.Value);
             }
-            if (ClusterFailoverMemoryInMB.HasValue)
+            if (Optional.IsDefined(ClusterFailoverMemoryInMB))
             {
                 writer.WritePropertyName("clusterFailoverMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFailoverMemoryInMB.Value);
             }
-            if (ClusterFragmentationMemoryInMB.HasValue)
+            if (Optional.IsDefined(ClusterFragmentationMemoryInMB))
             {
                 writer.WritePropertyName("clusterFragmentationMemoryMb"u8);
                 writer.WriteNumberValue(ClusterFragmentationMemoryInMB.Value);
             }
-            if (ClusterHyperVReserveMemoryMb.HasValue)
+            if (Optional.IsDefined(ClusterHyperVReserveMemoryMb))
             {
                 writer.WritePropertyName("clusterHypervReserveMemoryMb"u8);
                 writer.WriteNumberValue(ClusterHyperVReserveMemoryMb.Value);
             }
-            if (ClusterInfraVmMemoryInMB.HasValue)
+            if (Optional.IsDefined(ClusterInfraVmMemoryInMB))
             {
                 writer.WritePropertyName("clusterInfraVmMemoryMb"u8);
                 writer.WriteNumberValue(ClusterInfraVmMemoryInMB.Value);
             }
-            if (ClusterTotalMemoryInMB.HasValue)
+            if (Optional.IsDefined(ClusterTotalMemoryInMB))
             {
                 writer.WritePropertyName("clusterTotalMemoryMb"u8);
                 writer.WriteNumberValue(ClusterTotalMemoryInMB.Value);
             }
-            if (ClusterNonFailoverVmInMB.HasValue)
+            if (Optional.IsDefined(ClusterNonFailoverVmInMB))
             {
                 writer.WritePropertyName("clusterNonFailoverVmMb"u8);
                 writer.WriteNumberValue(ClusterNonFailoverVmInMB.Value);
             }
-            if (ClusterMemoryUsedByVmsInMB.HasValue)
+            if (Optional.IsDefined(ClusterMemoryUsedByVmsInMB))
             {
                 writer.WritePropertyName("clusterMemoryUsedByVmsMb"u8);
                 writer.WriteNumberValue(ClusterMemoryUsedByVmsInMB.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterMemoryCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeClusterMemoryCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterMemoryCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<FhirServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Authority != null)
+            if (Optional.IsDefined(Authority))
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Audience != null)
+            if (Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (IsSmartProxyEnabled.HasValue)
+            if (Optional.IsDefined(IsSmartProxyEnabled))
             {
                 writer.WritePropertyName("smartProxyEnabled"u8);
                 writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<FhirServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeFhirServiceAuthenticationConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirServiceAuthenticationConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

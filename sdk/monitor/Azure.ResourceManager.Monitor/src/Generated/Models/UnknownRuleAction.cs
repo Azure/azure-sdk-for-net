@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The UnknownRuleAction. </summary>
+    /// <summary> Unknown version of RuleAction. </summary>
     internal partial class UnknownRuleAction : AlertRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRuleAction"/>. </summary>

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 if (Branch != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("branch");
                 }
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 if (Tag != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tag");
                 }
             }
-            if (Semver != null)
+            if (Optional.IsDefined(Semver))
             {
                 if (Semver != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("semver");
                 }
             }
-            if (Commit != null)
+            if (Optional.IsDefined(Commit))
             {
                 if (Commit != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesGitRepositoryRef(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support reading '{options.Format}' format.");
             }
         }
 

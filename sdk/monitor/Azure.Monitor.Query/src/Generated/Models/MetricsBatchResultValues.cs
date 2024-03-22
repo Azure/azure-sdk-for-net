@@ -8,51 +8,66 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The MetricResultsResponseValuesItem. </summary>
-    public partial class MetricsBatchResultValues
+    internal partial class MetricsBatchResultValues
     {
         /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
-        /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="metrics"> The value of the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<MetricResult> metrics)
+        /// <param name="starttime"> The start time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="endtime"> The end time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="value"> The value of the collection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="starttime"/>, <paramref name="endtime"/> or <paramref name="value"/> is null. </exception>
+        internal MetricsBatchResultValues(string starttime, string endtime, IEnumerable<MetricResult> value)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
+            Argument.AssertNotNull(starttime, nameof(starttime));
+            Argument.AssertNotNull(endtime, nameof(endtime));
+            Argument.AssertNotNull(value, nameof(value));
 
-            StartTime = startTime;
-            EndTime = endTime;
-            Metrics = metrics.ToList();
+            Starttime = starttime;
+            Endtime = endtime;
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricsBatchResultValues"/>. </summary>
-        /// <param name="startTime"> The start time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="endTime"> The end time, in datetime format, for which the data was retrieved. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="starttime"> The start time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="endtime"> The end time, in datetime format, for which the data was retrieved. </param>
+        /// <param name="interval">
+        /// The interval (window size) for which the metric data was returned in ISO 8601 duration format with a special case for 'FULL' value that returns single datapoint for entire time span requested (*Examples: PT15M, PT1H, P1D, FULL*).
+        /// This may be adjusted and different from what was originally requested if AutoAdjustTimegrain=true is specified.
+        /// </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="resourceRegion"> The region of the resource been queried for metrics. </param>
-        /// <param name="resourceId"> The resource that has been queried for metrics. </param>
-        /// <param name="metrics"> The value of the collection. </param>
-        internal MetricsBatchResultValues(DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan? interval, string @namespace, AzureLocation resourceRegion, ResourceIdentifier resourceId, IReadOnlyList<MetricResult> metrics)
+        /// <param name="resourceregion"> The region of the resource been queried for metrics. </param>
+        /// <param name="resourceid"> The resource that has been queried for metrics. </param>
+        /// <param name="value"> The value of the collection. </param>
+        internal MetricsBatchResultValues(string starttime, string endtime, string interval, string @namespace, string resourceregion, string resourceid, IReadOnlyList<MetricResult> value)
         {
-            StartTime = startTime;
-            EndTime = endTime;
+            Starttime = starttime;
+            Endtime = endtime;
             Interval = interval;
             Namespace = @namespace;
-            ResourceRegion = resourceRegion;
-            ResourceId = resourceId;
-            Metrics = metrics;
+            Resourceregion = resourceregion;
+            Resourceid = resourceid;
+            Value = value;
         }
-        /// <summary> The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </summary>
-        public TimeSpan? Interval { get; }
+
+        /// <summary> The start time, in datetime format, for which the data was retrieved. </summary>
+        public string Starttime { get; }
+        /// <summary> The end time, in datetime format, for which the data was retrieved. </summary>
+        public string Endtime { get; }
+        /// <summary>
+        /// The interval (window size) for which the metric data was returned in ISO 8601 duration format with a special case for 'FULL' value that returns single datapoint for entire time span requested (*Examples: PT15M, PT1H, P1D, FULL*).
+        /// This may be adjusted and different from what was originally requested if AutoAdjustTimegrain=true is specified.
+        /// </summary>
+        public string Interval { get; }
         /// <summary> The namespace of the metrics been queried. </summary>
         public string Namespace { get; }
+        /// <summary> The region of the resource been queried for metrics. </summary>
+        public string Resourceregion { get; }
+        /// <summary> The resource that has been queried for metrics. </summary>
+        public string Resourceid { get; }
+        /// <summary> The value of the collection. </summary>
+        public IReadOnlyList<MetricResult> Value { get; }
     }
 }

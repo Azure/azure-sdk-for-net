@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("changeType"u8);
             writer.WriteStringValue(ChangeType.ToSerialString());
-            if (UnsupportedReason != null)
+            if (Optional.IsDefined(UnsupportedReason))
             {
                 writer.WritePropertyName("unsupportedReason"u8);
                 writer.WriteStringValue(UnsupportedReason);
             }
-            if (Before != null)
+            if (Optional.IsDefined(Before))
             {
                 writer.WritePropertyName("before"u8);
 #if NET6_0_OR_GREATER
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (After != null)
+            if (Optional.IsDefined(After))
             {
                 writer.WritePropertyName("after"u8);
 #if NET6_0_OR_GREATER
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (!(Delta is ChangeTrackingList<WhatIfPropertyChange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Delta))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatIfChange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeWhatIfChange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatIfChange)} does not support reading '{options.Format}' format.");
             }
         }
 

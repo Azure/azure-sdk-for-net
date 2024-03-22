@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraCertificate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Pem != null)
+            if (Optional.IsDefined(Pem))
             {
                 writer.WritePropertyName("pem"u8);
                 writer.WriteStringValue(Pem);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 

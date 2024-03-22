@@ -18,14 +18,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         public CustomMultiLabelClassificationTaskParameters(string projectName, string deploymentName) : base(projectName, deploymentName)
         {
-            if (projectName == null)
-            {
-                throw new ArgumentNullException(nameof(projectName));
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException(nameof(deploymentName));
-            }
+            Argument.AssertNotNull(projectName, nameof(projectName));
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationTaskParameters"/>. </summary>

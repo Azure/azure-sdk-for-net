@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && FirstStripeName != null)
+            if (options.Format != "W" && Optional.IsDefined(FirstStripeName))
             {
                 writer.WritePropertyName("firstStripeName"u8);
                 writer.WriteStringValue(FirstStripeName);
             }
-            if (options.Format != "W" && NumberOfStripes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfStripes))
             {
                 writer.WritePropertyName("numberOfStripes"u8);
                 writer.WriteNumberValue(NumberOfStripes.Value);
             }
-            if (options.Format != "W" && BackupSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupSizeInMB))
             {
                 writer.WritePropertyName("backupSizeMB"u8);
                 writer.WriteNumberValue(BackupSizeInMB.Value);
             }
-            if (options.Format != "W" && RestoreStartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestoreStartedOn))
             {
                 writer.WritePropertyName("restoreStartedTimestampUtc"u8);
                 writer.WriteStringValue(RestoreStartedOn.Value, "O");
             }
-            if (options.Format != "W" && RestoreFinishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestoreFinishedOn))
             {
                 writer.WritePropertyName("restoreFinishedTimestampUtc"u8);
                 writer.WriteStringValue(RestoreFinishedOn.Value, "O");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedDatabaseRestoreDetailBackupSetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailBackupSetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

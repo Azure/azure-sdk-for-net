@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Days.HasValue)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (options.Format != "W" && LastEnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastEnabledOn))
             {
                 writer.WritePropertyName("lastEnabledTime"u8);
                 writer.WriteStringValue(LastEnabledOn.Value, "O");
             }
-            if (options.Format != "W" && MinRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinRestoreOn))
             {
                 writer.WritePropertyName("minRestoreTime"u8);
                 writer.WriteStringValue(MinRestoreOn.Value, "O");
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeRestorePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

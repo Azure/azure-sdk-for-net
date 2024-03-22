@@ -712,6 +712,60 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Search for operator information about specified phone numbers. </summary>
         /// <param name="phoneNumbers"> The phone numbers to search. </param>
+        /// <param name="options">Options to modify the search.  Please note: use of options can affect the cost of the search.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<OperatorInformationResult>> SearchOperatorInformationAsync(IEnumerable<string> phoneNumbers, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+            if (options?.IncludeAdditionalOperatorDetails == null)
+            {
+                options = new OperatorInformationOptions();
+                options.IncludeAdditionalOperatorDetails = false;
+            }
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = await InternalClient.OperatorInformationSearchAsync(phoneNumbers, options, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
+        /// <param name="options">Options to modify the search.  Please note: use of options can affect the cost of the search.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<OperatorInformationResult> SearchOperatorInformation(IEnumerable<string> phoneNumbers, OperatorInformationOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+            if (options?.IncludeAdditionalOperatorDetails == null)
+            {
+                options = new OperatorInformationOptions();
+                options.IncludeAdditionalOperatorDetails = false;
+            }
+
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(SearchOperatorInformation)}");
+            scope.Start();
+            try
+            {
+                var response = InternalClient.OperatorInformationSearch(phoneNumbers, options, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Search for operator information about specified phone numbers. </summary>
+        /// <param name="phoneNumbers"> The phone numbers to search. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OperatorInformationResult>> SearchOperatorInformationAsync(IEnumerable<string> phoneNumbers, CancellationToken cancellationToken = default)
         {
@@ -794,10 +848,6 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
-                    if (skip > pageSizeHint)
-                    {
-                        return null;
-                    }
 
                     return RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, null);
                 }
@@ -851,10 +901,6 @@ namespace Azure.Communication.PhoneNumbers
                 try
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
-                    if (skip > pageSizeHint)
-                    {
-                        return null;
-                    }
 
                     return RestClient.CreateListAreaCodesNextPageRequest(nextLink, twoLetterIsoCountryName, phoneNumberType, skip, pageSizeHint, phoneNumberAssignmentType, locality, administrativeDivision, null);
                 }

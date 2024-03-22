@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -23,23 +22,23 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Changes is ChangeTrackingList<WhatIfChange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Changes))
             {
                 writer.WritePropertyName("changes"u8);
                 writer.WriteStartArray();
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeWhatIfOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

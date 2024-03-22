@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(ForecastType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (TimePeriod != null)
+            if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
             }
             writer.WritePropertyName("dataset"u8);
             writer.WriteObjectValue(Dataset);
-            if (IncludeActualCost.HasValue)
+            if (Optional.IsDefined(IncludeActualCost))
             {
                 writer.WritePropertyName("includeActualCost"u8);
                 writer.WriteBooleanValue(IncludeActualCost.Value);
             }
-            if (IncludeFreshPartialCost.HasValue)
+            if (Optional.IsDefined(IncludeFreshPartialCost))
             {
                 writer.WritePropertyName("includeFreshPartialCost"u8);
                 writer.WriteBooleanValue(IncludeFreshPartialCost.Value);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeForecastDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

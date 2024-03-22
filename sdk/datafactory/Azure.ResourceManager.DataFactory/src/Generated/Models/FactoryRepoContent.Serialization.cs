@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryRepoContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FactoryResourceId != null)
+            if (Optional.IsDefined(FactoryResourceId))
             {
                 writer.WritePropertyName("factoryResourceId"u8);
                 writer.WriteStringValue(FactoryResourceId);
             }
-            if (RepoConfiguration != null)
+            if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryRepoContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFactoryRepoContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryRepoContent)} does not support reading '{options.Format}' format.");
             }
         }
 

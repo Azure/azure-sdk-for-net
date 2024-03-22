@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (LicenseTextLink != null)
+            if (Optional.IsDefined(LicenseTextLink))
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (PrivacyPolicyLink != null)
+            if (Optional.IsDefined(PrivacyPolicyLink))
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (RetrieveDatetime.HasValue)
+            if (Optional.IsDefined(RetrieveDatetime))
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveDatetime.Value, "O");
             }
-            if (Signature != null)
+            if (Optional.IsDefined(Signature))
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Accepted.HasValue)
+            if (Optional.IsDefined(Accepted))
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(Accepted.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogAgreementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogAgreementProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogAgreementProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DBVmSku != null)
+            if (Optional.IsDefined(DBVmSku))
             {
                 writer.WritePropertyName("dbVmSku"u8);
                 writer.WriteStringValue(DBVmSku);
             }
-            if (DatabaseInstanceCount.HasValue)
+            if (Optional.IsDefined(DatabaseInstanceCount))
             {
                 writer.WritePropertyName("databaseInstanceCount"u8);
                 writer.WriteNumberValue(DatabaseInstanceCount.Value);
             }
-            if (CentralServerVmSku != null)
+            if (Optional.IsDefined(CentralServerVmSku))
             {
                 writer.WritePropertyName("centralServerVmSku"u8);
                 writer.WriteStringValue(CentralServerVmSku);
             }
-            if (CentralServerInstanceCount.HasValue)
+            if (Optional.IsDefined(CentralServerInstanceCount))
             {
                 writer.WritePropertyName("centralServerInstanceCount"u8);
                 writer.WriteNumberValue(CentralServerInstanceCount.Value);
             }
-            if (ApplicationServerVmSku != null)
+            if (Optional.IsDefined(ApplicationServerVmSku))
             {
                 writer.WritePropertyName("applicationServerVmSku"u8);
                 writer.WriteStringValue(ApplicationServerVmSku);
             }
-            if (ApplicationServerInstanceCount.HasValue)
+            if (Optional.IsDefined(ApplicationServerInstanceCount))
             {
                 writer.WritePropertyName("applicationServerInstanceCount"u8);
                 writer.WriteNumberValue(ApplicationServerInstanceCount.Value);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeThreeTierRecommendationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierRecommendationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
