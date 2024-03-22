@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Azure.Communication.JobRouter
+namespace Azure.ResourceManager.EdgeZones.Models
 {
-    /// <summary> Represents the capacity a job in this channel will consume from a worker. </summary>
-    public partial class RouterChannel
+    /// <summary> The response of a ExtendedZone list operation. </summary>
+    internal partial class ExtendedZoneListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +46,35 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RouterChannel"/>. </summary>
-        /// <param name="channelId"> Id of a channel. </param>
-        /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
-        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouterChannel(string channelId, int capacityCostPerJob, int? maxNumberOfJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="ExtendedZoneListResult"/>. </summary>
+        /// <param name="value"> The ExtendedZone items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExtendedZoneListResult(IEnumerable<ExtendedZoneData> value)
         {
-            ChannelId = channelId;
-            CapacityCostPerJob = capacityCostPerJob;
-            MaxNumberOfJobs = maxNumberOfJobs;
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedZoneListResult"/>. </summary>
+        /// <param name="value"> The ExtendedZone items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedZoneListResult(IReadOnlyList<ExtendedZoneData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterChannel"/> for deserialization. </summary>
-        internal RouterChannel()
+        /// <summary> Initializes a new instance of <see cref="ExtendedZoneListResult"/> for deserialization. </summary>
+        internal ExtendedZoneListResult()
         {
         }
 
-        /// <summary> Id of a channel. </summary>
-        public string ChannelId { get; }
-        /// <summary> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </summary>
-        public int CapacityCostPerJob { get; }
+        /// <summary> The ExtendedZone items on this page. </summary>
+        public IReadOnlyList<ExtendedZoneData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
