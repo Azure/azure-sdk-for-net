@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ElasticSan
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ElasticSan
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ElasticSan
                         return DeserializeElasticSanData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support reading '{options.Format}' format.");
             }
         }
 

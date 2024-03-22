@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaTicketDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaTicketDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeQuotaTicketDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaTicketDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

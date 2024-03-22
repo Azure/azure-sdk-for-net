@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Blueprint;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PlaywrightTesting;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                         return DeserializePlaywrightTestingAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

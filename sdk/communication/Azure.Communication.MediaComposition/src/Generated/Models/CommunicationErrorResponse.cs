@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
 {

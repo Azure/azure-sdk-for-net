@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -544,7 +543,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         return DeserializeKubernetesClusterExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 

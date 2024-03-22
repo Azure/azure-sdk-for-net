@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.AlphaIds;
 
 namespace Azure.Communication.AlphaIds.Models
 {

@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
@@ -514,6 +512,30 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         {
             CosmosDBServiceResource.ValidateResourceId(id);
             return new CosmosDBServiceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ThroughputPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ThroughputPoolResource.CreateResourceIdentifier" /> to create a <see cref="ThroughputPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ThroughputPoolResource"/> object. </returns>
+        public virtual ThroughputPoolResource GetThroughputPoolResource(ResourceIdentifier id)
+        {
+            ThroughputPoolResource.ValidateResourceId(id);
+            return new ThroughputPoolResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ThroughputPoolAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ThroughputPoolAccountResource.CreateResourceIdentifier" /> to create a <see cref="ThroughputPoolAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ThroughputPoolAccountResource"/> object. </returns>
+        public virtual ThroughputPoolAccountResource GetThroughputPoolAccountResource(ResourceIdentifier id)
+        {
+            ThroughputPoolAccountResource.ValidateResourceId(id);
+            return new ThroughputPoolAccountResource(Client, id);
         }
     }
 }

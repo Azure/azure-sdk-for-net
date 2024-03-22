@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<StorageInsightData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageInsightData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageInsightData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<StorageInsightData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageInsightData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageInsightData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageInsightData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageInsightData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeStorageInsightData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageInsightData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageInsightData)} does not support reading '{options.Format}' format.");
             }
         }
 

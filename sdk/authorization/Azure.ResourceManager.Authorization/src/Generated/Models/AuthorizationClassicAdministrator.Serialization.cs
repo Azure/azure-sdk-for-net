@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationClassicAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeAuthorizationClassicAdministrator(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationClassicAdministrator)} does not support reading '{options.Format}' format.");
             }
         }
 

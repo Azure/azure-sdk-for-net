@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeSmbMountEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

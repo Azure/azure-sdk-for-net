@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models

@@ -34,29 +34,42 @@ extends:
     Artifacts:
     - name: Azure.Storage.Blobs
       safeName: AzureStorageBlobs
+      skipSmokeTests: true
     - name: Azure.Storage.Blobs.Batch
       safeName: AzureStorageBlobsBatch
+      skipSmokeTests: true
     - name: Azure.Storage.Common
       safeName: AzureStorageCommon
+      skipSmokeTests: true
     - name: Azure.Storage.Files.Shares
       safeName: AzureStorageFilesShares
+      skipSmokeTests: true
     - name: Azure.Storage.Files.DataLake
       safeName: AzureStorageFilesDataLake
+      skipSmokeTests: true
     - name: Azure.Storage.Queues
       safeName: AzureStorageQueues
+      skipSmokeTests: true
     - name: Azure.Storage.Blobs.ChangeFeed
       safeName: AzureStorageBlobsChangeFeed
+      skipSmokeTests: true
     - name: Azure.Storage.DataMovement
       safeName: AzureStorageDataMovement
+      skipSmokeTests: true
     - name: Azure.Storage.DataMovement.Blobs
       safeName: AzureStorageDataMovementBlobs
+      skipSmokeTests: true
     - name: Azure.Storage.DataMovement.Files.Shares
       safeName: AzureStorageDataMovementFilesShares
+      skipSmokeTests: true
     - name: Microsoft.Azure.WebJobs.Extensions.Storage
       safeName: MicrosoftAzureWebJobsExtensionsStorage
+      skipSmokeTests: true
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
       safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
+      skipSmokeTests: true
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
       safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
+      skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

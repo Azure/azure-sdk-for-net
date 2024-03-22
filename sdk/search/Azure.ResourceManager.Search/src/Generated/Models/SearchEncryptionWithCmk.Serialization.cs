@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchEncryptionWithCmk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchEncryptionWithCmk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Search.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Search.Models
                         return DeserializeSearchEncryptionWithCmk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchEncryptionWithCmk)} does not support reading '{options.Format}' format.");
             }
         }
 

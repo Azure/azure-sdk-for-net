@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSnapshotRestoreRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotRestoreRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

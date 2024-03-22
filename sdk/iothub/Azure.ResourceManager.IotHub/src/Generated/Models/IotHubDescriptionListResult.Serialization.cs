@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubDescriptionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDescriptionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

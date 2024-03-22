@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<FcmV1Credential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FcmV1Credential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FcmV1Credential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<FcmV1Credential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FcmV1Credential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FcmV1Credential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FcmV1Credential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FcmV1Credential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeFcmV1Credential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FcmV1Credential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FcmV1Credential)} does not support reading '{options.Format}' format.");
             }
         }
 
