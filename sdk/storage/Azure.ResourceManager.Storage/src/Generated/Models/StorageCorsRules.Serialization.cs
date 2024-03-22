@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in CorsRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageCorsRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRSharedPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Keys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SqlDatabaseKey>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

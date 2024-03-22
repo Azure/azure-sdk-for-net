@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageAccountKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

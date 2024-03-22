@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Keys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SqlDatabaseKey>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

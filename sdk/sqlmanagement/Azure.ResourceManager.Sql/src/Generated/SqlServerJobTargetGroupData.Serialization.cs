@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in Members)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JobTarget>(item, options);
                 }
                 writer.WriteEndArray();
             }

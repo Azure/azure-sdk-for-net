@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSshPublicKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
-                writer.WriteObjectValue(Author);
+                writer.WriteObjectValue<SecurityInsightsClientInfo>(Author, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

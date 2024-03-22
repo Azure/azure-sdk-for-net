@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SyncFullSchemaTable>(item, options);
                 }
                 writer.WriteEndArray();
             }

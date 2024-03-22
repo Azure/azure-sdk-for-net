@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("upgradeDomainTimeout"u8);
             writer.WriteStringValue(UpgradeDomainTimeout, "c");
             writer.WritePropertyName("healthPolicy"u8);
-            writer.WriteObjectValue(HealthPolicy);
+            writer.WriteObjectValue<ClusterHealthPolicy>(HealthPolicy, options);
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue(DeltaHealthPolicy);
+                writer.WriteObjectValue<ClusterUpgradeDeltaHealthPolicy>(DeltaHealthPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

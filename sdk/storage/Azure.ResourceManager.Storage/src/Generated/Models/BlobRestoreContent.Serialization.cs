@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartArray();
             foreach (var item in BlobRanges)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<BlobRestoreRange>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

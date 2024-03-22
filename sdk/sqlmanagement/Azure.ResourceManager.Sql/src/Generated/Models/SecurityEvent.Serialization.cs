@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
             {
                 writer.WritePropertyName("securityEventSqlInjectionAdditionalProperties"u8);
-                writer.WriteObjectValue(SecurityEventSqlInjectionAdditionalProperties);
+                writer.WriteObjectValue<SecurityEventSqlInjectionAdditionalProperties>(SecurityEventSqlInjectionAdditionalProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

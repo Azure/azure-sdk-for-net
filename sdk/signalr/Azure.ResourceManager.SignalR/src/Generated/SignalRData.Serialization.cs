@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SignalR
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SignalRResourceSku>(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRSharedPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                writer.WriteObjectValue<SignalRTlsSettings>(Tls, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostNamePrefix))
             {
@@ -144,34 +144,34 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
-                writer.WriteObjectValue(LiveTraceConfiguration);
+                writer.WriteObjectValue<SignalRLiveTraceConfiguration>(LiveTraceConfiguration, options);
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
-                writer.WriteObjectValue(ResourceLogConfiguration);
+                writer.WriteObjectValue<SignalRResourceLogCategoryListResult>(ResourceLogConfiguration, options);
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<SignalRCorsSettings>(Cors, options);
             }
             if (Optional.IsDefined(Upstream))
             {
                 writer.WritePropertyName("upstream"u8);
-                writer.WriteObjectValue(Upstream);
+                writer.WriteObjectValue<ServerlessUpstreamSettings>(Upstream, options);
             }
             if (Optional.IsDefined(NetworkACLs))
             {
                 writer.WritePropertyName("networkACLs"u8);
-                writer.WriteObjectValue(NetworkACLs);
+                writer.WriteObjectValue<SignalRNetworkAcls>(NetworkACLs, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

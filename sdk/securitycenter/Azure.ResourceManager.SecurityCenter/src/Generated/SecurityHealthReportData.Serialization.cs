@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                writer.WriteObjectValue<HealthReportResourceDetails>(ResourceDetails, options);
             }
             if (Optional.IsDefined(EnvironmentDetails))
             {
                 writer.WritePropertyName("environmentDetails"u8);
-                writer.WriteObjectValue(EnvironmentDetails);
+                writer.WriteObjectValue<EnvironmentDetails>(EnvironmentDetails, options);
             }
             if (Optional.IsDefined(HealthDataClassification))
             {
                 writer.WritePropertyName("healthDataClassification"u8);
-                writer.WriteObjectValue(HealthDataClassification);
+                writer.WriteObjectValue<HealthDataClassification>(HealthDataClassification, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<HealthReportStatus>(Status, options);
             }
             if (Optional.IsCollectionDefined(AffectedDefendersPlans))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityHealthReportIssue>(item, options);
                 }
                 writer.WriteEndArray();
             }

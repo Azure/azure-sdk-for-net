@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailabilityGroupListenerLoadBalancerConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in MultiSubnetIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MultiSubnetIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
-                writer.WriteObjectValue(AvailabilityGroupConfiguration);
+                writer.WriteObjectValue<AvailabilityGroupConfiguration>(AvailabilityGroupConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

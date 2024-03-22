@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartArray();
             foreach (var item in NotificationTargets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ClusterNotificationTarget>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

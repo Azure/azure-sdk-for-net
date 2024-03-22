@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedFamilies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstancePoolFamilyCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

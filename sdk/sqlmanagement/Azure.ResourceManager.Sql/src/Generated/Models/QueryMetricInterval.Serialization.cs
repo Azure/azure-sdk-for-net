@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryMetricProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
