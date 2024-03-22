@@ -69,9 +69,9 @@
       MSB3245; <!-- Do not warn if a package reference is unavailable -->
     </NoWarn>
 
-    <!-- 
-      Experimental Azure SDK features 
-      -->
+    <!--
+      Experimental Azure SDK features
+    -->
     <NoWarn>
       $(NoWarn);
       AZURE0001; <!-- BicepModelReaderWriterOptions -->
