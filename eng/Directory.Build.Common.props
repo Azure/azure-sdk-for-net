@@ -69,6 +69,8 @@
       MSB3245; <!-- Do not warn if a package reference is unavailable -->
     </NoWarn>
 
+    <NoWarn>$(NoWarn);AZURE0001</NoWarn>
+
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
