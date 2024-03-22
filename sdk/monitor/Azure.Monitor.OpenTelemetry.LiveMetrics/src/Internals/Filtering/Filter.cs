@@ -60,8 +60,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private static readonly MethodInfo DictionaryStringDoubleTryGetValueMethodInfo = typeof(IDictionary<string, double>).GetMethod("TryGetValue");
 
-        private static readonly MethodInfo DictionaryStringStringScanMethodInfo =
-            GetMethodInfo<IDictionary<string, string>, string, bool>((dict, searchValue) => Filter<int>.ScanDictionary(dict, searchValue));
+        private static readonly MethodInfo ListKeyValuePairStringScanMethodInfo =
+            GetMethodInfo<IList<KeyValuePairString>, string, bool>((list, searchValue) => Filter<int>.ScanList(list, searchValue));
 
         private static readonly MethodInfo DictionaryStringDoubleScanMethodInfo =
            GetMethodInfo<IDictionary<string, double>, string, bool>((dict, searchValue) => Filter<int>.ScanDictionary(dict, searchValue));
@@ -240,7 +240,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         {
             // return Filter<int>.TryGetString(document.listName, keyValue)
             MemberExpression properties = Expression.Property(documentExpression, listName);
-            return Expression.Call(ListStringTryGetValueMethodInfo, properties, Expression.Constant(keyValue));
+            return Expression.Call(tryGetValueMethodInfo, properties, Expression.Constant(keyValue));
         }
 
         private static Expression CreateDictionaryAccessExpression(ParameterExpression documentExpression, string dictionaryName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
@@ -338,9 +338,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             return null;
         }
 
-        private static bool ScanDictionary(IDictionary<string, string> dict, string searchValue)
+        private static bool ScanList(IList<KeyValuePairString> list, string searchValue)
         {
-            return dict?.Values.Any(val => (val ?? string.Empty).IndexOf(searchValue ?? string.Empty, StringComparison.OrdinalIgnoreCase) != -1)
+            return list?.Any(val => (val.Value ?? string.Empty).IndexOf(searchValue ?? string.Empty, StringComparison.OrdinalIgnoreCase) != -1)
                    ?? false;
         }
 
@@ -642,11 +642,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     Expression propertyComparatorExpression;
                     if (string.Equals(propertyInfo.Name, CustomDimensionsPropertyName, StringComparison.Ordinal))
                     {
-                        // ScanDictionary(document.<CustomDimensionsPropertyName>, <this.comparand>)
+                        // ScanList(document.<CustomDimensionsPropertyName>, <this.comparand>)
                         MemberExpression customDimensionsProperty = Expression.Property(documentExpression, CustomDimensionsPropertyName);
                         propertyComparatorExpression = Expression.Call(
                             null,
-                            DictionaryStringStringScanMethodInfo,
+                            ListKeyValuePairStringScanMethodInfo,
                             customDimensionsProperty,
                             Expression.Constant(this.comparand));
 
