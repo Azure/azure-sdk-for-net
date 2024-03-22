@@ -26,11 +26,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             _connectionVars = InitializeConnectionVars(options, platform);
             _quickPulseSDKClientAPIsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
-            CollectionConfigurationError[] errors;
-            _collectionConfigurationInfo = new CollectionConfigurationInfo();
-            _collectionConfiguration = new CollectionConfiguration(
-                _collectionConfigurationInfo,
-                out errors);
+            //CollectionConfigurationError[] errors;
+            //_collectionConfigurationInfo = new CollectionConfigurationInfo(); // TODO: DEFAULT CTOR WAS REMOVED. NEED TO TOUCH BASE WITH SEAN
+            //_collectionConfiguration = new CollectionConfiguration(
+            //    _collectionConfigurationInfo,
+            //    out errors);
+
             if (options.EnableLiveMetrics)
             {
                 _isAzureWebApp = InitializeIsWebAppRunningInAzure(platform);

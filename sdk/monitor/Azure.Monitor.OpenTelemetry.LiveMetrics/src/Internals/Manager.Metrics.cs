@@ -59,7 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 if (item is Request request)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
+                    }
+
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -71,7 +75,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is RemoteDependency remoteDependency)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
+                    }
+
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -83,12 +91,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is Models.Exception exception)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
+                    }
+
                     liveMetricsBuffer.RecordException();
                 }
                 else if (item is Models.Trace trace)
                 {
-                    ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
+                    if (_collectionConfiguration != null)
+                    {
+                        ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
+                    }
                 }
                 else
                 {
@@ -166,27 +181,31 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return metrics;
         }
 
-        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration collectionConfiguration)
+        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration? collectionConfiguration)
         {
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
-            // prepare the accumulators based on the collection configuration
-            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
+            if (collectionConfiguration != null)
             {
-                var derivedMetricInfoAggregation = metricId.Item2;
-                if (!derivedMetricInfoAggregation.HasValue)
+                // prepare the accumulators based on the collection configuration
+                IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+                foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
                 {
-                    continue;
-                }
+                    var derivedMetricInfoAggregation = metricId.Item2;
+                    if (!derivedMetricInfoAggregation.HasValue)
+                    {
+                        continue;
+                    }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
-                {
-                    var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
+                    if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
+                    {
+                        var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 
-                    metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                        metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                    }
                 }
             }
+
             return metricAccumulators;
         }
 
