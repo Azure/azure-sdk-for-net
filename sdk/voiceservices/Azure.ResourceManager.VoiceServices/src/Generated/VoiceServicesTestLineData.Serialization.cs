@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.VoiceServices
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesTestLineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.VoiceServices
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesTestLineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.VoiceServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.VoiceServices
                         return DeserializeVoiceServicesTestLineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesTestLineData)} does not support reading '{options.Format}' format.");
             }
         }
 
