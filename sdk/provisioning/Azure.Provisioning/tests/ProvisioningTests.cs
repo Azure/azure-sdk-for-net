@@ -45,6 +45,7 @@ using UserAssignedIdentity = Azure.Provisioning.ManagedServiceIdentities.UserAss
 namespace Azure.Provisioning.Tests
 {
     [AsyncOnly]
+    [Ignore("Ignoring for now until we can rebuild the ARM libraries in main.")]
     public class ProvisioningTests : ManagementRecordedTestBase<ProvisioningTestEnvironment>
     {
         public ProvisioningTests(bool async) : base(async)
