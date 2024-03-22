@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ReportableException>(Error, options);
             }
             if (Optional.IsCollectionDefined(Events))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SyncMigrationDatabaseErrorEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }

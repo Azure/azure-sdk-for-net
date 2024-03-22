@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonDslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperDslConnectorProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

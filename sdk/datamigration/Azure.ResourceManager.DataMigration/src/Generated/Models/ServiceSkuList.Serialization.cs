@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailableServiceSku>(item, options);
                 }
                 writer.WriteEndArray();
             }

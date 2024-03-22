@@ -62,7 +62,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<DocumentIntelligenceError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -246,7 +246,7 @@ namespace Azure.AI.DocumentIntelligence
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnknownOperationDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

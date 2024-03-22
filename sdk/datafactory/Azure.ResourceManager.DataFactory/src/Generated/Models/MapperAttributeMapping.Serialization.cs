@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
-                writer.WriteObjectValue(AttributeReference);
+                writer.WriteObjectValue<MapperAttributeReference>(AttributeReference, options);
             }
             if (Optional.IsCollectionDefined(AttributeReferences))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AttributeReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperAttributeReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

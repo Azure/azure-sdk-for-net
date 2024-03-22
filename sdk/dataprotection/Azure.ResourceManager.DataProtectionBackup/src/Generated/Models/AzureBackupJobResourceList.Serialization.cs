@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataProtectionBackupJobData>(item, options);
                 }
                 writer.WriteEndArray();
             }

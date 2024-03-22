@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Pages)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentPage>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Paragraphs))
@@ -52,7 +52,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Paragraphs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentParagraph>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentTable>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Figures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentFigure>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Lists)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentList>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentSection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in KeyValuePairs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentKeyValuePair>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Styles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentStyle>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Languages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentLanguage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AnalyzedDocument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -426,7 +426,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
