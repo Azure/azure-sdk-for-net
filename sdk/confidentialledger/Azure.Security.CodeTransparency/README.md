@@ -42,7 +42,7 @@ Before submitting the cose file, the service must be configured with the relevan
 To submit the signature, use the following code:
 
 ```C# Snippet:CodeTransparencySubmission
-CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
 Operation<GetOperationResult> operation = await client.CreateEntryAsync(content);

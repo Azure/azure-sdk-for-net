@@ -70,7 +70,7 @@ namespace Azure.Security.CodeTransparency.Tests
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 #endif
 #if SNIPPET
-            CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 #endif
 #if !SNIPPET
             BinaryData content = BinaryData.FromString("Hello World!");
@@ -133,7 +133,7 @@ namespace Azure.Security.CodeTransparency.Tests
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 #endif
 #if SNIPPET
-            CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 #endif
             #endregion
 
@@ -188,7 +188,7 @@ namespace Azure.Security.CodeTransparency.Tests
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 #endif
 #if SNIPPET
-            CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 #endif
             #endregion
             #region Snippet:CodeTransparencySample2_GetEntryWithEmbeddedReceipt
@@ -228,11 +228,12 @@ namespace Azure.Security.CodeTransparency.Tests
             string[] scopes = { "https://your.service.scope/.default" };
 #if !SNIPPET
             AccessToken accessToken = new("token", DateTimeOffset.Now.AddHours(1));
+            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential(accessToken.Token));
 #endif
 #if SNIPPET
             AccessToken accessToken = credential.GetToken(new TokenRequestContext(scopes), CancellationToken.None);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), new AzureKeyCredential(accessToken.Token));
 #endif
-            CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), new AzureKeyCredential(accessToken.Token));
             #endregion
         }
 
@@ -269,7 +270,7 @@ namespace Azure.Security.CodeTransparency.Tests
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 #endif
 #if SNIPPET
-            CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+            CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 #endif
             #endregion
             #region Snippet:CodeTransparencySample4_IterateOverEntries

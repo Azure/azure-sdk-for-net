@@ -33,14 +33,14 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary> Initializes a new instance of CertificateClient.</summary>
-        /// <param name="certificateEndpoint"> The Identity Service URL, for example https://identity.accledger.azure.com. </param>
+        /// <param name="certificateEndpoint"> The Identity Service URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
         public CodeTransparencyCertificateClient(Uri certificateEndpoint) : this(certificateEndpoint, new CodeTransparencyClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of CertificateClient.</summary>
-        /// <param name="certificateEndpoint"> The Identity Service URL, for example https://identity.confidential-ledger.azure.com. </param>
+        /// <param name="certificateEndpoint"> The Identity Service URL. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
         public CodeTransparencyCertificateClient(Uri certificateEndpoint, CodeTransparencyClientOptions options)

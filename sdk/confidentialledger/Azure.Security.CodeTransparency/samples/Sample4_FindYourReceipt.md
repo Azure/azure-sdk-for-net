@@ -13,7 +13,7 @@ To create a new `CodeTransparencyClient` that will interact with the service, wi
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample4_CreateClient
-CodeTransparencyClient client = new(new Uri("https://cts-service.confidential-ledger.azure.com"), null);
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 ```
 
 ## Find the entry
