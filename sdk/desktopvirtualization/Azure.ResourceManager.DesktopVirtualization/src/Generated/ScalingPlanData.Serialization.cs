@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DesktopVirtualizationSku>(Sku, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingSchedule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in HostPoolReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingHostPoolReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

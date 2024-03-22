@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EasmLabelData>(item, options);
                 }
                 writer.WriteEndArray();
             }

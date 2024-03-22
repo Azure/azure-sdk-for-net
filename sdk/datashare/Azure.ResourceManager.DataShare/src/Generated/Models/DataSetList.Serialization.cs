@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ShareDataSetData>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

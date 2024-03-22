@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteObjectValue(Description);
+                writer.WriteObjectValue<ProductDescription>(Description, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
             {
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ImageInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeOrderProductImageInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CostInformation))
             {
                 writer.WritePropertyName("costInformation"u8);
-                writer.WriteObjectValue(CostInformation);
+                writer.WriteObjectValue<EdgeOrderProductCostInformation>(CostInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
             {
                 writer.WritePropertyName("availabilityInformation"u8);
-                writer.WriteObjectValue(AvailabilityInformation);
+                writer.WriteObjectValue<ProductAvailabilityInformation>(AvailabilityInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
             {
                 writer.WritePropertyName("hierarchyInformation"u8);
-                writer.WriteObjectValue(HierarchyInformation);
+                writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilterableProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Specifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<ProductDimensions>(Dimensions, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

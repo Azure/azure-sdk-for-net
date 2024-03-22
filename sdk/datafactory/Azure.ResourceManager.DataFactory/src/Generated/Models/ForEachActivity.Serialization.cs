@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteNumberValue(BatchCount.Value);
             }
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue(Items);
+            writer.WriteObjectValue<DataFactoryExpression>(Items, options);
             writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PipelineActivity>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

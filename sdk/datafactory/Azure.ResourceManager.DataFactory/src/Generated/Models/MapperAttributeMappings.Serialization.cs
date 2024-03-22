@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AttributeMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperAttributeMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Dynatrace
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue(LogRules);
+                writer.WriteObjectValue<DynatraceMonitorResourceLogRules>(LogRules, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue(MetricRules);
+                writer.WriteObjectValue<DynatraceMonitorResourceMetricRules>(MetricRules, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

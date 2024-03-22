@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartArray();
             foreach (var item in TargetDnsServers)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TargetDnsServer>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Metadata))

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in ExposureControlRequests)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ExposureControlContent>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

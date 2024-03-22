@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("triggerOption"u8);
-            writer.WriteObjectValue(BackupTrigger);
+            writer.WriteObjectValue<AdhocBackupTriggerSetting>(BackupTrigger, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

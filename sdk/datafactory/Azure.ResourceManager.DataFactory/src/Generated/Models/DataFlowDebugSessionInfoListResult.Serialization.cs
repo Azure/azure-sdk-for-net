@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowDebugSessionInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

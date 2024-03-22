@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue(CursorMethods);
+                writer.WriteObjectValue<MongoDBCursorMethodsProperties>(CursorMethods, options);
             }
             if (Optional.IsDefined(BatchSize))
             {

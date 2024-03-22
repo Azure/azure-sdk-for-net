@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration);
+                writer.WriteObjectValue<DeliveryConfiguration>(DeliveryConfiguration, options);
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration);
+                writer.WriteObjectValue<FiltersConfiguration>(FiltersConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("restoreRequestObject"u8);
-            writer.WriteObjectValue(RestoreRequestObject);
+            writer.WriteObjectValue<BackupRestoreContent>(RestoreRequestObject, options);
             writer.WritePropertyName("crossRegionRestoreDetails"u8);
-            writer.WriteObjectValue(CrossRegionRestoreDetails);
+            writer.WriteObjectValue<CrossRegionRestoreDetails>(CrossRegionRestoreDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
