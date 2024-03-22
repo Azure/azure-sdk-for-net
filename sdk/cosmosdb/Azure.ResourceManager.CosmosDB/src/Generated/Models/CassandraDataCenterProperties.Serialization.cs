@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraDataCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
             }
+            if (Optional.IsDefined(PrivateEndpointIPAddress))
+            {
+                writer.WritePropertyName("privateEndpointIpAddress"u8);
+                writer.WriteStringValue(PrivateEndpointIPAddress);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraDataCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default;
             bool? deallocated = default;
             CassandraError provisionError = default;
+            string privateEndpointIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,6 +299,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("privateEndpointIpAddress"u8))
+                {
+                    privateEndpointIPAddress = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -315,6 +326,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 authenticationMethodLdapProperties,
                 deallocated,
                 provisionError,
+                privateEndpointIPAddress,
                 serializedAdditionalRawData);
         }
 
@@ -588,7 +600,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -606,7 +618,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
-                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

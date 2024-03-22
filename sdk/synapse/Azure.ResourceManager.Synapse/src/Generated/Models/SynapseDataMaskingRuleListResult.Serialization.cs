@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDataMaskingRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDataMaskingRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseDataMaskingRuleListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDataMaskingRuleListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

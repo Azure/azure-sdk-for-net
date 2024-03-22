@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedIdentityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 case "bicep":
                     throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
-                    throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserAssignedIdentityData)} does not support reading '{options.Format}' format.");
             }
         }
 

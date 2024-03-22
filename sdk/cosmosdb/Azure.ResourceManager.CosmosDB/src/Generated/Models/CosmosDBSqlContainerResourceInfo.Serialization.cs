@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);
             }
+            if (Optional.IsCollectionDefined(ComputedProperties))
+            {
+                writer.WritePropertyName("computedProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in ComputedProperties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,6 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceRestoreParameters restoreParameters = default;
             CosmosDBAccountCreateMode? createMode = default;
             MaterializedViewDefinition materializedViewDefinition = default;
+            IList<ComputedProperty> computedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,6 +239,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     materializedViewDefinition = MaterializedViewDefinition.DeserializeMaterializedViewDefinition(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("computedProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputedProperty> array = new List<ComputedProperty>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputedProperty.DeserializeComputedProperty(item, options));
+                    }
+                    computedProperties = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -246,6 +271,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 restoreParameters,
                 createMode,
                 materializedViewDefinition,
+                computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
                 serializedAdditionalRawData);
         }
 
@@ -459,7 +485,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -477,7 +503,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

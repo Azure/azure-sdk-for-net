@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
@@ -85,6 +86,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
+                }
+                else if (item is Models.Trace trace)
+                {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
                 {

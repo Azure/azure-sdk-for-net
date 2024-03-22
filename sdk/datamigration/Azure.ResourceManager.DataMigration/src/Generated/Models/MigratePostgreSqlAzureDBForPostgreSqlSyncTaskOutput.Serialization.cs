@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

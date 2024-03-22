@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeExtendedLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

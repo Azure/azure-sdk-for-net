@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreDataPlaneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreDataPlaneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializePacketCoreDataPlaneData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCoreDataPlaneData)} does not support reading '{options.Format}' format.");
             }
         }
 

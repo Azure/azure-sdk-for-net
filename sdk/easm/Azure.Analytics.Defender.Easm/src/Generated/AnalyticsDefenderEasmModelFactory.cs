@@ -318,7 +318,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="mark"> The cursor mark to be used on the next request.  Not set if using paging. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
-        /// <param name="value"> The items in the current page of results. </param>
+        /// <param name="value">
+        /// The items in the current page of results.
+        /// Please note <see cref="Easm.AssetResource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Easm.AsAssetResource"/>, <see cref="Easm.ContactAssetResource"/>, <see cref="Easm.DomainAssetResource"/>, <see cref="Easm.HostAssetResource"/>, <see cref="Easm.IpAddressAssetResource"/>, <see cref="Easm.IpBlockAssetResource"/>, <see cref="Easm.PageAssetResource"/> and <see cref="Easm.SslCertAssetResource"/>.
+        /// </param>
         /// <returns> A new <see cref="Easm.AssetPageResult"/> instance for mocking. </returns>
         public static AssetPageResult AssetPageResult(long? totalElements = null, string mark = null, string nextLink = null, IEnumerable<AssetResource> value = null)
         {
