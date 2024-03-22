@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<EventHubDestination>(Destination, options);
             }
             if (Optional.IsDefined(SkipEmptyArchives))
             {

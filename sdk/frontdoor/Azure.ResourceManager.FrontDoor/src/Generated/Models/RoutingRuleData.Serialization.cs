@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RouteConfiguration))
             {
                 writer.WritePropertyName("routeConfiguration"u8);
-                writer.WriteObjectValue(RouteConfiguration);
+                writer.WriteObjectValue<RouteConfiguration>(RouteConfiguration, options);
             }
             if (Optional.IsDefined(RulesEngine))
             {

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentReportResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

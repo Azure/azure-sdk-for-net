@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
-                writer.WriteObjectValue(GuestConfiguration);
+                writer.WriteObjectValue<GuestConfigurationNavigation>(GuestConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
-                writer.WriteObjectValue(LatestAssignmentReport);
+                writer.WriteObjectValue<GuestConfigurationAssignmentReportInfo>(LatestAssignmentReport, options);
             }
             if (Optional.IsDefined(Context))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in VmssVmList)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<GuestConfigurationVmssVmInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }

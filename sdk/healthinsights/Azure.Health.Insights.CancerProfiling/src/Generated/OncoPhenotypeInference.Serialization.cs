@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InferenceEvidence>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +205,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OncoPhenotypeInference>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

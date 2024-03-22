@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<EventHubsSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EventHubsEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventHubsPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

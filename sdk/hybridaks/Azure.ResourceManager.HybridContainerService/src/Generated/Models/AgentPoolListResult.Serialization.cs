@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridContainerServiceAgentPoolData>(item, options);
                 }
                 writer.WriteEndArray();
             }
