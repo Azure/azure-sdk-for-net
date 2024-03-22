@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<HciPrecheckResultTags>(Tags, options);
             }
             if (Optional.IsDefined(Title))
             {

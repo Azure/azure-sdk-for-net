@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkbookTemplateGallery>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     writer.WriteStartArray();
                     foreach (var item0 in item.Value)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue<WorkbookTemplateLocalizedGallery>(item0, options);
                     }
                     writer.WriteEndArray();
                 }

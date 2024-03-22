@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in FormParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParameterContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 foreach (var item in Examples)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterExampleContract>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

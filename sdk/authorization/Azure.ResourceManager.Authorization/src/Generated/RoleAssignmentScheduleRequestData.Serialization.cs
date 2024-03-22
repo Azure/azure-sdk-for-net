@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
-                writer.WriteObjectValue(TicketInfo);
+                writer.WriteObjectValue<RoleAssignmentScheduleTicketInfo>(TicketInfo, options);
             }
             if (Optional.IsDefined(Condition))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties);
+                writer.WriteObjectValue<RoleManagementExpandedProperties>(ExpandedProperties, options);
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();

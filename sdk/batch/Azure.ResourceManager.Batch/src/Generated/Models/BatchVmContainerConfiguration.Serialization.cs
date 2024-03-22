@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchVmContainerRegistry>(item, options);
                 }
                 writer.WriteEndArray();
             }

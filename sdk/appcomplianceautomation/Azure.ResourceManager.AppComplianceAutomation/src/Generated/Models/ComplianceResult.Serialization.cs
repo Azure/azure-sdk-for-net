@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Category>(item, options);
                 }
                 writer.WriteEndArray();
             }

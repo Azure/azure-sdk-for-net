@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleDefinitionPermission>(item, options);
                 }
                 writer.WriteEndArray();
             }
