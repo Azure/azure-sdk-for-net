@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue<SiteRecoveryEventProviderSpecificDetails>(ProviderSpecificDetails, options);
             }
             if (Optional.IsDefined(EventSpecificDetails))
             {
                 writer.WritePropertyName("eventSpecificDetails"u8);
-                writer.WriteObjectValue(EventSpecificDetails);
+                writer.WriteObjectValue<SiteRecoveryEventSpecificDetails>(EventSpecificDetails, options);
             }
             if (Optional.IsCollectionDefined(HealthErrors))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }

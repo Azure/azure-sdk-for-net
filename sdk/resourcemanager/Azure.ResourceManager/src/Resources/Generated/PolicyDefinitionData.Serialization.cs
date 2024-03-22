@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ArmPolicyParameter>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

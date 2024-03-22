@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ArmApplicationManagedIdentity>(Identity, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ArmApplicationSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(BillingDetails))
             {
                 writer.WritePropertyName("billingDetails"u8);
-                writer.WriteObjectValue(BillingDetails);
+                writer.WriteObjectValue<ArmApplicationBillingDetails>(BillingDetails, options);
             }
             if (Optional.IsDefined(JitAccessPolicy))
             {
                 writer.WritePropertyName("jitAccessPolicy"u8);
-                writer.WriteObjectValue(JitAccessPolicy);
+                writer.WriteObjectValue<ArmApplicationJitAccessPolicy>(JitAccessPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ArmApplicationAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(CustomerSupport))
             {
                 writer.WritePropertyName("customerSupport"u8);
-                writer.WriteObjectValue(CustomerSupport);
+                writer.WriteObjectValue<ArmApplicationPackageContact>(CustomerSupport, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportUris))
             {
                 writer.WritePropertyName("supportUrls"u8);
-                writer.WriteObjectValue(SupportUris);
+                writer.WriteObjectValue<ArmApplicationPackageSupportUris>(SupportUris, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Artifacts))
             {
@@ -172,19 +172,19 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ArmApplicationArtifact>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<ArmApplicationDetails>(CreatedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue<ArmApplicationDetails>(UpdatedBy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

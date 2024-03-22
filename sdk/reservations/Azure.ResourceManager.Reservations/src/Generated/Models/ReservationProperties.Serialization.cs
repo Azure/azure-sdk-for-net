@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo);
+                writer.WriteObjectValue<ExtendedStatusInfo>(ExtendedStatusInfo, options);
             }
             if (Optional.IsDefined(BillingPlan))
             {
@@ -144,22 +144,22 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(SplitProperties))
             {
                 writer.WritePropertyName("splitProperties"u8);
-                writer.WriteObjectValue(SplitProperties);
+                writer.WriteObjectValue<ReservationSplitProperties>(SplitProperties, options);
             }
             if (Optional.IsDefined(MergeProperties))
             {
                 writer.WritePropertyName("mergeProperties"u8);
-                writer.WriteObjectValue(MergeProperties);
+                writer.WriteObjectValue<ReservationMergeProperties>(MergeProperties, options);
             }
             if (Optional.IsDefined(SwapProperties))
             {
                 writer.WritePropertyName("swapProperties"u8);
-                writer.WriteObjectValue(SwapProperties);
+                writer.WriteObjectValue<ReservationSwapProperties>(SwapProperties, options);
             }
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<AppliedScopeProperties>(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(BillingScopeId))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties);
+                writer.WriteObjectValue<RenewProperties>(RenewProperties, options);
             }
             if (Optional.IsDefined(Term))
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue(Utilization);
+                writer.WriteObjectValue<ReservationPropertiesUtilization>(Utilization, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

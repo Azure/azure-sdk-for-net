@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(SubscriptionPolicies))
             {
                 writer.WritePropertyName("subscriptionPolicies"u8);
-                writer.WriteObjectValue(SubscriptionPolicies);
+                writer.WriteObjectValue<SubscriptionPolicies>(SubscriptionPolicies, options);
             }
             if (Optional.IsDefined(AuthorizationSource))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedByTenant>(item, options);
                 }
                 writer.WriteEndArray();
             }

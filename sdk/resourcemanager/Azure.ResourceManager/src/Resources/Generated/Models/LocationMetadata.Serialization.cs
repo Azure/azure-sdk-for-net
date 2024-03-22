@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in PairedRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PairedRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
