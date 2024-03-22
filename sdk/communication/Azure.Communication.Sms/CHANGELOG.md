@@ -1,8 +1,5 @@
 # Release History
 
-## 1.1.0-beta.1 (2024-03-20)
-- Dummy change
-
 ## 1.0.2 (2021-10-05)
 - Dependency versions updated.
 
