@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (ResourceProperties != null)
                 {
                     writer.WritePropertyName("resourceProperties"u8);
-                    writer.WriteObjectValue(ResourceProperties);
+                    writer.WriteObjectValue<AzureResourceBaseProperties>(ResourceProperties, options);
                 }
                 else
                 {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<JitNetworkAccessRequestPort>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

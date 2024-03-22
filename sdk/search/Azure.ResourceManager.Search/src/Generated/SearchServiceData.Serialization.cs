@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SearchSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<NetworkRuleSet>(NetworkRuleSet, options);
             }
             if (Optional.IsDefined(EncryptionWithCmk))
             {
                 writer.WritePropertyName("encryptionWithCmk"u8);
-                writer.WriteObjectValue(EncryptionWithCmk);
+                writer.WriteObjectValue<SearchEncryptionWithCmk>(EncryptionWithCmk, options);
             }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(AuthOptions))
             {
                 writer.WritePropertyName("authOptions"u8);
-                writer.WriteObjectValue(AuthOptions);
+                writer.WriteObjectValue<SearchAadAuthDataPlaneAuthOptions>(AuthOptions, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharedSearchServicePrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

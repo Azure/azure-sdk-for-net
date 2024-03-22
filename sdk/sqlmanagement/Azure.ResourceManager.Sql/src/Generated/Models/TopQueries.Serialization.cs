@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryStatisticsProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

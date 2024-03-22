@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedElasticPoolEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ElasticPoolEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

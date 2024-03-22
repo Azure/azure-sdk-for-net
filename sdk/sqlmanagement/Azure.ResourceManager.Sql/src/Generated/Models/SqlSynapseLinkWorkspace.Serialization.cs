@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlSynapseLinkWorkspaceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

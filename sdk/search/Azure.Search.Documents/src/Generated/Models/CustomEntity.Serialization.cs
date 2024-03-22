@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in Aliases)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<CustomEntityAlias>(item);
                     }
                     writer.WriteEndArray();
                 }

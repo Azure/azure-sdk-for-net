@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfidenceReasons)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsAlertConfidenceReason>(item, options);
                 }
                 writer.WriteEndArray();
             }

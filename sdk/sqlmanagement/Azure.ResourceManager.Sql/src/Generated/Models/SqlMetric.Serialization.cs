@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<SqlMetricName>(Name, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlMetricValue>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlVmGroupData>(item, options);
                 }
                 writer.WriteEndArray();
             }

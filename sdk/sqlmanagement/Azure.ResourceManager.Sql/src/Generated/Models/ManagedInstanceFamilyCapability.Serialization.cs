@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedLicenseTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LicenseTypeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedVcoresValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstanceVcoresCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

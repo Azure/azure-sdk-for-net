@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlServerVersionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedManagedInstanceVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstanceVersionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRUpstreamTemplate>(item, options);
                 }
                 writer.WriteEndArray();
             }

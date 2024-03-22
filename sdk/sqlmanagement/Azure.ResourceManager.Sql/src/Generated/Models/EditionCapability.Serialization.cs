@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceObjectiveCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
-                writer.WriteObjectValue(ReadScale);
+                writer.WriteObjectValue<ReadScaleCapability>(ReadScale, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
