@@ -1,16 +1,10 @@
-# Release History
+# Release
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0 (2024-03-22)
 
 ### Features Added
 
-- Added `BicepModelReaderWriterOptions` to support writing Bicep.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `BicepModelReaderWriterOptions`.
 
 ## 1.10.2 (2024-03-01)
 

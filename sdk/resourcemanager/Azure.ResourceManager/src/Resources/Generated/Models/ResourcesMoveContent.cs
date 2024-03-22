@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The IDs of the resources. </summary>
+        [WirePath("resources")]
         public IList<string> Resources { get; }
         /// <summary> The target resource group. </summary>
+        [WirePath("targetResourceGroup")]
         public ResourceIdentifier TargetResourceGroupId { get; set; }
     }
 }
