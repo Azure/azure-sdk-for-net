@@ -29,12 +29,12 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
-                writer.WriteObjectValue(ScoringRule);
+                writer.WriteObjectValue<RouterRule>(ScoringRule, options);
             }
             if (Optional.IsDefined(ScoringRuleOptions))
             {
                 writer.WritePropertyName("scoringRuleOptions"u8);
-                writer.WriteObjectValue(ScoringRuleOptions);
+                writer.WriteObjectValue<ScoringRuleOptions>(ScoringRuleOptions, options);
             }
             writer.WritePropertyName("minConcurrentOffers"u8);
             writer.WriteNumberValue(MinConcurrentOffers);
@@ -204,7 +204,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<BestWorkerMode>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<ChaosTargetSimpleFilterParameters>(Parameters, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FilterType.ToString());

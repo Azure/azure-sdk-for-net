@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CognitiveServicesSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(SkuChangeInfo))
             {
                 writer.WritePropertyName("skuChangeInfo"u8);
-                writer.WriteObjectValue(SkuChangeInfo);
+                writer.WriteObjectValue<CognitiveServicesSkuChangeInfo>(SkuChangeInfo, options);
             }
             if (Optional.IsDefined(CustomSubDomainName))
             {
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue<CognitiveServicesNetworkRuleSet>(NetworkAcls, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ServiceAccountEncryptionProperties>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(UserOwnedStorage))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in UserOwnedStorage)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceAccountUserOwnedStorage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CognitiveServicesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue(ApiProperties);
+                writer.WriteObjectValue<ServiceAccountApiProperties>(ApiProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                writer.WriteObjectValue<ServiceAccountCallRateLimit>(CallRateLimit, options);
             }
             if (Optional.IsDefined(EnableDynamicThrottling))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
             {
                 writer.WritePropertyName("quotaLimit"u8);
-                writer.WriteObjectValue(QuotaLimit);
+                writer.WriteObjectValue<ServiceAccountQuotaLimit>(QuotaLimit, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
-                writer.WriteObjectValue(Locations);
+                writer.WriteObjectValue<CognitiveServicesMultiRegionSettings>(Locations, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CommitmentPlanAssociations))
             {
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in CommitmentPlanAssociations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommitmentPlanAssociation>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AbusePenalty))
             {
                 writer.WritePropertyName("abusePenalty"u8);
-                writer.WriteObjectValue(AbusePenalty);
+                writer.WriteObjectValue<AbusePenalty>(AbusePenalty, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playRequest);
+            content.JsonWriter.WriteObjectValue<PlayRequestInternal>(playRequest);
             request.Content = content;
             return message;
         }
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue<StartTranscriptionRequestInternal>(startTranscriptionRequest);
             request.Content = content;
             return message;
         }
@@ -200,7 +200,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue<StopTranscriptionRequestInternal>(stopTranscriptionRequest);
             request.Content = content;
             return message;
         }
@@ -334,7 +334,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recognizeRequest);
+            content.JsonWriter.WriteObjectValue<RecognizeRequestInternal>(recognizeRequest);
             request.Content = content;
             return message;
         }
@@ -408,7 +408,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
+            content.JsonWriter.WriteObjectValue<ContinuousDtmfRecognitionRequestInternal>(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
         }
@@ -482,7 +482,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
+            content.JsonWriter.WriteObjectValue<ContinuousDtmfRecognitionRequestInternal>(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
         }
@@ -558,7 +558,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequest);
+            content.JsonWriter.WriteObjectValue<SendDtmfTonesRequestInternal>(sendDtmfTonesRequest);
             request.Content = content;
             return message;
         }
@@ -642,7 +642,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue<UpdateTranscriptionRequestInternal>(updateTranscriptionRequest);
             request.Content = content;
             return message;
         }
@@ -718,7 +718,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(holdRequest);
+            content.JsonWriter.WriteObjectValue<HoldRequestInternal>(holdRequest);
             request.Content = content;
             return message;
         }
@@ -792,7 +792,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unholdRequest);
+            content.JsonWriter.WriteObjectValue<UnholdRequestInternal>(unholdRequest);
             request.Content = content;
             return message;
         }
@@ -866,7 +866,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startHoldMusicRequest);
+            content.JsonWriter.WriteObjectValue<StartHoldMusicRequestInternal>(startHoldMusicRequest);
             request.Content = content;
             return message;
         }
@@ -940,7 +940,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopHoldMusicRequest);
+            content.JsonWriter.WriteObjectValue<StopHoldMusicRequestInternal>(stopHoldMusicRequest);
             request.Content = content;
             return message;
         }

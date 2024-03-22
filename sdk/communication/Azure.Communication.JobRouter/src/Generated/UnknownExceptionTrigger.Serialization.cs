@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnknownExceptionTrigger>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

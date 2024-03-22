@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<CognitiveServicesSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CognitiveServicesAccountProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {

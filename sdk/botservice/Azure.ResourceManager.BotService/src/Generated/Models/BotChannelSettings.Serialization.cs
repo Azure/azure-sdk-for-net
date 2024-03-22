@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotChannelSite>(item, options);
                 }
                 writer.WriteEndArray();
             }

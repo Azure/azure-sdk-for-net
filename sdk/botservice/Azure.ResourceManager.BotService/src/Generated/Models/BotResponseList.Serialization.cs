@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotData>(item, options);
                 }
                 writer.WriteEndArray();
             }
