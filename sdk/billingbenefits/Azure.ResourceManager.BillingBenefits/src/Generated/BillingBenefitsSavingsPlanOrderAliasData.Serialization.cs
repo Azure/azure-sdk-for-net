@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<BillingBenefitsSku>(Sku, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                writer.WriteObjectValue<BillingBenefitsCommitment>(Commitment, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

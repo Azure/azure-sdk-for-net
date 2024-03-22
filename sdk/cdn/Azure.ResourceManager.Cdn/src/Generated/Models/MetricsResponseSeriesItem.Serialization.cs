@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricsResponseSeriesPropertiesItemsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>(item, options);
                 }
                 writer.WriteEndArray();
             }

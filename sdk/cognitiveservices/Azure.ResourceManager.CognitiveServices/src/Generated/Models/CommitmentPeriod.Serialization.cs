@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota);
+                writer.WriteObjectValue<CommitmentQuota>(Quota, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
