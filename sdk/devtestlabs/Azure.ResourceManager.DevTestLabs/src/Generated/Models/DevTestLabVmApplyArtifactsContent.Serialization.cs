@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabArtifactInstallInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

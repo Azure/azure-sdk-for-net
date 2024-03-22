@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationRuntimeNodeMonitoringData>(item, options);
                 }
                 writer.WriteEndArray();
             }

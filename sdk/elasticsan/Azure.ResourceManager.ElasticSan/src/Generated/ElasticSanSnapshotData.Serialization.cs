@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("creationData"u8);
-            writer.WriteObjectValue(CreationData);
+            writer.WriteObjectValue<SnapshotCreationInfo>(CreationData, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

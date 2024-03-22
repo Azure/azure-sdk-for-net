@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(ConnectionInfo, options);
             writer.WritePropertyName("backupFileShare"u8);
-            writer.WriteObjectValue(BackupFileShare);
+            writer.WriteObjectValue<FileShare>(BackupFileShare, options);
             writer.WritePropertyName("selectedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedCertificates)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SelectedCertificateInput>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

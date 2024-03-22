@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevCenterEndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

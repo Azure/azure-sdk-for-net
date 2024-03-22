@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in DatabaseFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatabaseFileInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
