@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
@@ -23,7 +22,7 @@ namespace Azure.Security.CodeTransparency
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -137,7 +136,7 @@ namespace Azure.Security.CodeTransparency
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -303,7 +302,7 @@ namespace Azure.Security.CodeTransparency
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -319,7 +318,7 @@ namespace Azure.Security.CodeTransparency
                         return DeserializeJsonWebKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{options.Format}' format.");
             }
         }
 

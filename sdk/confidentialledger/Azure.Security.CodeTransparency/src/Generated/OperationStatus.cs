@@ -26,11 +26,11 @@ namespace Azure.Security.CodeTransparency
         private const string FailedValue = "failed";
         private const string SucceededValue = "succeeded";
 
-        /// <summary> running. </summary>
+        /// <summary> Operation is still running. </summary>
         public static OperationStatus Running { get; } = new OperationStatus(RunningValue);
-        /// <summary> failed. </summary>
+        /// <summary> Operation failed. </summary>
         public static OperationStatus Failed { get; } = new OperationStatus(FailedValue);
-        /// <summary> succeeded. </summary>
+        /// <summary> Operation succeeded. </summary>
         public static OperationStatus Succeeded { get; } = new OperationStatus(SucceededValue);
         /// <summary> Determines if two <see cref="OperationStatus"/> values are the same. </summary>
         public static bool operator ==(OperationStatus left, OperationStatus right) => left.Equals(right);
