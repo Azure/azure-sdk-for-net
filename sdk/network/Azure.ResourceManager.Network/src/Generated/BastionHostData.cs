@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -23,7 +22,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         public BastionHostData()
         {
-            Zones = new ChangeTrackingList<string>();
             IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
@@ -34,13 +32,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
         /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
         /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
-        /// <param name="virtualNetwork"> Reference to an existing virtual network required for Developer Bastion Host only. </param>
-        /// <param name="networkAcls"></param>
         /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
         /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
         /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
@@ -49,15 +44,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
-            Zones = zones;
             ETag = etag;
             Sku = sku;
             IPConfigurations = ipConfigurations;
             DnsName = dnsName;
-            VirtualNetwork = virtualNetwork;
-            NetworkAcls = networkAcls;
             ProvisioningState = provisioningState;
             ScaleUnits = scaleUnits;
             DisableCopyPaste = disableCopyPaste;
@@ -68,8 +60,6 @@ namespace Azure.ResourceManager.Network
             EnableKerberos = enableKerberos;
         }
 
-        /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
-        public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> The sku of this Bastion Host. </summary>
@@ -90,33 +80,6 @@ namespace Azure.ResourceManager.Network
         public IList<BastionHostIPConfiguration> IPConfigurations { get; }
         /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
         public string DnsName { get; set; }
-        /// <summary> Reference to an existing virtual network required for Developer Bastion Host only. </summary>
-        internal WritableSubResource VirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier VirtualNetworkId
-        {
-            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
-            set
-            {
-                if (VirtualNetwork is null)
-                    VirtualNetwork = new WritableSubResource();
-                VirtualNetwork.Id = value;
-            }
-        }
-
-        /// <summary> Gets or sets the network acls. </summary>
-        internal BastionHostPropertiesFormatNetworkAcls NetworkAcls { get; set; }
-        /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
-        public IList<BastionHostIPRule> NetworkAclsIPRules
-        {
-            get
-            {
-                if (NetworkAcls is null)
-                    NetworkAcls = new BastionHostPropertiesFormatNetworkAcls();
-                return NetworkAcls.IPRules;
-            }
-        }
-
         /// <summary> The provisioning state of the bastion host resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The scale units for the Bastion Host resource. </summary>

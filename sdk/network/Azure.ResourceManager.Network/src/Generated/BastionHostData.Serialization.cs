@@ -12,7 +12,6 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -29,16 +28,6 @@ namespace Azure.ResourceManager.Network
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Zones))
-            {
-                writer.WritePropertyName("zones"u8);
-                writer.WriteStartArray();
-                foreach (var item in Zones)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -96,16 +85,6 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
-            }
-            if (Optional.IsDefined(VirtualNetwork))
-            {
-                writer.WritePropertyName("virtualNetwork"u8);
-                JsonSerializer.Serialize(writer, VirtualNetwork);
-            }
-            if (Optional.IsDefined(NetworkAcls))
-            {
-                writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -186,7 +165,6 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            IList<string> zones = default;
             ETag? etag = default;
             NetworkSku sku = default;
             ResourceIdentifier id = default;
@@ -196,8 +174,6 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             IList<BastionHostIPConfiguration> ipConfigurations = default;
             string dnsName = default;
-            WritableSubResource virtualNetwork = default;
-            BastionHostPropertiesFormatNetworkAcls networkAcls = default;
             NetworkProvisioningState? provisioningState = default;
             int? scaleUnits = default;
             bool? disableCopyPaste = default;
@@ -210,20 +186,6 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    zones = array;
-                    continue;
-                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -316,24 +278,6 @@ namespace Azure.ResourceManager.Network
                             dnsName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetwork"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("networkAcls"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkAcls = BastionHostPropertiesFormatNetworkAcls.DeserializeBastionHostPropertiesFormatNetworkAcls(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -422,13 +366,10 @@ namespace Azure.ResourceManager.Network
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                zones ?? new ChangeTrackingList<string>(),
                 etag,
                 sku,
                 ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>(),
                 dnsName,
-                virtualNetwork,
-                networkAcls,
                 provisioningState,
                 scaleUnits,
                 disableCopyPaste,

@@ -14,16 +14,16 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class NetworkVirtualApplianceConnectionList : IUtf8JsonSerializable, IJsonModel<NetworkVirtualApplianceConnectionList>
+    internal partial class RoutingConfigurationListResult : IUtf8JsonSerializable, IJsonModel<RoutingConfigurationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceConnectionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfigurationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NetworkVirtualApplianceConnectionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoutingConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        NetworkVirtualApplianceConnectionList IJsonModel<NetworkVirtualApplianceConnectionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RoutingConfigurationListResult IJsonModel<RoutingConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkVirtualApplianceConnectionList(document.RootElement, options);
+            return DeserializeRoutingConfigurationListResult(document.RootElement, options);
         }
 
-        internal static NetworkVirtualApplianceConnectionList DeserializeNetworkVirtualApplianceConnectionList(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RoutingConfigurationListResult DeserializeRoutingConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkVirtualApplianceConnectionData> value = default;
+            IReadOnlyList<RoutingConfigurationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkVirtualApplianceConnectionData> array = new List<NetworkVirtualApplianceConnectionData>();
+                    List<RoutingConfigurationData> array = new List<RoutingConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkVirtualApplianceConnectionData.DeserializeNetworkVirtualApplianceConnectionData(item, options));
+                        array.Add(RoutingConfigurationData.DeserializeRoutingConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceConnectionList(value ?? new ChangeTrackingList<NetworkVirtualApplianceConnectionData>(), nextLink, serializedAdditionalRawData);
+            return new RoutingConfigurationListResult(value ?? new ChangeTrackingList<RoutingConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkVirtualApplianceConnectionList>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RoutingConfigurationListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        NetworkVirtualApplianceConnectionList IPersistableModel<NetworkVirtualApplianceConnectionList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RoutingConfigurationListResult IPersistableModel<RoutingConfigurationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNetworkVirtualApplianceConnectionList(document.RootElement, options);
+                        return DeserializeRoutingConfigurationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingConfigurationListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkVirtualApplianceConnectionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RoutingConfigurationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -81,16 +81,6 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(HostNames))
-            {
-                writer.WritePropertyName("hostNames"u8);
-                writer.WriteStartArray();
-                foreach (var item in HostNames)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -140,7 +130,6 @@ namespace Azure.ResourceManager.Network.Models
             WritableSubResource sslCertificate = default;
             WritableSubResource sslProfile = default;
             NetworkProvisioningState? provisioningState = default;
-            IList<string> hostNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,20 +229,6 @@ namespace Azure.ResourceManager.Network.Models
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostNames"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            hostNames = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -274,8 +249,7 @@ namespace Azure.ResourceManager.Network.Models
                 protocol,
                 sslCertificate,
                 sslProfile,
-                provisioningState,
-                hostNames ?? new ChangeTrackingList<string>());
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayListener>.Write(ModelReaderWriterOptions options)

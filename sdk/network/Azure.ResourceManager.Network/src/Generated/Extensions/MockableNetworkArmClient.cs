@@ -37,6 +37,42 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RoutingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="RoutingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoutingConfigurationResource"/> object. </returns>
+        public virtual RoutingConfigurationResource GetRoutingConfigurationResource(ResourceIdentifier id)
+        {
+            RoutingConfigurationResource.ValidateResourceId(id);
+            return new RoutingConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoutingRuleCollectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingRuleCollectionResource.CreateResourceIdentifier" /> to create a <see cref="RoutingRuleCollectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoutingRuleCollectionResource"/> object. </returns>
+        public virtual RoutingRuleCollectionResource GetRoutingRuleCollectionResource(ResourceIdentifier id)
+        {
+            RoutingRuleCollectionResource.ValidateResourceId(id);
+            return new RoutingRuleCollectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RoutingRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoutingRuleResource.CreateResourceIdentifier" /> to create a <see cref="RoutingRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoutingRuleResource"/> object. </returns>
+        public virtual RoutingRuleResource GetRoutingRuleResource(ResourceIdentifier id)
+        {
+            RoutingRuleResource.ValidateResourceId(id);
+            return new RoutingRuleResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -1234,18 +1270,6 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             ExpressRouteConnectionResource.ValidateResourceId(id);
             return new ExpressRouteConnectionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkVirtualApplianceConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkVirtualApplianceConnectionResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVirtualApplianceConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkVirtualApplianceConnectionResource"/> object. </returns>
-        public virtual NetworkVirtualApplianceConnectionResource GetNetworkVirtualApplianceConnectionResource(ResourceIdentifier id)
-        {
-            NetworkVirtualApplianceConnectionResource.ValidateResourceId(id);
-            return new NetworkVirtualApplianceConnectionResource(Client, id);
         }
 
         /// <summary>

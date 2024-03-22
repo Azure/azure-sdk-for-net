@@ -33,85 +33,8 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal HttpMessage CreateDeleteBastionShareableLinkByTokenRequest(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/bastionHosts/", false);
-            uri.AppendPath(bastionHostName, true);
-            uri.AppendPath("/deleteShareableLinksByToken", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deletes the Bastion Shareable Links for all the tokens specified in the request. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="content"> Post request for Delete Bastion Shareable Link By Token endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteBastionShareableLinkByTokenAsync(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateDeleteBastionShareableLinkByTokenRequest(subscriptionId, resourceGroupName, bastionHostName, content);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the Bastion Shareable Links for all the tokens specified in the request. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="bastionHostName"> The name of the Bastion Host. </param>
-        /// <param name="content"> Post request for Delete Bastion Shareable Link By Token endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="bastionHostName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="bastionHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response DeleteBastionShareableLinkByToken(string subscriptionId, string resourceGroupName, string bastionHostName, BastionShareableLinkTokenListContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(bastionHostName, nameof(bastionHostName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var message = CreateDeleteBastionShareableLinkByTokenRequest(subscriptionId, resourceGroupName, bastionHostName, content);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateCheckDnsNameAvailabilityRequest(string subscriptionId, AzureLocation location, string domainNameLabel)
@@ -135,7 +58,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,7 +86,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Checks whether a domain name in the cloudapp.azure.com zone is available for use. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of the domain name. </param>
         /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -209,7 +132,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves detail of a provider port. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerport"> The name of the provider port. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerport"/> is null. </exception>
@@ -238,7 +161,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves detail of a provider port. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerport"> The name of the provider port. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerport"/> is null. </exception>
@@ -296,7 +219,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists active connectivity configurations in a network manager. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="content"> Active Configuration Parameter. </param>
@@ -328,7 +251,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists active connectivity configurations in a network manager. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="content"> Active Configuration Parameter. </param>
@@ -389,7 +312,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists active security admin rules in a network manager. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="content"> Active Configuration Parameter. </param>
@@ -421,7 +344,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Lists active security admin rules in a network manager. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="content"> Active Configuration Parameter. </param>
@@ -482,7 +405,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List all effective connectivity configurations applied on a virtual network. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -514,7 +437,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List all effective connectivity configurations applied on a virtual network. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -575,7 +498,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List all effective security admin rules applied on a virtual network. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -607,7 +530,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> List all effective security admin rules applied on a virtual network. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="content"> Parameters supplied to list correct page. </param>
@@ -660,7 +583,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gives the supported security providers for the virtual wan. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWanName"> The name of the VirtualWAN for which supported security providers are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -689,7 +612,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gives the supported security providers for the virtual wan. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWanName"> The name of the VirtualWAN for which supported security providers are needed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -743,7 +666,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWanName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
@@ -770,7 +693,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Generates a unique VPN profile for P2S clients for VirtualWan and associated VpnServerConfiguration combination in the specified resource group. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="virtualWanName"> The name of the VirtualWAN whose associated VpnServerConfigurations is needed. </param>
         /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>

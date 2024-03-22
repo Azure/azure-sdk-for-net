@@ -11,8 +11,8 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The BastionHostPropertiesFormatNetworkAcls. </summary>
-    internal partial class BastionHostPropertiesFormatNetworkAcls
+    /// <summary> Network manager routing group item. </summary>
+    public partial class NetworkManagerRoutingGroupItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +46,31 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormatNetworkAcls"/>. </summary>
-        public BastionHostPropertiesFormatNetworkAcls()
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingGroupItem"/>. </summary>
+        /// <param name="networkGroupId"> Network manager group Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
+        public NetworkManagerRoutingGroupItem(string networkGroupId)
         {
-            IPRules = new ChangeTrackingList<BastionHostIPRule>();
+            Argument.AssertNotNull(networkGroupId, nameof(networkGroupId));
+
+            NetworkGroupId = networkGroupId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormatNetworkAcls"/>. </summary>
-        /// <param name="ipRules"> Sets the IP ACL rules for Developer Bastion Host. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingGroupItem"/>. </summary>
+        /// <param name="networkGroupId"> Network manager group Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BastionHostPropertiesFormatNetworkAcls(IList<BastionHostIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkManagerRoutingGroupItem(string networkGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IPRules = ipRules;
+            NetworkGroupId = networkGroupId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
-        public IList<BastionHostIPRule> IPRules { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerRoutingGroupItem"/> for deserialization. </summary>
+        internal NetworkManagerRoutingGroupItem()
+        {
+        }
+
+        /// <summary> Network manager group Id. </summary>
+        public string NetworkGroupId { get; set; }
     }
 }

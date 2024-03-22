@@ -11,8 +11,8 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> NetworkVirtualApplianceConnection list. </summary>
-    internal partial class NetworkVirtualApplianceConnectionList
+    /// <summary> A list of network manager routing configurations. </summary>
+    internal partial class RoutingConfigurationListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +46,26 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionList"/>. </summary>
-        internal NetworkVirtualApplianceConnectionList()
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationListResult"/>. </summary>
+        internal RoutingConfigurationListResult()
         {
-            Value = new ChangeTrackingList<NetworkVirtualApplianceConnectionData>();
+            Value = new ChangeTrackingList<RoutingConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionList"/>. </summary>
-        /// <param name="value"> The list of NetworkVirtualAppliance connections. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="RoutingConfigurationListResult"/>. </summary>
+        /// <param name="value"> Gets a page of routing configurations. </param>
+        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualApplianceConnectionList(IReadOnlyList<NetworkVirtualApplianceConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoutingConfigurationListResult(IReadOnlyList<RoutingConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of NetworkVirtualAppliance connections. </summary>
-        public IReadOnlyList<NetworkVirtualApplianceConnectionData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
+        /// <summary> Gets a page of routing configurations. </summary>
+        public IReadOnlyList<RoutingConfigurationData> Value { get; }
+        /// <summary> Gets the URL to get the next page of results. </summary>
         public string NextLink { get; }
     }
 }

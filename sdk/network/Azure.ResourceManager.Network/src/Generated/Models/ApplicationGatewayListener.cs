@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
@@ -20,7 +19,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListener"/>. </summary>
         public ApplicationGatewayListener()
         {
-            HostNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayListener"/>. </summary>
@@ -35,8 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sslCertificate"> SSL certificate resource of an application gateway. </param>
         /// <param name="sslProfile"> SSL profile resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the listener resource. </param>
-        /// <param name="hostNames"> List of Server Name Indications(SNI) for TLS Multi-site Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayListener(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, WritableSubResource sslCertificate, WritableSubResource sslProfile, NetworkProvisioningState? provisioningState, IList<string> hostNames) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayListener(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, WritableSubResource sslCertificate, WritableSubResource sslProfile, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -45,7 +42,6 @@ namespace Azure.ResourceManager.Network.Models
             SslCertificate = sslCertificate;
             SslProfile = sslProfile;
             ProvisioningState = provisioningState;
-            HostNames = hostNames;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -110,7 +106,5 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The provisioning state of the listener resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> List of Server Name Indications(SNI) for TLS Multi-site Listener that allows special wildcard characters as well. </summary>
-        public IList<string> HostNames { get; }
     }
 }

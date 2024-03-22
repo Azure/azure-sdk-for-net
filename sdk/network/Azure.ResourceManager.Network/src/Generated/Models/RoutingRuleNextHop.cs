@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The VirtualNetworkGatewayAutoScaleBounds. </summary>
-    public partial class VirtualNetworkGatewayAutoScaleBounds
+    /// <summary> Next hop. </summary>
+    public partial class RoutingRuleNextHop
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,32 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleBounds"/>. </summary>
-        public VirtualNetworkGatewayAutoScaleBounds()
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleNextHop"/>. </summary>
+        /// <param name="nextHopType"> Next hop type. </param>
+        public RoutingRuleNextHop(RoutingRuleNextHopType nextHopType)
         {
+            NextHopType = nextHopType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleBounds"/>. </summary>
-        /// <param name="min"> Minimum scale Units for Autoscale configuration. </param>
-        /// <param name="max"> Maximum Scale Units for Autoscale configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleNextHop"/>. </summary>
+        /// <param name="nextHopType"> Next hop type. </param>
+        /// <param name="nextHopAddress"> Next hop address. Only relevant if the next hop type is VirtualAppliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayAutoScaleBounds(int? min, int? max, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoutingRuleNextHop(RoutingRuleNextHopType nextHopType, string nextHopAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Min = min;
-            Max = max;
+            NextHopType = nextHopType;
+            NextHopAddress = nextHopAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Minimum scale Units for Autoscale configuration. </summary>
-        public int? Min { get; set; }
-        /// <summary> Maximum Scale Units for Autoscale configuration. </summary>
-        public int? Max { get; set; }
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleNextHop"/> for deserialization. </summary>
+        internal RoutingRuleNextHop()
+        {
+        }
+
+        /// <summary> Next hop type. </summary>
+        public RoutingRuleNextHopType NextHopType { get; set; }
+        /// <summary> Next hop address. Only relevant if the next hop type is VirtualAppliance. </summary>
+        public string NextHopAddress { get; set; }
     }
 }

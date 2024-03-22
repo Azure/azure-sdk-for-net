@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Network.Models
         private const string TcpValue = "Tcp";
         private const string TlsValue = "Tls";
 
-        /// <summary> Supported for httpListeners and  backendHttpSettingsCollection properties. </summary>
+        /// <summary> Http. </summary>
         public static ApplicationGatewayProtocol Http { get; } = new ApplicationGatewayProtocol(HttpValue);
-        /// <summary> Supported for httpListeners and  backendHttpSettingsCollection properties. </summary>
+        /// <summary> Https. </summary>
         public static ApplicationGatewayProtocol Https { get; } = new ApplicationGatewayProtocol(HttpsValue);
-        /// <summary> Supported for listeners and backendSettingsCollection properties. </summary>
+        /// <summary> Tcp. </summary>
         public static ApplicationGatewayProtocol Tcp { get; } = new ApplicationGatewayProtocol(TcpValue);
-        /// <summary> Supported for listeners and backendSettingsCollection properties. </summary>
+        /// <summary> Tls. </summary>
         public static ApplicationGatewayProtocol Tls { get; } = new ApplicationGatewayProtocol(TlsValue);
         /// <summary> Determines if two <see cref="ApplicationGatewayProtocol"/> values are the same. </summary>
         public static bool operator ==(ApplicationGatewayProtocol left, ApplicationGatewayProtocol right) => left.Equals(right);

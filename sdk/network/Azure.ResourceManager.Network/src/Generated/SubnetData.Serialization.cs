@@ -201,11 +201,6 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DefaultOutboundAccess))
-            {
-                writer.WritePropertyName("defaultOutboundAccess"u8);
-                writer.WriteBooleanValue(DefaultOutboundAccess.Value);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -268,7 +263,6 @@ namespace Azure.ResourceManager.Network
             VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies = default;
             VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies = default;
             IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
-            bool? defaultOutboundAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -532,15 +526,6 @@ namespace Azure.ResourceManager.Network
                             applicationGatewayIPConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultOutboundAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            defaultOutboundAccess = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -574,8 +559,7 @@ namespace Azure.ResourceManager.Network
                 provisioningState,
                 privateEndpointNetworkPolicies,
                 privateLinkServiceNetworkPolicies,
-                applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
-                defaultOutboundAccess);
+                applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>());
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)

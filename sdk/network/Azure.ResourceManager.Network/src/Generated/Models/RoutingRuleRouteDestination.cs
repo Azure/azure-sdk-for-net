@@ -11,8 +11,8 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Post request for Delete Bastion Shareable Link By Token endpoint. </summary>
-    public partial class BastionShareableLinkTokenListContent
+    /// <summary> Route destination. </summary>
+    public partial class RoutingRuleRouteDestination
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +46,37 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BastionShareableLinkTokenListContent"/>. </summary>
-        public BastionShareableLinkTokenListContent()
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/>. </summary>
+        /// <param name="destinationType"> Destination type. </param>
+        /// <param name="destinationAddress"> Destination address. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="destinationAddress"/> is null. </exception>
+        public RoutingRuleRouteDestination(RoutingRuleDestinationType destinationType, string destinationAddress)
         {
-            Tokens = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(destinationAddress, nameof(destinationAddress));
+
+            DestinationType = destinationType;
+            DestinationAddress = destinationAddress;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BastionShareableLinkTokenListContent"/>. </summary>
-        /// <param name="tokens"> List of Bastion Shareable Link Token. </param>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/>. </summary>
+        /// <param name="destinationType"> Destination type. </param>
+        /// <param name="destinationAddress"> Destination address. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BastionShareableLinkTokenListContent(IList<string> tokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoutingRuleRouteDestination(RoutingRuleDestinationType destinationType, string destinationAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tokens = tokens;
+            DestinationType = destinationType;
+            DestinationAddress = destinationAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Bastion Shareable Link Token. </summary>
-        public IList<string> Tokens { get; }
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleRouteDestination"/> for deserialization. </summary>
+        internal RoutingRuleRouteDestination()
+        {
+        }
+
+        /// <summary> Destination type. </summary>
+        public RoutingRuleDestinationType DestinationType { get; set; }
+        /// <summary> Destination address. </summary>
+        public string DestinationAddress { get; set; }
     }
 }

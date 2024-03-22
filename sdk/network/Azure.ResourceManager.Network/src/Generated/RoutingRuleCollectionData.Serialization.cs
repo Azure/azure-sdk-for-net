@@ -9,80 +9,87 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkVirtualApplianceConnectionData : IUtf8JsonSerializable, IJsonModel<NetworkVirtualApplianceConnectionData>
+    public partial class RoutingRuleCollectionData : IUtf8JsonSerializable, IJsonModel<RoutingRuleCollectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingRuleCollectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NetworkVirtualApplianceConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RoutingRuleCollectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleCollectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingRuleCollectionData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(NamePropertiesName);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Asn))
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
-                writer.WritePropertyName("asn"u8);
-                writer.WriteNumberValue(Asn.Value);
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (Optional.IsDefined(TunnelIdentifier))
+            if (Optional.IsCollectionDefined(AppliesTo))
             {
-                writer.WritePropertyName("tunnelIdentifier"u8);
-                writer.WriteNumberValue(TunnelIdentifier.Value);
-            }
-            if (Optional.IsCollectionDefined(BgpPeerAddress))
-            {
-                writer.WritePropertyName("bgpPeerAddress"u8);
+                writer.WritePropertyName("appliesTo"u8);
                 writer.WriteStartArray();
-                foreach (var item in BgpPeerAddress)
+                foreach (var item in AppliesTo)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableInternetSecurity))
+            if (Optional.IsDefined(DisableBgpRoutePropagation))
             {
-                writer.WritePropertyName("enableInternetSecurity"u8);
-                writer.WriteBooleanValue(EnableInternetSecurity.Value);
+                writer.WritePropertyName("disableBgpRoutePropagation"u8);
+                writer.WriteBooleanValue(DisableBgpRoutePropagation.Value);
             }
-            if (Optional.IsDefined(ConnectionRoutingConfiguration))
+            if (Optional.IsDefined(LocalRouteSetting))
             {
-                writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(ConnectionRoutingConfiguration);
+                writer.WritePropertyName("localRouteSetting"u8);
+                writer.WriteStringValue(LocalRouteSetting.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,19 +110,19 @@ namespace Azure.ResourceManager.Network
             writer.WriteEndObject();
         }
 
-        NetworkVirtualApplianceConnectionData IJsonModel<NetworkVirtualApplianceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RoutingRuleCollectionData IJsonModel<RoutingRuleCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleCollectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingRuleCollectionData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkVirtualApplianceConnectionData(document.RootElement, options);
+            return DeserializeRoutingRuleCollectionData(document.RootElement, options);
         }
 
-        internal static NetworkVirtualApplianceConnectionData DeserializeNetworkVirtualApplianceConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RoutingRuleCollectionData DeserializeRoutingRuleCollectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -123,26 +130,32 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
-            string name0 = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            string description = default;
             NetworkProvisioningState? provisioningState = default;
-            long? asn = default;
-            long? tunnelIdentifier = default;
-            IList<string> bgpPeerAddress = default;
-            bool? enableInternetSecurity = default;
-            RoutingConfiguration routingConfiguration = default;
+            Guid? resourceGuid = default;
+            IList<NetworkManagerRoutingGroupItem> appliesTo = default;
+            bool? disableBgpRoutePropagation = default;
+            RoutingRuleCollectionLocalRouteSetting? localRouteSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -153,11 +166,16 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -169,9 +187,9 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("name"u8))
+                        if (property0.NameEquals("description"u8))
                         {
-                            name0 = property0.Value.GetString();
+                            description = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -183,54 +201,45 @@ namespace Azure.ResourceManager.Network
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("asn"u8))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            asn = property0.Value.GetInt64();
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("tunnelIdentifier"u8))
+                        if (property0.NameEquals("appliesTo"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            tunnelIdentifier = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("bgpPeerAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
+                            List<NetworkManagerRoutingGroupItem> array = new List<NetworkManagerRoutingGroupItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(NetworkManagerRoutingGroupItem.DeserializeNetworkManagerRoutingGroupItem(item, options));
                             }
-                            bgpPeerAddress = array;
+                            appliesTo = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableInternetSecurity"u8))
+                        if (property0.NameEquals("disableBgpRoutePropagation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            enableInternetSecurity = property0.Value.GetBoolean();
+                            disableBgpRoutePropagation = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("routingConfiguration"u8))
+                        if (property0.NameEquals("localRouteSetting"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            routingConfiguration = Models.RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            localRouteSetting = new RoutingRuleCollectionLocalRouteSetting(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -242,49 +251,50 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceConnectionData(
+            return new RoutingRuleCollectionData(
                 id,
                 name,
                 type,
-                serializedAdditionalRawData,
-                name0,
+                systemData,
+                description,
                 provisioningState,
-                asn,
-                tunnelIdentifier,
-                bgpPeerAddress ?? new ChangeTrackingList<string>(),
-                enableInternetSecurity,
-                routingConfiguration);
+                resourceGuid,
+                appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>(),
+                disableBgpRoutePropagation,
+                localRouteSetting,
+                etag,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkVirtualApplianceConnectionData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RoutingRuleCollectionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleCollectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingRuleCollectionData)} does not support '{options.Format}' format.");
             }
         }
 
-        NetworkVirtualApplianceConnectionData IPersistableModel<NetworkVirtualApplianceConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RoutingRuleCollectionData IPersistableModel<RoutingRuleCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleCollectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNetworkVirtualApplianceConnectionData(document.RootElement, options);
+                        return DeserializeRoutingRuleCollectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingRuleCollectionData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkVirtualApplianceConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RoutingRuleCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

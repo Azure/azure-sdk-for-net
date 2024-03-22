@@ -72,11 +72,6 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoScaleConfiguration))
-            {
-                writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
-            }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
@@ -258,7 +253,6 @@ namespace Azure.ResourceManager.Network
             ResourceType? type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            VirtualNetworkGatewayAutoScaleConfiguration autoScaleConfiguration = default;
             IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default;
             VirtualNetworkGatewayType? gatewayType = default;
             VpnType? vpnType = default;
@@ -360,15 +354,6 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("autoScaleConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoScaleConfiguration = VirtualNetworkGatewayAutoScaleConfiguration.DeserializeVirtualNetworkGatewayAutoScaleConfiguration(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("ipConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -614,7 +599,6 @@ namespace Azure.ResourceManager.Network
                 serializedAdditionalRawData,
                 extendedLocation,
                 etag,
-                autoScaleConfiguration,
                 ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>(),
                 gatewayType,
                 vpnType,

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a nat rule. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the Virtual Network Gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a nat rule. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the Virtual Network Gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a nat rule to a scalable virtual network gateway if it doesn't exist else updates the existing nat rules. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the Virtual Network Gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Creates a nat rule to a scalable virtual network gateway if it doesn't exist else updates the existing nat rules. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the Virtual Network Gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a nat rule. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the Virtual Network Gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Deletes a nat rule. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the Virtual Network Gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="natRuleName"> The name of the nat rule. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Retrieves all nat rules for a particular virtual network gateway. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The resource group name of the virtual network gateway. </param>
         /// <param name="virtualNetworkGatewayName"> The name of the gateway. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

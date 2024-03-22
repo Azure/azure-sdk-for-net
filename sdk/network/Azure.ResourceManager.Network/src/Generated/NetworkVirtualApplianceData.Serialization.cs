@@ -143,31 +143,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
-            {
-                writer.WritePropertyName("internetIngressPublicIps"u8);
-                writer.WriteStartArray();
-                foreach (var item in InternetIngressPublicIPs)
-                {
-                    JsonSerializer.Serialize(writer, item);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceSites))
             {
                 writer.WritePropertyName("virtualApplianceSites"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceSites)
-                {
-                    JsonSerializer.Serialize(writer, item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceConnections))
-            {
-                writer.WritePropertyName("virtualApplianceConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in VirtualApplianceConnections)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
@@ -259,9 +239,7 @@ namespace Azure.ResourceManager.Network
             string sshPublicKey = default;
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
-            IList<WritableSubResource> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
-            IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
             IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
             NetworkProvisioningState? provisioningState = default;
             string deploymentType = default;
@@ -442,20 +420,6 @@ namespace Azure.ResourceManager.Network
                             additionalNics = array;
                             continue;
                         }
-                        if (property0.NameEquals("internetIngressPublicIps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
-                            }
-                            internetIngressPublicIPs = array;
-                            continue;
-                        }
                         if (property0.NameEquals("virtualApplianceSites"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -468,20 +432,6 @@ namespace Azure.ResourceManager.Network
                                 array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             virtualApplianceSites = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualApplianceConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
-                            }
-                            virtualApplianceConnections = array;
                             continue;
                         }
                         if (property0.NameEquals("inboundSecurityRules"u8))
@@ -558,9 +508,7 @@ namespace Azure.ResourceManager.Network
                 sshPublicKey,
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
-                internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
-                virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
                 provisioningState,
                 deploymentType,

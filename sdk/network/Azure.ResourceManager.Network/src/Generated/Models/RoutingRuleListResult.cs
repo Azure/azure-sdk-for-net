@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Virtual Network Gateway Autoscale Configuration details. </summary>
-    internal partial class VirtualNetworkGatewayAutoScaleConfiguration
+    /// <summary> Routing configuration rule list result. </summary>
+    internal partial class RoutingRuleListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +46,26 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleConfiguration"/>. </summary>
-        public VirtualNetworkGatewayAutoScaleConfiguration()
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleListResult"/>. </summary>
+        internal RoutingRuleListResult()
         {
+            Value = new ChangeTrackingList<RoutingRuleData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayAutoScaleConfiguration"/>. </summary>
-        /// <param name="bounds"> The bounds of the autoscale configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="RoutingRuleListResult"/>. </summary>
+        /// <param name="value"> A list of routing rules. </param>
+        /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayAutoScaleConfiguration(VirtualNetworkGatewayAutoScaleBounds bounds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoutingRuleListResult(IReadOnlyList<RoutingRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Bounds = bounds;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The bounds of the autoscale configuration. </summary>
-        public VirtualNetworkGatewayAutoScaleBounds Bounds { get; set; }
+        /// <summary> A list of routing rules. </summary>
+        public IReadOnlyList<RoutingRuleData> Value { get; }
+        /// <summary> The URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }
