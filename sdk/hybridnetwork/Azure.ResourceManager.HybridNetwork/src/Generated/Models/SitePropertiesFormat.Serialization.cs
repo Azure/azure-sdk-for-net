@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Nfvis)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NFVIs>(item, options);
                 }
                 writer.WriteEndArray();
             }

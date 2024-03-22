@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridComputeNetworkInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
