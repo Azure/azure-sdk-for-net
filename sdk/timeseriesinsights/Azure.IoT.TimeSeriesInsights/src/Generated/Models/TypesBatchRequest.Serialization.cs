@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
-                writer.WriteObjectValue(Get);
+                writer.WriteObjectValue<TypesRequestBatchGetOrDelete>(Get);
             }
             if (Optional.IsCollectionDefined(Put))
             {
@@ -26,14 +26,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeSeriesType>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<TypesRequestBatchGetOrDelete>(Delete);
             }
             writer.WriteEndObject();
         }

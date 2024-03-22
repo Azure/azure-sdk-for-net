@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseSsisParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                writer.WriteObjectValue(VirtualNetwork);
+                writer.WriteObjectValue<AppServiceVirtualNetworkProfile>(VirtualNetwork, options);
             }
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in ClusterSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppServiceNameValuePair>(item, options);
                 }
                 writer.WriteEndArray();
             }

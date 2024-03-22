@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PerfMonSample>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks);
+                writer.WriteObjectValue<JwtClaimChecks>(JwtClaimChecks, options);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy);
+                writer.WriteObjectValue<DefaultAuthorizationPolicy>(DefaultAuthorizationPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

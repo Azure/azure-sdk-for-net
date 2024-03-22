@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutboundEndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

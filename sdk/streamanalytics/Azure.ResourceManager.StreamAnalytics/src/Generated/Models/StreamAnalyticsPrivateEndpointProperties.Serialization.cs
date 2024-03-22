@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsPrivateLinkServiceConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }

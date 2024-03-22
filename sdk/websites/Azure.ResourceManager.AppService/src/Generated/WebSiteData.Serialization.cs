@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HostNameSslStates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HostNameSslState>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
-                writer.WriteObjectValue(SiteConfig);
+                writer.WriteObjectValue<SiteConfigProperties>(SiteConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService
                 if (HostingEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile);
+                    writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
                 if (CloningInfo != null)
                 {
                     writer.WritePropertyName("cloningInfo"u8);
-                    writer.WriteObjectValue(CloningInfo);
+                    writer.WriteObjectValue<CloningInfo>(CloningInfo, options);
                 }
                 else
                 {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService
                 if (SlotSwapStatus != null)
                 {
                     writer.WritePropertyName("slotSwapStatus"u8);
-                    writer.WriteObjectValue(SlotSwapStatus);
+                    writer.WriteObjectValue<SlotSwapStatus>(SlotSwapStatus, options);
                 }
                 else
                 {

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StackMajorVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Frameworks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationStack>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in IsDeprecated)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationStack>(item, options);
                 }
                 writer.WriteEndArray();
             }

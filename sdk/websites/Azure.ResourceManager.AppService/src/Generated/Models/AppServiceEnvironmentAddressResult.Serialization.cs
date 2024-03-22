@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualIPMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualIPMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
-                writer.WriteObjectValue(BuildProperties);
+                writer.WriteObjectValue<StaticSiteBuildProperties>(BuildProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

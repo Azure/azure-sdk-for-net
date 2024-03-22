@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CropRegion>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,7 +138,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SmartCropsResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

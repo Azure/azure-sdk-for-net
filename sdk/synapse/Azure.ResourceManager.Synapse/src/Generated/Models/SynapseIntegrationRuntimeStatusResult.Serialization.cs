@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<SynapseIntegrationRuntimeStatus>(Properties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

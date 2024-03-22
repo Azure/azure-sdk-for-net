@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile);
+                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                writer.WriteObjectValue(KubeEnvironmentProfile);
+                writer.WriteObjectValue<KubeEnvironmentProfile>(KubeEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
