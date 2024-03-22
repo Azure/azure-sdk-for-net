@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +45,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Namespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteStartArray();
@@ -60,17 +62,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyMode != null)
+            if (Optional.IsDefined(PolicyMode))
             {
                 writer.WritePropertyName("policyMode"u8);
                 writer.WriteStringValue(PolicyMode);
             }
-            if (IsBuiltInOnly.HasValue)
+            if (Optional.IsDefined(IsBuiltInOnly))
             {
                 writer.WritePropertyName("isBuiltInOnly"u8);
                 writer.WriteBooleanValue(IsBuiltInOnly.Value);
             }
-            if (!(ResourceTypeAliases is ChangeTrackingList<ResourceTypeAliases> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypeAliases))
             {
                 writer.WritePropertyName("resourceTypeAliases"u8);
                 writer.WriteStartArray();
@@ -80,7 +82,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(Effects is ChangeTrackingList<DataPolicyManifestEffect> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Effects))
             {
                 writer.WritePropertyName("effects"u8);
                 writer.WriteStartArray();
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(FieldValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(FieldValues))
             {
                 writer.WritePropertyName("fieldValues"u8);
                 writer.WriteStartArray();
@@ -102,7 +104,7 @@ namespace Azure.ResourceManager.Resources
             }
             writer.WritePropertyName("resourceFunctions"u8);
             writer.WriteStartObject();
-            if (!(Standard is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Standard))
             {
                 writer.WritePropertyName("standard"u8);
                 writer.WriteStartArray();
@@ -112,7 +114,7 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomDefinitions is ChangeTrackingList<DataManifestCustomResourceFunctionDefinition> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDefinitions))
             {
                 writer.WritePropertyName("custom"u8);
                 writer.WriteStartArray();
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -346,6 +348,285 @@ namespace Azure.ResourceManager.Resources
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespaces), out propertyOverride);
+            if (Optional.IsCollectionDefined(Namespaces) || hasPropertyOverride)
+            {
+                if (Namespaces.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    namespaces: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Namespaces)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyMode), out propertyOverride);
+            if (Optional.IsDefined(PolicyMode) || hasPropertyOverride)
+            {
+                builder.Append("    policyMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PolicyMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PolicyMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PolicyMode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBuiltInOnly), out propertyOverride);
+            if (Optional.IsDefined(IsBuiltInOnly) || hasPropertyOverride)
+            {
+                builder.Append("    isBuiltInOnly: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsBuiltInOnly.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypeAliases), out propertyOverride);
+            if (Optional.IsCollectionDefined(ResourceTypeAliases) || hasPropertyOverride)
+            {
+                if (ResourceTypeAliases.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    resourceTypeAliases: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceTypeAliases)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    resourceTypeAliases: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Effects), out propertyOverride);
+            if (Optional.IsCollectionDefined(Effects) || hasPropertyOverride)
+            {
+                if (Effects.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    effects: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Effects)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    effects: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FieldValues), out propertyOverride);
+            if (Optional.IsCollectionDefined(FieldValues) || hasPropertyOverride)
+            {
+                if (FieldValues.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    fieldValues: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in FieldValues)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.Append("    resourceFunctions:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Standard), out propertyOverride);
+            if (Optional.IsCollectionDefined(Standard) || hasPropertyOverride)
+            {
+                if (Standard.Any() || hasPropertyOverride)
+                {
+                    builder.Append("      standard: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Standard)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("        '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"        '{item}'");
+                            }
+                        }
+                        builder.AppendLine("      ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDefinitions), out propertyOverride);
+            if (Optional.IsCollectionDefined(CustomDefinitions) || hasPropertyOverride)
+            {
+                if (CustomDefinitions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("      custom: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in CustomDefinitions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 8, true, "      custom: ");
+                        }
+                        builder.AppendLine("      ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("    }");
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataPolicyManifestData>)this).GetFormatFromOptions(options) : options.Format;
@@ -354,8 +635,10 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -371,7 +654,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeDataPolicyManifestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPolicyManifestData)} does not support reading '{options.Format}' format.");
             }
         }
 
