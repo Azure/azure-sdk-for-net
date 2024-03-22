@@ -2047,20 +2047,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo5G>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEInfo5G>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UEQOSFlow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>
+    public partial class UEQosFlow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>
     {
-        public UEQOSFlow(int qfi, int fiveqi) { }
+        public UEQosFlow(int qfi, int fiveqi) { }
         public string DownlinkGbrDownlink { get { throw null; } set { } }
         public string DownlinkMbrDownlink { get { throw null; } set { } }
         public int Fiveqi { get { throw null; } set { } }
         public int Qfi { get { throw null; } set { } }
         public string UplinkGbrUplink { get { throw null; } set { } }
         public string UplinkMbrUplink { get { throw null; } set { } }
-        Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.MobileNetwork.Models.UEQosFlow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MobileNetwork.Models.UEQosFlow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UESessionInfo4G : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo4G>
     {
@@ -2077,13 +2077,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     }
     public partial class UESessionInfo5G : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MobileNetwork.Models.UESessionInfo5G>
     {
-        public UESessionInfo5G(int pduSessionId, string dnn, Azure.ResourceManager.MobileNetwork.Models.PdnType pdnType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow> qosFlow, string uplink, string downlink, int sst) { }
+        public UESessionInfo5G(int pduSessionId, string dnn, Azure.ResourceManager.MobileNetwork.Models.PdnType pdnType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow> qosFlow, string uplink, string downlink, int sst) { }
         public string Dnn { get { throw null; } set { } }
         public string Downlink { get { throw null; } set { } }
         public string IPV4Addr { get { throw null; } set { } }
         public Azure.ResourceManager.MobileNetwork.Models.PdnType PdnType { get { throw null; } set { } }
         public int PduSessionId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.UEQOSFlow> QosFlow { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.MobileNetwork.Models.UEQosFlow> QosFlow { get { throw null; } }
         public string Sd { get { throw null; } set { } }
         public int Sst { get { throw null; } set { } }
         public string Uplink { get { throw null; } set { } }

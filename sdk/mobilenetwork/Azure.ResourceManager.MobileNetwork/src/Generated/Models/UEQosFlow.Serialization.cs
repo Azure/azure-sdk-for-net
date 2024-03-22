@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class UEQOSFlow : IUtf8JsonSerializable, IJsonModel<UEQOSFlow>
+    public partial class UEQosFlow : IUtf8JsonSerializable, IJsonModel<UEQosFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UEQOSFlow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UEQosFlow>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<UEQOSFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UEQosFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UEQOSFlow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UEQosFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UEQOSFlow)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UEQosFlow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        UEQOSFlow IJsonModel<UEQOSFlow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UEQosFlow IJsonModel<UEQosFlow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UEQOSFlow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UEQosFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UEQOSFlow)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UEQosFlow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUEQOSFlow(document.RootElement, options);
+            return DeserializeUEQosFlow(document.RootElement, options);
         }
 
-        internal static UEQOSFlow DeserializeUEQOSFlow(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UEQosFlow DeserializeUEQosFlow(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UEQOSFlow(
+            return new UEQosFlow(
                 qfi,
                 fiveqi,
                 uplink,
@@ -174,35 +174,35 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UEQOSFlow>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UEQosFlow>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UEQOSFlow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UEQosFlow>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UEQOSFlow)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UEQosFlow)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UEQOSFlow IPersistableModel<UEQOSFlow>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UEQosFlow IPersistableModel<UEQosFlow>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UEQOSFlow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UEQosFlow>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUEQOSFlow(document.RootElement, options);
+                        return DeserializeUEQosFlow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UEQOSFlow)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UEQosFlow)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UEQOSFlow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UEQosFlow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

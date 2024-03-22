@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             int pduSessionId = default;
             string dnn = default;
             PdnType pdnType = default;
-            IList<UEQOSFlow> qosFlow = default;
+            IList<UEQosFlow> qosFlow = default;
             string uplink = default;
             string downlink = default;
             string ipV4Addr = default;
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("qosFlow"u8))
                 {
-                    List<UEQOSFlow> array = new List<UEQOSFlow>();
+                    List<UEQosFlow> array = new List<UEQosFlow>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UEQOSFlow.DeserializeUEQOSFlow(item, options));
+                        array.Add(UEQosFlow.DeserializeUEQosFlow(item, options));
                     }
                     qosFlow = array;
                     continue;

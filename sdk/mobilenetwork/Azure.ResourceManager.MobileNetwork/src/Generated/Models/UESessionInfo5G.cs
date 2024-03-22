@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="downlink"> Downlink bit rate. </param>
         /// <param name="sst"> Slice/service type (SST). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnn"/>, <paramref name="qosFlow"/>, <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
-        public UESessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IEnumerable<UEQOSFlow> qosFlow, string uplink, string downlink, int sst)
+        public UESessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IEnumerable<UEQosFlow> qosFlow, string uplink, string downlink, int sst)
         {
             Argument.AssertNotNull(dnn, nameof(dnn));
             Argument.AssertNotNull(qosFlow, nameof(qosFlow));
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="sst"> Slice/service type (SST). </param>
         /// <param name="sd"> Slice differentiator (SD). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UESessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IList<UEQOSFlow> qosFlow, string uplink, string downlink, string ipV4Addr, int sst, string sd, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UESessionInfo5G(int pduSessionId, string dnn, PdnType pdnType, IList<UEQosFlow> qosFlow, string uplink, string downlink, string ipV4Addr, int sst, string sd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PduSessionId = pduSessionId;
             Dnn = dnn;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Packet Data Network Type. </summary>
         public PdnType PdnType { get; set; }
         /// <summary> Gets the qos flow. </summary>
-        public IList<UEQOSFlow> QosFlow { get; }
+        public IList<UEQosFlow> QosFlow { get; }
         /// <summary> Uplink bit rate. </summary>
         public string Uplink { get; set; }
         /// <summary> Downlink bit rate. </summary>

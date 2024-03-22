@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> QoS Flow. </summary>
-    public partial class UEQOSFlow
+    public partial class UEQosFlow
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UEQOSFlow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UEQosFlow"/>. </summary>
         /// <param name="qfi"> Qos Flow Identifier. </param>
         /// <param name="fiveqi"> 5G QoS Identifier. </param>
-        public UEQOSFlow(int qfi, int fiveqi)
+        public UEQosFlow(int qfi, int fiveqi)
         {
             Qfi = qfi;
             Fiveqi = fiveqi;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UEQOSFlow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UEQosFlow"/>. </summary>
         /// <param name="qfi"> Qos Flow Identifier. </param>
         /// <param name="fiveqi"> 5G QoS Identifier. </param>
         /// <param name="uplinkGbrUplink"> Uplink bit rate. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="uplinkMbrUplink"> Uplink bit rate. </param>
         /// <param name="downlinkMbrDownlink"> Downlink bit rate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UEQOSFlow(int qfi, int fiveqi, string uplinkGbrUplink, string downlinkGbrDownlink, string uplinkMbrUplink, string downlinkMbrDownlink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UEQosFlow(int qfi, int fiveqi, string uplinkGbrUplink, string downlinkGbrDownlink, string uplinkMbrUplink, string downlinkMbrDownlink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Qfi = qfi;
             Fiveqi = fiveqi;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UEQOSFlow"/> for deserialization. </summary>
-        internal UEQOSFlow()
+        /// <summary> Initializes a new instance of <see cref="UEQosFlow"/> for deserialization. </summary>
+        internal UEQosFlow()
         {
         }
 

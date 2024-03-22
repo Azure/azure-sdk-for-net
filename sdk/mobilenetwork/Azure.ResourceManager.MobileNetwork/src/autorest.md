@@ -102,7 +102,6 @@ rename-mapping:
   Installation: MobileNetworkInstallation
   HttpsServerCertificate: MobileNetworkHttpsServerCertificate
   DiagnosticsPackageStatus: MobileNetworkDiagnosticsPackageStatus
-  CertificateProvisioningStatus: MobileNetworkCertificateProvisioningStatus
   CertificateProvisioning: MobileNetworkCertificateProvisioning
   BillingSku: MobileNetworkBillingSku
   AuthenticationType: MobileNetworkAuthenticationType
@@ -119,6 +118,7 @@ rename-mapping:
   EventHubConfiguration: MobileNetworkEventHubConfiguration
   EventHubConfiguration.id: -|arm-id
   RrcEstablishmentCause.SMS: Sms
+  UeQOSFlow: UEQosFlow
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem
