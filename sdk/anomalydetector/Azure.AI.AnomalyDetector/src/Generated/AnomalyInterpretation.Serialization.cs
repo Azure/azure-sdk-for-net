@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<AnomalyInterpretation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<AnomalyInterpretation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeAnomalyInterpretation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeImportDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

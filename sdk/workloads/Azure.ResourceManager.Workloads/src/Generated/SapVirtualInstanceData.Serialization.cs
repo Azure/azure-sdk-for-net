@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapVirtualInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

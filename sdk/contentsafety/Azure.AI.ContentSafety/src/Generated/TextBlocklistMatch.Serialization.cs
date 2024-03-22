@@ -22,7 +22,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklistMatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<TextBlocklistMatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeTextBlocklistMatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextBlocklistMatch)} does not support reading '{options.Format}' format.");
             }
         }
 

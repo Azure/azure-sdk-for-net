@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsAvailableServiceTier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support reading '{options.Format}' format.");
             }
         }
 
