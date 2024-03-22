@@ -287,10 +287,10 @@ namespace Azure.Provisioning
             var bicepOptions = new BicepModelReaderWriterOptions();
             foreach (var propertyOverride in PropertyOverrides)
             {
-                if (!bicepOptions.ParameterOverrides.TryGetValue(propertyOverride.Key, out var dict))
+                if (!bicepOptions.PropertyOverrides.TryGetValue(propertyOverride.Key, out var dict))
                 {
                     dict = new Dictionary<string, string>();
-                    bicepOptions.ParameterOverrides.Add(propertyOverride.Key, dict);
+                    bicepOptions.PropertyOverrides.Add(propertyOverride.Key, dict);
                 }
                 foreach (var kvp in propertyOverride.Value)
                 {
