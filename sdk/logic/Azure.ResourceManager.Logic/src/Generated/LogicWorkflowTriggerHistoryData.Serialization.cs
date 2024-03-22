@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                writer.WriteObjectValue<Correlation>(Correlation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                writer.WriteObjectValue<LogicContentLink>(InputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                writer.WriteObjectValue<LogicContentLink>(OutputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFired))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Run))
             {
                 writer.WritePropertyName("run"u8);
-                writer.WriteObjectValue(Run);
+                writer.WriteObjectValue<LogicResourceReference>(Run, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

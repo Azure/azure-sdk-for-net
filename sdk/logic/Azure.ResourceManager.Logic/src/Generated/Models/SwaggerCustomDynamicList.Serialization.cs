@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SwaggerCustomDynamicProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

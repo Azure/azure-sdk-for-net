@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(RecurrenceSchedule))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(RecurrenceSchedule);
+                writer.WriteObjectValue<ComputeStartStopRecurrenceSchedule>(RecurrenceSchedule, options);
             }
             if (Optional.IsDefined(CronSchedule))
             {
                 writer.WritePropertyName("cron"u8);
-                writer.WriteObjectValue(CronSchedule);
+                writer.WriteObjectValue<ComputeStartStopCronSchedule>(CronSchedule, options);
             }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                writer.WriteObjectValue<MachineLearningScheduleBase>(Schedule, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LabVirtualMachineImageData>(item, options);
                 }
                 writer.WriteEndArray();
             }
