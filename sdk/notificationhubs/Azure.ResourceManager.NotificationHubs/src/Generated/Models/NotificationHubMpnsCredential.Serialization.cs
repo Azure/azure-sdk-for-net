@@ -28,21 +28,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MpnsCertificate))
-            {
-                writer.WritePropertyName("mpnsCertificate"u8);
-                writer.WriteStringValue(MpnsCertificate);
-            }
-            if (Optional.IsDefined(CertificateKey))
-            {
-                writer.WritePropertyName("certificateKey"u8);
-                writer.WriteStringValue(CertificateKey);
-            }
-            if (Optional.IsDefined(ThumbprintString))
-            {
-                writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(ThumbprintString);
-            }
+            writer.WritePropertyName("mpnsCertificate"u8);
+            writer.WriteStringValue(MpnsCertificate);
+            writer.WritePropertyName("certificateKey"u8);
+            writer.WriteStringValue(CertificateKey);
+            writer.WritePropertyName("thumbprint"u8);
+            writer.WriteStringValue(ThumbprintString);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

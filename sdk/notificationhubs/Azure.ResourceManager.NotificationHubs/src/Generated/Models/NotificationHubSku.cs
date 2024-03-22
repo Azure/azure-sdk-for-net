@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubSku"/>. </summary>
-        /// <param name="name"> Name of the notification hub sku. </param>
+        /// <param name="name"> Namespace SKU name. </param>
         public NotificationHubSku(NotificationHubSkuName name)
         {
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubSku"/>. </summary>
-        /// <param name="name"> Name of the notification hub sku. </param>
-        /// <param name="tier"> The tier of particular sku. </param>
-        /// <param name="size"> The Sku size. </param>
-        /// <param name="family"> The Sku Family. </param>
-        /// <param name="capacity"> The capacity of the resource. </param>
+        /// <param name="name"> Namespace SKU name. </param>
+        /// <param name="tier"> Gets or sets the tier of particular sku. </param>
+        /// <param name="size"> Gets or sets the Sku size. </param>
+        /// <param name="family"> Gets or sets the Sku Family. </param>
+        /// <param name="capacity"> Gets or sets the capacity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NotificationHubSku(NotificationHubSkuName name, string tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         {
         }
 
-        /// <summary> Name of the notification hub sku. </summary>
+        /// <summary> Namespace SKU name. </summary>
         public NotificationHubSkuName Name { get; set; }
-        /// <summary> The tier of particular sku. </summary>
+        /// <summary> Gets or sets the tier of particular sku. </summary>
         public string Tier { get; set; }
-        /// <summary> The Sku size. </summary>
+        /// <summary> Gets or sets the Sku size. </summary>
         public string Size { get; set; }
-        /// <summary> The Sku Family. </summary>
+        /// <summary> Gets or sets the Sku Family. </summary>
         public string Family { get; set; }
-        /// <summary> The capacity of the resource. </summary>
+        /// <summary> Gets or sets the capacity of the resource. </summary>
         public int? Capacity { get; set; }
     }
 }

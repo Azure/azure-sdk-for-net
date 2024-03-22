@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    /// <summary> Name of the notification hub sku. </summary>
+    /// <summary> Namespace SKU name. </summary>
     public readonly partial struct NotificationHubSkuName : IEquatable<NotificationHubSkuName>
     {
         private readonly string _value;

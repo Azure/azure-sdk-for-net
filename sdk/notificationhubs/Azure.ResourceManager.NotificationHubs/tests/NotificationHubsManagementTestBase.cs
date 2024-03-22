@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
 
         protected async Task<NotificationHubNamespaceResource> CreateNotificationHubNamespace(ResourceGroupResource resourceGroup, string namespaceName)
         {
-            var data = new NotificationHubNamespaceCreateOrUpdateContent(DefaultLocation)
+            var data = new NotificationHubNamespaceData(DefaultLocation)
             {
                 Sku = new NotificationHubSku(NotificationHubSkuName.Standard),
             };
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NotificationHubs.Tests
 
         protected async Task<NotificationHubResource> CreateNotificationHub(NotificationHubNamespaceResource notificationHubNamespaceResource, string notificationHubName)
         {
-            var data = new NotificationHubCreateOrUpdateContent(DefaultLocation);
+            var data = new NotificationHubData(DefaultLocation);
             var notificationHub = await notificationHubNamespaceResource.GetNotificationHubs().CreateOrUpdateAsync(WaitUntil.Completed, notificationHubName, data);
             return notificationHub.Value;
         }
