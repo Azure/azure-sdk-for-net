@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerStorageCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

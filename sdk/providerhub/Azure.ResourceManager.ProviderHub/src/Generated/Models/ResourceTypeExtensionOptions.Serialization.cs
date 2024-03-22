@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceCreationBegin))
             {
                 writer.WritePropertyName("resourceCreationBegin"u8);
-                writer.WriteObjectValue(ResourceCreationBegin);
+                writer.WriteObjectValue<ExtensionOptions>(ResourceCreationBegin, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

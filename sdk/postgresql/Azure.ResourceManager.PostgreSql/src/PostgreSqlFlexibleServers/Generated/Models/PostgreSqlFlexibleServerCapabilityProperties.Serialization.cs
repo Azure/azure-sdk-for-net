@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerServerVersionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedFastProvisioningEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

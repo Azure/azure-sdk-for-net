@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationProtectedItemData>(item, options);
                 }
                 writer.WriteEndArray();
             }

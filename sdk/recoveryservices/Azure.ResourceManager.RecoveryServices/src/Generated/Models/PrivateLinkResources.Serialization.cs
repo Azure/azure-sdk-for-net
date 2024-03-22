@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryServicesPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

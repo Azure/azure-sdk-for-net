@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count);
+                writer.WriteObjectValue<PredefinedTagCount>(Count, options);
             }
             if (Optional.IsCollectionDefined(Values))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PredefinedTagValue>(item, options);
                 }
                 writer.WriteEndArray();
             }

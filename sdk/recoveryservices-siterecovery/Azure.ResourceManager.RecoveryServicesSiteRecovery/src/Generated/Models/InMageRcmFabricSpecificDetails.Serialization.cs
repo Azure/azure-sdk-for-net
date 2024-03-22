@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(SourceAgentIdentityDetails))
             {
                 writer.WritePropertyName("sourceAgentIdentityDetails"u8);
-                writer.WriteObjectValue(SourceAgentIdentityDetails);
+                writer.WriteObjectValue<IdentityProviderDetails>(SourceAgentIdentityDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryProcessServerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RcmProxies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RcmProxyDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in PushInstallers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PushInstallerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicationAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReplicationAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReprotectAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReprotectAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MarsAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MarsAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Dras)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryDraDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryAgentDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

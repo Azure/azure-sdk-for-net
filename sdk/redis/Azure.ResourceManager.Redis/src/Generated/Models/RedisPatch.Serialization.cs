@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration);
+                writer.WriteObjectValue<RedisCommonConfiguration>(RedisConfiguration, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RedisSku>(Sku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

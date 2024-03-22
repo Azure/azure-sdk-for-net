@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PostgreSqlSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<PostgreSqlServerPropertiesForCreate>(Properties, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))

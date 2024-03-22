@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {

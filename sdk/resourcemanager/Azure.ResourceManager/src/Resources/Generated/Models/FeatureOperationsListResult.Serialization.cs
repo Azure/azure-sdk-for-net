@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FeatureData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InquiryInfo))
             {
                 writer.WritePropertyName("inquiryInfo"u8);
-                writer.WriteObjectValue(InquiryInfo);
+                writer.WriteObjectValue<WorkloadContainerInquiryInfo>(InquiryInfo, options);
             }
             if (Optional.IsCollectionDefined(NodesList))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DistributedNodesInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

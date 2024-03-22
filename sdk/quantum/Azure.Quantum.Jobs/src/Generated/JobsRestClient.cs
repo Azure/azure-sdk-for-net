@@ -198,7 +198,7 @@ namespace Azure.Quantum.Jobs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(job);
+            content.JsonWriter.WriteObjectValue<JobDetails>(job);
             request.Content = content;
             return message;
         }
@@ -355,7 +355,7 @@ namespace Azure.Quantum.Jobs
             content.JsonWriter.WriteStartArray();
             foreach (var item in patchJob)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<Models.JsonPatchDocument>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

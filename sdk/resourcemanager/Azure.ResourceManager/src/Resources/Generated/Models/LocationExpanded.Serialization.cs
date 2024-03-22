@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<LocationMetadata>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZoneMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailabilityZoneMappings>(item, options);
                 }
                 writer.WriteEndArray();
             }

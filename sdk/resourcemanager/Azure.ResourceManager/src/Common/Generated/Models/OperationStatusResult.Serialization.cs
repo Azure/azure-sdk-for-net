@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationStatusResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, OperationStatusResult model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<OperationStatusResult>(model, new ModelReaderWriterOptions("W"));
             }
             public override OperationStatusResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
