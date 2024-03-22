@@ -8,9 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/developer-signing
-    - sdk/developer-signing/ci.yml
-    - sdk/developer-signing/Azure.Developer.Signing
+    - sdk/trustedsigning
+    - sdk/trustedsigning/ci.yml
+    - sdk/trustedsigning/Azure.Developer.Signing
 
 pr:
   branches:
@@ -21,14 +21,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/developer-signing
-    - sdk/developer-signing/ci.yml
-    - sdk/developer-signing/Azure.Developer.Signing
+    - sdk/trustedsigning
+    - sdk/trustedsigning/ci.yml
+    - sdk/trustedsigning/Azure.Developer.Signing
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: developer-signing
+    ServiceDirectory: trustedsigning
     ArtifactName: packages
     Artifacts:
     - name: Azure.Developer.Signing

@@ -4,6 +4,6 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     SDKType: client
-    ServiceDirectory: developer-signing
+    ServiceDirectory: trustedsigning
     SupportedClouds: 'Public,Preview'
     Location: eastus
