@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<StorageCorsRules>(Cors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ServiceBusPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

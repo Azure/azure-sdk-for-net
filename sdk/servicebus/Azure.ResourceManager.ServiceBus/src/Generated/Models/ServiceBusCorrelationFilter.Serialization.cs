@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

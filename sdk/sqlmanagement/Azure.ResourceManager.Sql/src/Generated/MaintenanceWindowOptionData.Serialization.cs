@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindowCycles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceWindowTimeRange>(item, options);
                 }
                 writer.WriteEndArray();
             }

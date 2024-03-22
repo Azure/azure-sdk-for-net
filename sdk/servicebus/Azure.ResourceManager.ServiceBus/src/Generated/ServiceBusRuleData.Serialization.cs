@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<ServiceBusFilterAction>(Action, options);
             }
             if (Optional.IsDefined(FilterType))
             {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(SqlFilter))
             {
                 writer.WritePropertyName("sqlFilter"u8);
-                writer.WriteObjectValue(SqlFilter);
+                writer.WriteObjectValue<ServiceBusSqlFilter>(SqlFilter, options);
             }
             if (Optional.IsDefined(CorrelationFilter))
             {
                 writer.WritePropertyName("correlationFilter"u8);
-                writer.WriteObjectValue(CorrelationFilter);
+                writer.WriteObjectValue<ServiceBusCorrelationFilter>(CorrelationFilter, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedActionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

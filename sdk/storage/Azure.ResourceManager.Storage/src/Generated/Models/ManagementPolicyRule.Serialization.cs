@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
+            writer.WriteObjectValue<ManagementPolicyDefinition>(Definition, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

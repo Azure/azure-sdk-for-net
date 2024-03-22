@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StorageSku>(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<StorageCorsRules>(Cors, options);
             }
             if (Optional.IsDefined(ShareDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("shareDeleteRetentionPolicy"u8);
-                writer.WriteObjectValue(ShareDeleteRetentionPolicy);
+                writer.WriteObjectValue<DeleteRetentionPolicy>(ShareDeleteRetentionPolicy, options);
             }
             if (Optional.IsDefined(ProtocolSettings))
             {
                 writer.WritePropertyName("protocolSettings"u8);
-                writer.WriteObjectValue(ProtocolSettings);
+                writer.WriteObjectValue<ProtocolSettings>(ProtocolSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

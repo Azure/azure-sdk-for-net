@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityConnectorGitHubOwnerData>(item, options);
                 }
                 writer.WriteEndArray();
             }

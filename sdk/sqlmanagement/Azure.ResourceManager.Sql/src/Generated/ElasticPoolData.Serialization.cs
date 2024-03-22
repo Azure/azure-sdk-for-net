@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
-                writer.WriteObjectValue(PerDatabaseSettings);
+                writer.WriteObjectValue<ElasticPoolPerDatabaseSettings>(PerDatabaseSettings, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {

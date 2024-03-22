@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(Location);
+                writer.WriteObjectValue<SecurityInsightsIPEntityGeoLocation>(Location, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ThreatIntelligence))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ThreatIntelligence)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsThreatIntelligence>(item, options);
                 }
                 writer.WriteEndArray();
             }

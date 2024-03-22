@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ServiceBusSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ServiceBusEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceBusPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

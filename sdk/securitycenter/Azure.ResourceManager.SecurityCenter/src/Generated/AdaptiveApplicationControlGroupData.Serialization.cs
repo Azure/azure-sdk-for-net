@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
-                writer.WriteObjectValue(ProtectionMode);
+                writer.WriteObjectValue<SecurityCenterFileProtectionMode>(ProtectionMode, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationStatus))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdaptiveApplicationControlIssueSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PathRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }

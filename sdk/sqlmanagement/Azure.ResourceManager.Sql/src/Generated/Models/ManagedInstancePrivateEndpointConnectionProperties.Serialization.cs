@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<ManagedInstancePrivateLinkServiceConnectionStateProperty>(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

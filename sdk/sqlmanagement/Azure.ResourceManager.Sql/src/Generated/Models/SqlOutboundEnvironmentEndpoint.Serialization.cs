@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstanceEndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }

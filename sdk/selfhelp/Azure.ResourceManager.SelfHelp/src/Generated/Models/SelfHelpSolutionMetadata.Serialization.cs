@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SolutionMetadataProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

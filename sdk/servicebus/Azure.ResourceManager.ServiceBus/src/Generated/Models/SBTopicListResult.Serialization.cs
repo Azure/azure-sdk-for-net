@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceBusTopicData>(item, options);
                 }
                 writer.WriteEndArray();
             }
