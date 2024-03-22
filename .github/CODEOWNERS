@@ -939,6 +939,12 @@
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
 
+# PRLabel: %Astronomer
+/sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
+
+# ServiceLabel: %Astronomer
+# ServiceOwners:                                                   @banggaurav
+
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
 
