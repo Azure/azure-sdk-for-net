@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
-            if (Optional.IsDefined(UeMtu))
+            if (Optional.IsDefined(UEMtu))
             {
                 writer.WritePropertyName("ueMtu"u8);
-                writer.WriteNumberValue(UeMtu.Value);
+                writer.WriteNumberValue(UEMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
             writer.WriteObjectValue(LocalDiagnosticsAccess);

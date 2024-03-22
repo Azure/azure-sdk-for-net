@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.MobileNetwork
             return GetPacketCoreDataPlanes().Get(packetCoreDataPlaneName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExtendedUeInfoResources in the PacketCoreControlPlane. </summary>
-        /// <returns> An object representing collection of ExtendedUeInfoResources and their operations over a ExtendedUeInfoResource. </returns>
-        public virtual ExtendedUeInfoCollection GetExtendedUeInfos()
+        /// <summary> Gets a collection of ExtendedUEInfoResources in the PacketCoreControlPlane. </summary>
+        /// <returns> An object representing collection of ExtendedUEInfoResources and their operations over a ExtendedUEInfoResource. </returns>
+        public virtual ExtendedUEInfoCollection GetExtendedUEInfos()
         {
-            return GetCachedClient(client => new ExtendedUeInfoCollection(client, Id));
+            return GetCachedClient(client => new ExtendedUEInfoCollection(client, Id));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExtendedUeInfoResource"/></description>
+        /// <description><see cref="ExtendedUEInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,9 +335,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtendedUeInfoResource>> GetExtendedUeInfoAsync(string ueId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExtendedUEInfoResource>> GetExtendedUEInfoAsync(string ueId, CancellationToken cancellationToken = default)
         {
-            return await GetExtendedUeInfos().GetAsync(ueId, cancellationToken).ConfigureAwait(false);
+            return await GetExtendedUEInfos().GetAsync(ueId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExtendedUeInfoResource"/></description>
+        /// <description><see cref="ExtendedUEInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtendedUeInfoResource> GetExtendedUeInfo(string ueId, CancellationToken cancellationToken = default)
+        public virtual Response<ExtendedUEInfoResource> GetExtendedUEInfo(string ueId, CancellationToken cancellationToken = default)
         {
-            return GetExtendedUeInfos().Get(ueId, cancellationToken);
+            return GetExtendedUEInfos().Get(ueId, cancellationToken);
         }
 
         /// <summary>
@@ -897,12 +897,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UeInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UeInfo> GetAllUeInformationAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="UEInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UEInfo> GetAllUeInformationAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ueInformationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ueInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UeInfo.DeserializeUeInfo(e), _ueInformationClientDiagnostics, Pipeline, "PacketCoreControlPlaneResource.GetAllUeInformation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UEInfo.DeserializeUEInfo(e), _ueInformationClientDiagnostics, Pipeline, "PacketCoreControlPlaneResource.GetAllUeInformation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -923,12 +923,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UeInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UeInfo> GetAllUeInformation(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="UEInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UEInfo> GetAllUeInformation(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ueInformationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ueInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UeInfo.DeserializeUeInfo(e), _ueInformationClientDiagnostics, Pipeline, "PacketCoreControlPlaneResource.GetAllUeInformation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UEInfo.DeserializeUEInfo(e), _ueInformationClientDiagnostics, Pipeline, "PacketCoreControlPlaneResource.GetAllUeInformation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

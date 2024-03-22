@@ -652,20 +652,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MobileNetwork.ExtendedUeInfoData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.ExtendedUEInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Extended UE Information Properties.
-        /// Please note <see cref="ExtendedUeInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="UeInfo4G"/> and <see cref="UeInfo5G"/>.
+        /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
         /// </param>
-        /// <returns> A new <see cref="MobileNetwork.ExtendedUeInfoData"/> instance for mocking. </returns>
-        public static ExtendedUeInfoData ExtendedUeInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedUeInfoProperties properties = null)
+        /// <returns> A new <see cref="MobileNetwork.ExtendedUEInfoData"/> instance for mocking. </returns>
+        public static ExtendedUEInfoData ExtendedUEInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedUEInfoProperties properties = null)
         {
-            return new ExtendedUeInfoData(
+            return new ExtendedUEInfoData(
                 id,
                 name,
                 resourceType,
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UeInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UEInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -683,12 +683,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="ueState"> State of the UE. </param>
         /// <param name="ueIPAddresses"></param>
         /// <param name="lastReadOn"> The timestamp of last list UEs call to the packet core (UTC). </param>
-        /// <returns> A new <see cref="Models.UeInfo"/> instance for mocking. </returns>
-        public static UeInfo UeInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RatType ratType = default, UeState ueState = default, IEnumerable<DnnIPPair> ueIPAddresses = null, DateTimeOffset? lastReadOn = null)
+        /// <returns> A new <see cref="Models.UEInfo"/> instance for mocking. </returns>
+        public static UEInfo UEInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RatType ratType = default, UEState ueState = default, IEnumerable<DnnIPPair> ueIPAddresses = null, DateTimeOffset? lastReadOn = null)
         {
             ueIPAddresses ??= new List<DnnIPPair>();
 
-            return new UeInfo(
+            return new UEInfo(
                 id,
                 name,
                 resourceType,

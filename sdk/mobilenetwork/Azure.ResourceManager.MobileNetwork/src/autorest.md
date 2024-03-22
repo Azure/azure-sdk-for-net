@@ -13,11 +13,14 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 use-model-reader-writer: true
 client-side-validation: false
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}: TenantPacketCoreControlPlaneVersion
@@ -55,6 +58,7 @@ acronym-mapping:
   AAD: Aad
   EPC: Epc
   EPC5GC: Epc5GC
+  Ue: UE|ue
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/ues/{ueId}/extendedInformation/default
@@ -114,8 +118,7 @@ rename-mapping:
   AttachedDataNetwork: MobileAttachedDataNetwork
   EventHubConfiguration: MobileNetworkEventHubConfiguration
   EventHubConfiguration.id: -|arm-id
-  
-
+  RrcEstablishmentCause.SMS: Sms
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

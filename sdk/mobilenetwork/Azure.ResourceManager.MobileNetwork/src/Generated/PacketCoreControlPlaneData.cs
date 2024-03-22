@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MobileNetwork
             ControlPlaneAccessInterface = controlPlaneAccessInterface;
             ControlPlaneAccessVirtualIPv4Addresses = controlPlaneAccessVirtualIPv4Addresses;
             Sku = sku;
-            UeMtu = ueMtu;
+            UEMtu = ueMtu;
             LocalDiagnosticsAccess = localDiagnosticsAccess;
             DiagnosticsUpload = diagnosticsUpload;
             EventHub = eventHub;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </summary>
         public MobileNetworkBillingSku Sku { get; set; }
         /// <summary> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </summary>
-        public int? UeMtu { get; set; }
+        public int? UEMtu { get; set; }
         /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
         public MobileNetworkLocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get; set; }
         /// <summary> Configuration for uploading packet core diagnostics. </summary>

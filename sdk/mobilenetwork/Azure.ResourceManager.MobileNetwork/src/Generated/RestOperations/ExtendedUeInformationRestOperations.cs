@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="ueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtendedUeInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId, CancellationToken cancellationToken = default)
+        public async Task<Response<ExtendedUEInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        ExtendedUeInfoData value = default;
+                        ExtendedUEInfoData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtendedUeInfoData.DeserializeExtendedUeInfoData(document.RootElement);
+                        value = ExtendedUEInfoData.DeserializeExtendedUEInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtendedUeInfoData)null, message.Response);
+                    return Response.FromValue((ExtendedUEInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="ueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtendedUeInfoData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId, CancellationToken cancellationToken = default)
+        public Response<ExtendedUEInfoData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string ueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        ExtendedUeInfoData value = default;
+                        ExtendedUEInfoData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtendedUeInfoData.DeserializeExtendedUeInfoData(document.RootElement);
+                        value = ExtendedUEInfoData.DeserializeExtendedUEInfoData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtendedUeInfoData)null, message.Response);
+                    return Response.FromValue((ExtendedUEInfoData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

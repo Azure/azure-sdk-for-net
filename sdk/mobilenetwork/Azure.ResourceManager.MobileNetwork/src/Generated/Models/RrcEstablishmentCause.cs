@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string MobileTerminatedSignalingValue = "MobileTerminatedSignaling";
         private const string MobileOriginatedDataValue = "MobileOriginatedData";
         private const string MobileTerminatedDataValue = "MobileTerminatedData";
-        private const string SMSValue = "SMS";
+        private const string SmsValue = "SMS";
 
         /// <summary> Emergency. </summary>
         public static RrcEstablishmentCause Emergency { get; } = new RrcEstablishmentCause(EmergencyValue);
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> MobileTerminatedData. </summary>
         public static RrcEstablishmentCause MobileTerminatedData { get; } = new RrcEstablishmentCause(MobileTerminatedDataValue);
         /// <summary> SMS. </summary>
-        public static RrcEstablishmentCause SMS { get; } = new RrcEstablishmentCause(SMSValue);
+        public static RrcEstablishmentCause Sms { get; } = new RrcEstablishmentCause(SmsValue);
         /// <summary> Determines if two <see cref="RrcEstablishmentCause"/> values are the same. </summary>
         public static bool operator ==(RrcEstablishmentCause left, RrcEstablishmentCause right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RrcEstablishmentCause"/> values are not the same. </summary>

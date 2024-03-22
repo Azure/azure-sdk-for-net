@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExtendedUeInfoResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtendedUeInfoResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedUeInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ExtendedUEInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedUEInfoResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedUEInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtendedUeInfoResource"/> object. </returns>
-        public virtual ExtendedUeInfoResource GetExtendedUeInfoResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExtendedUEInfoResource"/> object. </returns>
+        public virtual ExtendedUEInfoResource GetExtendedUEInfoResource(ResourceIdentifier id)
         {
-            ExtendedUeInfoResource.ValidateResourceId(id);
-            return new ExtendedUeInfoResource(Client, id);
+            ExtendedUEInfoResource.ValidateResourceId(id);
+            return new ExtendedUEInfoResource(Client, id);
         }
     }
 }
