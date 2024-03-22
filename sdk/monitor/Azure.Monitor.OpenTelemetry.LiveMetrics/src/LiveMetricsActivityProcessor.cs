@@ -4,11 +4,12 @@
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
-    internal sealed class LiveMetricsExtractionProcessor : BaseProcessor<Activity>
+    internal sealed class LiveMetricsActivityProcessor : BaseProcessor<Activity>
     {
         private bool _disposed;
         private LiveMetricsResource? _resource;
@@ -16,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
         internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal LiveMetricsExtractionProcessor(Manager manager)
+        internal LiveMetricsActivityProcessor(Manager manager)
         {
             _manager = manager;
         }

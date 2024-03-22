@@ -58,7 +58,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="name"> The modified name for the assistant to use. </param>
         /// <param name="description"> The modified description for the assistant to use. </param>
         /// <param name="instructions"> The modified system instructions for the new assistant to use. </param>
-        /// <param name="tools"> The modified collection of tools to enable for the assistant. </param>
+        /// <param name="tools">
+        /// The modified collection of tools to enable for the assistant.
+        /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CodeInterpreterToolDefinition"/>, <see cref="FunctionToolDefinition"/> and <see cref="RetrievalToolDefinition"/>.
+        /// </param>
         /// <param name="fileIds"> The modified list of previously uploaded fileIDs to attach to the assistant. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>

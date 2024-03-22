@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServices
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultExtendedInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServices
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultExtendedInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServices
                         return DeserializeRecoveryServicesVaultExtendedInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesVaultExtendedInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

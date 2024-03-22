@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Ratio>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Ratio>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeFhirR4Ratio(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4Ratio)} does not support reading '{options.Format}' format.");
             }
         }
 
