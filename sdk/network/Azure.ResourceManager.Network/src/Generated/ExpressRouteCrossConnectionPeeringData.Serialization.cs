@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeExpressRouteCrossConnectionPeeringData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionPeeringData)} does not support reading '{options.Format}' format.");
             }
         }
 
