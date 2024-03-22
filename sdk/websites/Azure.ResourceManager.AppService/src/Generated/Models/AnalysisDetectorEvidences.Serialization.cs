@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition);
+                writer.WriteObjectValue<DetectorDefinition>(DetectorDefinition, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticMetricSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue<AppServiceNameValuePair>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
-                writer.WriteObjectValue(DetectorMetaData);
+                writer.WriteObjectValue<DetectorMetadata>(DetectorMetaData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Containers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ContainerInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

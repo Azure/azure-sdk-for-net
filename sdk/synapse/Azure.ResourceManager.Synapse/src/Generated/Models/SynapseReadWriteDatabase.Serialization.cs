@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFollowed))
             {

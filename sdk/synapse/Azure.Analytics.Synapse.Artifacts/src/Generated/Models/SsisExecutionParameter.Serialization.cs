@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            writer.WriteObjectValue<object>(Value);
             writer.WriteEndObject();
         }
 
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SsisExecutionParameter model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisExecutionParameter>(model);
             }
             public override SsisExecutionParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

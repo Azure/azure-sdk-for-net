@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricSpecifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in LogSpecifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }

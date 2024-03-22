@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AbnormalTimePeriods)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AbnormalTimePeriod>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Payload)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AnalysisDetectorEvidences>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in NonCorrelatedDetectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DetectorDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }

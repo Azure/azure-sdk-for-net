@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
-                writer.WriteObjectValue(AppServiceEnvironment);
+                writer.WriteObjectValue<AppServiceEnvironmentProperties>(AppServiceEnvironment, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

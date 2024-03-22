@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in AppSettings)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<AppServiceNameValuePair>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in ConnectionStrings)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ConnStringInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.AppService
                 if (MachineKey != null)
                 {
                     writer.WritePropertyName("machineKey"u8);
-                    writer.WriteObjectValue(MachineKey);
+                    writer.WriteObjectValue<SiteMachineKey>(MachineKey, options);
                 }
                 else
                 {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in HandlerMappings)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<HttpRequestHandlerMapping>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in VirtualApplications)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<VirtualApplication>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AppService
                 if (Experiments != null)
                 {
                     writer.WritePropertyName("experiments"u8);
-                    writer.WriteObjectValue(Experiments);
+                    writer.WriteObjectValue<RoutingRuleExperiments>(Experiments, options);
                 }
                 else
                 {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppService
                 if (Limits != null)
                 {
                     writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue(Limits);
+                    writer.WriteObjectValue<SiteLimits>(Limits, options);
                 }
                 else
                 {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.AppService
                 if (AutoHealRules != null)
                 {
                     writer.WritePropertyName("autoHealRules"u8);
-                    writer.WriteObjectValue(AutoHealRules);
+                    writer.WriteObjectValue<AutoHealRules>(AutoHealRules, options);
                 }
                 else
                 {
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.AppService
                 if (Cors != null)
                 {
                     writer.WritePropertyName("cors"u8);
-                    writer.WriteObjectValue(Cors);
+                    writer.WriteObjectValue<AppServiceCorsSettings>(Cors, options);
                 }
                 else
                 {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppService
                 if (Push != null)
                 {
                     writer.WritePropertyName("push"u8);
-                    writer.WriteObjectValue(Push);
+                    writer.WriteObjectValue<WebAppPushSettings>(Push, options);
                 }
                 else
                 {
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.AppService
                 if (ApiDefinition != null)
                 {
                     writer.WritePropertyName("apiDefinition"u8);
-                    writer.WriteObjectValue(ApiDefinition);
+                    writer.WriteObjectValue<AppServiceApiDefinitionInfo>(ApiDefinition, options);
                 }
                 else
                 {
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.AppService
                 if (ApiManagementConfig != null)
                 {
                     writer.WritePropertyName("apiManagementConfig"u8);
-                    writer.WriteObjectValue(ApiManagementConfig);
+                    writer.WriteObjectValue<ApiManagementConfig>(ApiManagementConfig, options);
                 }
                 else
                 {
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in IPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<AppServiceIPSecurityRestriction>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteStartArray();
                     foreach (var item in ScmIPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<AppServiceIPSecurityRestriction>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.AppService
                     foreach (var item in AzureStorageAccounts)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<AppServiceStorageAccessInfo>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }

@@ -20,12 +20,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                writer.WriteObjectValue<SystemData>(SystemData);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<PipelineTopologyProperties>(Properties);
             }
             writer.WritePropertyName("methodName"u8);
             writer.WriteStringValue(MethodName);

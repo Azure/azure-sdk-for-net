@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue(LinuxRuntimeSettings);
+                writer.WriteObjectValue<FunctionAppRuntimeSettings>(LinuxRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue(WindowsRuntimeSettings);
+                writer.WriteObjectValue<FunctionAppRuntimeSettings>(WindowsRuntimeSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

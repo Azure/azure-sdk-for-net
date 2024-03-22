@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParameterDeclaration>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -37,7 +37,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceNodeBase>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Processors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProcessorNodeBase>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SinkNodeBase>(item);
                 }
                 writer.WriteEndArray();
             }

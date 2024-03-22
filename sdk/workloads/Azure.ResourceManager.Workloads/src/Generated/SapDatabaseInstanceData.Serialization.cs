@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatabaseVmDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                writer.WriteObjectValue<SapVirtualInstanceError>(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

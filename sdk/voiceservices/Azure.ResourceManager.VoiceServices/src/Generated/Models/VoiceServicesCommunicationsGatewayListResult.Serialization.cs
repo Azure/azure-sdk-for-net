@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<VoiceServicesCommunicationsGatewayData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
