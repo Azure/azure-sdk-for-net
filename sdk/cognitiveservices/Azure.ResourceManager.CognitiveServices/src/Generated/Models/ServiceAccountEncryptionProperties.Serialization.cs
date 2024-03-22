@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyVaultProperties != null)
+            if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (KeySource.HasValue)
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

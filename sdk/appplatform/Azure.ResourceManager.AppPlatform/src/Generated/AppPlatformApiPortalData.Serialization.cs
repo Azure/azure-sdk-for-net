@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.AppPlatform
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformApiPortalData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppPlatform
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformApiPortalData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppPlatform
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppPlatform
                         return DeserializeAppPlatformApiPortalData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformApiPortalData)} does not support reading '{options.Format}' format.");
             }
         }
 

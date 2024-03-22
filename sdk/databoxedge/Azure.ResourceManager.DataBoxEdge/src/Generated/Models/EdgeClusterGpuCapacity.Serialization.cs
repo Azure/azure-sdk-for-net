@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterGpuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GpuType != null)
+            if (Optional.IsDefined(GpuType))
             {
                 writer.WritePropertyName("gpuType"u8);
                 writer.WriteStringValue(GpuType);
             }
-            if (GpuUsedUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuUsedUnitsCount))
             {
                 writer.WritePropertyName("gpuUsedUnitsCount"u8);
                 writer.WriteNumberValue(GpuUsedUnitsCount.Value);
             }
-            if (GpuFreeUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuFreeUnitsCount))
             {
                 writer.WritePropertyName("gpuFreeUnitsCount"u8);
                 writer.WriteNumberValue(GpuFreeUnitsCount.Value);
             }
-            if (GpuReservedForFailoverUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuReservedForFailoverUnitsCount))
             {
                 writer.WritePropertyName("gpuReservedForFailoverUnitsCount"u8);
                 writer.WriteNumberValue(GpuReservedForFailoverUnitsCount.Value);
             }
-            if (GpuTotalUnitsCount.HasValue)
+            if (Optional.IsDefined(GpuTotalUnitsCount))
             {
                 writer.WritePropertyName("gpuTotalUnitsCount"u8);
                 writer.WriteNumberValue(GpuTotalUnitsCount.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterGpuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeClusterGpuCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

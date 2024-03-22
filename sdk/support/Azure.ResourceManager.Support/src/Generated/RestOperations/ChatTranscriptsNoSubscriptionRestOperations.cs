@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,22 +61,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> or <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChatTranscriptDetailData>> GetAsync(string supportTicketName, string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var message = CreateGetRequest(supportTicketName, chatTranscriptName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,22 +90,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> or <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChatTranscriptDetailData> Get(string supportTicketName, string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (chatTranscriptName == null)
-            {
-                throw new ArgumentNullException(nameof(chatTranscriptName));
-            }
-            if (chatTranscriptName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(chatTranscriptName));
-            }
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(chatTranscriptName, nameof(chatTranscriptName));
 
             using var message = CreateGetRequest(supportTicketName, chatTranscriptName);
             _pipeline.Send(message, cancellationToken);

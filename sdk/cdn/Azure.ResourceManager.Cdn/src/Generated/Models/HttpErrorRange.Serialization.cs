@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<HttpErrorRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpErrorRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpErrorRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Begin.HasValue)
+            if (Optional.IsDefined(Begin))
             {
                 writer.WritePropertyName("begin"u8);
                 writer.WriteNumberValue(Begin.Value);
             }
-            if (End.HasValue)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<HttpErrorRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpErrorRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpErrorRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HttpErrorRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpErrorRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeHttpErrorRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HttpErrorRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpErrorRange)} does not support reading '{options.Format}' format.");
             }
         }
 

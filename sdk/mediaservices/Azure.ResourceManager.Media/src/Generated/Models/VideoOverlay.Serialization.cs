@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoOverlay)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Position != null)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteObjectValue(Position);
             }
-            if (Opacity.HasValue)
+            if (Optional.IsDefined(Opacity))
             {
                 writer.WritePropertyName("opacity"u8);
                 writer.WriteNumberValue(Opacity.Value);
             }
-            if (CropRectangle != null)
+            if (Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
                 writer.WriteObjectValue(CropRectangle);
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(OdataType);
             writer.WritePropertyName("inputLabel"u8);
             writer.WriteStringValue(InputLabel);
-            if (Start.HasValue)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start.Value, "P");
             }
-            if (End.HasValue)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End.Value, "P");
             }
-            if (FadeInDuration.HasValue)
+            if (Optional.IsDefined(FadeInDuration))
             {
                 writer.WritePropertyName("fadeInDuration"u8);
                 writer.WriteStringValue(FadeInDuration.Value, "P");
             }
-            if (FadeOutDuration.HasValue)
+            if (Optional.IsDefined(FadeOutDuration))
             {
                 writer.WritePropertyName("fadeOutDuration"u8);
                 writer.WriteStringValue(FadeOutDuration.Value, "P");
             }
-            if (AudioGainLevel.HasValue)
+            if (Optional.IsDefined(AudioGainLevel))
             {
                 writer.WritePropertyName("audioGainLevel"u8);
                 writer.WriteNumberValue(AudioGainLevel.Value);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoOverlay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoOverlay)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeVideoOverlay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoOverlay)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnplannedFailoverProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FailoverDirection != null)
+            if (Optional.IsDefined(FailoverDirection))
             {
                 writer.WritePropertyName("failoverDirection"u8);
                 writer.WriteStringValue(FailoverDirection);
             }
-            if (SourceSiteOperations != null)
+            if (Optional.IsDefined(SourceSiteOperations))
             {
                 writer.WritePropertyName("sourceSiteOperations"u8);
                 writer.WriteStringValue(SourceSiteOperations);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UnplannedFailoverProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUnplannedFailoverProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnplannedFailoverProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

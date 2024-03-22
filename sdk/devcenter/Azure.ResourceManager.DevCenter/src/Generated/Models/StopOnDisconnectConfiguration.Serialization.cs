@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<StopOnDisconnectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (GracePeriodMinutes.HasValue)
+            if (Optional.IsDefined(GracePeriodMinutes))
             {
                 writer.WritePropertyName("gracePeriodMinutes"u8);
                 writer.WriteNumberValue(GracePeriodMinutes.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<StopOnDisconnectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeStopOnDisconnectConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

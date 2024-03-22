@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.HDInsight
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -44,17 +43,17 @@ namespace Azure.ResourceManager.HDInsight
                 }
                 writer.WriteEndArray();
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.HDInsight
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.HDInsight
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.HDInsight
                         return DeserializeHDInsightClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

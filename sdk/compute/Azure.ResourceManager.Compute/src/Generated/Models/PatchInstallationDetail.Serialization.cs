@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PatchInstallationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PatchId != null)
+            if (options.Format != "W" && Optional.IsDefined(PatchId))
             {
                 writer.WritePropertyName("patchId"u8);
                 writer.WriteStringValue(PatchId);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && KbId != null)
+            if (options.Format != "W" && Optional.IsDefined(KbId))
             {
                 writer.WritePropertyName("kbId"u8);
                 writer.WriteStringValue(KbId);
             }
-            if (options.Format != "W" && !(Classifications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Classifications))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstallationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstallationState))
             {
                 writer.WritePropertyName("installationState"u8);
                 writer.WriteStringValue(InstallationState.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PatchInstallationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializePatchInstallationDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchInstallationDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

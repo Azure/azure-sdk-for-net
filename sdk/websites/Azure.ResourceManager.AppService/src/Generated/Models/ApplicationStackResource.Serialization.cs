@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationStackResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StackName != null)
+            if (Optional.IsDefined(StackName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(StackName);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Dependency != null)
+            if (Optional.IsDefined(Dependency))
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (!(MajorVersions is ChangeTrackingList<StackMajorVersion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MajorVersions))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Frameworks is ChangeTrackingList<ApplicationStack> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Frameworks))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IsDeprecated is ChangeTrackingList<ApplicationStack> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationStackResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeApplicationStackResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationStackResource)} does not support reading '{options.Format}' format.");
             }
         }
 

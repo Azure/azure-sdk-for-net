@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,15 +19,12 @@ namespace Azure.Maps.Routing.Models
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/> and <see cref="GeoJsonMultiPoint"/>.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
         public GeoJsonGeometryCollection(IEnumerable<GeoJsonGeometry> geometries)
         {
-            if (geometries == null)
-            {
-                throw new ArgumentNullException(nameof(geometries));
-            }
+            Argument.AssertNotNull(geometries, nameof(geometries));
 
             Geometries = geometries.ToList();
             Type = GeoJsonObjectType.GeoJsonGeometryCollection;
@@ -37,7 +35,7 @@ namespace Azure.Maps.Routing.Models
         /// <param name="geometries">
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/> and <see cref="GeoJsonMultiPoint"/>.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </param>
         internal GeoJsonGeometryCollection(GeoJsonObjectType type, IList<GeoJsonGeometry> geometries) : base(type)
         {
@@ -48,7 +46,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary>
         /// Contains a list of valid `GeoJSON` geometry objects. **Note** that coordinates in GeoJSON are in x, y order (longitude, latitude).
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/>, <see cref="GeoJsonPolygon"/> and <see cref="GeoJsonMultiPoint"/>.
+        /// The available derived classes include <see cref="GeoJsonGeometryCollection"/>, <see cref="GeoJsonLineString"/>, <see cref="GeoJsonMultiLineString"/>, <see cref="GeoJsonMultiPoint"/>, <see cref="GeoJsonMultiPolygon"/>, <see cref="GeoJsonPoint"/> and <see cref="GeoJsonPolygon"/>.
         /// </summary>
         public IList<GeoJsonGeometry> Geometries { get; }
     }

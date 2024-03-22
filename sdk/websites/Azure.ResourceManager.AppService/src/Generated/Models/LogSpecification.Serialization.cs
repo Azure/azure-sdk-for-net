@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (BlobDuration.HasValue)
+            if (Optional.IsDefined(BlobDuration))
             {
                 writer.WritePropertyName("blobDuration"u8);
                 writer.WriteStringValue(BlobDuration.Value, "P");
             }
-            if (LogFilterPattern != null)
+            if (Optional.IsDefined(LogFilterPattern))
             {
                 writer.WritePropertyName("logFilterPattern"u8);
                 writer.WriteStringValue(LogFilterPattern);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeLogSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

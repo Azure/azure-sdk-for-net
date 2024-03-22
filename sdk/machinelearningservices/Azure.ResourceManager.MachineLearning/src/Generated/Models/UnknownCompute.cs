@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownCompute. </summary>
+    /// <summary> Unknown version of Compute. </summary>
     internal partial class UnknownCompute : MachineLearningComputeProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCompute"/>. </summary>

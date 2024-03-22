@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConfigType.ToSerialString());
-            if (KeyVaultMetaInfo != null)
+            if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
                 writer.WriteObjectValue(KeyVaultMetaInfo);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeDataLakeStoreAccountEncryptionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountEncryptionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

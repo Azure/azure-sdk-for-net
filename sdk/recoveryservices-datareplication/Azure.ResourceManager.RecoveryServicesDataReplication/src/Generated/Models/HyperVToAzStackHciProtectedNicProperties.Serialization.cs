@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NicId != null)
+            if (options.Format != "W" && Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && TargetNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (options.Format != "W" && TestNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (options.Format != "W" && SelectionTypeForFailover.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SelectionTypeForFailover))
             {
                 writer.WritePropertyName("selectionTypeForFailover"u8);
                 writer.WriteStringValue(SelectionTypeForFailover.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeHyperVToAzStackHciProtectedNicProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedNicProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

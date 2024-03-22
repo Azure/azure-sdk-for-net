@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupWeeklySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ScheduleRunDays is ChangeTrackingList<BackupDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScheduleRunDays))
             {
                 writer.WritePropertyName("scheduleRunDays"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ScheduleRunTimes is ChangeTrackingList<DateTimeOffset> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScheduleRunTimes))
             {
                 writer.WritePropertyName("scheduleRunTimes"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupWeeklySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupWeeklySchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupWeeklySchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

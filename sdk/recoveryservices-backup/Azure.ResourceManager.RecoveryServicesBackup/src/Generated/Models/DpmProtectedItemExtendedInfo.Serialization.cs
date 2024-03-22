@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ProtectableObjectLoadPath is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectableObjectLoadPath))
             {
                 writer.WritePropertyName("protectableObjectLoadPath"u8);
                 writer.WriteStartObject();
@@ -37,67 +37,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (IsProtected.HasValue)
+            if (Optional.IsDefined(IsProtected))
             {
                 writer.WritePropertyName("protected"u8);
                 writer.WriteBooleanValue(IsProtected.Value);
             }
-            if (IsPresentOnCloud.HasValue)
+            if (Optional.IsDefined(IsPresentOnCloud))
             {
                 writer.WritePropertyName("isPresentOnCloud"u8);
                 writer.WriteBooleanValue(IsPresentOnCloud.Value);
             }
-            if (LastBackupStatus != null)
+            if (Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
             }
-            if (LastRefreshedOn.HasValue)
+            if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (OldestRecoverOn.HasValue)
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (RecoveryPointCount.HasValue)
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (OnPremiseOldestRecoverOn.HasValue)
+            if (Optional.IsDefined(OnPremiseOldestRecoverOn))
             {
                 writer.WritePropertyName("onPremiseOldestRecoveryPoint"u8);
                 writer.WriteStringValue(OnPremiseOldestRecoverOn.Value, "O");
             }
-            if (OnPremiseLatestRecoverOn.HasValue)
+            if (Optional.IsDefined(OnPremiseLatestRecoverOn))
             {
                 writer.WritePropertyName("onPremiseLatestRecoveryPoint"u8);
                 writer.WriteStringValue(OnPremiseLatestRecoverOn.Value, "O");
             }
-            if (OnPremiseRecoveryPointCount.HasValue)
+            if (Optional.IsDefined(OnPremiseRecoveryPointCount))
             {
                 writer.WritePropertyName("onPremiseRecoveryPointCount"u8);
                 writer.WriteNumberValue(OnPremiseRecoveryPointCount.Value);
             }
-            if (IsCollocated.HasValue)
+            if (Optional.IsDefined(IsCollocated))
             {
                 writer.WritePropertyName("isCollocated"u8);
                 writer.WriteBooleanValue(IsCollocated.Value);
             }
-            if (ProtectionGroupName != null)
+            if (Optional.IsDefined(ProtectionGroupName))
             {
                 writer.WritePropertyName("protectionGroupName"u8);
                 writer.WriteStringValue(ProtectionGroupName);
             }
-            if (DiskStorageUsedInBytes != null)
+            if (Optional.IsDefined(DiskStorageUsedInBytes))
             {
                 writer.WritePropertyName("diskStorageUsedInBytes"u8);
                 writer.WriteStringValue(DiskStorageUsedInBytes);
             }
-            if (TotalDiskStorageSizeInBytes != null)
+            if (Optional.IsDefined(TotalDiskStorageSizeInBytes))
             {
                 writer.WritePropertyName("totalDiskStorageSizeInBytes"u8);
                 writer.WriteStringValue(TotalDiskStorageSizeInBytes);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

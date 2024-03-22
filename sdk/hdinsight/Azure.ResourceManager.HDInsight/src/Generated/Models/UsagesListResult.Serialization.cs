@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<UsagesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsagesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UsagesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<HDInsightUsage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<UsagesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsagesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UsagesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UsagesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UsagesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeUsagesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UsagesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UsagesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TestFailoverStatus != null)
+            if (Optional.IsDefined(TestFailoverStatus))
             {
                 writer.WritePropertyName("testFailoverStatus"u8);
                 writer.WriteStringValue(TestFailoverStatus);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (NetworkName != null)
+            if (Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (NetworkFriendlyName != null)
+            if (Optional.IsDefined(NetworkFriendlyName))
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (NetworkType != null)
+            if (Optional.IsDefined(NetworkType))
             {
                 writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
             }
-            if (!(ProtectedItemDetails is ChangeTrackingList<FailoverReplicationProtectedItemDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeTestFailoverJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

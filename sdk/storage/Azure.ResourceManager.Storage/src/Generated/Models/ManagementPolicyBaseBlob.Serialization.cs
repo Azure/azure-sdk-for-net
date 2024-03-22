@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyBaseBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TierToCool != null)
+            if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
-            if (TierToArchive != null)
+            if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (TierToCold != null)
+            if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
                 writer.WriteObjectValue(TierToCold);
             }
-            if (TierToHot != null)
+            if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
                 writer.WriteObjectValue(TierToHot);
             }
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
-            if (EnableAutoTierToHotFromCool.HasValue)
+            if (Optional.IsDefined(EnableAutoTierToHotFromCool))
             {
                 writer.WritePropertyName("enableAutoTierToHotFromCool"u8);
                 writer.WriteBooleanValue(EnableAutoTierToHotFromCool.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyBaseBlob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeManagementPolicyBaseBlob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyBaseBlob)} does not support reading '{options.Format}' format.");
             }
         }
 

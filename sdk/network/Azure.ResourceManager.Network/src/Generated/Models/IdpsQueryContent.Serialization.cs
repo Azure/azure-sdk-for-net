@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Filters is ChangeTrackingList<IdpsQueryFilterItems> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Search != null)
+            if (Optional.IsDefined(Search))
             {
                 writer.WritePropertyName("search"u8);
                 writer.WriteStringValue(Search);
             }
-            if (OrderBy != null)
+            if (Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteObjectValue(OrderBy);
             }
-            if (ResultsPerPage.HasValue)
+            if (Optional.IsDefined(ResultsPerPage))
             {
                 writer.WritePropertyName("resultsPerPage"u8);
                 writer.WriteNumberValue(ResultsPerPage.Value);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(Skip.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIdpsQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceRequests != null)
+            if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
                 writer.WriteObjectValue(ResourceRequests);
             }
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(AddonConfigs is ChangeTrackingDictionary<string, IDictionary<string, BinaryData>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AddonConfigs))
             {
                 writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
@@ -76,27 +76,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (LivenessProbe != null)
+            if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
                 writer.WriteObjectValue(LivenessProbe);
             }
-            if (ReadinessProbe != null)
+            if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
                 writer.WriteObjectValue(ReadinessProbe);
             }
-            if (StartupProbe != null)
+            if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
                 writer.WriteObjectValue(StartupProbe);
             }
-            if (TerminationGracePeriodInSeconds.HasValue)
+            if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodInSeconds.Value);
             }
-            if (ContainerProbeSettings != null)
+            if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
                 writer.WriteObjectValue(ContainerProbeSettings);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformDeploymentSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

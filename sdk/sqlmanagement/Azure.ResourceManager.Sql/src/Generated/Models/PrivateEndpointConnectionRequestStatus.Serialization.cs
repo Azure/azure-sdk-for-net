@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrivateLinkServiceId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
                 writer.WriteStringValue(PrivateLinkServiceId);
             }
-            if (options.Format != "W" && PrivateEndpointConnectionName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnectionName))
             {
                 writer.WritePropertyName("privateEndpointConnectionName"u8);
                 writer.WriteStringValue(PrivateEndpointConnectionName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionRequestStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializePrivateEndpointConnectionRequestStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionRequestStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

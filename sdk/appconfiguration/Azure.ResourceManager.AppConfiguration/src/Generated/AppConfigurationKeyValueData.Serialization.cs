@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.AppConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +42,49 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Key != null)
+            if (options.Format != "W" && Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && IsLocked.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsLocked))
             {
                 writer.WritePropertyName("locked"u8);
                 writer.WriteBooleanValue(IsLocked.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.AppConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.AppConfiguration
                         return DeserializeAppConfigurationKeyValueData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationKeyValueData)} does not support reading '{options.Format}' format.");
             }
         }
 

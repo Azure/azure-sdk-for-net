@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(QuotaId);
             writer.WritePropertyName("effect"u8);
             writer.WriteStringValue(Effect.ToString());
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceProviderCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

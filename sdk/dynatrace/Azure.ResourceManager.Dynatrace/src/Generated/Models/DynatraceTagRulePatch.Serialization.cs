@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LogRules != null)
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (MetricRules != null)
+            if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceTagRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceTagRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

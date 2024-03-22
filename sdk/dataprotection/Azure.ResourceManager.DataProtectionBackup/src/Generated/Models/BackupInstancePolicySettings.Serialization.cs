@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstancePolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DataStoreParametersList is ChangeTrackingList<DataStoreSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataStoreParametersList))
             {
                 writer.WritePropertyName("dataStoreParametersList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackupDataSourceParametersList is ChangeTrackingList<BackupDataSourceSettings> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BackupDataSourceParametersList))
             {
                 writer.WritePropertyName("backupDatasourceParametersList"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstancePolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupInstancePolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

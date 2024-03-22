@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                         return DeserializeDeviceProvisioningServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

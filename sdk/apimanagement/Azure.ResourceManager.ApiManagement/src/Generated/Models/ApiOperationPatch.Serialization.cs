@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TemplateParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TemplateParameters))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Request != null)
+            if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (!(Responses is ChangeTrackingList<ResponseContract> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Responses))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Policies != null)
+            if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStringValue(Policies);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (UriTemplate != null)
+            if (Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiOperationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

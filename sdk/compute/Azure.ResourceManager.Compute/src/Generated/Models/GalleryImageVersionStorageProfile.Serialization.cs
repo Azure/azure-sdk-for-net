@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GallerySource != null)
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteObjectValue(GallerySource);
             }
-            if (OSDiskImage != null)
+            if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
                 writer.WriteObjectValue(OSDiskImage);
             }
-            if (!(DataDiskImages is ChangeTrackingList<GalleryDataDiskImage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskImages))
             {
                 writer.WritePropertyName("dataDiskImages"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryImageVersionStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Bus.HasValue)
+            if (Optional.IsDefined(Bus))
             {
                 writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
-            if (Lun.HasValue)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (BusType != null)
+            if (Optional.IsDefined(BusType))
             {
                 writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
-            if (VhdType != null)
+            if (Optional.IsDefined(VhdType))
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (StorageQoSPolicy != null)
+            if (Optional.IsDefined(StorageQoSPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeVirtualDiskUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDiskUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

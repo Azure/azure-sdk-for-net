@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnterpriseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SaasSubscriptionDetails != null)
+            if (Optional.IsDefined(SaasSubscriptionDetails))
             {
                 writer.WritePropertyName("saasSubscriptionDetails"u8);
                 writer.WriteObjectValue(SaasSubscriptionDetails);
             }
-            if (MarketplaceTrialQuota != null)
+            if (Optional.IsDefined(MarketplaceTrialQuota))
             {
                 writer.WritePropertyName("marketplaceTrialQuota"u8);
                 writer.WriteObjectValue(MarketplaceTrialQuota);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnterpriseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeEnterpriseDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnterpriseDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

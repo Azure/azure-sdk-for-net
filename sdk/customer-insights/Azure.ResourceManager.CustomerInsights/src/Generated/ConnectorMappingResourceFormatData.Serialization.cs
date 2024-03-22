@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,84 +43,84 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ConnectorName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectorName))
             {
                 writer.WritePropertyName("connectorName"u8);
                 writer.WriteStringValue(ConnectorName);
             }
-            if (ConnectorType.HasValue)
+            if (Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (options.Format != "W" && LastModified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (EntityType.HasValue)
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (EntityTypeName != null)
+            if (Optional.IsDefined(EntityTypeName))
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (options.Format != "W" && ConnectorMappingName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectorMappingName))
             {
                 writer.WritePropertyName("connectorMappingName"u8);
                 writer.WriteStringValue(ConnectorMappingName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && DataFormatId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataFormatId))
             {
                 writer.WritePropertyName("dataFormatId"u8);
                 writer.WriteStringValue(DataFormatId);
             }
-            if (MappingProperties != null)
+            if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
                 writer.WriteObjectValue(MappingProperties);
             }
-            if (options.Format != "W" && NextRunOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextRunOn))
             {
                 writer.WritePropertyName("nextRunTime"u8);
                 writer.WriteStringValue(NextRunOn.Value, "O");
             }
-            if (options.Format != "W" && RunId != null)
+            if (options.Format != "W" && Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeConnectorMappingResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

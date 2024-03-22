@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalWorkspacesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Workspace != null)
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (WorkspaceType.HasValue)
+            if (Optional.IsDefined(WorkspaceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WorkspaceType.Value.ToString());
             }
-            if (!(DataTypes is ChangeTrackingList<AdditionalWorkspaceDataType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalWorkspacesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAdditionalWorkspacesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalWorkspacesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

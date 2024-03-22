@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (DeviceFamily != null)
+            if (Optional.IsDefined(DeviceFamily))
             {
                 writer.WritePropertyName("deviceFamily"u8);
                 writer.WriteStringValue(DeviceFamily);
             }
-            if (FirmwareVersion != null)
+            if (Optional.IsDefined(FirmwareVersion))
             {
                 writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnDeviceScriptContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support reading '{options.Format}' format.");
             }
         }
 

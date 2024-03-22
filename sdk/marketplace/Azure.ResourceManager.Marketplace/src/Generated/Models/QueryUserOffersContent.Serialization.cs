@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryUserOffersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(OfferIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OfferIds))
             {
                 writer.WritePropertyName("offerIds"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SubscriptionIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionIds))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryUserOffersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeQueryUserOffersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryUserOffersContent)} does not support reading '{options.Format}' format.");
             }
         }
 

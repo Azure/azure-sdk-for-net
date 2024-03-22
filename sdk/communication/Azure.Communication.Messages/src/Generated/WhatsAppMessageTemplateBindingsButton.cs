@@ -51,14 +51,8 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <exception cref="ArgumentNullException"> <paramref name="subType"/> or <paramref name="refValue"/> is null. </exception>
         public WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
         {
-            if (subType == null)
-            {
-                throw new ArgumentNullException(nameof(subType));
-            }
-            if (refValue == null)
-            {
-                throw new ArgumentNullException(nameof(refValue));
-            }
+            Argument.AssertNotNull(subType, nameof(subType));
+            Argument.AssertNotNull(refValue, nameof(refValue));
 
             SubType = subType;
             RefValue = refValue;

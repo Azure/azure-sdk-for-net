@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,79 +61,79 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteObjectValue(Host);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteObjectValue(Port);
             }
-            if (ServerType.HasValue)
+            if (Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
-            if (ThriftTransportProtocol.HasValue)
+            if (Optional.IsDefined(ThriftTransportProtocol))
             {
                 writer.WritePropertyName("thriftTransportProtocol"u8);
                 writer.WriteStringValue(ThriftTransportProtocol.Value.ToString());
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (ServiceDiscoveryMode != null)
+            if (Optional.IsDefined(ServiceDiscoveryMode))
             {
                 writer.WritePropertyName("serviceDiscoveryMode"u8);
                 writer.WriteObjectValue(ServiceDiscoveryMode);
             }
-            if (ZooKeeperNameSpace != null)
+            if (Optional.IsDefined(ZooKeeperNameSpace))
             {
                 writer.WritePropertyName("zooKeeperNameSpace"u8);
                 writer.WriteObjectValue(ZooKeeperNameSpace);
             }
-            if (UseNativeQuery != null)
+            if (Optional.IsDefined(UseNativeQuery))
             {
                 writer.WritePropertyName("useNativeQuery"u8);
                 writer.WriteObjectValue(UseNativeQuery);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (HttpPath != null)
+            if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
                 writer.WriteObjectValue(HttpPath);
             }
-            if (EnableSsl != null)
+            if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
                 writer.WriteObjectValue(EnableSsl);
             }
-            if (TrustedCertPath != null)
+            if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
                 writer.WriteObjectValue(TrustedCertPath);
             }
-            if (UseSystemTrustStore != null)
+            if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue(UseSystemTrustStore);
             }
-            if (AllowHostNameCNMismatch != null)
+            if (Optional.IsDefined(AllowHostNameCNMismatch))
             {
                 writer.WritePropertyName("allowHostNameCNMismatch"u8);
                 writer.WriteObjectValue(AllowHostNameCNMismatch);
             }
-            if (AllowSelfSignedServerCert != null)
+            if (Optional.IsDefined(AllowSelfSignedServerCert))
             {
                 writer.WritePropertyName("allowSelfSignedServerCert"u8);
                 writer.WriteObjectValue(AllowSelfSignedServerCert);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DiskRestorePoints is ChangeTrackingList<DiskRestorePointInstanceView> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskRestorePoints))
             {
                 writer.WritePropertyName("diskRestorePoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRestorePointInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

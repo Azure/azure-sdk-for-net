@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDimensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDimensions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Length.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Length))
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
             }
-            if (options.Format != "W" && Height.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (options.Format != "W" && Width.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (options.Format != "W" && LengthHeightUnit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LengthHeightUnit))
             {
                 writer.WritePropertyName("lengthHeightUnit"u8);
                 writer.WriteStringValue(LengthHeightUnit.Value.ToString());
             }
-            if (options.Format != "W" && Weight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (options.Format != "W" && Depth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Depth))
             {
                 writer.WritePropertyName("depth"u8);
                 writer.WriteNumberValue(Depth.Value);
             }
-            if (options.Format != "W" && WeightUnit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WeightUnit))
             {
                 writer.WritePropertyName("weightUnit"u8);
                 writer.WriteStringValue(WeightUnit.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDimensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDimensions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductDimensions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDimensions)} does not support reading '{options.Format}' format.");
             }
         }
 

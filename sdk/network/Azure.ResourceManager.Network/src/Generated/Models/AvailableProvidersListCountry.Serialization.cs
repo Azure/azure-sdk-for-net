@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListCountry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CountryName != null)
+            if (Optional.IsDefined(CountryName))
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(States is ChangeTrackingList<AvailableProvidersListState> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(States))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListCountry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAvailableProvidersListCountry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListCountry)} does not support reading '{options.Format}' format.");
             }
         }
 

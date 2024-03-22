@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstanceErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<SapVirtualInstanceErrorDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstanceErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapVirtualInstanceErrorDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapVirtualInstanceErrorDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

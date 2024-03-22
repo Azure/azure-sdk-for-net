@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(ExportBlobContainerUri.AbsoluteUri);
             writer.WritePropertyName("excludeKeys"u8);
             writer.WriteBooleanValue(ExcludeKeys);
-            if (ExportBlobName != null)
+            if (Optional.IsDefined(ExportBlobName))
             {
                 writer.WritePropertyName("exportBlobName"u8);
                 writer.WriteStringValue(ExportBlobName);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (IncludeConfigurations.HasValue)
+            if (Optional.IsDefined(IncludeConfigurations))
             {
                 writer.WritePropertyName("includeConfigurations"u8);
                 writer.WriteBooleanValue(IncludeConfigurations.Value);
             }
-            if (ConfigurationsBlobName != null)
+            if (Optional.IsDefined(ConfigurationsBlobName))
             {
                 writer.WritePropertyName("configurationsBlobName"u8);
                 writer.WriteStringValue(ConfigurationsBlobName);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDevicesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeExportDevicesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDevicesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

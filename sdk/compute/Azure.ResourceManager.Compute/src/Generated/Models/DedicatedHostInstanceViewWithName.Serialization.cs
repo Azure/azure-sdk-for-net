@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && AssetId != null)
+            if (options.Format != "W" && Optional.IsDefined(AssetId))
             {
                 writer.WritePropertyName("assetId"u8);
                 writer.WriteStringValue(AssetId);
             }
-            if (AvailableCapacity != null)
+            if (Optional.IsDefined(AvailableCapacity))
             {
                 writer.WritePropertyName("availableCapacity"u8);
                 writer.WriteObjectValue(AvailableCapacity);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDedicatedHostInstanceViewWithName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support reading '{options.Format}' format.");
             }
         }
 

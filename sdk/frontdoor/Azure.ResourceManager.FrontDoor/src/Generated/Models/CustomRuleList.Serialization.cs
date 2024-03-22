@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRuleList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRuleList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRuleList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Rules is ChangeTrackingList<WebApplicationCustomRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRuleList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRuleList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRuleList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomRuleList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRuleList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeCustomRuleList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomRuleList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRuleList)} does not support reading '{options.Format}' format.");
             }
         }
 

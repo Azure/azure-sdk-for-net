@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             JsonSerializer.Serialize(writer, ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,39 +59,39 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (CloudId != null)
+            if (Optional.IsDefined(CloudId))
             {
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId);
             }
-            if (TemplateId != null)
+            if (Optional.IsDefined(TemplateId))
             {
                 writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
             }
-            if (CheckpointType != null)
+            if (Optional.IsDefined(CheckpointType))
             {
                 writer.WritePropertyName("checkpointType"u8);
                 writer.WriteStringValue(CheckpointType);
             }
-            if (!(Checkpoints is ChangeTrackingList<Checkpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Checkpoints))
             {
                 writer.WritePropertyName("checkpoints"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (!(AvailabilitySets is ChangeTrackingList<AvailabilitySetListItem> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilitySets))
             {
                 writer.WritePropertyName("availabilitySets"u8);
                 writer.WriteStartArray();
@@ -111,47 +111,47 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
                 writer.WriteEndArray();
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
             }
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Uuid != null)
+            if (Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Generation.HasValue)
+            if (Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteNumberValue(Generation.Value);
             }
-            if (options.Format != "W" && PowerState != null)
+            if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.ArcScVmm
                         return DeserializeScVmmVirtualMachineData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support reading '{options.Format}' format.");
             }
         }
 

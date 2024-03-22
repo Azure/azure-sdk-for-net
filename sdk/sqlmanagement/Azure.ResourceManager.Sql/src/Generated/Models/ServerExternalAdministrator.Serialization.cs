@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerExternalAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AdministratorType.HasValue)
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Sid.HasValue)
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsAzureADOnlyAuthenticationEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication"u8);
                 writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerExternalAdministrator>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeServerExternalAdministrator(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerExternalAdministrator)} does not support reading '{options.Format}' format.");
             }
         }
 

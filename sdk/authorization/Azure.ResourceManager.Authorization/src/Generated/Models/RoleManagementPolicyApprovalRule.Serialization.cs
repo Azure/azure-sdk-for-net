@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyApprovalRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("setting"u8);
                 writer.WriteObjectValue(Settings);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyApprovalRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleManagementPolicyApprovalRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyApprovalRule)} does not support reading '{options.Format}' format.");
             }
         }
 

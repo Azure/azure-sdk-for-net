@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
             }
-            if (PartitionUpperBound != null)
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
                 JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
-            if (PartitionLowerBound != null)
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
-            if (MaxPartitionsNumber != null)
+            if (Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
                 JsonSerializer.Serialize(writer, MaxPartitionsNumber);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapTablePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSapTablePartitionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapTablePartitionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

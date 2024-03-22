@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -25,26 +24,26 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,34 +71,34 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ImmutableId != null)
+            if (options.Format != "W" && Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
             }
-            if (DataCollectionEndpointId != null)
+            if (Optional.IsDefined(DataCollectionEndpointId))
             {
                 writer.WritePropertyName("dataCollectionEndpointId"u8);
                 writer.WriteStringValue(DataCollectionEndpointId);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(StreamDeclarations is ChangeTrackingDictionary<string, DataStreamDeclaration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StreamDeclarations))
             {
                 writer.WritePropertyName("streamDeclarations"u8);
                 writer.WriteStartObject();
@@ -110,17 +109,17 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndObject();
             }
-            if (DataSources != null)
+            if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
                 writer.WriteObjectValue(DataSources);
             }
-            if (Destinations != null)
+            if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteObjectValue(Destinations);
             }
-            if (!(DataFlows is ChangeTrackingList<DataFlow> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataFlows))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,7 +397,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +413,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeDataCollectionRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

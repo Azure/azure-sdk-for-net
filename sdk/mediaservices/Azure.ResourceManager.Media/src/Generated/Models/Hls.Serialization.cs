@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<Hls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Hls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Hls)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FragmentsPerTsSegment.HasValue)
+            if (Optional.IsDefined(FragmentsPerTsSegment))
             {
                 writer.WritePropertyName("fragmentsPerTsSegment"u8);
                 writer.WriteNumberValue(FragmentsPerTsSegment.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<Hls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Hls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Hls)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Hls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Hls)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeHls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Hls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Hls)} does not support reading '{options.Format}' format.");
             }
         }
 

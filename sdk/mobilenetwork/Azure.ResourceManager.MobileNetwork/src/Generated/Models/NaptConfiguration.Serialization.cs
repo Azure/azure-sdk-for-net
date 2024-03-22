@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NaptConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (PortRange != null)
+            if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteObjectValue(PortRange);
             }
-            if (PortReuseHoldTime != null)
+            if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
                 writer.WriteObjectValue(PortReuseHoldTime);
             }
-            if (PinholeLimits.HasValue)
+            if (Optional.IsDefined(PinholeLimits))
             {
                 writer.WritePropertyName("pinholeLimits"u8);
                 writer.WriteNumberValue(PinholeLimits.Value);
             }
-            if (PinholeTimeouts != null)
+            if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NaptConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeNaptConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NaptConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

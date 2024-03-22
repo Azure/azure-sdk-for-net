@@ -24,26 +24,26 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,29 +71,29 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DefaultHostname != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultHostname))
             {
                 writer.WritePropertyName("defaultHostname"u8);
                 writer.WriteStringValue(DefaultHostname);
             }
-            if (RepositoryUri != null)
+            if (Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (options.Format != "W" && !(CustomDomains is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (RepositoryToken != null)
+            if (Optional.IsDefined(RepositoryToken))
             {
                 writer.WritePropertyName("repositoryToken"u8);
                 writer.WriteStringValue(RepositoryToken);
             }
-            if (BuildProperties != null)
+            if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
                 writer.WriteObjectValue(BuildProperties);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -123,32 +123,32 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (StagingEnvironmentPolicy.HasValue)
+            if (Optional.IsDefined(StagingEnvironmentPolicy))
             {
                 writer.WritePropertyName("stagingEnvironmentPolicy"u8);
                 writer.WriteStringValue(StagingEnvironmentPolicy.Value.ToSerialString());
             }
-            if (AllowConfigFileUpdates.HasValue)
+            if (Optional.IsDefined(AllowConfigFileUpdates))
             {
                 writer.WritePropertyName("allowConfigFileUpdates"u8);
                 writer.WriteBooleanValue(AllowConfigFileUpdates.Value);
             }
-            if (TemplateProperties != null)
+            if (Optional.IsDefined(TemplateProperties))
             {
                 writer.WritePropertyName("templateProperties"u8);
                 writer.WriteObjectValue(TemplateProperties);
             }
-            if (options.Format != "W" && ContentDistributionEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentDistributionEndpoint))
             {
                 writer.WritePropertyName("contentDistributionEndpoint"u8);
                 writer.WriteStringValue(ContentDistributionEndpoint);
             }
-            if (options.Format != "W" && KeyVaultReferenceIdentity != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultReferenceIdentity))
             {
                 writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                 writer.WriteStringValue(KeyVaultReferenceIdentity);
             }
-            if (options.Format != "W" && !(UserProvidedFunctionApps is ChangeTrackingList<StaticSiteUserProvidedFunctionAppData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UserProvidedFunctionApps))
             {
                 writer.WritePropertyName("userProvidedFunctionApps"u8);
                 writer.WriteStartArray();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Provider != null)
+            if (options.Format != "W" && Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeStaticSiteData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteData)} does not support reading '{options.Format}' format.");
             }
         }
 

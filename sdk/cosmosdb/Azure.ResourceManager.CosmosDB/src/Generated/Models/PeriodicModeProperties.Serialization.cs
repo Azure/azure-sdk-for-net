@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicModeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupIntervalInMinutes.HasValue)
+            if (Optional.IsDefined(BackupIntervalInMinutes))
             {
                 writer.WritePropertyName("backupIntervalInMinutes"u8);
                 writer.WriteNumberValue(BackupIntervalInMinutes.Value);
             }
-            if (BackupRetentionIntervalInHours.HasValue)
+            if (Optional.IsDefined(BackupRetentionIntervalInHours))
             {
                 writer.WritePropertyName("backupRetentionIntervalInHours"u8);
                 writer.WriteNumberValue(BackupRetentionIntervalInHours.Value);
             }
-            if (BackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicModeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializePeriodicModeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

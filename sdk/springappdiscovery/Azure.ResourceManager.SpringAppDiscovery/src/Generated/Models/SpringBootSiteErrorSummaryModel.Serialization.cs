@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteErrorSummaryModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AffectedResourceType != null)
+            if (Optional.IsDefined(AffectedResourceType))
             {
                 writer.WritePropertyName("affectedResourceType"u8);
                 writer.WriteStringValue(AffectedResourceType);
             }
-            if (AffectedObjectsCount.HasValue)
+            if (Optional.IsDefined(AffectedObjectsCount))
             {
                 writer.WritePropertyName("affectedObjectsCount"u8);
                 writer.WriteNumberValue(AffectedObjectsCount.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteErrorSummaryModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteErrorSummaryModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteErrorSummaryModel)} does not support reading '{options.Format}' format.");
             }
         }
 

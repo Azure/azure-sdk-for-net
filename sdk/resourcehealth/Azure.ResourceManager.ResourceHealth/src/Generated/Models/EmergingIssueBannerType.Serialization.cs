@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueBannerType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Cloud != null)
+            if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueBannerType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeEmergingIssueBannerType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueBannerType)} does not support reading '{options.Format}' format.");
             }
         }
 

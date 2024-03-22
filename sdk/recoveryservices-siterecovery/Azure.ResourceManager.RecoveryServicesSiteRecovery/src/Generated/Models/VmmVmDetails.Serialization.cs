@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmmVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceItemId != null)
+            if (Optional.IsDefined(SourceItemId))
             {
                 writer.WritePropertyName("sourceItemId"u8);
                 writer.WriteStringValue(SourceItemId);
             }
-            if (Generation != null)
+            if (Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (OSDetails != null)
+            if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("osDetails"u8);
                 writer.WriteObjectValue(OSDetails);
             }
-            if (!(DiskDetails is ChangeTrackingList<SiteRecoveryDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskDetails))
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (HasPhysicalDisk.HasValue)
+            if (Optional.IsDefined(HasPhysicalDisk))
             {
                 writer.WritePropertyName("hasPhysicalDisk"u8);
                 writer.WriteStringValue(HasPhysicalDisk.Value.ToString());
             }
-            if (HasFibreChannelAdapter.HasValue)
+            if (Optional.IsDefined(HasFibreChannelAdapter))
             {
                 writer.WritePropertyName("hasFibreChannelAdapter"u8);
                 writer.WriteStringValue(HasFibreChannelAdapter.Value.ToString());
             }
-            if (HasSharedVhd.HasValue)
+            if (Optional.IsDefined(HasSharedVhd))
             {
                 writer.WritePropertyName("hasSharedVhd"u8);
                 writer.WriteStringValue(HasSharedVhd.Value.ToString());
             }
-            if (HyperVHostId != null)
+            if (Optional.IsDefined(HyperVHostId))
             {
                 writer.WritePropertyName("hyperVHostId"u8);
                 writer.WriteStringValue(HyperVHostId);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmmVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmmVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmmVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVmmVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmmVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

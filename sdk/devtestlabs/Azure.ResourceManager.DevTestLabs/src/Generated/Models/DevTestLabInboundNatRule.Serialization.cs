@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabInboundNatRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TransportProtocol.HasValue)
+            if (Optional.IsDefined(TransportProtocol))
             {
                 writer.WritePropertyName("transportProtocol"u8);
                 writer.WriteStringValue(TransportProtocol.Value.ToString());
             }
-            if (FrontendPort.HasValue)
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (BackendPort.HasValue)
+            if (Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabInboundNatRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabInboundNatRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabInboundNatRule)} does not support reading '{options.Format}' format.");
             }
         }
 

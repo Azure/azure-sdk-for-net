@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (RetryAttempts.HasValue)
+            if (Optional.IsDefined(RetryAttempts))
             {
                 writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
-            if (InitialRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(InitialRetryIntervalSeconds))
             {
                 writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
-            if (MaximumRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
             {
                 writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
-            if (RetryIntervalBackoffMultiplier.HasValue)
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
             {
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeJobStepExecutionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

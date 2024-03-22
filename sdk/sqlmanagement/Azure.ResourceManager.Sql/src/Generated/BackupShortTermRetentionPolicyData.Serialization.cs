@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<BackupShortTermRetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RetentionDays.HasValue)
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (DiffBackupIntervalInHours.HasValue)
+            if (Optional.IsDefined(DiffBackupIntervalInHours))
             {
                 writer.WritePropertyName("diffBackupIntervalInHours"u8);
                 writer.WriteNumberValue(DiffBackupIntervalInHours.Value.ToSerialInt32());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<BackupShortTermRetentionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeBackupShortTermRetentionPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupShortTermRetentionPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

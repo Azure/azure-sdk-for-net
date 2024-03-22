@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeServicePrincipalInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

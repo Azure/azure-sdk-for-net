@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmGeoReplicatedRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsPrimary.HasValue)
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmGeoReplicatedRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeManagedHsmGeoReplicatedRegion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmGeoReplicatedRegion)} does not support reading '{options.Format}' format.");
             }
         }
 

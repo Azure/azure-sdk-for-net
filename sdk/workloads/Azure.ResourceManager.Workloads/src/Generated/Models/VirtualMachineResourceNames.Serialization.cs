@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OSDiskName != null)
+            if (Optional.IsDefined(OSDiskName))
             {
                 writer.WritePropertyName("osDiskName"u8);
                 writer.WriteStringValue(OSDiskName);
             }
-            if (!(DataDiskNames is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskNames))
             {
                 writer.WritePropertyName("dataDiskNames"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeVirtualMachineResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

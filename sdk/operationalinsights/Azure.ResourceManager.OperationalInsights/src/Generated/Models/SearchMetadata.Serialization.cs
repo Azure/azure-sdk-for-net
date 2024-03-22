@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -23,36 +22,36 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SearchId != null)
+            if (Optional.IsDefined(SearchId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(SearchId);
             }
-            if (ResultType != null)
+            if (Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType);
             }
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(CoreSummaries is ChangeTrackingList<OperationalInsightsSearchCoreSummary> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CoreSummaries))
             {
                 writer.WritePropertyName("coreSummaries"u8);
                 writer.WriteStartArray();
@@ -62,27 +61,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (LastUpdated.HasValue)
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Sort is ChangeTrackingList<SearchSort> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
                 writer.WriteStartArray();
@@ -92,32 +91,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RequestTime.HasValue)
+            if (Optional.IsDefined(RequestTime))
             {
                 writer.WritePropertyName("requestTime"u8);
                 writer.WriteNumberValue(RequestTime.Value);
             }
-            if (AggregatedValueField != null)
+            if (Optional.IsDefined(AggregatedValueField))
             {
                 writer.WritePropertyName("aggregatedValueField"u8);
                 writer.WriteStringValue(AggregatedValueField);
             }
-            if (AggregatedGroupingFields != null)
+            if (Optional.IsDefined(AggregatedGroupingFields))
             {
                 writer.WritePropertyName("aggregatedGroupingFields"u8);
                 writer.WriteStringValue(AggregatedGroupingFields);
             }
-            if (Sum.HasValue)
+            if (Optional.IsDefined(Sum))
             {
                 writer.WritePropertyName("sum"u8);
                 writer.WriteNumberValue(Sum.Value);
             }
-            if (Max.HasValue)
+            if (Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -356,7 +355,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeSearchMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

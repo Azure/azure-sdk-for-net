@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradePolicyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ThroughputPolicy != null)
+            if (Optional.IsDefined(ThroughputPolicy))
             {
                 writer.WritePropertyName("throughputPolicy"u8);
                 writer.WriteObjectValue(ThroughputPolicy);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoUpgradePolicyResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAutoUpgradePolicyResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoUpgradePolicyResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

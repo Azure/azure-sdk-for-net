@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -82,6 +81,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override Task CompleteTransferAsync(
             bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);

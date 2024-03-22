@@ -22,56 +22,61 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RestoreFromBackupId != null)
+            if (Optional.IsDefined(RestoreFromBackupId))
             {
                 writer.WritePropertyName("restoreFromBackupId"u8);
                 writer.WriteStringValue(RestoreFromBackupId);
             }
-            if (DelegatedManagementSubnetId != null)
+            if (Optional.IsDefined(DelegatedManagementSubnetId))
             {
                 writer.WritePropertyName("delegatedManagementSubnetId"u8);
                 writer.WriteStringValue(DelegatedManagementSubnetId);
             }
-            if (CassandraVersion != null)
+            if (Optional.IsDefined(CassandraVersion))
             {
                 writer.WritePropertyName("cassandraVersion"u8);
                 writer.WriteStringValue(CassandraVersion);
             }
-            if (ClusterNameOverride != null)
+            if (Optional.IsDefined(ClusterNameOverride))
             {
                 writer.WritePropertyName("clusterNameOverride"u8);
                 writer.WriteStringValue(ClusterNameOverride);
             }
-            if (AuthenticationMethod.HasValue)
+            if (Optional.IsDefined(AuthenticationMethod))
             {
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (InitialCassandraAdminPassword != null)
+            if (Optional.IsDefined(InitialCassandraAdminPassword))
             {
                 writer.WritePropertyName("initialCassandraAdminPassword"u8);
                 writer.WriteStringValue(InitialCassandraAdminPassword);
             }
-            if (PrometheusEndpoint != null)
+            if (Optional.IsDefined(PrometheusEndpoint))
             {
                 writer.WritePropertyName("prometheusEndpoint"u8);
                 writer.WriteObjectValue(PrometheusEndpoint);
             }
-            if (IsRepairEnabled.HasValue)
+            if (Optional.IsDefined(IsRepairEnabled))
             {
                 writer.WritePropertyName("repairEnabled"u8);
                 writer.WriteBooleanValue(IsRepairEnabled.Value);
             }
-            if (!(ClientCertificates is ChangeTrackingList<CassandraCertificate> collection && collection.IsUndefined))
+            if (Optional.IsDefined(AutoReplicate))
+            {
+                writer.WritePropertyName("autoReplicate"u8);
+                writer.WriteStringValue(AutoReplicate.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ClientCertificates))
             {
                 writer.WritePropertyName("clientCertificates"u8);
                 writer.WriteStartArray();
@@ -81,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExternalGossipCertificates is ChangeTrackingList<CassandraCertificate> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalGossipCertificates))
             {
                 writer.WritePropertyName("externalGossipCertificates"u8);
                 writer.WriteStartArray();
@@ -91,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(GossipCertificates is ChangeTrackingList<CassandraCertificate> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GossipCertificates))
             {
                 writer.WritePropertyName("gossipCertificates"u8);
                 writer.WriteStartArray();
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExternalSeedNodes is ChangeTrackingList<CassandraDataCenterSeedNode> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalSeedNodes))
             {
                 writer.WritePropertyName("externalSeedNodes"u8);
                 writer.WriteStartArray();
@@ -111,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SeedNodes is ChangeTrackingList<CassandraDataCenterSeedNode> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SeedNodes))
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
@@ -121,32 +126,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (HoursBetweenBackups.HasValue)
+            if (Optional.IsCollectionDefined(ExternalDataCenters))
+            {
+                writer.WritePropertyName("externalDataCenters"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExternalDataCenters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HoursBetweenBackups))
             {
                 writer.WritePropertyName("hoursBetweenBackups"u8);
                 writer.WriteNumberValue(HoursBetweenBackups.Value);
             }
-            if (IsDeallocated.HasValue)
+            if (Optional.IsDefined(IsDeallocated))
             {
                 writer.WritePropertyName("deallocated"u8);
                 writer.WriteBooleanValue(IsDeallocated.Value);
             }
-            if (IsCassandraAuditLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsCassandraAuditLoggingEnabled))
             {
                 writer.WritePropertyName("cassandraAuditLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsCassandraAuditLoggingEnabled.Value);
             }
-            if (ClusterType.HasValue)
+            if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
                 writer.WriteStringValue(ClusterType.Value.ToString());
             }
-            if (ProvisionError != null)
+            if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
             }
-            if (!(Extensions is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -156,7 +171,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackupSchedules is ChangeTrackingList<CassandraClusterBackupSchedule> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(BackupSchedules))
             {
                 writer.WritePropertyName("backupSchedules"u8);
                 writer.WriteStartArray();
@@ -165,6 +180,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ScheduledEventStrategy))
+            {
+                writer.WritePropertyName("scheduledEventStrategy"u8);
+                writer.WriteStringValue(ScheduledEventStrategy.Value.ToString());
+            }
+            if (Optional.IsDefined(AzureConnectionMethod))
+            {
+                writer.WritePropertyName("azureConnectionMethod"u8);
+                writer.WriteStringValue(AzureConnectionMethod.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkResourceId))
+            {
+                writer.WritePropertyName("privateLinkResourceId"u8);
+                writer.WriteStringValue(PrivateLinkResourceId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -189,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,11 +243,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string initialCassandraAdminPassword = default;
             CassandraDataCenterSeedNode prometheusEndpoint = default;
             bool? repairEnabled = default;
+            AutoReplicate? autoReplicate = default;
             IList<CassandraCertificate> clientCertificates = default;
             IList<CassandraCertificate> externalGossipCertificates = default;
             IReadOnlyList<CassandraCertificate> gossipCertificates = default;
             IList<CassandraDataCenterSeedNode> externalSeedNodes = default;
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
+            IList<string> externalDataCenters = default;
             int? hoursBetweenBackups = default;
             bool? deallocated = default;
             bool? cassandraAuditLoggingEnabled = default;
@@ -225,6 +257,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CassandraError provisionError = default;
             IList<string> extensions = default;
             IList<CassandraClusterBackupSchedule> backupSchedules = default;
+            ScheduledEventStrategy? scheduledEventStrategy = default;
+            AzureConnectionType? azureConnectionMethod = default;
+            string privateLinkResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,6 +327,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     repairEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("autoReplicate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoReplicate = new AutoReplicate(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clientCertificates"u8))
@@ -362,6 +406,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item, options));
                     }
                     seedNodes = array;
+                    continue;
+                }
+                if (property.NameEquals("externalDataCenters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    externalDataCenters = array;
                     continue;
                 }
                 if (property.NameEquals("hoursBetweenBackups"u8))
@@ -437,6 +495,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupSchedules = array;
                     continue;
                 }
+                if (property.NameEquals("scheduledEventStrategy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledEventStrategy = new ScheduledEventStrategy(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("azureConnectionMethod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureConnectionMethod = new AzureConnectionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("privateLinkResourceId"u8))
+                {
+                    privateLinkResourceId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -453,11 +534,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 initialCassandraAdminPassword,
                 prometheusEndpoint,
                 repairEnabled,
+                autoReplicate,
                 clientCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 externalGossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 gossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 externalSeedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
                 seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
+                externalDataCenters ?? new ChangeTrackingList<string>(),
                 hoursBetweenBackups,
                 deallocated,
                 cassandraAuditLoggingEnabled,
@@ -465,6 +548,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 provisionError,
                 extensions ?? new ChangeTrackingList<string>(),
                 backupSchedules ?? new ChangeTrackingList<CassandraClusterBackupSchedule>(),
+                scheduledEventStrategy,
+                azureConnectionMethod,
+                privateLinkResourceId,
                 serializedAdditionalRawData);
         }
 
@@ -477,7 +563,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -493,7 +579,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

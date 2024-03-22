@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,26 +56,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("networkFabricSku"u8);
             writer.WriteStringValue(NetworkFabricSku);
-            if (options.Format != "W" && FabricVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricVersion))
             {
                 writer.WritePropertyName("fabricVersion"u8);
                 writer.WriteStringValue(FabricVersion);
             }
-            if (options.Format != "W" && !(RouterIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RouterIds))
             {
                 writer.WritePropertyName("routerIds"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("networkFabricControllerId"u8);
             writer.WriteStringValue(NetworkFabricControllerId);
-            if (RackCount.HasValue)
+            if (Optional.IsDefined(RackCount))
             {
                 writer.WritePropertyName("rackCount"u8);
                 writer.WriteNumberValue(RackCount.Value);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteNumberValue(ServerCountPerRack);
             writer.WritePropertyName("ipv4Prefix"u8);
             writer.WriteStringValue(IPv4Prefix);
-            if (IPv6Prefix != null)
+            if (Optional.IsDefined(IPv6Prefix))
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteObjectValue(TerminalServerConfiguration);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
             writer.WriteObjectValue(ManagementNetworkConfiguration);
-            if (options.Format != "W" && !(Racks is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
             {
                 writer.WritePropertyName("racks"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(L2IsolationDomains is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(L2IsolationDomains))
             {
                 writer.WritePropertyName("l2IsolationDomains"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(L3IsolationDomains is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(L3IsolationDomains))
             {
                 writer.WritePropertyName("l3IsolationDomains"u8);
                 writer.WriteStartArray();
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support reading '{options.Format}' format.");
             }
         }
 

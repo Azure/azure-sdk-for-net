@@ -17,10 +17,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="style"/> is null. </exception>
         internal TextAppearance(Style style)
         {
-            if (style == null)
-            {
-                throw new ArgumentNullException(nameof(style));
-            }
+            Argument.AssertNotNull(style, nameof(style));
 
             Style = style;
         }

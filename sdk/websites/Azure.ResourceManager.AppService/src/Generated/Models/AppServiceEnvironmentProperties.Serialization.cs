@@ -22,63 +22,63 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WritePropertyName("virtualNetwork"u8);
             writer.WriteObjectValue(VirtualNetwork);
-            if (InternalLoadBalancingMode.HasValue)
+            if (Optional.IsDefined(InternalLoadBalancingMode))
             {
                 writer.WritePropertyName("internalLoadBalancingMode"u8);
                 writer.WriteStringValue(InternalLoadBalancingMode.Value.ToString());
             }
-            if (MultiSize != null)
+            if (Optional.IsDefined(MultiSize))
             {
                 writer.WritePropertyName("multiSize"u8);
                 writer.WriteStringValue(MultiSize);
             }
-            if (options.Format != "W" && MultiRoleCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MultiRoleCount))
             {
                 writer.WritePropertyName("multiRoleCount"u8);
                 writer.WriteNumberValue(MultiRoleCount.Value);
             }
-            if (IPSslAddressCount.HasValue)
+            if (Optional.IsDefined(IPSslAddressCount))
             {
                 writer.WritePropertyName("ipsslAddressCount"u8);
                 writer.WriteNumberValue(IPSslAddressCount.Value);
             }
-            if (DnsSuffix != null)
+            if (Optional.IsDefined(DnsSuffix))
             {
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
-            if (options.Format != "W" && MaximumNumberOfMachines.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfMachines))
             {
                 writer.WritePropertyName("maximumNumberOfMachines"u8);
                 writer.WriteNumberValue(MaximumNumberOfMachines.Value);
             }
-            if (FrontEndScaleFactor.HasValue)
+            if (Optional.IsDefined(FrontEndScaleFactor))
             {
                 writer.WritePropertyName("frontEndScaleFactor"u8);
                 writer.WriteNumberValue(FrontEndScaleFactor.Value);
             }
-            if (options.Format != "W" && IsSuspended.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSuspended))
             {
                 writer.WritePropertyName("suspended"u8);
                 writer.WriteBooleanValue(IsSuspended.Value);
             }
-            if (!(ClusterSettings is ChangeTrackingList<AppServiceNameValuePair> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterSettings))
             {
                 writer.WritePropertyName("clusterSettings"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserWhitelistedIPRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserWhitelistedIPRanges))
             {
                 writer.WritePropertyName("userWhitelistedIpRanges"u8);
                 writer.WriteStartArray();
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HasLinuxWorkers.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasLinuxWorkers))
             {
                 writer.WritePropertyName("hasLinuxWorkers"u8);
                 writer.WriteBooleanValue(HasLinuxWorkers.Value);
             }
-            if (DedicatedHostCount.HasValue)
+            if (Optional.IsDefined(DedicatedHostCount))
             {
                 writer.WritePropertyName("dedicatedHostCount"u8);
                 writer.WriteNumberValue(DedicatedHostCount.Value);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceEnvironmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

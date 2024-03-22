@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelResourceApiConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ProviderName != null)
+            if (Optional.IsDefined(ProviderName))
             {
                 if (ProviderName != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("providerName");
                 }
             }
-            if (CognitiveServiceSubscriptionKey != null)
+            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (CognitiveServiceRegion != null)
+            if (Optional.IsDefined(CognitiveServiceRegion))
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (CognitiveServiceResourceId != null)
+            if (Optional.IsDefined(CognitiveServiceResourceId))
             {
                 if (CognitiveServiceResourceId != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceResourceId");
                 }
             }
-            if (DefaultLocale != null)
+            if (Optional.IsDefined(DefaultLocale))
             {
                 if (DefaultLocale != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelResourceApiConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeTelephonyChannelResourceApiConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TelephonyChannelResourceApiConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

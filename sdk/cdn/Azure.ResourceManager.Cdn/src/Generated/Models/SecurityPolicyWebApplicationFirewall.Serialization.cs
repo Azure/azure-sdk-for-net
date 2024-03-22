@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WafPolicy != null)
+            if (Optional.IsDefined(WafPolicy))
             {
                 writer.WritePropertyName("wafPolicy"u8);
                 JsonSerializer.Serialize(writer, WafPolicy);
             }
-            if (!(Associations is ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Associations))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeSecurityPolicyWebApplicationFirewall(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support reading '{options.Format}' format.");
             }
         }
 

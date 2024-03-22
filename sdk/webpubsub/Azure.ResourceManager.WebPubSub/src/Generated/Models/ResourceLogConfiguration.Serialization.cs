@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceLogConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Categories is ChangeTrackingList<ResourceLogCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceLogConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeResourceLogConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceLogConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

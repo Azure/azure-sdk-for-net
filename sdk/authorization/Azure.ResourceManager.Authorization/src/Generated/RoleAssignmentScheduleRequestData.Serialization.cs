@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,118 +43,118 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Scope != null)
+            if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (PrincipalId.HasValue)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId.Value);
             }
-            if (options.Format != "W" && PrincipalType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (RequestType.HasValue)
+            if (Optional.IsDefined(RequestType))
             {
                 writer.WritePropertyName("requestType"u8);
                 writer.WriteStringValue(RequestType.Value.ToString());
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ApprovalId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApprovalId))
             {
                 writer.WritePropertyName("approvalId"u8);
                 writer.WriteStringValue(ApprovalId);
             }
-            if (TargetRoleAssignmentScheduleId != null)
+            if (Optional.IsDefined(TargetRoleAssignmentScheduleId))
             {
                 writer.WritePropertyName("targetRoleAssignmentScheduleId"u8);
                 writer.WriteStringValue(TargetRoleAssignmentScheduleId);
             }
-            if (TargetRoleAssignmentScheduleInstanceId != null)
+            if (Optional.IsDefined(TargetRoleAssignmentScheduleInstanceId))
             {
                 writer.WritePropertyName("targetRoleAssignmentScheduleInstanceId"u8);
                 writer.WriteStringValue(TargetRoleAssignmentScheduleInstanceId);
             }
-            if (LinkedRoleEligibilityScheduleId != null)
+            if (Optional.IsDefined(LinkedRoleEligibilityScheduleId))
             {
                 writer.WritePropertyName("linkedRoleEligibilityScheduleId"u8);
                 writer.WriteStringValue(LinkedRoleEligibilityScheduleId);
             }
-            if (Justification != null)
+            if (Optional.IsDefined(Justification))
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (TicketInfo != null)
+            if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
                 writer.WriteObjectValue(TicketInfo);
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
             }
-            if (ConditionVersion != null)
+            if (Optional.IsDefined(ConditionVersion))
             {
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && RequestorId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestorId))
             {
                 writer.WritePropertyName("requestorId"u8);
                 writer.WriteStringValue(RequestorId.Value);
             }
-            if (options.Format != "W" && ExpandedProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
                 writer.WriteObjectValue(ExpandedProperties);
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
             writer.WritePropertyName("expiration"u8);
             writer.WriteStartObject();
-            if (ExpirationType.HasValue)
+            if (Optional.IsDefined(ExpirationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExpirationType.Value.ToString());
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleRequestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Authorization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Authorization
                         return DeserializeRoleAssignmentScheduleRequestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentScheduleRequestData)} does not support reading '{options.Format}' format.");
             }
         }
 

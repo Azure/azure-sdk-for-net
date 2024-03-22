@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableResultStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Progress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (options.Format != "W" && IngestedRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngestedRecords))
             {
                 writer.WritePropertyName("ingestedRecords"u8);
                 writer.WriteNumberValue(IngestedRecords.Value);
             }
-            if (options.Format != "W" && ScannedGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScannedGB))
             {
                 writer.WritePropertyName("scannedGb"u8);
                 writer.WriteNumberValue(ScannedGB.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableResultStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsTableResultStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

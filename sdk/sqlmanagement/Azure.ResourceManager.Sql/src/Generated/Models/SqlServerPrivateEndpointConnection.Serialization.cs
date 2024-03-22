@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlServerPrivateEndpointConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

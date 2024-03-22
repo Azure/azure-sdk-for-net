@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TicketNumber != null)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteStringValue(TicketNumber);
             }
-            if (TicketSystem != null)
+            if (Optional.IsDefined(TicketSystem))
             {
                 writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (ExtendedLocationReplicaCount.HasValue)
+            if (Optional.IsDefined(ExtendedLocationReplicaCount))
             {
                 writer.WritePropertyName("extendedLocationReplicaCount"u8);
                 writer.WriteNumberValue(ExtendedLocationReplicaCount.Value);
             }
-            if (GalleryStorageAccountType.HasValue)
+            if (Optional.IsDefined(GalleryStorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(GalleryStorageAccountType.Value.ToString());
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryTargetExtendedLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryTargetExtendedLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

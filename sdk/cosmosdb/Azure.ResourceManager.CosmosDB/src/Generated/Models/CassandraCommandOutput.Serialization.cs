@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCommandOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CommandOutput != null)
+            if (Optional.IsDefined(CommandOutput))
             {
                 writer.WritePropertyName("commandOutput"u8);
                 writer.WriteStringValue(CommandOutput);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCommandOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraCommandOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraCommandOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

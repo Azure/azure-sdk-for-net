@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetIPRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPMask != null)
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetIPRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusNetworkRuleSetIPRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetIPRules)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticMetricSample>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (RoleInstance != null)
+            if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
                 writer.WriteStringValue(RoleInstance);
             }
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Minimum.HasValue)
+            if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (IsAggregated.HasValue)
+            if (Optional.IsDefined(IsAggregated))
             {
                 writer.WritePropertyName("isAggregated"u8);
                 writer.WriteBooleanValue(IsAggregated.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticMetricSample>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDiagnosticMetricSample(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticMetricSample)} does not support reading '{options.Format}' format.");
             }
         }
 

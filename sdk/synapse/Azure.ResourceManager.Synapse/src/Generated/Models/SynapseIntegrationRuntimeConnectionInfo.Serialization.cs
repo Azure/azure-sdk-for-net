@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceToken))
             {
                 writer.WritePropertyName("serviceToken"u8);
                 writer.WriteStringValue(ServiceToken);
             }
-            if (options.Format != "W" && IdentityCertThumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(IdentityCertThumbprint))
             {
                 writer.WritePropertyName("identityCertThumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
 #endif
             }
-            if (options.Format != "W" && HostServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HostServiceUri))
             {
                 writer.WritePropertyName("hostServiceUri"u8);
                 writer.WriteStringValue(HostServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && PublicKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && IsIdentityCertExprired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsIdentityCertExprired))
             {
                 writer.WritePropertyName("isIdentityCertExprired"u8);
                 writer.WriteBooleanValue(IsIdentityCertExprired.Value);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseIntegrationRuntimeConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

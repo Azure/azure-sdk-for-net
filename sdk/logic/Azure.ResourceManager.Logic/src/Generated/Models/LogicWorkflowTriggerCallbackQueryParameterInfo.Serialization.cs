@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("api-version"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Sp != null)
+            if (Optional.IsDefined(Sp))
             {
                 writer.WritePropertyName("sp"u8);
                 writer.WriteStringValue(Sp);
             }
-            if (Sv != null)
+            if (Optional.IsDefined(Sv))
             {
                 writer.WritePropertyName("sv"u8);
                 writer.WriteStringValue(Sv);
             }
-            if (Sig != null)
+            if (Optional.IsDefined(Sig))
             {
                 writer.WritePropertyName("sig"u8);
                 writer.WriteStringValue(Sig);
             }
-            if (Se != null)
+            if (Optional.IsDefined(Se))
             {
                 writer.WritePropertyName("se"u8);
                 writer.WriteStringValue(Se);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

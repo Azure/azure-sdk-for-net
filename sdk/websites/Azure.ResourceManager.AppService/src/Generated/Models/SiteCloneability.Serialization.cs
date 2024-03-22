@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteCloneability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteCloneability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteCloneability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Result.HasValue)
+            if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result.Value.ToSerialString());
             }
-            if (!(BlockingFeatures is ChangeTrackingList<SiteCloneabilityCriterion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BlockingFeatures))
             {
                 writer.WritePropertyName("blockingFeatures"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UnsupportedFeatures is ChangeTrackingList<SiteCloneabilityCriterion> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UnsupportedFeatures))
             {
                 writer.WritePropertyName("unsupportedFeatures"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BlockingCharacteristics is ChangeTrackingList<SiteCloneabilityCriterion> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BlockingCharacteristics))
             {
                 writer.WritePropertyName("blockingCharacteristics"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteCloneability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteCloneability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteCloneability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteCloneability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteCloneability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSiteCloneability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteCloneability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteCloneability)} does not support reading '{options.Format}' format.");
             }
         }
 

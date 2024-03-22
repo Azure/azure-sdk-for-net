@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeStartStopSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 if (Id != null)
                 {
@@ -38,37 +38,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (options.Format != "W" && ProvisioningStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (TriggerType.HasValue)
+            if (Optional.IsDefined(TriggerType))
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (RecurrenceSchedule != null)
+            if (Optional.IsDefined(RecurrenceSchedule))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteObjectValue(RecurrenceSchedule);
             }
-            if (CronSchedule != null)
+            if (Optional.IsDefined(CronSchedule))
             {
                 writer.WritePropertyName("cron"u8);
                 writer.WriteObjectValue(CronSchedule);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeStartStopSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningComputeStartStopSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

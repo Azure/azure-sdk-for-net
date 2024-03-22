@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (BackupFileShare != null)
+            if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
                 writer.WriteObjectValue(BackupFileShare);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerSqlMISyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlServerSqlMISyncTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerSqlMISyncTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WorkspaceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId.Value);
             }
-            if (options.Format != "W" && WorkspaceName != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceName))
             {
                 writer.WritePropertyName("workspaceName"u8);
                 writer.WriteStringValue(WorkspaceName);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && AssociatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssociatedOn))
             {
                 writer.WritePropertyName("associateDate"u8);
                 writer.WriteStringValue(AssociatedOn.Value, "R");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsClusterAssociatedWorkspace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support reading '{options.Format}' format.");
             }
         }
 

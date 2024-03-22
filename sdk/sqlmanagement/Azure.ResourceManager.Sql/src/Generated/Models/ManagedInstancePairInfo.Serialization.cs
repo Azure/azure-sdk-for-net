@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePairInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryManagedInstanceId != null)
+            if (Optional.IsDefined(PrimaryManagedInstanceId))
             {
                 writer.WritePropertyName("primaryManagedInstanceId"u8);
                 writer.WriteStringValue(PrimaryManagedInstanceId);
             }
-            if (PartnerManagedInstanceId != null)
+            if (Optional.IsDefined(PartnerManagedInstanceId))
             {
                 writer.WritePropertyName("partnerManagedInstanceId"u8);
                 writer.WriteStringValue(PartnerManagedInstanceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePairInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstancePairInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

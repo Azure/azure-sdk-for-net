@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SoftDeleteSettings != null)
+            if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
                 writer.WriteObjectValue(SoftDeleteSettings);
             }
-            if (ImmutabilitySettings != null)
+            if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupVaultSecuritySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

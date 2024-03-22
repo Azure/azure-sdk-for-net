@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ImpactedService != null)
+            if (Optional.IsDefined(ImpactedService))
             {
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ImpactedRegions))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthEventImpact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventImpact)} does not support reading '{options.Format}' format.");
             }
         }
 

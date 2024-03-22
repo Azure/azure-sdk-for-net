@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReplacementKey != null)
+            if (Optional.IsDefined(ReplacementKey))
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (!(SearchResults is ChangeTrackingList<SearchResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeWebResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebResult)} does not support reading '{options.Format}' format.");
             }
         }
 

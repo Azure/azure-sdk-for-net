@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (FabricName != null)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (RemoteContainerName != null)
+            if (Optional.IsDefined(RemoteContainerName))
             {
                 writer.WritePropertyName("remoteContainerName"u8);
                 writer.WriteStringValue(RemoteContainerName);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaAzureEventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

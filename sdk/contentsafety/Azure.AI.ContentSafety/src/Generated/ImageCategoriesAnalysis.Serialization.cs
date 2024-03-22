@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -23,13 +22,13 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<ImageCategoriesAnalysis>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
@@ -57,7 +56,7 @@ namespace Azure.AI.ContentSafety
             var format = options.Format == "W" ? ((IPersistableModel<ImageCategoriesAnalysis>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +109,7 @@ namespace Azure.AI.ContentSafety
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +125,7 @@ namespace Azure.AI.ContentSafety
                         return DeserializeImageCategoriesAnalysis(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageCategoriesAnalysis)} does not support reading '{options.Format}' format.");
             }
         }
 

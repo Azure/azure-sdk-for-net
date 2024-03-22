@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ReasonCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteNumberValue(ReasonCode.Value);
             }
-            if (options.Format != "W" && ReasonDesc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonDesc))
             {
                 writer.WritePropertyName("reasonDesc"u8);
                 writer.WriteStringValue(ReasonDesc.Value.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticTuningOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeAutomaticTuningOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticTuningOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

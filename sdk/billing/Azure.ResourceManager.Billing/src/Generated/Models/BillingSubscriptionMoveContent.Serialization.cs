@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DestinationEnrollmentAccountId != null)
+            if (Optional.IsDefined(DestinationEnrollmentAccountId))
             {
                 writer.WritePropertyName("destinationEnrollmentAccountId"u8);
                 writer.WriteStringValue(DestinationEnrollmentAccountId);
             }
-            if (DestinationInvoiceSectionId != null)
+            if (Optional.IsDefined(DestinationInvoiceSectionId))
             {
                 writer.WritePropertyName("destinationInvoiceSectionId"u8);
                 writer.WriteStringValue(DestinationInvoiceSectionId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeBillingSubscriptionMoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

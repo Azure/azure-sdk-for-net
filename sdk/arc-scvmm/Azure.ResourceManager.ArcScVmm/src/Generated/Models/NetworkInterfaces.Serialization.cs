@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaces>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && !(IPv4Addresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IPv6Addresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
@@ -56,37 +56,37 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MacAddress != null)
+            if (Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (VirtualNetworkId != null)
+            if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (IPv4AddressType.HasValue)
+            if (Optional.IsDefined(IPv4AddressType))
             {
                 writer.WritePropertyName("ipv4AddressType"u8);
                 writer.WriteStringValue(IPv4AddressType.Value.ToString());
             }
-            if (IPv6AddressType.HasValue)
+            if (Optional.IsDefined(IPv6AddressType))
             {
                 writer.WritePropertyName("ipv6AddressType"u8);
                 writer.WriteStringValue(IPv6AddressType.Value.ToString());
             }
-            if (MacAddressType.HasValue)
+            if (Optional.IsDefined(MacAddressType))
             {
                 writer.WritePropertyName("macAddressType"u8);
                 writer.WriteStringValue(MacAddressType.Value.ToString());
             }
-            if (NicId != null)
+            if (Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaces>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeNetworkInterfaces(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaces)} does not support reading '{options.Format}' format.");
             }
         }
 

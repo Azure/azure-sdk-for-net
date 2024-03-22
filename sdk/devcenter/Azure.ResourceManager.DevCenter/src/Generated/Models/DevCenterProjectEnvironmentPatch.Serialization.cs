@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,29 +38,29 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeploymentTargetId != null)
+            if (Optional.IsDefined(DeploymentTargetId))
             {
                 writer.WritePropertyName("deploymentTargetId"u8);
                 writer.WriteStringValue(DeploymentTargetId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (CreatorRoleAssignment != null)
+            if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
                 writer.WriteObjectValue(CreatorRoleAssignment);
             }
-            if (!(UserRoleAssignments is ChangeTrackingDictionary<string, DevCenterUserRoleAssignments> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
                 writer.WritePropertyName("userRoleAssignments"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterProjectEnvironmentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

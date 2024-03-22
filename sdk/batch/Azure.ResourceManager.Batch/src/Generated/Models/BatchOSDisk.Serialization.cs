@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchOSDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EphemeralOSDiskSettings != null)
+            if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
                 writer.WriteObjectValue(EphemeralOSDiskSettings);
             }
-            if (Caching.HasValue)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
                 writer.WriteObjectValue(ManagedDisk);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (IsWriteAcceleratorEnabled.HasValue)
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchOSDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchOSDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchOSDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchOSDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

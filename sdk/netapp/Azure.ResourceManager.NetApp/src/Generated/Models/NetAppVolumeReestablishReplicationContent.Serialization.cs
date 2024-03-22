@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeReestablishReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceVolumeId != null)
+            if (Optional.IsDefined(SourceVolumeId))
             {
                 writer.WritePropertyName("sourceVolumeId"u8);
                 writer.WriteStringValue(SourceVolumeId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeReestablishReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeReestablishReplicationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeReestablishReplicationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

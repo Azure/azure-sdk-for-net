@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CreateOption.HasValue)
+            if (Optional.IsDefined(CreateOption))
             {
                 writer.WritePropertyName("createOption"u8);
                 writer.WriteStringValue(CreateOption.Value.ToString());
             }
-            if (DeleteOption.HasValue)
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudOSDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudOSDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

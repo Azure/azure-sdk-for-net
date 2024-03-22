@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderContainerUnmappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (InstanceType != null)
+            if (Optional.IsDefined(InstanceType))
             {
                 writer.WritePropertyName("instanceType"u8);
                 writer.WriteStringValue(InstanceType);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderContainerUnmappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeReplicationProviderContainerUnmappingContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationProviderContainerUnmappingContent)} does not support reading '{options.Format}' format.");
             }
         }
 

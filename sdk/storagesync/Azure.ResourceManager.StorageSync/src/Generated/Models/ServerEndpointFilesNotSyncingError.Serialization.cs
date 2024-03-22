@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointFilesNotSyncingError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && PersistentCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PersistentCount))
             {
                 writer.WritePropertyName("persistentCount"u8);
                 writer.WriteNumberValue(PersistentCount.Value);
             }
-            if (options.Format != "W" && TransientCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransientCount))
             {
                 writer.WritePropertyName("transientCount"u8);
                 writer.WriteNumberValue(TransientCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointFilesNotSyncingError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointFilesNotSyncingError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointFilesNotSyncingError)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingMatchPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingMatchPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountThrottlingMatchPattern(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support reading '{options.Format}' format.");
             }
         }
 

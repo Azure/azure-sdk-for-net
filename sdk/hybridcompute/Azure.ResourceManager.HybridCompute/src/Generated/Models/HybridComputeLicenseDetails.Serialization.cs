@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Target.HasValue)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target.Value.ToString());
             }
-            if (Edition.HasValue)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (LicenseCoreType.HasValue)
+            if (Optional.IsDefined(LicenseCoreType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LicenseCoreType.Value.ToString());
             }
-            if (Processors.HasValue)
+            if (Optional.IsDefined(Processors))
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteNumberValue(Processors.Value);
             }
-            if (options.Format != "W" && AssignedLicenses.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssignedLicenses))
             {
                 writer.WritePropertyName("assignedLicenses"u8);
                 writer.WriteNumberValue(AssignedLicenses.Value);
             }
-            if (options.Format != "W" && ImmutableId != null)
+            if (options.Format != "W" && Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeLicenseDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

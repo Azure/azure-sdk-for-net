@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Bypass.HasValue)
+            if (Optional.IsDefined(Bypass))
             {
                 writer.WritePropertyName("bypass"u8);
                 writer.WriteStringValue(Bypass.Value.ToString());
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(IPRules is ChangeTrackingList<KeyVaultIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<KeyVaultVirtualNetworkRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeKeyVaultNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultNetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

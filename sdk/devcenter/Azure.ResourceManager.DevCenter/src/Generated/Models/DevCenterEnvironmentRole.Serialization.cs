@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RoleName != null)
+            if (options.Format != "W" && Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironmentRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterEnvironmentRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterEnvironmentRole)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteZipDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AppZipUri != null)
+            if (Optional.IsDefined(AppZipUri))
             {
                 writer.WritePropertyName("appZipUrl"u8);
                 writer.WriteStringValue(AppZipUri.AbsoluteUri);
             }
-            if (ApiZipUri != null)
+            if (Optional.IsDefined(ApiZipUri))
             {
                 writer.WritePropertyName("apiZipUrl"u8);
                 writer.WriteStringValue(ApiZipUri.AbsoluteUri);
             }
-            if (DeploymentTitle != null)
+            if (Optional.IsDefined(DeploymentTitle))
             {
                 writer.WritePropertyName("deploymentTitle"u8);
                 writer.WriteStringValue(DeploymentTitle);
             }
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (FunctionLanguage != null)
+            if (Optional.IsDefined(FunctionLanguage))
             {
                 writer.WritePropertyName("functionLanguage"u8);
                 writer.WriteStringValue(FunctionLanguage);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteZipDeployment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSiteZipDeployment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support reading '{options.Format}' format.");
             }
         }
 

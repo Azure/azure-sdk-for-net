@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionStateInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("currentValue"u8);
             writer.WriteStringValue(CurrentValue.ToString());
-            if (options.Format != "W" && ActionInitiatedBy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActionInitiatedBy))
             {
                 writer.WritePropertyName("actionInitiatedBy"u8);
                 writer.WriteStringValue(ActionInitiatedBy.Value.ToSerialString());
             }
-            if (options.Format != "W" && LastModified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionStateInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeRecommendedActionStateInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionStateInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

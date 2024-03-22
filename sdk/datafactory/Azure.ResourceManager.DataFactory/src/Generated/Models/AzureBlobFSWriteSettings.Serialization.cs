@@ -23,33 +23,33 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BlockSizeInMB != null)
+            if (Optional.IsDefined(BlockSizeInMB))
             {
                 writer.WritePropertyName("blockSizeInMB"u8);
                 JsonSerializer.Serialize(writer, BlockSizeInMB);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreWriteSettingsType);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
                 JsonSerializer.Serialize(writer, CopyBehavior);
             }
-            if (!(Metadata is ChangeTrackingList<DataFactoryMetadataItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBlobFSWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureBlobFSWriteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobFSWriteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

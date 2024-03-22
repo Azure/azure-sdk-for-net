@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryGitHubConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryGitHubConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFactoryGitHubConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

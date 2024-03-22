@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (ScheduleType.HasValue)
+            if (Optional.IsDefined(ScheduleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ScheduleType.Value.ToSerialString());
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlServerJobSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerJobSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

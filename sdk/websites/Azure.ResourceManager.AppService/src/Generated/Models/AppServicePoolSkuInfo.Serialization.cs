@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServicePoolSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServicePoolSkuInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServicePoolSkuInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServicePoolSkuInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

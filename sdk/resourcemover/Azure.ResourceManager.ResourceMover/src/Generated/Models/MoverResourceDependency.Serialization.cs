@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ResolutionStatus != null)
+            if (Optional.IsDefined(ResolutionStatus))
             {
                 writer.WritePropertyName("resolutionStatus"u8);
                 writer.WriteStringValue(ResolutionStatus);
             }
-            if (ResolutionType.HasValue)
+            if (Optional.IsDefined(ResolutionType))
             {
                 writer.WritePropertyName("resolutionType"u8);
                 writer.WriteStringValue(ResolutionType.Value.ToString());
             }
-            if (DependencyType.HasValue)
+            if (Optional.IsDefined(DependencyType))
             {
                 writer.WritePropertyName("dependencyType"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (ManualResolution != null)
+            if (Optional.IsDefined(ManualResolution))
             {
                 writer.WritePropertyName("manualResolution"u8);
                 writer.WriteObjectValue(ManualResolution);
             }
-            if (AutomaticResolution != null)
+            if (Optional.IsDefined(AutomaticResolution))
             {
                 writer.WritePropertyName("automaticResolution"u8);
                 writer.WriteObjectValue(AutomaticResolution);
             }
-            if (IsDependencyOptional != null)
+            if (Optional.IsDefined(IsDependencyOptional))
             {
                 writer.WritePropertyName("isOptional"u8);
                 writer.WriteStringValue(IsDependencyOptional);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverResourceDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

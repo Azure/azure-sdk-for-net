@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageApplianceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            if (StorageApplianceName != null)
+            if (Optional.IsDefined(StorageApplianceName))
             {
                 writer.WritePropertyName("storageApplianceName"u8);
                 writer.WriteStringValue(StorageApplianceName);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageApplianceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeStorageApplianceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageApplianceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

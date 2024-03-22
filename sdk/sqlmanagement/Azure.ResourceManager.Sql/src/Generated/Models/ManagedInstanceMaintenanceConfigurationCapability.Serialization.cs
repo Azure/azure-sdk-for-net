@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceMaintenanceConfigurationCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceMaintenanceConfigurationCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceMaintenanceConfigurationCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceMaintenanceConfigurationCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesJustInTimeAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("multiFactorAuthProvider"u8);
             writer.WriteStringValue(MultiFactorAuthProvider.ToString());
-            if (MaximumActivationDuration.HasValue)
+            if (Optional.IsDefined(MaximumActivationDuration))
             {
                 writer.WritePropertyName("maximumActivationDuration"u8);
                 writer.WriteStringValue(MaximumActivationDuration.Value, "P");
             }
-            if (!(ManagedByTenantApprovers is ChangeTrackingList<ManagedServicesEligibleApprover> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedByTenantApprovers))
             {
                 writer.WritePropertyName("managedByTenantApprovers"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesJustInTimeAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         return DeserializeManagedServicesJustInTimeAccessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesJustInTimeAccessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableRestoredLogs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StartRestoreOn.HasValue)
+            if (Optional.IsDefined(StartRestoreOn))
             {
                 writer.WritePropertyName("startRestoreTime"u8);
                 writer.WriteStringValue(StartRestoreOn.Value, "O");
             }
-            if (EndRestoreOn.HasValue)
+            if (Optional.IsDefined(EndRestoreOn))
             {
                 writer.WritePropertyName("endRestoreTime"u8);
                 writer.WriteStringValue(EndRestoreOn.Value, "O");
             }
-            if (SourceTable != null)
+            if (Optional.IsDefined(SourceTable))
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
-            if (options.Format != "W" && AzureAsyncOperationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
             {
                 writer.WritePropertyName("azureAsyncOperationId"u8);
                 writer.WriteStringValue(AzureAsyncOperationId.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableRestoredLogs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsTableRestoredLogs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LinuxRuntimeSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
                 writer.WriteObjectValue(LinuxRuntimeSettings);
             }
-            if (options.Format != "W" && WindowsRuntimeSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
                 writer.WriteObjectValue(WindowsRuntimeSettings);
             }
-            if (options.Format != "W" && LinuxContainerSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
                 writer.WriteObjectValue(LinuxContainerSettings);
             }
-            if (options.Format != "W" && WindowsContainerSettings != null)
+            if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
                 writer.WriteObjectValue(WindowsContainerSettings);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppRuntimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppRuntimes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppRuntimes)} does not support reading '{options.Format}' format.");
             }
         }
 

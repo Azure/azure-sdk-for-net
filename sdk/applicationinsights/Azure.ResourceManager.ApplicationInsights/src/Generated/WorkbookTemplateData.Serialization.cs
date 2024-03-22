@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ApplicationInsights
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Author != null)
+            if (Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (TemplateData != null)
+            if (Optional.IsDefined(TemplateData))
             {
                 writer.WritePropertyName("templateData"u8);
 #if NET6_0_OR_GREATER
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
 #endif
             }
-            if (!(Galleries is ChangeTrackingList<WorkbookTemplateGallery> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Galleries))
             {
                 writer.WritePropertyName("galleries"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocalizedGalleries is ChangeTrackingDictionary<string, IList<WorkbookTemplateLocalizedGallery>> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LocalizedGalleries))
             {
                 writer.WritePropertyName("localized"u8);
                 writer.WriteStartObject();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                         return DeserializeWorkbookTemplateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountBlobUri"/> is null. </exception>
         public PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri)
         {
-            if (storageAccountBlobUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountBlobUri));
-            }
+            Argument.AssertNotNull(storageAccountBlobUri, nameof(storageAccountBlobUri));
 
             StorageAccountBlobUri = storageAccountBlobUri;
         }

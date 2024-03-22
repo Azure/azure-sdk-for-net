@@ -17,10 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SymmetricKeyCredentials(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             Type = "#Microsoft.VideoAnalyzer.SymmetricKeyCredentials";

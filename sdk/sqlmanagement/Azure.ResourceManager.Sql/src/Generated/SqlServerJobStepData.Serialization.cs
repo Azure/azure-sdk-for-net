@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobStepData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StepId.HasValue)
+            if (Optional.IsDefined(StepId))
             {
                 writer.WritePropertyName("stepId"u8);
                 writer.WriteNumberValue(StepId.Value);
             }
-            if (TargetGroup != null)
+            if (Optional.IsDefined(TargetGroup))
             {
                 writer.WritePropertyName("targetGroup"u8);
                 writer.WriteStringValue(TargetGroup);
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteStringValue(Credential);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Output != null)
+            if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output);
             }
-            if (ExecutionOptions != null)
+            if (Optional.IsDefined(ExecutionOptions))
             {
                 writer.WritePropertyName("executionOptions"u8);
                 writer.WriteObjectValue(ExecutionOptions);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerJobStepData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlServerJobStepData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerJobStepData)} does not support reading '{options.Format}' format.");
             }
         }
 

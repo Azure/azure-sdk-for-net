@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticsDataApiResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (RenderingProperties != null)
+            if (Optional.IsDefined(RenderingProperties))
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticsDataApiResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppDiagnosticsDataApiResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticsDataApiResult)} does not support reading '{options.Format}' format.");
             }
         }
 

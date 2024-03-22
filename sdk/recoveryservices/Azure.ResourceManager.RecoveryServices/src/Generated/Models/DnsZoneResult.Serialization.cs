@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(RequiredZoneNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubResource.HasValue)
+            if (Optional.IsDefined(SubResource))
             {
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeDnsZoneResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support reading '{options.Format}' format.");
             }
         }
 

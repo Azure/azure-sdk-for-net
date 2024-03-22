@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RawCertData != null)
+            if (Optional.IsDefined(RawCertData))
             {
                 writer.WritePropertyName("rawCertData"u8);
                 writer.WriteStringValue(RawCertData);
             }
-            if (ContainerIdentityInfo != null)
+            if (Optional.IsDefined(ContainerIdentityInfo))
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
                 writer.WriteObjectValue(ContainerIdentityInfo);
             }
-            if (!(ServiceEndpoints is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeGenericContainerExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericContainerExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

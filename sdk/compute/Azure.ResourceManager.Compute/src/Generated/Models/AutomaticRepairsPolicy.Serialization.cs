@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticRepairsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (GracePeriod != null)
+            if (Optional.IsDefined(GracePeriod))
             {
                 writer.WritePropertyName("gracePeriod"u8);
                 writer.WriteStringValue(GracePeriod);
             }
-            if (RepairAction.HasValue)
+            if (Optional.IsDefined(RepairAction))
             {
                 writer.WritePropertyName("repairAction"u8);
                 writer.WriteStringValue(RepairAction.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticRepairsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAutomaticRepairsPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticRepairsPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

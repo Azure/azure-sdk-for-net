@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRPrivateEndpointAcl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(Allow is ChangeTrackingList<SignalRRequestType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Deny is ChangeTrackingList<SignalRRequestType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Deny))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRPrivateEndpointAcl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRPrivateEndpointAcl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRPrivateEndpointAcl)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryNetworkId"/> is null. </exception>
         public SiteRecoveryCreateReplicationNetworkMappingProperties(ResourceIdentifier recoveryNetworkId)
         {
-            if (recoveryNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(recoveryNetworkId));
-            }
+            Argument.AssertNotNull(recoveryNetworkId, nameof(recoveryNetworkId));
 
             RecoveryNetworkId = recoveryNetworkId;
         }

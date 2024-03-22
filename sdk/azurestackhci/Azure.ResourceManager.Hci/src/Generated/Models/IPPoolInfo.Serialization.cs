@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPPoolInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPoolInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPPoolInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Used != null)
+            if (options.Format != "W" && Optional.IsDefined(Used))
             {
                 writer.WritePropertyName("used"u8);
                 writer.WriteStringValue(Used);
             }
-            if (options.Format != "W" && Available != null)
+            if (options.Format != "W" && Optional.IsDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStringValue(Available);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPPoolInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPoolInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPPoolInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPPoolInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPPoolInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeIPPoolInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPPoolInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPPoolInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

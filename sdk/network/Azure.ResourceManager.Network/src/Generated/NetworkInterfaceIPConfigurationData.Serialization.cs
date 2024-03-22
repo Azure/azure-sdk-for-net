@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,38 +24,38 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GatewayLoadBalancer != null)
+            if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
                 JsonSerializer.Serialize(writer, GatewayLoadBalancer);
             }
-            if (!(VirtualNetworkTaps is ChangeTrackingList<VirtualNetworkTapData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkTaps))
             {
                 writer.WritePropertyName("virtualNetworkTaps"u8);
                 writer.WriteStartArray();
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationGatewayBackendAddressPools is ChangeTrackingList<ApplicationGatewayBackendAddressPool> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancerBackendAddressPools is ChangeTrackingList<BackendAddressPoolData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancerInboundNatRules is ChangeTrackingList<InboundNatRuleData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerInboundNatRules))
             {
                 writer.WritePropertyName("loadBalancerInboundNatRules"u8);
                 writer.WriteStartArray();
@@ -96,37 +95,37 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (PrivateIPAddressVersion.HasValue)
+            if (Optional.IsDefined(PrivateIPAddressVersion))
             {
                 writer.WritePropertyName("privateIPAddressVersion"u8);
                 writer.WriteStringValue(PrivateIPAddressVersion.Value.ToString());
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Primary.HasValue)
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 writer.WriteObjectValue(PublicIPAddress);
             }
-            if (!(ApplicationSecurityGroups is ChangeTrackingList<ApplicationSecurityGroupData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -136,12 +135,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PrivateLinkConnectionProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkConnectionProperties))
             {
                 writer.WritePropertyName("privateLinkConnectionProperties"u8);
                 writer.WriteObjectValue(PrivateLinkConnectionProperties);
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -435,7 +434,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -451,7 +450,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeNetworkInterfaceIPConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && FailureReason != null)
+            if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
                 writer.WriteStringValue(FailureReason);
             }
-            if (options.Format != "W" && RestoreId != null)
+            if (options.Format != "W" && Optional.IsDefined(RestoreId))
             {
                 writer.WritePropertyName("restoreId"u8);
                 writer.WriteStringValue(RestoreId);
             }
-            if (options.Format != "W" && Parameters != null)
+            if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobRestoreStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeBlobRestoreStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobRestoreStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

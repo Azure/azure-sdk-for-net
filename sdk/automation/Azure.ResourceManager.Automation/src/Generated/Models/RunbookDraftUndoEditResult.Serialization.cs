@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookDraftUndoEditResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (RequestId != null)
+            if (Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookDraftUndoEditResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeRunbookDraftUndoEditResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookDraftUndoEditResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningHDInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SshPort.HasValue)
+            if (Optional.IsDefined(SshPort))
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (AdministratorAccount != null)
+            if (Optional.IsDefined(AdministratorAccount))
             {
                 if (AdministratorAccount != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningHDInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningHDInsightProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningHDInsightProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

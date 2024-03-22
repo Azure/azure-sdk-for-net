@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MinValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
                 writer.WriteNumberValue(MinValue.Value);
             }
-            if (options.Format != "W" && MaxValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
                 writer.WriteNumberValue(MaxValue.Value);
             }
-            if (options.Format != "W" && StepSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StepSize))
             {
                 writer.WritePropertyName("stepSize"u8);
                 writer.WriteNumberValue(StepSize.Value);
             }
-            if (options.Format != "W" && Default.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && DoNotPauseValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DoNotPauseValue))
             {
                 writer.WritePropertyName("doNotPauseValue"u8);
                 writer.WriteNumberValue(DoNotPauseValue.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeAutoPauseDelayTimeRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support reading '{options.Format}' format.");
             }
         }
 

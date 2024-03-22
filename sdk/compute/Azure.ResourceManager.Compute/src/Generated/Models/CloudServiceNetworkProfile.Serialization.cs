@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(LoadBalancerConfigurations is ChangeTrackingList<CloudServiceLoadBalancerConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SlotType.HasValue)
+            if (Optional.IsDefined(SlotType))
             {
                 writer.WritePropertyName("slotType"u8);
                 writer.WriteStringValue(SlotType.Value.ToString());
             }
-            if (SwappableCloudService != null)
+            if (Optional.IsDefined(SwappableCloudService))
             {
                 writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCloudServiceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceElementTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ResourceElementType.ToString());
-            if (DependsOnProfile != null)
+            if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceElementTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeResourceElementTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

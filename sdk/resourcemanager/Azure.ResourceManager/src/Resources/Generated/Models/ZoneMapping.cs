@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The location of the zone mapping. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Gets the zones. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }
 }

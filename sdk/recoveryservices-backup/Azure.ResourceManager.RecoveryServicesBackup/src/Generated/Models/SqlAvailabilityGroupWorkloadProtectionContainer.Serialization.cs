@@ -22,58 +22,58 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (ExtendedInfo != null)
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteObjectValue(ExtendedInfo);
             }
-            if (WorkloadType.HasValue)
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (OperationType.HasValue)
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (HealthStatus != null)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (ProtectableObjectType != null)
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

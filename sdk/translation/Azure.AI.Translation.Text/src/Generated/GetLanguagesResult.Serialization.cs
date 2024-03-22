@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -23,11 +22,11 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<GetLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Translation is ChangeTrackingDictionary<string, TranslationLanguage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Translation))
             {
                 writer.WritePropertyName("translation"u8);
                 writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (!(Transliteration is ChangeTrackingDictionary<string, TransliterationLanguage> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteStartObject();
@@ -49,7 +48,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (!(Dictionary is ChangeTrackingDictionary<string, SourceDictionaryLanguage> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Dictionary))
             {
                 writer.WritePropertyName("dictionary"u8);
                 writer.WriteStartObject();
@@ -83,7 +82,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<GetLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +164,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +180,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeGetLanguagesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

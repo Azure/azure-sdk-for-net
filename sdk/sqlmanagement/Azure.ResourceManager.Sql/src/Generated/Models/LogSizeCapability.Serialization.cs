@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogSizeCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogSizeCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogSizeCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Limit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogSizeCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogSizeCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogSizeCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogSizeCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogSizeCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeLogSizeCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogSizeCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogSizeCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

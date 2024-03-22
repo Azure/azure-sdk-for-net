@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SkippedReason != null)
+            if (Optional.IsDefined(SkippedReason))
             {
                 writer.WritePropertyName("skippedReason"u8);
                 writer.WriteStringValue(SkippedReason);
             }
-            if (SkippedReasonString != null)
+            if (Optional.IsDefined(SkippedReasonString))
             {
                 writer.WritePropertyName("skippedReasonString"u8);
                 writer.WriteStringValue(SkippedReasonString);
             }
-            if (JobTask != null)
+            if (Optional.IsDefined(JobTask))
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryVmTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

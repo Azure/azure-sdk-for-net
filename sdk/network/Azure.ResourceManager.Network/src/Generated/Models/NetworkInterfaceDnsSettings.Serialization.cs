@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AppliedDnsServers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedDnsServers))
             {
                 writer.WritePropertyName("appliedDnsServers"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (InternalDnsNameLabel != null)
+            if (Optional.IsDefined(InternalDnsNameLabel))
             {
                 writer.WritePropertyName("internalDnsNameLabel"u8);
                 writer.WriteStringValue(InternalDnsNameLabel);
             }
-            if (options.Format != "W" && InternalFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalFqdn))
             {
                 writer.WritePropertyName("internalFqdn"u8);
                 writer.WriteStringValue(InternalFqdn);
             }
-            if (options.Format != "W" && InternalDomainNameSuffix != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalDomainNameSuffix))
             {
                 writer.WritePropertyName("internalDomainNameSuffix"u8);
                 writer.WriteStringValue(InternalDomainNameSuffix);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkInterfaceDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && OperationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (options.Format != "W" && EventTimestamp != null)
+            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
+            {
+                writer.WritePropertyName("canUndelete"u8);
+                writer.WriteStringValue(CanUndelete);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
+            {
+                writer.WritePropertyName("canUndeleteReason"u8);
+                writer.WriteStringValue(CanUndeleteReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && ContainerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (options.Format != "W" && ContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (Container != null)
+            if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteObjectValue(Container);
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlContainerResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,6 +106,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string rid = default;
             CosmosDBOperationType? operationType = default;
+            string canUndelete = default;
+            string canUndeleteReason = default;
             string eventTimestamp = default;
             string ownerId = default;
             string ownerResourceId = default;
@@ -116,6 +128,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("canUndelete"u8))
+                {
+                    canUndelete = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("canUndeleteReason"u8))
+                {
+                    canUndeleteReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -151,6 +173,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedRestorableSqlContainerResourceInfo(
                 rid,
                 operationType,
+                canUndelete,
+                canUndeleteReason,
                 eventTimestamp,
                 ownerId,
                 ownerResourceId,
@@ -167,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeExtendedRestorableSqlContainerResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlContainerResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceWorkerPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -53,34 +53,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WorkerSizeId.HasValue)
+            if (Optional.IsDefined(WorkerSizeId))
             {
                 writer.WritePropertyName("workerSizeId"u8);
                 writer.WriteNumberValue(WorkerSizeId.Value);
             }
-            if (ComputeMode.HasValue)
+            if (Optional.IsDefined(ComputeMode))
             {
                 writer.WritePropertyName("computeMode"u8);
                 writer.WriteStringValue(ComputeMode.Value.ToSerialString());
             }
-            if (WorkerSize != null)
+            if (Optional.IsDefined(WorkerSize))
             {
                 writer.WritePropertyName("workerSize"u8);
                 writer.WriteStringValue(WorkerSize);
             }
-            if (WorkerCount.HasValue)
+            if (Optional.IsDefined(WorkerCount))
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && !(InstanceNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InstanceNames))
             {
                 writer.WritePropertyName("instanceNames"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceWorkerPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeAppServiceWorkerPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceWorkerPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

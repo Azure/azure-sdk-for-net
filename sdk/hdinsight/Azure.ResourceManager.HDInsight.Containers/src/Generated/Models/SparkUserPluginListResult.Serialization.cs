@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SparkUserPluginListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Plugins is ChangeTrackingList<SparkUserPlugin> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Plugins))
             {
                 writer.WritePropertyName("plugins"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<SparkUserPluginListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeSparkUserPluginListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SparkUserPluginListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

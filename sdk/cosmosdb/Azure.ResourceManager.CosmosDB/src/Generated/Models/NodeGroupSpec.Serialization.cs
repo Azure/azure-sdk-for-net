@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeGroupSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (DiskSizeInGB.HasValue)
+            if (Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
             }
-            if (EnableHa.HasValue)
+            if (Optional.IsDefined(EnableHa))
             {
                 writer.WritePropertyName("enableHa"u8);
                 writer.WriteBooleanValue(EnableHa.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeGroupSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeNodeGroupSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeGroupSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

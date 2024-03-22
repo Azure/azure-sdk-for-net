@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ManagedInstanceStartStopScheduleResource>> UpdateAsync(WaitUntil waitUntil, ManagedInstanceStartStopScheduleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ManagedInstanceStartStopScheduleResource> Update(WaitUntil waitUntil, ManagedInstanceStartStopScheduleData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _managedInstanceStartStopScheduleStartStopManagedInstanceSchedulesClientDiagnostics.CreateScope("ManagedInstanceStartStopScheduleResource.Update");
             scope.Start();

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HealthBot;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
@@ -23,16 +22,16 @@ namespace Azure.ResourceManager.HealthBot.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotResponseList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotResponseList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotResponseList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<HealthBotData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotResponseList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotResponseList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotResponseList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotResponseList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotResponseList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                         return DeserializeBotResponseList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotResponseList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotResponseList)} does not support reading '{options.Format}' format.");
             }
         }
 

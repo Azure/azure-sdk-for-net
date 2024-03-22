@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OverwriteOption.HasValue)
+            if (Optional.IsDefined(OverwriteOption))
             {
                 writer.WritePropertyName("overwriteOption"u8);
                 writer.WriteStringValue(OverwriteOption.Value.ToString());
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (TargetDirectoryForFileRestore != null)
+            if (Optional.IsDefined(TargetDirectoryForFileRestore))
             {
                 writer.WritePropertyName("targetDirectoryForFileRestore"u8);
                 writer.WriteStringValue(TargetDirectoryForFileRestore);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetRestoreInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeTargetRestoreInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetRestoreInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

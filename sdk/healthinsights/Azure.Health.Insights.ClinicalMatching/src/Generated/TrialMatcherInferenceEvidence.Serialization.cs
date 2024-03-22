@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,26 +22,26 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EligibilityCriteriaEvidence != null)
+            if (Optional.IsDefined(EligibilityCriteriaEvidence))
             {
                 writer.WritePropertyName("eligibilityCriteriaEvidence"u8);
                 writer.WriteStringValue(EligibilityCriteriaEvidence);
             }
-            if (PatientDataEvidence != null)
+            if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
                 writer.WriteObjectValue(PatientDataEvidence);
             }
-            if (PatientInfoEvidence != null)
+            if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
                 writer.WriteObjectValue(PatientInfoEvidence);
             }
-            if (Importance.HasValue)
+            if (Optional.IsDefined(Importance))
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteNumberValue(Importance.Value);
@@ -70,7 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeTrialMatcherInferenceEvidence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support reading '{options.Format}' format.");
             }
         }
 

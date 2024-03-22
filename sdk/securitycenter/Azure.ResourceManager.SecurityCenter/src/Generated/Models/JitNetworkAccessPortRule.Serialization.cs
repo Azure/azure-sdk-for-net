@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPortRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteNumberValue(Number);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (AllowedSourceAddressPrefix != null)
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (!(AllowedSourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPortRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeJitNetworkAccessPortRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support reading '{options.Format}' format.");
             }
         }
 

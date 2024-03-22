@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializePerformanceLevelCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

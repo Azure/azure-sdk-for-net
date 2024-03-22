@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DppBaseResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ResourceGuardProtectedObjectData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DppBaseResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDppBaseResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

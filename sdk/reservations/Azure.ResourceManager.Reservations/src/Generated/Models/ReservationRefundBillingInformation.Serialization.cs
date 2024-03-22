@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundBillingInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BillingPlan.HasValue)
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (CompletedTransactions.HasValue)
+            if (Optional.IsDefined(CompletedTransactions))
             {
                 writer.WritePropertyName("completedTransactions"u8);
                 writer.WriteNumberValue(CompletedTransactions.Value);
             }
-            if (TotalTransactions.HasValue)
+            if (Optional.IsDefined(TotalTransactions))
             {
                 writer.WritePropertyName("totalTransactions"u8);
                 writer.WriteNumberValue(TotalTransactions.Value);
             }
-            if (BillingCurrencyTotalPaidAmount != null)
+            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
             }
-            if (BillingCurrencyProratedAmount != null)
+            if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyProratedAmount);
             }
-            if (BillingCurrencyRemainingCommitmentAmount != null)
+            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundBillingInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationRefundBillingInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

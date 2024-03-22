@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckCosmosDBNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NameAvailable.HasValue)
+            if (Optional.IsDefined(NameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(NameAvailable.Value);
             }
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckCosmosDBNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCheckCosmosDBNameAvailabilityResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckCosmosDBNameAvailabilityResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -23,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<MoverResourceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,12 +36,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (SummaryCollection != null)
+            if (Optional.IsDefined(SummaryCollection))
             {
                 if (SummaryCollection != null)
                 {
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("summaryCollection");
                 }
             }
-            if (options.Format != "W" && TotalCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BackupName != null)
+            if (Optional.IsDefined(BackupName))
             {
                 writer.WritePropertyName("backupName"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (StorageAccountUri != null)
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (BackupSchedule != null)
+            if (Optional.IsDefined(BackupSchedule))
             {
                 writer.WritePropertyName("backupSchedule"u8);
                 writer.WriteObjectValue(BackupSchedule);
             }
-            if (!(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppBackupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppBackupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LogRules != null)
+            if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
                 writer.WriteObjectValue(LogRules);
             }
-            if (MetricRules != null)
+            if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
                 writer.WriteObjectValue(MetricRules);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityTagRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicObservabilityTagRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityTagRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

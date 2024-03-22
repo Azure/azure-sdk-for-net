@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Exchange != null)
+            if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
                 writer.WriteObjectValue(Exchange);
             }
-            if (SharePoint != null)
+            if (Optional.IsDefined(SharePoint))
             {
                 writer.WritePropertyName("sharePoint"u8);
                 writer.WriteObjectValue(SharePoint);
             }
-            if (Teams != null)
+            if (Optional.IsDefined(Teams))
             {
                 writer.WritePropertyName("teams"u8);
                 writer.WriteObjectValue(Teams);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support reading '{options.Format}' format.");
             }
         }
 

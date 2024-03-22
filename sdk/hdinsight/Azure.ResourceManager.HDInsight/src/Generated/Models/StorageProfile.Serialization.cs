@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(StorageAccounts is ChangeTrackingList<HDInsightStorageAccountInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageaccounts"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

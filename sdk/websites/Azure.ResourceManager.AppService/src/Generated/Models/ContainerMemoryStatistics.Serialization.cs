@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerMemoryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Usage.HasValue)
+            if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteNumberValue(Usage.Value);
             }
-            if (MaxUsage.HasValue)
+            if (Optional.IsDefined(MaxUsage))
             {
                 writer.WritePropertyName("maxUsage"u8);
                 writer.WriteNumberValue(MaxUsage.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerMemoryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerMemoryStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerMemoryStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

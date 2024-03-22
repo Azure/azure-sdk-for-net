@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MetricName != null)
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LegacyResourceId != null)
+            if (Optional.IsDefined(LegacyResourceId))
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (ResourceLocation != null)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleMetricDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

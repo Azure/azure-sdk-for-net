@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,36 +22,36 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultDetailsForPrompt>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sexual != null)
+            if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
                 writer.WriteObjectValue(Sexual);
             }
-            if (Violence != null)
+            if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
                 writer.WriteObjectValue(Violence);
             }
-            if (Hate != null)
+            if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
                 writer.WriteObjectValue(Hate);
             }
-            if (SelfHarm != null)
+            if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
                 writer.WriteObjectValue(SelfHarm);
             }
-            if (Profanity != null)
+            if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity);
             }
-            if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();
@@ -62,12 +61,12 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Jailbreak != null)
+            if (Optional.IsDefined(Jailbreak))
             {
                 writer.WritePropertyName("jailbreak"u8);
                 writer.WriteObjectValue(Jailbreak);
@@ -95,7 +94,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultDetailsForPrompt>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +225,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +241,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeContentFilterResultDetailsForPrompt(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterResultDetailsForPrompt)} does not support reading '{options.Format}' format.");
             }
         }
 

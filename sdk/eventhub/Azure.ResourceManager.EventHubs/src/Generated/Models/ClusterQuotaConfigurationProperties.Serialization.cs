@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterQuotaConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Settings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterQuotaConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeClusterQuotaConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterQuotaConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

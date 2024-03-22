@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,13 +22,13 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -66,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +120,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeInternalFunctionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalFunctionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

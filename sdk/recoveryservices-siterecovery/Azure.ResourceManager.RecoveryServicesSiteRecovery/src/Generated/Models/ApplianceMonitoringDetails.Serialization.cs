@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceMonitoringDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CpuDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(CpuDetails))
             {
                 writer.WritePropertyName("cpuDetails"u8);
                 writer.WriteObjectValue(CpuDetails);
             }
-            if (options.Format != "W" && RamDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RamDetails))
             {
                 writer.WritePropertyName("ramDetails"u8);
                 writer.WriteObjectValue(RamDetails);
             }
-            if (options.Format != "W" && !(DatastoreSnapshot is ChangeTrackingList<DataStoreUtilizationDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
             {
                 writer.WritePropertyName("datastoreSnapshot"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DisksReplicationDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(DisksReplicationDetails))
             {
                 writer.WritePropertyName("disksReplicationDetails"u8);
                 writer.WriteObjectValue(DisksReplicationDetails);
             }
-            if (options.Format != "W" && EsxiNfcBuffer != null)
+            if (options.Format != "W" && Optional.IsDefined(EsxiNfcBuffer))
             {
                 writer.WritePropertyName("esxiNfcBuffer"u8);
                 writer.WriteObjectValue(EsxiNfcBuffer);
             }
-            if (options.Format != "W" && NetworkBandwidth != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkBandwidth))
             {
                 writer.WritePropertyName("networkBandwidth"u8);
                 writer.WriteObjectValue(NetworkBandwidth);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceMonitoringDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeApplianceMonitoringDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceMonitoringDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Category.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (options.Format != "W" && Retry.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteStringValue(Retry.Value.ToString());
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<MediaJobErrorDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobError)} does not support reading '{options.Format}' format.");
             }
         }
 

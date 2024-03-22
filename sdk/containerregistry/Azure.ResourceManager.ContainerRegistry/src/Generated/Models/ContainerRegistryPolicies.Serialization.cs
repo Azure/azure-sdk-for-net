@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (QuarantinePolicy != null)
+            if (Optional.IsDefined(QuarantinePolicy))
             {
                 writer.WritePropertyName("quarantinePolicy"u8);
                 writer.WriteObjectValue(QuarantinePolicy);
             }
-            if (TrustPolicy != null)
+            if (Optional.IsDefined(TrustPolicy))
             {
                 writer.WritePropertyName("trustPolicy"u8);
                 writer.WriteObjectValue(TrustPolicy);
             }
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
-            if (ExportPolicy != null)
+            if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryPolicies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryPolicies)} does not support reading '{options.Format}' format.");
             }
         }
 

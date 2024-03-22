@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkEventHubConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (ReportingInterval.HasValue)
+            if (Optional.IsDefined(ReportingInterval))
             {
                 writer.WritePropertyName("reportingInterval"u8);
                 writer.WriteNumberValue(ReportingInterval.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkEventHubConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkEventHubConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkEventHubConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

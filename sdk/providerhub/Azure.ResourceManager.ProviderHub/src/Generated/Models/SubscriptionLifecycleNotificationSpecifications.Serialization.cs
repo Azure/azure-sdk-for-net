@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionLifecycleNotificationSpecifications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SubscriptionStateOverrideActions is ChangeTrackingList<SubscriptionStateOverrideAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
             {
                 writer.WritePropertyName("subscriptionStateOverrideActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SoftDeleteTtl.HasValue)
+            if (Optional.IsDefined(SoftDeleteTtl))
             {
                 writer.WritePropertyName("softDeleteTTL"u8);
                 writer.WriteStringValue(SoftDeleteTtl.Value, "P");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionLifecycleNotificationSpecifications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeSubscriptionLifecycleNotificationSpecifications(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support reading '{options.Format}' format.");
             }
         }
 

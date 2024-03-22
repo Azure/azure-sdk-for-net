@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceObjectiveName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceObjectiveName))
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (options.Format != "W" && IsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (options.Format != "W" && IsSystem.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSystem))
             {
                 writer.WritePropertyName("isSystem"u8);
                 writer.WriteBooleanValue(IsSystem.Value);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeServiceObjectiveData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceObjectiveData)} does not support reading '{options.Format}' format.");
             }
         }
 

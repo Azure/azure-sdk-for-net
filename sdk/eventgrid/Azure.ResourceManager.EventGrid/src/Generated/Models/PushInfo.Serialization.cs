@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PushInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PushInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PushInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxDeliveryCount.HasValue)
+            if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (EventTimeToLive != null)
+            if (Optional.IsDefined(EventTimeToLive))
             {
                 writer.WritePropertyName("eventTimeToLive"u8);
                 writer.WriteStringValue(EventTimeToLive);
             }
-            if (DeadLetterDestinationWithResourceIdentity != null)
+            if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
             }
-            if (DeliveryWithResourceIdentity != null)
+            if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeliveryWithResourceIdentity);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PushInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PushInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PushInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PushInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PushInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializePushInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PushInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PushInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

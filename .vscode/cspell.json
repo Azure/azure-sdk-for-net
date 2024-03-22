@@ -78,6 +78,7 @@
     "fhir",
     "finalizer",
     "finalizers",
+    "flac",
     "hnsw",
     "ienumerable",
     "illumos",
@@ -444,6 +445,17 @@
       ]
     },
     {
+      "filename": "**/sdk/easm/**/*",
+      "words": [
+        "easm",
+        "asns",
+        "cnames",
+        "alexa",
+        "whois",
+        "nxdomain"
+      ]
+    },
+    {
       "filename": "**/sdk/desktopvirtualization/**/*.cs",
       "words": [
         "adfs",
@@ -530,6 +542,10 @@
         "ldaps",
         "llap",
         "oaep",
+        "SSDLRS",
+        "SSDV",
+        "SSDZRS",
+        "HDDLRS",
         "trino"
       ]
     },
@@ -1309,6 +1325,12 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/confluent/**/*.cs",
+      "words": [
+        "Byok"
       ]
     }
   ],

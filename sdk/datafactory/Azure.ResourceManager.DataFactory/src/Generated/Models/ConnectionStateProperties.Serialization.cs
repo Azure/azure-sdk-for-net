@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionStateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ActionsRequired != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionStateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeConnectionStateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionStateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

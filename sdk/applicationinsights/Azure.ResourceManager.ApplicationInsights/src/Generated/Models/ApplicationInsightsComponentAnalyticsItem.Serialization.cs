@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("Content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("Scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (ItemType.HasValue)
+            if (Optional.IsDefined(ItemType))
             {
                 writer.WritePropertyName("Type"u8);
                 writer.WriteStringValue(ItemType.Value.ToString());
             }
-            if (options.Format != "W" && TimeCreated != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("TimeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (options.Format != "W" && TimeModified != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeModified))
             {
                 writer.WritePropertyName("TimeModified"u8);
                 writer.WriteStringValue(TimeModified);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentAnalyticsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentAnalyticsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentAnalyticsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

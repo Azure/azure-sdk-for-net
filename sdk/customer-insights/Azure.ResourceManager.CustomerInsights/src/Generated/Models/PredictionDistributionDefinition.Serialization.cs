@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDistributionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TotalPositives.HasValue)
+            if (Optional.IsDefined(TotalPositives))
             {
                 writer.WritePropertyName("totalPositives"u8);
                 writer.WriteNumberValue(TotalPositives.Value);
             }
-            if (TotalNegatives.HasValue)
+            if (Optional.IsDefined(TotalNegatives))
             {
                 writer.WritePropertyName("totalNegatives"u8);
                 writer.WriteNumberValue(TotalNegatives.Value);
             }
-            if (!(Distributions is ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Distributions))
             {
                 writer.WritePropertyName("distributions"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDistributionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionDistributionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDistributionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

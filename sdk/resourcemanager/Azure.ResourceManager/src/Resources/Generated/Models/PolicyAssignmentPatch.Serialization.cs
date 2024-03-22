@@ -23,23 +23,23 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(ResourceSelectors is ChangeTrackingList<ResourceSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceSelectors))
             {
                 writer.WritePropertyName("resourceSelectors"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Overrides is ChangeTrackingList<PolicyOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Overrides))
             {
                 writer.WritePropertyName("overrides"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializePolicyAssignmentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

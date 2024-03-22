@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (MdmAccount != null)
+            if (Optional.IsDefined(MdmAccount))
             {
                 writer.WritePropertyName("mdmAccount"u8);
                 writer.WriteStringValue(MdmAccount);
             }
-            if (MetricNameSpace != null)
+            if (Optional.IsDefined(MetricNameSpace))
             {
                 writer.WritePropertyName("metricNameSpace"u8);
                 writer.WriteStringValue(MetricNameSpace);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMetricConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeMetricConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeMetricConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Redis
             var format = options.Format == "W" ? ((IPersistableModel<RedisCacheAccessPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && TypePropertiesType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis
             var format = options.Format == "W" ? ((IPersistableModel<RedisCacheAccessPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Redis
                         return DeserializeRedisCacheAccessPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisCacheAccessPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

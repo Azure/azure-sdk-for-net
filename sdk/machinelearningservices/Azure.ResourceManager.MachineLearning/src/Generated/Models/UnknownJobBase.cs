@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownJobBase. </summary>
+    /// <summary> Unknown version of JobBase. </summary>
     internal partial class UnknownJobBase : MachineLearningJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownJobBase"/>. </summary>

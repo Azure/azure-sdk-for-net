@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDiskReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SharedGalleryImageId != null)
+            if (Optional.IsDefined(SharedGalleryImageId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
                 writer.WriteStringValue(SharedGalleryImageId);
             }
-            if (CommunityGalleryImageId != null)
+            if (Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Lun.HasValue)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDiskReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeImageDiskReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support reading '{options.Format}' format.");
             }
         }
 

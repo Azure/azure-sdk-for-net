@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafRankingsResponseDataItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(GroupValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupValues))
             {
                 writer.WritePropertyName("groupValues"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metrics is ChangeTrackingList<ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafRankingsResponseDataItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeWafRankingsResponseDataItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafRankingsResponseDataItem)} does not support reading '{options.Format}' format.");
             }
         }
 

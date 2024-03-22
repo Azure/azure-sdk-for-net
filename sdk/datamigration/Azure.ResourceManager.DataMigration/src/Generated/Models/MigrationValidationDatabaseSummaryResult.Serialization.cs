@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrationValidationDatabaseSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && MigrationId != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationId))
             {
                 writer.WritePropertyName("migrationId"u8);
                 writer.WriteStringValue(MigrationId);
             }
-            if (options.Format != "W" && SourceDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && TargetDatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrationValidationDatabaseSummaryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrationValidationDatabaseSummaryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationValidationDatabaseSummaryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

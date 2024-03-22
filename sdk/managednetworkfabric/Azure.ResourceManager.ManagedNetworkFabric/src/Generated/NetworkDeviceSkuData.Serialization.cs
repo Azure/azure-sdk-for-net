@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartObject();
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Manufacturer != null)
+            if (Optional.IsDefined(Manufacturer))
             {
                 writer.WritePropertyName("manufacturer"u8);
                 writer.WriteStringValue(Manufacturer);
             }
-            if (!(SupportedVersions is ChangeTrackingList<SupportedVersionProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedVersions))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedRoleTypes is ChangeTrackingList<NetworkDeviceRoleName> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedRoleTypes))
             {
                 writer.WritePropertyName("supportedRoleTypes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (!(Interfaces is ChangeTrackingList<NetworkDeviceInterfaceProperties> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Interfaces))
             {
                 writer.WritePropertyName("interfaces"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkDeviceSkuData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceSkuData)} does not support reading '{options.Format}' format.");
             }
         }
 

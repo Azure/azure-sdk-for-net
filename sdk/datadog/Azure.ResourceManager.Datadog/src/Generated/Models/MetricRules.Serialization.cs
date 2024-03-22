@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeMetricRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricRules)} does not support reading '{options.Format}' format.");
             }
         }
 

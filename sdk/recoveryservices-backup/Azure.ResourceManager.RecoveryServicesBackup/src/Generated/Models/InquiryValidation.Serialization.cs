@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<InquiryValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InquiryValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InquiryValidation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ErrorDetail != null)
+            if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
                 writer.WriteObjectValue(ErrorDetail);
             }
-            if (options.Format != "W" && AdditionalDetail != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalDetail))
             {
                 writer.WritePropertyName("additionalDetail"u8);
                 writer.WriteStringValue(AdditionalDetail);
             }
-            if (options.Format != "W" && ProtectableItemCount != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectableItemCount))
             {
                 writer.WritePropertyName("protectableItemCount"u8);
 #if NET6_0_OR_GREATER
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<InquiryValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InquiryValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InquiryValidation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InquiryValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InquiryValidation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeInquiryValidation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InquiryValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InquiryValidation)} does not support reading '{options.Format}' format.");
             }
         }
 

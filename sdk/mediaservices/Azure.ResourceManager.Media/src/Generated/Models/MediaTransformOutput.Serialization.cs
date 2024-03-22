@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OnError.HasValue)
+            if (Optional.IsDefined(OnError))
             {
                 writer.WritePropertyName("onError"u8);
                 writer.WriteStringValue(OnError.Value.ToString());
             }
-            if (RelativePriority.HasValue)
+            if (Optional.IsDefined(RelativePriority))
             {
                 writer.WritePropertyName("relativePriority"u8);
                 writer.WriteStringValue(RelativePriority.Value.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaTransformOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaTransformOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaTransformOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

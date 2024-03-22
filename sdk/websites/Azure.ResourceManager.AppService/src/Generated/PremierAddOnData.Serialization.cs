@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<PremierAddOnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PremierAddOnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PremierAddOnData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,34 +60,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (MarketplacePublisher != null)
+            if (Optional.IsDefined(MarketplacePublisher))
             {
                 writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
-            if (MarketplaceOffer != null)
+            if (Optional.IsDefined(MarketplaceOffer))
             {
                 writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<PremierAddOnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PremierAddOnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PremierAddOnData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PremierAddOnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PremierAddOnData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializePremierAddOnData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PremierAddOnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PremierAddOnData)} does not support reading '{options.Format}' format.");
             }
         }
 

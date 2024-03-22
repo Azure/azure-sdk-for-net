@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceResourceId != null)
+            if (Optional.IsDefined(ServiceResourceId))
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (SparkEnabled.HasValue)
+            if (Optional.IsDefined(SparkEnabled))
             {
                 writer.WritePropertyName("sparkEnabled"u8);
                 writer.WriteBooleanValue(SparkEnabled.Value);
             }
-            if (SparkStatus.HasValue)
+            if (Optional.IsDefined(SparkStatus))
             {
                 writer.WritePropertyName("sparkStatus"u8);
                 writer.WriteStringValue(SparkStatus.Value.ToString());
             }
-            if (SubresourceTarget != null)
+            if (Optional.IsDefined(SubresourceTarget))
             {
                 writer.WritePropertyName("subresourceTarget"u8);
                 writer.WriteStringValue(SubresourceTarget);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePrivateEndpointDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

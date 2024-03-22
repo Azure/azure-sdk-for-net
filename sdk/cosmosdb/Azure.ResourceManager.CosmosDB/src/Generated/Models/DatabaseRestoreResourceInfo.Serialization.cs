@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseRestoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (!(CollectionNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CollectionNames))
             {
                 writer.WritePropertyName("collectionNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseRestoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeDatabaseRestoreResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseRestoreResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

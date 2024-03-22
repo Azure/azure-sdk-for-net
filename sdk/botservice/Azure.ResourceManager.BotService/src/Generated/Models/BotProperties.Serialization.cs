@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -23,18 +22,18 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
@@ -48,12 +47,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WriteNull("endpoint");
             }
-            if (options.Format != "W" && EndpointVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(EndpointVersion))
             {
                 writer.WritePropertyName("endpointVersion"u8);
                 writer.WriteStringValue(EndpointVersion);
             }
-            if (!(AllSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllSettings))
             {
                 writer.WritePropertyName("allSettings"u8);
                 writer.WriteStartObject();
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -75,29 +74,29 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ManifestUri != null)
+            if (Optional.IsDefined(ManifestUri))
             {
                 writer.WritePropertyName("manifestUrl"u8);
                 writer.WriteStringValue(ManifestUri.AbsoluteUri);
             }
-            if (MsaAppType.HasValue)
+            if (Optional.IsDefined(MsaAppType))
             {
                 writer.WritePropertyName("msaAppType"u8);
                 writer.WriteStringValue(MsaAppType.Value.ToString());
             }
             writer.WritePropertyName("msaAppId"u8);
             writer.WriteStringValue(MsaAppId);
-            if (MsaAppTenantId != null)
+            if (Optional.IsDefined(MsaAppTenantId))
             {
                 writer.WritePropertyName("msaAppTenantId"u8);
                 writer.WriteStringValue(MsaAppTenantId);
             }
-            if (MsaAppMSIResourceId != null)
+            if (Optional.IsDefined(MsaAppMSIResourceId))
             {
                 writer.WritePropertyName("msaAppMSIResourceId"u8);
                 writer.WriteStringValue(MsaAppMSIResourceId);
             }
-            if (options.Format != "W" && !(ConfiguredChannels is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfiguredChannels))
             {
                 writer.WritePropertyName("configuredChannels"u8);
                 writer.WriteStartArray();
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(EnabledChannels is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledChannels))
             {
                 writer.WritePropertyName("enabledChannels"u8);
                 writer.WriteStartArray();
@@ -117,22 +116,22 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DeveloperAppInsightKey != null)
+            if (Optional.IsDefined(DeveloperAppInsightKey))
             {
                 writer.WritePropertyName("developerAppInsightKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightKey);
             }
-            if (DeveloperAppInsightsApiKey != null)
+            if (Optional.IsDefined(DeveloperAppInsightsApiKey))
             {
                 writer.WritePropertyName("developerAppInsightsApiKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApiKey);
             }
-            if (DeveloperAppInsightsApplicationId != null)
+            if (Optional.IsDefined(DeveloperAppInsightsApplicationId))
             {
                 writer.WritePropertyName("developerAppInsightsApplicationId"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApplicationId);
             }
-            if (!(LuisAppIds is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(LuisAppIds))
             {
                 writer.WritePropertyName("luisAppIds"u8);
                 writer.WriteStartArray();
@@ -142,57 +141,57 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LuisKey != null)
+            if (Optional.IsDefined(LuisKey))
             {
                 writer.WritePropertyName("luisKey"u8);
                 writer.WriteStringValue(LuisKey);
             }
-            if (IsCmekEnabled.HasValue)
+            if (Optional.IsDefined(IsCmekEnabled))
             {
                 writer.WritePropertyName("isCmekEnabled"u8);
                 writer.WriteBooleanValue(IsCmekEnabled.Value);
             }
-            if (CmekKeyVaultUri != null)
+            if (Optional.IsDefined(CmekKeyVaultUri))
             {
                 writer.WritePropertyName("cmekKeyVaultUrl"u8);
                 writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && CmekEncryptionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(CmekEncryptionStatus))
             {
                 writer.WritePropertyName("cmekEncryptionStatus"u8);
                 writer.WriteStringValue(CmekEncryptionStatus);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (IsStreamingSupported.HasValue)
+            if (Optional.IsDefined(IsStreamingSupported))
             {
                 writer.WritePropertyName("isStreamingSupported"u8);
                 writer.WriteBooleanValue(IsStreamingSupported.Value);
             }
-            if (options.Format != "W" && IsDeveloperAppInsightsApiKeySet.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeveloperAppInsightsApiKeySet))
             {
                 writer.WritePropertyName("isDeveloperAppInsightsApiKeySet"u8);
                 writer.WriteBooleanValue(IsDeveloperAppInsightsApiKeySet.Value);
             }
-            if (options.Format != "W" && MigrationToken != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationToken))
             {
                 writer.WritePropertyName("migrationToken"u8);
                 writer.WriteStringValue(MigrationToken);
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (SchemaTransformationVersion != null)
+            if (Optional.IsDefined(SchemaTransformationVersion))
             {
                 if (SchemaTransformationVersion != null)
                 {
@@ -204,12 +203,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("schemaTransformationVersion");
                 }
             }
-            if (StorageResourceId != null)
+            if (Optional.IsDefined(StorageResourceId))
             {
                 writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<BotServicePrivateEndpointConnectionData> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -219,22 +218,22 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OpenWithHint != null)
+            if (Optional.IsDefined(OpenWithHint))
             {
                 writer.WritePropertyName("openWithHint"u8);
                 writer.WriteStringValue(OpenWithHint);
             }
-            if (AppPasswordHint != null)
+            if (Optional.IsDefined(AppPasswordHint))
             {
                 writer.WritePropertyName("appPasswordHint"u8);
                 writer.WriteStringValue(AppPasswordHint);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (PublishingCredentials != null)
+            if (Optional.IsDefined(PublishingCredentials))
             {
                 writer.WritePropertyName("publishingCredentials"u8);
                 writer.WriteStringValue(PublishingCredentials);
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -657,7 +656,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -673,7 +672,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

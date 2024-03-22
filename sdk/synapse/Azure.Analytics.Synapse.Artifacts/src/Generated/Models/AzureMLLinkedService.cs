@@ -23,14 +23,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> or <paramref name="apiKey"/> is null. </exception>
         public AzureMLLinkedService(object mlEndpoint, SecretBase apiKey)
         {
-            if (mlEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(mlEndpoint));
-            }
-            if (apiKey == null)
-            {
-                throw new ArgumentNullException(nameof(apiKey));
-            }
+            Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
+            Argument.AssertNotNull(apiKey, nameof(apiKey));
 
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;

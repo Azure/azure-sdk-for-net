@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<TerminateNotificationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NotBeforeTimeout != null)
+            if (Optional.IsDefined(NotBeforeTimeout))
             {
                 writer.WritePropertyName("notBeforeTimeout"u8);
                 writer.WriteStringValue(NotBeforeTimeout);
             }
-            if (Enable.HasValue)
+            if (Optional.IsDefined(Enable))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(Enable.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<TerminateNotificationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeTerminateNotificationProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TerminateNotificationProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

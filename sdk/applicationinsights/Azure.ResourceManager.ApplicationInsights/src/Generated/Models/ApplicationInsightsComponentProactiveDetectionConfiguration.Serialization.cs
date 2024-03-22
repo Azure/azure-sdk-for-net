@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("Enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (SendEmailsToSubscriptionOwners.HasValue)
+            if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
             {
                 writer.WritePropertyName("SendEmailsToSubscriptionOwners"u8);
                 writer.WriteBooleanValue(SendEmailsToSubscriptionOwners.Value);
             }
-            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("CustomEmails"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdatedTime != null)
+            if (Optional.IsDefined(LastUpdatedTime))
             {
                 writer.WritePropertyName("LastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedTime);
             }
-            if (RuleDefinitions != null)
+            if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
                 writer.WriteObjectValue(RuleDefinitions);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

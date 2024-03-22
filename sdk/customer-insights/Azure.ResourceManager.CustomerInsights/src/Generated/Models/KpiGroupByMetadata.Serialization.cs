@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiGroupByMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FieldName != null)
+            if (Optional.IsDefined(FieldName))
             {
                 writer.WritePropertyName("fieldName"u8);
                 writer.WriteStringValue(FieldName);
             }
-            if (FieldType != null)
+            if (Optional.IsDefined(FieldType))
             {
                 writer.WritePropertyName("fieldType"u8);
                 writer.WriteStringValue(FieldType);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiGroupByMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeKpiGroupByMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiGroupByMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

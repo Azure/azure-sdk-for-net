@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Akamai != null)
+            if (Optional.IsDefined(Akamai))
             {
                 writer.WritePropertyName("akamai"u8);
                 writer.WriteObjectValue(Akamai);
             }
-            if (IPs != null)
+            if (Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteObjectValue(IPs);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingEndpointAccessControl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support reading '{options.Format}' format.");
             }
         }
 

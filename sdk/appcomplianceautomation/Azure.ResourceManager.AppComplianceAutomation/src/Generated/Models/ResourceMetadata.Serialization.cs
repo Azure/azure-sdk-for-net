@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (ResourceKind != null)
+            if (Optional.IsDefined(ResourceKind))
             {
                 writer.WritePropertyName("resourceKind"u8);
                 writer.WriteStringValue(ResourceKind);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeResourceMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

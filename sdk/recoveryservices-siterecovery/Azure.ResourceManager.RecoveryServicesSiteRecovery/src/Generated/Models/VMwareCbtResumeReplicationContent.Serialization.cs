@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtResumeReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DeleteMigrationResources != null)
+            if (Optional.IsDefined(DeleteMigrationResources))
             {
                 writer.WritePropertyName("deleteMigrationResources"u8);
                 writer.WriteStringValue(DeleteMigrationResources);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtResumeReplicationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtResumeReplicationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtResumeReplicationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

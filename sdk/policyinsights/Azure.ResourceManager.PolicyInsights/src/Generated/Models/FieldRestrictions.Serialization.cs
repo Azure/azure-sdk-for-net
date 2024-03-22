@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<FieldRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Field != null)
+            if (options.Format != "W" && Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (!(Restrictions is ChangeTrackingList<FieldRestriction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Restrictions))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<FieldRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FieldRestrictions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeFieldRestrictions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FieldRestrictions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServerHostname != null)
+            if (Optional.IsDefined(ServerHostname))
             {
                 writer.WritePropertyName("serverHostname"u8);
                 writer.WriteStringValue(ServerHostname);
             }
-            if (ServerPort.HasValue)
+            if (Optional.IsDefined(ServerPort))
             {
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (ServiceUserDistinguishedName != null)
+            if (Optional.IsDefined(ServiceUserDistinguishedName))
             {
                 writer.WritePropertyName("serviceUserDistinguishedName"u8);
                 writer.WriteStringValue(ServiceUserDistinguishedName);
             }
-            if (ServiceUserPassword != null)
+            if (Optional.IsDefined(ServiceUserPassword))
             {
                 writer.WritePropertyName("serviceUserPassword"u8);
                 writer.WriteStringValue(ServiceUserPassword);
             }
-            if (SearchBaseDistinguishedName != null)
+            if (Optional.IsDefined(SearchBaseDistinguishedName))
             {
                 writer.WritePropertyName("searchBaseDistinguishedName"u8);
                 writer.WriteStringValue(SearchBaseDistinguishedName);
             }
-            if (SearchFilterTemplate != null)
+            if (Optional.IsDefined(SearchFilterTemplate))
             {
                 writer.WritePropertyName("searchFilterTemplate"u8);
                 writer.WriteStringValue(SearchFilterTemplate);
             }
-            if (!(ServerCertificates is ChangeTrackingList<CassandraCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServerCertificates))
             {
                 writer.WritePropertyName("serverCertificates"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ConnectionTimeoutInMs.HasValue)
+            if (Optional.IsDefined(ConnectionTimeoutInMs))
             {
                 writer.WritePropertyName("connectionTimeoutInMs"u8);
                 writer.WriteNumberValue(ConnectionTimeoutInMs.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -23,36 +22,36 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ContainerInstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ContainerInstanceId))
             {
                 writer.WritePropertyName("containerInstanceId"u8);
                 writer.WriteStringValue(ContainerInstanceId);
             }
-            if (options.Format != "W" && StorageAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeScriptStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

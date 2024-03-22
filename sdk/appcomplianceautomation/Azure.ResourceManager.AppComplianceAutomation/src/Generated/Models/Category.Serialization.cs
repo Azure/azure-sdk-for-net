@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Category>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Category)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Category)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CategoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(CategoryName))
             {
                 writer.WritePropertyName("categoryName"u8);
                 writer.WriteStringValue(CategoryName);
             }
-            if (options.Format != "W" && CategoryType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CategoryType))
             {
                 writer.WritePropertyName("categoryType"u8);
                 writer.WriteStringValue(CategoryType.Value.ToString());
             }
-            if (options.Format != "W" && CategoryStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CategoryStatus))
             {
                 writer.WritePropertyName("categoryStatus"u8);
                 writer.WriteStringValue(CategoryStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(ControlFamilies is ChangeTrackingList<ControlFamily> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ControlFamilies))
             {
                 writer.WritePropertyName("controlFamilies"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Category>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Category)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Category)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Category)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeCategory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Category)} does not support reading '{options.Format}' format.");
             }
         }
 

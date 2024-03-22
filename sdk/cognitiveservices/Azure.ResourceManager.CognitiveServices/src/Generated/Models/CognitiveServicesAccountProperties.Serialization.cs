@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -23,21 +22,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<CognitiveServicesSkuCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -47,37 +46,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsMigrated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsMigrated))
             {
                 writer.WritePropertyName("isMigrated"u8);
                 writer.WriteBooleanValue(IsMigrated.Value);
             }
-            if (MigrationToken != null)
+            if (Optional.IsDefined(MigrationToken))
             {
                 writer.WritePropertyName("migrationToken"u8);
                 writer.WriteStringValue(MigrationToken);
             }
-            if (options.Format != "W" && SkuChangeInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuChangeInfo))
             {
                 writer.WritePropertyName("skuChangeInfo"u8);
                 writer.WriteObjectValue(SkuChangeInfo);
             }
-            if (CustomSubDomainName != null)
+            if (Optional.IsDefined(CustomSubDomainName))
             {
                 writer.WritePropertyName("customSubDomainName"u8);
                 writer.WriteStringValue(CustomSubDomainName);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (!(UserOwnedStorage is ChangeTrackingList<ServiceAccountUserOwnedStorage> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserOwnedStorage))
             {
                 writer.WritePropertyName("userOwnedStorage"u8);
                 writer.WriteStartArray();
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<CognitiveServicesPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -97,42 +96,42 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (ApiProperties != null)
+            if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
                 writer.WriteObjectValue(ApiProperties);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("dateCreated"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && CallRateLimit != null)
+            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
                 writer.WriteObjectValue(CallRateLimit);
             }
-            if (EnableDynamicThrottling.HasValue)
+            if (Optional.IsDefined(EnableDynamicThrottling))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
                 writer.WriteBooleanValue(EnableDynamicThrottling.Value);
             }
-            if (options.Format != "W" && QuotaLimit != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
             {
                 writer.WritePropertyName("quotaLimit"u8);
                 writer.WriteObjectValue(QuotaLimit);
             }
-            if (RestrictOutboundNetworkAccess.HasValue)
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteBooleanValue(RestrictOutboundNetworkAccess.Value);
             }
-            if (!(AllowedFqdnList is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedFqdnList))
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
@@ -142,12 +141,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (options.Format != "W" && !(Endpoints is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartObject();
@@ -158,27 +157,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Restore.HasValue)
+            if (Optional.IsDefined(Restore))
             {
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && ScheduledPurgeDate != null)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeDate))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeDate);
             }
-            if (Locations != null)
+            if (Optional.IsDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteObjectValue(Locations);
             }
-            if (options.Format != "W" && !(CommitmentPlanAssociations is ChangeTrackingList<CommitmentPlanAssociation> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CommitmentPlanAssociations))
             {
                 writer.WritePropertyName("commitmentPlanAssociations"u8);
                 writer.WriteStartArray();
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AbusePenalty != null)
+            if (options.Format != "W" && Optional.IsDefined(AbusePenalty))
             {
                 writer.WritePropertyName("abusePenalty"u8);
                 writer.WriteObjectValue(AbusePenalty);
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -565,7 +564,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -581,7 +580,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesAccountProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

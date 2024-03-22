@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntityStoreAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Principal != null)
+            if (Optional.IsDefined(Principal))
             {
                 writer.WritePropertyName("principal"u8);
                 writer.WriteStringValue(Principal);
             }
-            if (EntityStoreDatabaseLink != null)
+            if (Optional.IsDefined(EntityStoreDatabaseLink))
             {
                 writer.WritePropertyName("entityStoreDatabaseLink"u8);
                 writer.WriteStringValue(EntityStoreDatabaseLink);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<CustomEntityStoreAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeCustomEntityStoreAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomEntityStoreAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

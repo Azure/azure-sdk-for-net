@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Cost.HasValue)
+            if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
                 writer.WriteNumberValue(Cost.Value);
             }
             writer.WritePropertyName("timespan"u8);
             writer.WriteStringValue(Timespan);
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Resourceregion != null)
+            if (Optional.IsDefined(Resourceregion))
             {
                 writer.WritePropertyName("resourceregion"u8);
                 writer.WriteStringValue(Resourceregion);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeMetricResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeSubscriptionScopeMetricResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionScopeMetricResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

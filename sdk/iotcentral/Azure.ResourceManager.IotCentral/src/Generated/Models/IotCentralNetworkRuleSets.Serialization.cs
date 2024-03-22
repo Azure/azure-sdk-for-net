@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralNetworkRuleSets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApplyToDevices.HasValue)
+            if (Optional.IsDefined(ApplyToDevices))
             {
                 writer.WritePropertyName("applyToDevices"u8);
                 writer.WriteBooleanValue(ApplyToDevices.Value);
             }
-            if (ApplyToIotCentral.HasValue)
+            if (Optional.IsDefined(ApplyToIotCentral))
             {
                 writer.WritePropertyName("applyToIoTCentral"u8);
                 writer.WriteBooleanValue(ApplyToIotCentral.Value);
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(IPRules is ChangeTrackingList<IotCentralNetworkRuleSetIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralNetworkRuleSets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                         return DeserializeIotCentralNetworkRuleSets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralNetworkRuleSets)} does not support reading '{options.Format}' format.");
             }
         }
 

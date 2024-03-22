@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -25,17 +24,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,38 +62,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PanETag.HasValue)
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
             writer.WriteObjectValue(NetworkProfile);
-            if (IsPanoramaManaged.HasValue)
+            if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
                 writer.WriteStringValue(IsPanoramaManaged.Value.ToString());
             }
-            if (PanoramaConfig != null)
+            if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
                 writer.WriteObjectValue(PanoramaConfig);
             }
-            if (AssociatedRulestack != null)
+            if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
                 writer.WriteObjectValue(AssociatedRulestack);
             }
             writer.WritePropertyName("dnsSettings"u8);
             writer.WriteObjectValue(DnsSettings);
-            if (!(FrontEndSettings is ChangeTrackingList<FirewallFrontendSetting> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksFirewallData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -353,7 +352,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +368,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         return DeserializePaloAltoNetworksFirewallData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support reading '{options.Format}' format.");
             }
         }
 

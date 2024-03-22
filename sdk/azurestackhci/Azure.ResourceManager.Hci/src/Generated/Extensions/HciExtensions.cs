@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Hci.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -47,10 +45,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
         public static VirtualMachineInstanceResource GetVirtualMachineInstance(this ArmClient client, ResourceIdentifier scope)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetVirtualMachineInstance(scope);
         }
@@ -69,10 +64,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="GalleryImageResource"/> object. </returns>
         public static GalleryImageResource GetGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetGalleryImageResource(id);
         }
@@ -91,10 +83,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="LogicalNetworkResource"/> object. </returns>
         public static LogicalNetworkResource GetLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetLogicalNetworkResource(id);
         }
@@ -113,10 +102,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="MarketplaceGalleryImageResource"/> object. </returns>
         public static MarketplaceGalleryImageResource GetMarketplaceGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetMarketplaceGalleryImageResource(id);
         }
@@ -135,10 +121,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
         public static NetworkInterfaceResource GetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetNetworkInterfaceResource(id);
         }
@@ -157,10 +140,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="StorageContainerResource"/> object. </returns>
         public static StorageContainerResource GetStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetStorageContainerResource(id);
         }
@@ -179,10 +159,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="VirtualHardDiskResource"/> object. </returns>
         public static VirtualHardDiskResource GetVirtualHardDiskResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetVirtualHardDiskResource(id);
         }
@@ -201,10 +178,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
         public static VirtualMachineInstanceResource GetVirtualMachineInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetVirtualMachineInstanceResource(id);
         }
@@ -223,10 +197,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetHybridIdentityMetadataResource(id);
         }
@@ -245,10 +216,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
         public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetGuestAgentResource(id);
         }
@@ -267,10 +235,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
         public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetArcSettingResource(id);
         }
@@ -289,10 +254,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciClusterResource"/> object. </returns>
         public static HciClusterResource GetHciClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetHciClusterResource(id);
         }
@@ -311,10 +273,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcExtensionResource"/> object. </returns>
         public static ArcExtensionResource GetArcExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetArcExtensionResource(id);
         }
@@ -333,10 +292,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="OfferResource"/> object. </returns>
         public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetOfferResource(id);
         }
@@ -355,10 +311,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetPublisherResource(id);
         }
@@ -377,10 +330,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciSkuResource"/> object. </returns>
         public static HciSkuResource GetHciSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetHciSkuResource(id);
         }
@@ -399,10 +349,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateRunResource"/> object. </returns>
         public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetUpdateRunResource(id);
         }
@@ -421,10 +368,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateSummaryResource"/> object. </returns>
         public static UpdateSummaryResource GetUpdateSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetUpdateSummaryResource(id);
         }
@@ -443,10 +387,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateResource"/> object. </returns>
         public static UpdateResource GetUpdateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetUpdateResource(id);
         }
@@ -463,10 +404,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of GalleryImageResources and their operations over a GalleryImageResource. </returns>
         public static GalleryImageCollection GetGalleryImages(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetGalleryImages();
         }
@@ -504,10 +442,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<GalleryImageResource>> GetGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetGalleryImageAsync(galleryImageName, cancellationToken).ConfigureAwait(false);
         }
@@ -545,10 +480,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<GalleryImageResource> GetGalleryImage(this ResourceGroupResource resourceGroupResource, string galleryImageName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetGalleryImage(galleryImageName, cancellationToken);
         }
@@ -565,10 +497,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of LogicalNetworkResources and their operations over a LogicalNetworkResource. </returns>
         public static LogicalNetworkCollection GetLogicalNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetLogicalNetworks();
         }
@@ -605,10 +534,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<LogicalNetworkResource>> GetLogicalNetworkAsync(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetLogicalNetworkAsync(logicalNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -645,10 +571,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<LogicalNetworkResource> GetLogicalNetwork(this ResourceGroupResource resourceGroupResource, string logicalNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetLogicalNetwork(logicalNetworkName, cancellationToken);
         }
@@ -665,10 +588,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of MarketplaceGalleryImageResources and their operations over a MarketplaceGalleryImageResource. </returns>
         public static MarketplaceGalleryImageCollection GetMarketplaceGalleryImages(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImages();
         }
@@ -706,10 +626,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<MarketplaceGalleryImageResource>> GetMarketplaceGalleryImageAsync(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImageAsync(marketplaceGalleryImageName, cancellationToken).ConfigureAwait(false);
         }
@@ -747,10 +664,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<MarketplaceGalleryImageResource> GetMarketplaceGalleryImage(this ResourceGroupResource resourceGroupResource, string marketplaceGalleryImageName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetMarketplaceGalleryImage(marketplaceGalleryImageName, cancellationToken);
         }
@@ -767,10 +681,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of NetworkInterfaceResources and their operations over a NetworkInterfaceResource. </returns>
         public static NetworkInterfaceCollection GetNetworkInterfaces(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetNetworkInterfaces();
         }
@@ -808,10 +719,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<NetworkInterfaceResource>> GetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetNetworkInterfaceAsync(networkInterfaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -849,10 +757,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<NetworkInterfaceResource> GetNetworkInterface(this ResourceGroupResource resourceGroupResource, string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetNetworkInterface(networkInterfaceName, cancellationToken);
         }
@@ -869,10 +774,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of StorageContainerResources and their operations over a StorageContainerResource. </returns>
         public static StorageContainerCollection GetStorageContainers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetStorageContainers();
         }
@@ -910,10 +812,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<StorageContainerResource>> GetStorageContainerAsync(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetStorageContainerAsync(storageContainerName, cancellationToken).ConfigureAwait(false);
         }
@@ -951,10 +850,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<StorageContainerResource> GetStorageContainer(this ResourceGroupResource resourceGroupResource, string storageContainerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetStorageContainer(storageContainerName, cancellationToken);
         }
@@ -971,10 +867,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of VirtualHardDiskResources and their operations over a VirtualHardDiskResource. </returns>
         public static VirtualHardDiskCollection GetVirtualHardDisks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetVirtualHardDisks();
         }
@@ -1012,10 +905,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<VirtualHardDiskResource>> GetVirtualHardDiskAsync(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetVirtualHardDiskAsync(virtualHardDiskName, cancellationToken).ConfigureAwait(false);
         }
@@ -1053,10 +943,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<VirtualHardDiskResource> GetVirtualHardDisk(this ResourceGroupResource resourceGroupResource, string virtualHardDiskName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetVirtualHardDisk(virtualHardDiskName, cancellationToken);
         }
@@ -1073,10 +960,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
         public static HciClusterCollection GetHciClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetHciClusters();
         }
@@ -1114,10 +998,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<HciClusterResource>> GetHciClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableHciResourceGroupResource(resourceGroupResource).GetHciClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -1155,10 +1036,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<HciClusterResource> GetHciCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableHciResourceGroupResource(resourceGroupResource).GetHciCluster(clusterName, cancellationToken);
         }
@@ -1194,10 +1072,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GalleryImageResource> GetGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetGalleryImagesAsync(cancellationToken);
         }
@@ -1233,10 +1108,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GalleryImageResource> GetGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetGalleryImages(cancellationToken);
         }
@@ -1272,10 +1144,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogicalNetworkResource> GetLogicalNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetLogicalNetworksAsync(cancellationToken);
         }
@@ -1311,10 +1180,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="LogicalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogicalNetworkResource> GetLogicalNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetLogicalNetworks(cancellationToken);
         }
@@ -1350,10 +1216,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetMarketplaceGalleryImagesAsync(cancellationToken);
         }
@@ -1389,10 +1252,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="MarketplaceGalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MarketplaceGalleryImageResource> GetMarketplaceGalleryImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetMarketplaceGalleryImages(cancellationToken);
         }
@@ -1428,10 +1288,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetNetworkInterfacesAsync(cancellationToken);
         }
@@ -1467,10 +1324,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkInterfaceResource> GetNetworkInterfaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetNetworkInterfaces(cancellationToken);
         }
@@ -1506,10 +1360,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageContainerResource> GetStorageContainersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetStorageContainersAsync(cancellationToken);
         }
@@ -1545,10 +1396,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="StorageContainerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageContainerResource> GetStorageContainers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetStorageContainers(cancellationToken);
         }
@@ -1584,10 +1432,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualHardDiskResource> GetVirtualHardDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetVirtualHardDisksAsync(cancellationToken);
         }
@@ -1623,10 +1468,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="VirtualHardDiskResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualHardDiskResource> GetVirtualHardDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetVirtualHardDisks(cancellationToken);
         }
@@ -1662,10 +1504,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HciClusterResource> GetHciClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetHciClustersAsync(cancellationToken);
         }
@@ -1701,10 +1540,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HciClusterResource> GetHciClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHciSubscriptionResource(subscriptionResource).GetHciClusters(cancellationToken);
         }

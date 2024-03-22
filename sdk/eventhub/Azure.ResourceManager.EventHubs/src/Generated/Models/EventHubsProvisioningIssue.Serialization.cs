@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 

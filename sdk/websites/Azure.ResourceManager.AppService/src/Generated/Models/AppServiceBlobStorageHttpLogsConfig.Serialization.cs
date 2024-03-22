@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceBlobStorageHttpLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceBlobStorageHttpLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceBlobStorageHttpLogsConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceBlobStorageHttpLogsConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Baseline != null)
+            if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
                 writer.WriteObjectValue(Baseline);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(ResultsNotInBaseline is ChangeTrackingList<IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResultsNotInBaseline))
             {
                 writer.WritePropertyName("resultsNotInBaseline"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResultsOnlyInBaseline is ChangeTrackingList<IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResultsOnlyInBaseline))
             {
                 writer.WritePropertyName("resultsOnlyInBaseline"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeBaselineAdjustedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support reading '{options.Format}' format.");
             }
         }
 

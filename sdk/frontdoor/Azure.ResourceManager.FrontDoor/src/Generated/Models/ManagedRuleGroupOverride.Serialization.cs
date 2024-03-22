@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (!(Exclusions is ChangeTrackingList<ManagedRuleExclusion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Rules is ChangeTrackingList<ManagedRuleOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeManagedRuleGroupOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleGroupOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

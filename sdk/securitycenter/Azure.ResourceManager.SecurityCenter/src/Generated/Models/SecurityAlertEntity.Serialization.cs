@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertEntityType != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertEntityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlertEntityType);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAlertEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

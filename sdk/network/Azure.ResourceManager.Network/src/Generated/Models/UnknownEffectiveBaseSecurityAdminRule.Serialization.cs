@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (ConfigurationDescription != null)
+            if (Optional.IsDefined(ConfigurationDescription))
             {
                 writer.WritePropertyName("configurationDescription"u8);
                 writer.WriteStringValue(ConfigurationDescription);
             }
-            if (RuleCollectionDescription != null)
+            if (Optional.IsDefined(RuleCollectionDescription))
             {
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleGroups))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support reading '{options.Format}' format.");
             }
         }
 

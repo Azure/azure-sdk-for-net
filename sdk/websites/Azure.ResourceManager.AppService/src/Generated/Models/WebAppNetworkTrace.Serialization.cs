@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppNetworkTrace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppNetworkTrace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppNetworkTrace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppNetworkTrace)} does not support reading '{options.Format}' format.");
             }
         }
 

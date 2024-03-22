@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (ComplianceState.HasValue)
+            if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (AppliedBy != null)
+            if (Optional.IsDefined(AppliedBy))
             {
                 if (AppliedBy != null)
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("appliedBy");
                 }
             }
-            if (!(StatusConditions is ChangeTrackingList<KubernetesObjectStatusCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusConditions))
             {
                 if (StatusConditions != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("statusConditions");
                 }
             }
-            if (HelmReleaseProperties != null)
+            if (Optional.IsDefined(HelmReleaseProperties))
             {
                 if (HelmReleaseProperties != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesObjectStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

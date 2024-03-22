@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicContentHash>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicContentHash)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicContentHash)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Algorithm != null)
+            if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicContentHash>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicContentHash)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicContentHash)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicContentHash)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicContentHash)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicContentHash(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicContentHash)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicContentHash)} does not support reading '{options.Format}' format.");
             }
         }
 

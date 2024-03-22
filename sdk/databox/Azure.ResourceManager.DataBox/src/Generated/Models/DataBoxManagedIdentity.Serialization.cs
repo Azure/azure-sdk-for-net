@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IdentityType != null)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType);
             }
-            if (UserAssigned != null)
+            if (Optional.IsDefined(UserAssigned))
             {
                 writer.WritePropertyName("userAssigned"u8);
                 writer.WriteObjectValue(UserAssigned);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxManagedIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxManagedIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

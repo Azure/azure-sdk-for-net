@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MemoryMB.HasValue)
+            if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (CpuCount.HasValue)
+            if (Optional.IsDefined(CpuCount))
             {
                 writer.WritePropertyName("cpuCount"u8);
                 writer.WriteNumberValue(CpuCount.Value);
             }
-            if (LimitCpuForMigration.HasValue)
+            if (Optional.IsDefined(LimitCpuForMigration))
             {
                 writer.WritePropertyName("limitCpuForMigration"u8);
                 writer.WriteStringValue(LimitCpuForMigration.Value.ToString());
             }
-            if (DynamicMemoryEnabled.HasValue)
+            if (Optional.IsDefined(DynamicMemoryEnabled))
             {
                 writer.WritePropertyName("dynamicMemoryEnabled"u8);
                 writer.WriteStringValue(DynamicMemoryEnabled.Value.ToString());
             }
-            if (DynamicMemoryMaxMB.HasValue)
+            if (Optional.IsDefined(DynamicMemoryMaxMB))
             {
                 writer.WritePropertyName("dynamicMemoryMaxMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMaxMB.Value);
             }
-            if (DynamicMemoryMinMB.HasValue)
+            if (Optional.IsDefined(DynamicMemoryMinMB))
             {
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeHardwareProfileUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareProfileUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

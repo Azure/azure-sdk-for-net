@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(ConnectionDetails is ChangeTrackingList<HybridComputeConnectionDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetails))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkScopeValidationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializePrivateLinkScopeValidationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkScopeValidationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

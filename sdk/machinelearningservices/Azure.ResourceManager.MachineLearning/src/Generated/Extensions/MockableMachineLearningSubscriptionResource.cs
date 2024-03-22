@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Mocking
@@ -190,10 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceQuotaUpdate"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotasAsync(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
@@ -223,10 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <returns> A collection of <see cref="MachineLearningWorkspaceQuotaUpdate"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceQuotaUpdate> UpdateMachineLearningQuotas(AzureLocation location, MachineLearningQuotaUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);

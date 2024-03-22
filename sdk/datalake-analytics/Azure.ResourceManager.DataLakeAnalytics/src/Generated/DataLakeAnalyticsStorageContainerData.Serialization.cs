@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsStorageContainerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsStorageContainerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         return DeserializeDataLakeAnalyticsStorageContainerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsStorageContainerData)} does not support reading '{options.Format}' format.");
             }
         }
 

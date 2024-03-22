@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
-            if (ApplicationId.HasValue)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeKeyVaultAccessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultAccessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

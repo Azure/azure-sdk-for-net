@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,12 +30,12 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(QueueId);
             writer.WritePropertyName("length"u8);
             writer.WriteNumberValue(Length);
-            if (!(EstimatedWaitTimes is ChangeTrackingDictionary<int, TimeSpan> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EstimatedWaitTimes))
             {
                 writer.WritePropertyName("estimatedWaitTimeMinutes"u8);
                 WriteEstimatedWaitTimes(writer);
             }
-            if (LongestJobWaitTimeMinutes.HasValue)
+            if (Optional.IsDefined(LongestJobWaitTimeMinutes))
             {
                 writer.WritePropertyName("longestJobWaitTimeMinutes"u8);
                 writer.WriteNumberValue(LongestJobWaitTimeMinutes.Value);
@@ -64,7 +63,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterQueueStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +128,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +144,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeRouterQueueStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterQueueStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

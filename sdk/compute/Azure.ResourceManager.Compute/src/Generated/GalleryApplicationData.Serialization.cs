@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (PrivacyStatementUri != null)
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
             }
-            if (ReleaseNoteUri != null)
+            if (Optional.IsDefined(ReleaseNoteUri))
             {
                 writer.WritePropertyName("releaseNoteUri"u8);
                 writer.WriteStringValue(ReleaseNoteUri.AbsoluteUri);
             }
-            if (EndOfLifeOn.HasValue)
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (SupportedOSType.HasValue)
+            if (Optional.IsDefined(SupportedOSType))
             {
                 writer.WritePropertyName("supportedOSType"u8);
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
-            if (!(CustomActions is ChangeTrackingList<GalleryApplicationCustomAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomActions))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeGalleryApplicationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support reading '{options.Format}' format.");
             }
         }
 

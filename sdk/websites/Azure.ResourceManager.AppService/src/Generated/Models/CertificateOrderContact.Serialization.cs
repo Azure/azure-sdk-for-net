@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (NameFirst != null)
+            if (Optional.IsDefined(NameFirst))
             {
                 writer.WritePropertyName("nameFirst"u8);
                 writer.WriteStringValue(NameFirst);
             }
-            if (NameLast != null)
+            if (Optional.IsDefined(NameLast))
             {
                 writer.WritePropertyName("nameLast"u8);
                 writer.WriteStringValue(NameLast);
             }
-            if (Phone != null)
+            if (Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeCertificateOrderContact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support reading '{options.Format}' format.");
             }
         }
 

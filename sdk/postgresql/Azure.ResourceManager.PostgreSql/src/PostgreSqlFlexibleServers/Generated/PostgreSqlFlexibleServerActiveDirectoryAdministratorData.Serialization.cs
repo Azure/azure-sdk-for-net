@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (PrincipalName != null)
+            if (Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         return DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerActiveDirectoryAdministratorData)} does not support reading '{options.Format}' format.");
             }
         }
 

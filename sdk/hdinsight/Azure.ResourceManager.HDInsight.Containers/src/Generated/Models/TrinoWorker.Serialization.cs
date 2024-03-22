@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoWorker>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoWorker)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("debug"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Suspend.HasValue)
+            if (Optional.IsDefined(Suspend))
             {
                 writer.WritePropertyName("suspend"u8);
                 writer.WriteBooleanValue(Suspend.Value);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrinoWorker>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrinoWorker)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeTrinoWorker(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrinoWorker)} does not support reading '{options.Format}' format.");
             }
         }
 

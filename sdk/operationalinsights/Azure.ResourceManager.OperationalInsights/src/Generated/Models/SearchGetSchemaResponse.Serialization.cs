@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchGetSchemaResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (!(Value is ChangeTrackingList<OperationalInsightsSearchSchemaValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchGetSchemaResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeSearchGetSchemaResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchGetSchemaResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

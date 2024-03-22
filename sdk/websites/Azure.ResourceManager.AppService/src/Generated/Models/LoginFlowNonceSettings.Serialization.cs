@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoginFlowNonceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ValidateNonce.HasValue)
+            if (Optional.IsDefined(ValidateNonce))
             {
                 writer.WritePropertyName("validateNonce"u8);
                 writer.WriteBooleanValue(ValidateNonce.Value);
             }
-            if (NonceExpirationInterval != null)
+            if (Optional.IsDefined(NonceExpirationInterval))
             {
                 writer.WritePropertyName("nonceExpirationInterval"u8);
                 writer.WriteStringValue(NonceExpirationInterval);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoginFlowNonceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeLoginFlowNonceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

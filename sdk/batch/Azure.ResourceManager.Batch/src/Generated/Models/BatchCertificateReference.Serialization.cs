@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchCertificateReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (StoreLocation.HasValue)
+            if (Optional.IsDefined(StoreLocation))
             {
                 writer.WritePropertyName("storeLocation"u8);
                 writer.WriteStringValue(StoreLocation.Value.ToSerialString());
             }
-            if (StoreName != null)
+            if (Optional.IsDefined(StoreName))
             {
                 writer.WritePropertyName("storeName"u8);
                 writer.WriteStringValue(StoreName);
             }
-            if (!(Visibility is ChangeTrackingList<BatchCertificateVisibility> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchCertificateReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchCertificateReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchCertificateReference)} does not support reading '{options.Format}' format.");
             }
         }
 

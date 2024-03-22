@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeTaken != null)
+            if (Optional.IsDefined(TimeTaken))
             {
                 writer.WritePropertyName("timeTaken"u8);
                 writer.WriteStringValue(TimeTaken);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TimeInterval != null)
+            if (Optional.IsDefined(TimeInterval))
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSlowRequestsBasedTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

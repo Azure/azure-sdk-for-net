@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupLogProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && LogType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Details != null)
+            if (options.Format != "W" && Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (options.Format != "W" && TracingId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TracingId))
             {
                 writer.WritePropertyName("tracingId"u8);
                 writer.WriteStringValue(TracingId.Value);
             }
-            if (options.Format != "W" && OperationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
                 writer.WriteStringValue(OperationStatus);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupLogProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSyncGroupLogProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncGroupLogProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

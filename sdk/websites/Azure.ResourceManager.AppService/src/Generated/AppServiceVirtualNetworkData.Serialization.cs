@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VnetResourceId != null)
+            if (Optional.IsDefined(VnetResourceId))
             {
                 writer.WritePropertyName("vnetResourceId"u8);
                 writer.WriteStringValue(VnetResourceId);
             }
-            if (options.Format != "W" && CertThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(CertThumbprintString))
             {
                 writer.WritePropertyName("certThumbprint"u8);
                 writer.WriteStringValue(CertThumbprintString);
             }
-            if (CertBlob != null)
+            if (Optional.IsDefined(CertBlob))
             {
                 writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
-            if (options.Format != "W" && !(Routes is ChangeTrackingList<AppServiceVirtualNetworkRoute> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsResyncRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (DnsServers != null)
+            if (Optional.IsDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStringValue(DnsServers);
             }
-            if (IsSwift.HasValue)
+            if (Optional.IsDefined(IsSwift))
             {
                 writer.WritePropertyName("isSwift"u8);
                 writer.WriteBooleanValue(IsSwift.Value);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeAppServiceVirtualNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

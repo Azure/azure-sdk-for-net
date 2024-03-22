@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStringValue(SigningKey.ToString());
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Maps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Maps.Models
                         return DeserializeMapsAccountSasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsAccountSasContent)} does not support reading '{options.Format}' format.");
             }
         }
 

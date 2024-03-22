@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesMultiRegionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RoutingMethod.HasValue)
+            if (Optional.IsDefined(RoutingMethod))
             {
                 writer.WritePropertyName("routingMethod"u8);
                 writer.WriteStringValue(RoutingMethod.Value.ToString());
             }
-            if (!(Regions is ChangeTrackingList<CognitiveServicesRegionSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesMultiRegionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesMultiRegionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesMultiRegionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

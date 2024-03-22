@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesModelSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (UsageName != null)
+            if (Optional.IsDefined(UsageName))
             {
                 writer.WritePropertyName("usageName"u8);
                 writer.WriteStringValue(UsageName);
             }
-            if (DeprecationOn.HasValue)
+            if (Optional.IsDefined(DeprecationOn))
             {
                 writer.WritePropertyName("deprecationDate"u8);
                 writer.WriteStringValue(DeprecationOn.Value, "O");
             }
-            if (Capacity != null)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && !(RateLimits is ChangeTrackingList<ServiceAccountCallRateLimit> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesModelSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesModelSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesModelSku)} does not support reading '{options.Format}' format.");
             }
         }
 

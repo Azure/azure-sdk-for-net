@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ManagementGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
             }
-            if (!(Facets is ChangeTrackingList<FacetRequest> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Facets))
             {
                 writer.WritePropertyName("facets"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeResourceQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

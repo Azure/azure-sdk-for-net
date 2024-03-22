@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(CredentialsInternal);
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("identity");
                 }
             }
-            if (DataChangeDetectionPolicy != null)
+            if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataChangeDetectionPolicy");
                 }
             }
-            if (DataDeletionDetectionPolicy != null)
+            if (Optional.IsDefined(DataDeletionDetectionPolicy))
             {
                 if (DataDeletionDetectionPolicy != null)
                 {
@@ -64,12 +64,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dataDeletionDetectionPolicy");
                 }
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {

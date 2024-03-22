@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AllowInboundEnabled.HasValue)
+            if (Optional.IsDefined(AllowInboundEnabled))
             {
                 writer.WritePropertyName("allowInboundEnabled"u8);
                 writer.WriteBooleanValue(AllowInboundEnabled.Value);
             }
-            if (AllowOutboundEnabled.HasValue)
+            if (Optional.IsDefined(AllowOutboundEnabled))
             {
                 writer.WritePropertyName("allowOutboundEnabled"u8);
                 writer.WriteBooleanValue(AllowOutboundEnabled.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceDtcTransactionManagerCommunicationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceDtcTransactionManagerCommunicationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceDtcTransactionManagerCommunicationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

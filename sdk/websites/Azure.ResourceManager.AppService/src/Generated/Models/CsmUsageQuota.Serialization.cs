@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsmUsageQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (NextResetOn.HasValue)
+            if (Optional.IsDefined(NextResetOn))
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetOn.Value, "O");
             }
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsmUsageQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeCsmUsageQuota(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmUsageQuota)} does not support reading '{options.Format}' format.");
             }
         }
 

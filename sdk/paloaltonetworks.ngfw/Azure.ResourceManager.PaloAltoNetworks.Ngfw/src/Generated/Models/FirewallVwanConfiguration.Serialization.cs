@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkVirtualApplianceId != null)
+            if (Optional.IsDefined(NetworkVirtualApplianceId))
             {
                 writer.WritePropertyName("networkVirtualApplianceId"u8);
                 writer.WriteStringValue(NetworkVirtualApplianceId);
             }
             writer.WritePropertyName("vHub"u8);
             writer.WriteObjectValue(Vhub);
-            if (TrustSubnet != null)
+            if (Optional.IsDefined(TrustSubnet))
             {
                 writer.WritePropertyName("trustSubnet"u8);
                 writer.WriteObjectValue(TrustSubnet);
             }
-            if (UnTrustSubnet != null)
+            if (Optional.IsDefined(UnTrustSubnet))
             {
                 writer.WritePropertyName("unTrustSubnet"u8);
                 writer.WriteObjectValue(UnTrustSubnet);
             }
-            if (IPOfTrustSubnetForUdr != null)
+            if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
                 writer.WriteObjectValue(IPOfTrustSubnetForUdr);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallVwanConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallVwanConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallVwanConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

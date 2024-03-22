@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceLoadMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteStringValue(Weight.Value.ToString());
             }
-            if (PrimaryDefaultLoad.HasValue)
+            if (Optional.IsDefined(PrimaryDefaultLoad))
             {
                 writer.WritePropertyName("primaryDefaultLoad"u8);
                 writer.WriteNumberValue(PrimaryDefaultLoad.Value);
             }
-            if (SecondaryDefaultLoad.HasValue)
+            if (Optional.IsDefined(SecondaryDefaultLoad))
             {
                 writer.WritePropertyName("secondaryDefaultLoad"u8);
                 writer.WriteNumberValue(SecondaryDefaultLoad.Value);
             }
-            if (DefaultLoad.HasValue)
+            if (Optional.IsDefined(DefaultLoad))
             {
                 writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceLoadMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedServiceLoadMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceLoadMetric)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
         public virtual async Task<Response<VerifiedPartnerResource>> GetAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
         public virtual Response<VerifiedPartnerResource> Get(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.Get");
             scope.Start();
@@ -249,14 +233,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.Exists");
             scope.Start();
@@ -299,14 +276,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
         public virtual Response<bool> Exists(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.Exists");
             scope.Start();
@@ -349,14 +319,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
         public virtual async Task<NullableResponse<VerifiedPartnerResource>> GetIfExistsAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetIfExists");
             scope.Start();
@@ -401,14 +364,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="verifiedPartnerName"/> is null. </exception>
         public virtual NullableResponse<VerifiedPartnerResource> GetIfExists(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
-            if (verifiedPartnerName == null)
-            {
-                throw new ArgumentNullException(nameof(verifiedPartnerName));
-            }
-            if (verifiedPartnerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(verifiedPartnerName));
-            }
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
 
             using var scope = _verifiedPartnerClientDiagnostics.CreateScope("VerifiedPartnerCollection.GetIfExists");
             scope.Start();

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,22 +35,22 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
             writer.WriteStringValue(Granularity.ToString());
-            if (CustomInterval.HasValue)
+            if (Optional.IsDefined(CustomInterval))
             {
                 writer.WritePropertyName("customInterval"u8);
                 writer.WriteNumberValue(CustomInterval.Value);
             }
-            if (Period.HasValue)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (StableTrendWindow.HasValue)
+            if (Optional.IsDefined(StableTrendWindow))
             {
                 writer.WritePropertyName("stableTrendWindow"u8);
                 writer.WriteNumberValue(StableTrendWindow.Value);
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
@@ -79,7 +78,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +179,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +195,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeUnivariateChangePointDetectionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

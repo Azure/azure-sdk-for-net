@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<OwaspCrsExclusionEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(SelectorMatchOperator.ToString());
             writer.WritePropertyName("selector"u8);
             writer.WriteStringValue(Selector);
-            if (!(ExclusionManagedRuleSets is ChangeTrackingList<ExclusionManagedRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExclusionManagedRuleSets))
             {
                 writer.WritePropertyName("exclusionManagedRuleSets"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<OwaspCrsExclusionEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeOwaspCrsExclusionEntry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OwaspCrsExclusionEntry)} does not support reading '{options.Format}' format.");
             }
         }
 

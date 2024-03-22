@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProtectedItemName != null)
+            if (Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (FabricObjectId != null)
+            if (Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (FabricName != null)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (FabricLocation.HasValue)
+            if (Optional.IsDefined(FabricLocation))
             {
                 writer.WritePropertyName("fabricLocation"u8);
                 writer.WriteStringValue(FabricLocation.Value);
             }
-            if (RemoteFabricName != null)
+            if (Optional.IsDefined(RemoteFabricName))
             {
                 writer.WritePropertyName("remoteFabricName"u8);
                 writer.WriteStringValue(RemoteFabricName);
             }
-            if (RemoteFabricLocation.HasValue)
+            if (Optional.IsDefined(RemoteFabricLocation))
             {
                 writer.WritePropertyName("remoteFabricLocation"u8);
                 writer.WriteStringValue(RemoteFabricLocation.Value);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AEventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AEventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AEventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

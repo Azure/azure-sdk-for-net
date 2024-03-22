@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredJobRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WebJobId != null)
+            if (Optional.IsDefined(WebJobId))
             {
                 writer.WritePropertyName("web_job_id"u8);
                 writer.WriteStringValue(WebJobId);
             }
-            if (WebJobName != null)
+            if (Optional.IsDefined(WebJobName))
             {
                 writer.WritePropertyName("web_job_name"u8);
                 writer.WriteStringValue(WebJobName);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (OutputUri != null)
+            if (Optional.IsDefined(OutputUri))
             {
                 writer.WritePropertyName("output_url"u8);
                 writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
-            if (ErrorUri != null)
+            if (Optional.IsDefined(ErrorUri))
             {
                 writer.WritePropertyName("error_url"u8);
                 writer.WriteStringValue(ErrorUri.AbsoluteUri);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (JobName != null)
+            if (Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("job_name"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Trigger != null)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredJobRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeTriggeredJobRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support reading '{options.Format}' format.");
             }
         }
 

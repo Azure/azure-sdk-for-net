@@ -19,64 +19,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SqlReaderQuery != null)
+            if (Optional.IsDefined(SqlReaderQuery))
             {
                 writer.WritePropertyName("sqlReaderQuery"u8);
                 writer.WriteObjectValue(SqlReaderQuery);
             }
-            if (SqlReaderStoredProcedureName != null)
+            if (Optional.IsDefined(SqlReaderStoredProcedureName))
             {
                 writer.WritePropertyName("sqlReaderStoredProcedureName"u8);
                 writer.WriteObjectValue(SqlReaderStoredProcedureName);
             }
-            if (StoredProcedureParameters != null)
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
                 writer.WriteObjectValue(StoredProcedureParameters);
             }
-            if (IsolationLevel != null)
+            if (Optional.IsDefined(IsolationLevel))
             {
                 writer.WritePropertyName("isolationLevel"u8);
                 writer.WriteObjectValue(IsolationLevel);
             }
-            if (ProduceAdditionalTypes != null)
+            if (Optional.IsDefined(ProduceAdditionalTypes))
             {
                 writer.WritePropertyName("produceAdditionalTypes"u8);
                 writer.WriteObjectValue(ProduceAdditionalTypes);
             }
-            if (PartitionOption != null)
+            if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
                 writer.WriteObjectValue(PartitionOption);
             }
-            if (PartitionSettings != null)
+            if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);

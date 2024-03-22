@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FiveQi.HasValue)
+            if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
-            if (AllocationAndRetentionPriorityLevel.HasValue)
+            if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
                 writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
-            if (PreemptionCapability.HasValue)
+            if (Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
-            if (PreemptionVulnerability.HasValue)
+            if (Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkQosPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkQosPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

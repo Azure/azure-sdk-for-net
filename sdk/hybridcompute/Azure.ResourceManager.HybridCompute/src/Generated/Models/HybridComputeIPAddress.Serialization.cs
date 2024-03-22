@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (IPAddressVersion != null)
+            if (Optional.IsDefined(IPAddressVersion))
             {
                 writer.WritePropertyName("ipAddressVersion"u8);
                 writer.WriteStringValue(IPAddressVersion);
             }
-            if (options.Format != "W" && Subnet != null)
+            if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeIPAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeIPAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncFullSchemaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Tables is ChangeTrackingList<SyncFullSchemaTable> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdateOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncFullSchemaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSyncFullSchemaProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncFullSchemaProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

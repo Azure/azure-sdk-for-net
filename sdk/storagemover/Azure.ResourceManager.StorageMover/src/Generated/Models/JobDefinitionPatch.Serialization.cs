@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (CopyMode.HasValue)
+            if (Optional.IsDefined(CopyMode))
             {
                 writer.WritePropertyName("copyMode"u8);
                 writer.WriteStringValue(CopyMode.Value.ToString());
             }
-            if (AgentName != null)
+            if (Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeJobDefinitionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobDefinitionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

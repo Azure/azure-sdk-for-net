@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppPushSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsPushEnabled.HasValue)
+            if (Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (TagWhitelistJson != null)
+            if (Optional.IsDefined(TagWhitelistJson))
             {
                 writer.WritePropertyName("tagWhitelistJson"u8);
                 writer.WriteStringValue(TagWhitelistJson);
             }
-            if (TagsRequiringAuth != null)
+            if (Optional.IsDefined(TagsRequiringAuth))
             {
                 writer.WritePropertyName("tagsRequiringAuth"u8);
                 writer.WriteStringValue(TagsRequiringAuth);
             }
-            if (DynamicTagsJson != null)
+            if (Optional.IsDefined(DynamicTagsJson))
             {
                 writer.WritePropertyName("dynamicTagsJson"u8);
                 writer.WriteStringValue(DynamicTagsJson);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppPushSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppPushSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppPushSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

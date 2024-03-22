@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<TableData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (!(SignedIdentifiers is ChangeTrackingList<StorageTableSignedIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SignedIdentifiers))
             {
                 writer.WritePropertyName("signedIdentifiers"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<TableData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Storage
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
                         return DeserializeTableData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableData)} does not support reading '{options.Format}' format.");
             }
         }
 

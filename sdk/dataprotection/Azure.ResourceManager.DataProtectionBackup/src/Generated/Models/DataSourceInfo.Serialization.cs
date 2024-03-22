@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataSourceType != null)
+            if (Optional.IsDefined(DataSourceType))
             {
                 writer.WritePropertyName("datasourceType"u8);
                 writer.WriteStringValue(DataSourceType);
             }
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
             writer.WriteStringValue(ResourceId);
-            if (ResourceLocation.HasValue)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (ResourceUriString != null)
+            if (Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (ResourceProperties != null)
+            if (Optional.IsDefined(ResourceProperties))
             {
                 writer.WritePropertyName("resourceProperties"u8);
                 writer.WriteObjectValue(ResourceProperties);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

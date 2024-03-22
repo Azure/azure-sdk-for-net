@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImmutableStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (ImmutabilityPolicy != null)
+            if (Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
                 writer.WriteObjectValue(ImmutabilityPolicy);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImmutableStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeImmutableStorageAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

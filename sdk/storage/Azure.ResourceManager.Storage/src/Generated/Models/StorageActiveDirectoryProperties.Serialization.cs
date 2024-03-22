@@ -22,40 +22,40 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            if (NetBiosDomainName != null)
+            if (Optional.IsDefined(NetBiosDomainName))
             {
                 writer.WritePropertyName("netBiosDomainName"u8);
                 writer.WriteStringValue(NetBiosDomainName);
             }
-            if (ForestName != null)
+            if (Optional.IsDefined(ForestName))
             {
                 writer.WritePropertyName("forestName"u8);
                 writer.WriteStringValue(ForestName);
             }
             writer.WritePropertyName("domainGuid"u8);
             writer.WriteStringValue(DomainGuid);
-            if (DomainSid != null)
+            if (Optional.IsDefined(DomainSid))
             {
                 writer.WritePropertyName("domainSid"u8);
                 writer.WriteStringValue(DomainSid);
             }
-            if (AzureStorageSid != null)
+            if (Optional.IsDefined(AzureStorageSid))
             {
                 writer.WritePropertyName("azureStorageSid"u8);
                 writer.WriteStringValue(AzureStorageSid);
             }
-            if (SamAccountName != null)
+            if (Optional.IsDefined(SamAccountName))
             {
                 writer.WritePropertyName("samAccountName"u8);
                 writer.WriteStringValue(SamAccountName);
             }
-            if (AccountType.HasValue)
+            if (Optional.IsDefined(AccountType))
             {
                 writer.WritePropertyName("accountType"u8);
                 writer.WriteStringValue(AccountType.Value.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageActiveDirectoryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

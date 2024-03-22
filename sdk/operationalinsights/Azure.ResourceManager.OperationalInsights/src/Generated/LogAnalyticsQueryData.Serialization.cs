@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ApplicationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("timeModified"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Author != null)
+            if (options.Format != "W" && Optional.IsDefined(Author))
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Related != null)
+            if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
                 writer.WriteObjectValue(Related);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeLogAnalyticsQueryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQueryData)} does not support reading '{options.Format}' format.");
             }
         }
 

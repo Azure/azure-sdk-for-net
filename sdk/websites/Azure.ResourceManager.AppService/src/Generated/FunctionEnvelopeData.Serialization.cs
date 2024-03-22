@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FunctionAppId != null)
+            if (Optional.IsDefined(FunctionAppId))
             {
                 writer.WritePropertyName("function_app_id"u8);
                 writer.WriteStringValue(FunctionAppId);
             }
-            if (ScriptRootPathHref != null)
+            if (Optional.IsDefined(ScriptRootPathHref))
             {
                 writer.WritePropertyName("script_root_path_href"u8);
                 writer.WriteStringValue(ScriptRootPathHref);
             }
-            if (ScriptHref != null)
+            if (Optional.IsDefined(ScriptHref))
             {
                 writer.WritePropertyName("script_href"u8);
                 writer.WriteStringValue(ScriptHref);
             }
-            if (ConfigHref != null)
+            if (Optional.IsDefined(ConfigHref))
             {
                 writer.WritePropertyName("config_href"u8);
                 writer.WriteStringValue(ConfigHref);
             }
-            if (TestDataHref != null)
+            if (Optional.IsDefined(TestDataHref))
             {
                 writer.WritePropertyName("test_data_href"u8);
                 writer.WriteStringValue(TestDataHref);
             }
-            if (SecretsFileHref != null)
+            if (Optional.IsDefined(SecretsFileHref))
             {
                 writer.WritePropertyName("secrets_file_href"u8);
                 writer.WriteStringValue(SecretsFileHref);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Config != null)
+            if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
                 }
 #endif
             }
-            if (!(Files is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();
@@ -112,22 +112,22 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (TestData != null)
+            if (Optional.IsDefined(TestData))
             {
                 writer.WritePropertyName("test_data"u8);
                 writer.WriteStringValue(TestData);
             }
-            if (InvokeUrlTemplate != null)
+            if (Optional.IsDefined(InvokeUrlTemplate))
             {
                 writer.WritePropertyName("invoke_url_template"u8);
                 writer.WriteStringValue(InvokeUrlTemplate);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (IsDisabled.HasValue)
+            if (Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeFunctionEnvelopeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PublisherUri != null)
+            if (Optional.IsDefined(PublisherUri))
             {
                 writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUri.AbsoluteUri);
             }
             writer.WritePropertyName("publisherContact"u8);
             writer.WriteStringValue(PublisherContact);
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (PrivacyStatementUri != null)
+            if (Optional.IsDefined(PrivacyStatementUri))
             {
                 writer.WritePropertyName("privacyStatementUri"u8);
                 writer.WriteStringValue(PrivacyStatementUri.AbsoluteUri);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCommunityGalleryMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

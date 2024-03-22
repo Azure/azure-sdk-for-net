@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<FileServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Cors != null)
+            if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors);
             }
-            if (ShareDeleteRetentionPolicy != null)
+            if (Optional.IsDefined(ShareDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("shareDeleteRetentionPolicy"u8);
                 writer.WriteObjectValue(ShareDeleteRetentionPolicy);
             }
-            if (ProtocolSettings != null)
+            if (Optional.IsDefined(ProtocolSettings))
             {
                 writer.WritePropertyName("protocolSettings"u8);
                 writer.WriteObjectValue(ProtocolSettings);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<FileServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Storage
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Storage
                         return DeserializeFileServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

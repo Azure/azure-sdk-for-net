@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,27 +31,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("isPrimaryNic"u8);
             writer.WriteStringValue(IsPrimaryNic);
-            if (IsSelectedForFailover != null)
+            if (Optional.IsDefined(IsSelectedForFailover))
             {
                 writer.WritePropertyName("isSelectedForFailover"u8);
                 writer.WriteStringValue(IsSelectedForFailover);
             }
-            if (TargetSubnetName != null)
+            if (Optional.IsDefined(TargetSubnetName))
             {
                 writer.WritePropertyName("targetSubnetName"u8);
                 writer.WriteStringValue(TargetSubnetName);
             }
-            if (TargetStaticIPAddress != null)
+            if (Optional.IsDefined(TargetStaticIPAddress))
             {
                 writer.WritePropertyName("targetStaticIPAddress"u8);
                 writer.WriteStringValue(TargetStaticIPAddress.ToString());
             }
-            if (TestSubnetName != null)
+            if (Optional.IsDefined(TestSubnetName))
             {
                 writer.WritePropertyName("testSubnetName"u8);
                 writer.WriteStringValue(TestSubnetName);
             }
-            if (TestStaticIPAddress != null)
+            if (Optional.IsDefined(TestStaticIPAddress))
             {
                 writer.WritePropertyName("testStaticIPAddress"u8);
                 writer.WriteStringValue(TestStaticIPAddress.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmNicContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmNicContent)} does not support reading '{options.Format}' format.");
             }
         }
 

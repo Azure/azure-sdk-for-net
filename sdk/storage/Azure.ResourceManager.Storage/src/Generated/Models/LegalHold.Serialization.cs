@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LegalHold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LegalHold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LegalHold)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HasLegalHold.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
                 writer.WritePropertyName("hasLegalHold"u8);
                 writer.WriteBooleanValue(HasLegalHold.Value);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (AllowProtectedAppendWritesAll.HasValue)
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
             {
                 writer.WritePropertyName("allowProtectedAppendWritesAll"u8);
                 writer.WriteBooleanValue(AllowProtectedAppendWritesAll.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LegalHold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LegalHold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LegalHold)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LegalHold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LegalHold)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLegalHold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LegalHold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LegalHold)} does not support reading '{options.Format}' format.");
             }
         }
 

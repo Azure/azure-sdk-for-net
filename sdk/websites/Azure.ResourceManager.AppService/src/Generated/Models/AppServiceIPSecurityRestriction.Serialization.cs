@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPAddressOrCidr != null)
+            if (Optional.IsDefined(IPAddressOrCidr))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddressOrCidr);
             }
-            if (SubnetMask != null)
+            if (Optional.IsDefined(SubnetMask))
             {
                 writer.WritePropertyName("subnetMask"u8);
                 writer.WriteStringValue(SubnetMask);
             }
-            if (VnetSubnetResourceId != null)
+            if (Optional.IsDefined(VnetSubnetResourceId))
             {
                 writer.WritePropertyName("vnetSubnetResourceId"u8);
                 writer.WriteStringValue(VnetSubnetResourceId);
             }
-            if (VnetTrafficTag.HasValue)
+            if (Optional.IsDefined(VnetTrafficTag))
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteNumberValue(VnetTrafficTag.Value);
             }
-            if (SubnetTrafficTag.HasValue)
+            if (Optional.IsDefined(SubnetTrafficTag))
             {
                 writer.WritePropertyName("subnetTrafficTag"u8);
                 writer.WriteNumberValue(SubnetTrafficTag.Value);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Tag.HasValue)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag.Value.ToString());
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Headers is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

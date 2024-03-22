@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerTrustGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(GroupMembers is ChangeTrackingList<ServerTrustGroupServerInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupMembers))
             {
                 writer.WritePropertyName("groupMembers"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrustScopes is ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustScopes))
             {
                 writer.WritePropertyName("trustScopes"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerTrustGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlServerTrustGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerTrustGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

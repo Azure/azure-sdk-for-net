@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && TotalRecallErrorsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalRecallErrorsCount))
             {
                 writer.WritePropertyName("totalRecallErrorsCount"u8);
                 writer.WriteNumberValue(TotalRecallErrorsCount.Value);
             }
-            if (options.Format != "W" && !(RecallErrors is ChangeTrackingList<ServerEndpointRecallError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecallErrors))
             {
                 writer.WritePropertyName("recallErrors"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointRecallStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

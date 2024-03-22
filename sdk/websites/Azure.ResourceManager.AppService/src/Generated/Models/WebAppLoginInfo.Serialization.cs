@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppLoginInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Routes != null)
+            if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
-            if (TokenStore != null)
+            if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
                 writer.WriteObjectValue(TokenStore);
             }
-            if (PreserveUrlFragmentsForLogins.HasValue)
+            if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
                 writer.WriteBooleanValue(PreserveUrlFragmentsForLogins.Value);
             }
-            if (!(AllowedExternalRedirectUrls is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
             {
                 writer.WritePropertyName("allowedExternalRedirectUrls"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CookieExpiration != null)
+            if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
                 writer.WriteObjectValue(CookieExpiration);
             }
-            if (Nonce != null)
+            if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
                 writer.WriteObjectValue(Nonce);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppLoginInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppLoginInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppLoginInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

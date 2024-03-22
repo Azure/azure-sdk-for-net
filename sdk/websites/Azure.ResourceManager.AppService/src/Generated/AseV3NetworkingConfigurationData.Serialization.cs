@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(WindowsOutboundIPAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(WindowsOutboundIPAddresses))
             {
                 writer.WritePropertyName("windowsOutboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LinuxOutboundIPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinuxOutboundIPAddresses))
             {
                 writer.WritePropertyName("linuxOutboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ExternalInboundIPAddresses is ChangeTrackingList<IPAddress> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalInboundIPAddresses))
             {
                 writer.WritePropertyName("externalInboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(InternalInboundIPAddresses is ChangeTrackingList<IPAddress> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InternalInboundIPAddresses))
             {
                 writer.WritePropertyName("internalInboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (AllowNewPrivateEndpointConnections.HasValue)
+            if (Optional.IsDefined(AllowNewPrivateEndpointConnections))
             {
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeAseV3NetworkingConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

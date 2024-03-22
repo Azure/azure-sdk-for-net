@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UpgradeType.ToString());
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetManagedClusterUpgradeSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         return DeserializeContainerServiceFleetManagedClusterUpgradeSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetManagedClusterUpgradeSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

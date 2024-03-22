@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummaryGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Total.HasValue)
+            if (Optional.IsDefined(Total))
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (SmartGroupsCount.HasValue)
+            if (Optional.IsDefined(SmartGroupsCount))
             {
                 writer.WritePropertyName("smartGroupsCount"u8);
                 writer.WriteNumberValue(SmartGroupsCount.Value);
             }
-            if (GroupedBy != null)
+            if (Optional.IsDefined(GroupedBy))
             {
                 writer.WritePropertyName("groupedby"u8);
                 writer.WriteStringValue(GroupedBy);
             }
-            if (!(Values is ChangeTrackingList<ServiceAlertSummaryGroupItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertSummaryGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertSummaryGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertSummaryGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

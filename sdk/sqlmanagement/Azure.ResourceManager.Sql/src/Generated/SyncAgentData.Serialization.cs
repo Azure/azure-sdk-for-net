@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SyncAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncAgentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SyncDatabaseId != null)
+            if (Optional.IsDefined(SyncDatabaseId))
             {
                 writer.WritePropertyName("syncDatabaseId"u8);
                 writer.WriteStringValue(SyncDatabaseId);
             }
-            if (options.Format != "W" && LastAliveOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAliveOn))
             {
                 writer.WritePropertyName("lastAliveTime"u8);
                 writer.WriteStringValue(LastAliveOn.Value, "O");
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && IsUpToDate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsUpToDate))
             {
                 writer.WritePropertyName("isUpToDate"u8);
                 writer.WriteBooleanValue(IsUpToDate.Value);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SyncAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncAgentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncAgentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSyncAgentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncAgentData)} does not support reading '{options.Format}' format.");
             }
         }
 

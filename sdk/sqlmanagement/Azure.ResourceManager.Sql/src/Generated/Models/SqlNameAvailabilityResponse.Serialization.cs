@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && IsAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAvailable))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);
             }
-            if (options.Format != "W" && Reason.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToSerialString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlNameAvailabilityResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlNameAvailabilityResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

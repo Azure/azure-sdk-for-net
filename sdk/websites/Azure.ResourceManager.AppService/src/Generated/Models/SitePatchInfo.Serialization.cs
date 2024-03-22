@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SitePatchInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SitePatchInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SitePatchInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && !(HostNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HostNames))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RepositorySiteName != null)
+            if (options.Format != "W" && Optional.IsDefined(RepositorySiteName))
             {
                 writer.WritePropertyName("repositorySiteName"u8);
                 writer.WriteStringValue(RepositorySiteName);
             }
-            if (options.Format != "W" && UsageState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsageState))
             {
                 writer.WritePropertyName("usageState"u8);
                 writer.WriteStringValue(UsageState.Value.ToSerialString());
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && !(EnabledHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
             {
                 writer.WritePropertyName("enabledHostNames"u8);
                 writer.WriteStartArray();
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AvailabilityState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityState))
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToSerialString());
             }
-            if (!(HostNameSslStates is ChangeTrackingList<HostNameSslState> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HostNameSslStates))
             {
                 writer.WritePropertyName("hostNameSslStates"u8);
                 writer.WriteStartArray();
@@ -114,37 +114,37 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ServerFarmId != null)
+            if (Optional.IsDefined(ServerFarmId))
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (IsReserved.HasValue)
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (IsXenon.HasValue)
+            if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (IsHyperV.HasValue)
+            if (Optional.IsDefined(IsHyperV))
             {
                 writer.WritePropertyName("hyperV"u8);
                 writer.WriteBooleanValue(IsHyperV.Value);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (SiteConfig != null)
+            if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (options.Format != "W" && !(TrafficManagerHostNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
                 writer.WritePropertyName("trafficManagerHostNames"u8);
                 writer.WriteStartArray();
@@ -154,132 +154,132 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsScmSiteAlsoStopped.HasValue)
+            if (Optional.IsDefined(IsScmSiteAlsoStopped))
             {
                 writer.WritePropertyName("scmSiteAlsoStopped"u8);
                 writer.WriteBooleanValue(IsScmSiteAlsoStopped.Value);
             }
-            if (options.Format != "W" && TargetSwapSlot != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetSwapSlot))
             {
                 writer.WritePropertyName("targetSwapSlot"u8);
                 writer.WriteStringValue(TargetSwapSlot);
             }
-            if (HostingEnvironmentProfile != null)
+            if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (IsClientAffinityEnabled.HasValue)
+            if (Optional.IsDefined(IsClientAffinityEnabled))
             {
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (IsClientCertEnabled.HasValue)
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
-            if (ClientCertMode.HasValue)
+            if (Optional.IsDefined(ClientCertMode))
             {
                 writer.WritePropertyName("clientCertMode"u8);
                 writer.WriteStringValue(ClientCertMode.Value.ToSerialString());
             }
-            if (ClientCertExclusionPaths != null)
+            if (Optional.IsDefined(ClientCertExclusionPaths))
             {
                 writer.WritePropertyName("clientCertExclusionPaths"u8);
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (IsHostNameDisabled.HasValue)
+            if (Optional.IsDefined(IsHostNameDisabled))
             {
                 writer.WritePropertyName("hostNamesDisabled"u8);
                 writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
-            if (CustomDomainVerificationId != null)
+            if (Optional.IsDefined(CustomDomainVerificationId))
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (options.Format != "W" && OutboundIPAddresses != null)
+            if (options.Format != "W" && Optional.IsDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStringValue(OutboundIPAddresses);
             }
-            if (options.Format != "W" && PossibleOutboundIPAddresses != null)
+            if (options.Format != "W" && Optional.IsDefined(PossibleOutboundIPAddresses))
             {
                 writer.WritePropertyName("possibleOutboundIpAddresses"u8);
                 writer.WriteStringValue(PossibleOutboundIPAddresses);
             }
-            if (ContainerSize.HasValue)
+            if (Optional.IsDefined(ContainerSize))
             {
                 writer.WritePropertyName("containerSize"u8);
                 writer.WriteNumberValue(ContainerSize.Value);
             }
-            if (DailyMemoryTimeQuota.HasValue)
+            if (Optional.IsDefined(DailyMemoryTimeQuota))
             {
                 writer.WritePropertyName("dailyMemoryTimeQuota"u8);
                 writer.WriteNumberValue(DailyMemoryTimeQuota.Value);
             }
-            if (options.Format != "W" && SuspendOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuspendOn))
             {
                 writer.WritePropertyName("suspendedTill"u8);
                 writer.WriteStringValue(SuspendOn.Value, "O");
             }
-            if (options.Format != "W" && MaxNumberOfWorkers.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfWorkers))
             {
                 writer.WritePropertyName("maxNumberOfWorkers"u8);
                 writer.WriteNumberValue(MaxNumberOfWorkers.Value);
             }
-            if (CloningInfo != null)
+            if (Optional.IsDefined(CloningInfo))
             {
                 writer.WritePropertyName("cloningInfo"u8);
                 writer.WriteObjectValue(CloningInfo);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && IsDefaultContainer.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultContainer))
             {
                 writer.WritePropertyName("isDefaultContainer"u8);
                 writer.WriteBooleanValue(IsDefaultContainer.Value);
             }
-            if (options.Format != "W" && DefaultHostName != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultHostName))
             {
                 writer.WritePropertyName("defaultHostName"u8);
                 writer.WriteStringValue(DefaultHostName);
             }
-            if (options.Format != "W" && SlotSwapStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
             {
                 writer.WritePropertyName("slotSwapStatus"u8);
                 writer.WriteObjectValue(SlotSwapStatus);
             }
-            if (IsHttpsOnly.HasValue)
+            if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (RedundancyMode.HasValue)
+            if (Optional.IsDefined(RedundancyMode))
             {
                 writer.WritePropertyName("redundancyMode"u8);
                 writer.WriteStringValue(RedundancyMode.Value.ToSerialString());
             }
-            if (options.Format != "W" && InProgressOperationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InProgressOperationId))
             {
                 writer.WritePropertyName("inProgressOperationId"u8);
                 writer.WriteStringValue(InProgressOperationId.Value);
             }
-            if (IsStorageAccountRequired.HasValue)
+            if (Optional.IsDefined(IsStorageAccountRequired))
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
                 writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
-            if (KeyVaultReferenceIdentity != null)
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
             {
                 writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                 writer.WriteStringValue(KeyVaultReferenceIdentity);
             }
-            if (VirtualNetworkSubnetId != null)
+            if (Optional.IsDefined(VirtualNetworkSubnetId))
             {
                 writer.WritePropertyName("virtualNetworkSubnetId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetId);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SitePatchInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SitePatchInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SitePatchInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SitePatchInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SitePatchInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSitePatchInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SitePatchInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SitePatchInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

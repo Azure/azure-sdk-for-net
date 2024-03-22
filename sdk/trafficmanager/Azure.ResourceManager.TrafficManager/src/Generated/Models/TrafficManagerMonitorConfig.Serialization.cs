@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProfileMonitorStatus.HasValue)
+            if (Optional.IsDefined(ProfileMonitorStatus))
             {
                 writer.WritePropertyName("profileMonitorStatus"u8);
                 writer.WriteStringValue(ProfileMonitorStatus.Value.ToString());
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (IntervalInSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (ToleratedNumberOfFailures.HasValue)
+            if (Optional.IsDefined(ToleratedNumberOfFailures))
             {
                 writer.WritePropertyName("toleratedNumberOfFailures"u8);
                 writer.WriteNumberValue(ToleratedNumberOfFailures.Value);
             }
-            if (!(CustomHeaders is ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomHeaders))
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExpectedStatusCodeRanges is ChangeTrackingList<ExpectedStatusCodeRangeInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExpectedStatusCodeRanges))
             {
                 writer.WritePropertyName("expectedStatusCodeRanges"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         return DeserializeTrafficManagerMonitorConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

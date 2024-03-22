@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppBackupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BackupId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(BackupId.Value);
             }
-            if (options.Format != "W" && StorageAccountUri != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (options.Format != "W" && BlobName != null)
+            if (options.Format != "W" && Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (options.Format != "W" && BackupName != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (options.Format != "W" && SizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Log != null)
+            if (options.Format != "W" && Optional.IsDefined(Log))
             {
                 writer.WritePropertyName("log"u8);
                 writer.WriteStringValue(Log);
             }
-            if (options.Format != "W" && !(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -105,27 +105,27 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsScheduled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsScheduled))
             {
                 writer.WritePropertyName("scheduled"u8);
                 writer.WriteBooleanValue(IsScheduled.Value);
             }
-            if (options.Format != "W" && LastRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoreOn))
             {
                 writer.WritePropertyName("lastRestoreTimeStamp"u8);
                 writer.WriteStringValue(LastRestoreOn.Value, "O");
             }
-            if (options.Format != "W" && FinishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishedTimeStamp"u8);
                 writer.WriteStringValue(FinishedOn.Value, "O");
             }
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && WebsiteSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WebsiteSizeInBytes))
             {
                 writer.WritePropertyName("websiteSizeInBytes"u8);
                 writer.WriteNumberValue(WebsiteSizeInBytes.Value);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeWebAppBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 

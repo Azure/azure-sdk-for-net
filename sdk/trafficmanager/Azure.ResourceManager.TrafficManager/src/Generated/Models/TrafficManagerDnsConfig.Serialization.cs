@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerDnsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RelativeName != null)
+            if (Optional.IsDefined(RelativeName))
             {
                 writer.WritePropertyName("relativeName"u8);
                 writer.WriteStringValue(RelativeName);
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Ttl.HasValue)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerDnsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         return DeserializeTrafficManagerDnsConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerDnsConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

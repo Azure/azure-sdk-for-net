@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountUri != null)
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (BlobName != null)
+            if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (CanOverwrite.HasValue)
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (SiteName != null)
+            if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (!(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -84,32 +84,32 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IgnoreConflictingHostNames.HasValue)
+            if (Optional.IsDefined(IgnoreConflictingHostNames))
             {
                 writer.WritePropertyName("ignoreConflictingHostNames"u8);
                 writer.WriteBooleanValue(IgnoreConflictingHostNames.Value);
             }
-            if (IgnoreDatabases.HasValue)
+            if (Optional.IsDefined(IgnoreDatabases))
             {
                 writer.WritePropertyName("ignoreDatabases"u8);
                 writer.WriteBooleanValue(IgnoreDatabases.Value);
             }
-            if (AppServicePlan != null)
+            if (Optional.IsDefined(AppServicePlan))
             {
                 writer.WritePropertyName("appServicePlan"u8);
                 writer.WriteStringValue(AppServicePlan);
             }
-            if (OperationType.HasValue)
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToSerialString());
             }
-            if (AdjustConnectionStrings.HasValue)
+            if (Optional.IsDefined(AdjustConnectionStrings))
             {
                 writer.WritePropertyName("adjustConnectionStrings"u8);
                 writer.WriteBooleanValue(AdjustConnectionStrings.Value);
             }
-            if (HostingEnvironment != null)
+            if (Optional.IsDefined(HostingEnvironment))
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeRestoreRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

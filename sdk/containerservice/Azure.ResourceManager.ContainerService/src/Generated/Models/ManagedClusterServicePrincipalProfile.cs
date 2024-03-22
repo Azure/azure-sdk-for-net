@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public ManagedClusterServicePrincipalProfile(string clientId)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
 
             ClientId = clientId;
         }

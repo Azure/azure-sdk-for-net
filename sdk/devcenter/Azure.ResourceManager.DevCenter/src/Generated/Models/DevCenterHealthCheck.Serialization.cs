@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterHealthCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && ErrorType != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("errorType"u8);
                 writer.WriteStringValue(ErrorType);
             }
-            if (options.Format != "W" && RecommendedAction != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedAction))
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (options.Format != "W" && AdditionalDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterHealthCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterHealthCheck(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterHealthCheck)} does not support reading '{options.Format}' format.");
             }
         }
 

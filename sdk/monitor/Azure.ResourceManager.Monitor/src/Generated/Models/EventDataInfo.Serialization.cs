@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Authorization != null)
+            if (options.Format != "W" && Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (options.Format != "W" && !(Claims is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
                 writer.WriteStartObject();
@@ -42,82 +42,82 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Caller != null)
+            if (options.Format != "W" && Optional.IsDefined(Caller))
             {
                 writer.WritePropertyName("caller"u8);
                 writer.WriteStringValue(Caller);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && EventDataId != null)
+            if (options.Format != "W" && Optional.IsDefined(EventDataId))
             {
                 writer.WritePropertyName("eventDataId"u8);
                 writer.WriteStringValue(EventDataId);
             }
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && EventName != null)
+            if (options.Format != "W" && Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteObjectValue(EventName);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteObjectValue(Category);
             }
-            if (options.Format != "W" && HttpRequest != null)
+            if (options.Format != "W" && Optional.IsDefined(HttpRequest))
             {
                 writer.WritePropertyName("httpRequest"u8);
                 writer.WriteObjectValue(HttpRequest);
             }
-            if (options.Format != "W" && Level.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (options.Format != "W" && ResourceGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (options.Format != "W" && ResourceProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceProviderName))
             {
                 writer.WritePropertyName("resourceProviderName"u8);
                 writer.WriteObjectValue(ResourceProviderName);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteObjectValue(ResourceType);
             }
-            if (options.Format != "W" && OperationId != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && OperationName != null)
+            if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteObjectValue(OperationName);
             }
-            if (options.Format != "W" && !(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -128,32 +128,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
             }
-            if (options.Format != "W" && SubStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteObjectValue(SubStatus);
             }
-            if (options.Format != "W" && EventTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp.Value, "O");
             }
-            if (options.Format != "W" && SubmissionTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubmissionTimestamp))
             {
                 writer.WritePropertyName("submissionTimestamp"u8);
                 writer.WriteStringValue(SubmissionTimestamp.Value, "O");
             }
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeEventDataInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

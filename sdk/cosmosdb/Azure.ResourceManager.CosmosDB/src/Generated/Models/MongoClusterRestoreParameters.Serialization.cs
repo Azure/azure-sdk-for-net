@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PointInTimeUTC.HasValue)
+            if (Optional.IsDefined(PointInTimeUTC))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoClusterRestoreParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

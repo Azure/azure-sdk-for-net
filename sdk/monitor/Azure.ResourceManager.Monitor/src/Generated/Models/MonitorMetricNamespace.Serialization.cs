@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricNamespace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Classification.HasValue)
+            if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricNamespace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorMetricNamespace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteObjectValue(SecuritySettings);
             writer.WritePropertyName("processingSettings"u8);
             writer.WriteObjectValue(ProcessingSettings);
-            if (!(EnvelopeOverrides is ChangeTrackingList<X12EnvelopeOverride> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationOverrides is ChangeTrackingList<X12ValidationOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MessageFilterList is ChangeTrackingList<X12MessageIdentifier> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(X12DelimiterOverrides is ChangeTrackingList<X12DelimiterOverrides> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(X12DelimiterOverrides))
             {
                 writer.WritePropertyName("x12DelimiterOverrides"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeX12ProtocolSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

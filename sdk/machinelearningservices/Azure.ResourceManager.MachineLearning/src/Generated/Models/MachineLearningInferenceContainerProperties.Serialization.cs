@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LivenessRoute != null)
+            if (Optional.IsDefined(LivenessRoute))
             {
                 writer.WritePropertyName("livenessRoute"u8);
                 writer.WriteObjectValue(LivenessRoute);
             }
-            if (ReadinessRoute != null)
+            if (Optional.IsDefined(ReadinessRoute))
             {
                 writer.WritePropertyName("readinessRoute"u8);
                 writer.WriteObjectValue(ReadinessRoute);
             }
-            if (ScoringRoute != null)
+            if (Optional.IsDefined(ScoringRoute))
             {
                 writer.WritePropertyName("scoringRoute"u8);
                 writer.WriteObjectValue(ScoringRoute);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningInferenceContainerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

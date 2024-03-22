@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(SourceConnectionInfo);
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
-            if (IsOfflineMigration.HasValue)
+            if (Optional.IsDefined(IsOfflineMigration))
             {
                 writer.WritePropertyName("isOfflineMigration"u8);
                 writer.WriteBooleanValue(IsOfflineMigration.Value);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetAzureDBForMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToTargetAzureDBForMySqlTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetAzureDBForMySqlTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

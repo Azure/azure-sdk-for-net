@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages.Models.Channels
@@ -23,11 +22,11 @@ namespace Azure.Communication.Messages.Models.Channels
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Header is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Header))
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (!(Body is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (!(Footer is ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Footer))
             {
                 writer.WritePropertyName("footer"u8);
                 writer.WriteStartArray();
@@ -57,7 +56,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 writer.WriteEndArray();
             }
-            if (!(Buttons is ChangeTrackingList<WhatsAppMessageTemplateBindingsButton> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Buttons))
             {
                 writer.WritePropertyName("buttons"u8);
                 writer.WriteStartArray();
@@ -92,7 +91,7 @@ namespace Azure.Communication.Messages.Models.Channels
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +200,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +216,7 @@ namespace Azure.Communication.Messages.Models.Channels
                         return DeserializeWhatsAppMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindings)} does not support reading '{options.Format}' format.");
             }
         }
 

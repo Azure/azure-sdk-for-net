@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("nicId"u8);
             writer.WriteStringValue(NicId);
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeHyperVToAzStackHciNicInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support reading '{options.Format}' format.");
             }
         }
 

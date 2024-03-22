@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name.HasValue)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToSerialString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Search.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Search.Models
                         return DeserializeSearchSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchSku)} does not support reading '{options.Format}' format.");
             }
         }
 

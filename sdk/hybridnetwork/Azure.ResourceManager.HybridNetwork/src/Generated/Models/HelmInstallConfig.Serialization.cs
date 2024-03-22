@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmInstallConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Atomic != null)
+            if (Optional.IsDefined(Atomic))
             {
                 writer.WritePropertyName("atomic"u8);
                 writer.WriteStringValue(Atomic);
             }
-            if (Wait != null)
+            if (Optional.IsDefined(Wait))
             {
                 writer.WritePropertyName("wait"u8);
                 writer.WriteStringValue(Wait);
             }
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmInstallConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeHelmInstallConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmInstallConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

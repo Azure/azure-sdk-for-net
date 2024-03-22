@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (InterfaceType != null)
+            if (Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType);
             }
-            if (!(SupportedConnectorTypes is ChangeTrackingList<SupportedConnectorProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedConnectorTypes))
             {
                 writer.WritePropertyName("supportedConnectorTypes"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkDeviceInterfaceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

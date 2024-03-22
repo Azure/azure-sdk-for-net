@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Validation != null)
+            if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteStringValue(Validation);
             }
-            if (ValidationKey != null)
+            if (Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Decryption != null)
+            if (Optional.IsDefined(Decryption))
             {
                 writer.WritePropertyName("decryption"u8);
                 writer.WriteStringValue(Decryption);
             }
-            if (DecryptionKey != null)
+            if (Optional.IsDefined(DecryptionKey))
             {
                 writer.WritePropertyName("decryptionKey"u8);
                 writer.WriteStringValue(DecryptionKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSiteMachineKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobilityServiceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (RebootStatus != null)
+            if (Optional.IsDefined(RebootStatus))
             {
                 writer.WritePropertyName("rebootStatus"u8);
                 writer.WriteStringValue(RebootStatus);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobilityServiceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeMobilityServiceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobilityServiceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisInstanceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SslPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SslPort))
             {
                 writer.WritePropertyName("sslPort"u8);
                 writer.WriteNumberValue(SslPort.Value);
             }
-            if (options.Format != "W" && NonSslPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NonSslPort))
             {
                 writer.WritePropertyName("nonSslPort"u8);
                 writer.WriteNumberValue(NonSslPort.Value);
             }
-            if (options.Format != "W" && Zone != null)
+            if (options.Format != "W" && Optional.IsDefined(Zone))
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
-            if (options.Format != "W" && ShardId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShardId))
             {
                 writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
-            if (options.Format != "W" && IsMaster.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsMaster))
             {
                 writer.WritePropertyName("isMaster"u8);
                 writer.WriteBooleanValue(IsMaster.Value);
             }
-            if (options.Format != "W" && IsPrimary.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisInstanceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeRedisInstanceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

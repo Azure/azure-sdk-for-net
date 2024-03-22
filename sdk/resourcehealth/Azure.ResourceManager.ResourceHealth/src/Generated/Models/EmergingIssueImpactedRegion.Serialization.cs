@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueImpactedRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueImpactedRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeEmergingIssueImpactedRegion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueImpactedRegion)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeSecurityPostureReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(ExcludeExtensions is ChangeTrackingList<VirtualMachineExtensionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludeExtensions))
             {
                 writer.WritePropertyName("excludeExtensions"u8);
                 writer.WriteStartArray();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeSecurityPostureReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputeSecurityPostureReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSecurityPostureReference)} does not support reading '{options.Format}' format.");
             }
         }
 

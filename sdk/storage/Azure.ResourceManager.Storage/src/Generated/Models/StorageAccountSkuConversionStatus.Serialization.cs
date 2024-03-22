@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountSkuConversionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SkuConversionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkuConversionStatus))
             {
                 writer.WritePropertyName("skuConversionStatus"u8);
                 writer.WriteStringValue(SkuConversionStatus.Value.ToString());
             }
-            if (TargetSkuName.HasValue)
+            if (Optional.IsDefined(TargetSkuName))
             {
                 writer.WritePropertyName("targetSkuName"u8);
                 writer.WriteStringValue(TargetSkuName.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountSkuConversionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageAccountSkuConversionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountSkuConversionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

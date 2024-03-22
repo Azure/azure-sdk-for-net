@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Attestation
             var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationProviderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationProviderData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.Attestation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TrustModel != null)
+            if (Optional.IsDefined(TrustModel))
             {
                 writer.WritePropertyName("trustModel"u8);
                 writer.WriteStringValue(TrustModel);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (AttestUri != null)
+            if (Optional.IsDefined(AttestUri))
             {
                 writer.WritePropertyName("attestUri"u8);
                 writer.WriteStringValue(AttestUri.AbsoluteUri);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<AttestationPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Attestation
             var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationProviderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationProviderData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Attestation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttestationProviderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationProviderData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Attestation
                         return DeserializeAttestationProviderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestationProviderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationProviderData)} does not support reading '{options.Format}' format.");
             }
         }
 

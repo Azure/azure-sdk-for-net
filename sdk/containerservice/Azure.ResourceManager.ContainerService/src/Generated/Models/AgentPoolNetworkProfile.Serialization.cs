@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(NodePublicIPTags is ChangeTrackingList<ContainerServiceIPTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodePublicIPTags))
             {
                 writer.WritePropertyName("nodePublicIPTags"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedHostPorts is ChangeTrackingList<AgentPoolNetworkPortRange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedHostPorts))
             {
                 writer.WritePropertyName("allowedHostPorts"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationSecurityGroups is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeAgentPoolNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

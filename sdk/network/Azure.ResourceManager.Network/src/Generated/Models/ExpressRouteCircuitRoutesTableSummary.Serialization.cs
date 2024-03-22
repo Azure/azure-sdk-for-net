@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Neighbor != null)
+            if (Optional.IsDefined(Neighbor))
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (V.HasValue)
+            if (Optional.IsDefined(V))
             {
                 writer.WritePropertyName("v"u8);
                 writer.WriteNumberValue(V.Value);
             }
-            if (As.HasValue)
+            if (Optional.IsDefined(As))
             {
                 writer.WritePropertyName("as"u8);
                 writer.WriteNumberValue(As.Value);
             }
-            if (UpDown != null)
+            if (Optional.IsDefined(UpDown))
             {
                 writer.WritePropertyName("upDown"u8);
                 writer.WriteStringValue(UpDown);
             }
-            if (StatePfxRcd != null)
+            if (Optional.IsDefined(StatePfxRcd))
             {
                 writer.WritePropertyName("statePfxRcd"u8);
                 writer.WriteStringValue(StatePfxRcd);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteCircuitRoutesTableSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

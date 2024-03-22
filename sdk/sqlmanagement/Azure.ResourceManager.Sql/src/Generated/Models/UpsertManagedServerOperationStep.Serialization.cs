@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeUpsertManagedServerOperationStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationStep)} does not support reading '{options.Format}' format.");
             }
         }
 

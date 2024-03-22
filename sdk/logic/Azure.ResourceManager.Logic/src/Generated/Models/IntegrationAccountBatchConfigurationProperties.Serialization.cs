@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(BatchGroupName);
             writer.WritePropertyName("releaseCriteria"u8);
             writer.WriteObjectValue(ReleaseCriteria);
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ChangedOn.HasValue)
+            if (Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountBatchConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

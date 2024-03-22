@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryOverrideTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
-            if (!(Arguments is ChangeTrackingList<ContainerRegistryRunArgument> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UpdateTriggerToken != null)
+            if (Optional.IsDefined(UpdateTriggerToken))
             {
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryOverrideTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryOverrideTaskStepProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryOverrideTaskStepProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

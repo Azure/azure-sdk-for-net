@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (DefaultContentKeyPolicyName != null)
+            if (Optional.IsDefined(DefaultContentKeyPolicyName))
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (EnvelopeEncryption != null)
+            if (Optional.IsDefined(EnvelopeEncryption))
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
                 writer.WriteObjectValue(EnvelopeEncryption);
             }
-            if (CommonEncryptionCenc != null)
+            if (Optional.IsDefined(CommonEncryptionCenc))
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
                 writer.WriteObjectValue(CommonEncryptionCenc);
             }
-            if (CommonEncryptionCbcs != null)
+            if (Optional.IsDefined(CommonEncryptionCbcs))
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
                 writer.WriteObjectValue(CommonEncryptionCbcs);
             }
-            if (NoEncryption != null)
+            if (Optional.IsDefined(NoEncryption))
             {
                 writer.WritePropertyName("noEncryption"u8);
                 writer.WriteObjectValue(NoEncryption);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeStreamingPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

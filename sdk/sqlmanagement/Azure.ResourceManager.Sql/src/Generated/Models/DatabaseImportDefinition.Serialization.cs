@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Edition != null)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (ServiceObjectiveName != null)
+            if (Optional.IsDefined(ServiceObjectiveName))
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (MaxSizeBytes != null)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (NetworkIsolation != null)
+            if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeDatabaseImportDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

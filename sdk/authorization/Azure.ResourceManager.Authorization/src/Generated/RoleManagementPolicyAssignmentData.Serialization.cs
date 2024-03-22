@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Authorization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (RoleDefinitionId != null)
+            if (Optional.IsDefined(RoleDefinitionId))
             {
                 writer.WritePropertyName("roleDefinitionId"u8);
                 writer.WriteStringValue(RoleDefinitionId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && !(EffectiveRules is ChangeTrackingList<RoleManagementPolicyRule> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EffectiveRules))
             {
                 writer.WritePropertyName("effectiveRules"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PolicyAssignmentProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
             {
                 writer.WritePropertyName("policyAssignmentProperties"u8);
                 writer.WriteObjectValue(PolicyAssignmentProperties);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Authorization
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Authorization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Authorization
                         return DeserializeRoleManagementPolicyAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

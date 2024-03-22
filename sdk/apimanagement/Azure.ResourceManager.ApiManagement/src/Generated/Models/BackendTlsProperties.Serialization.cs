@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ShouldValidateCertificateChain.HasValue)
+            if (Optional.IsDefined(ShouldValidateCertificateChain))
             {
                 writer.WritePropertyName("validateCertificateChain"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateChain.Value);
             }
-            if (ShouldValidateCertificateName.HasValue)
+            if (Optional.IsDefined(ShouldValidateCertificateName))
             {
                 writer.WritePropertyName("validateCertificateName"u8);
                 writer.WriteBooleanValue(ShouldValidateCertificateName.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackendTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeBackendTlsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

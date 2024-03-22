@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.MySql.Models
             writer.WriteStringValue(SourceServerId);
             writer.WritePropertyName("restorePointInTime"u8);
             writer.WriteStringValue(RestorePointInTime, "O");
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (SslEnforcement.HasValue)
+            if (Optional.IsDefined(SslEnforcement))
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (MinimalTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (InfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForRestore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlServerPropertiesForRestore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(RegisteredFeatures is ChangeTrackingList<CustomerSubscriptionRegisteredFeatures> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
             {
                 writer.WritePropertyName("registeredFeatures"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LocationPlacementId != null)
+            if (Optional.IsDefined(LocationPlacementId))
             {
                 writer.WritePropertyName("locationPlacementId"u8);
                 writer.WriteStringValue(LocationPlacementId);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeCustomerSubscriptionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerSubscriptionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

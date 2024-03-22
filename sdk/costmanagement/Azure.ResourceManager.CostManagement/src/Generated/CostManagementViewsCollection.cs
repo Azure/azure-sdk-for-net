@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CostManagement
 {
@@ -72,18 +70,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CostManagementViewsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.CreateOrUpdate");
             scope.Start();
@@ -131,18 +119,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CostManagementViewsResource> CreateOrUpdate(WaitUntil waitUntil, string viewName, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +166,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         public virtual async Task<Response<CostManagementViewsResource>> GetAsync(string viewName, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Get");
             scope.Start();
@@ -240,14 +211,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         public virtual Response<CostManagementViewsResource> Get(string viewName, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Get");
             scope.Start();
@@ -352,14 +316,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string viewName, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Exists");
             scope.Start();
@@ -402,14 +359,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         public virtual Response<bool> Exists(string viewName, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.Exists");
             scope.Start();
@@ -452,14 +402,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         public virtual async Task<NullableResponse<CostManagementViewsResource>> GetIfExistsAsync(string viewName, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.GetIfExists");
             scope.Start();
@@ -504,14 +447,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
         public virtual NullableResponse<CostManagementViewsResource> GetIfExists(string viewName, CancellationToken cancellationToken = default)
         {
-            if (viewName == null)
-            {
-                throw new ArgumentNullException(nameof(viewName));
-            }
-            if (viewName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(viewName));
-            }
+            Argument.AssertNotNullOrEmpty(viewName, nameof(viewName));
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsCollection.GetIfExists");
             scope.Start();

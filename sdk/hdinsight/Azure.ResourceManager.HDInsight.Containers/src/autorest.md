@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: HDInsightContainers
 namespace: Azure.ResourceManager.HDInsight.Containers
-require: https://github.com/Azure/azure-rest-api-specs/blob/5372f410f6af3de9559b63defbd556a7b10c4e65/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md
-# tag: package-2023-06-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/a434a5a7ee851abc96218443e66a5ebb57911fee/specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/readme.md
+# tag: package-preview-2023-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -62,8 +62,8 @@ rename-mapping:
   ScaleActionType.scaleup: ScaleUp
   ScaleActionType.scaledown: ScaleDown
   Schedule: AutoscaleSchedule
-  Schedule.startTime: StartOn|date-time
-  Schedule.endTime: EndOn|date-time
+  Schedule.startTime: StartOn
+  Schedule.endTime: EndOn
   ScheduleDay: AutoscaleScheduleDay
   SecretReference: ClusterSecretReference
   SecretsProfile: ClusterSecretsProfile

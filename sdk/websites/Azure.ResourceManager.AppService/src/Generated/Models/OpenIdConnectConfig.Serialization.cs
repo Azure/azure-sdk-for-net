@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AuthorizationEndpoint != null)
+            if (Optional.IsDefined(AuthorizationEndpoint))
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (TokenEndpoint != null)
+            if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (CertificationUri != null)
+            if (Optional.IsDefined(CertificationUri))
             {
                 writer.WritePropertyName("certificationUri"u8);
                 writer.WriteStringValue(CertificationUri.AbsoluteUri);
             }
-            if (WellKnownOpenIdConfiguration != null)
+            if (Optional.IsDefined(WellKnownOpenIdConfiguration))
             {
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeOpenIdConnectConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

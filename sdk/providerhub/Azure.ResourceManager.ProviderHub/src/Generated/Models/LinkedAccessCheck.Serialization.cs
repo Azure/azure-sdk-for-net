@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ActionName != null)
+            if (Optional.IsDefined(ActionName))
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (LinkedProperty != null)
+            if (Optional.IsDefined(LinkedProperty))
             {
                 writer.WritePropertyName("linkedProperty"u8);
                 writer.WriteStringValue(LinkedProperty);
             }
-            if (LinkedAction != null)
+            if (Optional.IsDefined(LinkedAction))
             {
                 writer.WritePropertyName("linkedAction"u8);
                 writer.WriteStringValue(LinkedAction);
             }
-            if (LinkedActionVerb != null)
+            if (Optional.IsDefined(LinkedActionVerb))
             {
                 writer.WritePropertyName("linkedActionVerb"u8);
                 writer.WriteStringValue(LinkedActionVerb);
             }
-            if (LinkedType != null)
+            if (Optional.IsDefined(LinkedType))
             {
                 writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeLinkedAccessCheck(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support reading '{options.Format}' format.");
             }
         }
 

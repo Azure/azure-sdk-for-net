@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<Annotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Annotation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Annotation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AnnotationName != null)
+            if (Optional.IsDefined(AnnotationName))
             {
                 writer.WritePropertyName("AnnotationName"u8);
                 writer.WriteStringValue(AnnotationName);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("Category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (EventOn.HasValue)
+            if (Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("EventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("Id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (RelatedAnnotation != null)
+            if (Optional.IsDefined(RelatedAnnotation))
             {
                 writer.WritePropertyName("RelatedAnnotation"u8);
                 writer.WriteStringValue(RelatedAnnotation);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<Annotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Annotation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Annotation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Annotation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Annotation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Annotation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Annotation)} does not support reading '{options.Format}' format.");
             }
         }
 

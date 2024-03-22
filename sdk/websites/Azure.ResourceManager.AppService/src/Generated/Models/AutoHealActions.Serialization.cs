@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealActions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ActionType.HasValue)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
-            if (CustomAction != null)
+            if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
                 writer.WriteObjectValue(CustomAction);
             }
-            if (MinProcessExecutionTime != null)
+            if (Optional.IsDefined(MinProcessExecutionTime))
             {
                 writer.WritePropertyName("minProcessExecutionTime"u8);
                 writer.WriteStringValue(MinProcessExecutionTime);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealActions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAutoHealActions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support reading '{options.Format}' format.");
             }
         }
 

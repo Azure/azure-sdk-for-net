@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<TemplateSpecData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateSpecData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateSpecData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Resources
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
                 }
 #endif
             }
-            if (options.Format != "W" && !(Versions is ChangeTrackingDictionary<string, TemplateSpecVersionInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<TemplateSpecData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateSpecData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateSpecData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Resources
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateSpecData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateSpecData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeTemplateSpecData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateSpecData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateSpecData)} does not support reading '{options.Format}' format.");
             }
         }
 

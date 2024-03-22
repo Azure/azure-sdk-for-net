@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PrivateIPAddressStringValue != null)
+            if (Optional.IsDefined(PrivateIPAddressStringValue))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddressStringValue);
             }
-            if (PrivateIPAllocationMethod != null)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Zones != null)
+            if (Optional.IsDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeLoadBalancerFrontendIPConfigurationResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfigurationResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

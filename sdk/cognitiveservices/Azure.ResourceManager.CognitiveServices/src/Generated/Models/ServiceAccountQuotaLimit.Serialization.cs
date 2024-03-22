@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountQuotaLimit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (RenewalPeriod.HasValue)
+            if (Optional.IsDefined(RenewalPeriod))
             {
                 writer.WritePropertyName("renewalPeriod"u8);
                 writer.WriteNumberValue(RenewalPeriod.Value);
             }
-            if (!(Rules is ChangeTrackingList<ServiceAccountThrottlingRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountQuotaLimit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountQuotaLimit(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountQuotaLimit)} does not support reading '{options.Format}' format.");
             }
         }
 

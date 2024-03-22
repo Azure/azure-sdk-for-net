@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBContainerPartitionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Paths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Paths))
             {
                 writer.WritePropertyName("paths"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (options.Format != "W" && IsSystemKey.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSystemKey))
             {
                 writer.WritePropertyName("systemKey"u8);
                 writer.WriteBooleanValue(IsSystemKey.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBContainerPartitionKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBContainerPartitionKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBContainerPartitionKey)} does not support reading '{options.Format}' format.");
             }
         }
 

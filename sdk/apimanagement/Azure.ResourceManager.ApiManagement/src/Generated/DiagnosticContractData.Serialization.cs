@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlwaysLog.HasValue)
+            if (Optional.IsDefined(AlwaysLog))
             {
                 writer.WritePropertyName("alwaysLog"u8);
                 writer.WriteStringValue(AlwaysLog.Value.ToString());
             }
-            if (LoggerId != null)
+            if (Optional.IsDefined(LoggerId))
             {
                 writer.WritePropertyName("loggerId"u8);
                 writer.WriteStringValue(LoggerId);
             }
-            if (Sampling != null)
+            if (Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
                 writer.WriteObjectValue(Sampling);
             }
-            if (Frontend != null)
+            if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
                 writer.WriteObjectValue(Frontend);
             }
-            if (Backend != null)
+            if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend);
             }
-            if (IsLogClientIPEnabled.HasValue)
+            if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp"u8);
                 writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
-            if (HttpCorrelationProtocol.HasValue)
+            if (Optional.IsDefined(HttpCorrelationProtocol))
             {
                 writer.WritePropertyName("httpCorrelationProtocol"u8);
                 writer.WriteStringValue(HttpCorrelationProtocol.Value.ToString());
             }
-            if (Verbosity.HasValue)
+            if (Optional.IsDefined(Verbosity))
             {
                 writer.WritePropertyName("verbosity"u8);
                 writer.WriteStringValue(Verbosity.Value.ToString());
             }
-            if (OperationNameFormat.HasValue)
+            if (Optional.IsDefined(OperationNameFormat))
             {
                 writer.WritePropertyName("operationNameFormat"u8);
                 writer.WriteStringValue(OperationNameFormat.Value.ToString());
             }
-            if (Metrics.HasValue)
+            if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteBooleanValue(Metrics.Value);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeDiagnosticContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

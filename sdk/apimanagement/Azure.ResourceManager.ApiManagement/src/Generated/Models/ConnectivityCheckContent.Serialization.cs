@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (PreferredIPVersion.HasValue)
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (ProtocolConfiguration != null)
+            if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
                 writer.WriteObjectValue(ProtocolConfiguration);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConnectivityCheckContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PatchMode.HasValue)
+            if (Optional.IsDefined(PatchMode))
             {
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (EnableHotpatching.HasValue)
+            if (Optional.IsDefined(EnableHotpatching))
             {
                 writer.WritePropertyName("enableHotpatching"u8);
                 writer.WriteBooleanValue(EnableHotpatching.Value);
             }
-            if (AssessmentMode.HasValue)
+            if (Optional.IsDefined(AssessmentMode))
             {
                 writer.WritePropertyName("assessmentMode"u8);
                 writer.WriteStringValue(AssessmentMode.Value.ToString());
             }
-            if (AutomaticByPlatformSettings != null)
+            if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
                 writer.WriteObjectValue(AutomaticByPlatformSettings);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatchSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatchSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializePatchSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatchSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatchSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

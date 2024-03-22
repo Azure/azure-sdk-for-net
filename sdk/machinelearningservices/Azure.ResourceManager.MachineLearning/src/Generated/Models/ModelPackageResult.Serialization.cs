@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BaseEnvironmentSource != null)
+            if (options.Format != "W" && Optional.IsDefined(BaseEnvironmentSource))
             {
                 if (BaseEnvironmentSource != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("baseEnvironmentSource");
                 }
             }
-            if (options.Format != "W" && BuildId != null)
+            if (options.Format != "W" && Optional.IsDefined(BuildId))
             {
                 if (BuildId != null)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("buildId");
                 }
             }
-            if (options.Format != "W" && BuildState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BuildState))
             {
                 writer.WritePropertyName("buildState"u8);
                 writer.WriteStringValue(BuildState.Value.ToString());
             }
-            if (options.Format != "W" && !(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (options.Format != "W" && InferencingServer != null)
+            if (options.Format != "W" && Optional.IsDefined(InferencingServer))
             {
                 if (InferencingServer != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inferencingServer");
                 }
             }
-            if (options.Format != "W" && !(Inputs is ChangeTrackingList<ModelPackageInput> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (options.Format != "W" && LogUri != null)
+            if (options.Format != "W" && Optional.IsDefined(LogUri))
             {
                 if (LogUri != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("logUrl");
                 }
             }
-            if (options.Format != "W" && ModelConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(ModelConfiguration))
             {
                 if (ModelConfiguration != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelConfiguration");
                 }
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (options.Format != "W" && TargetEnvironmentId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetEnvironmentId))
             {
                 if (TargetEnvironmentId != null)
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPackageResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPackageResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeModelPackageResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPackageResult)} does not support reading '{options.Format}' format.");
             }
         }
 

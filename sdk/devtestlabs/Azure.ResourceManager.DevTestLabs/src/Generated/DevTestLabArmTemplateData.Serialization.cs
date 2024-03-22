@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArmTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Icon != null)
+            if (options.Format != "W" && Optional.IsDefined(Icon))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(Icon);
             }
-            if (options.Format != "W" && Contents != null)
+            if (options.Format != "W" && Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
 #if NET6_0_OR_GREATER
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
 #endif
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && !(ParametersValueFilesInfo is ChangeTrackingList<DevTestLabParametersValueFileInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ParametersValueFilesInfo))
             {
                 writer.WritePropertyName("parametersValueFilesInfo"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArmTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabArmTemplateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabArmTemplateData)} does not support reading '{options.Format}' format.");
             }
         }
 

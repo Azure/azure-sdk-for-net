@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -26,18 +25,18 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,34 +64,34 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PolicySettings != null)
+            if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
                 writer.WriteObjectValue(PolicySettings);
             }
-            if (RateLimitSettings != null)
+            if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
                 writer.WriteObjectValue(RateLimitSettings);
             }
-            if (CustomSettings != null)
+            if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteObjectValue(CustomSettings);
             }
-            if (ManagedRules != null)
+            if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
-            if (options.Format != "W" && !(EndpointLinks is ChangeTrackingList<SubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
             {
                 writer.WritePropertyName("endpointLinks"u8);
                 writer.WriteStartArray();
@@ -102,12 +101,12 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Cdn
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.Cdn
                         return DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnWebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

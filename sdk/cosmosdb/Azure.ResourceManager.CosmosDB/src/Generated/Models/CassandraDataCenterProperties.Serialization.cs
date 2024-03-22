@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraDataCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DataCenterLocation.HasValue)
+            if (Optional.IsDefined(DataCenterLocation))
             {
                 writer.WritePropertyName("dataCenterLocation"u8);
                 writer.WriteStringValue(DataCenterLocation.Value);
             }
-            if (DelegatedSubnetId != null)
+            if (Optional.IsDefined(DelegatedSubnetId))
             {
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (options.Format != "W" && !(SeedNodes is ChangeTrackingList<CassandraDataCenterSeedNode> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SeedNodes))
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
@@ -56,55 +56,60 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Base64EncodedCassandraYamlFragment != null)
+            if (Optional.IsDefined(Base64EncodedCassandraYamlFragment))
             {
                 writer.WritePropertyName("base64EncodedCassandraYamlFragment"u8);
                 writer.WriteStringValue(Base64EncodedCassandraYamlFragment);
             }
-            if (ManagedDiskCustomerKeyUri != null)
+            if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
             {
                 writer.WritePropertyName("managedDiskCustomerKeyUri"u8);
                 writer.WriteStringValue(ManagedDiskCustomerKeyUri.AbsoluteUri);
             }
-            if (BackupStorageCustomerKeyUri != null)
+            if (Optional.IsDefined(BackupStorageCustomerKeyUri))
             {
                 writer.WritePropertyName("backupStorageCustomerKeyUri"u8);
                 writer.WriteStringValue(BackupStorageCustomerKeyUri.AbsoluteUri);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (DiskSku != null)
+            if (Optional.IsDefined(DiskSku))
             {
                 writer.WritePropertyName("diskSku"u8);
                 writer.WriteStringValue(DiskSku);
             }
-            if (DiskCapacity.HasValue)
+            if (Optional.IsDefined(DiskCapacity))
             {
                 writer.WritePropertyName("diskCapacity"u8);
                 writer.WriteNumberValue(DiskCapacity.Value);
             }
-            if (DoesSupportAvailabilityZone.HasValue)
+            if (Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
-            if (AuthenticationMethodLdapProperties != null)
+            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
                 writer.WriteObjectValue(AuthenticationMethodLdapProperties);
             }
-            if (Deallocated.HasValue)
+            if (Optional.IsDefined(Deallocated))
             {
                 writer.WritePropertyName("deallocated"u8);
                 writer.WriteBooleanValue(Deallocated.Value);
             }
-            if (ProvisionError != null)
+            if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
                 writer.WriteObjectValue(ProvisionError);
+            }
+            if (Optional.IsDefined(PrivateEndpointIPAddress))
+            {
+                writer.WritePropertyName("privateEndpointIpAddress"u8);
+                writer.WriteStringValue(PrivateEndpointIPAddress);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraDataCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,6 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default;
             bool? deallocated = default;
             CassandraError provisionError = default;
+            string privateEndpointIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -291,6 +297,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("privateEndpointIpAddress"u8))
+                {
+                    privateEndpointIPAddress = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -313,6 +324,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 authenticationMethodLdapProperties,
                 deallocated,
                 provisionError,
+                privateEndpointIPAddress,
                 serializedAdditionalRawData);
         }
 
@@ -325,7 +337,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +353,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraDataCenterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,86 +22,86 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportExportData.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportExportData))
             {
                 writer.WritePropertyName("SupportExportData"u8);
                 writer.WriteBooleanValue(SupportExportData.Value);
             }
-            if (options.Format != "W" && BurstThrottlePolicy != null)
+            if (options.Format != "W" && Optional.IsDefined(BurstThrottlePolicy))
             {
                 writer.WritePropertyName("BurstThrottlePolicy"u8);
                 writer.WriteStringValue(BurstThrottlePolicy);
             }
-            if (options.Format != "W" && MetadataClass != null)
+            if (options.Format != "W" && Optional.IsDefined(MetadataClass))
             {
                 writer.WritePropertyName("MetadataClass"u8);
                 writer.WriteStringValue(MetadataClass);
             }
-            if (options.Format != "W" && LiveStreamMetrics.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiveStreamMetrics))
             {
                 writer.WritePropertyName("LiveStreamMetrics"u8);
                 writer.WriteBooleanValue(LiveStreamMetrics.Value);
             }
-            if (options.Format != "W" && ApplicationMap.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationMap))
             {
                 writer.WritePropertyName("ApplicationMap"u8);
                 writer.WriteBooleanValue(ApplicationMap.Value);
             }
-            if (options.Format != "W" && WorkItemIntegration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkItemIntegration))
             {
                 writer.WritePropertyName("WorkItemIntegration"u8);
                 writer.WriteBooleanValue(WorkItemIntegration.Value);
             }
-            if (options.Format != "W" && PowerBIIntegration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PowerBIIntegration))
             {
                 writer.WritePropertyName("PowerBIIntegration"u8);
                 writer.WriteBooleanValue(PowerBIIntegration.Value);
             }
-            if (options.Format != "W" && OpenSchema.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OpenSchema))
             {
                 writer.WritePropertyName("OpenSchema"u8);
                 writer.WriteBooleanValue(OpenSchema.Value);
             }
-            if (options.Format != "W" && ProactiveDetection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProactiveDetection))
             {
                 writer.WritePropertyName("ProactiveDetection"u8);
                 writer.WriteBooleanValue(ProactiveDetection.Value);
             }
-            if (options.Format != "W" && AnalyticsIntegration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AnalyticsIntegration))
             {
                 writer.WritePropertyName("AnalyticsIntegration"u8);
                 writer.WriteBooleanValue(AnalyticsIntegration.Value);
             }
-            if (options.Format != "W" && MultipleStepWebTest.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MultipleStepWebTest))
             {
                 writer.WritePropertyName("MultipleStepWebTest"u8);
                 writer.WriteBooleanValue(MultipleStepWebTest.Value);
             }
-            if (options.Format != "W" && ApiAccessLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiAccessLevel))
             {
                 writer.WritePropertyName("ApiAccessLevel"u8);
                 writer.WriteStringValue(ApiAccessLevel);
             }
-            if (options.Format != "W" && TrackingType != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingType))
             {
                 writer.WritePropertyName("TrackingType"u8);
                 writer.WriteStringValue(TrackingType);
             }
-            if (options.Format != "W" && DailyCap.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DailyCap))
             {
                 writer.WritePropertyName("DailyCap"u8);
                 writer.WriteNumberValue(DailyCap.Value);
             }
-            if (options.Format != "W" && DailyCapResetTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DailyCapResetTime))
             {
                 writer.WritePropertyName("DailyCapResetTime"u8);
                 writer.WriteNumberValue(DailyCapResetTime.Value);
             }
-            if (options.Format != "W" && ThrottleRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThrottleRate))
             {
                 writer.WritePropertyName("ThrottleRate"u8);
                 writer.WriteNumberValue(ThrottleRate.Value);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentFeatureCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFeatureCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

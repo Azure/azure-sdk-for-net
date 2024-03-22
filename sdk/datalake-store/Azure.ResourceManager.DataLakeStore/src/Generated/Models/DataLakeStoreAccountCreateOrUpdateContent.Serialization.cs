@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -40,29 +40,29 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultGroup != null)
+            if (Optional.IsDefined(DefaultGroup))
             {
                 writer.WritePropertyName("defaultGroup"u8);
                 writer.WriteStringValue(DefaultGroup);
             }
-            if (EncryptionConfig != null)
+            if (Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
                 writer.WriteObjectValue(EncryptionConfig);
             }
-            if (EncryptionState.HasValue)
+            if (Optional.IsDefined(EncryptionState))
             {
                 writer.WritePropertyName("encryptionState"u8);
                 writer.WriteStringValue(EncryptionState.Value.ToSerialString());
             }
-            if (!(FirewallRules is ChangeTrackingList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkRules is ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallState.HasValue)
+            if (Optional.IsDefined(FirewallState))
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (FirewallAllowAzureIPs.HasValue)
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (!(TrustedIdProviders is ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedIdProviders))
             {
                 writer.WritePropertyName("trustedIdProviders"u8);
                 writer.WriteStartArray();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TrustedIdProviderState.HasValue)
+            if (Optional.IsDefined(TrustedIdProviderState))
             {
                 writer.WritePropertyName("trustedIdProviderState"u8);
                 writer.WriteStringValue(TrustedIdProviderState.Value.ToSerialString());
             }
-            if (NewTier.HasValue)
+            if (Optional.IsDefined(NewTier))
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeDataLakeStoreAccountCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

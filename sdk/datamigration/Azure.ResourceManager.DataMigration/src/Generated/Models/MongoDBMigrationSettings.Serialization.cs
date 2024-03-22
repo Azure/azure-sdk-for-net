@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBMigrationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BoostRUs.HasValue)
+            if (Optional.IsDefined(BoostRUs))
             {
                 writer.WritePropertyName("boostRUs"u8);
                 writer.WriteNumberValue(BoostRUs.Value);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Replication.HasValue)
+            if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
                 writer.WriteStringValue(Replication.Value.ToString());
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (Throttling != null)
+            if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
                 writer.WriteObjectValue(Throttling);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBMigrationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBMigrationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBMigrationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

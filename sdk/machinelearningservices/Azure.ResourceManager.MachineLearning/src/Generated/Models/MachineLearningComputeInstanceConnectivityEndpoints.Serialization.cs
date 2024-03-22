@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceConnectivityEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 if (PublicIPAddress != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("publicIpAddress");
                 }
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 if (PrivateIPAddress != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceConnectivityEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningComputeInstanceConnectivityEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceConnectivityEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

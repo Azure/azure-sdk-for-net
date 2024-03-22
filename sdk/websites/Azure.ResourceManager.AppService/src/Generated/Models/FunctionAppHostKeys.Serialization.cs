@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppHostKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MasterKey != null)
+            if (Optional.IsDefined(MasterKey))
             {
                 writer.WritePropertyName("masterKey"u8);
                 writer.WriteStringValue(MasterKey);
             }
-            if (!(FunctionKeys is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FunctionKeys))
             {
                 writer.WritePropertyName("functionKeys"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(SystemKeys is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SystemKeys))
             {
                 writer.WritePropertyName("systemKeys"u8);
                 writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppHostKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeFunctionAppHostKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionAppHostKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

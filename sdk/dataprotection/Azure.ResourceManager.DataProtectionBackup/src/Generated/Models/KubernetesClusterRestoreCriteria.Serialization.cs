@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IsClusterScopeResourcesIncluded);
-            if (!(IncludedNamespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedNamespaces))
             {
                 writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedNamespaces is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedNamespaces))
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedResourceTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedResourceTypes))
             {
                 writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedResourceTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedResourceTypes))
             {
                 writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LabelSelectors is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(LabelSelectors))
             {
                 writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PersistentVolumeRestoreMode.HasValue)
+            if (Optional.IsDefined(PersistentVolumeRestoreMode))
             {
                 writer.WritePropertyName("persistentVolumeRestoreMode"u8);
                 writer.WriteStringValue(PersistentVolumeRestoreMode.Value.ToString());
             }
-            if (ConflictPolicy.HasValue)
+            if (Optional.IsDefined(ConflictPolicy))
             {
                 writer.WritePropertyName("conflictPolicy"u8);
                 writer.WriteStringValue(ConflictPolicy.Value.ToString());
             }
-            if (!(NamespaceMappings is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(NamespaceMappings))
             {
                 writer.WritePropertyName("namespaceMappings"u8);
                 writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(RestoreHookReferences is ChangeTrackingList<NamespacedName> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(RestoreHookReferences))
             {
                 writer.WritePropertyName("restoreHookReferences"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesClusterRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Categories is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Solutions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Solutions))
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeLogAnalyticsQuerySearchRelatedMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

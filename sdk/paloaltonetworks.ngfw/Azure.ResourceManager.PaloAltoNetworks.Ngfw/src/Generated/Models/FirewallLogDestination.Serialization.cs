@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallLogDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageConfiguration != null)
+            if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfigurations"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (EventHubConfiguration != null)
+            if (Optional.IsDefined(EventHubConfiguration))
             {
                 writer.WritePropertyName("eventHubConfigurations"u8);
                 writer.WriteObjectValue(EventHubConfiguration);
             }
-            if (MonitorConfiguration != null)
+            if (Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfigurations"u8);
                 writer.WriteObjectValue(MonitorConfiguration);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallLogDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallLogDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

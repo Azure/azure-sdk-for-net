@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxSegmentCount.HasValue)
+            if (Optional.IsDefined(MaxSegmentCount))
             {
                 writer.WritePropertyName("maxSegmentCount"u8);
                 writer.WriteNumberValue(MaxSegmentCount.Value);
             }
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteObjectValue(ContinuationToken);

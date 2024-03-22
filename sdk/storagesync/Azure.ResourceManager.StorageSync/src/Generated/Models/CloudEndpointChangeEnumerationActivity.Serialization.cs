@@ -22,71 +22,71 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && OperationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationState))
             {
                 writer.WritePropertyName("operationState"u8);
                 writer.WriteStringValue(OperationState.Value.ToString());
             }
-            if (options.Format != "W" && StatusCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && ProcessedFilesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedFilesCount))
             {
                 writer.WritePropertyName("processedFilesCount"u8);
                 writer.WriteNumberValue(ProcessedFilesCount.Value);
             }
-            if (options.Format != "W" && ProcessedDirectoriesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedDirectoriesCount))
             {
                 writer.WritePropertyName("processedDirectoriesCount"u8);
                 writer.WriteNumberValue(ProcessedDirectoriesCount.Value);
             }
-            if (options.Format != "W" && TotalFilesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalFilesCount))
             {
                 writer.WritePropertyName("totalFilesCount"u8);
                 writer.WriteNumberValue(TotalFilesCount.Value);
             }
-            if (options.Format != "W" && TotalDirectoriesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDirectoriesCount))
             {
                 writer.WritePropertyName("totalDirectoriesCount"u8);
                 writer.WriteNumberValue(TotalDirectoriesCount.Value);
             }
-            if (options.Format != "W" && TotalSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSizeInBytes))
             {
                 writer.WritePropertyName("totalSizeBytes"u8);
                 writer.WriteNumberValue(TotalSizeInBytes.Value);
             }
-            if (options.Format != "W" && ProgressPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercent))
             {
                 writer.WritePropertyName("progressPercent"u8);
                 writer.WriteNumberValue(ProgressPercent.Value);
             }
-            if (options.Format != "W" && MinutesRemaining.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinutesRemaining))
             {
                 writer.WritePropertyName("minutesRemaining"u8);
                 writer.WriteNumberValue(MinutesRemaining.Value);
             }
-            if (options.Format != "W" && TotalCountsState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCountsState))
             {
                 writer.WritePropertyName("totalCountsState"u8);
                 writer.WriteStringValue(TotalCountsState.Value.ToString());
             }
-            if (options.Format != "W" && DeletesProgressPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletesProgressPercent))
             {
                 writer.WritePropertyName("deletesProgressPercent"u8);
                 writer.WriteNumberValue(DeletesProgressPercent.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudEndpointChangeEnumerationActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

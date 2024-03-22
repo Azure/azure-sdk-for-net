@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this collection event. </param>
+        /// <param name="canUndelete"> A state of this collection to identify if this container is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this collection can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>
         /// <param name="collectionName"> The name of this MongoDB collection. </param>
         /// <param name="collectionId"> The resource ID of this MongoDB collection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string collectionName, string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string collectionName, string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
+            CanUndelete = canUndelete;
+            CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
             CollectionName = collectionName;
             CollectionId = collectionId;
@@ -71,6 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Rid { get; }
         /// <summary> The operation type of this collection event. </summary>
         public CosmosDBOperationType? OperationType { get; }
+        /// <summary> A state of this collection to identify if this container is restorable in same account. </summary>
+        public string CanUndelete { get; }
+        /// <summary> The reason why this collection can not be restored in same account. </summary>
+        public string CanUndeleteReason { get; }
         /// <summary> The time when this collection event happened. </summary>
         public string EventTimestamp { get; }
         /// <summary> The name of this MongoDB collection. </summary>

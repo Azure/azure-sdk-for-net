@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
                 writer.WriteObjectValue(NetworkConfiguration);
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteObjectValue(ApplicationServer);
             writer.WritePropertyName("databaseServer"u8);
             writer.WriteObjectValue(DatabaseServer);
-            if (HighAvailabilityConfig != null)
+            if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
                 writer.WriteObjectValue(HighAvailabilityConfig);
             }
-            if (StorageConfiguration != null)
+            if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
                 writer.WriteObjectValue(StorageConfiguration);
             }
-            if (CustomResourceNames != null)
+            if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
                 writer.WriteObjectValue(CustomResourceNames);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeThreeTierConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

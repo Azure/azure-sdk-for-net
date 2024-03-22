@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VpnClientAddressPool != null)
+            if (Optional.IsDefined(VpnClientAddressPool))
             {
                 writer.WritePropertyName("vpnClientAddressPool"u8);
                 writer.WriteObjectValue(VpnClientAddressPool);
             }
-            if (!(VpnClientRootCertificates is ChangeTrackingList<VpnClientRootCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnClientRootCertificates))
             {
                 writer.WritePropertyName("vpnClientRootCertificates"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VpnClientRevokedCertificates is ChangeTrackingList<VpnClientRevokedCertificate> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnClientRevokedCertificates))
             {
                 writer.WritePropertyName("vpnClientRevokedCertificates"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VpnClientProtocols is ChangeTrackingList<VpnClientProtocol> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnClientProtocols))
             {
                 writer.WritePropertyName("vpnClientProtocols"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VpnAuthenticationTypes is ChangeTrackingList<VpnAuthenticationType> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnAuthenticationTypes))
             {
                 writer.WritePropertyName("vpnAuthenticationTypes"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VpnClientIPsecPolicies is ChangeTrackingList<IPsecPolicy> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnClientIPsecPolicies))
             {
                 writer.WritePropertyName("vpnClientIpsecPolicies"u8);
                 writer.WriteStartArray();
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RadiusServerAddress != null)
+            if (Optional.IsDefined(RadiusServerAddress))
             {
                 writer.WritePropertyName("radiusServerAddress"u8);
                 writer.WriteStringValue(RadiusServerAddress);
             }
-            if (RadiusServerSecret != null)
+            if (Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
             }
-            if (!(RadiusServers is ChangeTrackingList<RadiusServer> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(RadiusServers))
             {
                 writer.WritePropertyName("radiusServers"u8);
                 writer.WriteStartArray();
@@ -101,22 +101,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AadTenant != null)
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (AadIssuer != null)
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
             }
-            if (!(VngClientConnectionConfigurations is ChangeTrackingList<VngClientConnectionConfiguration> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(VngClientConnectionConfigurations))
             {
                 writer.WritePropertyName("vngClientConnectionConfigurations"u8);
                 writer.WriteStartArray();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnClientConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

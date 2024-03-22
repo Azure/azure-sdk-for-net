@@ -23,23 +23,23 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RelativeUri != null)
+            if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 JsonSerializer.Serialize(writer, RelativeUri);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<HttpServerLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpServerLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpServerLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeHttpServerLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HttpServerLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpServerLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SecondaryType.HasValue)
+            if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (ReadWriteEndpoint != null)
+            if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
-            if (ReadOnlyEndpoint != null)
+            if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
-            if (options.Format != "W" && ReplicationRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && ReplicationState != null)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
             {
                 writer.WritePropertyName("replicationState"u8);
                 writer.WriteStringValue(ReplicationState);
             }
-            if (!(PartnerRegions is ChangeTrackingList<PartnerRegionInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PartnerRegions))
             {
                 writer.WritePropertyName("partnerRegions"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (!(ManagedInstancePairs is ChangeTrackingList<ManagedInstancePairInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedInstancePairs))
             {
                 writer.WritePropertyName("managedInstancePairs"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeInstanceFailoverGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

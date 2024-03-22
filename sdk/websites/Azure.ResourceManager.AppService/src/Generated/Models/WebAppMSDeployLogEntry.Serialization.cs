@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeployLogEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Time.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (options.Format != "W" && EntryType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EntryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EntryType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeployLogEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppMSDeployLogEntry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support reading '{options.Format}' format.");
             }
         }
 

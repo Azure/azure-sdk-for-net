@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEmailReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("emailAddress"u8);
             writer.WriteStringValue(EmailAddress);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEmailReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorEmailReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorEmailReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 

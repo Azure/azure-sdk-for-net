@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.ElasticSan
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (!(AvailabilityZones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailabilityZones))
             {
                 writer.WritePropertyName("availabilityZones"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,32 +84,32 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WriteNumberValue(BaseSizeTiB);
             writer.WritePropertyName("extendedCapacitySizeTiB"u8);
             writer.WriteNumberValue(ExtendedCapacitySizeTiB);
-            if (options.Format != "W" && TotalVolumeSizeGiB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalVolumeSizeGiB))
             {
                 writer.WritePropertyName("totalVolumeSizeGiB"u8);
                 writer.WriteNumberValue(TotalVolumeSizeGiB.Value);
             }
-            if (options.Format != "W" && VolumeGroupCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumeGroupCount))
             {
                 writer.WritePropertyName("volumeGroupCount"u8);
                 writer.WriteNumberValue(VolumeGroupCount.Value);
             }
-            if (options.Format != "W" && TotalIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalIops))
             {
                 writer.WritePropertyName("totalIops"u8);
                 writer.WriteNumberValue(TotalIops.Value);
             }
-            if (options.Format != "W" && TotalMbps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalMbps))
             {
                 writer.WritePropertyName("totalMBps"u8);
                 writer.WriteNumberValue(TotalMbps.Value);
             }
-            if (options.Format != "W" && TotalSizeTiB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSizeTiB))
             {
                 writer.WritePropertyName("totalSizeTiB"u8);
                 writer.WriteNumberValue(TotalSizeTiB.Value);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ElasticSanPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ElasticSan
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ElasticSan
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ElasticSan
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ElasticSan
                         return DeserializeElasticSanData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanData)} does not support reading '{options.Format}' format.");
             }
         }
 

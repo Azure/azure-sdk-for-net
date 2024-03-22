@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,29 +55,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (EndpointType.HasValue)
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (Backend != null)
+            if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
                 writer.WriteStringValue(Backend);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializePreconfiguredEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreconfiguredEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RxBytes.HasValue)
+            if (Optional.IsDefined(RxBytes))
             {
                 writer.WritePropertyName("rxBytes"u8);
                 writer.WriteNumberValue(RxBytes.Value);
             }
-            if (RxPackets.HasValue)
+            if (Optional.IsDefined(RxPackets))
             {
                 writer.WritePropertyName("rxPackets"u8);
                 writer.WriteNumberValue(RxPackets.Value);
             }
-            if (RxErrors.HasValue)
+            if (Optional.IsDefined(RxErrors))
             {
                 writer.WritePropertyName("rxErrors"u8);
                 writer.WriteNumberValue(RxErrors.Value);
             }
-            if (RxDropped.HasValue)
+            if (Optional.IsDefined(RxDropped))
             {
                 writer.WritePropertyName("rxDropped"u8);
                 writer.WriteNumberValue(RxDropped.Value);
             }
-            if (TxBytes.HasValue)
+            if (Optional.IsDefined(TxBytes))
             {
                 writer.WritePropertyName("txBytes"u8);
                 writer.WriteNumberValue(TxBytes.Value);
             }
-            if (TxPackets.HasValue)
+            if (Optional.IsDefined(TxPackets))
             {
                 writer.WritePropertyName("txPackets"u8);
                 writer.WriteNumberValue(TxPackets.Value);
             }
-            if (TxErrors.HasValue)
+            if (Optional.IsDefined(TxErrors))
             {
                 writer.WritePropertyName("txErrors"u8);
                 writer.WriteNumberValue(TxErrors.Value);
             }
-            if (TxDropped.HasValue)
+            if (Optional.IsDefined(TxDropped))
             {
                 writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterfaceStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerNetworkInterfaceStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterfaceStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

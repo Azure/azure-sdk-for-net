@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataProductsCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(Publishers is ChangeTrackingList<PublisherInformation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Publishers))
             {
                 writer.WritePropertyName("publishers"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataProductsCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                         return DeserializeDataProductsCatalogData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductsCatalogData)} does not support reading '{options.Format}' format.");
             }
         }
 

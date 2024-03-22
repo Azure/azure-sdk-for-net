@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DataExportDetails is ChangeTrackingList<DataExportDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataImportDetails is ChangeTrackingList<DataImportDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferDetailsValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataTransferDetailsValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTransferDetailsValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

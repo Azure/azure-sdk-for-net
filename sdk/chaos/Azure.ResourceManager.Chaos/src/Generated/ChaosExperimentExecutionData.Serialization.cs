@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Chaos
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && StoppedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
             {
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentExecutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Chaos
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Chaos
                         return DeserializeChaosExperimentExecutionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentExecutionData)} does not support reading '{options.Format}' format.");
             }
         }
 

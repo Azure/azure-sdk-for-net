@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDeploymentLocations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Locations is ChangeTrackingList<AppServiceGeoRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HostingEnvironments is ChangeTrackingList<AppServiceEnvironmentProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HostingEnvironments))
             {
                 writer.WritePropertyName("hostingEnvironments"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HostingEnvironmentDeploymentInfos is ChangeTrackingList<HostingEnvironmentDeploymentInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HostingEnvironmentDeploymentInfos))
             {
                 writer.WritePropertyName("hostingEnvironmentDeploymentInfos"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDeploymentLocations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceDeploymentLocations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceDeploymentLocations)} does not support reading '{options.Format}' format.");
             }
         }
 

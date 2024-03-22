@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationEnabledResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClusterExtensionId != null)
+            if (Optional.IsDefined(ClusterExtensionId))
             {
                 writer.WritePropertyName("clusterExtensionId"u8);
                 writer.WriteStringValue(ClusterExtensionId);
             }
-            if (ExtensionType != null)
+            if (Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("extensionType"u8);
                 writer.WriteStringValue(ExtensionType);
             }
-            if (!(TypesMetadata is ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TypesMetadata))
             {
                 writer.WritePropertyName("typesMetadata"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationEnabledResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         return DeserializeCustomLocationEnabledResourceType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support reading '{options.Format}' format.");
             }
         }
 

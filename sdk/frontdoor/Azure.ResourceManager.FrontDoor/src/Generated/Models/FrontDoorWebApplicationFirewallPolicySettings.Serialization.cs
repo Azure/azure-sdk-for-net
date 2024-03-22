@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (RedirectUri != null)
+            if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (CustomBlockResponseStatusCode.HasValue)
+            if (Optional.IsDefined(CustomBlockResponseStatusCode))
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (CustomBlockResponseBody != null)
+            if (Optional.IsDefined(CustomBlockResponseBody))
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (RequestBodyCheck.HasValue)
+            if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

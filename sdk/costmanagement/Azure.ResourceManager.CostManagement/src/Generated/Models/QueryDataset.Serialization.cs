@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteObjectValue(Configuration);
             }
-            if (!(Aggregation is ChangeTrackingDictionary<string, QueryAggregation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Grouping is ChangeTrackingList<QueryGrouping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeQueryDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

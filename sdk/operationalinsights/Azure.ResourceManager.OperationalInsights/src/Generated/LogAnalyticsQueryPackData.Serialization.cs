@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryPackData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,29 +55,29 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && QueryPackId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QueryPackId))
             {
                 writer.WritePropertyName("queryPackId"u8);
                 writer.WriteStringValue(QueryPackId.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("timeModified"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQueryPackData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeLogAnalyticsQueryPackData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsQueryPackData)} does not support reading '{options.Format}' format.");
             }
         }
 

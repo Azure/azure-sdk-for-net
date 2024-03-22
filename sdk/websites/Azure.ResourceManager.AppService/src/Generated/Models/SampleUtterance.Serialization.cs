@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SampleUtterance)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (!(Links is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Qid != null)
+            if (Optional.IsDefined(Qid))
             {
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SampleUtterance)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSampleUtterance(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && RuntimeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
             {
                 writer.WritePropertyName("runtimeState"u8);
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (BlobPathBeginsWith != null)
+            if (Optional.IsDefined(BlobPathBeginsWith))
             {
                 writer.WritePropertyName("blobPathBeginsWith"u8);
                 writer.WriteStringValue(BlobPathBeginsWith);
             }
-            if (BlobPathEndsWith != null)
+            if (Optional.IsDefined(BlobPathEndsWith))
             {
                 writer.WritePropertyName("blobPathEndsWith"u8);
                 writer.WriteStringValue(BlobPathEndsWith);
             }
-            if (IgnoreEmptyBlobs.HasValue)
+            if (Optional.IsDefined(IgnoreEmptyBlobs))
             {
                 writer.WritePropertyName("ignoreEmptyBlobs"u8);
                 writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryBlobEventsTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

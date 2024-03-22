@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReissueCertificateOrderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (KeySize.HasValue)
+            if (Optional.IsDefined(KeySize))
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (DelayExistingRevokeInHours.HasValue)
+            if (Optional.IsDefined(DelayExistingRevokeInHours))
             {
                 writer.WritePropertyName("delayExistingRevokeInHours"u8);
                 writer.WriteNumberValue(DelayExistingRevokeInHours.Value);
             }
-            if (Csr != null)
+            if (Optional.IsDefined(Csr))
             {
                 writer.WritePropertyName("csr"u8);
                 writer.WriteStringValue(Csr);
             }
-            if (IsPrivateKeyExternal.HasValue)
+            if (Optional.IsDefined(IsPrivateKeyExternal))
             {
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReissueCertificateOrderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeReissueCertificateOrderContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReissueCertificateOrderContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MergeParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MergeParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MergeParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsDryRun.HasValue)
+            if (Optional.IsDefined(IsDryRun))
             {
                 writer.WritePropertyName("isDryRun"u8);
                 writer.WriteBooleanValue(IsDryRun.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MergeParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MergeParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MergeParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MergeParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MergeParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMergeParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MergeParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MergeParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

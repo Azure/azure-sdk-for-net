@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ScheduleName != null)
+            if (Optional.IsDefined(ScheduleName))
             {
                 writer.WritePropertyName("scheduleName"u8);
                 writer.WriteStringValue(ScheduleName);
             }
-            if (CronExpression != null)
+            if (Optional.IsDefined(CronExpression))
             {
                 writer.WritePropertyName("cronExpression"u8);
                 writer.WriteStringValue(CronExpression);
             }
-            if (RetentionInHours.HasValue)
+            if (Optional.IsDefined(RetentionInHours))
             {
                 writer.WritePropertyName("retentionInHours"u8);
                 writer.WriteNumberValue(RetentionInHours.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterBackupSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

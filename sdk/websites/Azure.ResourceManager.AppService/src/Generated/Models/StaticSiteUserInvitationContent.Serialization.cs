@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteUserInvitationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (UserDetails != null)
+            if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
                 writer.WriteStringValue(UserDetails);
             }
-            if (Roles != null)
+            if (Optional.IsDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStringValue(Roles);
             }
-            if (NumHoursToExpiration.HasValue)
+            if (Optional.IsDefined(NumHoursToExpiration))
             {
                 writer.WritePropertyName("numHoursToExpiration"u8);
                 writer.WriteNumberValue(NumHoursToExpiration.Value);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteUserInvitationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSiteUserInvitationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteUserInvitationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

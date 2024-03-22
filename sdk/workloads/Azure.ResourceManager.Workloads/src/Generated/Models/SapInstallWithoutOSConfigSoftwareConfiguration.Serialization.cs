@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteStringValue(SapBitsStorageAccountId);
             writer.WritePropertyName("softwareVersion"u8);
             writer.WriteStringValue(SoftwareVersion);
-            if (HighAvailabilitySoftwareConfiguration != null)
+            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
                 writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapInstallWithoutOSConfigSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapInstallWithoutOSConfigSoftwareConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

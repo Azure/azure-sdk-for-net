@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,72 +34,72 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServerFarmId != null)
+            if (Optional.IsDefined(ServerFarmId))
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (SkuName != null)
+            if (Optional.IsDefined(SkuName))
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (NeedLinuxWorkers.HasValue)
+            if (Optional.IsDefined(NeedLinuxWorkers))
             {
                 writer.WritePropertyName("needLinuxWorkers"u8);
                 writer.WriteBooleanValue(NeedLinuxWorkers.Value);
             }
-            if (IsSpot.HasValue)
+            if (Optional.IsDefined(IsSpot))
             {
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (HostingEnvironment != null)
+            if (Optional.IsDefined(HostingEnvironment))
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
-            if (IsXenon.HasValue)
+            if (Optional.IsDefined(IsXenon))
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (ContainerRegistryBaseUri != null)
+            if (Optional.IsDefined(ContainerRegistryBaseUri))
             {
                 writer.WritePropertyName("containerRegistryBaseUrl"u8);
                 writer.WriteStringValue(ContainerRegistryBaseUri.AbsoluteUri);
             }
-            if (ContainerRegistryUsername != null)
+            if (Optional.IsDefined(ContainerRegistryUsername))
             {
                 writer.WritePropertyName("containerRegistryUsername"u8);
                 writer.WriteStringValue(ContainerRegistryUsername);
             }
-            if (ContainerRegistryPassword != null)
+            if (Optional.IsDefined(ContainerRegistryPassword))
             {
                 writer.WritePropertyName("containerRegistryPassword"u8);
                 writer.WriteStringValue(ContainerRegistryPassword);
             }
-            if (ContainerImageRepository != null)
+            if (Optional.IsDefined(ContainerImageRepository))
             {
                 writer.WritePropertyName("containerImageRepository"u8);
                 writer.WriteStringValue(ContainerImageRepository);
             }
-            if (ContainerImageTag != null)
+            if (Optional.IsDefined(ContainerImageTag))
             {
                 writer.WritePropertyName("containerImageTag"u8);
                 writer.WriteStringValue(ContainerImageTag);
             }
-            if (ContainerImagePlatform != null)
+            if (Optional.IsDefined(ContainerImagePlatform))
             {
                 writer.WritePropertyName("containerImagePlatform"u8);
                 writer.WriteStringValue(ContainerImagePlatform);
             }
-            if (AppServiceEnvironment != null)
+            if (Optional.IsDefined(AppServiceEnvironment))
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
                 writer.WriteObjectValue(AppServiceEnvironment);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceValidateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

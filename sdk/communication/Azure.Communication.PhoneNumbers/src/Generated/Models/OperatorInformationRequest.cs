@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -24,9 +25,12 @@ namespace Azure.Communication.PhoneNumbers
         internal OperatorInformationRequest(IList<string> phoneNumbers)
         {
             PhoneNumbers = phoneNumbers;
+            Options = options;
         }
 
         /// <summary> Phone number(s) whose operator information is being requested. </summary>
         public IList<string> PhoneNumbers { get; }
+        /// <summary> Represents options to modify a search request for operator information. </summary>
+        public OperatorInformationOptions Options { get; set; }
     }
 }

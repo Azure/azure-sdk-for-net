@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComponentEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (PrincipalOid != null)
+            if (Optional.IsDefined(PrincipalOid))
             {
                 writer.WritePropertyName("principalOid"u8);
                 writer.WriteStringValue(PrincipalOid);
             }
-            if (PolicyDefinitionAction != null)
+            if (Optional.IsDefined(PolicyDefinitionAction))
             {
                 writer.WritePropertyName("policyDefinitionAction"u8);
                 writer.WriteStringValue(PolicyDefinitionAction);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComponentEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeComponentEventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

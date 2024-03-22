@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeterGuid))
             {
                 writer.WritePropertyName("meterGuid"u8);
                 writer.WriteStringValue(MeterGuid.Value);
             }
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Multiplier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && ChargingType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChargingType))
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<Pav2MeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializePav2MeterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Pav2MeterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterCreationValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ValidationErrors is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationWarnings is ChangeTrackingList<HDInsightClusterValidationErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationWarnings))
             {
                 writer.WritePropertyName("validationWarnings"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EstimatedCreationDuration.HasValue)
+            if (Optional.IsDefined(EstimatedCreationDuration))
             {
                 writer.WritePropertyName("estimatedCreationDuration"u8);
                 writer.WriteStringValue(EstimatedCreationDuration.Value, "P");
             }
-            if (!(AaddsResourcesDetails is ChangeTrackingList<HDInsightClusterAaddsDetail> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AaddsResourcesDetails))
             {
                 writer.WritePropertyName("aaddsResourcesDetails"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterCreationValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterCreationValidateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterCreationValidateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

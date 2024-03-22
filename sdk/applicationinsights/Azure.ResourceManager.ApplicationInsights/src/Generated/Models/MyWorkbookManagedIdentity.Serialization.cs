@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MyWorkbookManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentities != null)
+            if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteObjectValue(UserAssignedIdentities);
             }
-            if (IdentityType.HasValue)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MyWorkbookManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeMyWorkbookManagedIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MyWorkbookManagedIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

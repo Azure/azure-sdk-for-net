@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RouteMapResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routeMapName, RouteMapData data, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RouteMapResource> CreateOrUpdate(WaitUntil waitUntil, string routeMapName, RouteMapData data, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
         public virtual async Task<Response<RouteMapResource>> GetAsync(string routeMapName, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
         public virtual Response<RouteMapResource> Get(string routeMapName, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routeMapName, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
         public virtual Response<bool> Exists(string routeMapName, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
         public virtual async Task<NullableResponse<RouteMapResource>> GetIfExistsAsync(string routeMapName, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
         public virtual NullableResponse<RouteMapResource> GetIfExists(string routeMapName, CancellationToken cancellationToken = default)
         {
-            if (routeMapName == null)
-            {
-                throw new ArgumentNullException(nameof(routeMapName));
-            }
-            if (routeMapName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routeMapName));
-            }
+            Argument.AssertNotNullOrEmpty(routeMapName, nameof(routeMapName));
 
             using var scope = _routeMapClientDiagnostics.CreateScope("RouteMapCollection.GetIfExists");
             scope.Start();

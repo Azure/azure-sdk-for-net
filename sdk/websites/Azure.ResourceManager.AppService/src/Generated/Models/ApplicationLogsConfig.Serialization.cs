@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FileSystem != null)
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteObjectValue(FileSystem);
             }
-            if (AzureTableStorage != null)
+            if (Optional.IsDefined(AzureTableStorage))
             {
                 writer.WritePropertyName("azureTableStorage"u8);
                 writer.WriteObjectValue(AzureTableStorage);
             }
-            if (AzureBlobStorage != null)
+            if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
                 writer.WriteObjectValue(AzureBlobStorage);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeApplicationLogsConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

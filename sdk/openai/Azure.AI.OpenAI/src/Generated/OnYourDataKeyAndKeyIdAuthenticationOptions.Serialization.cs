@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,13 +22,13 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataKeyAndKeyIdAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("keyId"u8);
+            writer.WritePropertyName("key_id"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -56,7 +55,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataKeyAndKeyIdAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.AI.OpenAI
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyId"u8))
+                if (property.NameEquals("key_id"u8))
                 {
                     keyId = property.Value.GetString();
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeOnYourDataKeyAndKeyIdAuthenticationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataKeyAndKeyIdAuthenticationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

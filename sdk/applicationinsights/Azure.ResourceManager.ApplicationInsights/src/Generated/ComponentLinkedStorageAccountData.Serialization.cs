@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             var format = options.Format == "W" ? ((IPersistableModel<ComponentLinkedStorageAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LinkedStorageAccount != null)
+            if (Optional.IsDefined(LinkedStorageAccount))
             {
                 writer.WritePropertyName("linkedStorageAccount"u8);
                 writer.WriteStringValue(LinkedStorageAccount);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             var format = options.Format == "W" ? ((IPersistableModel<ComponentLinkedStorageAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                         return DeserializeComponentLinkedStorageAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComponentLinkedStorageAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

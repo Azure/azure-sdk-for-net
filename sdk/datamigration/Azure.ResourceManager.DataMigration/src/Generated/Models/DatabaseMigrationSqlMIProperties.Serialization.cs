@@ -22,88 +22,88 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlMIProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MigrationStatusDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
                 writer.WriteObjectValue(MigrationStatusDetails);
             }
-            if (BackupConfiguration != null)
+            if (Optional.IsDefined(BackupConfiguration))
             {
                 writer.WritePropertyName("backupConfiguration"u8);
                 writer.WriteObjectValue(BackupConfiguration);
             }
-            if (OfflineConfiguration != null)
+            if (Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
                 writer.WriteObjectValue(OfflineConfiguration);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && MigrationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
             {
                 writer.WritePropertyName("migrationStatus"u8);
                 writer.WriteStringValue(MigrationStatus);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (SourceSqlConnection != null)
+            if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
                 writer.WriteObjectValue(SourceSqlConnection);
             }
-            if (SourceDatabaseName != null)
+            if (Optional.IsDefined(SourceDatabaseName))
             {
                 writer.WritePropertyName("sourceDatabaseName"u8);
                 writer.WriteStringValue(SourceDatabaseName);
             }
-            if (options.Format != "W" && SourceServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerName))
             {
                 writer.WritePropertyName("sourceServerName"u8);
                 writer.WriteStringValue(SourceServerName);
             }
-            if (MigrationService != null)
+            if (Optional.IsDefined(MigrationService))
             {
                 writer.WritePropertyName("migrationService"u8);
                 writer.WriteStringValue(MigrationService);
             }
-            if (MigrationOperationId != null)
+            if (Optional.IsDefined(MigrationOperationId))
             {
                 writer.WritePropertyName("migrationOperationId"u8);
                 writer.WriteStringValue(MigrationOperationId);
             }
-            if (options.Format != "W" && MigrationFailureError != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
                 writer.WriteObjectValue(MigrationFailureError);
             }
-            if (TargetDatabaseCollation != null)
+            if (Optional.IsDefined(TargetDatabaseCollation))
             {
                 writer.WritePropertyName("targetDatabaseCollation"u8);
                 writer.WriteStringValue(TargetDatabaseCollation);
             }
-            if (ProvisioningError != null)
+            if (Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationSqlMIProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseMigrationSqlMIProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationSqlMIProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

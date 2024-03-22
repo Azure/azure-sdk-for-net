@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,16 +23,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -64,29 +63,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CustomerId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 if (RetentionInDays != null)
                 {
@@ -98,37 +97,37 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("retentionInDays");
                 }
             }
-            if (WorkspaceCapping != null)
+            if (Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
                 writer.WriteObjectValue(WorkspaceCapping);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedDate"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (PublicNetworkAccessForIngestion.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (PublicNetworkAccessForQuery.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (ForceCmkForQuery.HasValue)
+            if (Optional.IsDefined(ForceCmkForQuery))
             {
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
-            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
             {
                 writer.WritePropertyName("privateLinkScopedResources"u8);
                 writer.WriteStartArray();
@@ -138,12 +137,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Features != null)
+            if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteObjectValue(Features);
             }
-            if (DefaultDataCollectionRuleResourceId != null)
+            if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {
                 writer.WritePropertyName("defaultDataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -441,7 +440,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -457,7 +456,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

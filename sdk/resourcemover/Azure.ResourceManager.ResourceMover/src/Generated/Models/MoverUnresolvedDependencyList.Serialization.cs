@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverUnresolvedDependencyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<MoverUnresolvedDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && SummaryCollection != null)
+            if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
             {
                 writer.WritePropertyName("summaryCollection"u8);
                 writer.WriteObjectValue(SummaryCollection);
             }
-            if (options.Format != "W" && TotalCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverUnresolvedDependencyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverUnresolvedDependencyList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support reading '{options.Format}' format.");
             }
         }
 

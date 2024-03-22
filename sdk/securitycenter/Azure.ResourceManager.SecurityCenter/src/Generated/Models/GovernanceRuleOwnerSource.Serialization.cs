@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleOwnerSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceType.HasValue)
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleOwnerSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGovernanceRuleOwnerSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support reading '{options.Format}' format.");
             }
         }
 

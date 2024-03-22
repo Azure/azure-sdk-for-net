@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,42 +30,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceBusNamespace != null)
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (SharedAccessPolicyName != null)
+            if (Optional.IsDefined(SharedAccessPolicyName))
             {
                 writer.WritePropertyName("sharedAccessPolicyName"u8);
                 writer.WriteStringValue(SharedAccessPolicyName);
             }
-            if (SharedAccessPolicyKey != null)
+            if (Optional.IsDefined(SharedAccessPolicyKey))
             {
                 writer.WritePropertyName("sharedAccessPolicyKey"u8);
                 writer.WriteStringValue(SharedAccessPolicyKey);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (EventHubName != null)
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (ConsumerGroupName != null)
+            if (Optional.IsDefined(ConsumerGroupName))
             {
                 writer.WritePropertyName("consumerGroupName"u8);
                 writer.WriteStringValue(ConsumerGroupName);
             }
-            if (PrefetchCount.HasValue)
+            if (Optional.IsDefined(PrefetchCount))
             {
                 writer.WritePropertyName("prefetchCount"u8);
                 writer.WriteNumberValue(PrefetchCount.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeEventHubStreamInputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubStreamInputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

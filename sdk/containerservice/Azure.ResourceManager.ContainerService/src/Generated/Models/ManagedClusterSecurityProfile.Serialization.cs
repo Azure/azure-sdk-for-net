@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Defender != null)
+            if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
                 writer.WriteObjectValue(Defender);
             }
-            if (AzureKeyVaultKms != null)
+            if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
                 writer.WriteObjectValue(AzureKeyVaultKms);
             }
-            if (WorkloadIdentity != null)
+            if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
                 writer.WriteObjectValue(WorkloadIdentity);
             }
-            if (ImageCleaner != null)
+            if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
                 writer.WriteObjectValue(ImageCleaner);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (RegistryServer != null)
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryServer"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerRegistry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchVmContainerRegistry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmContainerRegistry)} does not support reading '{options.Format}' format.");
             }
         }
 

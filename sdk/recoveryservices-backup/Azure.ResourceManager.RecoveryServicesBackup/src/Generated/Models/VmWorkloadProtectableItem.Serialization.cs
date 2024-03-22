@@ -22,73 +22,73 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ParentName != null)
+            if (Optional.IsDefined(ParentName))
             {
                 writer.WritePropertyName("parentName"u8);
                 writer.WriteStringValue(ParentName);
             }
-            if (ParentUniqueName != null)
+            if (Optional.IsDefined(ParentUniqueName))
             {
                 writer.WritePropertyName("parentUniqueName"u8);
                 writer.WriteStringValue(ParentUniqueName);
             }
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (IsAutoProtectable.HasValue)
+            if (Optional.IsDefined(IsAutoProtectable))
             {
                 writer.WritePropertyName("isAutoProtectable"u8);
                 writer.WriteBooleanValue(IsAutoProtectable.Value);
             }
-            if (IsAutoProtected.HasValue)
+            if (Optional.IsDefined(IsAutoProtected))
             {
                 writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
-            if (SubInquiredItemCount.HasValue)
+            if (Optional.IsDefined(SubInquiredItemCount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
                 writer.WriteNumberValue(SubInquiredItemCount.Value);
             }
-            if (SubProtectableItemCount.HasValue)
+            if (Optional.IsDefined(SubProtectableItemCount))
             {
                 writer.WritePropertyName("subprotectableitemcount"u8);
                 writer.WriteNumberValue(SubProtectableItemCount.Value);
             }
-            if (PreBackupValidation != null)
+            if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
                 writer.WriteObjectValue(PreBackupValidation);
             }
-            if (IsProtectable.HasValue)
+            if (Optional.IsDefined(IsProtectable))
             {
                 writer.WritePropertyName("isProtectable"u8);
                 writer.WriteBooleanValue(IsProtectable.Value);
             }
-            if (BackupManagementType != null)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (WorkloadType != null)
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("protectableItemType"u8);
             writer.WriteStringValue(ProtectableItemType);
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ProtectionState.HasValue)
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "HanaHSRContainer": return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
                     case "SAPAseSystem": return VmWorkloadSapAseSystemProtectableItem.DeserializeVmWorkloadSapAseSystemProtectableItem(element, options);
-                    case "SAPHanaDBInstance": return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
                     case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectableItem.DeserializeVmWorkloadSapHanaDatabaseProtectableItem(element, options);
+                    case "SAPHanaDBInstance": return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
                     case "SAPHanaSystem": return VmWorkloadSapHanaSystemProtectableItem.DeserializeVmWorkloadSapHanaSystemProtectableItem(element, options);
                     case "SQLAvailabilityGroupContainer": return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
                     case "SQLDataBase": return VmWorkloadSqlDatabaseProtectableItem.DeserializeVmWorkloadSqlDatabaseProtectableItem(element, options);
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LogAnalytics != null)
+            if (Optional.IsDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteObjectValue(LogAnalytics);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerGroupDiagnostics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupDiagnostics)} does not support reading '{options.Format}' format.");
             }
         }
 

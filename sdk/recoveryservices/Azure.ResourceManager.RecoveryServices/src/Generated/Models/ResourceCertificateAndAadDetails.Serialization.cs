@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,44 +36,44 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             writer.WriteStringValue(ServicePrincipalObjectId);
             writer.WritePropertyName("azureManagementEndpointAudience"u8);
             writer.WriteStringValue(AzureManagementEndpointAudience);
-            if (ServiceResourceId != null)
+            if (Optional.IsDefined(ServiceResourceId))
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType);
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteBase64StringValue(Certificate, "D");
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Issuer != null)
+            if (Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (ResourceId.HasValue)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteNumberValue(ResourceId.Value);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -85,12 +85,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
 #endif
             }
-            if (ValidStartOn.HasValue)
+            if (Optional.IsDefined(ValidStartOn))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidStartOn.Value, "O");
             }
-            if (ValidEndOn.HasValue)
+            if (Optional.IsDefined(ValidEndOn))
             {
                 writer.WritePropertyName("validTo"u8);
                 writer.WriteStringValue(ValidEndOn.Value, "O");
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

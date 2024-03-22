@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdhocBasedBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TagInfo != null)
+            if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
                 writer.WriteObjectValue(TagInfo);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdhocBasedBackupTaggingCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeAdhocBasedBackupTaggingCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdhocBasedBackupTaggingCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

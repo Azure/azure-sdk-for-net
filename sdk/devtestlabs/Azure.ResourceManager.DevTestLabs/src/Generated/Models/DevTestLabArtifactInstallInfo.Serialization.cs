@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ArtifactId != null)
+            if (Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
-            if (ArtifactTitle != null)
+            if (Optional.IsDefined(ArtifactTitle))
             {
                 writer.WritePropertyName("artifactTitle"u8);
                 writer.WriteStringValue(ArtifactTitle);
             }
-            if (!(Parameters is ChangeTrackingList<DevTestLabArtifactParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (DeploymentStatusMessage != null)
+            if (Optional.IsDefined(DeploymentStatusMessage))
             {
                 writer.WritePropertyName("deploymentStatusMessage"u8);
                 writer.WriteStringValue(DeploymentStatusMessage);
             }
-            if (VmExtensionStatusMessage != null)
+            if (Optional.IsDefined(VmExtensionStatusMessage))
             {
                 writer.WritePropertyName("vmExtensionStatusMessage"u8);
                 writer.WriteStringValue(VmExtensionStatusMessage);
             }
-            if (InstallOn.HasValue)
+            if (Optional.IsDefined(InstallOn))
             {
                 writer.WritePropertyName("installTime"u8);
                 writer.WriteStringValue(InstallOn.Value, "O");
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabArtifactInstallInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabArtifactInstallInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabArtifactInstallInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

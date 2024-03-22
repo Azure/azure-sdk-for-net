@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsProjectProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdatedOn))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ParentOrgName != null)
+            if (Optional.IsDefined(ParentOrgName))
             {
                 writer.WritePropertyName("parentOrgName"u8);
                 writer.WriteStringValue(ParentOrgName);
             }
-            if (options.Format != "W" && ProjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
                 writer.WriteObjectValue(ActionableRemediation);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsProjectProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDevOpsProjectProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

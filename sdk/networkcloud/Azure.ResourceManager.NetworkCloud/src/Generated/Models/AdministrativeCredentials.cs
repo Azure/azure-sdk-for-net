@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public AdministrativeCredentials(string username)
         {
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(username, nameof(username));
 
             Username = username;
         }

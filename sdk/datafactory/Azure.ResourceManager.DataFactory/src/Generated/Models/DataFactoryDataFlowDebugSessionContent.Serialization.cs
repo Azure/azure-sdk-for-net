@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataFlowDebugSessionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputeType != null)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType);
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (TimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (IntegrationRuntime != null)
+            if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
                 writer.WriteObjectValue(IntegrationRuntime);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataFlowDebugSessionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryDataFlowDebugSessionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugSessionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

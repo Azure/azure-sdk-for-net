@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceHostName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceHostName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceHostName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(SiteNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SiteNames))
             {
                 writer.WritePropertyName("siteNames"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AzureResourceName != null)
+            if (Optional.IsDefined(AzureResourceName))
             {
                 writer.WritePropertyName("azureResourceName"u8);
                 writer.WriteStringValue(AzureResourceName);
             }
-            if (AzureResourceType.HasValue)
+            if (Optional.IsDefined(AzureResourceType))
             {
                 writer.WritePropertyName("azureResourceType"u8);
                 writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
             }
-            if (CustomHostNameDnsRecordType.HasValue)
+            if (Optional.IsDefined(CustomHostNameDnsRecordType))
             {
                 writer.WritePropertyName("customHostNameDnsRecordType"u8);
                 writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
             }
-            if (HostNameType.HasValue)
+            if (Optional.IsDefined(HostNameType))
             {
                 writer.WritePropertyName("hostNameType"u8);
                 writer.WriteStringValue(HostNameType.Value.ToSerialString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceHostName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceHostName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceHostName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceHostName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceHostName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceHostName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceHostName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceHostName)} does not support reading '{options.Format}' format.");
             }
         }
 
