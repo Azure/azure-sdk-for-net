@@ -11,6 +11,6 @@ description: Samples for the Azure.Developer.Signing client library.
 
 #  Azure.Developer.Signing Samples
 
-* [Submit a signing request](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developersigning/Azure.Developer.Signing/samples/Sample_Sign.md)
-* [Get a profile eku](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developersigning/Azure.Developer.Signing/samples/Sample_GetProfileEku.md)
-* [Get a profile root certificate](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developersigning/Azure.Developer.Signing/samples/Sample_GetProfileRootCertificate.md)
+* [Submit a signing request](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developer-signing/Azure.Developer.Signing/samples/Sample_Sign.md)
+* [Get a profile eku](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developer-signing/Azure.Developer.Signing/samples/Sample_GetProfileEku.md)
+* [Get a profile root certificate](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developer-signing/Azure.Developer.Signing/samples/Sample_GetProfileRootCertificate.md)

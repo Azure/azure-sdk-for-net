@@ -1,6 +1,6 @@
 # # Azure.Developer.Signing samples - Get customer extended key usages
 
-To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developersigning/Azure.Developer.Signing/README.md#getting-started) for details.
+To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/developer-signing/Azure.Developer.Signing/README.md#getting-started) for details.
 
 ## Get customer extended key usages
 
