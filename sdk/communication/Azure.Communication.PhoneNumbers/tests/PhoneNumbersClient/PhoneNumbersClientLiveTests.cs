@@ -1389,7 +1389,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers, null);
             Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
         }
 
@@ -1402,7 +1402,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            var results = client.SearchOperatorInformation(phoneNumbers);
+            var results = client.SearchOperatorInformation(phoneNumbers, null);
             Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
         }
 
@@ -1417,7 +1417,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             try
             {
-                var results = await client.SearchOperatorInformationAsync(phoneNumbers);
+                var results = await client.SearchOperatorInformationAsync(phoneNumbers, null);
             }
             catch (RequestFailedException ex)
             {
@@ -1439,7 +1439,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             try
             {
-                var results = client.SearchOperatorInformation(phoneNumbers);
+                var results = client.SearchOperatorInformation(phoneNumbers, null);
             }
             catch (RequestFailedException ex)
             {
@@ -1462,16 +1462,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
             var operatorInformation = results.Value.Values[0];
             Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
             Assert.IsNull(operatorInformation.IsoCountryCode);
             Assert.IsNull(operatorInformation.OperatorDetails);
 
             results = await client.SearchOperatorInformationAsync(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
             operatorInformation = results.Value.Values[0];
             Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
             Assert.IsNotNull(operatorInformation.IsoCountryCode);
             Assert.IsNotNull(operatorInformation.OperatorDetails);
         }
@@ -1488,16 +1484,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             var results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = false });
             var operatorInformation = results.Value.Values[0];
             Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
             Assert.IsNull(operatorInformation.IsoCountryCode);
             Assert.IsNull(operatorInformation.OperatorDetails);
 
             results = client.SearchOperatorInformation(phoneNumbers, new OperatorInformationOptions() { IncludeAdditionalOperatorDetails = true });
             operatorInformation = results.Value.Values[0];
             Assert.AreEqual(phoneNumber, operatorInformation.PhoneNumber);
-            Assert.IsNotNull(operatorInformation.InternationalFormat);
-            Assert.IsNotNull(operatorInformation.NationalFormat);
             Assert.IsNotNull(operatorInformation.IsoCountryCode);
             Assert.IsNotNull(operatorInformation.OperatorDetails);
         }

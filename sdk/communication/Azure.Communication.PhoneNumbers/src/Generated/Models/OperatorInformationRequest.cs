@@ -22,7 +22,8 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="OperatorInformationRequest"/>. </summary>
         /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
-        internal OperatorInformationRequest(IList<string> phoneNumbers)
+        /// <param name="options"> Phone number(s) whose operator information is being requested. </param>
+        internal OperatorInformationRequest(IList<string> phoneNumbers, OperatorInformationOptions options)
         {
             PhoneNumbers = phoneNumbers;
             Options = options;

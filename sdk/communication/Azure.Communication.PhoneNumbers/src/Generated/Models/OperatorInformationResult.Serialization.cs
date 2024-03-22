@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Optional<IReadOnlyList<OperatorInformation>> values = default;
+            IReadOnlyList<OperatorInformation> values = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -37,7 +37,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformationResult(Optional.ToList(values));
+            return new OperatorInformationResult(values);
         }
     }
 }

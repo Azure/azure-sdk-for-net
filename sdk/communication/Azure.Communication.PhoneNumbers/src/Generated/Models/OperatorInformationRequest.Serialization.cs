@@ -17,19 +17,20 @@ namespace Azure.Communication.PhoneNumbers
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PhoneNumbers))
             {
-            writer.WritePropertyName("phoneNumbers"u8);
-            writer.WriteStartArray();
-            foreach (var item in PhoneNumbers)
-            {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("phoneNumbers"u8);
+                writer.WriteStartArray();
+                foreach (var item in PhoneNumbers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+                if (Optional.IsDefined(Options))
+                {
+                    writer.WritePropertyName("options"u8);
+                    writer.WriteObjectValue(Options);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndArray();
-            if (Optional.IsDefined(Options))
-            {
-                writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
-            }
-            writer.WriteEndObject();
         }
     }
 }

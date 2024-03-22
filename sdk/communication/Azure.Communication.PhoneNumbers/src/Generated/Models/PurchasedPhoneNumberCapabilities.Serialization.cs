@@ -20,7 +20,7 @@ namespace Azure.Communication.PhoneNumbers
             }
             PhoneNumberCapabilityType calling = default;
             PhoneNumberCapabilityType sms = default;
-            Optional<string> tenDLCCampaignBriefId = default;
+            string tenDLCCampaignBriefId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("calling"u8))
@@ -39,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PurchasedPhoneNumberCapabilities(calling, sms, tenDLCCampaignBriefId.Value);
+            return new PurchasedPhoneNumberCapabilities(calling, sms, tenDLCCampaignBriefId);
         }
     }
 }
