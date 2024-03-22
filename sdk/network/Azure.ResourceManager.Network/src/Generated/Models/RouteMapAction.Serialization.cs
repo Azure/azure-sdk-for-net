@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouteMapActionParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }

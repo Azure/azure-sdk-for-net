@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteObjectValue<InternalMessageTextDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTextContent>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

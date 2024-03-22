@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(FailingPeriods))
             {
                 writer.WritePropertyName("failingPeriods"u8);
-                writer.WriteObjectValue(FailingPeriods);
+                writer.WriteObjectValue<ConditionFailingPeriods>(FailingPeriods, options);
             }
             if (Optional.IsDefined(MetricName))
             {

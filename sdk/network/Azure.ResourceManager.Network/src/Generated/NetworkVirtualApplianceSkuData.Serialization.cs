@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableScaleUnits)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkVirtualApplianceSkuInstances>(item, options);
                 }
                 writer.WriteEndArray();
             }

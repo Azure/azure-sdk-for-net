@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ExclusionManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExclusionManagedRuleSet>(item, options);
                 }
                 writer.WriteEndArray();
             }

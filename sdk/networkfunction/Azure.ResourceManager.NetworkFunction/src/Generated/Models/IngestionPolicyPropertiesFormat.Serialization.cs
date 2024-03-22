@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in IngestionSources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IngestionSourcesPropertiesFormat>(item, options);
                 }
                 writer.WriteEndArray();
             }

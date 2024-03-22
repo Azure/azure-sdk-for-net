@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RewriteRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayRewriteRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

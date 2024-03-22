@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Messages)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChatRequestMessage>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Functions))
@@ -37,14 +37,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FunctionDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
-                writer.WriteObjectValue(FunctionCall);
+                writer.WriteObjectValue<FunctionDefinition>(FunctionCall, options);
             }
             if (Optional.IsDefined(MaxTokens))
             {
@@ -112,14 +112,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in InternalAzureExtensionsDataSources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureChatExtensionConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
-                writer.WriteObjectValue(Enhancements);
+                writer.WriteObjectValue<AzureChatEnhancementConfiguration>(Enhancements, options);
             }
             if (Optional.IsDefined(Seed))
             {
@@ -153,7 +153,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteObjectValue(ResponseFormat);
+                writer.WriteObjectValue<ChatCompletionsResponseFormat>(ResponseFormat, options);
             }
             if (Optional.IsCollectionDefined(Tools))
             {
@@ -161,7 +161,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChatCompletionsToolDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -525,7 +525,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatCompletionsOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

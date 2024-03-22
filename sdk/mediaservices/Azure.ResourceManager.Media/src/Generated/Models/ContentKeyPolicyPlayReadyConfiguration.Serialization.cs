@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Licenses)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ContentKeyPolicyPlayReadyLicense>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ResponseCustomData))

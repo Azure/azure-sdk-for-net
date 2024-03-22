@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaJobErrorDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }

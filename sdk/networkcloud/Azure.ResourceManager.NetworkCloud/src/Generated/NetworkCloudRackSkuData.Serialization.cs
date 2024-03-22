@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ComputeMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ControllerMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in StorageAppliances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageApplianceSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in SshPublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkCloudSshPublicKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

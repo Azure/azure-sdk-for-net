@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<SearchMetadata>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Value))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsSearchSchemaValue>(item, options);
                 }
                 writer.WriteEndArray();
             }

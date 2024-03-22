@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
-                writer.WriteObjectValue(Configurations);
+                writer.WriteObjectValue<EncoderPresetConfigurations>(Configurations, options);
             }
             writer.WritePropertyName("presetName"u8);
             writer.WriteStringValue(PresetName.ToString());
