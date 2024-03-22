@@ -6,18 +6,6 @@
 
 - Added `BicepModelReaderWriterOptions`.
 
-## 1.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-- Added `BicepModelReaderWriterOptions` to support writing Bicep.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.10.2 (2024-03-01)
 
 ### Features Added
