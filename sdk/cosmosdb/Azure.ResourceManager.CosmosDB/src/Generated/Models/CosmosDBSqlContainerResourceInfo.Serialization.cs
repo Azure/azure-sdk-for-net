@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -453,6 +453,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputedProperties), out propertyOverride);
+            if (Optional.IsCollectionDefined(ComputedProperties) || hasPropertyOverride)
+            {
+                if (ComputedProperties.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  computedProperties: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ComputedProperties)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  computedProperties: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -466,7 +488,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "UniqueKeys":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("UniqueKeys", item.Value);
-                        bicepOptions.ParameterOverrides.Add(UniqueKeyPolicy, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(UniqueKeyPolicy, propertyDictionary);
                         break;
                     default:
                         continue;
@@ -500,8 +522,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCosmosDBSqlContainerResourceInfo(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBSqlContainerResourceInfo)} does not support reading '{options.Format}' format.");
             }

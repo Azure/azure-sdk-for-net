@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -211,6 +211,50 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 else
                 {
                     builder.AppendLine($"'{OperationType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndelete), out propertyOverride);
+            if (Optional.IsDefined(CanUndelete) || hasPropertyOverride)
+            {
+                builder.Append("  canUndelete: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CanUndelete.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CanUndelete}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CanUndelete}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndeleteReason), out propertyOverride);
+            if (Optional.IsDefined(CanUndeleteReason) || hasPropertyOverride)
+            {
+                builder.Append("  canUndeleteReason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CanUndeleteReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CanUndeleteReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CanUndeleteReason}'");
+                    }
                 }
             }
 
@@ -310,8 +354,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExtendedRestorableMongoDBCollectionResourceInfo(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support reading '{options.Format}' format.");
             }

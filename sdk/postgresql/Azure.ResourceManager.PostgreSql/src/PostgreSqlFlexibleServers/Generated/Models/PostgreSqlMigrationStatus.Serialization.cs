@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     case "CurrentSubState":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("CurrentSubState", item.Value);
-                        bicepOptions.ParameterOverrides.Add(CurrentSubStateDetails, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(CurrentSubStateDetails, propertyDictionary);
                         break;
                     default:
                         continue;
@@ -233,8 +233,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlMigrationStatus(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlMigrationStatus)} does not support reading '{options.Format}' format.");
             }

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.AppService.Models
                     case "LoginScopes":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("Scopes", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Login, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(Login, propertyDictionary);
                         break;
                     case "ValidationAllowedAudiences":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("AllowedAudiences", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Validation, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(Validation, propertyDictionary0);
                         break;
                     default:
                         continue;
@@ -264,8 +264,6 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLegacyMicrosoftAccount(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LegacyMicrosoftAccount)} does not support reading '{options.Format}' format.");
             }

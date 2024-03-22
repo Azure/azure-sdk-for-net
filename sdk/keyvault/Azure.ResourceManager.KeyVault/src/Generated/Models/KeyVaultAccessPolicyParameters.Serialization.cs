@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     case "AccessPolicies":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("AccessPolicies", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Properties, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(Properties, propertyDictionary);
                         break;
                     default:
                         continue;
@@ -299,8 +299,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKeyVaultAccessPolicyParameters(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultAccessPolicyParameters)} does not support reading '{options.Format}' format.");
             }

@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
         /// <summary> A state of this container to identify if this container is restorable in same account. </summary>
+        [WirePath("canUndelete")]
         public string CanUndelete { get; }
         /// <summary> The reason why this container can not be restored in same account. </summary>
+        [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
         /// <summary> The when this container event happened. </summary>
         [WirePath("eventTimestamp")]

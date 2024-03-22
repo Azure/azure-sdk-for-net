@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -1544,7 +1544,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{CustomerManagedKeyStatus.Value.ToString()}'");
+                    if (CustomerManagedKeyStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomerManagedKeyStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomerManagedKeyStatus}'");
+                    }
                 }
             }
 
@@ -1577,6 +1585,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePerRegionPerPartitionAutoscale), out propertyOverride);
+            if (Optional.IsDefined(EnablePerRegionPerPartitionAutoscale) || hasPropertyOverride)
+            {
+                builder.Append("    enablePerRegionPerPartitionAutoscale: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = EnablePerRegionPerPartitionAutoscale.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -1591,22 +1614,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "ApiServerVersion":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("ServerVersion", item.Value);
-                        bicepOptions.ParameterOverrides.Add(ApiProperties, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(ApiProperties, propertyDictionary);
                         break;
                     case "AnalyticalStorageSchemaType":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("SchemaType", item.Value);
-                        bicepOptions.ParameterOverrides.Add(AnalyticalStorageConfiguration, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(AnalyticalStorageConfiguration, propertyDictionary0);
                         break;
                     case "DiagnosticLogEnableFullTextQuery":
                         Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
                         propertyDictionary1.Add("EnableFullTextQuery", item.Value);
-                        bicepOptions.ParameterOverrides.Add(DiagnosticLogSettings, propertyDictionary1);
+                        bicepOptions.PropertyOverrides.Add(DiagnosticLogSettings, propertyDictionary1);
                         break;
                     case "CapacityTotalThroughputLimit":
                         Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
                         propertyDictionary2.Add("TotalThroughputLimit", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Capacity, propertyDictionary2);
+                        bicepOptions.PropertyOverrides.Add(Capacity, propertyDictionary2);
                         break;
                     default:
                         continue;
@@ -1640,8 +1663,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCosmosDBAccountCreateOrUpdateContent(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }

@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -314,8 +314,6 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageAccountKeyVaultProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageAccountKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Redis
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -314,8 +314,6 @@ namespace Azure.ResourceManager.Redis
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRedisPatchScheduleData(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RedisPatchScheduleData)} does not support reading '{options.Format}' format.");
             }

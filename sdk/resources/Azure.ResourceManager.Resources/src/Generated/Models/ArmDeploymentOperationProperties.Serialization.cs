@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -431,12 +431,12 @@ namespace Azure.ResourceManager.Resources.Models
                     case "RequestContent":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("Content", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Request, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(Request, propertyDictionary);
                         break;
                     case "ResponseContent":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("Content", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Response, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(Response, propertyDictionary0);
                         break;
                     default:
                         continue;
@@ -470,8 +470,6 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmDeploymentOperationProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support reading '{options.Format}' format.");
             }

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -224,22 +224,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "PrimaryMasterKeyGeneratedOn":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("GeneratedOn", item.Value);
-                        bicepOptions.ParameterOverrides.Add(PrimaryMasterKey, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(PrimaryMasterKey, propertyDictionary);
                         break;
                     case "SecondaryMasterKeyGeneratedOn":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("GeneratedOn", item.Value);
-                        bicepOptions.ParameterOverrides.Add(SecondaryMasterKey, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(SecondaryMasterKey, propertyDictionary0);
                         break;
                     case "PrimaryReadonlyMasterKeyGeneratedOn":
                         Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
                         propertyDictionary1.Add("GeneratedOn", item.Value);
-                        bicepOptions.ParameterOverrides.Add(PrimaryReadonlyMasterKey, propertyDictionary1);
+                        bicepOptions.PropertyOverrides.Add(PrimaryReadonlyMasterKey, propertyDictionary1);
                         break;
                     case "SecondaryReadonlyMasterKeyGeneratedOn":
                         Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
                         propertyDictionary2.Add("GeneratedOn", item.Value);
-                        bicepOptions.ParameterOverrides.Add(SecondaryReadonlyMasterKey, propertyDictionary2);
+                        bicepOptions.PropertyOverrides.Add(SecondaryReadonlyMasterKey, propertyDictionary2);
                         break;
                     default:
                         continue;
@@ -273,8 +273,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support reading '{options.Format}' format.");
             }

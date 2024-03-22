@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -387,6 +387,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
+            if (Optional.IsDefined(Duration) || hasPropertyOverride)
+            {
+                builder.Append("  duration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (Optional.IsDefined(Mode) || hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Mode.Value.ToString()}'");
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -417,8 +446,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataTransferJobProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support reading '{options.Format}' format.");
             }

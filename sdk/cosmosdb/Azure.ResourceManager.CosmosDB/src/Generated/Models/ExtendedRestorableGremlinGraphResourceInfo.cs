@@ -78,8 +78,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("operationType")]
         public CosmosDBOperationType? OperationType { get; }
         /// <summary> A state of this graph to identify if this graph is restorable in same account. </summary>
+        [WirePath("canUndelete")]
         public string CanUndelete { get; }
         /// <summary> The reason why this graph can not be restored in same account. </summary>
+        [WirePath("canUndeleteReason")]
         public string CanUndeleteReason { get; }
         /// <summary> The time when this graph event happened. </summary>
         [WirePath("eventTimestamp")]

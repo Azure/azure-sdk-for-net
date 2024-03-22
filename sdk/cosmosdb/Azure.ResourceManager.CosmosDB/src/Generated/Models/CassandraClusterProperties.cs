@@ -158,6 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("repairEnabled")]
         public bool? IsRepairEnabled { get; set; }
         /// <summary> The form of AutoReplicate that is being used by this cluster. </summary>
+        [WirePath("autoReplicate")]
         public AutoReplicate? AutoReplicate { get; set; }
         /// <summary> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </summary>
         [WirePath("clientCertificates")]
@@ -175,6 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("seedNodes")]
         public IReadOnlyList<CassandraDataCenterSeedNode> SeedNodes { get; }
         /// <summary> List of the data center names for unmanaged data centers in this cluster to be included in auto-replication. </summary>
+        [WirePath("externalDataCenters")]
         public IList<string> ExternalDataCenters { get; }
         /// <summary> (Deprecated) Number of hours to wait between taking a backup of the cluster. </summary>
         [WirePath("hoursBetweenBackups")]
@@ -198,10 +200,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("backupSchedules")]
         public IList<CassandraClusterBackupSchedule> BackupSchedules { get; }
         /// <summary> How the nodes in the cluster react to scheduled events. </summary>
+        [WirePath("scheduledEventStrategy")]
         public ScheduledEventStrategy? ScheduledEventStrategy { get; set; }
         /// <summary> How to connect to the azure services needed for running the cluster. </summary>
+        [WirePath("azureConnectionMethod")]
         public AzureConnectionType? AzureConnectionMethod { get; set; }
         /// <summary> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </summary>
+        [WirePath("privateLinkResourceId")]
         public string PrivateLinkResourceId { get; }
     }
 }

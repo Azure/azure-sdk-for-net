@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Resources
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -865,17 +865,17 @@ namespace Azure.ResourceManager.Resources
                     case "NotificationEndpoints":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("NotificationEndpoints", item.Value);
-                        bicepOptions.ParameterOverrides.Add(NotificationPolicy, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(NotificationPolicy, propertyDictionary);
                         break;
                     case "DeploymentMode":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("DeploymentMode", item.Value);
-                        bicepOptions.ParameterOverrides.Add(DeploymentPolicy, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(DeploymentPolicy, propertyDictionary0);
                         break;
                     case "ManagementMode":
                         Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
                         propertyDictionary1.Add("Mode", item.Value);
-                        bicepOptions.ParameterOverrides.Add(ManagementPolicy, propertyDictionary1);
+                        bicepOptions.PropertyOverrides.Add(ManagementPolicy, propertyDictionary1);
                         break;
                     default:
                         continue;
@@ -909,8 +909,6 @@ namespace Azure.ResourceManager.Resources
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmApplicationDefinitionData(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmApplicationDefinitionData)} does not support reading '{options.Format}' format.");
             }

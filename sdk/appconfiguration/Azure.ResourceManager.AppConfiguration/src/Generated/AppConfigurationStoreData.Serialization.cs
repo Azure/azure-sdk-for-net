@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppConfiguration
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -700,12 +700,12 @@ namespace Azure.ResourceManager.AppConfiguration
                     case "SkuName":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("Name", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Sku, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(Sku, propertyDictionary);
                         break;
                     case "EncryptionKeyVaultProperties":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("KeyVaultProperties", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Encryption, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(Encryption, propertyDictionary0);
                         break;
                     default:
                         continue;
@@ -739,8 +739,6 @@ namespace Azure.ResourceManager.AppConfiguration
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppConfigurationStoreData(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationStoreData)} does not support reading '{options.Format}' format.");
             }

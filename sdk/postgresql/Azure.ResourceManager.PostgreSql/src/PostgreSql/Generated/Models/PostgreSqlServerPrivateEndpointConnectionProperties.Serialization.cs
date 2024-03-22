@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     case "PrivateEndpointId":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("Id", item.Value);
-                        bicepOptions.ParameterOverrides.Add(PrivateEndpoint, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(PrivateEndpoint, propertyDictionary);
                         break;
                     default:
                         continue;
@@ -230,8 +230,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlServerPrivateEndpointConnectionProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }

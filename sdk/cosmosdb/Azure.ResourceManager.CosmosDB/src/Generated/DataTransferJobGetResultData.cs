@@ -133,8 +133,10 @@ namespace Azure.ResourceManager.CosmosDB
         [WirePath("properties.error")]
         public ErrorResponse Error { get; }
         /// <summary> Total Duration of Job. </summary>
+        [WirePath("properties.duration")]
         public TimeSpan? Duration { get; }
         /// <summary> Mode of job execution. </summary>
+        [WirePath("properties.mode")]
         public DataTransferJobMode? Mode { get; set; }
     }
 }

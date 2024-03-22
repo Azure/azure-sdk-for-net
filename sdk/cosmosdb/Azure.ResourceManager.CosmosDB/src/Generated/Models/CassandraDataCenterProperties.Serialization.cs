@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -585,6 +585,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointIPAddress), out propertyOverride);
+            if (Optional.IsDefined(PrivateEndpointIPAddress) || hasPropertyOverride)
+            {
+                builder.Append("  privateEndpointIpAddress: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrivateEndpointIPAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateEndpointIPAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateEndpointIPAddress}'");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -615,8 +637,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraDataCenterProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support reading '{options.Format}' format.");
             }

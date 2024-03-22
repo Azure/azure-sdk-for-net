@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.SignalR
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -1050,22 +1050,22 @@ namespace Azure.ResourceManager.SignalR
                     case "IsClientCertEnabled":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("IsClientCertEnabled", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Tls, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(Tls, propertyDictionary);
                         break;
                     case "ResourceLogCategories":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("Categories", item.Value);
-                        bicepOptions.ParameterOverrides.Add(ResourceLogConfiguration, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(ResourceLogConfiguration, propertyDictionary0);
                         break;
                     case "CorsAllowedOrigins":
                         Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
                         propertyDictionary1.Add("AllowedOrigins", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Cors, propertyDictionary1);
+                        bicepOptions.PropertyOverrides.Add(Cors, propertyDictionary1);
                         break;
                     case "UpstreamTemplates":
                         Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
                         propertyDictionary2.Add("Templates", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Upstream, propertyDictionary2);
+                        bicepOptions.PropertyOverrides.Add(Upstream, propertyDictionary2);
                         break;
                     default:
                         continue;
@@ -1099,8 +1099,6 @@ namespace Azure.ResourceManager.SignalR
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSignalRData(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SignalRData)} does not support reading '{options.Format}' format.");
             }

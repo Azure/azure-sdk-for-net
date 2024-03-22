@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -731,6 +731,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoReplicate), out propertyOverride);
+            if (Optional.IsDefined(AutoReplicate) || hasPropertyOverride)
+            {
+                builder.Append("  autoReplicate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AutoReplicate.Value.ToString()}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCertificates), out propertyOverride);
             if (Optional.IsCollectionDefined(ClientCertificates) || hasPropertyOverride)
             {
@@ -835,6 +849,41 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         foreach (var item in SeedNodes)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  seedNodes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalDataCenters), out propertyOverride);
+            if (Optional.IsCollectionDefined(ExternalDataCenters) || hasPropertyOverride)
+            {
+                if (ExternalDataCenters.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  externalDataCenters: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ExternalDataCenters)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
                         }
                         builder.AppendLine("  ]");
                     }
@@ -970,6 +1019,56 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledEventStrategy), out propertyOverride);
+            if (Optional.IsDefined(ScheduledEventStrategy) || hasPropertyOverride)
+            {
+                builder.Append("  scheduledEventStrategy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ScheduledEventStrategy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureConnectionMethod), out propertyOverride);
+            if (Optional.IsDefined(AzureConnectionMethod) || hasPropertyOverride)
+            {
+                builder.Append("  azureConnectionMethod: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AzureConnectionMethod.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
+            if (Optional.IsDefined(PrivateLinkResourceId) || hasPropertyOverride)
+            {
+                builder.Append("  privateLinkResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrivateLinkResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateLinkResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateLinkResourceId}'");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -983,7 +1082,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "PrometheusEndpointIPAddress":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("IPAddress", item.Value);
-                        bicepOptions.ParameterOverrides.Add(PrometheusEndpoint, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(PrometheusEndpoint, propertyDictionary);
                         break;
                     default:
                         continue;
@@ -1017,8 +1116,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraClusterProperties(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support reading '{options.Format}' format.");
             }

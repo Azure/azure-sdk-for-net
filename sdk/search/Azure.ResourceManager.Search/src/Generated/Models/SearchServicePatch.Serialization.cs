@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Search.Models
             StringBuilder builder = new StringBuilder();
             BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
             IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
@@ -850,12 +850,12 @@ namespace Azure.ResourceManager.Search.Models
                     case "SkuName":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("Name", item.Value);
-                        bicepOptions.ParameterOverrides.Add(Sku, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(Sku, propertyDictionary);
                         break;
                     case "IPRules":
                         Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
                         propertyDictionary0.Add("IPRules", item.Value);
-                        bicepOptions.ParameterOverrides.Add(NetworkRuleSet, propertyDictionary0);
+                        bicepOptions.PropertyOverrides.Add(NetworkRuleSet, propertyDictionary0);
                         break;
                     default:
                         continue;
@@ -889,8 +889,6 @@ namespace Azure.ResourceManager.Search.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSearchServicePatch(document.RootElement, options);
                     }
-                case "bicep":
-                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SearchServicePatch)} does not support reading '{options.Format}' format.");
             }

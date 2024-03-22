@@ -137,6 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("materializedViewDefinition")]
         public MaterializedViewDefinition MaterializedViewDefinition { get; set; }
         /// <summary> List of computed properties. </summary>
+        [WirePath("computedProperties")]
         public IList<ComputedProperty> ComputedProperties { get; }
     }
 }

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("restoreTimestampInUtc")]
         public DateTimeOffset? RestoreTimestampInUtc { get; set; }
         /// <summary> Specifies whether the restored account will have Time-To-Live disabled upon the successful restore. </summary>
+        [WirePath("restoreWithTtlDisabled")]
         public bool? RestoreWithTtlDisabled { get; set; }
     }
 }

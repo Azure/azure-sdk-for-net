@@ -137,6 +137,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("provisionError")]
         public CassandraError ProvisionError { get; set; }
         /// <summary> Ip of the VPN Endpoint for this data center. </summary>
+        [WirePath("privateEndpointIpAddress")]
         public string PrivateEndpointIPAddress { get; set; }
     }
 }
