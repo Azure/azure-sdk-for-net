@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(DraftContentLink))
             {
                 writer.WritePropertyName("draftContentLink"u8);
-                writer.WriteObjectValue(DraftContentLink);
+                writer.WriteObjectValue<AutomationContentLink>(DraftContentLink, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RunbookParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

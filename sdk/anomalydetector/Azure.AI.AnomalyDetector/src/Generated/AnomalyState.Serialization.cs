@@ -31,7 +31,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<AnomalyValue>(Value, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ErrorResponse>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +168,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnomalyState>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

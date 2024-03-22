@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<AppConfigurationSku>(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppConfiguration
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AppConfigurationStoreEncryptionProperties>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<AppConfigurationPrivateEndpointConnectionReference>(item, options);
                     }
                     writer.WriteEndArray();
                 }

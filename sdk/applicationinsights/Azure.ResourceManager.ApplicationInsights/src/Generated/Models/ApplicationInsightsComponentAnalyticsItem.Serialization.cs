@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("Properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ApplicationInsightsComponentAnalyticsItemProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

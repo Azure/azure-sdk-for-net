@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuthorizationClassicAdministrator>(item, options);
                 }
                 writer.WriteEndArray();
             }

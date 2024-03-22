@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault);
+                writer.WriteObjectValue<KeyVaultContractCreateProperties>(KeyVault, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<FarmBeatsUpdateProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
