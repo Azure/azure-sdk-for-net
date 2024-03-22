@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<FirewallPolicyIntrusionDetectionConfiguration>(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

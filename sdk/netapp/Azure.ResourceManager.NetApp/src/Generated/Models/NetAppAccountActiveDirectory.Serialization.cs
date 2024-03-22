@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(LdapSearchScope))
             {
                 writer.WritePropertyName("ldapSearchScope"u8);
-                writer.WriteObjectValue(LdapSearchScope);
+                writer.WriteObjectValue<NetAppLdapSearchScopeConfiguration>(LdapSearchScope, options);
             }
             if (Optional.IsDefined(PreferredServersForLdapClient))
             {

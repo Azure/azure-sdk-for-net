@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (options.Format != "W" && Optional.IsDefined(LldpNeighbor))
             {
                 writer.WritePropertyName("lldpNeighbor"u8);
-                writer.WriteObjectValue(LldpNeighbor);
+                writer.WriteObjectValue<LldpNeighbor>(LldpNeighbor, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {

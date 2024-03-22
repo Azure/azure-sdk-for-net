@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Signatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IdpsSignatureResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

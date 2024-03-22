@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkManagerScopes))
             {
                 writer.WritePropertyName("networkManagerScopes"u8);
-                writer.WriteObjectValue(NetworkManagerScopes);
+                writer.WriteObjectValue<NetworkManagerPropertiesNetworkManagerScopes>(NetworkManagerScopes, options);
             }
             if (Optional.IsCollectionDefined(NetworkManagerScopeAccesses))
             {

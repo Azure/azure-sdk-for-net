@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricSingleDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorSingleBaseline>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(MetadataValues))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetadataValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorBaselineMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }

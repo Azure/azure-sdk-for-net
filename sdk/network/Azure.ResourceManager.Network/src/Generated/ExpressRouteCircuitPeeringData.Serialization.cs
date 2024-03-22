@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig);
+                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
             }
             if (Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats);
+                writer.WriteObjectValue<ExpressRouteCircuitStats>(Stats, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue(IPv6PeeringConfig);
+                writer.WriteObjectValue<IPv6ExpressRouteCircuitPeeringConfig>(IPv6PeeringConfig, options);
             }
             if (Optional.IsDefined(ExpressRouteConnection))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExpressRouteCircuitConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PeeredConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeerExpressRouteCircuitConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

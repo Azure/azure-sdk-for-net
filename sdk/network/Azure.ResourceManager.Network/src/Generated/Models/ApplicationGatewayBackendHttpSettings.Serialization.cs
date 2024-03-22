@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining"u8);
-                writer.WriteObjectValue(ConnectionDraining);
+                writer.WriteObjectValue<ApplicationGatewayConnectionDraining>(ConnectionDraining, options);
             }
             if (Optional.IsDefined(HostName))
             {

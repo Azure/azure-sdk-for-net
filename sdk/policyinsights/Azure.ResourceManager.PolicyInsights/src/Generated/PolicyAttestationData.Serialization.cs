@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AttestationEvidence>(item, options);
                 }
                 writer.WriteEndArray();
             }

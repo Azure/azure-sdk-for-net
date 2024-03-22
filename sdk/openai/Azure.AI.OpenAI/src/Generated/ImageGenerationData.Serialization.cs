@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
-                writer.WriteObjectValue(ContentFilterResults);
+                writer.WriteObjectValue<ImageGenerationContentFilterResults>(ContentFilterResults, options);
             }
             if (Optional.IsDefined(RevisedPrompt))
             {
@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
-                writer.WriteObjectValue(PromptFilterResults);
+                writer.WriteObjectValue<ImageGenerationPromptFilterResults>(PromptFilterResults, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -193,7 +193,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImageGenerationData>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

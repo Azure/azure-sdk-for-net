@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
-                writer.WriteObjectValue(SshPublicKey);
+                writer.WriteObjectValue<NetworkCloudSshPublicKey>(SshPublicKey, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

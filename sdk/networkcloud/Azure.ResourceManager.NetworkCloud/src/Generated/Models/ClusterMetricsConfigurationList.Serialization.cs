@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkCloudClusterMetricsConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
