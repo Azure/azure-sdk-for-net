@@ -152,13 +152,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 try
                 {
-                    MetricPoint metricPoint = new MetricPoint
-                    {
-                        Name = metricAccumulatedValues.MetricId,
-                        Value = (float)metricAccumulatedValues.CalculateAggregation(out long count),
-                        Weight = (int)count,
-                    };
-
+                    MetricPoint metricPoint = new MetricPoint(name: metricAccumulatedValues.MetricId, value: (float)metricAccumulatedValues.CalculateAggregation(out long count), weight: (int)count);
                     metrics.Add(metricPoint);
                 }
                 catch (System.Exception)
@@ -177,8 +171,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
             // prepare the accumulators based on the collection configuration
-            IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-            foreach (Tuple<string, DerivedMetricInfoAggregation?> metricId in allMetrics ?? Enumerable.Empty<Tuple<string, DerivedMetricInfoAggregation?>>())
+            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
             {
                 var derivedMetricInfoAggregation = metricId.Item2;
                 if (!derivedMetricInfoAggregation.HasValue)
@@ -186,7 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     continue;
                 }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AggregationType aggregationType))
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
                 {
                     var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 
