@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
