@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NewRelicObservability
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                         return DeserializeNewRelicMonitorResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

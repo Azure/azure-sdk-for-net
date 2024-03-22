@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,6 +35,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanUndelete))
+            {
+                writer.WritePropertyName("canUndelete"u8);
+                writer.WriteStringValue(CanUndelete);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanUndeleteReason))
+            {
+                writer.WritePropertyName("canUndeleteReason"u8);
+                writer.WriteStringValue(CanUndeleteReason);
             }
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
@@ -80,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableSqlDatabaseResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,6 +106,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string rid = default;
             CosmosDBOperationType? operationType = default;
+            string canUndelete = default;
+            string canUndeleteReason = default;
             string eventTimestamp = default;
             string ownerId = default;
             string ownerResourceId = default;
@@ -117,6 +128,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         continue;
                     }
                     operationType = new CosmosDBOperationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("canUndelete"u8))
+                {
+                    canUndelete = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("canUndeleteReason"u8))
+                {
+                    canUndeleteReason = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eventTimestamp"u8))
@@ -152,6 +173,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new ExtendedRestorableSqlDatabaseResourceInfo(
                 rid,
                 operationType,
+                canUndelete,
+                canUndeleteReason,
                 eventTimestamp,
                 ownerId,
                 ownerResourceId,
@@ -168,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeExtendedRestorableSqlDatabaseResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedRestorableSqlDatabaseResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

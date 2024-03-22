@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<EmbeddingsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,6 +43,16 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(EncodingFormat))
+            {
+                writer.WritePropertyName("encoding_format"u8);
+                writer.WriteStringValue(EncodingFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteNumberValue(Dimensions.Value);
+            }
             if (Optional.IsDefined(InputType))
             {
                 writer.WritePropertyName("input_type"u8);
@@ -72,7 +81,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<EmbeddingsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,6 +99,8 @@ namespace Azure.AI.OpenAI
             string user = default;
             string model = default;
             IList<string> input = default;
+            EmbeddingEncodingFormat? encodingFormat = default;
+            int? dimensions = default;
             string inputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,6 +126,24 @@ namespace Azure.AI.OpenAI
                     input = array;
                     continue;
                 }
+                if (property.NameEquals("encoding_format"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encodingFormat = new EmbeddingEncodingFormat(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dimensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dimensions = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("input_type"u8))
                 {
                     inputType = property.Value.GetString();
@@ -126,7 +155,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmbeddingsOptions(user, model, input, inputType, serializedAdditionalRawData);
+            return new EmbeddingsOptions(
+                user,
+                model,
+                input,
+                encodingFormat,
+                dimensions,
+                inputType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmbeddingsOptions>.Write(ModelReaderWriterOptions options)
@@ -138,7 +174,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +190,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeEmbeddingsOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingsOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

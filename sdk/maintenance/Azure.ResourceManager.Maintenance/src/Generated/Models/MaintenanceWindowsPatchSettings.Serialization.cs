@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowsPatchSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceWindowsPatchSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowsPatchSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

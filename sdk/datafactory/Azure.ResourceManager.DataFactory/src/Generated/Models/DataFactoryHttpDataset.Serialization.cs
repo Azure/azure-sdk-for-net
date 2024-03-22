@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryHttpDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryHttpDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -344,7 +343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -360,7 +359,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryHttpDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryHttpDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

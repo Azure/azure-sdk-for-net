@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -69,8 +68,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
         /// <param name="deallocated"> Whether the data center has been deallocated. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
+        /// <param name="privateEndpointIPAddress"> Ip of the VPN Endpoint for this data center. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, string privateEndpointIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AuthenticationMethodLdapProperties = authenticationMethodLdapProperties;
             Deallocated = deallocated;
             ProvisionError = provisionError;
+            PrivateEndpointIPAddress = privateEndpointIPAddress;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -120,5 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? Deallocated { get; set; }
         /// <summary> Error related to resource provisioning. </summary>
         public CassandraError ProvisionError { get; set; }
+        /// <summary> Ip of the VPN Endpoint for this data center. </summary>
+        public string PrivateEndpointIPAddress { get; set; }
     }
 }

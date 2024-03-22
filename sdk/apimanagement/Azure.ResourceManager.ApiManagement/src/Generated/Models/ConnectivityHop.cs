@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {

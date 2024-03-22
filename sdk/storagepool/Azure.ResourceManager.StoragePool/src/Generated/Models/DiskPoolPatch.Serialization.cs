@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeDiskPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

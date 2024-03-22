@@ -4,8 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -43,20 +46,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             // TODO: Configuration errors are thrown when filter is applied.
             // CollectionConfigurationErrors = null,
 
+            CollectionConfigurationError[] filteringErrors;
+            string projectionError = string.Empty;
+            Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
                 // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
-                //TODO: Apply filters
-                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
-                //    if (metric.CheckFilters(telemetry, out filteringErrors))
 
                 dataPoint.Documents.Add(item);
 
-                if (item.DocumentType == DocumentType.Request)
+                if (item is Request request)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -66,8 +69,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordRequestFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentType.RemoteDependency)
+                else if (item is RemoteDependency remoteDependency)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -77,9 +81,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordDependencyFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentType.Exception)
+                else if (item is Models.Exception exception)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
+                }
+                else if (item is Models.Trace trace)
+                {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
                 {
@@ -88,6 +97,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             foreach (var metricPoint in liveMetricsBuffer.GetMetricPoints())
+            {
+                dataPoint.Metrics.Add(metricPoint);
+            }
+
+            foreach (var metricPoint in CreateCalculatedMetrics(metricAccumulators))
             {
                 dataPoint.Metrics.Add(metricPoint);
             }
@@ -128,6 +142,87 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _cachedCollectedTime = DateTimeOffset.MinValue;
             _cachedCollectedValue = 0;
+        }
+
+        private static IEnumerable<MetricPoint> CreateCalculatedMetrics(Dictionary<string, AccumulatedValues> metricAccumulators)
+        {
+            var metrics = new List<MetricPoint>();
+
+            foreach (AccumulatedValues metricAccumulatedValues in metricAccumulators.Values)
+            {
+                try
+                {
+                    MetricPoint metricPoint = new MetricPoint
+                    {
+                        Name = metricAccumulatedValues.MetricId,
+                        Value = (float)metricAccumulatedValues.CalculateAggregation(out long count),
+                        Weight = (int)count,
+                    };
+
+                    metrics.Add(metricPoint);
+                }
+                catch (System.Exception)
+                {
+                    // skip this metric
+                    // TODO: log unknown error
+                    // QuickPulseEventSource.Log.UnknownErrorEvent(e.ToString());
+                }
+            }
+
+            return metrics;
+        }
+
+        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration collectionConfiguration)
+        {
+            Dictionary<string, AccumulatedValues> metricAccumulators = new();
+
+            // prepare the accumulators based on the collection configuration
+            IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, DerivedMetricInfoAggregation?> metricId in allMetrics ?? Enumerable.Empty<Tuple<string, DerivedMetricInfoAggregation?>>())
+            {
+                var derivedMetricInfoAggregation = metricId.Item2;
+                if (!derivedMetricInfoAggregation.HasValue)
+                {
+                    continue;
+                }
+
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AggregationType aggregationType))
+                {
+                    var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
+
+                    metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                }
+            }
+            return metricAccumulators;
+        }
+
+        private void ApplyFilters<TTelemetry>(
+            Dictionary<string, AccumulatedValues> metricAccumulators,
+            IEnumerable<DerivedMetric<TTelemetry>> metrics,
+            TTelemetry telemetry,
+            out CollectionConfigurationError[] filteringErrors,
+            ref string projectionError)
+        {
+            filteringErrors = Array.Empty<CollectionConfigurationError>();
+
+            foreach (DerivedMetric<TTelemetry> metric in metrics)
+            {
+                if (metric.CheckFilters(telemetry, out filteringErrors))
+                {
+                    // the telemetry document has passed the filters, count it in and project
+                    try
+                    {
+                        double projection = metric.Project(telemetry);
+
+                        metricAccumulators[metric.Id].AddValue(projection);
+                    }
+                    catch (System.Exception e)
+                    {
+                        // most likely the projection did not result in a value parsable by double.Parse()
+                        projectionError = e.ToString();
+                    }
+                }
+            }
         }
 
         /// <summary>

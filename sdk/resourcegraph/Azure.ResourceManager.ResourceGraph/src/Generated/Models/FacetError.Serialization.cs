@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FacetError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeFacetError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FacetError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetError)} does not support reading '{options.Format}' format.");
             }
         }
 

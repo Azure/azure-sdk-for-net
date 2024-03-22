@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureLargeInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureLargeInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeAzureLargeInstanceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureLargeInstanceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

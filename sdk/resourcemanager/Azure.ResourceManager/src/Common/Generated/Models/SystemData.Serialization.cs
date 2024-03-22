@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Models
                         return DeserializeSystemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemData)} does not support reading '{options.Format}' format.");
             }
         }
 

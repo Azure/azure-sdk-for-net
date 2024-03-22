@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IsolationDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IsolationDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeIsolationDomainProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IsolationDomainProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

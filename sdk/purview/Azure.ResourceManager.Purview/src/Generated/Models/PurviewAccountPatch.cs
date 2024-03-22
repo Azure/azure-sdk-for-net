@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {

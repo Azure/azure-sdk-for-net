@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreNotificationsState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreNotificationsState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePrivateStoreNotificationsState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreNotificationsState)} does not support reading '{options.Format}' format.");
             }
         }
 

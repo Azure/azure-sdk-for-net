@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManifest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManifest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -377,7 +376,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceProviderManifest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderManifest)} does not support reading '{options.Format}' format.");
             }
         }
 
