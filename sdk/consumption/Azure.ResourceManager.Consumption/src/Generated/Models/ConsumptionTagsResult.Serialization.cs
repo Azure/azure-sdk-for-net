@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionTag>(item, options);
                 }
                 writer.WriteEndArray();
             }

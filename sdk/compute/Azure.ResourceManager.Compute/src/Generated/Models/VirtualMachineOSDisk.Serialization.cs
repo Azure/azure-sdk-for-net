@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                writer.WriteObjectValue<DiskEncryptionSettings>(EncryptionSettings, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd);
+                writer.WriteObjectValue<VirtualHardDisk>(Vhd, options);
             }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<VirtualHardDisk>(Image, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings);
+                writer.WriteObjectValue<DiffDiskSettings>(DiffDiskSettings, options);
             }
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                writer.WriteObjectValue<VirtualMachineManagedDisk>(ManagedDisk, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {

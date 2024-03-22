@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Patches)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PatchInstallationDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

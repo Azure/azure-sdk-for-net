@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareCredentialDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShareCredentialDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

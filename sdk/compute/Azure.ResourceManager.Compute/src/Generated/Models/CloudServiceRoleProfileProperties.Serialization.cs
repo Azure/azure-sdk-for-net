@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<CloudServiceRoleSku>(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

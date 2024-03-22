@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RegionalReplicationStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }

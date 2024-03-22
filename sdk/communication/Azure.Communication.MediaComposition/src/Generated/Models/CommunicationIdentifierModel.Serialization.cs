@@ -29,17 +29,17 @@ namespace Azure.Communication
             if (MediaComposition.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
             }
             if (MediaComposition.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
             }
             if (MediaComposition.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
         }

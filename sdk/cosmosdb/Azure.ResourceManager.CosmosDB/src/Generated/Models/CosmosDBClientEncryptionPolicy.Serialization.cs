@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartArray();
             foreach (var item in IncludedPaths)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CosmosDBClientEncryptionIncludedPath>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policyFormatVersion"u8);

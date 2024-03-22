@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in DeviceSecrets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DataBoxEdgeDeviceSecret>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
