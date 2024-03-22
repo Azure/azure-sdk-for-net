@@ -176,8 +176,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await sender.SendMessagesAsync(batch);
                 AssertSendActivities(useSessions, sender, messages);
 
-                // delete messages
-                await receiver.DeleteMessagesAsync();
+                // delete all messages
+                await receiver.PurgeMessagesAsync();
                 var deleteScope = _listener.AssertAndRemoveScope(DiagnosticProperty.DeleteActivityName);
                 AssertCommonTags(deleteScope.Activity, receiver.EntityPath, receiver.FullyQualifiedNamespace);
             };
