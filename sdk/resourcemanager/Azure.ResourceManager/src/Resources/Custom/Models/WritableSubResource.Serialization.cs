@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,16 +12,17 @@ namespace Azure.ResourceManager.Resources.Models
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
     [JsonConverter(typeof(WritableSubResourceConverter))]
-    public partial class WritableSubResource : IUtf8JsonSerializable, IJsonModel<WritableSubResource>
+    public partial class WritableSubResource : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WritableSubResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<WritableSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <summary>
+        /// Serialize the input WritableSubResource object.
+        /// </summary>
+        /// <param name="writer"> Input Json writer. </param>
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WritableSubResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            if (writer is null)
             {
-                throw new FormatException($"The model {nameof(WritableSubResource)} does not support '{format}' format.");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             writer.WriteStartObject();
@@ -34,28 +34,13 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        WritableSubResource IJsonModel<WritableSubResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WritableSubResource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(WritableSubResource)} does not support '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWritableSubResource(document.RootElement, options);
-        }
-
         /// <summary>
         /// Deserialize the input JSON element to a WritableSubResource object.
         /// </summary>
         /// <param name="element">The JSON element to be deserialized.</param>
-        /// <param name="options">The options to use.</param>
         /// <returns>Deserialized WritableSubResource object.</returns>
-        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WritableSubResource DeserializeWritableSubResource(JsonElement element)
         {
-            options ??= new ModelReaderWriterOptions("W");
-
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,37 +56,6 @@ namespace Azure.ResourceManager.Resources.Models
             }
             return new WritableSubResource(id);
         }
-
-        BinaryData IPersistableModel<WritableSubResource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WritableSubResource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(WritableSubResource)} does not support '{options.Format}' format.");
-            }
-        }
-
-        WritableSubResource IPersistableModel<WritableSubResource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WritableSubResource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWritableSubResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WritableSubResource)} does not support '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WritableSubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class WritableSubResourceConverter : JsonConverter<WritableSubResource>
         {
