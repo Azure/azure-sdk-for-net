@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Route>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(DiskPoolVolume))
             {
                 writer.WritePropertyName("diskPoolVolume"u8);
-                writer.WriteObjectValue(DiskPoolVolume);
+                writer.WriteObjectValue<DiskPoolVolume>(DiskPoolVolume, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

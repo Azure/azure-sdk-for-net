@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalStages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoleManagementApprovalStage>(item, options);
                 }
                 writer.WriteEndArray();
             }

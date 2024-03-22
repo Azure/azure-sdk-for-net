@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
-                writer.WriteObjectValue(SensorIntegration);
+                writer.WriteObjectValue<SensorIntegration>(SensorIntegration, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteObjectValue(PrivateEndpointConnections);
+                writer.WriteObjectValue<AgFoodPlatformPrivateEndpointConnectionData>(PrivateEndpointConnections, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

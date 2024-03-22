@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }

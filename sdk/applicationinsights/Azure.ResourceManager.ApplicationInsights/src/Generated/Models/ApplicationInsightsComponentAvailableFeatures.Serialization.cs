@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Result)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationInsightsComponentFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }
