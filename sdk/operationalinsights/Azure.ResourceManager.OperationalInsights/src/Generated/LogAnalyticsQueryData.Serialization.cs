@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue(Related);
+                writer.WriteObjectValue<LogAnalyticsQueryRelatedMetadata>(Related, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

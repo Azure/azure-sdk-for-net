@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
 
             writer.WriteStartObject();
             writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue(ImageUrl);
+            writer.WriteObjectValue<ChatMessageImageUrl>(ImageUrl, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatMessageImageContentItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Monitor
             if (Criteria != null)
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria);
+                writer.WriteObjectValue<MetricAlertCriteria>(Criteria, options);
             }
             else
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricAlertAction>(item, options);
                 }
                 writer.WriteEndArray();
             }

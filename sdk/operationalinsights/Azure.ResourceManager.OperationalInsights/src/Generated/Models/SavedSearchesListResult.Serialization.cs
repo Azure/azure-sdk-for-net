@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsSavedSearchData>(item, options);
                 }
                 writer.WriteEndArray();
             }

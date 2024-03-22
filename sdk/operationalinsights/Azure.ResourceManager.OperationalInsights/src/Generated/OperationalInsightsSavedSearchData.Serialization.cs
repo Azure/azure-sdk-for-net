@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalInsightsTag>(item, options);
                 }
                 writer.WriteEndArray();
             }

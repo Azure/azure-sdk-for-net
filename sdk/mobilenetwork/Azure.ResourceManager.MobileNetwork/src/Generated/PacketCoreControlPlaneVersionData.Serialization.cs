@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStartArray();
                 foreach (var item in Platforms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MobileNetworkPlatform>(item, options);
                 }
                 writer.WriteEndArray();
             }

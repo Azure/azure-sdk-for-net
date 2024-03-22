@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
-                writer.WriteObjectValue(StaticRoutesConfig);
+                writer.WriteObjectValue<StaticRoutesConfig>(StaticRoutesConfig, options);
             }
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRoute>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name);
+            writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
             if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Timeseries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorTimeSeriesElement>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

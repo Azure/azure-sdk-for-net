@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationStatusResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

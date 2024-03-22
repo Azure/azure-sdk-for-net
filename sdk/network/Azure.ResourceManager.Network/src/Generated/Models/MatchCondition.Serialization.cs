@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in MatchVariables)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MatchVariable>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);

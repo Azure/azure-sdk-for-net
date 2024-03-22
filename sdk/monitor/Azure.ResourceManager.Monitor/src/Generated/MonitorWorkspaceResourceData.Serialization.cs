@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                writer.WriteObjectValue<MonitorWorkspaceMetrics>(Metrics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(DefaultIngestionSettings))
             {
                 writer.WritePropertyName("defaultIngestionSettings"u8);
-                writer.WriteObjectValue(DefaultIngestionSettings);
+                writer.WriteObjectValue<MonitorWorkspaceDefaultIngestionSettings>(DefaultIngestionSettings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorWorkspacePrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
