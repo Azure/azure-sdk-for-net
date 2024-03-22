@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Hive))
             {
                 writer.WritePropertyName("hive"u8);
-                writer.WriteObjectValue(Hive);
+                writer.WriteObjectValue<FlinkHiveCatalogOption>(Hive, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

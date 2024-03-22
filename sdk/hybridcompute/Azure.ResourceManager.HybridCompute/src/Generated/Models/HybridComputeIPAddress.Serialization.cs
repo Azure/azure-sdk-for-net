@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<HybridComputeSubnet>(Subnet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

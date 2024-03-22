@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(RemoteStorageUri.AbsoluteUri);
             }
             writer.WritePropertyName("diskStorage"u8);
-            writer.WriteObjectValue(DiskStorage);
+            writer.WriteObjectValue<DiskStorageProfile>(DiskStorage, options);
             if (options.Format != "W" && Optional.IsDefined(ClusterIdentity))
             {
                 writer.WritePropertyName("clusterIdentity"u8);
-                writer.WriteObjectValue(ClusterIdentity);
+                writer.WriteObjectValue<HDInsightIdentityProfile>(ClusterIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
-                writer.WriteObjectValue(ConnectivityEndpoints);
+                writer.WriteObjectValue<KafkaConnectivityEndpoints>(ConnectivityEndpoints, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

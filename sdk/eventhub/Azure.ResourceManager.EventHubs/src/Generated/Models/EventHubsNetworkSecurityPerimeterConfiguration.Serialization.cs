@@ -73,24 +73,24 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventHubsProvisioningIssue>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter);
+                writer.WriteObjectValue<EventHubsNetworkSecurityPerimeter>(NetworkSecurityPerimeter, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation);
+                writer.WriteObjectValue<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>(ResourceAssociation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile);
+                writer.WriteObjectValue<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(Profile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

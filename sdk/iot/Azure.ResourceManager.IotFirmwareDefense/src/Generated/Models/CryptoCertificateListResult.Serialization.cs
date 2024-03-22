@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CryptoCertificateResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

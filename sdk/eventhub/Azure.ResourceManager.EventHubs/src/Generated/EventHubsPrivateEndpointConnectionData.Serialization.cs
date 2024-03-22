@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<EventHubsPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

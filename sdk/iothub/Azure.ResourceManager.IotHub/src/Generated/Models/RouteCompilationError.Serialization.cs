@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(Location);
+                writer.WriteObjectValue<RouteErrorRange>(Location, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
