@@ -1,4 +1,4 @@
-# Azure.Developer.Signing client library for .NET
+# Azure Developer Signing client library for .NET
 
 Azure.Developer.Signing is a fully managed end-to-end signing solution for 3rd party developers. The Azure.Developer.Signing client library allows you to easily sign your bits without the hassle of managing certificate lifetimes.
 
