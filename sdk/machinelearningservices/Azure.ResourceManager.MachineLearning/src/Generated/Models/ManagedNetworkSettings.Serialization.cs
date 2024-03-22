@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in OutboundRules)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningOutboundRule>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ManagedNetworkProvisionStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

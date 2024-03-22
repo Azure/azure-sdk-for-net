@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningFeatureData>(item, options);
                 }
                 writer.WriteEndArray();
             }

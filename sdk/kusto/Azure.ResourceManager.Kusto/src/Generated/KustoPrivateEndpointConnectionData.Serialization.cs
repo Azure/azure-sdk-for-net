@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<KustoPrivateLinkServiceConnectionStateProperty>(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GroupId))
             {

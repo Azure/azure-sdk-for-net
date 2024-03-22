@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyVaultPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

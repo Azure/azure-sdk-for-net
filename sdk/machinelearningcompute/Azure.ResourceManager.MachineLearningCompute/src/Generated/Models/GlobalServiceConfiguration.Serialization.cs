@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(Ssl))
             {
                 writer.WritePropertyName("ssl"u8);
-                writer.WriteObjectValue(Ssl);
+                writer.WriteObjectValue<SslConfiguration>(Ssl, options);
             }
             if (Optional.IsDefined(ServiceAuth))
             {
                 writer.WritePropertyName("serviceAuth"u8);
-                writer.WriteObjectValue(ServiceAuth);
+                writer.WriteObjectValue<ServiceAuthConfiguration>(ServiceAuth, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<AutoScaleConfiguration>(AutoScale, options);
             }
             foreach (var item in AdditionalProperties)
             {

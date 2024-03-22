@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ScaleSettingsInformation>(Properties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

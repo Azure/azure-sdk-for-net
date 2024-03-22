@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<KeyVaultAccessPolicyProperties>(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

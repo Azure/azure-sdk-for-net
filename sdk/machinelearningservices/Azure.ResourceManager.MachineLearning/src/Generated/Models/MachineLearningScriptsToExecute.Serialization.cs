@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(StartupScript))
             {
                 writer.WritePropertyName("startupScript"u8);
-                writer.WriteObjectValue(StartupScript);
+                writer.WriteObjectValue<MachineLearningScriptReference>(StartupScript, options);
             }
             if (Optional.IsDefined(CreationScript))
             {
                 writer.WritePropertyName("creationScript"u8);
-                writer.WriteObjectValue(CreationScript);
+                writer.WriteObjectValue<MachineLearningScriptReference>(CreationScript, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
