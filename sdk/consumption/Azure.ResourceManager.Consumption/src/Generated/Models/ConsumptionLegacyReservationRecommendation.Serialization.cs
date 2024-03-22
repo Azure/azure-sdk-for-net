@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionSkuProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }

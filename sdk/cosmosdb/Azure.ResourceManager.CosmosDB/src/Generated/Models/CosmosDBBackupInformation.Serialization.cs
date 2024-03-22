@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(ContinuousBackupInformation))
             {
                 writer.WritePropertyName("continuousBackupInformation"u8);
-                writer.WriteObjectValue(ContinuousBackupInformation);
+                writer.WriteObjectValue<ContinuousBackupInformation>(ContinuousBackupInformation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

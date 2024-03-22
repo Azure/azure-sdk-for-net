@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
-                writer.WriteObjectValue(RunRequest);
+                writer.WriteObjectValue<ContainerRegistryRunContent>(RunRequest, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RunResult))
             {
                 writer.WritePropertyName("runResult"u8);
-                writer.WriteObjectValue(RunResult);
+                writer.WriteObjectValue<ContainerRegistryRunData>(RunResult, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {
