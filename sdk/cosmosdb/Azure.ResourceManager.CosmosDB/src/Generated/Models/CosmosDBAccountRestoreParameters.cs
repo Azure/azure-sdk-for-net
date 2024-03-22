@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -25,13 +24,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountRestoreParameters"/>. </summary>
         /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
         /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
+        /// <param name="restoreWithTtlDisabled"> Specifies whether the restored account will have Time-To-Live disabled upon the successful restore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="restoreMode"> Describes the mode of the restore. </param>
         /// <param name="databasesToRestore"> List of specific databases available for restore. </param>
         /// <param name="gremlinDatabasesToRestore"> List of specific gremlin databases available for restore. </param>
         /// <param name="tablesToRestore"> List of specific tables available for restore. </param>
         /// <param name="sourceBackupLocation"> The source backup location for restore. </param>
-        internal CosmosDBAccountRestoreParameters(string restoreSource, DateTimeOffset? restoreTimestampInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData, CosmosDBAccountRestoreMode? restoreMode, IList<DatabaseRestoreResourceInfo> databasesToRestore, IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore, IList<string> tablesToRestore, string sourceBackupLocation) : base(restoreSource, restoreTimestampInUtc, serializedAdditionalRawData)
+        internal CosmosDBAccountRestoreParameters(string restoreSource, DateTimeOffset? restoreTimestampInUtc, bool? restoreWithTtlDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData, CosmosDBAccountRestoreMode? restoreMode, IList<DatabaseRestoreResourceInfo> databasesToRestore, IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore, IList<string> tablesToRestore, string sourceBackupLocation) : base(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, serializedAdditionalRawData)
         {
             RestoreMode = restoreMode;
             DatabasesToRestore = databasesToRestore;

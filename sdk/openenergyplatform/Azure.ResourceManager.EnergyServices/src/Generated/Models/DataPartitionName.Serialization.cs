@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EnergyServices;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeDataPartitionName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionName)} does not support reading '{options.Format}' format.");
             }
         }
 

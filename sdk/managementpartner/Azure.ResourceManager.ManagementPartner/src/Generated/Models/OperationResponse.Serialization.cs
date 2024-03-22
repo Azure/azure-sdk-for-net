@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagementPartner;
 
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                         return DeserializeOperationResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

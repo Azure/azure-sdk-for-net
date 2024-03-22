@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -362,7 +361,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -378,7 +377,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineRunCommandUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

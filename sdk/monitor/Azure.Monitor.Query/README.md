@@ -36,36 +36,51 @@ dotnet add package Azure.Monitor.Query
 
 ### Authenticate the client
 
-An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a `TokenCredential` class. Pass it to the constructor of the `LogsQueryClient` or `MetricsQueryClient` class.
+An authenticated client is required to query Logs or Metrics. To authenticate, create an instance of a `TokenCredential` class. Pass it to the constructor of the `LogsQueryClient`, `MetricsClient`, or `MetricsQueryClient` class. To satisfy the `TokenCredential` requirement, the following examples use `DefaultAzureCredential` from the `Azure.Identity` package.
 
-To authenticate, the following examples use `DefaultAzureCredential` from the `Azure.Identity` package:
+#### Client for Logs queries
 
 ```C# Snippet:CreateLogsClient
 var client = new LogsQueryClient(new DefaultAzureCredential());
 ```
 
-```C# Snippet:CreateMetricsClient
+#### Clients for Metrics queries
+
+For Metrics queries on a single Azure resource, use the following client:
+
+```C# Snippet:CreateMetricsQueryClient
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 ```
 
-### Configure client for Azure sovereign cloud
+For Metrics queries across multiple Azure resources, use the following client:
 
-By default, `LogsQueryClient` and `MetricsQueryClient` are configured to connect to the Azure public cloud. To connect to a sovereign cloud instead, set the `Audience` property on the `Options` class. For example:
+```C# Snippet:CreateMetricsClient
+var client = new MetricsClient(
+    new Uri("https://metrics.monitor.azure.com/.default"),
+    new DefaultAzureCredential());
+```
+
+#### Configure client for Azure sovereign cloud
+
+By default, `LogsQueryClient` and `MetricsQueryClient` are configured to use the Azure Public Cloud. To use a sovereign cloud instead, set the `Audience` property on the `Options` class. For example:
 
 ```C# Snippet:CreateClientsWithOptions
-MetricsQueryClientOptions metricsQueryClientOptions = new MetricsQueryClientOptions()
+var metricsQueryClientOptions = new MetricsQueryClientOptions
 {
     Audience = MetricsQueryAudience.AzureGovernment
 };
-MetricsQueryClient metricsQueryClient = new MetricsQueryClient(new DefaultAzureCredential(), metricsQueryClientOptions);
+var metricsQueryClient = new MetricsQueryClient(
+    new DefaultAzureCredential(),
+    metricsQueryClientOptions);
 
-LogsQueryClientOptions logsQueryClientOptions = new LogsQueryClientOptions()
+var logsQueryClientOptions = new LogsQueryClientOptions
 {
     Audience = LogsQueryAudience.AzureChina
 };
-LogsQueryClient logsQueryClient = new LogsQueryClient(new DefaultAzureCredential(), logsQueryClientOptions);
+var logsQueryClient = new LogsQueryClient(
+    new DefaultAzureCredential(),
+    logsQueryClientOptions);
 ```
-
 
 ### Execute the query
 
@@ -86,7 +101,7 @@ Each set of metric values is a time series with the following characteristics:
 - A namespace that acts like a category for the metric
 - A metric name
 - The value itself
-- Some metrics may have multiple dimensions as described in multi-dimensional metrics. Custom metrics can have up to 10 dimensions.
+- Some metrics have multiple dimensions as described in multi-dimensional metrics. Custom metrics can have up to 10 dimensions.
 
 ### Thread safety
 
@@ -122,6 +137,7 @@ All client instance methods are thread-safe and independent of each other ([guid
   - [Query metrics with options](#query-metrics-with-options)
   - [Get metrics namespaces](#get-metrics-namespaces)
   - [Split a metric by dimension](#split-a-metric-by-dimension)
+  - [Query metrics for multiple resources](#query-metrics-for-multiple-resources)
 - [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
 ### Logs query
@@ -474,7 +490,7 @@ Because the structure of the visualization payload varies by query, a `BinaryDat
 
 ### Metrics query
 
-You can query metrics on an Azure resource using the `MetricsQueryClient.QueryResourceAsync` method. For each requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
+You can query metrics on a single Azure resource using the `MetricsQueryClient.QueryResourceAsync` method. For each requested metric, a set of aggregated values is returned inside the `TimeSeries` collection.
 
 A resource ID is required to query metrics. To find the resource ID:
 
@@ -534,7 +550,7 @@ MetricsQueryResult
 
 #### Query metrics with options
 
-A `MetricsQueryOptions` object may be used to support more granular metrics queries. Consider the following example, which queries an Azure Key Vault resource named *TestVault*. The resource's "Vault requests availability" metric is requested, as indicated by metric ID "Availability". Additionally, the "Avg" aggregation type is included.
+A `MetricsQueryOptions` object can be used to support more granular metrics queries. Consider the following example, which queries an Azure Key Vault resource named *TestVault*. The resource's "Vault requests availability" metric is requested, as indicated by metric ID "Availability". Additionally, the "Avg" aggregation type is included.
 
 ```C# Snippet:QueryMetricsWithAggregations
 string resourceId =
@@ -567,8 +583,8 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
 
 #### Get metrics namespaces
 
-To programmatically retrieve metrics namespaces, use the following code:
-    
+To programmatically retrieve metrics namespaces for an Azure resource, use the following code:
+
 ```C# Snippet:GetMetricsNamespaces
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
@@ -623,23 +639,33 @@ foreach (MetricResult metric in result.Value.Metrics)
 }
 ```
 
-#### Metrics Query Resources
+#### Query metrics for multiple resources
 
-A user can also query metrics from multiple resources at once using the `QueryResources` method of `MetricsClient`. This uses a different API than the `MetricsQueryClient` and requires that a user pass in a regional endpoint when instantiating the client (for example, "https://westus3.metrics.monitor.azure.com").
+To query metrics for multiple Azure resources in a single request, use the `MetricsClient.QueryResources` method. This method:
 
-Note, each resource must be in the same region as the endpoint passed in when instantiating the client, and each resource must be in the same Azure subscription. Furthermore, the metric namespace that contains the metrics to be queried must also be passed. A list of metric namespaces can be found [here][metric_namespaces].
+- Calls a different API than the `MetricsQueryClient` methods.
+- Requires a regional endpoint when creating the client. For example, "https://westus3.metrics.monitor.azure.com".
+
+Each Azure resource must reside in:
+
+- The same region as the endpoint specified when creating the client.
+- The same Azure subscription.
+
+Furthermore, the metric namespace containing the metrics to be queried must be provided. For a list of metric namespaces, see [Supported metrics and log categories by resource type][metric_namespaces].
 
 ```C# Snippet:QueryResourcesMetrics
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+var client = new MetricsClient(
+    new Uri("https://metrics.monitor.azure.com/.default"),
+    new DefaultAzureCredential());
+Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
     resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
     metricNames: new List<string> { "Ingress" },
     metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-foreach (var value in metricsQueryResults.Values)
+MetricsQueryResourcesResult metricsQueryResults = result.Value;
+foreach (MetricsQueryResult value in metricsQueryResults.Values)
 {
     Console.WriteLine(value.Metrics.Count);
 }
@@ -647,26 +673,28 @@ foreach (var value in metricsQueryResults.Values)
 
 For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
-The `QueryResources` method also has an Options bag `MetricsQueryResourcesOptions` in which the user can specify extra properties to filter the results. An example below shows the `RollUpBy` and `OrderBy` properties.
+The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `RollUpBy` and `OrderBy` properties:
 
 ```C# Snippet:QueryResourcesMetricsWithOptions
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
+var client = new MetricsClient(
+    new Uri("https://metrics.monitor.azure.com/.default"),
+    new DefaultAzureCredential());
+var options = new MetricsQueryResourcesOptions
 {
     OrderBy = "sum asc",
     RollUpBy = { "RollUpBy=City" }
 };
 
-Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
     resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
     metricNames: new List<string> { "Ingress" },
     metricNamespace: "Microsoft.Storage/storageAccounts",
     options).ConfigureAwait(false);
 
-MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-foreach (var value in metricsQueryResults.Values)
+MetricsQueryResourcesResult metricsQueryResults = result.Value;
+foreach (MetricsQueryResult value in metricsQueryResults.Values)
 {
     Console.WriteLine(value.Metrics.Count);
 }
@@ -674,7 +702,15 @@ foreach (var value in metricsQueryResults.Values)
 
 #### Register the client with dependency injection
 
-To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
+To register a client with the dependency injection container, invoke the corresponding extension method.
+
+| Client               | Extension method        |
+|----------------------|-------------------------|
+| `LogsQueryClient`    | [AddLogsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.logsqueryclientbuilderextensions?view=azure-dotnet)    |
+| `MetricsClient`      | `AddMetricsClient`      |
+| `MetricsQueryClient` | [AddMetricsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.metricsqueryclientbuilderextensions?view=azure-dotnet) |
+
+For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
 
 ## Troubleshooting
 
@@ -697,12 +733,12 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [changelog]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/CHANGELOG.md
 [kusto_query_language]: https://learn.microsoft.com/azure/data-explorer/kusto/query/
+[metric_namespaces]: https://learn.microsoft.com/azure/azure-monitor/reference/supported-metrics/metrics-index#supported-metrics-and-log-categories-by-resource-type
 [migration_guide_app_insights]: https://aka.ms/azsdk/net/migrate/ai-monitor-query
 [migration_guide_opp_insights]: https://aka.ms/azsdk/net/migrate/monitor-query
 [msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query-readme?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
-[metric_namespaces]: https://learn.microsoft.com/azure/azure-monitor/reference/supported-metrics/metrics-index#metrics-by-resource-provider
 
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

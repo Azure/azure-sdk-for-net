@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration
             var format = options.Format == "W" ? ((IPersistableModel<ProjectFileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectFileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectFileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration
             var format = options.Format == "W" ? ((IPersistableModel<ProjectFileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectFileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectFileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectFileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectFileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration
                         return DeserializeProjectFileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectFileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectFileData)} does not support reading '{options.Format}' format.");
             }
         }
 

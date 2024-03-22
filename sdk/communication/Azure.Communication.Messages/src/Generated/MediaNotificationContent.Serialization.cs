@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -23,7 +22,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +67,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MediaNotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +145,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +161,7 @@ namespace Azure.Communication.Messages
                         return DeserializeMediaNotificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaNotificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -130,8 +130,13 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = TenantId ?? tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
+
 #if PREVIEW_FEATURE_FLAG
             if (popTokenRequestContext.HasValue && popTokenRequestContext.Value.IsProofOfPossessionEnabled)
             {
@@ -188,8 +193,16 @@ namespace Azure.Identity
             // if the user specified a TenantId when they created the client we want to authenticate to that tenant.
             // otherwise we should authenticate with the tenant specified by the authentication record since that's the tenant the
             // user authenticated to originally.
-            var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
-                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId);
+            var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record);
+
+            if (tenantId != null || record.TenantId != null)
+            {
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId ?? record.TenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
 
             if (!string.IsNullOrEmpty(claims))
             {
@@ -299,7 +312,11 @@ namespace Azure.Identity
             }
             if (tenantId != null)
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             if (browserOptions != null)
             {
@@ -342,7 +359,11 @@ namespace Azure.Identity
             }
             if (!string.IsNullOrEmpty(tenantId))
             {
-                builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenantId
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
             return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -379,12 +400,20 @@ namespace Azure.Identity
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(string[] scopes, string claims, string refreshToken, AzureCloudInstance azureCloudInstance, string tenant, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
-            var builder = ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken)
-                .WithAuthority(azureCloudInstance, tenant);
+            var builder = ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken);
 
             if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
+            }
+
+            if (!string.IsNullOrEmpty(TenantId))
+            {
+                UriBuilder uriBuilder = new UriBuilder(AuthorityHost)
+                {
+                    Path = tenant
+                };
+                builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
 
             return await builder.ExecuteAsync(async, cancellationToken)

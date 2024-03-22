@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.HealthcareApis
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.HealthcareApis
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.HealthcareApis
                         return DeserializeHealthcareApisIotConnectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisIotConnectorData)} does not support reading '{options.Format}' format.");
             }
         }
 

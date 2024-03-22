@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                         return DeserializeProtectionContainerMappingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingData)} does not support reading '{options.Format}' format.");
             }
         }
 
