@@ -21,50 +21,16 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
         }
 
-        //[OneTimeSetUp]
-        //public async Task GlobalSetup()
-        //{
-        //    //TODO
-        //    return;
-        //}
-
-        //[OneTimeTearDown]
-        //public async Task GlobalTeardown()
-        //{
-        //    //TODO
-        //    return;
-        //}
-
-        //[SetUp]
-        //public async Task SetUp()
-        //{
-        //    //TODO
-        //    return;
-        //}
-
-        //[TearDown]
-        //public async Task TearDown()
-        //{
-        //    //TODO
-        //    return;
-        //}
-
         [Test]
         [RecordedTest]
         public async Task CheckNameAvailabilityCodeSigningAccount_ChecksThatTheTrustedSigningAccountNameIsAvailable()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_CheckNameAvailability.json
-            // this example is just showing the usage of "CodeSigningAccounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = TestEnvironment.Credential;
 
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -79,12 +45,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         [RecordedTest]
         public async Task GetCodeSigningAccounts_ListsTrustedSigningAccountsWithinASubscription()
         {
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = TestEnvironment.Credential;
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "tobefilled";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -101,14 +66,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         [RecordedTest]
         public async Task Get_GetATrustedSigningAccount()
         {
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = TestEnvironment.Credential;
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -117,8 +79,6 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // invoke the operation
             CodeSigningAccountResource result = await codeSigningAccount.GetAsync();
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
             CodeSigningAccountData resourceData = result.Data;
             // for demo we just print out the id
             Assert.IsNotNull(resourceData);
@@ -130,17 +90,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         [RecordedTest]
         public async Task Update_UpdateATrustedSigningAccount()
         {
-            // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_Update.json
-            // this example is just showing the usage of "CodeSigningAccounts_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = TestEnvironment.Credential;
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
-            string subscriptionId = "";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "";
             string accountName = "";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -166,9 +120,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -190,7 +142,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -214,14 +166,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         [RecordedTest]
         public async Task Exists_GetATrustedSigningAccount()
         {
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = TestEnvironment.Credential;
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -239,12 +188,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         [RecordedTest]
         public async Task GetIfExists_GetATrustedSigningAccount()
         {
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = TestEnvironment.Credential;
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -271,7 +219,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

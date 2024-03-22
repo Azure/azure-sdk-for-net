@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
                 ProfileType = ProfileType.PublicTrust,
                 IncludeStreetAddress = false,
                 IncludePostalCode = true,
-                IdentityValidationId = "00000000-1234-5678-3333-444444444444",
+                IdentityValidationId = "",
             };
             ArmOperation<CertificateProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
             CertificateProfileResource result = lro.Value;
