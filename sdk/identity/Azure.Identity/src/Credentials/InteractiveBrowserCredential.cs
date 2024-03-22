@@ -96,7 +96,7 @@ namespace Azure.Identity
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
             BrowserCustomization = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomization;
-            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseOperatingSystemAccount ?? false;
+            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseDefaultBrokerAccount ?? false;
         }
 
         /// <summary>
