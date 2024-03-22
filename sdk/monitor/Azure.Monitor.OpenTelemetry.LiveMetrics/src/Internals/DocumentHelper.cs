@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             RemoteDependency remoteDependencyDocumentIngress = new()
             {
-                DocumentType = DocumentIngressDocumentType.RemoteDependency,
+                DocumentType = DocumentType.RemoteDependency,
 
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
 
@@ -140,9 +140,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             Request requestDocumentIngress = new()
             {
-                DocumentType = DocumentIngressDocumentType.Request,
+                DocumentType = DocumentType.Request,
                 Name = activity.DisplayName,
-                Url = url,
+                Url = new Uri(url), // TODO: THIS COULD THROW. NEED TO HANDLE EXCEPTION.
                 ResponseCode = httpResponseStatusCode,
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -161,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             ExceptionDocument exceptionDocumentIngress = new()
             {
-                DocumentType = DocumentIngressDocumentType.Exception,
+                DocumentType = DocumentType.Exception,
                 ExceptionType = exceptionType,
                 ExceptionMessage = exceptionMessage,
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties

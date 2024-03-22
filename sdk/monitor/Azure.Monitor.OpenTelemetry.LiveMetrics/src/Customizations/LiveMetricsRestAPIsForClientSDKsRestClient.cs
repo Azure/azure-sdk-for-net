@@ -8,14 +8,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
+using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
-    internal partial class QuickPulseSDKClientAPIsRestClient
+    internal partial class LiveMetricsRestAPIsForClientSDKsRestClient
     {
+        private readonly string _host;
+
+        public LiveMetricsRestAPIsForClientSDKsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host, string apiVersion = "2024-04-01-preview")
+            : this(clientDiagnostics, pipeline, apiVersion)
+        {
+            _host = host;
+        }
+
         /// <summary> SDK ping. </summary>
         /// <param name="ikey"> The ikey of the target Application Insights component that displays server info sent by /QuickPulseService.svc/ping. </param>
         /// <param name="apikey"> Deprecated. An alternative way to pass api key. Use AAD auth instead. </param>
@@ -36,9 +45,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 throw new ArgumentNullException(nameof(ikey));
             }
 
-            using var message = CreatePingRequest(ikey, apikey, xMsQpsTransmissionTime, xMsQpsMachineName, xMsQpsInstanceName, xMsQpsStreamId, xMsQpsRoleName, xMsQpsInvariantVersion, xMsQpsConfigurationEtag, monitoringDataPoint);
+            using var message = CreateIsSubscribedRequest(ikey, apikey, xMsQpsTransmissionTime, xMsQpsMachineName, xMsQpsInstanceName, xMsQpsStreamId, xMsQpsRoleName, xMsQpsInvariantVersion, xMsQpsConfigurationEtag, monitoringDataPoint);
             _pipeline.Send(message, cancellationToken);
-            var headers = new QuickPulseSDKClientAPIsPingHeaders(message.Response);
+            var headers = new LiveMetricsRestAPIsForClientSDKsIsSubscribedHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -90,9 +99,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 throw new ArgumentNullException(nameof(ikey));
             }
 
-            using var message = CreatePostRequest(ikey, apikey, xMsQpsConfigurationEtag, xMsQpsTransmissionTime, monitoringDataPoints);
+            using var message = CreatePublishRequest(ikey, apikey, xMsQpsConfigurationEtag, xMsQpsTransmissionTime, monitoringDataPoints);
             _pipeline.Send(message, cancellationToken);
-            var headers = new QuickPulseSDKClientAPIsPostHeaders(message.Response);
+            var headers = new LiveMetricsRestAPIsForClientSDKsPublishHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:

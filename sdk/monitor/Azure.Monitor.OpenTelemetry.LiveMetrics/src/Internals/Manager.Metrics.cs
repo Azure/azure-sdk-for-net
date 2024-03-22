@@ -25,24 +25,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public MonitoringDataPoint GetDataPoint()
         {
-            var dataPoint = new MonitoringDataPoint
+            var dataPoint = new MonitoringDataPoint(
+                version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
+                invariantVersion: 5,
+                instance: LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                roleName: LiveMetricsResource?.RoleName,
+                machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
+                streamId: _streamId,
+                isWebApp: _isAzureWebApp,
+                performanceCollectionSupported: true)
             {
-                Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
-                InvariantVersion = 5,
-                Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                RoleName = LiveMetricsResource?.RoleName,
-                MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = _isAzureWebApp,
-                PerformanceCollectionSupported = true,
-                // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
-                // Follow up with service team to get this removed for OTEL based live metrics.
-                // TopCpuProcesses = null,
-                // TODO: Configuration errors are thrown when filter is applied.
-                // CollectionConfigurationErrors = null,
+                //TopCpuProcesses = null, // TODO
             };
+
+            // TODO: Configuration errors are thrown when filter is applied.
+            // CollectionConfigurationErrors = null,
 
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
@@ -56,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                 dataPoint.Documents.Add(item);
 
-                if (item.DocumentType == DocumentIngressDocumentType.Request)
+                if (item.DocumentType == DocumentType.Request)
                 {
                     if (item.Extension_IsSuccess)
                     {
@@ -67,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordRequestFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentIngressDocumentType.RemoteDependency)
+                else if (item.DocumentType == DocumentType.RemoteDependency)
                 {
                     if (item.Extension_IsSuccess)
                     {
@@ -78,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordDependencyFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentIngressDocumentType.Exception)
+                else if (item.DocumentType == DocumentType.Exception)
                 {
                     liveMetricsBuffer.RecordException();
                 }
@@ -117,21 +116,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _process.Refresh();
 
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _process.PrivateMemorySize64,
-                Weight = 1
-            };
+            yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue, value: _process.PrivateMemorySize64, weight: 1);
 
             if (TryCalculateCPUCounter(out var processorValue))
             {
-                yield return new Models.MetricPoint
-                {
-                    Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                    Value = Convert.ToSingle(processorValue),
-                    Weight = 1
-                };
+                yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue, value: Convert.ToSingle(processorValue), weight: 1);
             }
         }
 
