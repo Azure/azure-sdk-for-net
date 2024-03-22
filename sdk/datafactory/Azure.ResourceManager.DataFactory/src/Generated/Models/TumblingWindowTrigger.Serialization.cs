@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline);
+            writer.WriteObjectValue<TriggerPipelineReference>(Pipeline, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                writer.WriteObjectValue<RetryPolicy>(RetryPolicy, options);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DependencyReference>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.EdgeOrder
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<EdgeOrderShippingAddress>(ShippingAddress, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            writer.WriteObjectValue<EdgeOrderAddressContactDetails>(ContactDetails, options);
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (options.Format != "W" && Optional.IsDefined(InvokedBy))
             {
                 writer.WritePropertyName("invokedBy"u8);
-                writer.WriteObjectValue(InvokedBy);
+                writer.WriteObjectValue<DataFactoryPipelineRunEntityInfo>(InvokedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {

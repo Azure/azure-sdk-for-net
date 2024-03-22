@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFactoryRecurrenceScheduleOccurrence>(item, options);
                 }
                 writer.WriteEndArray();
             }

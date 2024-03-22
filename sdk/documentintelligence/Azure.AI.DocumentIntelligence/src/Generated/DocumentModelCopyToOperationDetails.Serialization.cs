@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result);
+                writer.WriteObjectValue<DocumentModelDetails>(Result, options);
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
@@ -67,7 +67,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<DocumentIntelligenceError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -262,7 +262,7 @@ namespace Azure.AI.DocumentIntelligence
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentModelCopyToOperationDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

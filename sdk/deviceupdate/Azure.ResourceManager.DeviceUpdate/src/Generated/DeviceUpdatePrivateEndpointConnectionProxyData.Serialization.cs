@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(RemotePrivateEndpoint))
             {
                 writer.WritePropertyName("remotePrivateEndpoint"u8);
-                writer.WriteObjectValue(RemotePrivateEndpoint);
+                writer.WriteObjectValue<DeviceUpdateRemotePrivateEndpoint>(RemotePrivateEndpoint, options);
             }
             if (Optional.IsDefined(Status))
             {

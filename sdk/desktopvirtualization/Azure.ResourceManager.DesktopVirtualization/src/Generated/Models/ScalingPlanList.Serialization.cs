@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingPlanData>(item, options);
                 }
                 writer.WriteEndArray();
             }

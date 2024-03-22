@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunQueryFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunQueryOrderBy>(item, options);
                 }
                 writer.WriteEndArray();
             }
