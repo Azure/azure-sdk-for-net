@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsentEnabled)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecondaryConsentEnabled>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ParentProblemClassification))
             {
                 writer.WritePropertyName("parentProblemClassification"u8);
-                writer.WriteObjectValue(ParentProblemClassification);
+                writer.WriteObjectValue<ProblemClassificationData>(ParentProblemClassification, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
-                writer.WriteObjectValue(CurrentCpuStats);
+                writer.WriteObjectValue<ContainerCpuStatistics>(CurrentCpuStats, options);
             }
             if (Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
-                writer.WriteObjectValue(PreviousCpuStats);
+                writer.WriteObjectValue<ContainerCpuStatistics>(PreviousCpuStats, options);
             }
             if (Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
-                writer.WriteObjectValue(MemoryStats);
+                writer.WriteObjectValue<ContainerMemoryStatistics>(MemoryStats, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
-                writer.WriteObjectValue(Eth0);
+                writer.WriteObjectValue<ContainerNetworkInterfaceStatistics>(Eth0, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

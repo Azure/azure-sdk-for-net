@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<DetectorInfo>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticDataset>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<AppServiceStatusInfo>(Status, options);
             }
             if (Optional.IsCollectionDefined(DataProvidersMetadata))
             {
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in DataProvidersMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataProviderMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SuggestedUtterances))
             {
                 writer.WritePropertyName("suggestedUtterances"u8);
-                writer.WriteObjectValue(SuggestedUtterances);
+                writer.WriteObjectValue<QueryUtterancesResults>(SuggestedUtterances, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

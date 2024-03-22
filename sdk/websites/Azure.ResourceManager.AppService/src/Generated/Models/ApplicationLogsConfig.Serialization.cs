@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem);
+                writer.WriteObjectValue<FileSystemApplicationLogsConfig>(FileSystem, options);
             }
             if (Optional.IsDefined(AzureTableStorage))
             {
                 writer.WritePropertyName("azureTableStorage"u8);
-                writer.WriteObjectValue(AzureTableStorage);
+                writer.WriteObjectValue<AppServiceTableStorageApplicationLogsConfig>(AzureTableStorage, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage);
+                writer.WriteObjectValue<AppServiceBlobStorageApplicationLogsConfig>(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

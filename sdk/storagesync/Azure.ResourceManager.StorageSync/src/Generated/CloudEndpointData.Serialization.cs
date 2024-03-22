@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StorageSync
             if (options.Format != "W" && Optional.IsDefined(ChangeEnumerationStatus))
             {
                 writer.WritePropertyName("changeEnumerationStatus"u8);
-                writer.WriteObjectValue(ChangeEnumerationStatus);
+                writer.WriteObjectValue<CloudEndpointChangeEnumerationStatus>(ChangeEnumerationStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Document
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<StartTranslationDetails>(body);
             request.Content = content;
             return message;
         }

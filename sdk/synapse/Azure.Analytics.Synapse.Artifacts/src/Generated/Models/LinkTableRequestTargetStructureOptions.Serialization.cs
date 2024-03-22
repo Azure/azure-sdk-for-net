@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkTableRequestTargetStructureOptions model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkTableRequestTargetStructureOptions>(model);
             }
             public override LinkTableRequestTargetStructureOptions Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

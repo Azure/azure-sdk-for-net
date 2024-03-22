@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WriteStartArray();
                 foreach (var item in ServiceLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VoiceServicesServiceRegionProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

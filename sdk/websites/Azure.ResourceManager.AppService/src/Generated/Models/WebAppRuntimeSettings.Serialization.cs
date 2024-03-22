@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
-                writer.WriteObjectValue(AppInsightsSettings);
+                writer.WriteObjectValue<AppInsightsWebAppStackSettings>(AppInsightsSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
-                writer.WriteObjectValue(GitHubActionSettings);
+                writer.WriteObjectValue<GitHubActionWebAppStackSettings>(GitHubActionSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {

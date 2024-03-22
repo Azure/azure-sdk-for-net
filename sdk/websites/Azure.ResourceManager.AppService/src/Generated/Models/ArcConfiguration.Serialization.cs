@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
-                writer.WriteObjectValue(FrontEndServiceConfiguration);
+                writer.WriteObjectValue<FrontEndConfiguration>(FrontEndServiceConfiguration, options);
             }
             if (Optional.IsDefined(KubeConfig))
             {

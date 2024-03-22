@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkedIntegrationRuntimeType model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkedIntegrationRuntimeType>(model);
             }
             public override LinkedIntegrationRuntimeType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
