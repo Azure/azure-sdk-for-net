@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PaymentMethodId != null)
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(PaymentMethodId);
             }
-            if (Family.HasValue)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
             }
-            if (options.Format != "W" && PaymentMethodProjectionPropertiesType != null)
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodProjectionPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PaymentMethodProjectionPropertiesType);
             }
-            if (options.Format != "W" && AccountHolderName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
             {
                 writer.WritePropertyName("accountHolderName"u8);
                 writer.WriteStringValue(AccountHolderName);
             }
-            if (options.Format != "W" && Expiration != null)
+            if (options.Format != "W" && Optional.IsDefined(Expiration))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(Expiration);
             }
-            if (options.Format != "W" && LastFourDigits != null)
+            if (options.Format != "W" && Optional.IsDefined(LastFourDigits))
             {
                 writer.WritePropertyName("lastFourDigits"u8);
                 writer.WriteStringValue(LastFourDigits);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(Logos is ChangeTrackingList<PaymentMethodLogo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Logos))
             {
                 writer.WritePropertyName("logos"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

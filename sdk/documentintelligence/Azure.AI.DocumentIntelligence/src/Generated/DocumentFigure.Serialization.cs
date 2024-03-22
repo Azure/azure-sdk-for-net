@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,11 +22,11 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFigure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
@@ -44,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (!(Elements is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Elements))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
@@ -54,12 +53,12 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
                 writer.WriteObjectValue(Caption);
             }
-            if (!(Footnotes is ChangeTrackingList<DocumentFootnote> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Footnotes))
             {
                 writer.WritePropertyName("footnotes"u8);
                 writer.WriteStartArray();
@@ -92,7 +91,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFigure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +200,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +216,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentFigure(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support reading '{options.Format}' format.");
             }
         }
 

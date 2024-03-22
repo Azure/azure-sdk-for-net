@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuspensionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuspensionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuspensionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SuspensionStartOn.HasValue)
+            if (Optional.IsDefined(SuspensionStartOn))
             {
                 writer.WritePropertyName("suspensionStartDate"u8);
                 writer.WriteStringValue(SuspensionStartOn.Value, "O");
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<SuspensionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuspensionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SuspensionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SuspensionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuspensionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeSuspensionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuspensionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuspensionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

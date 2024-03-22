@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitApprover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitApprover)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitApprover)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (ApproverType.HasValue)
+            if (Optional.IsDefined(ApproverType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApproverType.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitApprover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitApprover)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitApprover)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitApprover)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitApprover)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeJitApprover(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitApprover)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitApprover)} does not support reading '{options.Format}' format.");
             }
         }
 

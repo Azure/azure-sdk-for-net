@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("directoryServiceOptions"u8);
             writer.WriteStringValue(DirectoryServiceOptions.ToString());
-            if (ActiveDirectoryProperties != null)
+            if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
                 writer.WriteObjectValue(ActiveDirectoryProperties);
             }
-            if (DefaultSharePermission.HasValue)
+            if (Optional.IsDefined(DefaultSharePermission))
             {
                 writer.WritePropertyName("defaultSharePermission"u8);
                 writer.WriteStringValue(DefaultSharePermission.Value.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilesIdentityBasedAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeFilesIdentityBasedAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilesIdentityBasedAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

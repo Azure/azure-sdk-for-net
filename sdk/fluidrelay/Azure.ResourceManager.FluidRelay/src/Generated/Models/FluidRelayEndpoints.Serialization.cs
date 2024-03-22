@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(OrdererEndpoints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OrdererEndpoints))
             {
                 writer.WritePropertyName("ordererEndpoints"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(StorageEndpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageEndpoints))
             {
                 writer.WritePropertyName("storageEndpoints"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ServiceEndpoints is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         return DeserializeFluidRelayEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

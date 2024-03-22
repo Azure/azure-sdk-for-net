@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

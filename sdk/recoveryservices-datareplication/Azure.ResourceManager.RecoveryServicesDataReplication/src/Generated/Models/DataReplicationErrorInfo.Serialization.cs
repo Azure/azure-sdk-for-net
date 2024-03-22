@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && ErrorModelType != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorModelType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ErrorModelType);
             }
-            if (options.Format != "W" && Severity != null)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Causes != null)
+            if (options.Format != "W" && Optional.IsDefined(Causes))
             {
                 writer.WritePropertyName("causes"u8);
                 writer.WriteStringValue(Causes);
             }
-            if (options.Format != "W" && Recommendation != null)
+            if (options.Format != "W" && Optional.IsDefined(Recommendation))
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

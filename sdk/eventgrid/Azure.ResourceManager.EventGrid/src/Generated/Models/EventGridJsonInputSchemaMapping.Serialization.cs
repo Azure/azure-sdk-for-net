@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(InputSchemaMappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteObjectValue(Id);
             }
-            if (Topic != null)
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteObjectValue(Topic);
             }
-            if (EventTime != null)
+            if (Optional.IsDefined(EventTime))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteObjectValue(EventTime);
             }
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteObjectValue(EventType);
             }
-            if (Subject != null)
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteObjectValue(Subject);
             }
-            if (DataVersion != null)
+            if (Optional.IsDefined(DataVersion))
             {
                 writer.WritePropertyName("dataVersion"u8);
                 writer.WriteObjectValue(DataVersion);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridJsonInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventGridJsonInputSchemaMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridJsonInputSchemaMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

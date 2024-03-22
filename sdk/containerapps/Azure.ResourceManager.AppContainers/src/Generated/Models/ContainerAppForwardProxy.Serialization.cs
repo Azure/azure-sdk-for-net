@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Convention.HasValue)
+            if (Optional.IsDefined(Convention))
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (CustomHostHeaderName != null)
+            if (Optional.IsDefined(CustomHostHeaderName))
             {
                 writer.WritePropertyName("customHostHeaderName"u8);
                 writer.WriteStringValue(CustomHostHeaderName);
             }
-            if (CustomProtoHeaderName != null)
+            if (Optional.IsDefined(CustomProtoHeaderName))
             {
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppForwardProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppForwardProxy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support reading '{options.Format}' format.");
             }
         }
 

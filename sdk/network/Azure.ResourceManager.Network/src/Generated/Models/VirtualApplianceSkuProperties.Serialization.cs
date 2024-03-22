@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplianceSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (BundledScaleUnit != null)
+            if (Optional.IsDefined(BundledScaleUnit))
             {
                 writer.WritePropertyName("bundledScaleUnit"u8);
                 writer.WriteStringValue(BundledScaleUnit);
             }
-            if (MarketPlaceVersion != null)
+            if (Optional.IsDefined(MarketPlaceVersion))
             {
                 writer.WritePropertyName("marketPlaceVersion"u8);
                 writer.WriteStringValue(MarketPlaceVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplianceSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualApplianceSkuProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

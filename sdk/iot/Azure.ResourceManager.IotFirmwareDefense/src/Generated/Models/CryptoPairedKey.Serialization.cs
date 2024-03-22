@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoPairedKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (PairedKeyType != null)
+            if (Optional.IsDefined(PairedKeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PairedKeyType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoPairedKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoPairedKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileWorkloadIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsWorkloadIdentityEnabled.HasValue)
+            if (Optional.IsDefined(IsWorkloadIdentityEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsWorkloadIdentityEnabled.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileWorkloadIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterSecurityProfileWorkloadIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileWorkloadIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

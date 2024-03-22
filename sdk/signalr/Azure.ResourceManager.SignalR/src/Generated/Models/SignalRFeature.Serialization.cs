@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRFeature)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStringValue(Flag.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRFeature>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRFeature)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRFeature(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRFeature)} does not support reading '{options.Format}' format.");
             }
         }
 

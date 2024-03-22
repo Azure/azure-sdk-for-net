@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinifiedTemplate != null)
+            if (Optional.IsDefined(MinifiedTemplate))
             {
                 writer.WritePropertyName("minifiedTemplate"u8);
                 writer.WriteStringValue(MinifiedTemplate);
             }
-            if (TemplateHash != null)
+            if (Optional.IsDefined(TemplateHash))
             {
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeTemplateHashResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support reading '{options.Format}' format.");
             }
         }
 

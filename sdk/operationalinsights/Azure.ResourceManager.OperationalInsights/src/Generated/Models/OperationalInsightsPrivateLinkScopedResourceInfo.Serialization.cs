@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsPrivateLinkScopedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (ScopeId != null)
+            if (Optional.IsDefined(ScopeId))
             {
                 writer.WritePropertyName("scopeId"u8);
                 writer.WriteStringValue(ScopeId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsPrivateLinkScopedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsPrivateLinkScopedResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelClass>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelClass)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelClass)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (!(Subclasses is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subclasses))
             {
                 if (Subclasses != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelClass>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelClass)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelClass)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabelClass)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelClass)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeLabelClass(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelClass)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelClass)} does not support reading '{options.Format}' format.");
             }
         }
 

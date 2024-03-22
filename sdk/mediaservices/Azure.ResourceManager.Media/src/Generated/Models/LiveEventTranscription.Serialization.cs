@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventTranscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (!(InputTrackSelection is ChangeTrackingList<LiveEventInputTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InputTrackSelection))
             {
                 writer.WritePropertyName("inputTrackSelection"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutputTranscriptionTrack != null)
+            if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
                 writer.WriteObjectValue(OutputTranscriptionTrack);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventTranscription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeLiveEventTranscription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventTranscription)} does not support reading '{options.Format}' format.");
             }
         }
 

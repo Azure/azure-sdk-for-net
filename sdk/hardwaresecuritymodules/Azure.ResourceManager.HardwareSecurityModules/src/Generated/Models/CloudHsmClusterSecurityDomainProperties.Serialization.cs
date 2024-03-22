@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSecurityDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FipsState.HasValue)
+            if (Optional.IsDefined(FipsState))
             {
                 writer.WritePropertyName("fipsState"u8);
                 writer.WriteNumberValue(FipsState.Value);
             }
-            if (ActivationStatus != null)
+            if (Optional.IsDefined(ActivationStatus))
             {
                 writer.WritePropertyName("activationStatus"u8);
                 writer.WriteStringValue(ActivationStatus);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSecurityDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeCloudHsmClusterSecurityDomainProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterSecurityDomainProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

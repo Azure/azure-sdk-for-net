@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageAlternativeOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AlternativeType.HasValue)
+            if (Optional.IsDefined(AlternativeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(AlternativeType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageAlternativeOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeImageAlternativeOption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageAlternativeOption)} does not support reading '{options.Format}' format.");
             }
         }
 

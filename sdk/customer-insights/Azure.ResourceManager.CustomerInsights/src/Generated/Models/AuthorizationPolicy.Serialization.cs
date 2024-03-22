@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStringValue(item.ToSerialString());
             }
             writer.WriteEndArray();
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeAuthorizationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

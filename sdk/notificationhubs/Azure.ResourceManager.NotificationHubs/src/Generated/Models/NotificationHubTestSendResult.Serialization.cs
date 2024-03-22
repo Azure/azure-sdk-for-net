@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubTestSendResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,24 +60,24 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Success.HasValue)
+            if (Optional.IsDefined(Success))
             {
                 writer.WritePropertyName("success"u8);
                 writer.WriteNumberValue(Success.Value);
             }
-            if (Failure.HasValue)
+            if (Optional.IsDefined(Failure))
             {
                 writer.WritePropertyName("failure"u8);
                 writer.WriteNumberValue(Failure.Value);
             }
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
 #if NET6_0_OR_GREATER
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubTestSendResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubTestSendResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubTestSendResult)} does not support reading '{options.Format}' format.");
             }
         }
 

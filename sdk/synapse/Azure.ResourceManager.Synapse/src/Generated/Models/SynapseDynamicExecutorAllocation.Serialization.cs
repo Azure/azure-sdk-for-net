@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDynamicExecutorAllocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (MinExecutors.HasValue)
+            if (Optional.IsDefined(MinExecutors))
             {
                 writer.WritePropertyName("minExecutors"u8);
                 writer.WriteNumberValue(MinExecutors.Value);
             }
-            if (MaxExecutors.HasValue)
+            if (Optional.IsDefined(MaxExecutors))
             {
                 writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDynamicExecutorAllocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseDynamicExecutorAllocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDynamicExecutorAllocation)} does not support reading '{options.Format}' format.");
             }
         }
 

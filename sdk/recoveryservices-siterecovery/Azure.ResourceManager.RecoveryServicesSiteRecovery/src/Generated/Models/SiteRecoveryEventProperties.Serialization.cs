@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EventCode != null)
+            if (Optional.IsDefined(EventCode))
             {
                 writer.WritePropertyName("eventCode"u8);
                 writer.WriteStringValue(EventCode);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (AffectedObjectFriendlyName != null)
+            if (Optional.IsDefined(AffectedObjectFriendlyName))
             {
                 writer.WritePropertyName("affectedObjectFriendlyName"u8);
                 writer.WriteStringValue(AffectedObjectFriendlyName);
             }
-            if (AffectedObjectCorrelationId != null)
+            if (Optional.IsDefined(AffectedObjectCorrelationId))
             {
                 writer.WritePropertyName("affectedObjectCorrelationId"u8);
                 writer.WriteStringValue(AffectedObjectCorrelationId);
             }
-            if (Severity != null)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (OccurredOn.HasValue)
+            if (Optional.IsDefined(OccurredOn))
             {
                 writer.WritePropertyName("timeOfOccurrence"u8);
                 writer.WriteStringValue(OccurredOn.Value, "O");
             }
-            if (FabricId != null)
+            if (Optional.IsDefined(FabricId))
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
-            if (EventSpecificDetails != null)
+            if (Optional.IsDefined(EventSpecificDetails))
             {
                 writer.WritePropertyName("eventSpecificDetails"u8);
                 writer.WriteObjectValue(EventSpecificDetails);
             }
-            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryEventProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

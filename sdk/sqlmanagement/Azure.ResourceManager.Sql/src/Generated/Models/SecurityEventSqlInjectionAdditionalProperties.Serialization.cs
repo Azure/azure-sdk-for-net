@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ThreatId != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatId))
             {
                 writer.WritePropertyName("threatId"u8);
                 writer.WriteStringValue(ThreatId);
             }
-            if (options.Format != "W" && Statement != null)
+            if (options.Format != "W" && Optional.IsDefined(Statement))
             {
                 writer.WritePropertyName("statement"u8);
                 writer.WriteStringValue(Statement);
             }
-            if (options.Format != "W" && StatementHighlightOffset.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StatementHighlightOffset))
             {
                 writer.WritePropertyName("statementHighlightOffset"u8);
                 writer.WriteNumberValue(StatementHighlightOffset.Value);
             }
-            if (options.Format != "W" && StatementHighlightLength.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StatementHighlightLength))
             {
                 writer.WritePropertyName("statementHighlightLength"u8);
                 writer.WriteNumberValue(StatementHighlightLength.Value);
             }
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && ErrorSeverity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSecurityEventSqlInjectionAdditionalProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

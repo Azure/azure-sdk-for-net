@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (StatusId.HasValue)
+            if (Optional.IsDefined(StatusId))
             {
                 writer.WritePropertyName("statusId"u8);
                 writer.WriteStringValue(StatusId.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceStatusInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStatusInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

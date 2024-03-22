@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterCreation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("daysAfterCreationGreaterThan"u8);
             writer.WriteNumberValue(DaysAfterCreationGreaterThan);
-            if (DaysAfterLastTierChangeGreaterThan.HasValue)
+            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
             {
                 writer.WritePropertyName("daysAfterLastTierChangeGreaterThan"u8);
                 writer.WriteNumberValue(DaysAfterLastTierChangeGreaterThan.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterCreation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DateAfterCreation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeDateAfterCreation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DateAfterCreation)} does not support reading '{options.Format}' format.");
             }
         }
 

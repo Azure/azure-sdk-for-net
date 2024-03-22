@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.HybridCompute
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridCompute
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HybridCompute
                         return DeserializeHybridComputePrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

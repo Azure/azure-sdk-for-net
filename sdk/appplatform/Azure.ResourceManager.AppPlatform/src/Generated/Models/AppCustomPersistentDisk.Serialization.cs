@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CustomPersistentDiskProperties != null)
+            if (Optional.IsDefined(CustomPersistentDiskProperties))
             {
                 writer.WritePropertyName("customPersistentDiskProperties"u8);
                 writer.WriteObjectValue(CustomPersistentDiskProperties);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppCustomPersistentDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

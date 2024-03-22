@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DiskId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (options.Format != "W" && DiskName != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (options.Format != "W" && IsOSDisk != null)
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
             {
                 writer.WritePropertyName("isOSDisk"u8);
                 writer.WriteStringValue(IsOSDisk);
             }
-            if (options.Format != "W" && CapacityInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && DiskUuid != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskUuid))
             {
                 writer.WritePropertyName("diskUuid"u8);
                 writer.WriteStringValue(DiskUuid);
             }
-            if (options.Format != "W" && DataPendingInLogDataStoreInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataPendingInLogDataStoreInMB))
             {
                 writer.WritePropertyName("dataPendingInLogDataStoreInMB"u8);
                 writer.WriteNumberValue(DataPendingInLogDataStoreInMB.Value);
             }
-            if (options.Format != "W" && DataPendingAtSourceAgentInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataPendingAtSourceAgentInMB))
             {
                 writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
                 writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
             }
-            if (options.Format != "W" && IsInitialReplicationComplete != null)
+            if (options.Format != "W" && Optional.IsDefined(IsInitialReplicationComplete))
             {
                 writer.WritePropertyName("isInitialReplicationComplete"u8);
                 writer.WriteStringValue(IsInitialReplicationComplete);
             }
-            if (IrDetails != null)
+            if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
                 writer.WriteObjectValue(IrDetails);
             }
-            if (ResyncDetails != null)
+            if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
                 writer.WriteObjectValue(ResyncDetails);
             }
-            if (options.Format != "W" && LastSyncedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncedOn.Value, "O");
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackProtectedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

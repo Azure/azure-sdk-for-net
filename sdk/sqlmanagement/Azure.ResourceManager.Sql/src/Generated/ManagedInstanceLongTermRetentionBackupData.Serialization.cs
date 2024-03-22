@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceLongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedInstanceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceName))
             {
                 writer.WritePropertyName("managedInstanceName"u8);
                 writer.WriteStringValue(ManagedInstanceName);
             }
-            if (options.Format != "W" && ManagedInstanceCreateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ManagedInstanceCreateOn))
             {
                 writer.WritePropertyName("managedInstanceCreateTime"u8);
                 writer.WriteStringValue(ManagedInstanceCreateOn.Value, "O");
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && DatabaseDeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
             {
                 writer.WritePropertyName("databaseDeletionTime"u8);
                 writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
             }
-            if (options.Format != "W" && BackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupOn))
             {
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && BackupExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
                 writer.WriteStringValue(BackupExpireOn.Value, "O");
             }
-            if (options.Format != "W" && BackupStorageRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceLongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeManagedInstanceLongTermRetentionBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceLongTermRetentionBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 

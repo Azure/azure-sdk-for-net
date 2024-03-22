@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisEnvironment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FolderId.HasValue)
+            if (Optional.IsDefined(FolderId))
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (!(Variables is ChangeTrackingList<SsisVariable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Variables))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartArray();
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisEnvironment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSsisEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 

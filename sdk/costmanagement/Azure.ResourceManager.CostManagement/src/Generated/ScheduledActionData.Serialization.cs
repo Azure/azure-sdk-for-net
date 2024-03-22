@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -54,49 +53,49 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (FileDestination != null)
+            if (Optional.IsDefined(FileDestination))
             {
                 writer.WritePropertyName("fileDestination"u8);
                 writer.WriteObjectValue(FileDestination);
             }
-            if (Notification != null)
+            if (Optional.IsDefined(Notification))
             {
                 writer.WritePropertyName("notification"u8);
                 writer.WriteObjectValue(Notification);
             }
-            if (NotificationEmail != null)
+            if (Optional.IsDefined(NotificationEmail))
             {
                 writer.WritePropertyName("notificationEmail"u8);
                 writer.WriteStringValue(NotificationEmail);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ViewId != null)
+            if (Optional.IsDefined(ViewId))
             {
                 writer.WritePropertyName("viewId"u8);
                 writer.WriteStringValue(ViewId);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -309,7 +308,7 @@ namespace Azure.ResourceManager.CostManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.CostManagement
                         return DeserializeScheduledActionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BinaryHardeningId != null)
+            if (Optional.IsDefined(BinaryHardeningId))
             {
                 if (BinaryHardeningId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("binaryHardeningId");
                 }
             }
-            if (Architecture != null)
+            if (Optional.IsDefined(Architecture))
             {
                 if (Architecture != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("architecture");
                 }
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 if (FilePath != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePath");
                 }
             }
-            if (Class != null)
+            if (Optional.IsDefined(Class))
             {
                 if (Class != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("class");
                 }
             }
-            if (Runpath != null)
+            if (Optional.IsDefined(Runpath))
             {
                 if (Runpath != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("runpath");
                 }
             }
-            if (Rpath != null)
+            if (Optional.IsDefined(Rpath))
             {
                 if (Rpath != null)
                 {
@@ -123,27 +123,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("features"u8);
             writer.WriteStartObject();
-            if (NXFlag.HasValue)
+            if (Optional.IsDefined(NXFlag))
             {
                 writer.WritePropertyName("nx"u8);
                 writer.WriteBooleanValue(NXFlag.Value);
             }
-            if (PieFlag.HasValue)
+            if (Optional.IsDefined(PieFlag))
             {
                 writer.WritePropertyName("pie"u8);
                 writer.WriteBooleanValue(PieFlag.Value);
             }
-            if (RelroFlag.HasValue)
+            if (Optional.IsDefined(RelroFlag))
             {
                 writer.WritePropertyName("relro"u8);
                 writer.WriteBooleanValue(RelroFlag.Value);
             }
-            if (CanaryFlag.HasValue)
+            if (Optional.IsDefined(CanaryFlag))
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteBooleanValue(CanaryFlag.Value);
             }
-            if (StrippedFlag.HasValue)
+            if (Optional.IsDefined(StrippedFlag))
             {
                 writer.WritePropertyName("stripped"u8);
                 writer.WriteBooleanValue(StrippedFlag.Value);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<BinaryHardeningResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeBinaryHardeningResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support reading '{options.Format}' format.");
             }
         }
 

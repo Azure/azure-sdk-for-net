@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Authorization != null)
+            if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
                 writer.WriteObjectValue(Authorization);
             }
-            if (!(Orgs is ChangeTrackingList<AzureDevOpsOrgMetadata> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Orgs))
             {
                 writer.WritePropertyName("orgs"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsConnectorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

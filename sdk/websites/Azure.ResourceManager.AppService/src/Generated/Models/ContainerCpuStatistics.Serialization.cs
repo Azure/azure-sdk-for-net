@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CpuUsage != null)
+            if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteObjectValue(CpuUsage);
             }
-            if (SystemCpuUsage.HasValue)
+            if (Optional.IsDefined(SystemCpuUsage))
             {
                 writer.WritePropertyName("systemCpuUsage"u8);
                 writer.WriteNumberValue(SystemCpuUsage.Value);
             }
-            if (OnlineCpuCount.HasValue)
+            if (Optional.IsDefined(OnlineCpuCount))
             {
                 writer.WritePropertyName("onlineCpuCount"u8);
                 writer.WriteNumberValue(OnlineCpuCount.Value);
             }
-            if (ThrottlingData != null)
+            if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
                 writer.WriteObjectValue(ThrottlingData);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerCpuStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

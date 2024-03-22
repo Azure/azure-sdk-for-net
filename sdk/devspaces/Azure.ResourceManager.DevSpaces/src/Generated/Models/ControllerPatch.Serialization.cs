@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControllerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControllerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetContainerHostCredentialsBase64 != null)
+            if (Optional.IsDefined(TargetContainerHostCredentialsBase64))
             {
                 writer.WritePropertyName("targetContainerHostCredentialsBase64"u8);
                 writer.WriteStringValue(TargetContainerHostCredentialsBase64);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControllerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControllerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControllerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControllerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                         return DeserializeControllerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControllerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControllerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

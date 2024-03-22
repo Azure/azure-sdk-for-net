@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionWebAppStackSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSupported))
             {
                 writer.WritePropertyName("isSupported"u8);
                 writer.WriteBooleanValue(IsSupported.Value);
             }
-            if (options.Format != "W" && SupportedVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedVersion))
             {
                 writer.WritePropertyName("supportedVersion"u8);
                 writer.WriteStringValue(SupportedVersion);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubActionWebAppStackSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeGitHubActionWebAppStackSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubActionWebAppStackSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryType.HasValue)
+            if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (CopyOptions.HasValue)
+            if (Optional.IsDefined(CopyOptions))
             {
                 writer.WritePropertyName("copyOptions"u8);
                 writer.WriteStringValue(CopyOptions.Value.ToString());
             }
-            if (RestoreRequestType.HasValue)
+            if (Optional.IsDefined(RestoreRequestType))
             {
                 writer.WritePropertyName("restoreRequestType"u8);
                 writer.WriteStringValue(RestoreRequestType.Value.ToString());
             }
-            if (!(RestoreFileSpecs is ChangeTrackingList<RestoreFileSpecs> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RestoreFileSpecs))
             {
                 writer.WritePropertyName("restoreFileSpecs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TargetDetails != null)
+            if (Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
                 writer.WriteObjectValue(TargetDetails);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeFileShareRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

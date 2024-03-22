@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteObjectValue(PrivateIPAddress);
             }
-            if (PublicIPAddressResourceId != null)
+            if (Optional.IsDefined(PublicIPAddressResourceId))
             {
                 writer.WritePropertyName("publicIpAddressResourceId"u8);
                 writer.WriteStringValue(PublicIPAddressResourceId);
             }
-            if (LoadBalancerResourceId != null)
+            if (Optional.IsDefined(LoadBalancerResourceId))
             {
                 writer.WritePropertyName("loadBalancerResourceId"u8);
                 writer.WriteStringValue(LoadBalancerResourceId);
             }
-            if (ProbePort.HasValue)
+            if (Optional.IsDefined(ProbePort))
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
-            if (!(SqlVmInstances is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SqlVmInstances))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstances"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

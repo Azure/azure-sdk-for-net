@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImmutableStorageWithVersioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && TimeStamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (options.Format != "W" && MigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImmutableStorageWithVersioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeImmutableStorageWithVersioning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support reading '{options.Format}' format.");
             }
         }
 

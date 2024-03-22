@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TemplateRepositoryUri != null)
+            if (Optional.IsDefined(TemplateRepositoryUri))
             {
                 writer.WritePropertyName("templateRepositoryUrl"u8);
                 writer.WriteStringValue(TemplateRepositoryUri.AbsoluteUri);
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (RepositoryName != null)
+            if (Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsPrivate.HasValue)
+            if (Optional.IsDefined(IsPrivate))
             {
                 writer.WritePropertyName("isPrivate"u8);
                 writer.WriteBooleanValue(IsPrivate.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSiteTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

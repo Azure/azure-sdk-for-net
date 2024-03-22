@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceDefaultIngestionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DataCollectionRuleResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionRuleResourceId))
             {
                 writer.WritePropertyName("dataCollectionRuleResourceId"u8);
                 writer.WriteStringValue(DataCollectionRuleResourceId);
             }
-            if (options.Format != "W" && DataCollectionEndpointResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCollectionEndpointResourceId))
             {
                 writer.WritePropertyName("dataCollectionEndpointResourceId"u8);
                 writer.WriteStringValue(DataCollectionEndpointResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceDefaultIngestionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorWorkspaceDefaultIngestionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

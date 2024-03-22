@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LastTransitionOn.HasValue)
+            if (Optional.IsDefined(LastTransitionOn))
             {
                 writer.WritePropertyName("lastTransitionTime"u8);
                 writer.WriteStringValue(LastTransitionOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ObjectStatusConditionDefinitionType != null)
+            if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectStatusConditionDefinitionType);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatusCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesObjectStatusCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatusCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,41 +24,41 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,57 +71,57 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualWan != null)
+            if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (VpnGateway != null)
+            if (Optional.IsDefined(VpnGateway))
             {
                 writer.WritePropertyName("vpnGateway"u8);
                 JsonSerializer.Serialize(writer, VpnGateway);
             }
-            if (P2SVpnGateway != null)
+            if (Optional.IsDefined(P2SVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway"u8);
                 JsonSerializer.Serialize(writer, P2SVpnGateway);
             }
-            if (ExpressRouteGateway != null)
+            if (Optional.IsDefined(ExpressRouteGateway))
             {
                 writer.WritePropertyName("expressRouteGateway"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteGateway);
             }
-            if (AzureFirewall != null)
+            if (Optional.IsDefined(AzureFirewall))
             {
                 writer.WritePropertyName("azureFirewall"u8);
                 JsonSerializer.Serialize(writer, AzureFirewall);
             }
-            if (SecurityPartnerProvider != null)
+            if (Optional.IsDefined(SecurityPartnerProvider))
             {
                 writer.WritePropertyName("securityPartnerProvider"u8);
                 JsonSerializer.Serialize(writer, SecurityPartnerProvider);
             }
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (RouteTable != null)
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SecurityProviderName != null)
+            if (Optional.IsDefined(SecurityProviderName))
             {
                 writer.WritePropertyName("securityProviderName"u8);
                 writer.WriteStringValue(SecurityProviderName);
             }
-            if (!(VirtualHubRouteTableV2S is ChangeTrackingList<VirtualHubRouteTableV2Data> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
             {
                 writer.WritePropertyName("virtualHubRouteTableV2s"u8);
                 writer.WriteStartArray();
@@ -132,17 +131,17 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && RoutingState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoutingState))
             {
                 writer.WritePropertyName("routingState"u8);
                 writer.WriteStringValue(RoutingState.Value.ToString());
             }
-            if (options.Format != "W" && !(BgpConnections is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
             {
                 writer.WritePropertyName("bgpConnections"u8);
                 writer.WriteStartArray();
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IPConfigurations is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RouteMaps is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RouteMaps))
             {
                 writer.WritePropertyName("routeMaps"u8);
                 writer.WriteStartArray();
@@ -172,12 +171,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualRouterAsn.HasValue)
+            if (Optional.IsDefined(VirtualRouterAsn))
             {
                 writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (!(VirtualRouterIPs is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
@@ -187,22 +186,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (AllowBranchToBranchTraffic.HasValue)
+            if (Optional.IsDefined(AllowBranchToBranchTraffic))
             {
                 writer.WritePropertyName("allowBranchToBranchTraffic"u8);
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
-            if (PreferredRoutingGateway.HasValue)
+            if (Optional.IsDefined(PreferredRoutingGateway))
             {
                 writer.WritePropertyName("preferredRoutingGateway"u8);
                 writer.WriteStringValue(PreferredRoutingGateway.Value.ToString());
             }
-            if (HubRoutingPreference.HasValue)
+            if (Optional.IsDefined(HubRoutingPreference))
             {
                 writer.WritePropertyName("hubRoutingPreference"u8);
                 writer.WriteStringValue(HubRoutingPreference.Value.ToString());
             }
-            if (VirtualRouterAutoScaleConfiguration != null)
+            if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
             {
                 writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
                 writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -610,7 +609,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -626,7 +625,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualHubData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support reading '{options.Format}' format.");
             }
         }
 

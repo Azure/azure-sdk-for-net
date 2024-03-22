@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
         public ServiceFabricManagedClusterIPTag(string ipTagType, string tag)
         {
-            if (ipTagType == null)
-            {
-                throw new ArgumentNullException(nameof(ipTagType));
-            }
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
+            Argument.AssertNotNull(ipTagType, nameof(ipTagType));
+            Argument.AssertNotNull(tag, nameof(tag));
 
             IPTagType = ipTagType;
             Tag = tag;

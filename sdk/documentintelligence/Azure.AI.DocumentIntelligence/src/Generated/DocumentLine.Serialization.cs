@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,13 +22,13 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentLine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentLine)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentLine)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (!(Polygon is ChangeTrackingList<float> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Polygon))
             {
                 writer.WritePropertyName("polygon"u8);
                 writer.WriteStartArray();
@@ -69,7 +68,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentLine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentLine)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentLine)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +137,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentLine)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentLine)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +153,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentLine(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentLine)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentLine)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -54,32 +54,18 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="id"/>, <paramref name="planId"/>, <paramref name="planName"/> or <paramref name="termUnit"/> is null. </exception>
         public ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit)
         {
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (planId == null)
-            {
-                throw new ArgumentNullException(nameof(planId));
-            }
-            if (planName == null)
-            {
-                throw new ArgumentNullException(nameof(planName));
-            }
-            if (termUnit == null)
-            {
-                throw new ArgumentNullException(nameof(termUnit));
-            }
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(planId, nameof(planId));
+            Argument.AssertNotNull(planName, nameof(planName));
+            Argument.AssertNotNull(termUnit, nameof(termUnit));
 
             PublisherId = publisherId;
             Id = id;
             PlanId = planId;
             PlanName = planName;
             TermUnit = termUnit;
+            PrivateOfferIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfluentOfferDetail"/>. </summary>
@@ -88,15 +74,21 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="planId"> Offer Plan Id. </param>
         /// <param name="planName"> Offer Plan Name. </param>
         /// <param name="termUnit"> Offer Plan Term unit. </param>
+        /// <param name="termId"> Offer Plan Term Id. </param>
+        /// <param name="privateOfferId"> Private Offer Id. </param>
+        /// <param name="privateOfferIds"> Array of Private Offer Ids. </param>
         /// <param name="status"> SaaS Offer Status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, ConfluentSaaSOfferStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string termId, string privateOfferId, IList<string> privateOfferIds, ConfluentSaaSOfferStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublisherId = publisherId;
             Id = id;
             PlanId = planId;
             PlanName = planName;
             TermUnit = termUnit;
+            TermId = termId;
+            PrivateOfferId = privateOfferId;
+            PrivateOfferIds = privateOfferIds;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -116,7 +108,13 @@ namespace Azure.ResourceManager.Confluent.Models
         public string PlanName { get; set; }
         /// <summary> Offer Plan Term unit. </summary>
         public string TermUnit { get; set; }
+        /// <summary> Offer Plan Term Id. </summary>
+        public string TermId { get; set; }
+        /// <summary> Private Offer Id. </summary>
+        public string PrivateOfferId { get; set; }
+        /// <summary> Array of Private Offer Ids. </summary>
+        public IList<string> PrivateOfferIds { get; }
         /// <summary> SaaS Offer Status. </summary>
-        public ConfluentSaaSOfferStatus? Status { get; }
+        public ConfluentSaaSOfferStatus? Status { get; set; }
     }
 }

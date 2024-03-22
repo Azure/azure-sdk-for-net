@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentSubnetNetworkHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(OutboundNetworkDependencies is ChangeTrackingList<IntegrationServiceEnvironmentNetworkDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundNetworkDependencies))
             {
                 writer.WritePropertyName("outboundNetworkDependencies"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OutboundNetworkHealth != null)
+            if (Optional.IsDefined(OutboundNetworkHealth))
             {
                 writer.WritePropertyName("outboundNetworkHealth"u8);
                 writer.WriteObjectValue(OutboundNetworkHealth);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentSubnetNetworkHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentSubnetNetworkHealth)} does not support reading '{options.Format}' format.");
             }
         }
 

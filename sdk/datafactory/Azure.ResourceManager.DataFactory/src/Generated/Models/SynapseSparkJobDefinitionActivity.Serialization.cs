@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobDefinitionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
             writer.WriteObjectValue(SparkJob);
-            if (!(Arguments is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
                 JsonSerializer.Serialize(writer, File);
             }
-            if (ScanFolder != null)
+            if (Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
                 JsonSerializer.Serialize(writer, ScanFolder);
             }
-            if (ClassName != null)
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 JsonSerializer.Serialize(writer, ClassName);
             }
-            if (!(Files is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PythonCodeReference is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(PythonCodeReference))
             {
                 writer.WritePropertyName("pythonCodeReference"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FilesV2 is ChangeTrackingList<BinaryData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(FilesV2))
             {
                 writer.WritePropertyName("filesV2"u8);
                 writer.WriteStartArray();
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TargetBigDataPool != null)
+            if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
                 writer.WriteObjectValue(TargetBigDataPool);
             }
-            if (ExecutorSize != null)
+            if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
                 JsonSerializer.Serialize(writer, ExecutorSize);
             }
-            if (Conf != null)
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
 #if NET6_0_OR_GREATER
@@ -205,27 +205,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (DriverSize != null)
+            if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 JsonSerializer.Serialize(writer, DriverSize);
             }
-            if (NumExecutors != null)
+            if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 JsonSerializer.Serialize(writer, NumExecutors);
             }
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (TargetSparkConfiguration != null)
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (!(SparkConfig is ChangeTrackingDictionary<string, BinaryData> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobDefinitionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSynapseSparkJobDefinitionActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSparkJobDefinitionActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(MatchVariable.ToString());
             writer.WritePropertyName("selectorMatchOperator"u8);
             writer.WriteStringValue(SelectorMatchOperator.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallScrubbingRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeWebApplicationFirewallScrubbingRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallScrubbingRules)} does not support reading '{options.Format}' format.");
             }
         }
 

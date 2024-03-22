@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Throughput.HasValue)
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (AutoscaleSettings != null)
+            if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
-            if (options.Format != "W" && MinimumThroughput != null)
+            if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
             {
                 writer.WritePropertyName("minimumThroughput"u8);
                 writer.WriteStringValue(MinimumThroughput);
             }
-            if (options.Format != "W" && OfferReplacePending != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferReplacePending))
             {
                 writer.WritePropertyName("offerReplacePending"u8);
                 writer.WriteStringValue(OfferReplacePending);
             }
-            if (options.Format != "W" && InstantMaximumThroughput != null)
+            if (options.Format != "W" && Optional.IsDefined(InstantMaximumThroughput))
             {
                 writer.WritePropertyName("instantMaximumThroughput"u8);
                 writer.WriteStringValue(InstantMaximumThroughput);
             }
-            if (options.Format != "W" && SoftAllowedMaximumThroughput != null)
+            if (options.Format != "W" && Optional.IsDefined(SoftAllowedMaximumThroughput))
             {
                 writer.WritePropertyName("softAllowedMaximumThroughput"u8);
                 writer.WriteStringValue(SoftAllowedMaximumThroughput);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThroughputSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeThroughputSettingsResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThroughputSettingsResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

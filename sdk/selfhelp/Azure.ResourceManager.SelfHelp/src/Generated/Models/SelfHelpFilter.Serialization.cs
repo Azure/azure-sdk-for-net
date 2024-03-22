@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Values != null)
+            if (Optional.IsDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Operator != null)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHelpFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSelfHelpFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHelpFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

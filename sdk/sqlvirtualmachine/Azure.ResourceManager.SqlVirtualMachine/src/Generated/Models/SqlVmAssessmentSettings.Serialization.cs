@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (RunImmediately.HasValue)
+            if (Optional.IsDefined(RunImmediately))
             {
                 writer.WritePropertyName("runImmediately"u8);
                 writer.WriteBooleanValue(RunImmediately.Value);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmAssessmentSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsARecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPv4Address != null)
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsARecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                         return DeserializePrivateDnsARecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsARecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

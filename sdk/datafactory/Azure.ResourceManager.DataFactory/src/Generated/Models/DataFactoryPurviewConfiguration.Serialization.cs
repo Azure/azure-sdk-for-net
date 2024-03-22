@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPurviewConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PurviewResourceId != null)
+            if (Optional.IsDefined(PurviewResourceId))
             {
                 writer.WritePropertyName("purviewResourceId"u8);
                 writer.WriteStringValue(PurviewResourceId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPurviewConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryPurviewConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPurviewConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

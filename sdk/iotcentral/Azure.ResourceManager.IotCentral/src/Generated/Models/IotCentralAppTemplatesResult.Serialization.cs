@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppTemplatesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<IotCentralAppTemplate> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppTemplatesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                         return DeserializeIotCentralAppTemplatesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppTemplatesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Communication
             var format = options.Format == "W" ? ((IPersistableModel<CommunicationDomainResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DataLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (options.Format != "W" && FromSenderDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(FromSenderDomain))
             {
                 writer.WritePropertyName("fromSenderDomain"u8);
                 writer.WriteStringValue(FromSenderDomain);
             }
-            if (options.Format != "W" && MailFromSenderDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(MailFromSenderDomain))
             {
                 writer.WritePropertyName("mailFromSenderDomain"u8);
                 writer.WriteStringValue(MailFromSenderDomain);
             }
-            if (DomainManagement.HasValue)
+            if (Optional.IsDefined(DomainManagement))
             {
                 writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (options.Format != "W" && VerificationStates != null)
+            if (options.Format != "W" && Optional.IsDefined(VerificationStates))
             {
                 writer.WritePropertyName("verificationStates"u8);
                 writer.WriteObjectValue(VerificationStates);
             }
-            if (options.Format != "W" && VerificationRecords != null)
+            if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
             {
                 writer.WritePropertyName("verificationRecords"u8);
                 writer.WriteObjectValue(VerificationRecords);
             }
-            if (UserEngagementTracking.HasValue)
+            if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication
             var format = options.Format == "W" ? ((IPersistableModel<CommunicationDomainResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Communication
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Communication
                         return DeserializeCommunicationDomainResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

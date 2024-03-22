@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
 #if NET6_0_OR_GREATER
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingMdeAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingMdeAutoProvisioning)} does not support reading '{options.Format}' format.");
             }
         }
 

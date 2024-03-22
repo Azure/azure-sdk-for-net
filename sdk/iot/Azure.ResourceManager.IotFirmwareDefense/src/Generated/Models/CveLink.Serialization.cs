@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 if (Href != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("href");
                 }
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 if (Label != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CveLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCveLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveLink)} does not support reading '{options.Format}' format.");
             }
         }
 

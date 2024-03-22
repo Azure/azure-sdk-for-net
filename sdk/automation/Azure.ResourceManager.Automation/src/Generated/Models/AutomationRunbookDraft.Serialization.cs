@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsInEditMode.HasValue)
+            if (Optional.IsDefined(IsInEditMode))
             {
                 writer.WritePropertyName("inEdit"u8);
                 writer.WriteBooleanValue(IsInEditMode.Value);
             }
-            if (DraftContentLink != null)
+            if (Optional.IsDefined(DraftContentLink))
             {
                 writer.WritePropertyName("draftContentLink"u8);
                 writer.WriteObjectValue(DraftContentLink);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, RunbookParameterDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(OutputTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputTypes))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationRunbookDraft(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LocalRulesResourceListResult>> ListByLocalRulestacksAsync(string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
 
             using var message = CreateListByLocalRulestacksRequest(subscriptionId, resourceGroupName, localRulestackName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LocalRulesResourceListResult> ListByLocalRulestacks(string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
 
             using var message = CreateListByLocalRulestacksRequest(subscriptionId, resourceGroupName, localRulestackName);
             _pipeline.Send(message, cancellationToken);
@@ -190,38 +147,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LocalRulestackRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, localRulestackName, priority);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +180,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LocalRulestackRuleData> Get(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, localRulestackName, priority);
             _pipeline.Send(message, cancellationToken);
@@ -339,42 +240,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, LocalRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, localRulestackName, priority, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,42 +269,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, LocalRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, localRulestackName, priority, data);
             _pipeline.Send(message, cancellationToken);
@@ -480,38 +319,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, localRulestackName, priority);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -536,38 +347,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, localRulestackName, priority);
             _pipeline.Send(message, cancellationToken);
@@ -620,38 +403,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FirewallRuleCounter>> GetCountersAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetCountersRequest(subscriptionId, resourceGroupName, localRulestackName, priority, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -680,38 +435,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FirewallRuleCounter> GetCounters(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetCountersRequest(subscriptionId, resourceGroupName, localRulestackName, priority, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -767,38 +494,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RefreshCountersAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateRefreshCountersRequest(subscriptionId, resourceGroupName, localRulestackName, priority, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -822,38 +521,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RefreshCounters(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateRefreshCountersRequest(subscriptionId, resourceGroupName, localRulestackName, priority, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -904,38 +575,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateResetCountersRequest(subscriptionId, resourceGroupName, localRulestackName, priority, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -964,38 +607,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FirewallRuleResetConter> ResetCounters(string subscriptionId, string resourceGroupName, string localRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateResetCountersRequest(subscriptionId, resourceGroupName, localRulestackName, priority, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -1037,34 +652,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LocalRulesResourceListResult>> ListByLocalRulestacksNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
 
             using var message = CreateListByLocalRulestacksNextPageRequest(nextLink, subscriptionId, resourceGroupName, localRulestackName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1092,34 +683,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LocalRulesResourceListResult> ListByLocalRulestacksNextPage(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (localRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(localRulestackName));
-            }
-            if (localRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(localRulestackName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(localRulestackName, nameof(localRulestackName));
 
             using var message = CreateListByLocalRulestacksNextPageRequest(nextLink, subscriptionId, resourceGroupName, localRulestackName);
             _pipeline.Send(message, cancellationToken);

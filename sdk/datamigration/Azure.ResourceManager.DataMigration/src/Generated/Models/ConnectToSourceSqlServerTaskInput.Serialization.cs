@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo);
-            if (CheckPermissionsGroup.HasValue)
+            if (Optional.IsDefined(CheckPermissionsGroup))
             {
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (CollectDatabases.HasValue)
+            if (Optional.IsDefined(CollectDatabases))
             {
                 writer.WritePropertyName("collectDatabases"u8);
                 writer.WriteBooleanValue(CollectDatabases.Value);
             }
-            if (CollectLogins.HasValue)
+            if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
                 writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (CollectAgentJobs.HasValue)
+            if (Optional.IsDefined(CollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
                 writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (CollectTdeCertificateInfo.HasValue)
+            if (Optional.IsDefined(CollectTdeCertificateInfo))
             {
                 writer.WritePropertyName("collectTdeCertificateInfo"u8);
                 writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
             }
-            if (ValidateSsisCatalogOnly.HasValue)
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
                 writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
-            if (EncryptedKeyForSecureFields != null)
+            if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceSqlServerTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

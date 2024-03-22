@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
@@ -283,10 +281,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamAnalyticsPrivateEndpointResource>> UpdateAsync(WaitUntil waitUntil, StreamAnalyticsPrivateEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointResource.Update");
             scope.Start();
@@ -334,10 +329,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamAnalyticsPrivateEndpointResource> Update(WaitUntil waitUntil, StreamAnalyticsPrivateEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamAnalyticsPrivateEndpointPrivateEndpointsClientDiagnostics.CreateScope("StreamAnalyticsPrivateEndpointResource.Update");
             scope.Start();

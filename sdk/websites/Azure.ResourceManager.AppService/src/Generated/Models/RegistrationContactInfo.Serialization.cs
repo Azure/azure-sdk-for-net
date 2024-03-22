@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AddressMailing != null)
+            if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
                 writer.WriteObjectValue(AddressMailing);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (Fax != null)
+            if (Optional.IsDefined(Fax))
             {
                 writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
-            if (JobTitle != null)
+            if (Optional.IsDefined(JobTitle))
             {
                 writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(NameFirst);
             writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
-            if (NameMiddle != null)
+            if (Optional.IsDefined(NameMiddle))
             {
                 writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
-            if (Organization != null)
+            if (Optional.IsDefined(Organization))
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeRegistrationContactInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

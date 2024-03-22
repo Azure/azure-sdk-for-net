@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Triggers != null)
+            if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
                 writer.WriteObjectValue(Triggers);
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteObjectValue(Actions);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAutoHealRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealRules)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenancePatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RebootSetting.HasValue)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (WindowsParameters != null)
+            if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
                 writer.WriteObjectValue(WindowsParameters);
             }
-            if (LinuxParameters != null)
+            if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenancePatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenancePatchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenancePatchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

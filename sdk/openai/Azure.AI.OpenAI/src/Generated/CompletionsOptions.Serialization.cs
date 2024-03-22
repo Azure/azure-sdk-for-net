@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<CompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,47 +33,52 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MaxTokens.HasValue)
+            if (Optional.IsDefined(MaxTokens))
             {
                 writer.WritePropertyName("max_tokens"u8);
                 writer.WriteNumberValue(MaxTokens.Value);
             }
-            if (Temperature.HasValue)
+            if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (NucleusSamplingFactor.HasValue)
+            if (Optional.IsDefined(NucleusSamplingFactor))
             {
                 writer.WritePropertyName("top_p"u8);
                 writer.WriteNumberValue(NucleusSamplingFactor.Value);
             }
-            if (!(TokenSelectionBiases is ChangeTrackingDictionary<int, int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
                 SerializeTokenSelectionBiases(writer);
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (ChoicesPerPrompt.HasValue)
+            if (Optional.IsDefined(ChoicesPerPrompt))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteNumberValue(ChoicesPerPrompt.Value);
             }
-            if (LogProbabilityCount.HasValue)
+            if (Optional.IsDefined(LogProbabilityCount))
             {
                 writer.WritePropertyName("logprobs"u8);
                 writer.WriteNumberValue(LogProbabilityCount.Value);
             }
-            if (Echo.HasValue)
+            if (Optional.IsDefined(Suffix))
+            {
+                writer.WritePropertyName("suffix"u8);
+                writer.WriteStringValue(Suffix);
+            }
+            if (Optional.IsDefined(Echo))
             {
                 writer.WritePropertyName("echo"u8);
                 writer.WriteBooleanValue(Echo.Value);
             }
-            if (!(StopSequences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StopSequences))
             {
                 writer.WritePropertyName("stop"u8);
                 writer.WriteStartArray();
@@ -84,27 +88,27 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (PresencePenalty.HasValue)
+            if (Optional.IsDefined(PresencePenalty))
             {
                 writer.WritePropertyName("presence_penalty"u8);
                 writer.WriteNumberValue(PresencePenalty.Value);
             }
-            if (FrequencyPenalty.HasValue)
+            if (Optional.IsDefined(FrequencyPenalty))
             {
                 writer.WritePropertyName("frequency_penalty"u8);
                 writer.WriteNumberValue(FrequencyPenalty.Value);
             }
-            if (GenerationSampleCount.HasValue)
+            if (Optional.IsDefined(GenerationSampleCount))
             {
                 writer.WritePropertyName("best_of"u8);
                 writer.WriteNumberValue(GenerationSampleCount.Value);
             }
-            if (InternalShouldStreamResponse.HasValue)
+            if (Optional.IsDefined(InternalShouldStreamResponse))
             {
                 writer.WritePropertyName("stream"u8);
                 writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -132,7 +136,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<CompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompletionsOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,6 +159,7 @@ namespace Azure.AI.OpenAI
             string user = default;
             int? n = default;
             int? logprobs = default;
+            string suffix = default;
             bool? echo = default;
             IList<string> stop = default;
             float? presencePenalty = default;
@@ -229,6 +234,11 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     logprobs = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("suffix"u8))
+                {
+                    suffix = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("echo"u8))
@@ -310,6 +320,7 @@ namespace Azure.AI.OpenAI
                 user,
                 n,
                 logprobs,
+                suffix,
                 echo,
                 stop ?? new ChangeTrackingList<string>(),
                 presencePenalty,
@@ -329,7 +340,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +356,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeCompletionsOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompletionsOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

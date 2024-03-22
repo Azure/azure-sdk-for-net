@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (options.Format != "W" && OSType != null)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (SshPublicKey != null)
+            if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

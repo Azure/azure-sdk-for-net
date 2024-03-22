@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmAvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,24 +61,24 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (VmmServerId != null)
+            if (Optional.IsDefined(VmmServerId))
             {
                 writer.WritePropertyName("vmmServerId"u8);
                 writer.WriteStringValue(VmmServerId);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ArcScVmm
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmAvailabilitySetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ArcScVmm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ArcScVmm
                         return DeserializeScVmmAvailabilitySetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScVmmAvailabilitySetData)} does not support reading '{options.Format}' format.");
             }
         }
 

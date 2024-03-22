@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToSerialString());
             }
-            if (IntervalInSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
-            if (SizeLimitInBytes.HasValue)
+            if (Optional.IsDefined(SizeLimitInBytes))
             {
                 writer.WritePropertyName("sizeLimitInBytes"u8);
                 writer.WriteNumberValue(SizeLimitInBytes.Value);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
-            if (SkipEmptyArchives.HasValue)
+            if (Optional.IsDefined(SkipEmptyArchives))
             {
                 writer.WritePropertyName("skipEmptyArchives"u8);
                 writer.WriteBooleanValue(SkipEmptyArchives.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeCaptureDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

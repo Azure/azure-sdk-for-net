@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (ErrorResponse != null)
+            if (Optional.IsDefined(ErrorResponse))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(ErrorResponse);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         return DeserializeRedisEnterpriseOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseOperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

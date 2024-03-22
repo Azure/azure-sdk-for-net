@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(NetworkInterfaces is ChangeTrackingList<LargeInstanceIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CircuitId != null)
+            if (options.Format != "W" && Optional.IsDefined(CircuitId))
             {
                 writer.WritePropertyName("circuitId"u8);
                 writer.WriteStringValue(CircuitId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

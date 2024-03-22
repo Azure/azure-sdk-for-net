@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalValidation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsAuthenticationRequired.HasValue)
+            if (Optional.IsDefined(IsAuthenticationRequired))
             {
                 writer.WritePropertyName("requireAuthentication"u8);
                 writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
-            if (UnauthenticatedClientAction.HasValue)
+            if (Optional.IsDefined(UnauthenticatedClientAction))
             {
                 writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
-            if (RedirectToProvider != null)
+            if (Optional.IsDefined(RedirectToProvider))
             {
                 writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
-            if (!(ExcludedPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalValidation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeGlobalValidation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support reading '{options.Format}' format.");
             }
         }
 

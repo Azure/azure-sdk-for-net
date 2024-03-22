@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<HostNameBindingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostNameBindingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostNameBindingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SiteName != null)
+            if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
             }
-            if (DomainId != null)
+            if (Optional.IsDefined(DomainId))
             {
                 writer.WritePropertyName("domainId"u8);
                 writer.WriteStringValue(DomainId);
             }
-            if (AzureResourceName != null)
+            if (Optional.IsDefined(AzureResourceName))
             {
                 writer.WritePropertyName("azureResourceName"u8);
                 writer.WriteStringValue(AzureResourceName);
             }
-            if (AzureResourceType.HasValue)
+            if (Optional.IsDefined(AzureResourceType))
             {
                 writer.WritePropertyName("azureResourceType"u8);
                 writer.WriteStringValue(AzureResourceType.Value.ToSerialString());
             }
-            if (CustomHostNameDnsRecordType.HasValue)
+            if (Optional.IsDefined(CustomHostNameDnsRecordType))
             {
                 writer.WritePropertyName("customHostNameDnsRecordType"u8);
                 writer.WriteStringValue(CustomHostNameDnsRecordType.Value.ToSerialString());
             }
-            if (HostNameType.HasValue)
+            if (Optional.IsDefined(HostNameType))
             {
                 writer.WritePropertyName("hostNameType"u8);
                 writer.WriteStringValue(HostNameType.Value.ToSerialString());
             }
-            if (SslState.HasValue)
+            if (Optional.IsDefined(SslState))
             {
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (options.Format != "W" && VirtualIP != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualIP))
             {
                 writer.WritePropertyName("virtualIP"u8);
                 writer.WriteStringValue(VirtualIP);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<HostNameBindingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostNameBindingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostNameBindingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostNameBindingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostNameBindingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeHostNameBindingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostNameBindingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostNameBindingData)} does not support reading '{options.Format}' format.");
             }
         }
 

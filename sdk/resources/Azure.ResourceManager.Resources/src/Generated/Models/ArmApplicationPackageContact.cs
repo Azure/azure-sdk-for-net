@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> or <paramref name="phone"/> is null. </exception>
         internal ArmApplicationPackageContact(string email, string phone)
         {
-            if (email == null)
-            {
-                throw new ArgumentNullException(nameof(email));
-            }
-            if (phone == null)
-            {
-                throw new ArgumentNullException(nameof(phone));
-            }
+            Argument.AssertNotNull(email, nameof(email));
+            Argument.AssertNotNull(phone, nameof(phone));
 
             Email = email;
             Phone = phone;

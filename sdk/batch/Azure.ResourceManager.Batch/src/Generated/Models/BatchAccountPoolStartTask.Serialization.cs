@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CommandLine != null)
+            if (Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (!(ResourceFiles is ChangeTrackingList<BatchResourceFile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceFiles))
             {
                 writer.WritePropertyName("resourceFiles"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EnvironmentSettings is ChangeTrackingList<BatchEnvironmentSetting> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentSettings))
             {
                 writer.WritePropertyName("environmentSettings"u8);
                 writer.WriteStartArray();
@@ -51,22 +51,22 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UserIdentity != null)
+            if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteObjectValue(UserIdentity);
             }
-            if (MaxTaskRetryCount.HasValue)
+            if (Optional.IsDefined(MaxTaskRetryCount))
             {
                 writer.WritePropertyName("maxTaskRetryCount"u8);
                 writer.WriteNumberValue(MaxTaskRetryCount.Value);
             }
-            if (WaitForSuccess.HasValue)
+            if (Optional.IsDefined(WaitForSuccess))
             {
                 writer.WritePropertyName("waitForSuccess"u8);
                 writer.WriteBooleanValue(WaitForSuccess.Value);
             }
-            if (ContainerSettings != null)
+            if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
                 writer.WriteObjectValue(ContainerSettings);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountPoolStartTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (PerimeterGuid != null)
+            if (Optional.IsDefined(PerimeterGuid))
             {
                 writer.WritePropertyName("perimeterGuid"u8);
                 writer.WriteStringValue(PerimeterGuid);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNetworkSecurityPerimeterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

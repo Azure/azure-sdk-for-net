@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareableSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ShareablePrivateLinkResourcePropertiesType != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);
             }
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareableSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Search.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Search.Models
                         return DeserializeShareableSearchServicePrivateLinkResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

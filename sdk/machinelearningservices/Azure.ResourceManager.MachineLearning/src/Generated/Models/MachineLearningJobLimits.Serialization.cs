@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                     case "Command": return MachineLearningCommandJobLimits.DeserializeMachineLearningCommandJobLimits(element, options);
+                    case "Sweep": return MachineLearningSweepJobLimits.DeserializeMachineLearningSweepJobLimits(element, options);
                 }
             }
             return UnknownJobLimits.DeserializeUnknownJobLimits(element, options);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningJobLimits(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobLimits)} does not support reading '{options.Format}' format.");
             }
         }
 

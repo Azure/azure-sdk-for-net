@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpCommunity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceSupportedRegion != null)
+            if (Optional.IsDefined(ServiceSupportedRegion))
             {
                 writer.WritePropertyName("serviceSupportedRegion"u8);
                 writer.WriteStringValue(ServiceSupportedRegion);
             }
-            if (CommunityName != null)
+            if (Optional.IsDefined(CommunityName))
             {
                 writer.WritePropertyName("communityName"u8);
                 writer.WriteStringValue(CommunityName);
             }
-            if (CommunityValue != null)
+            if (Optional.IsDefined(CommunityValue))
             {
                 writer.WritePropertyName("communityValue"u8);
                 writer.WriteStringValue(CommunityValue);
             }
-            if (!(CommunityPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CommunityPrefixes))
             {
                 writer.WritePropertyName("communityPrefixes"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsAuthorizedToUse.HasValue)
+            if (Optional.IsDefined(IsAuthorizedToUse))
             {
                 writer.WritePropertyName("isAuthorizedToUse"u8);
                 writer.WriteBooleanValue(IsAuthorizedToUse.Value);
             }
-            if (ServiceGroup != null)
+            if (Optional.IsDefined(ServiceGroup))
             {
                 writer.WritePropertyName("serviceGroup"u8);
                 writer.WriteStringValue(ServiceGroup);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpCommunity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpCommunity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpCommunity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeBgpCommunity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpCommunity)} does not support reading '{options.Format}' format.");
             }
         }
 

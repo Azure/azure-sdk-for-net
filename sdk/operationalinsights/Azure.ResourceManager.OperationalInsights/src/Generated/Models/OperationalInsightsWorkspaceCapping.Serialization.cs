@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceCapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DailyQuotaInGB.HasValue)
+            if (Optional.IsDefined(DailyQuotaInGB))
             {
                 writer.WritePropertyName("dailyQuotaGb"u8);
                 writer.WriteNumberValue(DailyQuotaInGB.Value);
             }
-            if (options.Format != "W" && QuotaNextResetTime != null)
+            if (options.Format != "W" && Optional.IsDefined(QuotaNextResetTime))
             {
                 writer.WritePropertyName("quotaNextResetTime"u8);
                 writer.WriteStringValue(QuotaNextResetTime);
             }
-            if (options.Format != "W" && DataIngestionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataIngestionStatus))
             {
                 writer.WritePropertyName("dataIngestionStatus"u8);
                 writer.WriteStringValue(DataIngestionStatus.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceCapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsWorkspaceCapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceCapping)} does not support reading '{options.Format}' format.");
             }
         }
 

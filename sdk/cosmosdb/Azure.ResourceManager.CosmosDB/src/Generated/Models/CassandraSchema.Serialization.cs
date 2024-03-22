@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Columns is ChangeTrackingList<CassandraColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PartitionKeys is ChangeTrackingList<CassandraPartitionKey> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PartitionKeys))
             {
                 writer.WritePropertyName("partitionKeys"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClusterKeys is ChangeTrackingList<CassandraClusterKey> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterKeys))
             {
                 writer.WritePropertyName("clusterKeys"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraSchema)} does not support reading '{options.Format}' format.");
             }
         }
 

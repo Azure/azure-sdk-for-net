@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeMaintenanceWindowPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

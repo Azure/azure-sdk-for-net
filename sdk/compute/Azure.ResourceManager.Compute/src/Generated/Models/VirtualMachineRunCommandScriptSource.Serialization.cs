@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandScriptSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (ScriptUri != null)
+            if (Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUri"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (CommandId != null)
+            if (Optional.IsDefined(CommandId))
             {
                 writer.WritePropertyName("commandId"u8);
                 writer.WriteStringValue(CommandId);
             }
-            if (ScriptUriManagedIdentity != null)
+            if (Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
                 writer.WriteObjectValue(ScriptUriManagedIdentity);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandScriptSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineRunCommandScriptSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandScriptSource)} does not support reading '{options.Format}' format.");
             }
         }
 

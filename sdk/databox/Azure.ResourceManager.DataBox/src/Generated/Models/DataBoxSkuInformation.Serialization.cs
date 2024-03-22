@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(DataLocationToServiceLocationMap is ChangeTrackingList<DataLocationToServiceLocationMap> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataLocationToServiceLocationMap))
             {
                 writer.WritePropertyName("dataLocationToServiceLocationMap"u8);
                 writer.WriteStartArray();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Capacity != null)
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxSkuCost> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DisabledReason.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisabledReason))
             {
                 writer.WritePropertyName("disabledReason"u8);
                 writer.WriteStringValue(DisabledReason.Value.ToSerialString());
             }
-            if (options.Format != "W" && DisabledReasonMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DisabledReasonMessage))
             {
                 writer.WritePropertyName("disabledReasonMessage"u8);
                 writer.WriteStringValue(DisabledReasonMessage);
             }
-            if (options.Format != "W" && RequiredFeature != null)
+            if (options.Format != "W" && Optional.IsDefined(RequiredFeature))
             {
                 writer.WritePropertyName("requiredFeature"u8);
                 writer.WriteStringValue(RequiredFeature);
             }
-            if (options.Format != "W" && !(CountriesWithinCommerceBoundary is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CountriesWithinCommerceBoundary))
             {
                 writer.WritePropertyName("countriesWithinCommerceBoundary"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxSkuInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

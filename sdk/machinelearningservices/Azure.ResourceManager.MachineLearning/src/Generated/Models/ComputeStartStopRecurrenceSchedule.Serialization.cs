@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeStartStopRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 if (StartTime != null)
                 {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeStartStopRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeComputeStartStopRecurrenceSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeStartStopRecurrenceSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

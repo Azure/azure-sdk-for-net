@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="template"/> is null. </exception>
         public LinkedTemplateArtifact(string path, BinaryData template)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(template, nameof(template));
 
             Path = path;
             Template = template;

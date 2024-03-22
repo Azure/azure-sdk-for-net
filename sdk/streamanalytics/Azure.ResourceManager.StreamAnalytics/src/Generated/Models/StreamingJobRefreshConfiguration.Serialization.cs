@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobRefreshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PathPattern != null)
+            if (Optional.IsDefined(PathPattern))
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (TimeFormat != null)
+            if (Optional.IsDefined(TimeFormat))
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (RefreshInterval != null)
+            if (Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshInterval"u8);
                 writer.WriteStringValue(RefreshInterval);
             }
-            if (RefreshType.HasValue)
+            if (Optional.IsDefined(RefreshType))
             {
                 writer.WritePropertyName("refreshType"u8);
                 writer.WriteStringValue(RefreshType.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobRefreshConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobRefreshConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobRefreshConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,13 +23,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MicrosoftSecurityIncidentCreationAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,14 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DisplayNamesFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayNamesFilter))
             {
                 writer.WritePropertyName("displayNamesFilter"u8);
                 writer.WriteStartArray();
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DisplayNamesExcludeFilter is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayNamesExcludeFilter))
             {
                 writer.WritePropertyName("displayNamesExcludeFilter"u8);
                 writer.WriteStartArray();
@@ -77,12 +76,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProductFilter.HasValue)
+            if (Optional.IsDefined(ProductFilter))
             {
                 writer.WritePropertyName("productFilter"u8);
                 writer.WriteStringValue(ProductFilter.Value.ToString());
             }
-            if (!(SeveritiesFilter is ChangeTrackingList<SecurityInsightsAlertSeverity> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SeveritiesFilter))
             {
                 writer.WritePropertyName("severitiesFilter"u8);
                 writer.WriteStartArray();
@@ -92,27 +91,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AlertRuleTemplateName != null)
+            if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
                 writer.WriteStringValue(AlertRuleTemplateName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MicrosoftSecurityIncidentCreationAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -359,7 +358,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeMicrosoftSecurityIncidentCreationAlertRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftSecurityIncidentCreationAlertRule)} does not support reading '{options.Format}' format.");
             }
         }
 

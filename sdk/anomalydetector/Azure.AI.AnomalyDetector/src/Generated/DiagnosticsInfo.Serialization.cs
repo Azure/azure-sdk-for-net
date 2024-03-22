@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,16 +22,16 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ModelState != null)
+            if (Optional.IsDefined(ModelState))
             {
                 writer.WritePropertyName("modelState"u8);
                 writer.WriteObjectValue(ModelState);
             }
-            if (!(VariableStates is ChangeTrackingList<VariableState> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VariableStates))
             {
                 writer.WritePropertyName("variableStates"u8);
                 writer.WriteStartArray();
@@ -65,7 +64,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +126,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeDiagnosticsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

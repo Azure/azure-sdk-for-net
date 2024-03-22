@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LeaseId != null)
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (LeaseTimeSeconds != null)
+            if (Optional.IsDefined(LeaseTimeSeconds))
             {
                 writer.WritePropertyName("leaseTimeSeconds"u8);
                 writer.WriteStringValue(LeaseTimeSeconds);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLeaseShareResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

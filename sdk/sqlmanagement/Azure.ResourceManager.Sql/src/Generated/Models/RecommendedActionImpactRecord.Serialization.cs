@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DimensionName != null)
+            if (options.Format != "W" && Optional.IsDefined(DimensionName))
             {
                 writer.WritePropertyName("dimensionName"u8);
                 writer.WriteStringValue(DimensionName);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && AbsoluteValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AbsoluteValue))
             {
                 writer.WritePropertyName("absoluteValue"u8);
                 writer.WriteNumberValue(AbsoluteValue.Value);
             }
-            if (options.Format != "W" && ChangeValueAbsolute.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueAbsolute))
             {
                 writer.WritePropertyName("changeValueAbsolute"u8);
                 writer.WriteNumberValue(ChangeValueAbsolute.Value);
             }
-            if (options.Format != "W" && ChangeValueRelative.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueRelative))
             {
                 writer.WritePropertyName("changeValueRelative"u8);
                 writer.WriteNumberValue(ChangeValueRelative.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeRecommendedActionImpactRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

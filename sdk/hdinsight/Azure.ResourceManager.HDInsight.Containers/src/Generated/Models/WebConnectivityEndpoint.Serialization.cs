@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    internal partial class WebConnectivityEndpoint : IUtf8JsonSerializable, IJsonModel<WebConnectivityEndpoint>
+    public partial class WebConnectivityEndpoint : IUtf8JsonSerializable, IJsonModel<WebConnectivityEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebConnectivityEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -22,12 +22,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);
+            if (Optional.IsDefined(PrivateFqdn))
+            {
+                writer.WritePropertyName("privateFqdn"u8);
+                writer.WriteStringValue(PrivateFqdn);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -51,7 +56,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string fqdn = default;
+            string privateFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -76,13 +82,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     fqdn = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("privateFqdn"u8))
+                {
+                    privateFqdn = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebConnectivityEndpoint(fqdn, serializedAdditionalRawData);
+            return new WebConnectivityEndpoint(fqdn, privateFqdn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebConnectivityEndpoint>.Write(ModelReaderWriterOptions options)
@@ -94,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeWebConnectivityEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebConnectivityEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

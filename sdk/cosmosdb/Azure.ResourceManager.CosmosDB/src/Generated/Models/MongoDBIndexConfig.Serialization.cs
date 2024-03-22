@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndexConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExpireAfterSeconds.HasValue)
+            if (Optional.IsDefined(ExpireAfterSeconds))
             {
                 writer.WritePropertyName("expireAfterSeconds"u8);
                 writer.WriteNumberValue(ExpireAfterSeconds.Value);
             }
-            if (IsUnique.HasValue)
+            if (Optional.IsDefined(IsUnique))
             {
                 writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndexConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoDBIndexConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

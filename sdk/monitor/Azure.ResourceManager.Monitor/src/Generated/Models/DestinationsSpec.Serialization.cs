@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationsSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(LogAnalytics is ChangeTrackingList<LogAnalyticsDestination> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MonitoringAccounts is ChangeTrackingList<MonitoringAccountDestination> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MonitoringAccounts))
             {
                 writer.WritePropertyName("monitoringAccounts"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AzureMonitorMetrics != null)
+            if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
                 writer.WriteObjectValue(AzureMonitorMetrics);
             }
-            if (!(EventHubs is ChangeTrackingList<DataCollectionRuleEventHubDestination> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubs))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventHubsDirect is ChangeTrackingList<DataCollectionRuleEventHubDirectDestination> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubsDirect))
             {
                 writer.WritePropertyName("eventHubsDirect"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageBlobsDirect is ChangeTrackingList<DataCollectionRuleStorageBlobDestination> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageBlobsDirect))
             {
                 writer.WritePropertyName("storageBlobsDirect"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageTablesDirect is ChangeTrackingList<DataCollectionRuleStorageTableDestination> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageTablesDirect))
             {
                 writer.WritePropertyName("storageTablesDirect"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageAccounts is ChangeTrackingList<DataCollectionRuleStorageBlobDestination> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationsSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDestinationsSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

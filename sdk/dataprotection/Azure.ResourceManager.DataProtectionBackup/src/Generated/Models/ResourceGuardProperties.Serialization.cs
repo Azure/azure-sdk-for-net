@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && IsAutoApprovalsAllowed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsAutoApprovalsAllowed))
             {
                 writer.WritePropertyName("allowAutoApprovals"u8);
                 writer.WriteBooleanValue(IsAutoApprovalsAllowed.Value);
             }
-            if (options.Format != "W" && !(ResourceGuardOperations is ChangeTrackingList<ResourceGuardOperationDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceGuardOperations))
             {
                 writer.WritePropertyName("resourceGuardOperations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VaultCriticalOperationExclusionList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
             {
                 writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeResourceGuardProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

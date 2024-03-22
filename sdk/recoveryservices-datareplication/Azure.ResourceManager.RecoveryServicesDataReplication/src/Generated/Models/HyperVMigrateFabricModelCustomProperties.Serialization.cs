@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("hyperVSiteId"u8);
             writer.WriteStringValue(HyperVSiteId);
-            if (options.Format != "W" && FabricResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);
                 writer.WriteStringValue(FabricResourceId);
             }
-            if (options.Format != "W" && FabricContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricContainerId))
             {
                 writer.WritePropertyName("fabricContainerId"u8);
                 writer.WriteStringValue(FabricContainerId);
             }
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
-            if (options.Format != "W" && MigrationHubUri != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationHubUri))
             {
                 writer.WritePropertyName("migrationHubUri"u8);
                 writer.WriteStringValue(MigrationHubUri.AbsoluteUri);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVMigrateFabricModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeHyperVMigrateFabricModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVMigrateFabricModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricsResponseSeriesPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricsResponseSeriesPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeMetricsResponseSeriesPropertiesItemsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsResponseSeriesPropertiesItemsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

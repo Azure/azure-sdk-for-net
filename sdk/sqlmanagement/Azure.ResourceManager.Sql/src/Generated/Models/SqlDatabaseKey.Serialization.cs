@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KeyType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Subregion != null)
+            if (options.Format != "W" && Optional.IsDefined(Subregion))
             {
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlDatabaseKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
-            if (MaxStalenessPrefix.HasValue)
+            if (Optional.IsDefined(MaxStalenessPrefix))
             {
                 writer.WritePropertyName("maxStalenessPrefix"u8);
                 writer.WriteNumberValue(MaxStalenessPrefix.Value);
             }
-            if (MaxIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MaxIntervalInSeconds))
             {
                 writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsistencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeConsistencyPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsistencyPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiSchemaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiSchemaData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,26 +42,26 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             writer.WritePropertyName("document"u8);
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Definitions != null)
+            if (Optional.IsDefined(Definitions))
             {
                 writer.WritePropertyName("definitions"u8);
 #if NET6_0_OR_GREATER
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
 #endif
             }
-            if (Components != null)
+            if (Optional.IsDefined(Components))
             {
                 writer.WritePropertyName("components"u8);
 #if NET6_0_OR_GREATER
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiSchemaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiSchemaData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiSchemaData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiSchemaData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiSchemaData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiSchemaData)} does not support reading '{options.Format}' format.");
             }
         }
 

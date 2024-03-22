@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInsightsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (InstrumentationKey != null)
+            if (Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("instrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInsightsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeAppInsightsCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

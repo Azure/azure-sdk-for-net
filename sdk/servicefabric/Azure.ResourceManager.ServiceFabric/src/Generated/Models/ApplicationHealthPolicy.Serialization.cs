@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DefaultServiceTypeHealthPolicy != null)
+            if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
                 writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
             }
-            if (!(ServiceTypeHealthPolicies is ChangeTrackingDictionary<string, ServiceTypeHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
             {
                 writer.WritePropertyName("serviceTypeHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeApplicationHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

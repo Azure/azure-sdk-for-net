@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubCompatibleEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RetentionTimeInDays.HasValue)
+            if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
                 writer.WriteNumberValue(RetentionTimeInDays.Value);
             }
-            if (PartitionCount.HasValue)
+            if (Optional.IsDefined(PartitionCount))
             {
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
-            if (options.Format != "W" && !(PartitionIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PartitionIds))
             {
                 writer.WritePropertyName("partitionIds"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EventHubCompatibleName != null)
+            if (options.Format != "W" && Optional.IsDefined(EventHubCompatibleName))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(EventHubCompatibleName);
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubCompatibleEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeEventHubCompatibleEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

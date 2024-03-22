@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("systemServiceType"u8);
             writer.WriteStringValue(SystemServiceType.ToString());
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializeSystemService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemService)} does not support reading '{options.Format}' format.");
             }
         }
 

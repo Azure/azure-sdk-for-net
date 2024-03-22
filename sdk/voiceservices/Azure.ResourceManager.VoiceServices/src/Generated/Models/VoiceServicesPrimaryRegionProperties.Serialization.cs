@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesPrimaryRegionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(EsrpAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EsrpAddresses))
             {
                 writer.WritePropertyName("esrpAddresses"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedSignalingSourceAddressPrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedSignalingSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSignalingSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedMediaSourceAddressPrefixes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedMediaSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedMediaSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VoiceServicesPrimaryRegionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
                         return DeserializeVoiceServicesPrimaryRegionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceServicesPrimaryRegionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

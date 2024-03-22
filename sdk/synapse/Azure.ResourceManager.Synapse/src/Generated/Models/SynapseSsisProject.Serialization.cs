@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisProject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FolderId.HasValue)
+            if (Optional.IsDefined(FolderId))
             {
                 writer.WritePropertyName("folderId"u8);
                 writer.WriteNumberValue(FolderId.Value);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (!(EnvironmentRefs is ChangeTrackingList<SynapseSsisEnvironmentReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentRefs))
             {
                 writer.WritePropertyName("environmentRefs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingList<SynapseSsisParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetadataType.ToString());
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisProject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSsisProject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSsisProject)} does not support reading '{options.Format}' format.");
             }
         }
 

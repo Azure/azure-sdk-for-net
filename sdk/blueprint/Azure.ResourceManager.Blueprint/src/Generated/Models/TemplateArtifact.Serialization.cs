@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateArtifact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeTemplateArtifact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateArtifact)} does not support reading '{options.Format}' format.");
             }
         }
 

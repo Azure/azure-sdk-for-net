@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineRunsQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPipelineRunsQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryPipelineRunsQueryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPipelineRunsQueryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

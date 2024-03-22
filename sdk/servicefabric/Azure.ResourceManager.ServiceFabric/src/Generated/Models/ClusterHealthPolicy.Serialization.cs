@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxPercentUnhealthyNodes.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyNodes))
             {
                 writer.WritePropertyName("maxPercentUnhealthyNodes"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyNodes.Value);
             }
-            if (MaxPercentUnhealthyApplications.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyApplications))
             {
                 writer.WritePropertyName("maxPercentUnhealthyApplications"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyApplications.Value);
             }
-            if (!(ApplicationHealthPolicies is ChangeTrackingDictionary<string, ApplicationHealthPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
             {
                 writer.WritePropertyName("applicationHealthPolicies"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

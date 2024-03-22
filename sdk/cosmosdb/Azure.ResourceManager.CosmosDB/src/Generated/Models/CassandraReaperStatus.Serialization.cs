@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraReaperStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsHealthy.HasValue)
+            if (Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (!(RepairRunIds is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RepairRunIds))
             {
                 writer.WritePropertyName("repairRunIds"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(RepairSchedules is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RepairSchedules))
             {
                 writer.WritePropertyName("repairSchedules"u8);
                 writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraReaperStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraReaperStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

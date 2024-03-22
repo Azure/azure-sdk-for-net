@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBKeyWrapMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (CosmosDBKeyWrapMetadataType != null)
+            if (Optional.IsDefined(CosmosDBKeyWrapMetadataType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CosmosDBKeyWrapMetadataType);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Algorithm != null)
+            if (Optional.IsDefined(Algorithm))
             {
                 writer.WritePropertyName("algorithm"u8);
                 writer.WriteStringValue(Algorithm);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBKeyWrapMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBKeyWrapMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBKeyWrapMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

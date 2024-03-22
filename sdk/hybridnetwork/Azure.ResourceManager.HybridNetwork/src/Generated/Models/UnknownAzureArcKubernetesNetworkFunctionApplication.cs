@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownAzureArcKubernetesNetworkFunctionApplication. </summary>
+    /// <summary> Unknown version of AzureArcKubernetesNetworkFunctionApplication. </summary>
     internal partial class UnknownAzureArcKubernetesNetworkFunctionApplication : AzureArcKubernetesNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureArcKubernetesNetworkFunctionApplication"/>. </summary>

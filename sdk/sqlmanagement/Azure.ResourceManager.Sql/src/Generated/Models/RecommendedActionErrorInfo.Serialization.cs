@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && IsRetryable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRetryable))
             {
                 writer.WritePropertyName("isRetryable"u8);
                 writer.WriteStringValue(IsRetryable.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeRecommendedActionErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

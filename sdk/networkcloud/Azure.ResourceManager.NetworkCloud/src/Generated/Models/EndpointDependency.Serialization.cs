@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeEndpointDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

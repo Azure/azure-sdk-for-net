@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (RenewalPeriod.HasValue)
+            if (Optional.IsDefined(RenewalPeriod))
             {
                 writer.WritePropertyName("renewalPeriod"u8);
                 writer.WriteNumberValue(RenewalPeriod.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (MinCount.HasValue)
+            if (Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (IsDynamicThrottlingEnabled.HasValue)
+            if (Optional.IsDefined(IsDynamicThrottlingEnabled))
             {
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
                 writer.WriteBooleanValue(IsDynamicThrottlingEnabled.Value);
             }
-            if (!(MatchPatterns is ChangeTrackingList<ServiceAccountThrottlingMatchPattern> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchPatterns))
             {
                 writer.WritePropertyName("matchPatterns"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountThrottlingRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingRule)} does not support reading '{options.Format}' format.");
             }
         }
 

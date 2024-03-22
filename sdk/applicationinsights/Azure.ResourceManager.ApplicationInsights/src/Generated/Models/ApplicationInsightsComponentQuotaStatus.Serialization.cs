@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentQuotaStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AppId != null)
+            if (options.Format != "W" && Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("AppId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && ShouldBeThrottled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShouldBeThrottled))
             {
                 writer.WritePropertyName("ShouldBeThrottled"u8);
                 writer.WriteBooleanValue(ShouldBeThrottled.Value);
             }
-            if (options.Format != "W" && ExpirationTime != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
             {
                 writer.WritePropertyName("ExpirationTime"u8);
                 writer.WriteStringValue(ExpirationTime);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentQuotaStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentQuotaStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentQuotaStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

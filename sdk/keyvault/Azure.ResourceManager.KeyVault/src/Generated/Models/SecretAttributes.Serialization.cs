@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAttributes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (NotBefore.HasValue)
+            if (Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
-            if (Expires.HasValue)
+            if (Optional.IsDefined(Expires))
             {
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(Created.Value, "U");
             }
-            if (options.Format != "W" && Updated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Updated))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(Updated.Value, "U");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAttributes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeSecretAttributes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support reading '{options.Format}' format.");
             }
         }
 

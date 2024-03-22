@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManualResolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TargetId != null)
+            if (Optional.IsDefined(TargetId))
             {
                 writer.WritePropertyName("targetId"u8);
                 writer.WriteStringValue(TargetId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManualResolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeManualResolutionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManualResolutionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<DeletedAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && StorageAccountResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && RestoreReference != null)
+            if (options.Format != "W" && Optional.IsDefined(RestoreReference))
             {
                 writer.WritePropertyName("restoreReference"u8);
                 writer.WriteStringValue(RestoreReference);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<DeletedAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Storage
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Storage
                         return DeserializeDeletedAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorRulesEngineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string rulesEngineName, FrontDoorRulesEngineData data, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FrontDoorRulesEngineResource> CreateOrUpdate(WaitUntil waitUntil, string rulesEngineName, FrontDoorRulesEngineData data, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorRulesEngineResource>> GetAsync(string rulesEngineName, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
         public virtual Response<FrontDoorRulesEngineResource> Get(string rulesEngineName, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string rulesEngineName, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
         public virtual Response<bool> Exists(string rulesEngineName, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorRulesEngineResource>> GetIfExistsAsync(string rulesEngineName, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorRulesEngineResource> GetIfExists(string rulesEngineName, CancellationToken cancellationToken = default)
         {
-            if (rulesEngineName == null)
-            {
-                throw new ArgumentNullException(nameof(rulesEngineName));
-            }
-            if (rulesEngineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rulesEngineName));
-            }
+            Argument.AssertNotNullOrEmpty(rulesEngineName, nameof(rulesEngineName));
 
             using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.GetIfExists");
             scope.Start();

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EffectiveFrom.HasValue)
+            if (Optional.IsDefined(EffectiveFrom))
             {
                 writer.WritePropertyName("effectiveFrom"u8);
                 writer.WriteStringValue(EffectiveFrom.Value, "O");
             }
-            if (EffectiveUntil.HasValue)
+            if (Optional.IsDefined(EffectiveUntil))
             {
                 writer.WritePropertyName("effectiveUntil"u8);
                 writer.WriteStringValue(EffectiveUntil.Value, "O");
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (!(Recurrences is ChangeTrackingList<AlertProcessingRuleRecurrence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recurrences))
             {
                 writer.WritePropertyName("recurrences"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeAlertProcessingRuleSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

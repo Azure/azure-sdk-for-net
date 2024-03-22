@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(PreferredDataCenterRegion is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PreferredDataCenterRegion))
             {
                 writer.WritePropertyName("preferredDataCenterRegion"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TransportPreferences != null)
+            if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
                 writer.WriteObjectValue(TransportPreferences);
             }
-            if (ReverseTransportPreferences != null)
+            if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
                 writer.WriteObjectValue(ReverseTransportPreferences);
             }
-            if (EncryptionPreferences != null)
+            if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
                 writer.WriteObjectValue(EncryptionPreferences);
             }
-            if (!(StorageAccountAccessTierPreferences is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
                 writer.WritePropertyName("storageAccountAccessTierPreferences"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxOrderPreferences(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support reading '{options.Format}' format.");
             }
         }
 

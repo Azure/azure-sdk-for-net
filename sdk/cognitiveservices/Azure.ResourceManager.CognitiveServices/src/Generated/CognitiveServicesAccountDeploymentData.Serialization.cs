@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -25,21 +24,21 @@ namespace Azure.ResourceManager.CognitiveServices
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.CognitiveServices
                         return DeserializeCognitiveServicesAccountDeploymentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentData)} does not support reading '{options.Format}' format.");
             }
         }
 

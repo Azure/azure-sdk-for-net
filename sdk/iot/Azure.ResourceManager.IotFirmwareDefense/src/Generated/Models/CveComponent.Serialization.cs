@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveComponent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveComponent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CveComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CveComponent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CveComponent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CveComponent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveComponent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCveComponent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CveComponent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CveComponent)} does not support reading '{options.Format}' format.");
             }
         }
 

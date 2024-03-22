@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricDimension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricDimension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (InternalName != null)
+            if (Optional.IsDefined(InternalName))
             {
                 writer.WritePropertyName("internalName"u8);
                 writer.WriteStringValue(InternalName);
             }
-            if (IsToBeExportedForShoebox.HasValue)
+            if (Optional.IsDefined(IsToBeExportedForShoebox))
             {
                 writer.WritePropertyName("toBeExportedForShoebox"u8);
                 writer.WriteBooleanValue(IsToBeExportedForShoebox.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricDimension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricDimension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricDimension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricDimension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricDimension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeMetricDimension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricDimension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricDimension)} does not support reading '{options.Format}' format.");
             }
         }
 

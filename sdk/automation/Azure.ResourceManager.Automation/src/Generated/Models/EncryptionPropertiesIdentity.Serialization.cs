@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
 #if NET6_0_OR_GREATER
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionPropertiesIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeEncryptionPropertiesIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionPropertiesIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

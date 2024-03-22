@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceVnetAddons>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsLogStreamPublicEndpoint.HasValue)
+            if (Optional.IsDefined(IsLogStreamPublicEndpoint))
             {
                 writer.WritePropertyName("logStreamPublicEndpoint"u8);
                 writer.WriteBooleanValue(IsLogStreamPublicEndpoint.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceVnetAddons>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeServiceVnetAddons(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceVnetAddons)} does not support reading '{options.Format}' format.");
             }
         }
 

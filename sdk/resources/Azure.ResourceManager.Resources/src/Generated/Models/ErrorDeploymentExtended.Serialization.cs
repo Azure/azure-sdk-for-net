@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ErrorDeploymentExtended>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DeploymentType.HasValue)
+            if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DeploymentType.Value.ToSerialString());
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ErrorDeploymentExtended>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeErrorDeploymentExtended(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorDeploymentExtended)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningOperation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningOperation))
             {
                 writer.WritePropertyName("provisioningOperation"u8);
                 writer.WriteStringValue(ProvisioningOperation.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Duration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && ServiceRequestId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceRequestId))
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (options.Format != "W" && StatusCode != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 if (StatusMessage != null)
                 {
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Resources.Models
                     writer.WriteNull("statusMessage");
                 }
             }
-            if (options.Format != "W" && TargetResource != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
                 writer.WriteObjectValue(TargetResource);
             }
-            if (options.Format != "W" && Request != null)
+            if (options.Format != "W" && Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (options.Format != "W" && Response != null)
+            if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentOperationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

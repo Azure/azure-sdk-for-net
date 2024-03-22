@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Registration != null)
+            if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
                 writer.WriteObjectValue(Registration);
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Validation != null)
+            if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
                 writer.WriteObjectValue(Validation);
             }
-            if (IsAutoProvisioned.HasValue)
+            if (Optional.IsDefined(IsAutoProvisioned))
             {
                 writer.WritePropertyName("isAutoProvisioned"u8);
                 writer.WriteBooleanValue(IsAutoProvisioned.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceAadProvider(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadProvider)} does not support reading '{options.Format}' format.");
             }
         }
 

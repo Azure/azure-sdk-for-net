@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ReservationsToPurchase is ChangeTrackingList<ReservationPurchaseContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservationsToPurchase))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SavingsPlansToPurchase is ChangeTrackingList<SavingsPlanPurchase> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReservationsToExchange is ChangeTrackingList<ReservationToReturn> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ReservationsToExchange))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeContentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeCalculateExchangeContentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateExchangeContentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

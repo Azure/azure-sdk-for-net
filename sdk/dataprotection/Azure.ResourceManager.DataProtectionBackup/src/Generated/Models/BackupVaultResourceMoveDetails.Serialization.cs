@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (CompleteOn.HasValue)
+            if (Optional.IsDefined(CompleteOn))
             {
                 writer.WritePropertyName("completionTimeUtc"u8);
                 writer.WriteStringValue(CompleteOn.Value, "O");
             }
-            if (SourceResourcePath != null)
+            if (Optional.IsDefined(SourceResourcePath))
             {
                 writer.WritePropertyName("sourceResourcePath"u8);
                 writer.WriteStringValue(SourceResourcePath);
             }
-            if (TargetResourcePath != null)
+            if (Optional.IsDefined(TargetResourcePath))
             {
                 writer.WritePropertyName("targetResourcePath"u8);
                 writer.WriteStringValue(TargetResourcePath);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultResourceMoveDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupVaultResourceMoveDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultResourceMoveDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

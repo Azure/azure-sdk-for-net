@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LatencyScorecard>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatencyScorecard)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LatencyScorecard)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,54 +55,54 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LatencyScorecardId != null)
+            if (options.Format != "W" && Optional.IsDefined(LatencyScorecardId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(LatencyScorecardId);
             }
-            if (options.Format != "W" && LatencyScorecardName != null)
+            if (options.Format != "W" && Optional.IsDefined(LatencyScorecardName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(LatencyScorecardName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ScorecardEndpointA != null)
+            if (options.Format != "W" && Optional.IsDefined(ScorecardEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
                 writer.WriteStringValue(ScorecardEndpointA.AbsoluteUri);
             }
-            if (options.Format != "W" && ScorecardEndpointB != null)
+            if (options.Format != "W" && Optional.IsDefined(ScorecardEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
                 writer.WriteStringValue(ScorecardEndpointB.AbsoluteUri);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (!(LatencyMetrics is ChangeTrackingList<LatencyMetric> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LatencyMetrics))
             {
                 writer.WritePropertyName("latencyMetrics"u8);
                 writer.WriteStartArray();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LatencyScorecard>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatencyScorecard)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LatencyScorecard)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LatencyScorecard)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatencyScorecard)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeLatencyScorecard(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatencyScorecard)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatencyScorecard)} does not support reading '{options.Format}' format.");
             }
         }
 

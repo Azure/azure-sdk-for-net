@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IntervalStartTime != null)
+            if (options.Format != "W" && Optional.IsDefined(IntervalStartTime))
             {
                 writer.WritePropertyName("intervalStartTime"u8);
                 writer.WriteStringValue(IntervalStartTime);
             }
-            if (options.Format != "W" && IntervalType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IntervalType))
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && ExecutionCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExecutionCount))
             {
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (!(Metrics is ChangeTrackingList<QueryMetricProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeQueryMetricInterval(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support reading '{options.Format}' format.");
             }
         }
 

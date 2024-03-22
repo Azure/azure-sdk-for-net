@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceVmExtensionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IngestionKey != null)
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceVmExtensionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceVmExtensionPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceVmExtensionPayload)} does not support reading '{options.Format}' format.");
             }
         }
 

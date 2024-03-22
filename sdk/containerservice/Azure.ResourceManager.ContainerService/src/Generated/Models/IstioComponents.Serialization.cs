@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioComponents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioComponents)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioComponents)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(IngressGateways is ChangeTrackingList<IstioIngressGateway> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IngressGateways))
             {
                 writer.WritePropertyName("ingressGateways"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EgressGateways is ChangeTrackingList<IstioEgressGateway> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EgressGateways))
             {
                 writer.WritePropertyName("egressGateways"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioComponents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioComponents)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioComponents)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioComponents)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioComponents)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioComponents(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioComponents)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioComponents)} does not support reading '{options.Format}' format.");
             }
         }
 

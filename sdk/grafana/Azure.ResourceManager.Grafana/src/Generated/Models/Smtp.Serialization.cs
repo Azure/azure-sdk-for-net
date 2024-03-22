@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<Smtp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Smtp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Smtp)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (User != null)
+            if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (FromAddress != null)
+            if (Optional.IsDefined(FromAddress))
             {
                 writer.WritePropertyName("fromAddress"u8);
                 writer.WriteStringValue(FromAddress);
             }
-            if (FromName != null)
+            if (Optional.IsDefined(FromName))
             {
                 writer.WritePropertyName("fromName"u8);
                 writer.WriteStringValue(FromName);
             }
-            if (StartTLSPolicy.HasValue)
+            if (Optional.IsDefined(StartTLSPolicy))
             {
                 writer.WritePropertyName("startTLSPolicy"u8);
                 writer.WriteStringValue(StartTLSPolicy.Value.ToString());
             }
-            if (SkipVerify.HasValue)
+            if (Optional.IsDefined(SkipVerify))
             {
                 writer.WritePropertyName("skipVerify"u8);
                 writer.WriteBooleanValue(SkipVerify.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<Smtp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Smtp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Smtp)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Smtp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Smtp)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeSmtp(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Smtp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Smtp)} does not support reading '{options.Format}' format.");
             }
         }
 

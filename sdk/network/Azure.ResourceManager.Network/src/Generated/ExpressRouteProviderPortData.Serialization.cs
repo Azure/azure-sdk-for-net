@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,16 +23,16 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,49 +60,49 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PortPairDescriptor != null)
+            if (options.Format != "W" && Optional.IsDefined(PortPairDescriptor))
             {
                 writer.WritePropertyName("portPairDescriptor"u8);
                 writer.WriteStringValue(PortPairDescriptor);
             }
-            if (options.Format != "W" && PrimaryAzurePort != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAzurePort))
             {
                 writer.WritePropertyName("primaryAzurePort"u8);
                 writer.WriteStringValue(PrimaryAzurePort);
             }
-            if (options.Format != "W" && SecondaryAzurePort != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAzurePort))
             {
                 writer.WritePropertyName("secondaryAzurePort"u8);
                 writer.WriteStringValue(SecondaryAzurePort);
             }
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (OverprovisionFactor.HasValue)
+            if (Optional.IsDefined(OverprovisionFactor))
             {
                 writer.WritePropertyName("overprovisionFactor"u8);
                 writer.WriteNumberValue(OverprovisionFactor.Value);
             }
-            if (PortBandwidthInMbps.HasValue)
+            if (Optional.IsDefined(PortBandwidthInMbps))
             {
                 writer.WritePropertyName("portBandwidthInMbps"u8);
                 writer.WriteNumberValue(PortBandwidthInMbps.Value);
             }
-            if (UsedBandwidthInMbps.HasValue)
+            if (Optional.IsDefined(UsedBandwidthInMbps))
             {
                 writer.WritePropertyName("usedBandwidthInMbps"u8);
                 writer.WriteNumberValue(UsedBandwidthInMbps.Value);
             }
-            if (RemainingBandwidthInMbps.HasValue)
+            if (Optional.IsDefined(RemainingBandwidthInMbps))
             {
                 writer.WritePropertyName("remainingBandwidthInMbps"u8);
                 writer.WriteNumberValue(RemainingBandwidthInMbps.Value);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -320,7 +319,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +335,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeExpressRouteProviderPortData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support reading '{options.Format}' format.");
             }
         }
 

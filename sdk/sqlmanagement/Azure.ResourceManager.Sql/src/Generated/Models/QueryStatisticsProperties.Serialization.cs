@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryStatisticsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && QueryId != null)
+            if (options.Format != "W" && Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (options.Format != "W" && StartTime != null)
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && EndTime != null)
+            if (options.Format != "W" && Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (!(Intervals is ChangeTrackingList<QueryMetricInterval> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Intervals))
             {
                 writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryStatisticsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeQueryStatisticsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryStatisticsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

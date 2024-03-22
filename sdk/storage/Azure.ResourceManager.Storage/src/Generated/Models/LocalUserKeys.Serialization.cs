@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocalUserKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalUserKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SshAuthorizedKeys is ChangeTrackingList<StorageSshPublicKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
             {
                 writer.WritePropertyName("sshAuthorizedKeys"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SharedKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LocalUserKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalUserKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalUserKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLocalUserKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalUserKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

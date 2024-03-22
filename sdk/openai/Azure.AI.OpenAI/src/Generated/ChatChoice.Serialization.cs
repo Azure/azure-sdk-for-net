@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,14 +22,23 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatChoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatChoice)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatChoice)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
+            }
+            if (LogProbabilityInfo != null)
+            {
+                writer.WritePropertyName("logprobs"u8);
+                writer.WriteObjectValue(LogProbabilityInfo);
+            }
+            else
+            {
+                writer.WriteNull("logprobs");
             }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
@@ -43,22 +51,22 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("finish_reason");
             }
-            if (FinishDetails != null)
+            if (Optional.IsDefined(FinishDetails))
             {
                 writer.WritePropertyName("finish_details"u8);
                 writer.WriteObjectValue(FinishDetails);
             }
-            if (InternalStreamingDeltaMessage != null)
+            if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteObjectValue(InternalStreamingDeltaMessage);
             }
-            if (ContentFilterResults != null)
+            if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
-            if (Enhancements != null)
+            if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
                 writer.WriteObjectValue(Enhancements);
@@ -86,7 +94,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatChoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatChoice)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatChoice)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,6 +110,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             ChatResponseMessage message = default;
+            ChatChoiceLogProbabilityInfo logprobs = default;
             int index = default;
             CompletionsFinishReason? finishReason = default;
             ChatFinishDetails finishDetails = default;
@@ -119,6 +128,16 @@ namespace Azure.AI.OpenAI
                         continue;
                     }
                     message = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("logprobs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
+                    logprobs = ChatChoiceLogProbabilityInfo.DeserializeChatChoiceLogProbabilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -180,6 +199,7 @@ namespace Azure.AI.OpenAI
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ChatChoice(
                 message,
+                logprobs,
                 index,
                 finishReason,
                 finishDetails,
@@ -198,7 +218,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatChoice)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatChoice)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +234,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatChoice(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatChoice)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatChoice)} does not support reading '{options.Format}' format.");
             }
         }
 

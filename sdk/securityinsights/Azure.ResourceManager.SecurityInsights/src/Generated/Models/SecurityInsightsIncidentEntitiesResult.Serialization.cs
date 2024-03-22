@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Entities is ChangeTrackingList<SecurityInsightsEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Entities))
             {
                 writer.WritePropertyName("entities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MetaData is ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MetaData))
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentEntitiesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsIncidentEntitiesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

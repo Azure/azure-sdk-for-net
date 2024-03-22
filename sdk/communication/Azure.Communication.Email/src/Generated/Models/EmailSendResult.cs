@@ -18,10 +18,7 @@ namespace Azure.Communication.Email
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal EmailSendResult(string id, EmailSendStatus status)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             Status = status;

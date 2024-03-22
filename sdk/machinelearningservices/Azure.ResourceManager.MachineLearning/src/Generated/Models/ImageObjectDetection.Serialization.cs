@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryMetric.HasValue)
+            if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (ModelSettings != null)
+            if (Optional.IsDefined(ModelSettings))
             {
                 if (ModelSettings != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelSettings");
                 }
             }
-            if (!(SearchSpace is ChangeTrackingList<ImageModelDistributionSettingsObjectDetection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchSpace))
             {
                 if (SearchSpace != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings);
-            if (SweepSettings != null)
+            if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (ValidationData != null)
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (ValidationDataSize.HasValue)
+            if (Optional.IsDefined(ValidationDataSize))
             {
                 if (ValidationDataSize != null)
                 {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (LogVerbosity.HasValue)
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (TargetColumnName != null)
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageObjectDetection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeImageObjectDetection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageObjectDetection)} does not support reading '{options.Format}' format.");
             }
         }
 

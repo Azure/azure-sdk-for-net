@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInsightsWebAppStackSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsSupported))
             {
                 writer.WritePropertyName("isSupported"u8);
                 writer.WriteBooleanValue(IsSupported.Value);
             }
-            if (options.Format != "W" && IsDefaultOff.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultOff))
             {
                 writer.WritePropertyName("isDefaultOff"u8);
                 writer.WriteBooleanValue(IsDefaultOff.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInsightsWebAppStackSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppInsightsWebAppStackSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInsightsWebAppStackSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

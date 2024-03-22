@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,31 +21,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(PredefinedPolicies is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PredefinedPolicies))
             {
                 writer.WritePropertyName("predefinedPolicies"u8);
                 writer.WriteStartArray();
@@ -69,12 +68,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultPolicy.HasValue)
+            if (Optional.IsDefined(DefaultPolicy))
             {
                 writer.WritePropertyName("defaultPolicy"u8);
                 writer.WriteStringValue(DefaultPolicy.Value.ToString());
             }
-            if (!(AvailableCipherSuites is ChangeTrackingList<ApplicationGatewaySslCipherSuite> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableCipherSuites))
             {
                 writer.WritePropertyName("availableCipherSuites"u8);
                 writer.WriteStartArray();
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AvailableProtocols is ChangeTrackingList<ApplicationGatewaySslProtocol> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableProtocols))
             {
                 writer.WritePropertyName("availableProtocols"u8);
                 writer.WriteStartArray();
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayAvailableSslOptionsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayAvailableSslOptionsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

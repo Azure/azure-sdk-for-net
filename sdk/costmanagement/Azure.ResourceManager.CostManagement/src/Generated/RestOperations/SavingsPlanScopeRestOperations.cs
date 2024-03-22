@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -68,26 +67,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GenerateBenefitUtilizationSummariesReportAsyncAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -110,26 +92,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GenerateBenefitUtilizationSummariesReportAsync(string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (savingsPlanOrderId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanOrderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanOrderId));
-            }
-            if (savingsPlanId == null)
-            {
-                throw new ArgumentNullException(nameof(savingsPlanId));
-            }
-            if (savingsPlanId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(savingsPlanId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportAsyncRequest(savingsPlanOrderId, savingsPlanId, content);
             _pipeline.Send(message, cancellationToken);

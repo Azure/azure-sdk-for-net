@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementEventAggregationCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementEventAggregationCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeManagementEventAggregationCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

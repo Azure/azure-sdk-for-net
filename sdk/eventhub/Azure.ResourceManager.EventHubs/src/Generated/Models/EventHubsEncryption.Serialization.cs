@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(KeyVaultProperties is ChangeTrackingList<EventHubsKeyVaultProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (KeySource.HasValue)
+            if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (RequireInfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(RequireInfrastructureEncryption))
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

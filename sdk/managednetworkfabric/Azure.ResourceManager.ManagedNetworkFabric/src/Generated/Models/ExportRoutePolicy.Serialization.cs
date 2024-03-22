@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExportIPv4RoutePolicyId != null)
+            if (Optional.IsDefined(ExportIPv4RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv4RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv4RoutePolicyId);
             }
-            if (ExportIPv6RoutePolicyId != null)
+            if (Optional.IsDefined(ExportIPv6RoutePolicyId))
             {
                 writer.WritePropertyName("exportIpv6RoutePolicyId"u8);
                 writer.WriteStringValue(ExportIPv6RoutePolicyId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeExportRoutePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRoutePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

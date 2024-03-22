@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,17 +30,17 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConfidenceScore.HasValue)
+            if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (!(Evidence is ChangeTrackingList<TrialMatcherInferenceEvidence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
@@ -51,17 +50,17 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -89,7 +88,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +203,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +219,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeTrialMatcherInference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrialMatcherInference)} does not support reading '{options.Format}' format.");
             }
         }
 

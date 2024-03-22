@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Title);
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeTldLegalAgreement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support reading '{options.Format}' format.");
             }
         }
 

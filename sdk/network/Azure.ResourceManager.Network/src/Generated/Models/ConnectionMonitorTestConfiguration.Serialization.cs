@@ -22,40 +22,40 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TestFrequencySec.HasValue)
+            if (Optional.IsDefined(TestFrequencySec))
             {
                 writer.WritePropertyName("testFrequencySec"u8);
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (PreferredIPVersion.HasValue)
+            if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (HttpConfiguration != null)
+            if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);
             }
-            if (TcpConfiguration != null)
+            if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
                 writer.WriteObjectValue(TcpConfiguration);
             }
-            if (IcmpConfiguration != null)
+            if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
                 writer.WriteObjectValue(IcmpConfiguration);
             }
-            if (SuccessThreshold != null)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteObjectValue(SuccessThreshold);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorTestConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

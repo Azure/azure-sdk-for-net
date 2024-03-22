@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnableDnsProxy.HasValue)
+            if (Optional.IsDefined(EnableDnsProxy))
             {
                 writer.WritePropertyName("enableDnsProxy"u8);
                 writer.WriteStringValue(EnableDnsProxy.Value.ToString());
             }
-            if (EnabledDnsType.HasValue)
+            if (Optional.IsDefined(EnabledDnsType))
             {
                 writer.WritePropertyName("enabledDnsType"u8);
                 writer.WriteStringValue(EnabledDnsType.Value.ToString());
             }
-            if (!(DnsServers is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallDnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

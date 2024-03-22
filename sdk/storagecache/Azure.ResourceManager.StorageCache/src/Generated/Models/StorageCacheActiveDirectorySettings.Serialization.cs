@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheActiveDirectorySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("primaryDnsIpAddress"u8);
             writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
-            if (SecondaryDnsIPAddress != null)
+            if (Optional.IsDefined(SecondaryDnsIPAddress))
             {
                 writer.WritePropertyName("secondaryDnsIpAddress"u8);
                 writer.WriteStringValue(SecondaryDnsIPAddress.ToString());
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(DomainNetBiosName);
             writer.WritePropertyName("cacheNetBiosName"u8);
             writer.WriteStringValue(CacheNetBiosName);
-            if (options.Format != "W" && DomainJoined.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DomainJoined))
             {
                 writer.WritePropertyName("domainJoined"u8);
                 writer.WriteStringValue(DomainJoined.Value.ToString());
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheActiveDirectorySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheActiveDirectorySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

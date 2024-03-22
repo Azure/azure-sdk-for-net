@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ThreadRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreadRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreadRun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +36,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStringValue(AssistantId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (RequiredAction != null)
+            if (Optional.IsDefined(RequiredAction))
             {
                 if (RequiredAction != null)
                 {
@@ -123,7 +122,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 writer.WriteNull("failed_at");
             }
-            if (Metadata != null && !(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Metadata != null && Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -161,7 +160,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ThreadRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreadRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreadRun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -355,7 +354,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreadRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreadRun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -371,7 +370,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeThreadRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreadRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreadRun)} does not support reading '{options.Format}' format.");
             }
         }
 

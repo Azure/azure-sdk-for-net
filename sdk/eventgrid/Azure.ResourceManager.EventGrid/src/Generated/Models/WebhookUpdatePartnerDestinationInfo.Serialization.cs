@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EndpointUri != null)
+            if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUrl"u8);
                 writer.WriteStringValue(EndpointUri.AbsoluteUri);
             }
-            if (EndpointBaseUri != null)
+            if (Optional.IsDefined(EndpointBaseUri))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
                 writer.WriteStringValue(EndpointBaseUri.AbsoluteUri);
             }
-            if (ClientAuthentication != null)
+            if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
                 writer.WriteObjectValue(ClientAuthentication);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebhookUpdatePartnerDestinationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeWebhookUpdatePartnerDestinationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebhookUpdatePartnerDestinationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

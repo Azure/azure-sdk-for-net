@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryGitHubClientSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ByoaSecretAkvUri != null)
+            if (Optional.IsDefined(ByoaSecretAkvUri))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUri.AbsoluteUri);
             }
-            if (ByoaSecretName != null)
+            if (Optional.IsDefined(ByoaSecretName))
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryGitHubClientSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFactoryGitHubClientSecret(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryGitHubClientSecret)} does not support reading '{options.Format}' format.");
             }
         }
 

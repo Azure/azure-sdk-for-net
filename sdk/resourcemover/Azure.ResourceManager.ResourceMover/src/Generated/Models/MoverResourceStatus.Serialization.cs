@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MoveState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
                 writer.WritePropertyName("moveState"u8);
                 writer.WriteStringValue(MoveState.Value.ToString());
             }
-            if (JobStatus != null)
+            if (Optional.IsDefined(JobStatus))
             {
                 if (JobStatus != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteNull("jobStatus");
                 }
             }
-            if (Errors != null)
+            if (Optional.IsDefined(Errors))
             {
                 if (Errors != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverResourceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

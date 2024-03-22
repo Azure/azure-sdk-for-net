@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RestrictionType != null)
+            if (options.Format != "W" && Optional.IsDefined(RestrictionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionType);
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReasonCode.HasValue)
+            if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageSkuRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

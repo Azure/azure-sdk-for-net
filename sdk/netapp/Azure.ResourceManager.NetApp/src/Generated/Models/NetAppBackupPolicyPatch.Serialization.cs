@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,49 +55,49 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BackupPolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyId))
             {
                 writer.WritePropertyName("backupPolicyId"u8);
                 writer.WriteStringValue(BackupPolicyId);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DailyBackupsToKeep.HasValue)
+            if (Optional.IsDefined(DailyBackupsToKeep))
             {
                 writer.WritePropertyName("dailyBackupsToKeep"u8);
                 writer.WriteNumberValue(DailyBackupsToKeep.Value);
             }
-            if (WeeklyBackupsToKeep.HasValue)
+            if (Optional.IsDefined(WeeklyBackupsToKeep))
             {
                 writer.WritePropertyName("weeklyBackupsToKeep"u8);
                 writer.WriteNumberValue(WeeklyBackupsToKeep.Value);
             }
-            if (MonthlyBackupsToKeep.HasValue)
+            if (Optional.IsDefined(MonthlyBackupsToKeep))
             {
                 writer.WritePropertyName("monthlyBackupsToKeep"u8);
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
-            if (options.Format != "W" && VolumesAssigned.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumesAssigned))
             {
                 writer.WritePropertyName("volumesAssigned"u8);
                 writer.WriteNumberValue(VolumesAssigned.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && !(VolumeBackups is ChangeTrackingList<NetAppVolumeBackupDetail> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VolumeBackups))
             {
                 writer.WritePropertyName("volumeBackups"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppBackupPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineAgentInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmAgentVersion != null)
+            if (Optional.IsDefined(VmAgentVersion))
             {
                 writer.WritePropertyName("vmAgentVersion"u8);
                 writer.WriteStringValue(VmAgentVersion);
             }
-            if (!(ExtensionHandlers is ChangeTrackingList<VirtualMachineExtensionHandlerInstanceView> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtensionHandlers))
             {
                 writer.WritePropertyName("extensionHandlers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineAgentInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineAgentInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineAgentInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Multichannel != null)
+            if (Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
                 writer.WriteObjectValue(Multichannel);
             }
-            if (Versions != null)
+            if (Optional.IsDefined(Versions))
             {
                 writer.WritePropertyName("versions"u8);
                 writer.WriteStringValue(Versions);
             }
-            if (AuthenticationMethods != null)
+            if (Optional.IsDefined(AuthenticationMethods))
             {
                 writer.WritePropertyName("authenticationMethods"u8);
                 writer.WriteStringValue(AuthenticationMethods);
             }
-            if (KerberosTicketEncryption != null)
+            if (Optional.IsDefined(KerberosTicketEncryption))
             {
                 writer.WritePropertyName("kerberosTicketEncryption"u8);
                 writer.WriteStringValue(KerberosTicketEncryption);
             }
-            if (ChannelEncryption != null)
+            if (Optional.IsDefined(ChannelEncryption))
             {
                 writer.WritePropertyName("channelEncryption"u8);
                 writer.WriteStringValue(ChannelEncryption);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmbSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmbSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmbSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmbSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeSmbSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmbSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmbSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

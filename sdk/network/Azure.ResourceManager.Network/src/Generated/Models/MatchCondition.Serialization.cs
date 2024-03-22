@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<MatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (NegationConditon.HasValue)
+            if (Optional.IsDefined(NegationConditon))
             {
                 writer.WritePropertyName("negationConditon"u8);
                 writer.WriteBooleanValue(NegationConditon.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Transforms is ChangeTrackingList<WebApplicationFirewallTransform> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<MatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

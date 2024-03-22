@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (VCores.HasValue)
+            if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (StorageSizeInGB.HasValue)
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeInGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpsertManagedServerOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeUpsertManagedServerOperationParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpsertManagedServerOperationParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

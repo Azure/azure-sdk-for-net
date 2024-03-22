@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppSourceControlData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && OperationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationState))
             {
                 writer.WritePropertyName("operationState"u8);
                 writer.WriteStringValue(OperationState.Value.ToString());
             }
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (GitHubActionConfiguration != null)
+            if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 writer.WritePropertyName("githubActionConfiguration"u8);
                 writer.WriteObjectValue(GitHubActionConfiguration);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppSourceControlData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers
                         return DeserializeContainerAppSourceControlData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppSourceControlData)} does not support reading '{options.Format}' format.");
             }
         }
 

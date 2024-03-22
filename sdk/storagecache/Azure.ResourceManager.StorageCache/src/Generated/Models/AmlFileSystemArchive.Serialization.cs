@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchive>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FilesystemPath != null)
+            if (options.Format != "W" && Optional.IsDefined(FilesystemPath))
             {
                 writer.WritePropertyName("filesystemPath"u8);
                 writer.WriteStringValue(FilesystemPath);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemArchive>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemArchive(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support reading '{options.Format}' format.");
             }
         }
 

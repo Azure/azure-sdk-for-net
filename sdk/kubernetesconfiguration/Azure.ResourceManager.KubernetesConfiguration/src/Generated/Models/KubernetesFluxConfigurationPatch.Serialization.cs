@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesFluxConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceKind.HasValue)
+            if (Optional.IsDefined(SourceKind))
             {
                 if (SourceKind != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sourceKind");
                 }
             }
-            if (Suspend.HasValue)
+            if (Optional.IsDefined(Suspend))
             {
                 if (Suspend != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("suspend");
                 }
             }
-            if (GitRepository != null)
+            if (Optional.IsDefined(GitRepository))
             {
                 if (GitRepository != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("gitRepository");
                 }
             }
-            if (Bucket != null)
+            if (Optional.IsDefined(Bucket))
             {
                 if (Bucket != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("bucket");
                 }
             }
-            if (AzureBlob != null)
+            if (Optional.IsDefined(AzureBlob))
             {
                 if (AzureBlob != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("azureBlob");
                 }
             }
-            if (!(Kustomizations is ChangeTrackingDictionary<string, KustomizationUpdateContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Kustomizations))
             {
                 if (Kustomizations != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("kustomizations");
                 }
             }
-            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesFluxConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesFluxConfigurationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesFluxConfigurationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

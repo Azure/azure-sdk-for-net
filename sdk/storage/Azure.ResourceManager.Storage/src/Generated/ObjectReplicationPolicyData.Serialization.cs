@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && PolicyId != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && EnabledOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnabledOn))
             {
                 writer.WritePropertyName("enabledTime"u8);
                 writer.WriteStringValue(EnabledOn.Value, "O");
             }
-            if (SourceAccount != null)
+            if (Optional.IsDefined(SourceAccount))
             {
                 writer.WritePropertyName("sourceAccount"u8);
                 writer.WriteStringValue(SourceAccount);
             }
-            if (DestinationAccount != null)
+            if (Optional.IsDefined(DestinationAccount))
             {
                 writer.WritePropertyName("destinationAccount"u8);
                 writer.WriteStringValue(DestinationAccount);
             }
-            if (!(Rules is ChangeTrackingList<ObjectReplicationPolicyRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Storage
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Storage
                         return DeserializeObjectReplicationPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

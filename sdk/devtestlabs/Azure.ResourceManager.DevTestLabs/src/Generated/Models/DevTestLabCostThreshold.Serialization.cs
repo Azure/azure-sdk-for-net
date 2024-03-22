@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ThresholdId != null)
+            if (Optional.IsDefined(ThresholdId))
             {
                 writer.WritePropertyName("thresholdId"u8);
                 writer.WriteStringValue(ThresholdId);
             }
-            if (PercentageThreshold != null)
+            if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
                 writer.WriteObjectValue(PercentageThreshold);
             }
-            if (DisplayOnChart.HasValue)
+            if (Optional.IsDefined(DisplayOnChart))
             {
                 writer.WritePropertyName("displayOnChart"u8);
                 writer.WriteStringValue(DisplayOnChart.Value.ToString());
             }
-            if (SendNotificationWhenExceeded.HasValue)
+            if (Optional.IsDefined(SendNotificationWhenExceeded))
             {
                 writer.WritePropertyName("sendNotificationWhenExceeded"u8);
                 writer.WriteStringValue(SendNotificationWhenExceeded.Value.ToString());
             }
-            if (NotificationSent != null)
+            if (Optional.IsDefined(NotificationSent))
             {
                 writer.WritePropertyName("notificationSent"u8);
                 writer.WriteStringValue(NotificationSent);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostThreshold>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabCostThreshold(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostThreshold)} does not support reading '{options.Format}' format.");
             }
         }
 

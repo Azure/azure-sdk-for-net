@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSummaryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OemFamily != null)
+            if (Optional.IsDefined(OemFamily))
             {
                 writer.WritePropertyName("oemFamily"u8);
                 writer.WriteStringValue(OemFamily);
             }
-            if (HardwareModel != null)
+            if (Optional.IsDefined(HardwareModel))
             {
                 writer.WritePropertyName("hardwareModel"u8);
                 writer.WriteStringValue(HardwareModel);
             }
-            if (!(PackageVersions is ChangeTrackingList<HciPackageVersionInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageVersions))
             {
                 writer.WritePropertyName("packageVersions"u8);
                 writer.WriteStartArray();
@@ -80,27 +80,27 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (CurrentVersion != null)
+            if (Optional.IsDefined(CurrentVersion))
             {
                 writer.WritePropertyName("currentVersion"u8);
                 writer.WriteStringValue(CurrentVersion);
             }
-            if (LastUpdated.HasValue)
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (LastChecked.HasValue)
+            if (Optional.IsDefined(LastChecked))
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastChecked.Value, "O");
             }
-            if (HealthState.HasValue)
+            if (Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (!(HealthCheckResult is ChangeTrackingList<HciPrecheckResult> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthCheckResult))
             {
                 writer.WritePropertyName("healthCheckResult"u8);
                 writer.WriteStartArray();
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Hci
                 }
                 writer.WriteEndArray();
             }
-            if (HealthCheckOn.HasValue)
+            if (Optional.IsDefined(HealthCheckOn))
             {
                 writer.WritePropertyName("healthCheckDate"u8);
                 writer.WriteStringValue(HealthCheckOn.Value, "O");
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSummaryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeUpdateSummaryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSummaryData)} does not support reading '{options.Format}' format.");
             }
         }
 

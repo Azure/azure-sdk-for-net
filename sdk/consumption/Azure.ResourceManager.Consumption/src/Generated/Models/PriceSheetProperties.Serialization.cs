@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BillingPeriodId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
             {
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && MeterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && MeterDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
                 writer.WriteObjectValue(MeterDetails);
             }
-            if (options.Format != "W" && UnitOfMeasure != null)
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && IncludedQuantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IncludedQuantity))
             {
                 writer.WritePropertyName("includedQuantity"u8);
                 writer.WriteNumberValue(IncludedQuantity.Value);
             }
-            if (options.Format != "W" && PartNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(PartNumber))
             {
                 writer.WritePropertyName("partNumber"u8);
                 writer.WriteStringValue(PartNumber);
             }
-            if (options.Format != "W" && UnitPrice.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnitPrice))
             {
                 writer.WritePropertyName("unitPrice"u8);
                 writer.WriteNumberValue(UnitPrice.Value);
             }
-            if (options.Format != "W" && CurrencyCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (options.Format != "W" && OfferId != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializePriceSheetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

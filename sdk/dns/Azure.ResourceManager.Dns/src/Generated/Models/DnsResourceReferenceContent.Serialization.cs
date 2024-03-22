@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TargetResources is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetResources))
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsResourceReferenceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReferenceContent)} does not support reading '{options.Format}' format.");
             }
         }
 

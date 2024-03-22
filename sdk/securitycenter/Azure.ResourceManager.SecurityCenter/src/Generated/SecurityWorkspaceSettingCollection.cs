@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityWorkspaceSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityWorkspaceSettingResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceSettingName, SecurityWorkspaceSettingData data, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
         public virtual async Task<Response<SecurityWorkspaceSettingResource>> GetAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
         public virtual Response<SecurityWorkspaceSettingResource> Get(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityWorkspaceSettingResource>> GetIfExistsAsync(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceSettingName"/> is null. </exception>
         public virtual NullableResponse<SecurityWorkspaceSettingResource> GetIfExists(string workspaceSettingName, CancellationToken cancellationToken = default)
         {
-            if (workspaceSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceSettingName));
-            }
-            if (workspaceSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(workspaceSettingName, nameof(workspaceSettingName));
 
             using var scope = _securityWorkspaceSettingWorkspaceSettingsClientDiagnostics.CreateScope("SecurityWorkspaceSettingCollection.GetIfExists");
             scope.Start();

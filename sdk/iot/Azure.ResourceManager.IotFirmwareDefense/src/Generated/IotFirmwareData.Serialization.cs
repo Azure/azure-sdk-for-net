@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             var format = options.Format == "W" ? ((IPersistableModel<IotFirmwareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotFirmwareData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotFirmwareData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (FileSize.HasValue)
+            if (Optional.IsDefined(FileSize))
             {
                 if (FileSize != null)
                 {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                     writer.WriteNull("fileSize");
                 }
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(StatusMessages is ChangeTrackingList<FirmwareAnalysisStatusMessage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusMessages))
             {
                 writer.WritePropertyName("statusMessages"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             var format = options.Format == "W" ? ((IPersistableModel<IotFirmwareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotFirmwareData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotFirmwareData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotFirmwareData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotFirmwareData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                         return DeserializeIotFirmwareData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotFirmwareData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotFirmwareData)} does not support reading '{options.Format}' format.");
             }
         }
 

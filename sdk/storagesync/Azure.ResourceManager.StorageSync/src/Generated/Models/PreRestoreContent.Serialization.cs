@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Partition != null)
+            if (Optional.IsDefined(Partition))
             {
                 writer.WritePropertyName("partition"u8);
                 writer.WriteStringValue(Partition);
             }
-            if (ReplicaGroup != null)
+            if (Optional.IsDefined(ReplicaGroup))
             {
                 writer.WritePropertyName("replicaGroup"u8);
                 writer.WriteStringValue(ReplicaGroup);
             }
-            if (RequestId != null)
+            if (Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (AzureFileShareUri != null)
+            if (Optional.IsDefined(AzureFileShareUri))
             {
                 writer.WritePropertyName("azureFileShareUri"u8);
                 writer.WriteStringValue(AzureFileShareUri.AbsoluteUri);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (SourceAzureFileShareUri != null)
+            if (Optional.IsDefined(SourceAzureFileShareUri))
             {
                 writer.WritePropertyName("sourceAzureFileShareUri"u8);
                 writer.WriteStringValue(SourceAzureFileShareUri.AbsoluteUri);
             }
-            if (BackupMetadataPropertyBag != null)
+            if (Optional.IsDefined(BackupMetadataPropertyBag))
             {
                 writer.WritePropertyName("backupMetadataPropertyBag"u8);
                 writer.WriteStringValue(BackupMetadataPropertyBag);
             }
-            if (!(RestoreFileSpec is ChangeTrackingList<RestoreFileSpec> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RestoreFileSpec))
             {
                 writer.WritePropertyName("restoreFileSpec"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PauseWaitForSyncDrainTimePeriodInSeconds.HasValue)
+            if (Optional.IsDefined(PauseWaitForSyncDrainTimePeriodInSeconds))
             {
                 writer.WritePropertyName("pauseWaitForSyncDrainTimePeriodInSeconds"u8);
                 writer.WriteNumberValue(PauseWaitForSyncDrainTimePeriodInSeconds.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializePreRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

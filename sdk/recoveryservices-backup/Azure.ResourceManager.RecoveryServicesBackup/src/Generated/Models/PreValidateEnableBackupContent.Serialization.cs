@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value.ToString());
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (VaultId != null)
+            if (Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStringValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializePreValidateEnableBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 

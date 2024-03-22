@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryInboundNatRulePortMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPConfiguration != null)
+            if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
                 JsonSerializer.Serialize(writer, IPConfiguration);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryInboundNatRulePortMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeQueryInboundNatRulePortMappingContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryInboundNatRulePortMappingContent)} does not support reading '{options.Format}' format.");
             }
         }
 

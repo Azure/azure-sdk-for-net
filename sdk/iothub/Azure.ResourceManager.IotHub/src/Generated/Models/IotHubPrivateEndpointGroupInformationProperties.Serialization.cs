@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointGroupInformationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (!(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredDnsZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredDnsZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointGroupInformationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubPrivateEndpointGroupInformationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointGroupInformationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

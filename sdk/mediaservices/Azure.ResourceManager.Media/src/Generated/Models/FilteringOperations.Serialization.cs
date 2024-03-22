@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilteringOperations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Deinterlace != null)
+            if (Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
                 writer.WriteObjectValue(Deinterlace);
             }
-            if (Rotation.HasValue)
+            if (Optional.IsDefined(Rotation))
             {
                 writer.WritePropertyName("rotation"u8);
                 writer.WriteStringValue(Rotation.Value.ToString());
             }
-            if (Crop != null)
+            if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
                 writer.WriteObjectValue(Crop);
             }
-            if (FadeIn != null)
+            if (Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
                 writer.WriteObjectValue(FadeIn);
             }
-            if (FadeOut != null)
+            if (Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
                 writer.WriteObjectValue(FadeOut);
             }
-            if (!(Overlays is ChangeTrackingList<MediaOverlayBase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Overlays))
             {
                 writer.WritePropertyName("overlays"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilteringOperations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeFilteringOperations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilteringOperations)} does not support reading '{options.Format}' format.");
             }
         }
 

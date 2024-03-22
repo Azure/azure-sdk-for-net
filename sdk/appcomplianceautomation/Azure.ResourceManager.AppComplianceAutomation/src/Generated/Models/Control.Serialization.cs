@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Control>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Control)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Control)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ControlId != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlId))
             {
                 writer.WritePropertyName("controlId"u8);
                 writer.WriteStringValue(ControlId);
             }
-            if (options.Format != "W" && ControlShortName != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlShortName))
             {
                 writer.WritePropertyName("controlShortName"u8);
                 writer.WriteStringValue(ControlShortName);
             }
-            if (options.Format != "W" && ControlFullName != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlFullName))
             {
                 writer.WritePropertyName("controlFullName"u8);
                 writer.WriteStringValue(ControlFullName);
             }
-            if (options.Format != "W" && ControlType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ControlType))
             {
                 writer.WritePropertyName("controlType"u8);
                 writer.WriteStringValue(ControlType.Value.ToString());
             }
-            if (options.Format != "W" && ControlDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlDescription))
             {
                 writer.WritePropertyName("controlDescription"u8);
                 writer.WriteStringValue(ControlDescription);
             }
-            if (options.Format != "W" && ControlDescriptionHyperLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlDescriptionHyperLink))
             {
                 writer.WritePropertyName("controlDescriptionHyperLink"u8);
                 writer.WriteStringValue(ControlDescriptionHyperLink);
             }
-            if (options.Format != "W" && ControlStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ControlStatus))
             {
                 writer.WritePropertyName("controlStatus"u8);
                 writer.WriteStringValue(ControlStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(Assessments is ChangeTrackingList<Assessment> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Assessments))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<Control>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Control)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Control)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Control)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeControl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Control)} does not support reading '{options.Format}' format.");
             }
         }
 

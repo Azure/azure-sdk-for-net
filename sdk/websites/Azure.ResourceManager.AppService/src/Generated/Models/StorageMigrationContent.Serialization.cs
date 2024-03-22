@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AzurefilesConnectionString != null)
+            if (Optional.IsDefined(AzurefilesConnectionString))
             {
                 writer.WritePropertyName("azurefilesConnectionString"u8);
                 writer.WriteStringValue(AzurefilesConnectionString);
             }
-            if (AzurefilesShare != null)
+            if (Optional.IsDefined(AzurefilesShare))
             {
                 writer.WritePropertyName("azurefilesShare"u8);
                 writer.WriteStringValue(AzurefilesShare);
             }
-            if (SwitchSiteAfterMigration.HasValue)
+            if (Optional.IsDefined(SwitchSiteAfterMigration))
             {
                 writer.WritePropertyName("switchSiteAfterMigration"u8);
                 writer.WriteBooleanValue(SwitchSiteAfterMigration.Value);
             }
-            if (BlockWriteAccessToSite.HasValue)
+            if (Optional.IsDefined(BlockWriteAccessToSite))
             {
                 writer.WritePropertyName("blockWriteAccessToSite"u8);
                 writer.WriteBooleanValue(BlockWriteAccessToSite.Value);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStorageMigrationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMigrationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

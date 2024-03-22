@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,28 +22,28 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<CreateAndRunThreadOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (Thread != null)
+            if (Optional.IsDefined(Thread))
             {
                 writer.WritePropertyName("thread"u8);
                 writer.WriteObjectValue(Thread);
             }
-            if (OverrideModelName != null)
+            if (Optional.IsDefined(OverrideModelName))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(OverrideModelName);
             }
-            if (OverrideInstructions != null)
+            if (Optional.IsDefined(OverrideInstructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(OverrideInstructions);
             }
-            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OverrideTools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
@@ -54,7 +53,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -95,7 +94,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<CreateAndRunThreadOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +196,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +212,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeCreateAndRunThreadOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateAndRunThreadOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

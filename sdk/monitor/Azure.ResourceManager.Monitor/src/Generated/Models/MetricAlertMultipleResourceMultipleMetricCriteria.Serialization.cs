@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AllOf is ChangeTrackingList<MultiMetricCriteria> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllOf))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricAlertMultipleResourceMultipleMetricCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

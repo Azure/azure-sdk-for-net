@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,27 +32,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime"u8);
             writer.WriteStringValue(ToTime, "O");
-            if (GroupByThrottlePolicy.HasValue)
+            if (Optional.IsDefined(GroupByThrottlePolicy))
             {
                 writer.WritePropertyName("groupByThrottlePolicy"u8);
                 writer.WriteBooleanValue(GroupByThrottlePolicy.Value);
             }
-            if (GroupByOperationName.HasValue)
+            if (Optional.IsDefined(GroupByOperationName))
             {
                 writer.WritePropertyName("groupByOperationName"u8);
                 writer.WriteBooleanValue(GroupByOperationName.Value);
             }
-            if (GroupByResourceName.HasValue)
+            if (Optional.IsDefined(GroupByResourceName))
             {
                 writer.WritePropertyName("groupByResourceName"u8);
                 writer.WriteBooleanValue(GroupByResourceName.Value);
             }
-            if (GroupByClientApplicationId.HasValue)
+            if (Optional.IsDefined(GroupByClientApplicationId))
             {
                 writer.WritePropertyName("groupByClientApplicationId"u8);
                 writer.WriteBooleanValue(GroupByClientApplicationId.Value);
             }
-            if (GroupByUserAgent.HasValue)
+            if (Optional.IsDefined(GroupByUserAgent))
             {
                 writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeLogAnalyticsInputBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support reading '{options.Format}' format.");
             }
         }
 

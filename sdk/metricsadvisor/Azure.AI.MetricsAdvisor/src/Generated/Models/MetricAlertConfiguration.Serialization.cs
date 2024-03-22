@@ -19,32 +19,32 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(DetectionConfigurationId);
             writer.WritePropertyName("anomalyScopeType"u8);
             writer.WriteStringValue(AnomalyScopeType.ToString());
-            if (UseDetectionResultToFilterAnomalies.HasValue)
+            if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
                 writer.WritePropertyName("negationOperation"u8);
                 writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
             }
-            if (DimensionAnomalyScope != null)
+            if (Optional.IsDefined(DimensionAnomalyScope))
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
                 writer.WriteObjectValue(DimensionAnomalyScope);
             }
-            if (TopNAnomalyScope != null)
+            if (Optional.IsDefined(TopNAnomalyScope))
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
                 writer.WriteObjectValue(TopNAnomalyScope);
             }
-            if (SeverityFilter != null)
+            if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);
             }
-            if (AlertSnoozeCondition != null)
+            if (Optional.IsDefined(AlertSnoozeCondition))
             {
                 writer.WritePropertyName("snoozeFilter"u8);
                 writer.WriteObjectValue(AlertSnoozeCondition);
             }
-            if (ValueFilter != null)
+            if (Optional.IsDefined(ValueFilter))
             {
                 writer.WritePropertyName("valueFilter"u8);
                 writer.WriteObjectValue(ValueFilter);

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NextHopResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NextHopResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NextHopResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NextHopType.HasValue)
+            if (Optional.IsDefined(NextHopType))
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (NextHopIPAddress != null)
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
-            if (RouteTableId != null)
+            if (Optional.IsDefined(RouteTableId))
             {
                 writer.WritePropertyName("routeTableId"u8);
                 writer.WriteStringValue(RouteTableId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NextHopResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NextHopResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NextHopResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NextHopResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NextHopResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNextHopResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NextHopResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NextHopResult)} does not support reading '{options.Format}' format.");
             }
         }
 

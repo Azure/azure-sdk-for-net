@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (!(Columns is ChangeTrackingList<DataTableResponseColumn> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Rows is ChangeTrackingList<IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTableResponseObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDataTableResponseObject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTableResponseObject)} does not support reading '{options.Format}' format.");
             }
         }
 

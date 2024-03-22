@@ -18,14 +18,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="provisioningStatus"/> is null. </exception>
         public TriggerDependencyProvisioningStatus(string triggerName, string provisioningStatus)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (provisioningStatus == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningStatus));
-            }
+            Argument.AssertNotNull(triggerName, nameof(triggerName));
+            Argument.AssertNotNull(provisioningStatus, nameof(provisioningStatus));
 
             TriggerName = triggerName;
             ProvisioningStatus = provisioningStatus;

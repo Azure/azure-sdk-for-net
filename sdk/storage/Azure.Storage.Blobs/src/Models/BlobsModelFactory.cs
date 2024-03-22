@@ -18,6 +18,49 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         #region BlobContentInfo
+        /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
+        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
+        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="value"> The key as a base64 string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
+        /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
+        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string value = null)
+        {
+            if (signedObjectId == null)
+            {
+                throw new ArgumentNullException(nameof(signedObjectId));
+            }
+            if (signedTenantId == null)
+            {
+                throw new ArgumentNullException(nameof(signedTenantId));
+            }
+            if (signedService == null)
+            {
+                throw new ArgumentNullException(nameof(signedService));
+            }
+            if (signedVersion == null)
+            {
+                throw new ArgumentNullException(nameof(signedVersion));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                value);
+        }
+
         /// <summary>
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>

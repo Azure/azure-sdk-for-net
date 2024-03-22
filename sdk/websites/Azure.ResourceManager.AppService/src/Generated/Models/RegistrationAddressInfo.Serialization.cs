@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("address1"u8);
             writer.WriteStringValue(Address1);
-            if (Address2 != null)
+            if (Optional.IsDefined(Address2))
             {
                 writer.WritePropertyName("address2"u8);
                 writer.WriteStringValue(Address2);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeRegistrationAddressInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

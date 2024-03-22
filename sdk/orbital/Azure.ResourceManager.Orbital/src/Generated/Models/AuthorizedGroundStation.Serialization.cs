@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizedGroundStation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GroundStationName != null)
+            if (Optional.IsDefined(GroundStationName))
             {
                 writer.WritePropertyName("groundStation"u8);
                 writer.WriteStringValue(GroundStationName);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "D");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizedGroundStation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Orbital.Models
                         return DeserializeAuthorizedGroundStation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizedGroundStation)} does not support reading '{options.Format}' format.");
             }
         }
 

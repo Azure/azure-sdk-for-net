@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Edition != null)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (VCores.HasValue)
+            if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (HardwareGeneration != null)
+            if (Optional.IsDefined(HardwareGeneration))
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (MaxBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MaxBackupRetentionDays))
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
-            if (MinBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MinBackupRetentionDays))
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (MaxStorageInMB.HasValue)
+            if (Optional.IsDefined(MaxStorageInMB))
             {
                 writer.WritePropertyName("maxStorageMB"u8);
                 writer.WriteNumberValue(MaxStorageInMB.Value);
             }
-            if (MinStorageInMB.HasValue)
+            if (Optional.IsDefined(MinStorageInMB))
             {
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlPerformanceTierServiceLevelObjectives(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierServiceLevelObjectives)} does not support reading '{options.Format}' format.");
             }
         }
 

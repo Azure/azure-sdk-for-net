@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -18,7 +17,7 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStartObject();
             writer.WritePropertyName("zIndex"u8);
             writer.WriteNumberValue(ZIndex);
-            if (Visibility.HasValue)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());

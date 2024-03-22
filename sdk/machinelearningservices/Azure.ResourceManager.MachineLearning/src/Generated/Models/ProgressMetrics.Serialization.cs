@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProgressMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProgressMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProgressMetrics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CompletedDatapointCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompletedDatapointCount))
             {
                 if (CompletedDatapointCount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("completedDatapointCount");
                 }
             }
-            if (options.Format != "W" && IncrementalDataLastRefreshOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IncrementalDataLastRefreshOn))
             {
                 if (IncrementalDataLastRefreshOn != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("incrementalDataLastRefreshDateTime");
                 }
             }
-            if (options.Format != "W" && SkippedDatapointCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkippedDatapointCount))
             {
                 if (SkippedDatapointCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("skippedDatapointCount");
                 }
             }
-            if (options.Format != "W" && TotalDatapointCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDatapointCount))
             {
                 if (TotalDatapointCount != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProgressMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProgressMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProgressMetrics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProgressMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProgressMetrics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeProgressMetrics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProgressMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProgressMetrics)} does not support reading '{options.Format}' format.");
             }
         }
 

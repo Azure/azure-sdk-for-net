@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PowerBIDedicated
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DedicatedCapacityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dedicatedCapacityName, DedicatedCapacityData data, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DedicatedCapacityResource> CreateOrUpdate(WaitUntil waitUntil, string dedicatedCapacityName, DedicatedCapacityData data, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
         public virtual async Task<Response<DedicatedCapacityResource>> GetAsync(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
         public virtual Response<DedicatedCapacityResource> Get(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
         public virtual Response<bool> Exists(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
         public virtual async Task<NullableResponse<DedicatedCapacityResource>> GetIfExistsAsync(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="dedicatedCapacityName"/> is null. </exception>
         public virtual NullableResponse<DedicatedCapacityResource> GetIfExists(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
-            if (dedicatedCapacityName == null)
-            {
-                throw new ArgumentNullException(nameof(dedicatedCapacityName));
-            }
-            if (dedicatedCapacityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dedicatedCapacityName));
-            }
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
 
             using var scope = _dedicatedCapacityCapacitiesClientDiagnostics.CreateScope("DedicatedCapacityCollection.GetIfExists");
             scope.Start();

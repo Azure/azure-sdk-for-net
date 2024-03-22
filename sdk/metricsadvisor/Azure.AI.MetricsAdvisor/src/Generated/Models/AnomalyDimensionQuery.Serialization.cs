@@ -21,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(EndTime, "O");
             writer.WritePropertyName("dimensionName"u8);
             writer.WriteStringValue(DimensionName);
-            if (DimensionFilter != null)
+            if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteObjectValue(DimensionFilter);

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerService
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStringValue(KubernetesVersion);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());
-            if (!(Upgrades is ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (LatestNodeImageVersion != null)
+            if (Optional.IsDefined(LatestNodeImageVersion))
             {
                 writer.WritePropertyName("latestNodeImageVersion"u8);
                 writer.WriteStringValue(LatestNodeImageVersion);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.ContainerService
                         return DeserializeAgentPoolUpgradeProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

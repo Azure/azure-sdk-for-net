@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IdleNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IdleNodeCount))
             {
                 writer.WritePropertyName("idleNodeCount"u8);
                 writer.WriteNumberValue(IdleNodeCount.Value);
             }
-            if (options.Format != "W" && RunningNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RunningNodeCount))
             {
                 writer.WritePropertyName("runningNodeCount"u8);
                 writer.WriteNumberValue(RunningNodeCount.Value);
             }
-            if (options.Format != "W" && PreparingNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreparingNodeCount))
             {
                 writer.WritePropertyName("preparingNodeCount"u8);
                 writer.WriteNumberValue(PreparingNodeCount.Value);
             }
-            if (options.Format != "W" && UnusableNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnusableNodeCount))
             {
                 writer.WritePropertyName("unusableNodeCount"u8);
                 writer.WriteNumberValue(UnusableNodeCount.Value);
             }
-            if (options.Format != "W" && LeavingNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LeavingNodeCount))
             {
                 writer.WritePropertyName("leavingNodeCount"u8);
                 writer.WriteNumberValue(LeavingNodeCount.Value);
             }
-            if (options.Format != "W" && PreemptedNodeCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreemptedNodeCount))
             {
                 writer.WritePropertyName("preemptedNodeCount"u8);
                 writer.WriteNumberValue(PreemptedNodeCount.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNodeStateCounts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningNodeStateCounts(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNodeStateCounts)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultToLanguageCode"u8);
             writer.WriteStringValue(DefaultToLanguageCode.ToString());
-            if (DefaultFromLanguageCode.HasValue)
+            if (Optional.IsDefined(DefaultFromLanguageCode))
             {
                 if (DefaultFromLanguageCode != null)
                 {
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultFromLanguageCode");
                 }
             }
-            if (SuggestedFrom.HasValue)
+            if (Optional.IsDefined(SuggestedFrom))
             {
                 if (SuggestedFrom != null)
                 {
@@ -44,17 +44,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SqlDedicatedGatewayEndpoint != null)
+            if (Optional.IsDefined(SqlDedicatedGatewayEndpoint))
             {
                 writer.WritePropertyName("sqlDedicatedGatewayEndpoint"u8);
                 writer.WriteStringValue(SqlDedicatedGatewayEndpoint);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<SqlDedicatedGatewayRegionalService> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -41,24 +41,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (InstanceSize.HasValue)
+            if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
                 writer.WriteStringValue(InstanceSize.Value.ToString());
             }
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeSqlDedicatedGatewayServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

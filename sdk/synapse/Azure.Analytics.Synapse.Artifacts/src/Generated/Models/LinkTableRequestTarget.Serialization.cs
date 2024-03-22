@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (SchemaName != null)
+            if (Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (DistributionOptions != null)
+            if (Optional.IsDefined(DistributionOptions))
             {
                 writer.WritePropertyName("distributionOptions"u8);
                 writer.WriteObjectValue(DistributionOptions);
             }
-            if (StructureOptions != null)
+            if (Optional.IsDefined(StructureOptions))
             {
                 writer.WritePropertyName("structureOptions"u8);
                 writer.WriteObjectValue(StructureOptions);

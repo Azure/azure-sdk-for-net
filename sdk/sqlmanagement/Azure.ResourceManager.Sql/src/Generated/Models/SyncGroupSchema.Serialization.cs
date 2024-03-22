@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tables is ChangeTrackingList<SyncGroupSchemaTable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tables))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MasterSyncMemberName != null)
+            if (Optional.IsDefined(MasterSyncMemberName))
             {
                 writer.WritePropertyName("masterSyncMemberName"u8);
                 writer.WriteStringValue(MasterSyncMemberName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSyncGroupSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncGroupSchema)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             var format = options.Format == "W" ? ((IPersistableModel<IngestionPolicyPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IngestionType.HasValue)
+            if (Optional.IsDefined(IngestionType))
             {
                 writer.WritePropertyName("ingestionType"u8);
                 writer.WriteStringValue(IngestionType.Value.ToString());
             }
-            if (!(IngestionSources is ChangeTrackingList<IngestionSourcesPropertiesFormat> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IngestionSources))
             {
                 writer.WritePropertyName("ingestionSources"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             var format = options.Format == "W" ? ((IPersistableModel<IngestionPolicyPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                         return DeserializeIngestionPolicyPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionPolicyPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

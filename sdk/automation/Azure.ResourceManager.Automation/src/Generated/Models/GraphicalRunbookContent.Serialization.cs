@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RawContent != null)
+            if (Optional.IsDefined(RawContent))
             {
                 if (RawContent != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("rawContent");
                 }
             }
-            if (GraphRunbookJson != null)
+            if (Optional.IsDefined(GraphRunbookJson))
             {
                 if (GraphRunbookJson != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<GraphicalRunbookContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeGraphicalRunbookContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GraphicalRunbookContent)} does not support reading '{options.Format}' format.");
             }
         }
 

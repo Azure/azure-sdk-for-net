@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseGrantSqlControlToManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
             }
-            if (options.Format != "W" && ActualState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
             {
                 writer.WritePropertyName("actualState"u8);
                 writer.WriteStringValue(ActualState.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseGrantSqlControlToManagedIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseGrantSqlControlToManagedIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseGrantSqlControlToManagedIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

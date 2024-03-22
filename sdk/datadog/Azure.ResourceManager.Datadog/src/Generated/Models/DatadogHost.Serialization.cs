@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHost)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Aliases is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Apps is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Apps))
             {
                 writer.WritePropertyName("apps"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Meta != null)
+            if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
                 writer.WriteObjectValue(Meta);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHost)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHost)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogHost(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHost)} does not support reading '{options.Format}' format.");
             }
         }
 

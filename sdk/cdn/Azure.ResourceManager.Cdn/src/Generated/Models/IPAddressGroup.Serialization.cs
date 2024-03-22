@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DeliveryRegion != null)
+            if (Optional.IsDefined(DeliveryRegion))
             {
                 writer.WritePropertyName("deliveryRegion"u8);
                 writer.WriteStringValue(DeliveryRegion);
             }
-            if (!(IPv4Addresses is ChangeTrackingList<CidrIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Addresses is ChangeTrackingList<CidrIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeIPAddressGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

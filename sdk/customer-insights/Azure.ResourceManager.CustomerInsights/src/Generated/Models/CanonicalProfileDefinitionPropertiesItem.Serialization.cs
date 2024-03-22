@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinitionPropertiesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProfileName != null)
+            if (Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (ProfilePropertyName != null)
+            if (Optional.IsDefined(ProfilePropertyName))
             {
                 writer.WritePropertyName("profilePropertyName"u8);
                 writer.WriteStringValue(ProfilePropertyName);
             }
-            if (Rank.HasValue)
+            if (Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteNumberValue(Rank.Value);
             }
-            if (ValueType.HasValue)
+            if (Optional.IsDefined(ValueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinitionPropertiesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeCanonicalProfileDefinitionPropertiesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanonicalProfileDefinitionPropertiesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HostServerName != null)
+            if (Optional.IsDefined(HostServerName))
             {
                 writer.WritePropertyName("hostServerName"u8);
                 writer.WriteStringValue(HostServerName);
             }
-            if (InquiryInfo != null)
+            if (Optional.IsDefined(InquiryInfo))
             {
                 writer.WritePropertyName("inquiryInfo"u8);
                 writer.WriteObjectValue(InquiryInfo);
             }
-            if (!(NodesList is ChangeTrackingList<DistributedNodesInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodesList))
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadContainerExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

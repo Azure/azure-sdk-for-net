@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HubPattern != null)
+            if (Optional.IsDefined(HubPattern))
             {
                 writer.WritePropertyName("hubPattern"u8);
                 writer.WriteStringValue(HubPattern);
             }
-            if (EventPattern != null)
+            if (Optional.IsDefined(EventPattern))
             {
                 writer.WritePropertyName("eventPattern"u8);
                 writer.WriteStringValue(EventPattern);
             }
-            if (CategoryPattern != null)
+            if (Optional.IsDefined(CategoryPattern))
             {
                 writer.WritePropertyName("categoryPattern"u8);
                 writer.WriteStringValue(CategoryPattern);
             }
             writer.WritePropertyName("urlTemplate"u8);
             writer.WriteStringValue(UrlTemplate);
-            if (Auth != null)
+            if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
                 writer.WriteObjectValue(Auth);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRUpstreamTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

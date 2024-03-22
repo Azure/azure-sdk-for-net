@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlAdvisorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,39 +53,39 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AdvisorStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdvisorStatus))
             {
                 writer.WritePropertyName("advisorStatus"u8);
                 writer.WriteStringValue(AdvisorStatus.Value.ToSerialString());
             }
-            if (AutoExecuteStatus.HasValue)
+            if (Optional.IsDefined(AutoExecuteStatus))
             {
                 writer.WritePropertyName("autoExecuteStatus"u8);
                 writer.WriteStringValue(AutoExecuteStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && AutoExecuteStatusInheritedFrom.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AutoExecuteStatusInheritedFrom))
             {
                 writer.WritePropertyName("autoExecuteStatusInheritedFrom"u8);
                 writer.WriteStringValue(AutoExecuteStatusInheritedFrom.Value.ToSerialString());
             }
-            if (options.Format != "W" && RecommendationsStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationsStatus))
             {
                 writer.WritePropertyName("recommendationsStatus"u8);
                 writer.WriteStringValue(RecommendationsStatus);
             }
-            if (options.Format != "W" && LastCheckedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCheckedOn))
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
-            if (options.Format != "W" && !(RecommendedActions is ChangeTrackingList<RecommendedActionData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlAdvisorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlAdvisorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support reading '{options.Format}' format.");
             }
         }
 

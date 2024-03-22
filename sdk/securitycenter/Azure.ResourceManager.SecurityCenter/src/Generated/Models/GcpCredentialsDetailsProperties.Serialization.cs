@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpCredentialsDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(AuthProviderX509CertUri.AbsoluteUri);
             writer.WritePropertyName("clientX509CertUrl"u8);
             writer.WriteStringValue(ClientX509CertUri.AbsoluteUri);
-            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpCredentialsDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGcpCredentialsDetailsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

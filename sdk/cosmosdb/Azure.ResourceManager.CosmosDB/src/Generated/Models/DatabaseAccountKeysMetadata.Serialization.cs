@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
                 writer.WriteObjectValue(PrimaryMasterKey);
             }
-            if (options.Format != "W" && SecondaryMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
                 writer.WriteObjectValue(SecondaryMasterKey);
             }
-            if (options.Format != "W" && PrimaryReadonlyMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
                 writer.WriteObjectValue(PrimaryReadonlyMasterKey);
             }
-            if (options.Format != "W" && SecondaryReadonlyMasterKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
                 writer.WriteObjectValue(SecondaryReadonlyMasterKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseAccountKeysMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeDatabaseAccountKeysMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseAccountKeysMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

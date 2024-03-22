@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ImageMappingRuleProfile != null)
+            if (Optional.IsDefined(ImageMappingRuleProfile))
             {
                 writer.WritePropertyName("imageMappingRuleProfile"u8);
                 writer.WriteObjectValue(ImageMappingRuleProfile);
             }
-            if (ApplicationEnablement.HasValue)
+            if (Optional.IsDefined(ApplicationEnablement))
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusImageDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureOperatorNexusImageDeployMappingRuleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusImageDeployMappingRuleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

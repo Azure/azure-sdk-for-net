@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (TargetInstanceCount.HasValue)
+            if (Optional.IsDefined(TargetInstanceCount))
             {
                 writer.WritePropertyName("targetInstanceCount"u8);
                 writer.WriteNumberValue(TargetInstanceCount.Value);
             }
-            if (VmGroupName != null)
+            if (Optional.IsDefined(VmGroupName))
             {
                 writer.WritePropertyName("VMGroupName"u8);
                 writer.WriteStringValue(VmGroupName);
             }
-            if (AutoScaleConfiguration != null)
+            if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration);
             }
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
                 writer.WriteObjectValue(HardwareProfile);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
                 writer.WriteObjectValue(OSProfile);
             }
-            if (VirtualNetworkProfile != null)
+            if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (!(DataDisksGroups is ChangeTrackingList<HDInsightClusterDataDiskGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisksGroups))
             {
                 writer.WritePropertyName("dataDisksGroups"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ScriptActions is ChangeTrackingList<ScriptAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptActions))
             {
                 writer.WritePropertyName("scriptActions"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptDataDisks.HasValue)
+            if (Optional.IsDefined(EncryptDataDisks))
             {
                 writer.WritePropertyName("encryptDataDisks"u8);
                 writer.WriteBooleanValue(EncryptDataDisks.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterRole)} does not support reading '{options.Format}' format.");
             }
         }
 

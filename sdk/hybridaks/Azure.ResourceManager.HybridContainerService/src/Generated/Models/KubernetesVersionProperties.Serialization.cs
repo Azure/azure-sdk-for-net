@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && IsPreview.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (options.Format != "W" && !(PatchVersions is ChangeTrackingDictionary<string, KubernetesPatchVersions> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PatchVersions))
             {
                 writer.WritePropertyName("patchVersions"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeKubernetesVersionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

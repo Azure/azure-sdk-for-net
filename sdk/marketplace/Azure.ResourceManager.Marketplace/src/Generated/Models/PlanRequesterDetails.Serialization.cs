@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PlanId != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && PlanDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanDisplayName))
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (options.Format != "W" && !(Requesters is ChangeTrackingList<PlanRequesterInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Requesters))
             {
                 writer.WritePropertyName("requesters"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PlanRequesterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePlanRequesterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlanRequesterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

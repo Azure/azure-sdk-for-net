@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VnetResourceGroup != null)
+            if (Optional.IsDefined(VnetResourceGroup))
             {
                 writer.WritePropertyName("vnetResourceGroup"u8);
                 writer.WriteStringValue(VnetResourceGroup);
             }
-            if (VnetName != null)
+            if (Optional.IsDefined(VnetName))
             {
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (VnetSubnetName != null)
+            if (Optional.IsDefined(VnetSubnetName))
             {
                 writer.WritePropertyName("vnetSubnetName"u8);
                 writer.WriteStringValue(VnetSubnetName);
             }
-            if (SubnetResourceId != null)
+            if (Optional.IsDefined(SubnetResourceId))
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceVirtualNetworkValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

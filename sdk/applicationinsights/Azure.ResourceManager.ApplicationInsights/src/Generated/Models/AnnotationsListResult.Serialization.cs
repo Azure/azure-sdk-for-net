@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnnotationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<Annotation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnnotationsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeAnnotationsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnnotationsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

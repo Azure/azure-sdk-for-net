@@ -65,6 +65,12 @@ public partial class AudioTranslationOptions
     /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
     /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
     /// </param>
+    /// <remarks>
+    /// By default, audio data will be provided as if it were from an audio file named "file.wav". For other audio
+    /// formats, set an appropriate filename via the <see cref="Filename"/> property such that the format can be
+    /// inferred. For example, setting <see cref="Filename"/> to "foo.mp3" for an MP3 stream will ensure that the
+    /// audio data is handled as MP3 input.
+    /// </remarks>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="deploymentName"/> or <paramref name="audioData"/> is null.
     /// </exception>

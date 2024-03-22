@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TargetResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
             {
                 if (TargetResourceId != null)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("targetResourceId");
                 }
             }
-            if (GuestConfiguration != null)
+            if (Optional.IsDefined(GuestConfiguration))
             {
                 writer.WritePropertyName("guestConfiguration"u8);
                 writer.WriteObjectValue(GuestConfiguration);
             }
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && LastComplianceStatusCheckedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceStatusCheckedOn))
             {
                 if (LastComplianceStatusCheckedOn != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("lastComplianceStatusChecked");
                 }
             }
-            if (options.Format != "W" && LatestReportId != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestReportId))
             {
                 if (LatestReportId != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("latestReportId");
                 }
             }
-            if (options.Format != "W" && ParameterHash != null)
+            if (options.Format != "W" && Optional.IsDefined(ParameterHash))
             {
                 if (ParameterHash != null)
                 {
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("parameterHash");
                 }
             }
-            if (LatestAssignmentReport != null)
+            if (Optional.IsDefined(LatestAssignmentReport))
             {
                 writer.WritePropertyName("latestAssignmentReport"u8);
                 writer.WriteObjectValue(LatestAssignmentReport);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (options.Format != "W" && AssignmentHash != null)
+            if (options.Format != "W" && Optional.IsDefined(AssignmentHash))
             {
                 if (AssignmentHash != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentHash");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 if (ProvisioningState != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 if (ResourceType != null)
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("resourceType");
                 }
             }
-            if (!(VmssVmList is ChangeTrackingList<GuestConfigurationVmssVmInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmssVmList))
             {
                 if (VmssVmList != null)
                 {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

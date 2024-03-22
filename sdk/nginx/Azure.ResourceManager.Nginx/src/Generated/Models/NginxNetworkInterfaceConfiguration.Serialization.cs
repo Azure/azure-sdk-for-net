@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxNetworkInterfaceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxNetworkInterfaceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

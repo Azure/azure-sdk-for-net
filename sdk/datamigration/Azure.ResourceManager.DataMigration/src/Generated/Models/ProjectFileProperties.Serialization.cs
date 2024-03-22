@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProjectFileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Extension != null)
+            if (Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (options.Format != "W" && LastModified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (MediaType != null)
+            if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (options.Format != "W" && Size.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProjectFileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeProjectFileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectFileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

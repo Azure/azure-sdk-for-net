@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlUpsertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UseTempDB != null)
+            if (Optional.IsDefined(UseTempDB))
             {
                 writer.WritePropertyName("useTempDB"u8);
                 JsonSerializer.Serialize(writer, UseTempDB);
             }
-            if (InterimSchemaName != null)
+            if (Optional.IsDefined(InterimSchemaName))
             {
                 writer.WritePropertyName("interimSchemaName"u8);
                 JsonSerializer.Serialize(writer, InterimSchemaName);
             }
-            if (Keys != null)
+            if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 JsonSerializer.Serialize(writer, Keys);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlUpsertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSqlUpsertSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlUpsertSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

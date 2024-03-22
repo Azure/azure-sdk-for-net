@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtractedSize.HasValue)
+            if (Optional.IsDefined(ExtractedSize))
             {
                 if (ExtractedSize != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("extractedSize");
                 }
             }
-            if (FileSize.HasValue)
+            if (Optional.IsDefined(FileSize))
             {
                 if (FileSize != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("fileSize");
                 }
             }
-            if (ExtractedFileCount.HasValue)
+            if (Optional.IsDefined(ExtractedFileCount))
             {
                 if (ExtractedFileCount != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("extractedFileCount");
                 }
             }
-            if (ComponentCount.HasValue)
+            if (Optional.IsDefined(ComponentCount))
             {
                 if (ComponentCount != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("componentCount");
                 }
             }
-            if (BinaryCount.HasValue)
+            if (Optional.IsDefined(BinaryCount))
             {
                 if (BinaryCount != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("binaryCount");
                 }
             }
-            if (AnalysisTimeSeconds.HasValue)
+            if (Optional.IsDefined(AnalysisTimeSeconds))
             {
                 if (AnalysisTimeSeconds != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("analysisTimeSeconds");
                 }
             }
-            if (RootFileSystems.HasValue)
+            if (Optional.IsDefined(RootFileSystems))
             {
                 if (RootFileSystems != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeFirmwareSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

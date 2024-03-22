@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseKustoPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kustoPoolName, SynapseKustoPoolData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -145,18 +133,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseKustoPoolResource> CreateOrUpdate(WaitUntil waitUntil, string kustoPoolName, SynapseKustoPoolData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +180,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
         public virtual async Task<Response<SynapseKustoPoolResource>> GetAsync(string kustoPoolName, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
         public virtual Response<SynapseKustoPoolResource> Get(string kustoPoolName, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string kustoPoolName, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string kustoPoolName, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseKustoPoolResource>> GetIfExistsAsync(string kustoPoolName, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolName"/> is null. </exception>
         public virtual NullableResponse<SynapseKustoPoolResource> GetIfExists(string kustoPoolName, CancellationToken cancellationToken = default)
         {
-            if (kustoPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(kustoPoolName));
-            }
-            if (kustoPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(kustoPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(kustoPoolName, nameof(kustoPoolName));
 
             using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolCollection.GetIfExists");
             scope.Start();

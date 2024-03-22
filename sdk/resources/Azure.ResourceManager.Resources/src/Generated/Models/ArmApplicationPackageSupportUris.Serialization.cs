@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationPackageSupportUris>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzurePublicCloudUri != null)
+            if (Optional.IsDefined(AzurePublicCloudUri))
             {
                 writer.WritePropertyName("publicAzure"u8);
                 writer.WriteStringValue(AzurePublicCloudUri.AbsoluteUri);
             }
-            if (AzureGovernmentUri != null)
+            if (Optional.IsDefined(AzureGovernmentUri))
             {
                 writer.WritePropertyName("governmentCloud"u8);
                 writer.WriteStringValue(AzureGovernmentUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationPackageSupportUris>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmApplicationPackageSupportUris(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationPackageSupportUris)} does not support reading '{options.Format}' format.");
             }
         }
 

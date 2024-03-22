@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfigurationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AllowedCallerIPAddresses is ChangeTrackingList<FlowAccessControlIPAddressRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedCallerIPAddresses))
             {
                 writer.WritePropertyName("allowedCallerIpAddresses"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OpenAuthenticationPolicies != null)
+            if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
                 writer.WriteObjectValue(OpenAuthenticationPolicies);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfigurationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeFlowAccessControlConfigurationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfigurationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisplayVersion != null)
+            if (Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (!(MinorVersions is ChangeTrackingList<StackMinorVersion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MinorVersions))
             {
                 writer.WritePropertyName("minorVersions"u8);
                 writer.WriteStartArray();
@@ -51,27 +51,27 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsApplicationInsights.HasValue)
+            if (Optional.IsDefined(IsApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteBooleanValue(IsApplicationInsights.Value);
             }
-            if (IsPreview.HasValue)
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (IsDeprecated.HasValue)
+            if (Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteBooleanValue(IsDeprecated.Value);
             }
-            if (IsHidden.HasValue)
+            if (Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (!(AppSettingsDictionary is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AppSettingsDictionary))
             {
                 writer.WritePropertyName("appSettingsDictionary"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(SiteConfigPropertiesDictionary is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
                 writer.WriteStartObject();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StackMajorVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStackMajorVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StackMajorVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

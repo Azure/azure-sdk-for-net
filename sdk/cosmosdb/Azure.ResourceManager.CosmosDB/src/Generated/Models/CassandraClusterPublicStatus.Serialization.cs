@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -23,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterPublicStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (ReaperStatus != null)
+            if (Optional.IsDefined(ReaperStatus))
             {
                 writer.WritePropertyName("reaperStatus"u8);
                 writer.WriteObjectValue(ReaperStatus);
             }
-            if (!(ConnectionErrors is ChangeTrackingList<CassandraConnectionError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionErrors))
             {
                 writer.WritePropertyName("connectionErrors"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Errors is ChangeTrackingList<CassandraError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataCenters is ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataCenters))
             {
                 writer.WritePropertyName("dataCenters"u8);
                 writer.WriteStartArray();
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterPublicStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterPublicStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterPublicStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<X509CertificateName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X509CertificateName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IssuerCertificateThumbprint != null)
+            if (Optional.IsDefined(IssuerCertificateThumbprint))
             {
                 writer.WritePropertyName("issuerCertificateThumbprint"u8);
                 writer.WriteStringValue(IssuerCertificateThumbprint);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<X509CertificateName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X509CertificateName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeX509CertificateName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X509CertificateName)} does not support reading '{options.Format}' format.");
             }
         }
 

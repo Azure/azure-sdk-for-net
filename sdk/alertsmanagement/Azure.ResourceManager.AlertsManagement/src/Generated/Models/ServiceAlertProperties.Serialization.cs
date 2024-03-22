@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Essentials != null)
+            if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
                 writer.WriteObjectValue(Essentials);
             }
-            if (options.Format != "W" && Context != null)
+            if (options.Format != "W" && Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
 #if NET6_0_OR_GREATER
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
 #endif
             }
-            if (options.Format != "W" && EgressConfig != null)
+            if (options.Format != "W" && Optional.IsDefined(EgressConfig))
             {
                 writer.WritePropertyName("egressConfig"u8);
 #if NET6_0_OR_GREATER
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

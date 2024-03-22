@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CryptoKeyId != null)
+            if (Optional.IsDefined(CryptoKeyId))
             {
                 if (CryptoKeyId != null)
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("cryptoKeyId");
                 }
             }
-            if (KeyType != null)
+            if (Optional.IsDefined(KeyType))
             {
                 if (KeyType != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keyType");
                 }
             }
-            if (KeySize.HasValue)
+            if (Optional.IsDefined(KeySize))
             {
                 if (KeySize != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keySize");
                 }
             }
-            if (KeyAlgorithm != null)
+            if (Optional.IsDefined(KeyAlgorithm))
             {
                 if (KeyAlgorithm != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("keyAlgorithm");
                 }
             }
-            if (!(Usage is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Usage))
             {
                 if (Usage != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("usage");
                 }
             }
-            if (options.Format != "W" && !(FilePaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FilePaths))
             {
                 if (FilePaths != null)
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePaths");
                 }
             }
-            if (PairedKey != null)
+            if (Optional.IsDefined(PairedKey))
             {
                 if (PairedKey != null)
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("pairedKey");
                 }
             }
-            if (IsShortKeySize.HasValue)
+            if (Optional.IsDefined(IsShortKeySize))
             {
                 if (IsShortKeySize != null)
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoKeyResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support reading '{options.Format}' format.");
             }
         }
 

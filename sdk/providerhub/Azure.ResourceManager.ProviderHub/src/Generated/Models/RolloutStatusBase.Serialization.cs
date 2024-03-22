@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RolloutStatusBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(CompletedRegions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CompletedRegions))
             {
                 writer.WritePropertyName("completedRegions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailedOrSkippedRegions is ChangeTrackingDictionary<string, ExtendedErrorInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedOrSkippedRegions))
             {
                 writer.WritePropertyName("failedOrSkippedRegions"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RolloutStatusBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeRolloutStatusBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support reading '{options.Format}' format.");
             }
         }
 

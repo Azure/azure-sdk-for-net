@@ -19,19 +19,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RelativeUrl != null)
+            if (Optional.IsDefined(RelativeUrl))
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 writer.WriteObjectValue(RelativeUrl);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteObjectValue(FolderPath);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteObjectValue(FileName);

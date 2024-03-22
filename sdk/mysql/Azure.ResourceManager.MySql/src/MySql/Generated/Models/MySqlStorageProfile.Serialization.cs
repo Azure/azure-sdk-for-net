@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupRetentionDays.HasValue)
+            if (Optional.IsDefined(BackupRetentionDays))
             {
                 writer.WritePropertyName("backupRetentionDays"u8);
                 writer.WriteNumberValue(BackupRetentionDays.Value);
             }
-            if (GeoRedundantBackup.HasValue)
+            if (Optional.IsDefined(GeoRedundantBackup))
             {
                 writer.WritePropertyName("geoRedundantBackup"u8);
                 writer.WriteStringValue(GeoRedundantBackup.Value.ToString());
             }
-            if (StorageInMB.HasValue)
+            if (Optional.IsDefined(StorageInMB))
             {
                 writer.WritePropertyName("storageMB"u8);
                 writer.WriteNumberValue(StorageInMB.Value);
             }
-            if (StorageAutogrow.HasValue)
+            if (Optional.IsDefined(StorageAutogrow))
             {
                 writer.WritePropertyName("storageAutogrow"u8);
                 writer.WriteStringValue(StorageAutogrow.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

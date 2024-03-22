@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("maxThroughput"u8);
             writer.WriteNumberValue(MaxThroughput);
-            if (AutoUpgradePolicy != null)
+            if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
                 writer.WriteObjectValue(AutoUpgradePolicy);
             }
-            if (options.Format != "W" && TargetMaxThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {
                 writer.WritePropertyName("targetMaxThroughput"u8);
                 writer.WriteNumberValue(TargetMaxThroughput.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingsResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAutoscaleSettingsResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingsResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

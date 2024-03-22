@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsHealthy.HasValue)
+            if (Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (RelationshipStatus.HasValue)
+            if (Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
-            if (MirrorState.HasValue)
+            if (Optional.IsDefined(MirrorState))
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (TotalProgress != null)
+            if (Optional.IsDefined(TotalProgress))
             {
                 writer.WritePropertyName("totalProgress"u8);
                 writer.WriteStringValue(TotalProgress);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeReplicationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeReplicationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

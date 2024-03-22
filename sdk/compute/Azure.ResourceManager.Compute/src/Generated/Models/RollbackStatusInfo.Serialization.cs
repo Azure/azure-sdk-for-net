@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RollbackStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SuccessfullyRolledbackInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SuccessfullyRolledbackInstanceCount))
             {
                 writer.WritePropertyName("successfullyRolledbackInstanceCount"u8);
                 writer.WriteNumberValue(SuccessfullyRolledbackInstanceCount.Value);
             }
-            if (options.Format != "W" && FailedRolledbackInstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedRolledbackInstanceCount))
             {
                 writer.WritePropertyName("failedRolledbackInstanceCount"u8);
                 writer.WriteNumberValue(FailedRolledbackInstanceCount.Value);
             }
-            if (options.Format != "W" && RollbackError != null)
+            if (options.Format != "W" && Optional.IsDefined(RollbackError))
             {
                 writer.WritePropertyName("rollbackError"u8);
                 writer.WriteObjectValue(RollbackError);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RollbackStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRollbackStatusInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RollbackStatusInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

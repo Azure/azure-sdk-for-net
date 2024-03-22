@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageQoSPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (IopsMaximum.HasValue)
+            if (Optional.IsDefined(IopsMaximum))
             {
                 writer.WritePropertyName("iopsMaximum"u8);
                 writer.WriteNumberValue(IopsMaximum.Value);
             }
-            if (IopsMinimum.HasValue)
+            if (Optional.IsDefined(IopsMinimum))
             {
                 writer.WritePropertyName("iopsMinimum"u8);
                 writer.WriteNumberValue(IopsMinimum.Value);
             }
-            if (BandwidthLimit.HasValue)
+            if (Optional.IsDefined(BandwidthLimit))
             {
                 writer.WritePropertyName("bandwidthLimit"u8);
                 writer.WriteNumberValue(BandwidthLimit.Value);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageQoSPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         return DeserializeStorageQoSPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageQoSPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

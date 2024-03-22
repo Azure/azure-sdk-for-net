@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectionStringPrimaryKey != null)
+            if (Optional.IsDefined(ConnectionStringPrimaryKey))
             {
                 if (ConnectionStringPrimaryKey != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("connectionStringPrimaryKey");
                 }
             }
-            if (ConnectionStringSecondaryKey != null)
+            if (Optional.IsDefined(ConnectionStringSecondaryKey))
             {
                 if (ConnectionStringSecondaryKey != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("connectionStringSecondaryKey");
                 }
             }
-            if (EndpointUri != null)
+            if (Optional.IsDefined(EndpointUri))
             {
                 if (EndpointUri != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("endpointUri");
                 }
             }
-            if (EntityPath != null)
+            if (Optional.IsDefined(EntityPath))
             {
                 if (EntityPath != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 if (ProvisioningState != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 if (CreatedOn != null)
                 {
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("createdTime");
                 }
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (DeadLetterSecret != null)
+            if (Optional.IsDefined(DeadLetterSecret))
             {
                 if (DeadLetterSecret != null)
                 {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterSecret");
                 }
             }
-            if (DeadLetterUri != null)
+            if (Optional.IsDefined(DeadLetterUri))
             {
                 if (DeadLetterUri != null)
                 {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("deadLetterUri");
                 }
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         return DeserializeDigitalTwinsEventHubProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventHubProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

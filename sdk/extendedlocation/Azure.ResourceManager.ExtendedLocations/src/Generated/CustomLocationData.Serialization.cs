@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ExtendedLocations
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ExtendedLocations
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (!(ClusterExtensionIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
                 writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();
@@ -88,27 +88,27 @@ namespace Azure.ResourceManager.ExtendedLocations
                 }
                 writer.WriteEndArray();
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (HostResourceId != null)
+            if (Optional.IsDefined(HostResourceId))
             {
                 writer.WritePropertyName("hostResourceId"u8);
                 writer.WriteStringValue(HostResourceId);
             }
-            if (HostType.HasValue)
+            if (Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToString());
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                         return DeserializeCustomLocationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PublisherName != null)
+            if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && PublisherScope.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && ConfigurationGroupSchemaName != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaName))
             {
                 writer.WritePropertyName("configurationGroupSchemaName"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaName);
             }
-            if (options.Format != "W" && ConfigurationGroupSchemaOfferingLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
             {
                 writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
             }
-            if (ConfigurationGroupSchemaResourceReference != null)
+            if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

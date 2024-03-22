@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsSuppressed.HasValue)
+            if (Optional.IsDefined(IsSuppressed))
             {
                 writer.WritePropertyName("isSuppressed"u8);
                 writer.WriteBooleanValue(IsSuppressed.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertActionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertActionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertActionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

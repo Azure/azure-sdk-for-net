@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(StreamInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Subscriber != null)
+            if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
                 writer.WriteObjectValue(Subscriber);
             }
-            if (Schema.HasValue)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema.Value.ToString());
             }
-            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EventTypes))
             {
                 writer.WritePropertyName("eventTypes"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeEventGridStreamInputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

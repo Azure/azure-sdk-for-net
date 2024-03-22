@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStorageAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageType.Value.ToSerialString());
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ShareName != null)
+            if (Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (MountPath != null)
+            if (Optional.IsDefined(MountPath))
             {
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceStorageAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceStorageAccessInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceStorageAccessInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

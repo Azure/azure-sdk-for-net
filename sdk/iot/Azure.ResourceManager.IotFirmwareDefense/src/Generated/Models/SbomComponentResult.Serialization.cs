@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SbomComponentResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SbomComponentResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (ComponentName != null)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (License != null)
+            if (Optional.IsDefined(License))
             {
                 if (License != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("license");
                 }
             }
-            if (!(FilePaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilePaths))
             {
                 writer.WritePropertyName("filePaths"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<SbomComponentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SbomComponentResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SbomComponentResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SbomComponentResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SbomComponentResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeSbomComponentResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SbomComponentResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SbomComponentResult)} does not support reading '{options.Format}' format.");
             }
         }
 

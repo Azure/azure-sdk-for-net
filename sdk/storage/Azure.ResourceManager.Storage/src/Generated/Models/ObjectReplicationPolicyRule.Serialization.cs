@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RuleId != null)
+            if (Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SourceContainer);
             writer.WritePropertyName("destinationContainer"u8);
             writer.WriteStringValue(DestinationContainer);
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ObjectReplicationPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeObjectReplicationPolicyRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ObjectReplicationPolicyRule)} does not support reading '{options.Format}' format.");
             }
         }
 

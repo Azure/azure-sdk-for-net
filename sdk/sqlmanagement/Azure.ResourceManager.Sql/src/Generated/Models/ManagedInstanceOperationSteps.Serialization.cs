@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationSteps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalSteps != null)
+            if (options.Format != "W" && Optional.IsDefined(TotalSteps))
             {
                 writer.WritePropertyName("totalSteps"u8);
                 writer.WriteStringValue(TotalSteps);
             }
-            if (options.Format != "W" && CurrentStep.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentStep))
             {
                 writer.WritePropertyName("currentStep"u8);
                 writer.WriteNumberValue(CurrentStep.Value);
             }
-            if (options.Format != "W" && !(StepsList is ChangeTrackingList<UpsertManagedServerOperationStep> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StepsList))
             {
                 writer.WritePropertyName("stepsList"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceOperationSteps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceOperationSteps(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceOperationSteps)} does not support reading '{options.Format}' format.");
             }
         }
 

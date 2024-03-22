@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(CorsRules is ChangeTrackingList<StorageCorsRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorsRules))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageCorsRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support reading '{options.Format}' format.");
             }
         }
 

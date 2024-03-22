@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinCapacity.HasValue)
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (MaxCapacity.HasValue)
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeElasticPoolPerDatabaseSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

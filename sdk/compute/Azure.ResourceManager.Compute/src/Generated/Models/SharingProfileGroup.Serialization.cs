@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingProfileGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GroupType.HasValue)
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (!(Ids is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingProfileGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharingProfileGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingProfileGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

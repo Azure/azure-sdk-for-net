@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -23,81 +22,91 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Self != null)
+            if (options.Format != "W" && Optional.IsDefined(Self))
             {
                 writer.WritePropertyName("_self"u8);
                 writer.WriteStringValue(Self);
             }
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(ContainerName);
-            if (IndexingPolicy != null)
+            if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
                 writer.WriteObjectValue(IndexingPolicy);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteObjectValue(PartitionKey);
             }
-            if (DefaultTtl.HasValue)
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (UniqueKeyPolicy != null)
+            if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
                 writer.WriteObjectValue(UniqueKeyPolicy);
             }
-            if (ConflictResolutionPolicy != null)
+            if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
-            if (ClientEncryptionPolicy != null)
+            if (Optional.IsDefined(ClientEncryptionPolicy))
             {
                 writer.WritePropertyName("clientEncryptionPolicy"u8);
                 writer.WriteObjectValue(ClientEncryptionPolicy);
             }
-            if (AnalyticalStorageTtl.HasValue)
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (RestoreParameters != null)
+            if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (MaterializedViewDefinition != null)
+            if (Optional.IsDefined(MaterializedViewDefinition))
             {
                 writer.WritePropertyName("materializedViewDefinition"u8);
                 writer.WriteObjectValue(MaterializedViewDefinition);
+            }
+            if (Optional.IsCollectionDefined(ComputedProperties))
+            {
+                writer.WritePropertyName("computedProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in ComputedProperties)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorableSqlContainerPropertiesResourceContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,6 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ResourceRestoreParameters restoreParameters = default;
             CosmosDBAccountCreateMode? createMode = default;
             MaterializedViewDefinition materializedViewDefinition = default;
+            IList<ComputedProperty> computedProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -279,6 +289,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     materializedViewDefinition = MaterializedViewDefinition.DeserializeMaterializedViewDefinition(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("computedProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputedProperty> array = new List<ComputedProperty>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ComputedProperty.DeserializeComputedProperty(item, options));
+                    }
+                    computedProperties = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -297,6 +321,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 restoreParameters,
                 createMode,
                 materializedViewDefinition,
+                computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
                 serializedAdditionalRawData,
                 self,
                 rid,
@@ -313,7 +338,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -329,7 +354,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeRestorableSqlContainerPropertiesResourceContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorableSqlContainerPropertiesResourceContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

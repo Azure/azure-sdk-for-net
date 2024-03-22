@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<MSDeployStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,34 +48,34 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Deployer != null)
+            if (options.Format != "W" && Optional.IsDefined(Deployer))
             {
                 writer.WritePropertyName("deployer"u8);
                 writer.WriteStringValue(Deployer);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && IsComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsComplete))
             {
                 writer.WritePropertyName("complete"u8);
                 writer.WriteBooleanValue(IsComplete.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<MSDeployStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeMSDeployStatusData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MSDeployStatusData)} does not support reading '{options.Format}' format.");
             }
         }
 

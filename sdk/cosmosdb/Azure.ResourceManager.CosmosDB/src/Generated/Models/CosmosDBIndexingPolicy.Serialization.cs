@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBIndexingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsAutomatic.HasValue)
+            if (Optional.IsDefined(IsAutomatic))
             {
                 writer.WritePropertyName("automatic"u8);
                 writer.WriteBooleanValue(IsAutomatic.Value);
             }
-            if (IndexingMode.HasValue)
+            if (Optional.IsDefined(IndexingMode))
             {
                 writer.WritePropertyName("indexingMode"u8);
                 writer.WriteStringValue(IndexingMode.Value.ToString());
             }
-            if (!(IncludedPaths is ChangeTrackingList<CosmosDBIncludedPath> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedPaths))
             {
                 writer.WritePropertyName("includedPaths"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedPaths is ChangeTrackingList<CosmosDBExcludedPath> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPaths))
             {
                 writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CompositeIndexes is ChangeTrackingList<IList<CosmosDBCompositePath>> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CompositeIndexes))
             {
                 writer.WritePropertyName("compositeIndexes"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SpatialIndexes is ChangeTrackingList<SpatialSpec> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SpatialIndexes))
             {
                 writer.WritePropertyName("spatialIndexes"u8);
                 writer.WriteStartArray();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBIndexingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBIndexingPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBIndexingPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

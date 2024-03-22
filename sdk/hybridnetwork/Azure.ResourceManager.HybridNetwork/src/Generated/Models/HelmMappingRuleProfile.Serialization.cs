@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReleaseNamespace != null)
+            if (Optional.IsDefined(ReleaseNamespace))
             {
                 writer.WritePropertyName("releaseNamespace"u8);
                 writer.WriteStringValue(ReleaseNamespace);
             }
-            if (ReleaseName != null)
+            if (Optional.IsDefined(ReleaseName))
             {
                 writer.WritePropertyName("releaseName"u8);
                 writer.WriteStringValue(ReleaseName);
             }
-            if (HelmPackageVersion != null)
+            if (Optional.IsDefined(HelmPackageVersion))
             {
                 writer.WritePropertyName("helmPackageVersion"u8);
                 writer.WriteStringValue(HelmPackageVersion);
             }
-            if (Values != null)
+            if (Optional.IsDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStringValue(Values);
             }
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeHelmMappingRuleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmMappingRuleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

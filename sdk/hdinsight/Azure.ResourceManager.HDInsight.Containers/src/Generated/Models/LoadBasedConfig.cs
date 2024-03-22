@@ -53,10 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scalingRules"/> is null. </exception>
         public LoadBasedConfig(int minNodes, int maxNodes, IEnumerable<ScalingRule> scalingRules)
         {
-            if (scalingRules == null)
-            {
-                throw new ArgumentNullException(nameof(scalingRules));
-            }
+            Argument.AssertNotNull(scalingRules, nameof(scalingRules));
 
             MinNodes = minNodes;
             MaxNodes = maxNodes;

@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AppLocation != null)
+            if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation);
             }
-            if (ApiLocation != null)
+            if (Optional.IsDefined(ApiLocation))
             {
                 writer.WritePropertyName("apiLocation"u8);
                 writer.WriteStringValue(ApiLocation);
             }
-            if (AppArtifactLocation != null)
+            if (Optional.IsDefined(AppArtifactLocation))
             {
                 writer.WritePropertyName("appArtifactLocation"u8);
                 writer.WriteStringValue(AppArtifactLocation);
             }
-            if (OutputLocation != null)
+            if (Optional.IsDefined(OutputLocation))
             {
                 writer.WritePropertyName("outputLocation"u8);
                 writer.WriteStringValue(OutputLocation);
             }
-            if (AppBuildCommand != null)
+            if (Optional.IsDefined(AppBuildCommand))
             {
                 writer.WritePropertyName("appBuildCommand"u8);
                 writer.WriteStringValue(AppBuildCommand);
             }
-            if (ApiBuildCommand != null)
+            if (Optional.IsDefined(ApiBuildCommand))
             {
                 writer.WritePropertyName("apiBuildCommand"u8);
                 writer.WriteStringValue(ApiBuildCommand);
             }
-            if (SkipGithubActionWorkflowGeneration.HasValue)
+            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
             {
                 writer.WritePropertyName("skipGithubActionWorkflowGeneration"u8);
                 writer.WriteBooleanValue(SkipGithubActionWorkflowGeneration.Value);
             }
-            if (GithubActionSecretNameOverride != null)
+            if (Optional.IsDefined(GithubActionSecretNameOverride))
             {
                 writer.WritePropertyName("githubActionSecretNameOverride"u8);
                 writer.WriteStringValue(GithubActionSecretNameOverride);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStaticSiteBuildProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

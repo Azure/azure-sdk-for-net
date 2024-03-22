@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Workloads.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapMonitorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,59 +61,59 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 JsonSerializer.Serialize(writer, Errors);
             }
-            if (AppLocation.HasValue)
+            if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
                 writer.WriteStringValue(AppLocation.Value);
             }
-            if (RoutingPreference.HasValue)
+            if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
                 writer.WriteStringValue(RoutingPreference.Value.ToString());
             }
-            if (ZoneRedundancyPreference != null)
+            if (Optional.IsDefined(ZoneRedundancyPreference))
             {
                 writer.WritePropertyName("zoneRedundancyPreference"u8);
                 writer.WriteStringValue(ZoneRedundancyPreference);
             }
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (LogAnalyticsWorkspaceArmId != null)
+            if (Optional.IsDefined(LogAnalyticsWorkspaceArmId))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceArmId"u8);
                 writer.WriteStringValue(LogAnalyticsWorkspaceArmId);
             }
-            if (MonitorSubnetId != null)
+            if (Optional.IsDefined(MonitorSubnetId))
             {
                 writer.WritePropertyName("monitorSubnet"u8);
                 writer.WriteStringValue(MonitorSubnetId);
             }
-            if (options.Format != "W" && MsiArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(MsiArmId))
             {
                 writer.WritePropertyName("msiArmId"u8);
                 writer.WriteStringValue(MsiArmId);
             }
-            if (options.Format != "W" && StorageAccountArmId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountArmId))
             {
                 writer.WritePropertyName("storageAccountArmId"u8);
                 writer.WriteStringValue(StorageAccountArmId);
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapMonitorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -365,7 +364,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapMonitorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapMonitorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapMonitorData)} does not support reading '{options.Format}' format.");
             }
         }
 

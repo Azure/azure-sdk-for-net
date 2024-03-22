@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupId != null)
+            if (Optional.IsDefined(BackupId))
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (BackupState.HasValue)
+            if (Optional.IsDefined(BackupState))
             {
                 writer.WritePropertyName("backupState"u8);
                 writer.WriteStringValue(BackupState.Value.ToString());
             }
-            if (BackupStartTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStartTimestamp))
             {
                 writer.WritePropertyName("backupStartTimestamp"u8);
                 writer.WriteStringValue(BackupStartTimestamp.Value, "O");
             }
-            if (BackupStopTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStopTimestamp))
             {
                 writer.WritePropertyName("backupStopTimestamp"u8);
                 writer.WriteStringValue(BackupStopTimestamp.Value, "O");
             }
-            if (BackupExpiryTimestamp.HasValue)
+            if (Optional.IsDefined(BackupExpiryTimestamp))
             {
                 writer.WritePropertyName("backupExpiryTimestamp"u8);
                 writer.WriteStringValue(BackupExpiryTimestamp.Value, "O");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterBackupResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,28 +22,28 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ElasticsearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TitleFieldName != null)
+            if (Optional.IsDefined(TitleFieldName))
             {
-                writer.WritePropertyName("titleField"u8);
+                writer.WritePropertyName("title_field"u8);
                 writer.WriteStringValue(TitleFieldName);
             }
-            if (UrlFieldName != null)
+            if (Optional.IsDefined(UrlFieldName))
             {
-                writer.WritePropertyName("urlField"u8);
+                writer.WritePropertyName("url_field"u8);
                 writer.WriteStringValue(UrlFieldName);
             }
-            if (FilepathFieldName != null)
+            if (Optional.IsDefined(FilepathFieldName))
             {
-                writer.WritePropertyName("filepathField"u8);
+                writer.WritePropertyName("filepath_field"u8);
                 writer.WriteStringValue(FilepathFieldName);
             }
-            if (!(ContentFieldNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentFieldNames))
             {
-                writer.WritePropertyName("contentFields"u8);
+                writer.WritePropertyName("content_fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentFieldNames)
                 {
@@ -52,14 +51,14 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
-            if (ContentFieldSeparator != null)
+            if (Optional.IsDefined(ContentFieldSeparator))
             {
-                writer.WritePropertyName("contentFieldsSeparator"u8);
+                writer.WritePropertyName("content_fields_separator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);
             }
-            if (!(VectorFieldNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VectorFieldNames))
             {
-                writer.WritePropertyName("vectorFields"u8);
+                writer.WritePropertyName("vector_fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in VectorFieldNames)
                 {
@@ -90,7 +89,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ElasticsearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,22 +114,22 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("titleField"u8))
+                if (property.NameEquals("title_field"u8))
                 {
                     titleField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urlField"u8))
+                if (property.NameEquals("url_field"u8))
                 {
                     urlField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filepathField"u8))
+                if (property.NameEquals("filepath_field"u8))
                 {
                     filepathField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentFields"u8))
+                if (property.NameEquals("content_fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -144,12 +143,12 @@ namespace Azure.AI.OpenAI
                     contentFields = array;
                     continue;
                 }
-                if (property.NameEquals("contentFieldsSeparator"u8))
+                if (property.NameEquals("content_fields_separator"u8))
                 {
                     contentFieldsSeparator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vectorFields"u8))
+                if (property.NameEquals("vector_fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +187,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +203,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeElasticsearchIndexFieldMappingOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticsearchIndexFieldMappingOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

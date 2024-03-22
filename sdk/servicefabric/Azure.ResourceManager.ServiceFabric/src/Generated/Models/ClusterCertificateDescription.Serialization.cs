@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCertificateDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (ThumbprintSecondary != null)
+            if (Optional.IsDefined(ThumbprintSecondary))
             {
                 writer.WritePropertyName("thumbprintSecondary"u8);
                 writer.WriteStringValue(ThumbprintSecondary);
             }
-            if (X509StoreName.HasValue)
+            if (Optional.IsDefined(X509StoreName))
             {
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCertificateDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterCertificateDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCertificateDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

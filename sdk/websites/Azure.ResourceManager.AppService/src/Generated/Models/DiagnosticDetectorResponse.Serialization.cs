@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticDetectorResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (IssueDetected.HasValue)
+            if (Optional.IsDefined(IssueDetected))
             {
                 writer.WritePropertyName("issueDetected"u8);
                 writer.WriteBooleanValue(IssueDetected.Value);
             }
-            if (DetectorDefinition != null)
+            if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
-            if (!(Metrics is ChangeTrackingList<DiagnosticMetricSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AbnormalTimePeriods is ChangeTrackingList<DetectorAbnormalTimePeriod> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AbnormalTimePeriods))
             {
                 writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ResponseMetaData != null)
+            if (Optional.IsDefined(ResponseMetaData))
             {
                 writer.WritePropertyName("responseMetaData"u8);
                 writer.WriteObjectValue(ResponseMetaData);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticDetectorResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDiagnosticDetectorResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticDetectorResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

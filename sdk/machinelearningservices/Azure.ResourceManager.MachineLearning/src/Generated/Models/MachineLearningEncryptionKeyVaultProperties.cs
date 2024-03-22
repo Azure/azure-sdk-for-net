@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> or <paramref name="keyVaultArmId"/> is null. </exception>
         public MachineLearningEncryptionKeyVaultProperties(string keyIdentifier, ResourceIdentifier keyVaultArmId)
         {
-            if (keyIdentifier == null)
-            {
-                throw new ArgumentNullException(nameof(keyIdentifier));
-            }
-            if (keyVaultArmId == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultArmId));
-            }
+            Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
+            Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
 
             KeyIdentifier = keyIdentifier;
             KeyVaultArmId = keyVaultArmId;

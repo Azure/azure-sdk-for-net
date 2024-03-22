@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEnrichments>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Static is ChangeTrackingList<StaticRoutingEnrichment> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Static))
             {
                 writer.WritePropertyName("static"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Dynamic is ChangeTrackingList<DynamicRoutingEnrichment> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Dynamic))
             {
                 writer.WritePropertyName("dynamic"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEnrichments>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeRoutingEnrichments(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEnrichments)} does not support reading '{options.Format}' format.");
             }
         }
 

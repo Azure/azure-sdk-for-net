@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
@@ -24,10 +23,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="inputGroups"/> is null. </exception>
         public CustomLayout(IDictionary<string, InputGroup> inputGroups)
         {
-            if (inputGroups == null)
-            {
-                throw new ArgumentNullException(nameof(inputGroups));
-            }
+            Argument.AssertNotNull(inputGroups, nameof(inputGroups));
 
             Layers = new ChangeTrackingDictionary<string, LayoutLayer>();
             InputGroups = inputGroups;

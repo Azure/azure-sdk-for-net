@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuChangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CountOfDowngrades.HasValue)
+            if (Optional.IsDefined(CountOfDowngrades))
             {
                 writer.WritePropertyName("countOfDowngrades"u8);
                 writer.WriteNumberValue(CountOfDowngrades.Value);
             }
-            if (CountOfUpgradesAfterDowngrades.HasValue)
+            if (Optional.IsDefined(CountOfUpgradesAfterDowngrades))
             {
                 writer.WritePropertyName("countOfUpgradesAfterDowngrades"u8);
                 writer.WriteNumberValue(CountOfUpgradesAfterDowngrades.Value);
             }
-            if (LastChangedOn.HasValue)
+            if (Optional.IsDefined(LastChangedOn))
             {
                 writer.WritePropertyName("lastChangeDate"u8);
                 writer.WriteStringValue(LastChangedOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuChangeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesSkuChangeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuChangeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

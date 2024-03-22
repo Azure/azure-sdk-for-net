@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<KeyVaultPrivateLinkResourceData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeKeyVaultPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

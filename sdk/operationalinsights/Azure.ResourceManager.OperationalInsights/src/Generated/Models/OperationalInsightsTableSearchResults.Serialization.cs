@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableSearchResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (StartSearchOn.HasValue)
+            if (Optional.IsDefined(StartSearchOn))
             {
                 writer.WritePropertyName("startSearchTime"u8);
                 writer.WriteStringValue(StartSearchOn.Value, "O");
             }
-            if (EndSearchOn.HasValue)
+            if (Optional.IsDefined(EndSearchOn))
             {
                 writer.WritePropertyName("endSearchTime"u8);
                 writer.WriteStringValue(EndSearchOn.Value, "O");
             }
-            if (options.Format != "W" && SourceTable != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceTable))
             {
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
-            if (options.Format != "W" && AzureAsyncOperationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
             {
                 writer.WritePropertyName("azureAsyncOperationId"u8);
                 writer.WriteStringValue(AzureAsyncOperationId.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableSearchResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsTableSearchResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableSearchResults)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmNicDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmNicDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NicId != null)
+            if (Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (ReplicaNicId != null)
+            if (Optional.IsDefined(ReplicaNicId))
             {
                 writer.WritePropertyName("replicaNicId"u8);
                 writer.WriteStringValue(ReplicaNicId);
             }
-            if (SourceNicArmId != null)
+            if (Optional.IsDefined(SourceNicArmId))
             {
                 writer.WritePropertyName("sourceNicArmId"u8);
                 writer.WriteStringValue(SourceNicArmId);
             }
-            if (VmNetworkName != null)
+            if (Optional.IsDefined(VmNetworkName))
             {
                 writer.WritePropertyName("vMNetworkName"u8);
                 writer.WriteStringValue(VmNetworkName);
             }
-            if (RecoveryVmNetworkId != null)
+            if (Optional.IsDefined(RecoveryVmNetworkId))
             {
                 writer.WritePropertyName("recoveryVMNetworkId"u8);
                 writer.WriteStringValue(RecoveryVmNetworkId);
             }
-            if (!(IPConfigs is ChangeTrackingList<HyperVIPConfigDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigs))
             {
                 writer.WritePropertyName("ipConfigs"u8);
                 writer.WriteStartArray();
@@ -61,67 +61,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SelectionType != null)
+            if (Optional.IsDefined(SelectionType))
             {
                 writer.WritePropertyName("selectionType"u8);
                 writer.WriteStringValue(SelectionType);
             }
-            if (RecoveryNetworkSecurityGroupId != null)
+            if (Optional.IsDefined(RecoveryNetworkSecurityGroupId))
             {
                 writer.WritePropertyName("recoveryNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(RecoveryNetworkSecurityGroupId);
             }
-            if (IsAcceleratedNetworkingOnRecoveryEnabled.HasValue)
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnRecovery"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnRecoveryEnabled.Value);
             }
-            if (TfoVmNetworkId != null)
+            if (Optional.IsDefined(TfoVmNetworkId))
             {
                 writer.WritePropertyName("tfoVMNetworkId"u8);
                 writer.WriteStringValue(TfoVmNetworkId);
             }
-            if (TfoNetworkSecurityGroupId != null)
+            if (Optional.IsDefined(TfoNetworkSecurityGroupId))
             {
                 writer.WritePropertyName("tfoNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(TfoNetworkSecurityGroupId);
             }
-            if (IsAcceleratedNetworkingOnTfoEnabled.HasValue)
+            if (Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnTfo"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnTfoEnabled.Value);
             }
-            if (RecoveryNicName != null)
+            if (Optional.IsDefined(RecoveryNicName))
             {
                 writer.WritePropertyName("recoveryNicName"u8);
                 writer.WriteStringValue(RecoveryNicName);
             }
-            if (RecoveryNicResourceGroupName != null)
+            if (Optional.IsDefined(RecoveryNicResourceGroupName))
             {
                 writer.WritePropertyName("recoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryNicResourceGroupName);
             }
-            if (IsReuseExistingNicAllowed.HasValue)
+            if (Optional.IsDefined(IsReuseExistingNicAllowed))
             {
                 writer.WritePropertyName("reuseExistingNic"u8);
                 writer.WriteBooleanValue(IsReuseExistingNicAllowed.Value);
             }
-            if (TfoRecoveryNicName != null)
+            if (Optional.IsDefined(TfoRecoveryNicName))
             {
                 writer.WritePropertyName("tfoRecoveryNicName"u8);
                 writer.WriteStringValue(TfoRecoveryNicName);
             }
-            if (TfoRecoveryNicResourceGroupName != null)
+            if (Optional.IsDefined(TfoRecoveryNicResourceGroupName))
             {
                 writer.WritePropertyName("tfoRecoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(TfoRecoveryNicResourceGroupName);
             }
-            if (IsTfoReuseExistingNicAllowed.HasValue)
+            if (Optional.IsDefined(IsTfoReuseExistingNicAllowed))
             {
                 writer.WritePropertyName("tfoReuseExistingNic"u8);
                 writer.WriteBooleanValue(IsTfoReuseExistingNicAllowed.Value);
             }
-            if (TargetNicName != null)
+            if (Optional.IsDefined(TargetNicName))
             {
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmNicDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmNicDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmNicDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmNicDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVmNicDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmNicDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmNicDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

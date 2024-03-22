@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -289,10 +287,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<FileShareResource>> UpdateAsync(FileShareData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Update");
             scope.Start();
@@ -334,10 +329,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<FileShareResource> Update(FileShareData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Update");
             scope.Start();
@@ -379,10 +371,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual async Task<Response> RestoreAsync(DeletedShare deletedShare, CancellationToken cancellationToken = default)
         {
-            if (deletedShare == null)
-            {
-                throw new ArgumentNullException(nameof(deletedShare));
-            }
+            Argument.AssertNotNull(deletedShare, nameof(deletedShare));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Restore");
             scope.Start();
@@ -424,10 +413,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="deletedShare"/> is null. </exception>
         public virtual Response Restore(DeletedShare deletedShare, CancellationToken cancellationToken = default)
         {
-            if (deletedShare == null)
-            {
-                throw new ArgumentNullException(nameof(deletedShare));
-            }
+            Argument.AssertNotNull(deletedShare, nameof(deletedShare));
 
             using var scope = _fileShareClientDiagnostics.CreateScope("FileShareResource.Restore");
             scope.Start();

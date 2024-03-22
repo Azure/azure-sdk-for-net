@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteLimits)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxPercentageCpu.HasValue)
+            if (Optional.IsDefined(MaxPercentageCpu))
             {
                 writer.WritePropertyName("maxPercentageCpu"u8);
                 writer.WriteNumberValue(MaxPercentageCpu.Value);
             }
-            if (MaxMemoryInMb.HasValue)
+            if (Optional.IsDefined(MaxMemoryInMb))
             {
                 writer.WritePropertyName("maxMemoryInMb"u8);
                 writer.WriteNumberValue(MaxMemoryInMb.Value);
             }
-            if (MaxDiskSizeInMb.HasValue)
+            if (Optional.IsDefined(MaxDiskSizeInMb))
             {
                 writer.WritePropertyName("maxDiskSizeInMb"u8);
                 writer.WriteNumberValue(MaxDiskSizeInMb.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteLimits)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteLimits)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteLimits)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSiteLimits(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteLimits)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteLimits)} does not support reading '{options.Format}' format.");
             }
         }
 

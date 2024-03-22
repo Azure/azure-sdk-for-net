@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<BasicArmDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BasicArmDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BasicArmDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<BasicArmDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BasicArmDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BasicArmDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BasicArmDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BasicArmDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeBasicArmDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BasicArmDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BasicArmDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

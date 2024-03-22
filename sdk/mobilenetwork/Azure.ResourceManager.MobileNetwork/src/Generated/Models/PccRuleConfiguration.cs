@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="serviceDataFlowTemplates"/> is null. </exception>
         public PccRuleConfiguration(string ruleName, int rulePrecedence, IEnumerable<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates)
         {
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleName));
-            }
-            if (serviceDataFlowTemplates == null)
-            {
-                throw new ArgumentNullException(nameof(serviceDataFlowTemplates));
-            }
+            Argument.AssertNotNull(ruleName, nameof(ruleName));
+            Argument.AssertNotNull(serviceDataFlowTemplates, nameof(serviceDataFlowTemplates));
 
             RuleName = ruleName;
             RulePrecedence = rulePrecedence;

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -66,22 +65,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ClusterCodeVersionsListResult>> GetAsync(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var message = CreateGetRequest(subscriptionId, location, clusterVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -108,22 +93,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ClusterCodeVersionsListResult> Get(string subscriptionId, AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var message = CreateGetRequest(subscriptionId, location, clusterVersion);
             _pipeline.Send(message, cancellationToken);
@@ -173,22 +144,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ClusterCodeVersionsListResult>> GetByEnvironmentAsync(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var message = CreateGetByEnvironmentRequest(subscriptionId, location, environment, clusterVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -216,22 +173,8 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ClusterCodeVersionsListResult> GetByEnvironment(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (clusterVersion == null)
-            {
-                throw new ArgumentNullException(nameof(clusterVersion));
-            }
-            if (clusterVersion.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterVersion));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
             using var message = CreateGetByEnvironmentRequest(subscriptionId, location, environment, clusterVersion);
             _pipeline.Send(message, cancellationToken);
@@ -276,14 +219,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ClusterCodeVersionsListResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -309,14 +245,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ClusterCodeVersionsListResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
@@ -364,14 +293,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ClusterCodeVersionsListResult>> ListByEnvironmentAsync(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByEnvironmentRequest(subscriptionId, location, environment);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -398,14 +320,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ClusterCodeVersionsListResult> ListByEnvironment(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListByEnvironmentRequest(subscriptionId, location, environment);
             _pipeline.Send(message, cancellationToken);

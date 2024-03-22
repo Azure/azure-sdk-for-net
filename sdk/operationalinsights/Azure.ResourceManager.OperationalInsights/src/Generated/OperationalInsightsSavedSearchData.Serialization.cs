@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSavedSearchData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -62,22 +61,22 @@ namespace Azure.ResourceManager.OperationalInsights
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
-            if (FunctionAlias != null)
+            if (Optional.IsDefined(FunctionAlias))
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (FunctionParameters != null)
+            if (Optional.IsDefined(FunctionParameters))
             {
                 writer.WritePropertyName("functionParameters"u8);
                 writer.WriteStringValue(FunctionParameters);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (!(Tags is ChangeTrackingList<OperationalInsightsTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.OperationalInsights
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsSavedSearchData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -266,7 +265,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         return DeserializeOperationalInsightsSavedSearchData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsSavedSearchData)} does not support reading '{options.Format}' format.");
             }
         }
 

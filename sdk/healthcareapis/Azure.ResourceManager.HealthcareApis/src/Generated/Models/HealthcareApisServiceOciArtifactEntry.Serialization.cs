@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceOciArtifactEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LoginServer != null)
+            if (Optional.IsDefined(LoginServer))
             {
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (ImageName != null)
+            if (Optional.IsDefined(ImageName))
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceOciArtifactEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeHealthcareApisServiceOciArtifactEntry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceOciArtifactEntry)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownInputSchemaMapping. </summary>
+    /// <summary> Unknown version of InputSchemaMapping. </summary>
     internal partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInputSchemaMapping"/>. </summary>

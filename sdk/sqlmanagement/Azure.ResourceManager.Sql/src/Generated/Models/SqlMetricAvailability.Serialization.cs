@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Retention != null)
+            if (options.Format != "W" && Optional.IsDefined(Retention))
             {
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
-            if (options.Format != "W" && TimeGrain != null)
+            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlMetricAvailability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountModelDeprecationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FineTuneOn.HasValue)
+            if (Optional.IsDefined(FineTuneOn))
             {
                 writer.WritePropertyName("fineTune"u8);
                 writer.WriteStringValue(FineTuneOn.Value, "O");
             }
-            if (InferenceOn.HasValue)
+            if (Optional.IsDefined(InferenceOn))
             {
                 writer.WritePropertyName("inference"u8);
                 writer.WriteStringValue(InferenceOn.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountModelDeprecationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountModelDeprecationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountModelDeprecationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

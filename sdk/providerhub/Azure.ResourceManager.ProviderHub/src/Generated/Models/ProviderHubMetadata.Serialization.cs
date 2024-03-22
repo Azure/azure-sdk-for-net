@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ProviderAuthorizations is ChangeTrackingList<ResourceProviderAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProviderAuthentication != null)
+            if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
                 writer.WriteObjectValue(ProviderAuthentication);
             }
-            if (ThirdPartyProviderAuthorization != null)
+            if (Optional.IsDefined(ThirdPartyProviderAuthorization))
             {
                 writer.WritePropertyName("thirdPartyProviderAuthorization"u8);
                 writer.WriteObjectValue(ThirdPartyProviderAuthorization);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderHubMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeProviderHubMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderHubMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

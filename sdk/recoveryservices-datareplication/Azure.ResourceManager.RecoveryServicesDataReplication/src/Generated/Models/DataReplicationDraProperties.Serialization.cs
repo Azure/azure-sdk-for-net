@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationDraProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteObjectValue(AuthenticationIdentity);
             writer.WritePropertyName("resourceAccessIdentity"u8);
             writer.WriteObjectValue(ResourceAccessIdentity);
-            if (options.Format != "W" && IsResponsive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResponsive))
             {
                 writer.WritePropertyName("isResponsive"u8);
                 writer.WriteBooleanValue(IsResponsive.Value);
             }
-            if (options.Format != "W" && LastHeartbeatOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatOn))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatOn.Value, "O");
             }
-            if (options.Format != "W" && VersionNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionNumber))
             {
                 writer.WritePropertyName("versionNumber"u8);
                 writer.WriteStringValue(VersionNumber);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationDraProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationDraProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationDraProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

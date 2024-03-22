@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<ProcessInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProcessInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Identifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteNumberValue(Identifier.Value);
             }
-            if (DeploymentName != null)
+            if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("deployment_name"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (Minidump != null)
+            if (Optional.IsDefined(Minidump))
             {
                 writer.WritePropertyName("minidump"u8);
                 writer.WriteStringValue(Minidump);
             }
-            if (IsProfileRunning.HasValue)
+            if (Optional.IsDefined(IsProfileRunning))
             {
                 writer.WritePropertyName("is_profile_running"u8);
                 writer.WriteBooleanValue(IsProfileRunning.Value);
             }
-            if (IsIisProfileRunning.HasValue)
+            if (Optional.IsDefined(IsIisProfileRunning))
             {
                 writer.WritePropertyName("is_iis_profile_running"u8);
                 writer.WriteBooleanValue(IsIisProfileRunning.Value);
             }
-            if (IisProfileTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(IisProfileTimeoutInSeconds))
             {
                 writer.WritePropertyName("iis_profile_timeout_in_seconds"u8);
                 writer.WriteNumberValue(IisProfileTimeoutInSeconds.Value);
             }
-            if (Parent != null)
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteStringValue(Parent);
             }
-            if (!(Children is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Children))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (!(Threads is ChangeTrackingList<ProcessThreadInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Threads))
             {
                 writer.WritePropertyName("threads"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (!(OpenFileHandles is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(OpenFileHandles))
             {
                 writer.WritePropertyName("open_file_handles"u8);
                 writer.WriteStartArray();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (!(Modules is ChangeTrackingList<ProcessModuleInfoData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
@@ -135,107 +135,107 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (CommandLine != null)
+            if (Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("command_line"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("user_name"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (HandleCount.HasValue)
+            if (Optional.IsDefined(HandleCount))
             {
                 writer.WritePropertyName("handle_count"u8);
                 writer.WriteNumberValue(HandleCount.Value);
             }
-            if (ModuleCount.HasValue)
+            if (Optional.IsDefined(ModuleCount))
             {
                 writer.WritePropertyName("module_count"u8);
                 writer.WriteNumberValue(ModuleCount.Value);
             }
-            if (ThreadCount.HasValue)
+            if (Optional.IsDefined(ThreadCount))
             {
                 writer.WritePropertyName("thread_count"u8);
                 writer.WriteNumberValue(ThreadCount.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (TotalCpuTime != null)
+            if (Optional.IsDefined(TotalCpuTime))
             {
                 writer.WritePropertyName("total_cpu_time"u8);
                 writer.WriteStringValue(TotalCpuTime);
             }
-            if (UserCpuTime != null)
+            if (Optional.IsDefined(UserCpuTime))
             {
                 writer.WritePropertyName("user_cpu_time"u8);
                 writer.WriteStringValue(UserCpuTime);
             }
-            if (PrivilegedCpuTime != null)
+            if (Optional.IsDefined(PrivilegedCpuTime))
             {
                 writer.WritePropertyName("privileged_cpu_time"u8);
                 writer.WriteStringValue(PrivilegedCpuTime);
             }
-            if (WorkingSet.HasValue)
+            if (Optional.IsDefined(WorkingSet))
             {
                 writer.WritePropertyName("working_set"u8);
                 writer.WriteNumberValue(WorkingSet.Value);
             }
-            if (PeakWorkingSet.HasValue)
+            if (Optional.IsDefined(PeakWorkingSet))
             {
                 writer.WritePropertyName("peak_working_set"u8);
                 writer.WriteNumberValue(PeakWorkingSet.Value);
             }
-            if (PrivateMemory.HasValue)
+            if (Optional.IsDefined(PrivateMemory))
             {
                 writer.WritePropertyName("private_memory"u8);
                 writer.WriteNumberValue(PrivateMemory.Value);
             }
-            if (VirtualMemory.HasValue)
+            if (Optional.IsDefined(VirtualMemory))
             {
                 writer.WritePropertyName("virtual_memory"u8);
                 writer.WriteNumberValue(VirtualMemory.Value);
             }
-            if (PeakVirtualMemory.HasValue)
+            if (Optional.IsDefined(PeakVirtualMemory))
             {
                 writer.WritePropertyName("peak_virtual_memory"u8);
                 writer.WriteNumberValue(PeakVirtualMemory.Value);
             }
-            if (PagedSystemMemory.HasValue)
+            if (Optional.IsDefined(PagedSystemMemory))
             {
                 writer.WritePropertyName("paged_system_memory"u8);
                 writer.WriteNumberValue(PagedSystemMemory.Value);
             }
-            if (NonPagedSystemMemory.HasValue)
+            if (Optional.IsDefined(NonPagedSystemMemory))
             {
                 writer.WritePropertyName("non_paged_system_memory"u8);
                 writer.WriteNumberValue(NonPagedSystemMemory.Value);
             }
-            if (PagedMemory.HasValue)
+            if (Optional.IsDefined(PagedMemory))
             {
                 writer.WritePropertyName("paged_memory"u8);
                 writer.WriteNumberValue(PagedMemory.Value);
             }
-            if (PeakPagedMemory.HasValue)
+            if (Optional.IsDefined(PeakPagedMemory))
             {
                 writer.WritePropertyName("peak_paged_memory"u8);
                 writer.WriteNumberValue(PeakPagedMemory.Value);
             }
-            if (TimeStamp.HasValue)
+            if (Optional.IsDefined(TimeStamp))
             {
                 writer.WritePropertyName("time_stamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environment_variables"u8);
                 writer.WriteStartObject();
@@ -246,17 +246,17 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndObject();
             }
-            if (IsScmSite.HasValue)
+            if (Optional.IsDefined(IsScmSite))
             {
                 writer.WritePropertyName("is_scm_site"u8);
                 writer.WriteBooleanValue(IsScmSite.Value);
             }
-            if (IsWebjob.HasValue)
+            if (Optional.IsDefined(IsWebjob))
             {
                 writer.WritePropertyName("is_webjob"u8);
                 writer.WriteBooleanValue(IsWebjob.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<ProcessInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProcessInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.AppService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProcessInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProcessInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeProcessInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProcessInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProcessInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

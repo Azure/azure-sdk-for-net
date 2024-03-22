@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDesktopData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && IconHash != null)
+            if (options.Format != "W" && Optional.IsDefined(IconHash))
             {
                 writer.WritePropertyName("iconHash"u8);
                 writer.WriteStringValue(IconHash);
             }
-            if (options.Format != "W" && IconContent != null)
+            if (options.Format != "W" && Optional.IsDefined(IconContent))
             {
                 writer.WritePropertyName("iconContent"u8);
 #if NET6_0_OR_GREATER
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<VirtualDesktopData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return DeserializeVirtualDesktopData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualDesktopData)} does not support reading '{options.Format}' format.");
             }
         }
 
