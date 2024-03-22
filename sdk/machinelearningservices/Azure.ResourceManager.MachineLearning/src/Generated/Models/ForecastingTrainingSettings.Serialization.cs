@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (StackEnsembleSettings != null)
                 {
                     writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue(StackEnsembleSettings);
+                    writer.WriteObjectValue<MachineLearningStackEnsembleSettings>(StackEnsembleSettings, options);
                 }
                 else
                 {

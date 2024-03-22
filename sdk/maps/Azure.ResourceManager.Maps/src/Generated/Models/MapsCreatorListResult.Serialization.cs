@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsCreatorData>(item, options);
                 }
                 writer.WriteEndArray();
             }

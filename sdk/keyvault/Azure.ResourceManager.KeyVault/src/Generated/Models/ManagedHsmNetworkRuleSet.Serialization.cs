@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedHsmIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedHsmVirtualNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

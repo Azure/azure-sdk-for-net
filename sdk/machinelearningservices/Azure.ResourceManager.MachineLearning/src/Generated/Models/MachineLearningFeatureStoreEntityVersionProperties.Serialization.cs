@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in IndexColumns)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<IndexColumn>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    writer.WriteObjectValue<AutoDeleteSetting>(AutoDeleteSetting, options);
                 }
                 else
                 {

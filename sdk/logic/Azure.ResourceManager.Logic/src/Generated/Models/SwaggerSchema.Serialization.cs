@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue(Items);
+                writer.WriteObjectValue<SwaggerSchema>(Items, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SwaggerSchema>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllOf)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SwaggerSchema>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Xml))
             {
                 writer.WritePropertyName("xml"u8);
-                writer.WriteObjectValue(Xml);
+                writer.WriteObjectValue<SwaggerXml>(Xml, options);
             }
             if (Optional.IsDefined(ExternalDocs))
             {
                 writer.WritePropertyName("externalDocs"u8);
-                writer.WriteObjectValue(ExternalDocs);
+                writer.WriteObjectValue<SwaggerExternalDocumentation>(ExternalDocs, options);
             }
             if (Optional.IsDefined(Example))
             {
@@ -139,22 +139,22 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DynamicSchemaOld))
             {
                 writer.WritePropertyName("dynamicSchemaOld"u8);
-                writer.WriteObjectValue(DynamicSchemaOld);
+                writer.WriteObjectValue<SwaggerCustomDynamicSchema>(DynamicSchemaOld, options);
             }
             if (Optional.IsDefined(DynamicSchemaNew))
             {
                 writer.WritePropertyName("dynamicSchemaNew"u8);
-                writer.WriteObjectValue(DynamicSchemaNew);
+                writer.WriteObjectValue<SwaggerCustomDynamicProperties>(DynamicSchemaNew, options);
             }
             if (Optional.IsDefined(DynamicListNew))
             {
                 writer.WritePropertyName("dynamicListNew"u8);
-                writer.WriteObjectValue(DynamicListNew);
+                writer.WriteObjectValue<SwaggerCustomDynamicList>(DynamicListNew, options);
             }
             if (Optional.IsDefined(DynamicTree))
             {
                 writer.WritePropertyName("dynamicTree"u8);
-                writer.WriteObjectValue(DynamicTree);
+                writer.WriteObjectValue<SwaggerCustomDynamicTree>(DynamicTree, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
