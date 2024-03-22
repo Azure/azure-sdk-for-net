@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteObjectValue(KeyVaultProperties);
+            writer.WriteObjectValue<EncryptionKeyVaultUpdateProperties>(KeyVaultProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

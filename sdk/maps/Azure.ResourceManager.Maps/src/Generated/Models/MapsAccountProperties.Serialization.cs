@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsLinkedResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                writer.WriteObjectValue<CorsRules>(Cors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

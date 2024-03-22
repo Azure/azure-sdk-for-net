@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ManagedNetworkPeeringPolicyProperties>(Properties, options);
             }
             if (Optional.IsDefined(Location))
             {

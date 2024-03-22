@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<KeyVaultSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(AccessPolicies))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyVaultAccessPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<KeyVaultNetworkRuleSet>(NetworkRuleSet, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

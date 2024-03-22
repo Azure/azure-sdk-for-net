@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyVaultPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

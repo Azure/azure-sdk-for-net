@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoResourceSkuCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }

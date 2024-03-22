@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
-                writer.WriteObjectValue(Triggers);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(Triggers, options);
             }
             if (Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
-                writer.WriteObjectValue(Contents);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(Contents, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(Actions, options);
             }
             if (Optional.IsDefined(WorkflowManagement))
             {
                 writer.WritePropertyName("workflowManagement"u8);
-                writer.WriteObjectValue(WorkflowManagement);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(WorkflowManagement, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

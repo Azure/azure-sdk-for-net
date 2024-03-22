@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FederatedIdentityCredentialData>(item, options);
                 }
                 writer.WriteEndArray();
             }
