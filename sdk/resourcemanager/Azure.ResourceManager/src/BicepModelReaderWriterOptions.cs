@@ -10,7 +10,7 @@ namespace Azure.ResourceManager
     /// <summary>
     /// Provides the options for reading and writing Bicep.
     /// </summary>
-    [Experimental("AzProvision001")]
+    [Experimental("AZPROVISION001")]
     public class BicepModelReaderWriterOptions : ModelReaderWriterOptions
     {
         /// <summary>

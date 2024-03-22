@@ -74,7 +74,7 @@
     -->
     <NoWarn>
       $(NoWarn);
-      AzProvision001; <!-- BicepModelReaderWriterOptions -->
+      AZPROVISION001; <!-- BicepModelReaderWriterOptions -->
     </NoWarn>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
