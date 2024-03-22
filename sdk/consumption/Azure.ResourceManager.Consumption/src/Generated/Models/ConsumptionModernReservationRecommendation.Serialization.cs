@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(CostWithNoReservedInstances))
             {
                 writer.WritePropertyName("costWithNoReservedInstances"u8);
-                writer.WriteObjectValue(CostWithNoReservedInstances);
+                writer.WriteObjectValue<ConsumptionAmount>(CostWithNoReservedInstances, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
             {
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(TotalCostWithReservedInstances))
             {
                 writer.WritePropertyName("totalCostWithReservedInstances"u8);
-                writer.WriteObjectValue(TotalCostWithReservedInstances);
+                writer.WriteObjectValue<ConsumptionAmount>(TotalCostWithReservedInstances, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NetSavings))
             {
                 writer.WritePropertyName("netSavings"u8);
-                writer.WriteObjectValue(NetSavings);
+                writer.WriteObjectValue<ConsumptionAmount>(NetSavings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FirstUsageOn))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionSkuProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }

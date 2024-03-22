@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryRegistrationConfiguration>(Registration, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryLoginConfiguration>(Login, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryValidationConfiguration>(Validation, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {

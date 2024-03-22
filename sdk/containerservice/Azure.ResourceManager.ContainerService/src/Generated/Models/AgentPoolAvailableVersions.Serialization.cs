@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AgentPoolAvailableVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }

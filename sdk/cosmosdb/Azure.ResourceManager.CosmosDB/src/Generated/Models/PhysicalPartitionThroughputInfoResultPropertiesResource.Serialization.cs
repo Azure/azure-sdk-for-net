@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionThroughputInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PhysicalPartitionThroughputInfoResource>(item, options);
                 }
                 writer.WriteEndArray();
             }

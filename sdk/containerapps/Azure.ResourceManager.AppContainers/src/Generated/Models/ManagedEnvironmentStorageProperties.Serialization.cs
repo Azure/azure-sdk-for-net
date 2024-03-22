@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                writer.WriteObjectValue<ContainerAppAzureFileProperties>(AzureFile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

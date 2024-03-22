@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PredictionDistribution))
             {
                 writer.WritePropertyName("predictionDistribution"u8);
-                writer.WriteObjectValue(PredictionDistribution);
+                writer.WriteObjectValue<PredictionDistributionDefinition>(PredictionDistribution, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in CanonicalProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CanonicalProfileDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GremlinDatabaseData>(item, options);
                 }
                 writer.WriteEndArray();
             }

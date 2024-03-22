@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComputeResourceSkuZoneDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

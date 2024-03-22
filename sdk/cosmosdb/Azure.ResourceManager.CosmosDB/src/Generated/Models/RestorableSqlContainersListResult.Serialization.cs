@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestorableSqlContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }

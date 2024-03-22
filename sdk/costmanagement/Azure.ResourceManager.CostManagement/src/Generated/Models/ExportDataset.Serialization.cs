@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<ExportDatasetConfiguration>(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

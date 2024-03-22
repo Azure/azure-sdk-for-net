@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlDedicatedGatewayRegionalService>(item, options);
                 }
                 writer.WriteEndArray();
             }

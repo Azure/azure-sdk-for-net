@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Plugin))
             {
                 writer.WritePropertyName("plugin"u8);
-                writer.WriteObjectValue(Plugin);
+                writer.WriteObjectValue<IstioPluginCertificateAuthority>(Plugin, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

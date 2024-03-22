@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedNodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CassandraDataCenterSeedNode>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
-                writer.WriteObjectValue(AuthenticationMethodLdapProperties);
+                writer.WriteObjectValue<AuthenticationMethodLdapProperties>(AuthenticationMethodLdapProperties, options);
             }
             if (Optional.IsDefined(Deallocated))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue(ProvisionError);
+                writer.WriteObjectValue<CassandraError>(ProvisionError, options);
             }
             if (Optional.IsDefined(PrivateEndpointIPAddress))
             {

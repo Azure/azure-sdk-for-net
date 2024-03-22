@@ -32,7 +32,7 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStartArray();
                 foreach (var item in BlocklistsMatch)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TextBlocklistMatch>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +40,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TextCategoriesAnalysis>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -163,7 +163,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzeTextResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

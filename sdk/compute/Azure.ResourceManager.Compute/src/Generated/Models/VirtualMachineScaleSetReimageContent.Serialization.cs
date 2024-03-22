@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<OSProfileProvisioningData>(OSProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
