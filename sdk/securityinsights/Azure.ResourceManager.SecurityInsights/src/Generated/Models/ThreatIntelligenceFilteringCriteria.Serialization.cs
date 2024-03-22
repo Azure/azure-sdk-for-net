@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SortBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceSortingCriteria>(item, options);
                 }
                 writer.WriteEndArray();
             }

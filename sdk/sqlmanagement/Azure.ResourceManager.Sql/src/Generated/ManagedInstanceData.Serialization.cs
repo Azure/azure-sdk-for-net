@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstancePecProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                writer.WriteObjectValue<ManagedInstanceExternalAdministrator>(Administrators, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                writer.WriteObjectValue<SqlServicePrincipal>(ServicePrincipal, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

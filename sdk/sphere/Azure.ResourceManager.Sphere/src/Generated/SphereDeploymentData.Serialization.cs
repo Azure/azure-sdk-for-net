@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sphere
                 writer.WriteStartArray();
                 foreach (var item in DeployedImages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SphereImageData>(item, options);
                 }
                 writer.WriteEndArray();
             }

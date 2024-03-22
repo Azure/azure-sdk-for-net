@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TableServiceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SignedIdentifiers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageTableSignedIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }

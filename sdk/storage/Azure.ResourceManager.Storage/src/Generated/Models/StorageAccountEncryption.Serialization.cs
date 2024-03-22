@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
-                writer.WriteObjectValue(Services);
+                writer.WriteObjectValue<StorageAccountEncryptionServices>(Services, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<StorageAccountKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(EncryptionIdentity);
+                writer.WriteObjectValue<StorageAccountEncryptionIdentity>(EncryptionIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

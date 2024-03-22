@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuotaUsageResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

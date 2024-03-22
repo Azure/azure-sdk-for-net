@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StorageSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoints))
             {
                 writer.WritePropertyName("primaryEndpoints"u8);
-                writer.WriteObjectValue(PrimaryEndpoints);
+                writer.WriteObjectValue<StorageAccountEndpoints>(PrimaryEndpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryLocation))
             {
@@ -128,32 +128,32 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain"u8);
-                writer.WriteObjectValue(CustomDomain);
+                writer.WriteObjectValue<StorageCustomDomain>(CustomDomain, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SasPolicy))
             {
                 writer.WritePropertyName("sasPolicy"u8);
-                writer.WriteObjectValue(SasPolicy);
+                writer.WriteObjectValue<StorageAccountSasPolicy>(SasPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyPolicy))
             {
                 writer.WritePropertyName("keyPolicy"u8);
-                writer.WriteObjectValue(KeyPolicy);
+                writer.WriteObjectValue<StorageAccountKeyPolicy>(KeyPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyCreationTime))
             {
                 writer.WritePropertyName("keyCreationTime"u8);
-                writer.WriteObjectValue(KeyCreationTime);
+                writer.WriteObjectValue<StorageAccountKeyCreationTime>(KeyCreationTime, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryEndpoints))
             {
                 writer.WritePropertyName("secondaryEndpoints"u8);
-                writer.WriteObjectValue(SecondaryEndpoints);
+                writer.WriteObjectValue<StorageAccountEndpoints>(SecondaryEndpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<StorageAccountEncryption>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AccessTier))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
-                writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication);
+                writer.WriteObjectValue<FilesIdentityBasedAuthentication>(AzureFilesIdentityBasedAuthentication, options);
             }
             if (Optional.IsDefined(EnableHttpsTrafficOnly))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<StorageAccountNetworkRuleSet>(NetworkRuleSet, options);
             }
             if (Optional.IsDefined(IsSftpEnabled))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(GeoReplicationStats))
             {
                 writer.WritePropertyName("geoReplicationStats"u8);
-                writer.WriteObjectValue(GeoReplicationStats);
+                writer.WriteObjectValue<GeoReplicationStatistics>(GeoReplicationStats, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFailoverInProgress))
             {
@@ -211,19 +211,19 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
-                writer.WriteObjectValue(RoutingPreference);
+                writer.WriteObjectValue<StorageRoutingPreference>(RoutingPreference, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BlobRestoreStatus))
             {
                 writer.WritePropertyName("blobRestoreStatus"u8);
-                writer.WriteObjectValue(BlobRestoreStatus);
+                writer.WriteObjectValue<BlobRestoreStatus>(BlobRestoreStatus, options);
             }
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
-                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+                writer.WriteObjectValue<ImmutableStorageAccount>(ImmutableStorageWithVersioning, options);
             }
             if (Optional.IsDefined(AllowedCopyScope))
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(StorageAccountSkuConversionStatus))
             {
                 writer.WritePropertyName("storageAccountSkuConversionStatus"u8);
-                writer.WriteObjectValue(StorageAccountSkuConversionStatus);
+                writer.WriteObjectValue<StorageAccountSkuConversionStatus>(StorageAccountSkuConversionStatus, options);
             }
             if (Optional.IsDefined(DnsEndpointType))
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in PermissionScopes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePermissionScope>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageSshPublicKey>(item, options);
                 }
                 writer.WriteEndArray();
             }

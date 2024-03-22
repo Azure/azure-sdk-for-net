@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VideoGroupVideo>(item, options);
                 }
                 writer.WriteEndArray();
             }

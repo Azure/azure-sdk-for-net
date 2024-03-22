@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchField>(item);
                 }
                 writer.WriteEndArray();
             }
