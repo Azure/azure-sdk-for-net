@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ParameterDefinitionsValueMetadata>(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

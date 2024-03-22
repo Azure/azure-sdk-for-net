@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PostgreSqlLtrServerBackupOperationData>(item, options);
                 }
                 writer.WriteEndArray();
             }

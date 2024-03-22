@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TermSearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Contact)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContactSearchResultValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -481,7 +481,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SuggestResultValue>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

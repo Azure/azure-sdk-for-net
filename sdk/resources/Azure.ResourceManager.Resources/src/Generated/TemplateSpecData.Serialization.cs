@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Versions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<TemplateSpecVersionInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

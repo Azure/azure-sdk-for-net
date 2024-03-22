@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(RoleDefinition))
             {
                 writer.WritePropertyName("roleDefinition"u8);
-                writer.WriteObjectValue(RoleDefinition);
+                writer.WriteObjectValue<AzureRoleDefinition>(RoleDefinition, options);
             }
             if (Optional.IsDefined(ManagedByRoleDefinition))
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
-                writer.WriteObjectValue(ManagedByRoleDefinition);
+                writer.WriteObjectValue<AzureRoleDefinition>(ManagedByRoleDefinition, options);
             }
             if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {

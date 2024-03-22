@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedItemDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FailoverReplicationProtectedItemDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

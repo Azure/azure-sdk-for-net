@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RedisLinkedServerWithPropertyData>(item, options);
                 }
                 writer.WriteEndArray();
             }

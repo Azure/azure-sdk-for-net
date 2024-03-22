@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<CmkKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue(KekIdentity);
+                writer.WriteObjectValue<CmkKekIdentity>(KekIdentity, options);
             }
             if (Optional.IsDefined(InfrastructureEncryption))
             {

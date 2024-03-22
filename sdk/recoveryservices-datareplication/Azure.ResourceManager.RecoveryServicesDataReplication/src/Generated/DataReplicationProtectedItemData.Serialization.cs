@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<DataReplicationProtectedItemProperties>(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

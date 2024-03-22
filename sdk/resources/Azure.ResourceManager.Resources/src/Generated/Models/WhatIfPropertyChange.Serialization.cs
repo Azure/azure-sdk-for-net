@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WhatIfPropertyChange>(item, options);
                 }
                 writer.WriteEndArray();
             }

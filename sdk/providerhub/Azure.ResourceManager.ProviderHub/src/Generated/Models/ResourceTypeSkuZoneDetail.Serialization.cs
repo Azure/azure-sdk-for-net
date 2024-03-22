@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

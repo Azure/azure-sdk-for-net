@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ResourcesSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {

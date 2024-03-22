@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(Specification))
             {
                 writer.WritePropertyName("specification"u8);
-                writer.WriteObjectValue(Specification);
+                writer.WriteObjectValue<DefaultRolloutSpecification>(Specification, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<DefaultRolloutStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

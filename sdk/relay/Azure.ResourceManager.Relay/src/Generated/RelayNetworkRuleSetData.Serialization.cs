@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Relay
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayNetworkRuleSetIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
